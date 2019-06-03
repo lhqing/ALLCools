@@ -255,7 +255,9 @@ def _merge_allc_files_tabix(allc_files,
         return
 
 
-@doc_params(allc_paths_doc=allc_paths_doc)
+@doc_params(allc_paths_doc=allc_paths_doc,
+            chrom_size_path_doc=chrom_size_path_doc,
+            cpu_basic_doc=cpu_basic_doc)
 def merge_allc_files(allc_paths, output_path, chrom_size_path, bin_length=10000000, cpu=10):
     """
     Merge N ALLC files into 1 ALLC file.

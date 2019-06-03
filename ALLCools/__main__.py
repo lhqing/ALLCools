@@ -8,8 +8,7 @@ import argparse
 import inspect
 import logging
 import sys
-
-import cemba_data
+import allcools
 
 from ._doc_ import *
 
@@ -534,7 +533,7 @@ def main():
     if len(sys.argv) > 1:
         # print out version
         if sys.argv[1] in ['-v', '--version']:
-            print(cemba_data.__version__)
+            print(allcools.__version__)
             exit()
         else:
             args = parser.parse_args()
