@@ -1,18 +1,20 @@
+import functools
 import gzip
-from functools import partial
-from subprocess import run, PIPE, CalledProcessError
+import itertools
+import os
+import pathlib
 import shlex
 from collections import defaultdict
-import pandas as pd
-import os
-from ._open_ import open_allc
-import itertools
-import functools
-import collections
-import pathlib
-import numpy as np
+from functools import partial
+from subprocess import run, PIPE, CalledProcessError
 from typing import Union, List
+
+import collections
+import numpy as np
+import pandas as pd
+
 from ._doc_ import *
+from ._open_ import open_allc
 
 IUPAC_TABLE = {
     'A': 'A',

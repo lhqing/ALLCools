@@ -4,16 +4,18 @@ This file is modified from methylpy https://github.com/yupenghe/methylpy
 Author: Yupeng He
 """
 
-import subprocess
-import shlex
-import pathlib
-import pandas as pd
-import collections
-from concurrent.futures import ProcessPoolExecutor, as_completed
-from .utilities import genome_region_chunks
-from ._open_ import open_allc, open_bam
 import logging
+import pathlib
+import shlex
+import subprocess
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
+import collections
+import pandas as pd
+
 from ._doc_ import *
+from ._open_ import open_allc, open_bam
+from .utilities import genome_region_chunks
 
 # logger
 log = logging.getLogger(__name__)

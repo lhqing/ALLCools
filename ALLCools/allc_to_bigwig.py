@@ -4,11 +4,12 @@ This file is modified from methylpy https://github.com/yupenghe/methylpy
 Original author: Yupeng He
 """
 
+import logging
 import shlex
 import subprocess
-from .utilities import parse_chrom_size
+
 from ._open_ import open_allc
-import logging
+from .utilities import parse_chrom_size
 
 # logger
 log = logging.getLogger(__name__)
@@ -90,8 +91,8 @@ def allc_to_bigwig(allc_path,
                    remove_additional_chrom=False,
                    remove_temp_bedgraph=True,
                    path_to_wigtobigwig=""):
-    #TODO add context support and strandness support to this function
-    #TODO add CLI in __main__
+    # TODO add context support and strandness support to this function
+    # TODO add CLI in __main__
     """
     Generate coverage (cov) and ratio (mc/cov) bigwig track files from 1 ALLC file
 

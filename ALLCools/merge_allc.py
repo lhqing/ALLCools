@@ -4,18 +4,20 @@ Some of the functions are modified from methylpy https://github.com/yupenghe/met
 Original Author: Yupeng He
 """
 
-import os
-import shlex
-import numpy as np
-import subprocess
-import resource
-import psutil
-from .utilities import parse_chrom_size, genome_region_chunks, parse_file_paths
-from concurrent.futures import ProcessPoolExecutor, as_completed
-from ._open_ import open_allc
-import logging
 import gc
+import logging
+import os
+import resource
+import shlex
+import subprocess
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
+import numpy as np
+import psutil
+
 from ._doc_ import *
+from ._open_ import open_allc
+from .utilities import parse_chrom_size, genome_region_chunks, parse_file_paths
 
 # logger
 log = logging.getLogger(__name__)

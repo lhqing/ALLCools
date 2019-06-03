@@ -1,10 +1,13 @@
-from typing import Union, Tuple
-from collections import defaultdict
-import subprocess
+import pathlib
 import shlex
+import subprocess
+from collections import defaultdict
 from functools import partial
-from .utilities import check_tbi_chroms, parse_chrom_size, parse_mc_pattern
+from typing import Union, Tuple
+
 from ._open_ import open_allc, open_gz
+from .extract_allc import extract_allc
+from .utilities import check_tbi_chroms, parse_chrom_size, parse_mc_pattern
 
 
 def _allc_to_site_bed(allc_path: str,
@@ -158,9 +161,10 @@ def _transfer_bin_size(bin_size: int) -> str:
 
 
 def allc_to_region_count(allc_path,
-                         out_prefix,
+                         output_prefix,
                          chrom_size_path,
                          mc_contexts,
+                         split_strand=True,
                          region_bed_paths=None,
                          region_bed_names=None,
                          bin_sizes=None,
@@ -178,7 +182,7 @@ def allc_to_region_count(allc_path,
     ----------
     allc_path
         Path to the ALLC file
-    out_prefix
+    output_prefix
         Path to output prefix
     chrom_size_path
         Path to UCSC chrom size file
@@ -214,22 +218,30 @@ def allc_to_region_count(allc_path,
                              f'from the {chrom_size_path}')
 
     print('Extract ALLC context')
-    out_prefix = out_prefix.rstrip('.')
-    mc_contexts, site_bed_paths = _allc_to_site_bed(allc_path=allc_path,
-                                                    out_prefix=out_prefix,
-                                                    chrom_size_path=chrom_size_path,
-                                                    mc_contexts=mc_contexts,
-                                                    max_cov_cutoff=max_cov_cutoff)
+    output_prefix = output_prefix.rstrip('.')
+    strandness = 'split' if split_strand else 'both'
+    output_paths = extract_allc(allc_path=allc_path,
+                                output_prefix=output_prefix,
+                                mc_contexts=mc_contexts,
+                                strandness=strandness,
+                                output_format='bed5',
+                                region=None,
+                                cov_cutoff=max_cov_cutoff)
+    path_dict = {}
+    for path in output_paths:
+        # this is according to extract_allc name pattern
+        info_type = pathlib.Path(path).name.split('.')[-4]  # {mc_context}-{strandness}
+        path_dict[info_type] = path
 
     if region_bed_paths is not None:
         print('Map to regions.')
     save_flag = 'full' if save_zero_cov else 'sparse'
     for region_name, region_bed_path in zip(region_bed_names, region_bed_paths):
-        for mc_context, site_bed_path in zip(mc_contexts, site_bed_paths):
+        for info_type, site_bed_path in path_dict.items():
             try:
                 _bedtools_map(region_bed=region_bed_path,
                               site_bed=site_bed_path,
-                              out_bed=out_prefix + f'.{region_name}_{mc_context}.{save_flag}.bed.gz',
+                              out_bed=output_prefix + f'.{region_name}_{info_type}.{save_flag}.bed.gz',
                               save_zero_cov=save_zero_cov)
             except subprocess.CalledProcessError as e:
                 print(e.stderr)
@@ -238,16 +250,16 @@ def allc_to_region_count(allc_path,
     if bin_sizes is not None:
         print('Map to chromosome bins.')
     for bin_size in bin_sizes:
-        for mc_context, site_bed_path in zip(mc_contexts, site_bed_paths):
+        for info_type, site_bed_path in path_dict.items():
             _map_to_sparse_chrom_bin(input_path=site_bed_path,
-                                     output_path=out_prefix + f'.chrom{_transfer_bin_size(bin_size)}'
-                                                              f'_{mc_context}.sparse.bed.gz',
+                                     output_path=output_prefix + f'.chrom{_transfer_bin_size(bin_size)}'
+                                                                 f'_{info_type}.sparse.bed.gz',
                                      chrom_size_file=chrom_size_path,
                                      bin_size=bin_size)
 
     if remove_tmp:
         print('Remove temporal files.')
-        for site_bed_path in site_bed_paths:
+        for site_bed_path in path_dict.values():
             subprocess.run(['rm', '-f', site_bed_path])
     return
 

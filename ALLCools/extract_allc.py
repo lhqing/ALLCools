@@ -1,9 +1,10 @@
-from subprocess import run
 from collections import defaultdict
+from subprocess import run
 from typing import Union, Tuple, Callable, List
+
+from ._doc_ import *
 from ._open_ import open_allc
 from .utilities import tabix_allc, parse_mc_pattern
-from ._doc_ import *
 
 
 def _merge_cg_strand(in_path, out_path):
@@ -94,7 +95,7 @@ def extract_allc(allc_path: str,
                  strandness: str = 'both',
                  output_format: str = 'allc',
                  region: str = None,
-                 cov_cutoff: int = 99999) -> List[str]:
+                 cov_cutoff: int = 9999) -> List[str]:
     """\
     Extract information (strand, context) from 1 ALLC file. Save to several different format.
 
@@ -122,7 +123,7 @@ def extract_allc(allc_path: str,
         Only extract records from certain genome region(s) via tabix, multiple region can be provided in tabix form.
     cov_cutoff
         Records with cov > cov_cutoff will be skipped.
-        
+
     Returns
     -------
     A list of output file paths, not include index files.
