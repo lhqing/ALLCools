@@ -8,7 +8,7 @@ import argparse
 import inspect
 import logging
 import sys
-import allcools
+import ALLCools
 
 from ._doc_ import *
 
@@ -533,7 +533,7 @@ def main():
     if len(sys.argv) > 1:
         # print out version
         if sys.argv[1] in ['-v', '--version']:
-            print(allcools.__version__)
+            print(ALLCools.__version__)
             exit()
         else:
             args = parser.parse_args()

@@ -1,3 +1,5 @@
+__version__ = ''
+
 from ._open_ import open_allc
 from .allc_to_bigwig import allc_to_bigwig
 from .allc_to_region_count import allc_to_region_count
