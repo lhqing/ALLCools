@@ -186,6 +186,7 @@ def allc_to_region_count(allc_path: str,
                                 mc_contexts=mc_contexts,
                                 strandness=strandness,
                                 output_format='bed5',
+                                chrom_size_path=chrom_size_path,
                                 region=None,
                                 cov_cutoff=cov_cutoff)
     path_dict = {}
