@@ -25,6 +25,8 @@ mc_contexts_doc = "Space separated mC context patterns to extract from ALLC. " \
                   "The context length should be the same as ALLC file context. " \
                   "Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT."
 
+cov_cutoff_doc = "Max cov filter for a single site in ALLC. Sites with cov > cov_cutoff will be skipped."
+
 
 def doc_params(**kwds):
     """\

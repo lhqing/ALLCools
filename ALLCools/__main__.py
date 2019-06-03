@@ -5,10 +5,12 @@ When adding new function:
 """
 
 import argparse
-import sys
 import inspect
-import cemba_data
 import logging
+import sys
+
+import cemba_data
+
 from ._doc_ import *
 
 log = logging.getLogger()
@@ -402,20 +404,19 @@ def extract_context_allc_register_subparser(subparser):
         type=int,
         required=False,
         default=99999,
-        help="Records with cov > cov_cutoff will be skipped."
+        help=cov_cutoff_doc
     )
 
 
 def allc_to_region_count_register_subparser(subparser):
-    # TODO cleaning this
     parser = subparser.add_parser('allc-to-region-count',
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-                                  help="Calculate mC and cov at regional level. Region accepted in 2 forms: "
+                                  help="Calculate mC and cov at regional level. Region can be provided in 2 forms: "
                                        "1. BED file, provided by region_bed_paths, "
                                        "containing arbitrary regions and use bedtools map to calculate; "
                                        "2. Fix-size non-overlap genome bins, provided by bin_sizes, "
-                                       "this is much faster to calculate than 1. "
-                                       "The output is in 6-column bed-like format: "
+                                       "Form 2 is much faster to calculate than form 1. "
+                                       "The output file is in 6-column bed-like format: "
                                        "chrom start end region_uid mc cov")
 
     parser_req = parser.add_argument_group("Required inputs")
@@ -425,21 +426,21 @@ def allc_to_region_count_register_subparser(subparser):
         "--allc_path",
         type=str,
         required=True,
-        help="Path to the ALLC file"
+        help=allc_path_doc
     )
 
     parser_req.add_argument(
-        "--out_prefix",
+        "--output_prefix",
         type=str,
         required=True,
-        help="Path to output prefix"
+        help="Path prefix of the output region count file."
     )
 
     parser_req.add_argument(
         "--chrom_size_path",
         type=str,
         required=True,
-        help="Path to UCSC chrom size file"
+        help=chrom_size_path_doc
     )
 
     parser_req.add_argument(
@@ -447,7 +448,15 @@ def allc_to_region_count_register_subparser(subparser):
         type=str,
         nargs='+',
         required=True,
-        help="Space separated mC context list to calculate"
+        help=mc_contexts_doc
+    )
+
+    parser_opt.add_argument(
+        "--split_strand",
+        type=bool,
+        required=False,
+        default=True,
+        help="If true, Watson (+) and Crick (-) strands will be count separately"
     )
 
     parser_opt.add_argument(
@@ -455,7 +464,10 @@ def allc_to_region_count_register_subparser(subparser):
         type=str,
         nargs='+',
         required=False,
-        help="Space separated path list to BED files."
+        default=None,
+        help="Arbitrary genomic regions can be defined in several BED files to count on. "
+             "Space separated paths to each BED files, "
+             "the fourth column of BED file should be unique id of the region."
     )
 
     parser_opt.add_argument(
@@ -463,7 +475,8 @@ def allc_to_region_count_register_subparser(subparser):
         type=str,
         nargs='+',
         required=False,
-        help="Matched name for each BED file provided in region_bed_paths."
+        default=None,
+        help="Space separated names for each BED file provided in region_bed_paths."
     )
 
     parser_opt.add_argument(
@@ -471,15 +484,17 @@ def allc_to_region_count_register_subparser(subparser):
         type=int,
         nargs='+',
         required=False,
-        help="Space separated genome size bins to calculate."
+        default=None,
+        help="Fix-size genomic bins can be defined by bin_sizes and chrom_size_path."
+             "Space separated sizes of genome bins, each size will be count separately."
     )
 
     parser_opt.add_argument(
-        "--max_cov_cutoff",
+        "--cov_cutoff",
         type=int,
         required=False,
         default=9999,
-        help="Max cov filter for a single site in ALLC"
+        help=cov_cutoff_doc
     )
 
     parser_opt.add_argument(
@@ -487,15 +502,7 @@ def allc_to_region_count_register_subparser(subparser):
         type=bool,
         required=False,
         default=True,
-        help="Whether to save the regions that have 0 cov, only apply to region count but not the chromosome count"
-    )
-
-    parser_opt.add_argument(
-        "--remove_tmp",
-        type=bool,
-        required=False,
-        default=True,
-        help="Whether to remove the temporary file"
+        help='Whether to save the regions that have 0 cov, only apply to region count but not the chromosome count'
     )
 
 
@@ -538,13 +545,24 @@ def main():
 
     # execute command
     args_vars = vars(args)
-    cur_command = args_vars.pop('command')
+    cur_command = args_vars.pop('command').lower().replace('_', '-')
     # Do real import here:
-    if cur_command == 'bam_to_allc':
+    if cur_command == 'bam-to-allc':
         from .bam_to_allc import bam_to_allc as func
-        # TODO add other cur_command
+    elif cur_command == 'standardize-allc':
+        from .utilities import standardize_allc as func
+    elif cur_command == 'tabix-allc':
+        from .utilities import tabix_allc as func
+    elif cur_command == 'profile-allc':
+        from .utilities import profile_allc as func
+    elif cur_command == 'merge-allc':
+        from .merge_allc import merge_allc_files as func
+    elif cur_command == 'extract-allc':
+        from .extract_allc import extract_allc as func
+    elif cur_command == 'allc-to-region-count':
+        from .allc_to_region_count import allc_to_region_count as func
     else:
-        log.debug(f'{cur_command} not Known, check the main function if else part')
+        log.debug(f'{cur_command} is not an valid sub-command')
         parser.parse_args(["-h"])
         return
 

@@ -88,7 +88,7 @@ def _check_out_format_parameter(out_format) -> Tuple[str, Callable[[list], str]]
         raise ValueError(f'Unknown value for out_format: {out_format}')
 
 
-@doc_params(allc_path_doc=allc_path_doc, mc_contexts_doc=mc_contexts_doc)
+@doc_params(allc_path_doc=allc_path_doc, mc_contexts_doc=mc_contexts_doc, cov_cutoff_doc=cov_cutoff_doc)
 def extract_allc(allc_path: str,
                  output_prefix: str,
                  mc_contexts: Union[str, list],
@@ -122,7 +122,7 @@ def extract_allc(allc_path: str,
     region
         Only extract records from certain genome region(s) via tabix, multiple region can be provided in tabix form.
     cov_cutoff
-        Records with cov > cov_cutoff will be skipped.
+        {cov_cutoff_doc}
 
     Returns
     -------

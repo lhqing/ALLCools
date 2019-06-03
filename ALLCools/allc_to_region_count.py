@@ -1,60 +1,13 @@
 import pathlib
 import shlex
 import subprocess
-from collections import defaultdict
 from functools import partial
-from typing import Union, Tuple
+from typing import List
 
-from ._open_ import open_allc, open_gz
+from ._doc_ import *
+from ._open_ import open_gz
 from .extract_allc import extract_allc
-from .utilities import check_tbi_chroms, parse_chrom_size, parse_mc_pattern
-
-
-def _allc_to_site_bed(allc_path: str,
-                      out_prefix: str,
-                      chrom_size_path: str,
-                      mc_contexts: Union[str, list],
-                      max_cov_cutoff: int = 9999) -> Tuple[list, list]:
-    """
-    1. Split allc by context into several site-bed files
-    2. Keep chromosome sorted as the chrom_size_path
-    3. BED file 4th column is mc, 5th column is cov, and each row is a single site
-    """
-    # TODO add parallel to this
-    out_prefix = out_prefix.rstrip('.')
-    if isinstance(mc_contexts, str):
-        mc_contexts = mc_contexts.split(' ')
-    mc_contexts = list(set(mc_contexts))
-
-    # because mc_contexts can overlap (e.g. CHN, CAN)
-    # each context may associate to multiple handle
-    context_handle = defaultdict(list)
-    handle_collect = []
-    out_paths = []
-    for mc_context in mc_contexts:
-        out_path = out_prefix + f'.extract_{mc_context}.bed.gz'
-        out_paths.append(out_path)
-        _handle = open_allc(out_path, 'w')
-        handle_collect.append(_handle)
-        parsed_context_set = parse_mc_pattern(mc_context)
-        for pattern in parsed_context_set:
-            context_handle[pattern].append(_handle)
-
-    # split file first
-    chrom_size_dict = parse_chrom_size(chrom_size_path)
-    with open_allc(allc_path, region=' '.join(chrom_size_dict.keys())) as allc:
-        for line in allc:
-            chrom, pos, _, context, mc, cov, *_ = line.strip('\n').split('\t')
-            if int(cov) > max_cov_cutoff:
-                continue
-            bed_line = '\t'.join([chrom, pos, pos, mc, cov]) + '\n'
-            try:
-                [h.write(bed_line) for h in context_handle[context]]
-            except KeyError:
-                continue
-    for handle in handle_collect:
-        handle.close()
-    return mc_contexts, out_paths
+from .utilities import check_tbi_chroms, parse_chrom_size
 
 
 def _bedtools_map(region_bed, site_bed, out_bed, save_zero_cov=True):
@@ -160,46 +113,53 @@ def _transfer_bin_size(bin_size: int) -> str:
     return bin_size_str
 
 
-def allc_to_region_count(allc_path,
-                         output_prefix,
-                         chrom_size_path,
-                         mc_contexts,
-                         split_strand=True,
-                         region_bed_paths=None,
-                         region_bed_names=None,
-                         bin_sizes=None,
-                         max_cov_cutoff=9999,
-                         save_zero_cov=True,
-                         remove_tmp=True):
+@doc_params(allc_path_doc=allc_path_doc, chrom_size_path_doc=chrom_size_path_doc,
+            mc_contexts_doc=mc_contexts_doc, cov_cutoff_doc=cov_cutoff_doc)
+def allc_to_region_count(allc_path: str,
+                         output_prefix: str,
+                         chrom_size_path: str,
+                         mc_contexts: List[str],
+                         split_strand: bool = True,
+                         region_bed_paths: str = None,
+                         region_bed_names: str = None,
+                         bin_sizes: List[int] = None,
+                         cov_cutoff: int = 9999,
+                         save_zero_cov: bool = True,
+                         remove_tmp: bool = True):
     """\
-    Calculate mC and cov at regional level. Region accepted in 2 forms:
-    1. BED file, provided by region_bed_paths, containing arbitrary regions and use bedtools map to calculate
-    2. Fix-size non-overlap genome bins, provided by bin_sizes, this is much faster to calculate than 1.
-    The output is in 6-column bed-like format:
-    chrom   start   end region_uid  mc  cov
+    Calculate mC and cov at regional level. Region can be provided in 2 forms:
+    1. BED file, provided by region_bed_paths, containing arbitrary regions and use bedtools map to calculate;
+    2. Fix-size non-overlap genome bins, provided by bin_sizes.
+    Form 2 is much faster to calculate than form 1.
+    The output file is in 6-column bed-like format: chrom start end region_uid mc cov
 
     Parameters
     ----------
     allc_path
-        Path to the ALLC file
+        {allc_path_doc}
     output_prefix
-        Path to output prefix
+        Path prefix of the output region count file.
     chrom_size_path
-        Path to UCSC chrom size file
+        {chrom_size_path_doc}
     mc_contexts
-        mC context list to calculate
+        {mc_contexts_doc}
+    split_strand
+        If true, Watson (+) and Crick (-) strands will be count separately
     region_bed_paths
-        Path to BED files
+        Arbitrary genomic regions can be defined in several BED files to count on.
+        Space separated paths to each BED files, the fourth column of BED file should be unique id of the region.
     region_bed_names
-        Matched name for each BED file provided in region_bed_paths
+        Space separated names for each BED file provided in region_bed_paths.
     bin_sizes
-        Sizes of genome bins to calculate
-    max_cov_cutoff
-        Max cov filter for a single site in ALLC
+        Fix-size genomic bins can be defined by bin_sizes and chrom_size_path.
+        Space separated sizes of genome bins, each size will be count separately.
+    cov_cutoff
+        {cov_cutoff_doc}
     save_zero_cov
         Whether to save the regions that have 0 cov, only apply to region count but not the chromosome count
     remove_tmp
-        Whether to remove the temporary file
+        Whether to remove the temporary BED file
+
     Returns
     -------
     """
@@ -226,7 +186,7 @@ def allc_to_region_count(allc_path,
                                 strandness=strandness,
                                 output_format='bed5',
                                 region=None,
-                                cov_cutoff=max_cov_cutoff)
+                                cov_cutoff=cov_cutoff)
     path_dict = {}
     for path in output_paths:
         # this is according to extract_allc name pattern
