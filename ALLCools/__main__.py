@@ -63,6 +63,11 @@ class NiceFormatter(logging.Formatter):
         return super().format(record)
 
 
+def validate_environment():
+    # TODO write validate environment function
+    return True
+
+
 def setup_logging(stdout=False, quiet=False, debug=False):
     """
     From Cutadapt https://github.com/marcelm/cutadapt
