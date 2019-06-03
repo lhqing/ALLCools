@@ -181,10 +181,11 @@ def standardize_allc_register_subparser(subparser):
                                        "3. Output file will be bgzipped with .tbi index; "
                                        "4. Remove additional chromosome (remove_additional_chrom=True) or "
                                        "raise KeyError if unknown chromosome found (default)")
-
-    parser.add_argument(
-        "allc_path",
+    parser_req = parser.add_argument_group("required arguments")
+    parser_req.add_argument(
+        "--allc_path",
         type=str,
+        required=True,
         help=allc_path_doc
     )
 
@@ -216,10 +217,11 @@ def tabix_allc_register_subparser(subparser):
     parser = subparser.add_parser('tabix-allc',
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="a simple wrapper of tabix command to index 1 ALLC file")
-
-    parser.add_argument(
-        "allc_path",
+    parser_req = parser.add_argument_group("required arguments")
+    parser_req.add_argument(
+        "--allc_path",
         type=str,
+        required=True,
         help=allc_path_doc
     )
 
@@ -237,9 +239,11 @@ def profile_allc_register_subparser(subparser):
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Generate some summary statistics of 1 ALLC.")
 
-    parser.add_argument(
-        "allc_path",
+    parser_req = parser.add_argument_group("required arguments")
+    parser_req.add_argument(
+        "--allc_path",
         type=str,
+        required=True,
         help=allc_path_doc
     )
 
@@ -275,10 +279,11 @@ def merge_allc_register_subparser(subparser):
 
     parser_req = parser.add_argument_group("required arguments")
 
-    parser.add_argument(
-        "allc_paths",
+    parser_req.add_argument(
+        "--allc_paths",
         type=str,
         nargs='+',
+        required=True,
         help=allc_paths_doc
     )
 
@@ -321,9 +326,10 @@ def extract_context_allc_register_subparser(subparser):
 
     parser_req = parser.add_argument_group("required arguments")
 
-    parser.add_argument(
-        "allc_path",
+    parser_req.add_argument(
+        "--allc_path",
         type=str,
+        required=True,
         help=allc_path_doc
     )
 
@@ -394,9 +400,10 @@ def allc_to_region_count_register_subparser(subparser):
 
     parser_req = parser.add_argument_group("required arguments")
 
-    parser.add_argument(
-        "allc_path",
+    parser_req.add_argument(
+        "--allc_path",
         type=str,
+        required=True,
         help=allc_path_doc
     )
 
