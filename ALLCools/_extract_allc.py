@@ -4,7 +4,7 @@ from typing import Union, Tuple, Callable, List
 
 from ._doc import *
 from ._open import open_allc
-from .utilities import tabix_allc, parse_mc_pattern
+from .utilities import tabix_allc, parse_mc_pattern, parse_chrom_size
 
 
 def _merge_cg_strand(in_path, out_path):
@@ -88,12 +88,16 @@ def _check_out_format_parameter(out_format) -> Tuple[str, Callable[[list], str]]
         raise ValueError(f'Unknown value for out_format: {out_format}')
 
 
-@doc_params(allc_path_doc=allc_path_doc, mc_contexts_doc=mc_contexts_doc, cov_cutoff_doc=cov_cutoff_doc)
+@doc_params(allc_path_doc=allc_path_doc,
+            mc_contexts_doc=mc_contexts_doc,
+            cov_cutoff_doc=cov_cutoff_doc,
+            chrom_size_path_doc=chrom_size_path_doc)
 def extract_allc(allc_path: str,
                  output_prefix: str,
                  mc_contexts: Union[str, list],
                  strandness: str = 'both',
                  output_format: str = 'allc',
+                 chrom_size_path: str = None,
                  region: str = None,
                  cov_cutoff: int = 9999) -> List[str]:
     """\
@@ -119,6 +123,10 @@ def extract_allc(allc_path: str,
         2. bed5: 5-column bed format, chrom, pos, pos, mc, cov
         3. bg-cov: bedgraph format, chrom, pos, pos, cov
         4. bg-rate: bedgraph format, chrom, pos, pos, mc/cov
+    chrom_size_path
+        chrom_size_path_doc
+        If chrom_size_path provided, will use it to extract ALLC with chrom order,
+        but if region provided, will ignore this.
     region
         Only extract records from certain genome region(s) via tabix, multiple region can be provided in tabix form.
     cov_cutoff
@@ -129,6 +137,12 @@ def extract_allc(allc_path: str,
     A list of output file paths, not include index files.
     """
     # TODO add parallel to this
+    # determine region
+    if region is None:
+        if chrom_size_path is not None:
+            chrom_dict = parse_chrom_size(chrom_size_path)
+            region = ' '.join(chrom_dict.keys())
+
     # prepare params
     output_prefix = output_prefix.rstrip('.')
     if isinstance(mc_contexts, str):
