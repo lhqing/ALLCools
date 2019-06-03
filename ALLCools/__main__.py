@@ -397,6 +397,14 @@ def extract_context_allc_register_subparser(subparser):
              "multiple region can be provided in tabix form."
     )
 
+    parser_opt.add_argument(
+        "--cov_cutoff",
+        type=int,
+        required=False,
+        default=99999,
+        help="Records with cov > cov_cutoff will be skipped."
+    )
+
 
 def allc_to_region_count_register_subparser(subparser):
     # TODO cleaning this

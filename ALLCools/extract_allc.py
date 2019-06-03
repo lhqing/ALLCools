@@ -1,6 +1,6 @@
 from subprocess import run
 from collections import defaultdict
-from typing import Union, Tuple, Callable
+from typing import Union, Tuple, Callable, List
 from ._open_ import open_allc
 from .utilities import tabix_allc, parse_mc_pattern
 from ._doc_ import *
@@ -93,7 +93,8 @@ def extract_allc(allc_path: str,
                  mc_contexts: Union[str, list],
                  strandness: str = 'both',
                  output_format: str = 'allc',
-                 region: str = None) -> None:
+                 region: str = None,
+                 cov_cutoff: int = 99999) -> List[str]:
     """\
     Extract information (strand, context) from 1 ALLC file. Save to several different format.
 
@@ -119,13 +120,15 @@ def extract_allc(allc_path: str,
         4. bg-rate: bedgraph format, chrom, pos, pos, mc/cov
     region
         Only extract records from certain genome region(s) via tabix, multiple region can be provided in tabix form.
-
+    cov_cutoff
+        Records with cov > cov_cutoff will be skipped.
+        
     Returns
     -------
-
+    A list of output file paths, not include index files.
     """
     # TODO add parallel to this
-    # prepare parms
+    # prepare params
     output_prefix = output_prefix.rstrip('.')
     if isinstance(mc_contexts, str):
         mc_contexts = mc_contexts.split(' ')
@@ -137,12 +140,18 @@ def extract_allc(allc_path: str,
     # each context may associate to multiple handle
     context_handle = defaultdict(list)
     handle_collect = []
+    output_path_collect = []
     for mc_context in mc_contexts:
         parsed_context_set = parse_mc_pattern(mc_context)
         if strandness == 'Split':
-            w_handle = open_allc(output_prefix + f'.{mc_context}-Watson.{out_suffix}', 'w')
+            file_path = output_prefix + f'.{mc_context}-Watson.{out_suffix}'
+            output_path_collect.append(file_path)
+            w_handle = open_allc(file_path, 'w')
             handle_collect.append(w_handle)
-            c_handle = open_allc(output_prefix + f'.{mc_context}-Crick.{out_suffix}', 'w')
+
+            file_path = output_prefix + f'.{mc_context}-Crick.{out_suffix}'
+            output_path_collect.append(file_path)
+            c_handle = open_allc(file_path, 'w')
             handle_collect.append(c_handle)
             for mc_pattern in parsed_context_set:
                 # handle for Watson/+ strand
@@ -151,7 +160,12 @@ def extract_allc(allc_path: str,
                 context_handle[(mc_pattern, '-')].append(c_handle)
         else:
             # handle for both strand
-            _handle = open_allc(output_prefix + f'.{mc_context}-{strandness}.{out_suffix}', 'w')
+            file_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
+            if strandness == 'MergeTmp':
+                output_path_collect.append(output_prefix + f'.{mc_context}-Merge.{out_suffix}')
+            else:
+                output_path_collect.append(file_path)
+            _handle = open_allc(file_path, 'w')
             handle_collect.append(_handle)
             for mc_pattern in parsed_context_set:
                 context_handle[mc_pattern].append(_handle)
@@ -162,6 +176,8 @@ def extract_allc(allc_path: str,
         if strandness == 'Split':
             for line in allc:
                 cur_line = line.split('\t')
+                if int(cur_line[5]) > cov_cutoff:
+                    continue
                 try:
                     # key is (context, strand)
                     [h.write(line_func(cur_line)) for h in context_handle[(cur_line[3], cur_line[2])]]
@@ -170,6 +186,8 @@ def extract_allc(allc_path: str,
         else:
             for line in allc:
                 cur_line = line.split('\t')
+                if int(cur_line[5]) > cov_cutoff:
+                    continue
                 try:
                     # key is context
                     [h.write(line_func(cur_line)) for h in context_handle[cur_line[3]]]
@@ -200,4 +218,4 @@ def extract_allc(allc_path: str,
             else:
                 in_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
                 tabix_allc(in_path)
-    return
+    return output_path_collect
