@@ -13,8 +13,8 @@ import collections
 import numpy as np
 import pandas as pd
 
-from ._doc_ import *
-from ._open_ import open_allc
+from ._doc import *
+from ._open import open_allc
 
 IUPAC_TABLE = {
     'A': 'A',
