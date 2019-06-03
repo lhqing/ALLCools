@@ -196,7 +196,7 @@ def check_tbi_chroms(file_path, genome_dict, same_order=False):
 
 
 @doc_params(allc_path_doc=allc_path_doc)
-def profile_allc(allc_path, drop_n=True, n_rows=100000000, output_path=None):
+def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
     """\
     Generate some summary statistics of 1 ALLC.
     1e8 rows finish in about 5 min.

@@ -8,8 +8,8 @@ import argparse
 import inspect
 import logging
 import sys
-import ALLCools
 
+import ALLCools
 from ._doc import *
 
 log = logging.getLogger()
@@ -92,8 +92,7 @@ def bam_to_allc_register_subparser(subparser):
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Take 1 position sorted BAM file, generate 1 ALLC file.")
 
-    parser_req = parser.add_argument_group("Required inputs")
-    parser_opt = parser.add_argument_group("Optional inputs")
+    parser_req = parser.add_argument_group("required arguments")
 
     parser_req.add_argument(
         "--bam_path",
@@ -117,65 +116,59 @@ def bam_to_allc_register_subparser(subparser):
         help="Path to output ALLC file"
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--cpu",
         type=int,
-        required=False,
         default=1,
         help="Number of processes to use in parallel. DO NOT use cpu > 1 for single cell ALLC generation. "
              "Parallel on cell level is better for single cell project."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--num_upstr_bases",
         type=int,
-        required=False,
         default=0,
         help="Number of upstream base(s) of the C base to include in ALLC context column, "
              "usually use 0 for normal BS-seq, 1 for NOMe-seq."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--num_downstr_bases",
         type=int,
-        required=False,
         default=2,
         help="Number of downstream base(s) of the C base to include in ALLC context column, "
              "usually use 2 for both BS-seq and NOMe-seq."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--min_mapq",
         type=int,
-        required=False,
         default=10,
         help="Minimum MAPQ for a read being considered, samtools mpileup parameter, see samtools documentation."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--min_base_quality",
         type=int,
-        required=False,
         default=20,
         help="Minimum base quality for a base being considered, samtools mpileup parameter, "
              "see samtools documentation."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--compress_level",
         type=int,
-        required=False,
         default=5,
         help=compress_level_doc
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--save_count_df",
-        type=bool,
-        required=False,
-        default=True,
-        help="If true, save an ALLC context count table next to ALLC file."
+        dest='save_count_df',
+        action='store_true',
+        help="If present, save an ALLC context count table next to ALLC file."
     )
+    parser.set_defaults(save_count_df=False)
 
 
 def standardize_allc_register_subparser(subparser):
@@ -189,24 +182,20 @@ def standardize_allc_register_subparser(subparser):
                                        "4. Remove additional chromosome (remove_additional_chrom=True) or "
                                        "raise KeyError if unknown chromosome found (default)")
 
-    parser_req = parser.add_argument_group("Required inputs")
-    parser_opt = parser.add_argument_group("Optional inputs")
-
-    parser_req.add_argument(
-        "--allc_path",
+    parser.add_argument(
+        "allc_path",
         type=str,
-        required=True,
         help=allc_path_doc
     )
 
-    parser_req.add_argument(
+    parser.add_argument(
         "--chrom_size_path",
         type=str,
         required=True,
         help=chrom_size_path_doc
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--compress_level",
         type=int,
         required=False,
@@ -214,13 +203,13 @@ def standardize_allc_register_subparser(subparser):
         help=compress_level_doc
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--remove_additional_chrom",
-        type=bool,
-        required=False,
-        default=False,
+        dest='remove_additional_chrom',
+        action='store_true',
         help=remove_additional_chrom_doc
     )
+    parser.set_defaults(remove_additional_chrom=False)
 
 
 def tabix_allc_register_subparser(subparser):
@@ -228,23 +217,19 @@ def tabix_allc_register_subparser(subparser):
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="a simple wrapper of tabix command to index 1 ALLC file")
 
-    parser_req = parser.add_argument_group("Required inputs")
-    parser_opt = parser.add_argument_group("Optional inputs")
-
-    parser_req.add_argument(
-        "--allc_path",
+    parser.add_argument(
+        "allc_path",
         type=str,
-        required=True,
         help=allc_path_doc
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--reindex",
-        type=bool,
-        required=False,
-        default=False,
-        help="If True, will force regenerate the ALLC index."
+        dest='reindex',
+        action='store_true',
+        help="If present, will force regenerate the ALLC index."
     )
+    parser.set_defaults(reindex=False)
 
 
 def profile_allc_register_subparser(subparser):
@@ -252,38 +237,32 @@ def profile_allc_register_subparser(subparser):
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Generate some summary statistics of 1 ALLC.")
 
-    parser_req = parser.add_argument_group("Required inputs")
-    parser_opt = parser.add_argument_group("Optional inputs")
-
-    parser_req.add_argument(
-        "--allc_path",
+    parser.add_argument(
+        "allc_path",
         type=str,
-        required=True,
         help=allc_path_doc
     )
 
-    parser_opt.add_argument(
-        "--drop_n",
-        type=bool,
-        required=False,
-        default=True,
-        help="Whether to drop context that contain N, such as CCN. "
+    parser.add_argument(
+        "--keep_n",
+        dest='drop_n',
+        action='store_false',
+        help="Whether to keep context that contain N, such as CCN. "
              "This is usually very rare and need to be dropped."
     )
+    parser.set_defaults(drop_n=True)
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--n_rows",
         type=int,
-        required=False,
-        default=100000000,
+        default=1000000,
         help="Number of rows to calculate the profile from. "
              "The default number is usually sufficient to get pretty precise assumption."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--output_path",
         type=str,
-        required=False,
         default=None,
         help="Path of the output file. If None, will save the profile next to input ALLC file."
     )
@@ -294,13 +273,11 @@ def merge_allc_register_subparser(subparser):
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Merge N ALLC files into 1 ALLC file")
 
-    parser_req = parser.add_argument_group("Required inputs")
-    parser_opt = parser.add_argument_group("Optional inputs")
+    parser_req = parser.add_argument_group("required arguments")
 
-    parser_req.add_argument(
-        "--allc_paths",
+    parser.add_argument(
+        "allc_paths",
         type=str,
-        required=True,
         nargs='+',
         help=allc_paths_doc
     )
@@ -319,20 +296,18 @@ def merge_allc_register_subparser(subparser):
         help=chrom_size_path_doc
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--cpu",
         type=int,
-        required=False,
         default=10,
         help=f"{cpu_basic_doc} The real CPU usage is ~1.5 times than this number, "
              f"due to the sub processes of handling ALLC files using tabix/bgzip. "
              f"Monitor the CPU and Memory usage when running this function."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--bin_length",
         type=int,
-        required=False,
         default=10000000,
         help="Length of the genome bin in each parallel job, large number means more memory usage."
     )
@@ -344,13 +319,11 @@ def extract_context_allc_register_subparser(subparser):
                                   help="Extract information (strand, context) from 1 ALLC file. "
                                        "Able to save to several different format.")
 
-    parser_req = parser.add_argument_group("Required inputs")
-    parser_opt = parser.add_argument_group("Optional inputs")
+    parser_req = parser.add_argument_group("required arguments")
 
-    parser_req.add_argument(
-        "--allc_path",
+    parser.add_argument(
+        "allc_path",
         type=str,
-        required=True,
         help=allc_path_doc
     )
 
@@ -369,11 +342,11 @@ def extract_context_allc_register_subparser(subparser):
         help=mc_contexts_doc
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--strandness",
         type=str,
-        required=False,
         default='both',
+        choices=['both', 'split', 'merge'],
         help="What to do with strand information, possible values are: "
              "1. both: save +/- strand together in one file without any modification; "
              "2. split: save +/- strand into two separate files, with suffix contain Watson (+) and Crick (-); "
@@ -381,10 +354,9 @@ def extract_context_allc_register_subparser(subparser):
              "For non-CG context, its the same as both."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--output_format",
         type=str,
-        required=False,
         default='allc',
         help="Output format of extracted information, possible values are: "
              "1. allc: keep the allc format; "
@@ -393,19 +365,17 @@ def extract_context_allc_register_subparser(subparser):
              "4. bg-rate: bedgraph format, chrom, pos, pos, mc/cov."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--region",
         type=str,
-        required=False,
         default=None,
         help="Only extract records from certain genome region(s) via tabix, "
              "multiple region can be provided in tabix form."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--cov_cutoff",
         type=int,
-        required=False,
         default=99999,
         help=cov_cutoff_doc
     )
@@ -422,13 +392,11 @@ def allc_to_region_count_register_subparser(subparser):
                                        "The output file is in 6-column bed-like format: "
                                        "chrom start end region_uid mc cov")
 
-    parser_req = parser.add_argument_group("Required inputs")
-    parser_opt = parser.add_argument_group("Optional inputs")
+    parser_req = parser.add_argument_group("required arguments")
 
-    parser_req.add_argument(
-        "--allc_path",
+    parser.add_argument(
+        "allc_path",
         type=str,
-        required=True,
         help=allc_path_doc
     )
 
@@ -454,59 +422,56 @@ def allc_to_region_count_register_subparser(subparser):
         help=mc_contexts_doc
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--split_strand",
-        type=bool,
-        required=False,
-        default=True,
-        help="If true, Watson (+) and Crick (-) strands will be count separately"
+        dest='split_strand',
+        action='store_true',
+        help="If present, Watson (+) and Crick (-) strands will be count separately"
     )
+    parser.set_defaults(split_strand=False)
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--region_bed_paths",
         type=str,
         nargs='+',
-        required=False,
         default=None,
         help="Arbitrary genomic regions can be defined in several BED files to count on. "
              "Space separated paths to each BED files, "
              "the fourth column of BED file should be unique id of the region."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--region_bed_names",
         type=str,
         nargs='+',
-        required=False,
         default=None,
         help="Space separated names for each BED file provided in region_bed_paths."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--bin_sizes",
         type=int,
         nargs='+',
-        required=False,
         default=None,
         help="Fix-size genomic bins can be defined by bin_sizes and chrom_size_path."
              "Space separated sizes of genome bins, each size will be count separately."
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--cov_cutoff",
         type=int,
-        required=False,
         default=9999,
         help=cov_cutoff_doc
     )
 
-    parser_opt.add_argument(
+    parser.add_argument(
         "--save_zero_cov",
-        type=bool,
-        required=False,
-        default=True,
-        help='Whether to save the regions that have 0 cov, only apply to region count but not the chromosome count'
+        dest='save_zero_cov',
+        action='store_true',
+        help='If present, save the regions that have 0 cov in output, '
+             'only apply to region count but not the chromosome count.'
     )
+    parser.set_defaults(save_zero_cov=False)
 
 
 def main():
@@ -548,6 +513,7 @@ def main():
 
     # execute command
     args_vars = vars(args)
+    print(args_vars)
     cur_command = args_vars.pop('command').lower().replace('_', '-')
     # Do real import here:
     if cur_command == 'bam-to-allc':
