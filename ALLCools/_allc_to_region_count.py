@@ -170,12 +170,13 @@ def allc_to_region_count(allc_path: str,
     # check bed file
     # 1. bgzip and tabix
     # 2. order of chrom should be the same as order of chrom_size_path
-    if len(region_bed_names) != len(region_bed_paths):
-        raise ValueError('Different number of bed names and paths')
-    for region_name, region_bed_path in zip(region_bed_names, region_bed_paths):
-        if not check_tbi_chroms(region_bed_path, genome_dict):
-            raise ValueError(f'The bed file {region_bed_path} chromosome order is different '
-                             f'from the {chrom_size_path}')
+    if region_bed_paths is not None:
+        if (region_bed_names is None) or (len(region_bed_names) != len(region_bed_paths)):
+            raise ValueError('Different number of bed names and paths provided')
+        for region_name, region_bed_path in zip(region_bed_names, region_bed_paths):
+            if not check_tbi_chroms(region_bed_path, genome_dict):
+                raise ValueError(f'The bed file {region_bed_path} chromosome order is different '
+                                 f'from the {chrom_size_path}')
 
     print('Extract ALLC context')
     output_prefix = output_prefix.rstrip('.')
