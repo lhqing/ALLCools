@@ -5,8 +5,8 @@ from functools import partial
 from typing import List
 
 from ._doc import *
-from ._open import open_gz
 from ._extract_allc import extract_allc
+from ._open import open_gz
 from .utilities import check_tbi_chroms, parse_chrom_size
 
 
@@ -196,27 +196,27 @@ def allc_to_region_count(allc_path: str,
 
     if region_bed_paths is not None:
         print('Map to regions.')
-    save_flag = 'full' if save_zero_cov else 'sparse'
-    for region_name, region_bed_path in zip(region_bed_names, region_bed_paths):
-        for info_type, site_bed_path in path_dict.items():
-            try:
-                _bedtools_map(region_bed=region_bed_path,
-                              site_bed=site_bed_path,
-                              out_bed=output_prefix + f'.{region_name}_{info_type}.{save_flag}.bed.gz',
-                              save_zero_cov=save_zero_cov)
-            except subprocess.CalledProcessError as e:
-                print(e.stderr)
-                raise e
+        save_flag = 'full' if save_zero_cov else 'sparse'
+        for region_name, region_bed_path in zip(region_bed_names, region_bed_paths):
+            for info_type, site_bed_path in path_dict.items():
+                try:
+                    _bedtools_map(region_bed=region_bed_path,
+                                  site_bed=site_bed_path,
+                                  out_bed=output_prefix + f'.{region_name}_{info_type}.{save_flag}.bed.gz',
+                                  save_zero_cov=save_zero_cov)
+                except subprocess.CalledProcessError as e:
+                    print(e.stderr)
+                    raise e
 
     if bin_sizes is not None:
         print('Map to chromosome bins.')
-    for bin_size in bin_sizes:
-        for info_type, site_bed_path in path_dict.items():
-            _map_to_sparse_chrom_bin(input_path=site_bed_path,
-                                     output_path=output_prefix + f'.chrom{_transfer_bin_size(bin_size)}'
-                                                                 f'_{info_type}.sparse.bed.gz',
-                                     chrom_size_file=chrom_size_path,
-                                     bin_size=bin_size)
+        for bin_size in bin_sizes:
+            for info_type, site_bed_path in path_dict.items():
+                _map_to_sparse_chrom_bin(input_path=site_bed_path,
+                                         output_path=output_prefix + f'.chrom{_transfer_bin_size(bin_size)}'
+                                                                     f'_{info_type}.sparse.bed.gz',
+                                         chrom_size_file=chrom_size_path,
+                                         bin_size=bin_size)
 
     if remove_tmp:
         print('Remove temporal files.')
