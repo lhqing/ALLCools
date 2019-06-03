@@ -8,7 +8,7 @@ import logging
 import shlex
 import subprocess
 
-from ._open_ import open_allc
+from ._open import open_allc
 from .utilities import parse_chrom_size
 
 # logger

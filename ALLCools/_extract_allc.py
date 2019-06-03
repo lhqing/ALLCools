@@ -2,8 +2,8 @@ from collections import defaultdict
 from subprocess import run
 from typing import Union, Tuple, Callable, List
 
-from ._doc_ import *
-from ._open_ import open_allc
+from ._doc import *
+from ._open import open_allc
 from .utilities import tabix_allc, parse_mc_pattern
 
 

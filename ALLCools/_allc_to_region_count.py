@@ -4,9 +4,9 @@ import subprocess
 from functools import partial
 from typing import List
 
-from ._doc_ import *
-from ._open_ import open_gz
-from .extract_allc import extract_allc
+from ._doc import *
+from ._open import open_gz
+from ._extract_allc import extract_allc
 from .utilities import check_tbi_chroms, parse_chrom_size
 
 

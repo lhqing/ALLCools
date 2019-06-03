@@ -15,8 +15,8 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 import numpy as np
 import psutil
 
-from ._doc_ import *
-from ._open_ import open_allc
+from ._doc import *
+from ._open import open_allc
 from .utilities import parse_chrom_size, genome_region_chunks, parse_file_paths
 
 # logger

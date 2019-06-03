@@ -10,13 +10,12 @@ import logging
 import sys
 import ALLCools
 
-from ._doc_ import *
+from ._doc import *
 
 log = logging.getLogger()
 
 DESCRIPTION = """
 ALLCools (ALLC tools) is a toolkit for ALLC format and methylation sequencing analysis
-Author: Hanqing Liu, hanliu@salk.edu
 
 This toolkit contain functions related to all steps about manipulating the ALLC format, 
 a core tab-separated values file format that stores single base level methylation information.
@@ -552,7 +551,7 @@ def main():
     cur_command = args_vars.pop('command').lower().replace('_', '-')
     # Do real import here:
     if cur_command == 'bam-to-allc':
-        from .bam_to_allc import bam_to_allc as func
+        from ._bam_to_allc import bam_to_allc as func
     elif cur_command == 'standardize-allc':
         from .utilities import standardize_allc as func
     elif cur_command == 'tabix-allc':
@@ -560,11 +559,11 @@ def main():
     elif cur_command == 'profile-allc':
         from .utilities import profile_allc as func
     elif cur_command == 'merge-allc':
-        from .merge_allc import merge_allc_files as func
+        from ._merge_allc import merge_allc_files as func
     elif cur_command == 'extract-allc':
-        from .extract_allc import extract_allc as func
+        from ._extract_allc import extract_allc as func
     elif cur_command == 'allc-to-region-count':
-        from .allc_to_region_count import allc_to_region_count as func
+        from ._allc_to_region_count import allc_to_region_count as func
     else:
         log.debug(f'{cur_command} is not an valid sub-command')
         parser.parse_args(["-h"])

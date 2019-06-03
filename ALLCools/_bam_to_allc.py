@@ -13,8 +13,8 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 import collections
 import pandas as pd
 
-from ._doc_ import *
-from ._open_ import open_allc, open_bam
+from ._doc import *
+from ._open import open_allc, open_bam
 from .utilities import genome_region_chunks
 
 # logger
