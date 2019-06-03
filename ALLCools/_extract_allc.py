@@ -61,19 +61,19 @@ def _check_out_format_parameter(out_format) -> Tuple[str, Callable[[list], str]]
 
     def _extract_bedgraph_cov_format(allc_line_list):
         # only chrom, pos, pos, cov
-        allc_line_list = [allc_line_list[i] for i in [0, 2, 2, 5]]
-        return '\t'.join(allc_line_list)
+        allc_line_list = [allc_line_list[i] for i in [0, 1, 1, 5]]
+        return '\t'.join(allc_line_list) + '\n'
 
     def _extract_bedgraph_rate_format(allc_line_list):
         # only chrom, pos, pos, mc/cov
-        allc_line_list = [allc_line_list[i] for i in [0, 2, 2]] + \
+        allc_line_list = [allc_line_list[i] for i in [0, 1, 1]] + \
                          [f'{(int(allc_line_list[4]) / int(allc_line_list[5])):.3f}']
-        return '\t'.join(allc_line_list)
+        return '\t'.join(allc_line_list) + '\n'
 
     def _extract_bed5_format(allc_line_list):
         # only chrom, pos, pos, mc, cov
-        allc_line_list = [allc_line_list[i] for i in [0, 2, 2, 4, 5]]
-        return '\t'.join(allc_line_list)
+        allc_line_list = [allc_line_list[i] for i in [0, 1, 1, 4, 5]]
+        return '\t'.join(allc_line_list) + '\n'
 
     out_format = str(out_format).lower()
     if out_format == 'allc':
