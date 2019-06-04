@@ -7,7 +7,7 @@ from typing import List
 from ._doc import *
 from ._extract_allc import extract_allc
 from ._open import open_gz
-from .utilities import check_tbi_chroms, parse_chrom_size
+from .utilities import check_tbi_chroms, parse_chrom_size, chrom_dict_to_id_index, get_bin_id
 
 
 def _bedtools_map(region_bed, site_bed, out_bed, save_zero_cov=True):
@@ -31,21 +31,6 @@ def _bedtools_map(region_bed, site_bed, out_bed, save_zero_cov=True):
     return
 
 
-def _chrom_dict_to_id_index(chrom_dict, bin_size):
-    sum_id = 0
-    index_dict = {}
-    for chrom, chrom_length in chrom_dict.items():
-        index_dict[chrom] = sum_id
-        sum_id += chrom_length // bin_size + 1
-        if chrom_length % bin_size == 0:
-            sum_id += 1
-    return index_dict
-
-
-def _get_bin_id(chrom, chrom_index_dict, bin_start, bin_size) -> int:
-    chrom_index_start = chrom_index_dict[chrom]
-    n_bin = bin_start // bin_size
-    return chrom_index_start + n_bin
 
 
 def _map_to_sparse_chrom_bin(input_path, output_path, chrom_size_file,
@@ -55,7 +40,7 @@ def _map_to_sparse_chrom_bin(input_path, output_path, chrom_size_file,
     bin_id constructed from chrom_size_file and can be reproduce.
     """
     chrom_dict = parse_chrom_size(chrom_size_file)
-    chrom_index_dict = _chrom_dict_to_id_index(chrom_dict, bin_size)
+    chrom_index_dict = chrom_dict_to_id_index(chrom_dict, bin_size)
     cur_chrom = 'TOTALLY_NOT_A_CHROM'
     cur_chrom_end = 0
     bin_end = min(cur_chrom_end, bin_size)
@@ -87,7 +72,7 @@ def _map_to_sparse_chrom_bin(input_path, output_path, chrom_size_file,
                 temp_mc, temp_cov = mc, cov
                 bin_start = int(pos // bin_size * bin_size)
                 bin_end = min(cur_chrom_end, bin_start + bin_size)
-                bin_id = _get_bin_id(cur_chrom, chrom_index_dict, bin_start, bin_size)
+                bin_id = get_bin_id(cur_chrom, chrom_index_dict, bin_start, bin_size)
             else:
                 temp_mc += mc
                 temp_cov += cov
@@ -223,11 +208,4 @@ def allc_to_region_count(allc_path: str,
         print('Remove temporal files.')
         for site_bed_path in path_dict.values():
             subprocess.run(['rm', '-f', site_bed_path])
-    return
-
-
-def aggregate_region_count_matrix(region_count_table, region_count_tables, region_name, region_bed_path, bin_size):
-    # TODO
-    # this should only deal with a simple case, aggregate 2 sample*feature 2-D matrix, one for mc, one for cov,
-    # output to full or sparse format
     return

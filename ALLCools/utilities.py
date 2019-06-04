@@ -73,6 +73,21 @@ def parse_chrom_size(path, remove_chr_list=None):
     return chrom_dict
 
 
+def chrom_dict_to_id_index(chrom_dict, bin_size):
+    sum_id = 0
+    index_dict = {}
+    for chrom, chrom_length in chrom_dict.items():
+        index_dict[chrom] = sum_id
+        sum_id += chrom_length // bin_size + 1
+    return index_dict
+
+
+def get_bin_id(chrom, chrom_index_dict, bin_start, bin_size) -> int:
+    chrom_index_start = chrom_index_dict[chrom]
+    n_bin = bin_start // bin_size
+    return chrom_index_start + n_bin
+
+
 def genome_region_chunks(chrom_size_file: str,
                          bin_length: int = 10000000,
                          combine_small: bool = True) -> List[str]:
@@ -193,6 +208,25 @@ def check_tbi_chroms(file_path, genome_dict, same_order=False):
     except CalledProcessError:
         return False
     return True
+
+
+def generate_chrom_bin_bed_dataframe(chrom_size_path: str,
+                                     bin_size: int) -> pd.DataFrame:
+    """
+    Generate BED format dataframe based on UCSC chrom size file and bin_size
+    return dataframe contain 3 columns: chrom, start, end. The index is 0 based continue bin index.
+    """
+    chrom_size_dict = parse_chrom_size(chrom_size_path)
+    records = []
+    for chrom, chrom_length in chrom_size_dict.items():
+        bin_start = pd.Series(list(range(0, chrom_length, bin_size)))
+        bin_end = bin_start + bin_size
+        bin_end.iloc[-1] = chrom_length
+        chrom_df = pd.DataFrame(dict(bin_start=bin_start, bin_end=bin_end))
+        chrom_df['chrom'] = chrom
+        records.append(chrom_df)
+    total_df = pd.concat(records).reset_index(drop=True)
+    return total_df
 
 
 @doc_params(allc_path_doc=allc_path_doc)

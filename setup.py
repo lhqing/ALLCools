@@ -11,7 +11,7 @@ setup(
     description='Tool kit for ALLC format and methylation analysis.',
     long_description=open('README.md').read(),
     include_package_data=True,
-    install_requires=['pandas>=0.24', 'numpy', 'psutil'],
+    install_requires=['pandas>=0.24', 'numpy', 'psutil', 'scipy', 'anndata'],
     entry_points={
         'console_scripts': ['allcools=ALLCools.__main__:main'],
     }
