@@ -1,7 +1,8 @@
 # ALLCools
 
-A toolkit for ALLC format and bulk/single-cell methylation sequencing analysis. It provides all necessary functions about generating, manipulating and transfering the ALLC format, a simple tab-sparated text format storing base-level raw methylation information.
-**This package is still under active development**
+- A toolkit for ALLC format and bulk/single-cell methylation sequencing analysis. 
+- It provides all necessary functions about generating, manipulating and transfering the ALLC format, a simple tab-sparated text format storing base-level raw methylation information.
+- **This package is still under active development**
 
 ## ALLCools Function Map
 ![](/doc/file/ALLCools.svg)
