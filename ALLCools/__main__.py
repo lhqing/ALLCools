@@ -519,10 +519,11 @@ def main():
     if not logging.root.handlers:
         setup_logging(stdout=True,
                       quiet=False)
-
     # execute command
     args_vars = vars(args)
-    print(args_vars)
+    for k, v in args_vars.items():
+        log.info(f'{k}\t{v}')
+
     cur_command = args_vars.pop('command').lower().replace('_', '-')
     # Do real import here:
     if cur_command == 'bam-to-allc':
