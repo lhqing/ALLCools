@@ -137,6 +137,7 @@ def extract_allc(allc_path: str,
     A list of output file paths, not include index files.
     """
     # TODO add parallel to this
+    # TODO write test
     # determine region
     if region is None:
         if chrom_size_path is not None:

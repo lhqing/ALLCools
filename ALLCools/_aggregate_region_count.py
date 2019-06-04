@@ -62,8 +62,8 @@ def _bin_count_table_to_csr_npz(bin_count_tables,
     return mc_path, cov_path
 
 
-def aggregate_bin_count_csr_matrix(matrix_paths, obs_names, chrom_size_path, bin_size, output_path,
-                                   compression=None, compression_opts=None):
+def _csr_matrix_to_anndata(matrix_paths, obs_names, chrom_size_path, bin_size, output_path,
+                           compression=None, compression_opts=None):
     if pathlib.Path(output_path).exists():
         return output_path
 
@@ -81,8 +81,9 @@ def aggregate_bin_count_csr_matrix(matrix_paths, obs_names, chrom_size_path, bin
     return output_path
 
 
-def aggregate_region_count_to_sparse_anndata(count_tables, output_prefix, chrom_size_path, bin_size,
+def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_size_path, bin_size,
                                              compression='gzip', file_ids=None, max_obj=3072):
+    # TODO write test
     # this should only deal with a simple case, aggregate 2 sample*feature 2-D matrix, one for mc, one for cov,
     # output to full or sparse format
 
@@ -124,21 +125,21 @@ def aggregate_region_count_to_sparse_anndata(count_tables, output_prefix, chrom_
     for chunk_id, cur_id_chunk in enumerate(id_chunk_list):
         if len(cur_ids) + len(cur_id_chunk) > max_obj:
             # mc
-            aggregate_bin_count_csr_matrix(matrix_paths=cur_mc_paths,
-                                           obs_names=cur_ids,
-                                           chrom_size_path=chrom_size_path,
-                                           bin_size=bin_size,
-                                           output_path=output_prefix + f'{adata_chunk_id}.mc.h5ad',
-                                           compression=compression,
-                                           compression_opts=None)
+            _csr_matrix_to_anndata(matrix_paths=cur_mc_paths,
+                                   obs_names=cur_ids,
+                                   chrom_size_path=chrom_size_path,
+                                   bin_size=bin_size,
+                                   output_path=output_prefix + f'{adata_chunk_id}.mc.h5ad',
+                                   compression=compression,
+                                   compression_opts=None)
             # cov
-            aggregate_bin_count_csr_matrix(matrix_paths=cur_cov_paths,
-                                           obs_names=cur_ids,
-                                           chrom_size_path=chrom_size_path,
-                                           bin_size=bin_size,
-                                           output_path=output_prefix + f'{adata_chunk_id}.cov.h5ad',
-                                           compression=compression,
-                                           compression_opts=None)
+            _csr_matrix_to_anndata(matrix_paths=cur_cov_paths,
+                                   obs_names=cur_ids,
+                                   chrom_size_path=chrom_size_path,
+                                   bin_size=bin_size,
+                                   output_path=output_prefix + f'{adata_chunk_id}.cov.h5ad',
+                                   compression=compression,
+                                   compression_opts=None)
             cur_ids = []
             cur_mc_paths = []
             cur_cov_paths = []
@@ -150,22 +151,30 @@ def aggregate_region_count_to_sparse_anndata(count_tables, output_prefix, chrom_
             cur_cov_paths.append(cov_path_list[chunk_id])
     if len(cur_ids) != 0:
         # mc
-        aggregate_bin_count_csr_matrix(matrix_paths=cur_mc_paths,
-                                       obs_names=cur_ids,
-                                       chrom_size_path=chrom_size_path,
-                                       bin_size=bin_size,
-                                       output_path=output_prefix + f'{adata_chunk_id}.mc.h5ad',
-                                       compression=compression,
-                                       compression_opts=None)
+        _csr_matrix_to_anndata(matrix_paths=cur_mc_paths,
+                               obs_names=cur_ids,
+                               chrom_size_path=chrom_size_path,
+                               bin_size=bin_size,
+                               output_path=output_prefix + f'{adata_chunk_id}.mc.h5ad',
+                               compression=compression,
+                               compression_opts=None)
         # cov
-        aggregate_bin_count_csr_matrix(matrix_paths=cur_cov_paths,
-                                       obs_names=cur_ids,
-                                       chrom_size_path=chrom_size_path,
-                                       bin_size=bin_size,
-                                       output_path=output_prefix + f'{adata_chunk_id}.cov.h5ad',
-                                       compression=compression,
-                                       compression_opts=None)
+        _csr_matrix_to_anndata(matrix_paths=cur_cov_paths,
+                               obs_names=cur_ids,
+                               chrom_size_path=chrom_size_path,
+                               bin_size=bin_size,
+                               output_path=output_prefix + f'{adata_chunk_id}.cov.h5ad',
+                               compression=compression,
+                               compression_opts=None)
 
     # remove temp file until everything finished
     subprocess.run(['rm', '-f'] + mc_path_list + cov_path_list)
+    return
+
+
+def aggregate_region_count_to_mcds(count_table_dataframe):
+    # TODO write prepare mcds
+    # TODO write test
+    # MCDS dimension: cell, feature, count_type, mc_type, strand
+    # count_table_dataframe: at least cell, feature, file_path, optional mc_type, strand
     return

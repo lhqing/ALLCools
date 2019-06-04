@@ -281,6 +281,7 @@ def merge_allc_files(allc_paths, output_path, chrom_size_path, bin_length=100000
     -------
 
     """
+    # TODO write test
     # a list of str, contain all absolute non-soft-link paths
     allc_files: list = parse_file_paths(allc_paths)
     if len(allc_files) < 2:

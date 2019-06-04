@@ -251,6 +251,8 @@ def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
     -------
 
     """
+    # TODO write test
+    # Find best default value
     if 'gz' in allc_path:
         opener = partial(gzip.open, mode='rt')
     else:
@@ -372,7 +374,6 @@ def standardize_allc(allc_path, chrom_size_path, compress_level=5,
     -------
 
     """
-
     genome_dict = parse_chrom_size(chrom_size_path)
     if check_tbi_chroms(allc_path, genome_dict):
         # means ALLC is already standard

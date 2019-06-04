@@ -148,6 +148,7 @@ def allc_to_region_count(allc_path: str,
     Returns
     -------
     """
+    # TODO write test
     genome_dict = parse_chrom_size(chrom_size_path)
     if bin_sizes is None and region_bed_paths is None:
         raise ValueError('Either bin_sizes or region_bed_paths should be provided.')

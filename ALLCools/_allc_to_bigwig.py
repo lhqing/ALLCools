@@ -93,6 +93,7 @@ def allc_to_bigwig(allc_path,
                    path_to_wigtobigwig=""):
     # TODO add context support and strandness support to this function
     # TODO add CLI in __main__
+    # TODO write test
     """
     Generate coverage (cov) and ratio (mc/cov) bigwig track files from 1 ALLC file
 
