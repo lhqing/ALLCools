@@ -1,4 +1,6 @@
 """
+CLI defined here
+
 When adding new function:
 1. add a func_register_subparser function to register the subparser
 2. add a condition in main func about this new func name, import the real func as func in main
