@@ -8,29 +8,31 @@
 ![](/doc/file/ALLCools.svg)
 
 ## Get Start
-```shell
-# requirements
-# ALLCools requires python > 3.6
+### requirements
+ALLCools requires python > 3.6
 
-# installation
+### installation
+```shell
 git clone https://github.com/lhqing/ALLCools.git
 cd ALLCools
 pip install .
+```
 
-# update (necessary)
+### update
+```shell
 # cd /path/to/ALLCools
 git pull
 pip install .
+```
 
-# use the ALLCools
-# CLI (recommand for non-python users)
+### use the ALLCools
+- CLI (recommand for non-python users)
+```shell
 allcools -h
 allcools [FUNCTION_NAME] -h
 ```
+- API (recommand for integrating ALLCools with other python package, such as pybedtools, pybigwig, deeptools.)
 
 ```python
-# API (recommand for integrate ALLCools with other python package, 
-# such as pybedtools, pybigwig, deeptools.)
 from ALLCools.api import *
-
 ```
