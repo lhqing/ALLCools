@@ -27,12 +27,16 @@ def _transform_single_h5ad(adata_path, output_path, chrom_size_path,
         chrom_data_list.append(chrom_data)
     total_data = ss.hstack(chrom_data_list)
 
+    # TODO add all necessary info in adata.uns
     adata = anndata.AnnData(X=total_data,
                             obs=adata.obs,
                             var=generate_chrom_bin_bed_dataframe(chrom_size_path,
                                                                  window_size=window_size,
-                                                                 step_size=step_size))
-
+                                                                 step_size=step_size),
+                            uns=dict(bin_size=window_size,
+                                     step_size=step_size,
+                                     chrom_size_path=chrom_size_path))
+    
     adata.write(filename=output_path, compression=compression)
     return output_path
 
