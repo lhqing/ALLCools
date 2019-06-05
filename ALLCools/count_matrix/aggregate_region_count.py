@@ -7,7 +7,7 @@ import pandas as pd
 import scipy.sparse as ss
 from anndata import AnnData
 
-from .utilities import parse_file_paths, \
+from ..utilities import parse_file_paths, \
     parse_chrom_size, \
     chrom_dict_to_id_index, \
     get_bin_id, \

@@ -1,6 +1,6 @@
 import anndata
 import scipy.sparse as ss
-from .utilities import parse_chrom_size, generate_chrom_bin_bed_dataframe
+from ..utilities import parse_chrom_size, generate_chrom_bin_bed_dataframe
 
 
 def _transform_single_h5ad(adata_path, output_path, chrom_size_path,
