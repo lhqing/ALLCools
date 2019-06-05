@@ -63,7 +63,8 @@ def _bin_count_table_to_csr_npz(bin_count_tables,
     return mc_path, cov_path
 
 
-def _csr_matrix_to_anndata(matrix_paths, obs_names, chrom_size_path, bin_size, output_path,
+def _csr_matrix_to_anndata(matrix_paths, output_path, obs_names, chrom_size_path,
+                           bin_size, mc_type, count_type, step_size, strandness,
                            compression=None, compression_opts=None):
     if pathlib.Path(output_path).exists():
         return output_path
@@ -75,18 +76,24 @@ def _csr_matrix_to_anndata(matrix_paths, obs_names, chrom_size_path, bin_size, o
                     obs=pd.DataFrame([], index=obs_names),
                     var=var_df[['chrom']],
                     uns=dict(bin_size=bin_size,
-                             chrom_size_path=chrom_size_path))
+                             chrom_size_path=chrom_size_path,
+                             mc_type=mc_type,
+                             count_type=count_type,
+                             step_size=step_size,
+                             strandness=strandness))
     adata.write(output_path,
                 compression=compression,
                 compression_opts=compression_opts)
     return output_path
 
 
-def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_size_path, bin_size,
+def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_size_path,
+                                             bin_size, mc_type, count_type, strandness,
                                              compression='gzip', file_uids=None, max_obj=3072, cpu=3):
     # TODO write test
     # this should only deal with a simple case, aggregate 2 sample*feature 2-D matrix, one for mc, one for cov,
     # output to full or sparse format
+    step_size = bin_size  # which means the region is non-overlap
 
     mini_batches = min(max_obj, 24)
     output_prefix = output_prefix.rstrip('.')
@@ -136,7 +143,6 @@ def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_
         adata_chunk_id = '.chunk-0'
     else:
         adata_chunk_id = ''
-    future_dict = {}
     worker = (cpu - 1) // 6
     with ProcessPoolExecutor(worker) as executor:
         for chunk_id, cur_id_chunk in enumerate(id_chunk_list):
@@ -147,6 +153,10 @@ def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_
                                 obs_names=cur_ids,
                                 chrom_size_path=chrom_size_path,
                                 bin_size=bin_size,
+                                mc_type=mc_type,
+                                count_type=count_type,
+                                step_size=step_size,
+                                strandness=strandness,
                                 output_path=output_prefix + f'{adata_chunk_id}.mc.h5ad',
                                 compression=compression,
                                 compression_opts=None)
@@ -156,6 +166,10 @@ def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_
                                 obs_names=cur_ids,
                                 chrom_size_path=chrom_size_path,
                                 bin_size=bin_size,
+                                mc_type=mc_type,
+                                count_type=count_type,
+                                step_size=step_size,
+                                strandness=strandness,
                                 output_path=output_prefix + f'{adata_chunk_id}.cov.h5ad',
                                 compression=compression,
                                 compression_opts=None)
@@ -175,6 +189,10 @@ def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_
                             obs_names=cur_ids,
                             chrom_size_path=chrom_size_path,
                             bin_size=bin_size,
+                            mc_type=mc_type,
+                            count_type=count_type,
+                            step_size=step_size,
+                            strandness=strandness,
                             output_path=output_prefix + f'{adata_chunk_id}.mc.h5ad',
                             compression=compression,
                             compression_opts=None)
@@ -184,6 +202,10 @@ def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_
                             obs_names=cur_ids,
                             chrom_size_path=chrom_size_path,
                             bin_size=bin_size,
+                            mc_type=mc_type,
+                            count_type=count_type,
+                            step_size=step_size,
+                            strandness=strandness,
                             output_path=output_prefix + f'{adata_chunk_id}.cov.h5ad',
                             compression=compression,
                             compression_opts=None)

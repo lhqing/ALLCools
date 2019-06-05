@@ -87,6 +87,8 @@ def _bedgraph_to_bigwig(input_file, chrom_size_file, path_to_wigtobigwig, remove
 def allc_to_bigwig(allc_path,
                    output_prefix,
                    chrom_size_path,
+                   mc_contexts,
+                   strandness='both',
                    bin_size=50,
                    remove_additional_chrom=False,
                    remove_temp_bedgraph=True,
@@ -116,6 +118,7 @@ def allc_to_bigwig(allc_path,
     if p.returncode != 255:
         raise OSError(f'Try {path_to_wigtobigwig}wigToBigWig, got error {p.stderr}')
 
+    # TODO add mc context and strandness split
     # prepare bedgraph
     out_rate, out_cov = _allc_to_bedgraph(allc_path, output_prefix, chrom_size_path,
                                           remove_additional_chrom=remove_additional_chrom,
