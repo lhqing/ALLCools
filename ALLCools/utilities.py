@@ -211,21 +211,24 @@ def check_tbi_chroms(file_path, genome_dict, same_order=False):
 
 
 def generate_chrom_bin_bed_dataframe(chrom_size_path: str,
-                                     bin_size: int) -> pd.DataFrame:
+                                     window_size: int,
+                                     step_size: int = None) -> pd.DataFrame:
     """
-    Generate BED format dataframe based on UCSC chrom size file and bin_size
+    Generate BED format dataframe based on UCSC chrom size file and window_size
     return dataframe contain 3 columns: chrom, start, end. The index is 0 based continue bin index.
     """
+    if step_size is None:
+        step_size = window_size
     chrom_size_dict = parse_chrom_size(chrom_size_path)
     records = []
     for chrom, chrom_length in chrom_size_dict.items():
-        bin_start = pd.Series(list(range(0, chrom_length, bin_size)))
-        bin_end = bin_start + bin_size
-        bin_end.iloc[-1] = chrom_length
+        bin_start = np.array(list(range(0, chrom_length, step_size)))
+        bin_end = bin_start + window_size
+        bin_end[np.where(bin_end > chrom_length)] = chrom_length
         chrom_df = pd.DataFrame(dict(bin_start=bin_start, bin_end=bin_end))
         chrom_df['chrom'] = chrom
         records.append(chrom_df)
-    total_df = pd.concat(records).reset_index(drop=True)
+    total_df = pd.concat(records)[['chrom', 'bin_start', 'bin_end']].reset_index(drop=True)
     return total_df
 
 
