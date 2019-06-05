@@ -32,8 +32,6 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-
-import pathlib
 import warnings
 
 import numpy as np
@@ -102,27 +100,14 @@ def _to_dict_fixed_width_arrays(adata):
     return d
 
 
-def _write_mcad(file_path,
+def _write_mcad(f,
                 key_base,
                 adata: AnnData,
-                force_dense: bool = False,
                 **kwargs):
-    file_path = pathlib.Path(file_path)
-    if not file_path.name.endswith('.mcad'):
-        raise ValueError("Filename needs to end with '.mcad'.")
-    if adata.isbacked:
-        # close so that we can reopen below
-        adata.file.close()
     d = _to_dict_fixed_width_arrays(adata)
-    # we're writing to a different location than the backing file
-    # - load the matrix into the memory...
-    if adata.isbacked and file_path != adata.filename:
-        d['X'] = adata.X[:]
-    # need to use 'a' if backed, otherwise we loose the backed objects
-    with h5py.File(file_path, 'a', force_dense=force_dense) as f:
-        for key, value in d.items():
-            key = key_base + '/' + key
-            _write_key_value_to_h5(f, key, value, **kwargs)
+    for key, value in d.items():
+        key = key_base + '/' + key
+        _write_key_value_to_h5(f, key, value, **kwargs)
 
 
 def _preprocess_writing(value):
@@ -201,16 +186,12 @@ def _write_key_value_to_h5(f, key, value, **kwargs):
             )
 
 
-def csr_matrix_to_mcad(key_base, matrix_paths, obs_names, chrom_size_path, bin_size, output_path,
+def csr_matrix_to_mcad(f, key_base, matrix_paths, obs_names, chrom_size_path, bin_size,
                        compression=None, compression_opts=None):
     """
     Save a list of csc matrix into specific place (key_base) of the hdf5 file (output_path)
     Not doing param check here, only call this function from aggregate_region_count_to_mcad
     """
-
-    if pathlib.Path(output_path).exists():
-        return output_path
-
     var_df = generate_chrom_bin_bed_dataframe(chrom_size_path=chrom_size_path,
                                               window_size=bin_size)
     total_matrix = ss.vstack([ss.load_npz(path) for path in matrix_paths])
@@ -220,10 +201,9 @@ def csr_matrix_to_mcad(key_base, matrix_paths, obs_names, chrom_size_path, bin_s
                     var=var_df[['chrom']],
                     uns=dict(bin_size=bin_size,
                              chrom_size_path=chrom_size_path))
-    _write_mcad(file_path=output_path,
+    _write_mcad(f=f,
                 key_base=key_base,
                 adata=adata,
-                force_dense=False,
                 compression=compression,
                 compression_opts=compression_opts)
-    return output_path
+    return

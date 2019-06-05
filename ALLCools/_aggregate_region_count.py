@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import scipy.sparse as ss
 
+from anndata import h5py
 from ._mcad_io import csr_matrix_to_mcad
 from .utilities import parse_file_paths, \
     parse_chrom_size, \
@@ -145,15 +146,43 @@ def aggregate_region_count_to_mcad(count_tables,
     cur_cov_paths = []
     adata_chunk_id = 0
     # writing to hdf5 is not able to parallel
-    for chunk_id, cur_id_chunk in enumerate(id_chunk_list):
-        if len(cur_ids) + len(cur_id_chunk) > max_obj:
+    with h5py.File(output_path, 'a') as f:
+        for chunk_id, cur_id_chunk in enumerate(id_chunk_list):
+            if len(cur_ids) + len(cur_id_chunk) > max_obj:
+                # mc
+                csr_matrix_to_mcad(key_base=f'{information_type}/{adata_chunk_id}/mc',
+                                   matrix_paths=cur_mc_paths,
+                                   obs_names=cur_ids,
+                                   chrom_size_path=chrom_size_path,
+                                   bin_size=bin_size,
+                                   f=f,
+                                   compression=compression,
+                                   compression_opts=None)
+                # cov
+                csr_matrix_to_mcad(key_base=f'{information_type}/{adata_chunk_id}/cov',
+                                   matrix_paths=cur_cov_paths,
+                                   obs_names=cur_ids,
+                                   chrom_size_path=chrom_size_path,
+                                   bin_size=bin_size,
+                                   f=f,
+                                   compression=compression,
+                                   compression_opts=None)
+                cur_ids = []
+                cur_mc_paths = []
+                cur_cov_paths = []
+                adata_chunk_id += 1
+            else:
+                cur_ids += cur_id_chunk
+                cur_mc_paths.append(mc_path_list[chunk_id])
+                cur_cov_paths.append(cov_path_list[chunk_id])
+        if len(cur_ids) != 0:
             # mc
             csr_matrix_to_mcad(key_base=f'{information_type}/{adata_chunk_id}/mc',
                                matrix_paths=cur_mc_paths,
                                obs_names=cur_ids,
                                chrom_size_path=chrom_size_path,
                                bin_size=bin_size,
-                               output_path=output_path,
+                               f=f,
                                compression=compression,
                                compression_opts=None)
             # cov
@@ -162,37 +191,10 @@ def aggregate_region_count_to_mcad(count_tables,
                                obs_names=cur_ids,
                                chrom_size_path=chrom_size_path,
                                bin_size=bin_size,
-                               output_path=output_path,
+                               f=f,
                                compression=compression,
                                compression_opts=None)
-            cur_ids = []
-            cur_mc_paths = []
-            cur_cov_paths = []
-            adata_chunk_id += 1
-        else:
-            cur_ids += cur_id_chunk
-            cur_mc_paths.append(mc_path_list[chunk_id])
-            cur_cov_paths.append(cov_path_list[chunk_id])
-    if len(cur_ids) != 0:
-        # mc
-        csr_matrix_to_mcad(key_base=f'{information_type}/{adata_chunk_id}/mc',
-                           matrix_paths=cur_mc_paths,
-                           obs_names=cur_ids,
-                           chrom_size_path=chrom_size_path,
-                           bin_size=bin_size,
-                           output_path=output_path,
-                           compression=compression,
-                           compression_opts=None)
-        # cov
-        csr_matrix_to_mcad(key_base=f'{information_type}/{adata_chunk_id}/cov',
-                           matrix_paths=cur_cov_paths,
-                           obs_names=cur_ids,
-                           chrom_size_path=chrom_size_path,
-                           bin_size=bin_size,
-                           output_path=output_path,
-                           compression=compression,
-                           compression_opts=None)
-    # remove temp file until everything finished
+        # remove temp file until everything finished
     subprocess.run(['rm', '-f'] + mc_path_list + cov_path_list)
     return
 
