@@ -1,11 +1,11 @@
 import pathlib
 import subprocess
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import numpy as np
 import pandas as pd
 import scipy.sparse as ss
 from anndata import AnnData
-from concurrent.futures import ProcessPoolExecutor, as_completed
 
 from .utilities import parse_file_paths, \
     parse_chrom_size, \
@@ -136,50 +136,57 @@ def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_
         adata_chunk_id = '.chunk-0'
     else:
         adata_chunk_id = ''
-    for chunk_id, cur_id_chunk in enumerate(id_chunk_list):
-        if len(cur_ids) + len(cur_id_chunk) > max_obj:
+    future_dict = {}
+    worker = (cpu - 1) // 6
+    with ProcessPoolExecutor(worker) as executor:
+        for chunk_id, cur_id_chunk in enumerate(id_chunk_list):
+            if len(cur_ids) + len(cur_id_chunk) > max_obj:
+                # mc
+                executor.submit(_csr_matrix_to_anndata,
+                                matrix_paths=cur_mc_paths,
+                                obs_names=cur_ids,
+                                chrom_size_path=chrom_size_path,
+                                bin_size=bin_size,
+                                output_path=output_prefix + f'{adata_chunk_id}.mc.h5ad',
+                                compression=compression,
+                                compression_opts=None)
+                # cov
+                executor.submit(_csr_matrix_to_anndata,
+                                matrix_paths=cur_cov_paths,
+                                obs_names=cur_ids,
+                                chrom_size_path=chrom_size_path,
+                                bin_size=bin_size,
+                                output_path=output_prefix + f'{adata_chunk_id}.cov.h5ad',
+                                compression=compression,
+                                compression_opts=None)
+                cur_ids = []
+                cur_mc_paths = []
+                cur_cov_paths = []
+                if adata_chunk_id != '':
+                    adata_chunk_id = '.chunk-' + str(int(adata_chunk_id[7:]) + 1)
+            else:
+                cur_ids += cur_id_chunk
+                cur_mc_paths.append(mc_path_list[chunk_id])
+                cur_cov_paths.append(cov_path_list[chunk_id])
+        if len(cur_ids) != 0:
             # mc
-            _csr_matrix_to_anndata(matrix_paths=cur_mc_paths,
-                                   obs_names=cur_ids,
-                                   chrom_size_path=chrom_size_path,
-                                   bin_size=bin_size,
-                                   output_path=output_prefix + f'{adata_chunk_id}.mc.h5ad',
-                                   compression=compression,
-                                   compression_opts=None)
+            executor.submit(_csr_matrix_to_anndata,
+                            matrix_paths=cur_mc_paths,
+                            obs_names=cur_ids,
+                            chrom_size_path=chrom_size_path,
+                            bin_size=bin_size,
+                            output_path=output_prefix + f'{adata_chunk_id}.mc.h5ad',
+                            compression=compression,
+                            compression_opts=None)
             # cov
-            _csr_matrix_to_anndata(matrix_paths=cur_cov_paths,
-                                   obs_names=cur_ids,
-                                   chrom_size_path=chrom_size_path,
-                                   bin_size=bin_size,
-                                   output_path=output_prefix + f'{adata_chunk_id}.cov.h5ad',
-                                   compression=compression,
-                                   compression_opts=None)
-            cur_ids = []
-            cur_mc_paths = []
-            cur_cov_paths = []
-            if adata_chunk_id != '':
-                adata_chunk_id = '.chunk-' + str(int(adata_chunk_id[7:]) + 1)
-        else:
-            cur_ids += cur_id_chunk
-            cur_mc_paths.append(mc_path_list[chunk_id])
-            cur_cov_paths.append(cov_path_list[chunk_id])
-    if len(cur_ids) != 0:
-        # mc
-        _csr_matrix_to_anndata(matrix_paths=cur_mc_paths,
-                               obs_names=cur_ids,
-                               chrom_size_path=chrom_size_path,
-                               bin_size=bin_size,
-                               output_path=output_prefix + f'{adata_chunk_id}.mc.h5ad',
-                               compression=compression,
-                               compression_opts=None)
-        # cov
-        _csr_matrix_to_anndata(matrix_paths=cur_cov_paths,
-                               obs_names=cur_ids,
-                               chrom_size_path=chrom_size_path,
-                               bin_size=bin_size,
-                               output_path=output_prefix + f'{adata_chunk_id}.cov.h5ad',
-                               compression=compression,
-                               compression_opts=None)
+            executor.submit(_csr_matrix_to_anndata,
+                            matrix_paths=cur_cov_paths,
+                            obs_names=cur_ids,
+                            chrom_size_path=chrom_size_path,
+                            bin_size=bin_size,
+                            output_path=output_prefix + f'{adata_chunk_id}.cov.h5ad',
+                            compression=compression,
+                            compression_opts=None)
 
     # remove temp file until everything finished
     subprocess.run(['rm', '-f'] + mc_path_list + cov_path_list)
