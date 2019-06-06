@@ -19,9 +19,8 @@ def _transform_single_h5ad(adata_path, output_path, chrom_size_path,
 
     chrom_data_list = []
     for chrom in chrom_dict.keys():
-        print(chrom)
         chrom_csc_data = csc_data[:, chrom_idx == chrom]
-        chunk_generator = (ss.csc_matrix(chrom_csc_data[:, n:n + m].sum(axis=1))
+        chunk_generator = (ss.csc_matrix(chrom_csc_data[:, i:i + m].sum(axis=1))
                            for i in range(0, chrom_csc_data.shape[1], n))
         chrom_data = ss.hstack(list(chunk_generator))
         chrom_data_list.append(chrom_data)
@@ -36,7 +35,7 @@ def _transform_single_h5ad(adata_path, output_path, chrom_size_path,
                             uns=dict(bin_size=window_size,
                                      step_size=step_size,
                                      chrom_size_path=chrom_size_path))
-    
+
     adata.write(filename=output_path, compression=compression)
     return output_path
 
