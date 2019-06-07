@@ -138,15 +138,17 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
 
         real_out_paths = []
         need_tabix = []
-        for suffix, sub_df in total_output_df.groupby('full_suffix'):
-            ordered_index = sub_df['chunk_id'].astype(int).sort_values().index
-            ordered_file_list = sub_df.loc[ordered_index, 'path'].tolist()
-            real_file_path = f'{output_prefix}.{suffix}'
-            real_out_paths.append(real_file_path)
-            if tabix and 'allc' in suffix:
-                need_tabix.append(real_out_paths)
-            _merge_gz_files(ordered_file_list, real_file_path)
-
+        with ProcessPoolExecutor(cpu) as merge_executor:
+            for suffix, sub_df in total_output_df.groupby('full_suffix'):
+                ordered_index = sub_df['chunk_id'].astype(int).sort_values().index
+                ordered_file_list = sub_df.loc[ordered_index, 'path'].tolist()
+                real_file_path = f'{output_prefix}.{suffix}'
+                real_out_paths.append(real_file_path)
+                if tabix and 'allc' in suffix:
+                    need_tabix.append(real_out_paths)
+                merge_executor.submit(_merge_gz_files,
+                                      file_list=ordered_file_list,
+                                      output_path=real_file_path)
         if tabix:
             with ProcessPoolExecutor(cpu) as tabix_executor:
                 for path in need_tabix:
@@ -211,6 +213,7 @@ def extract_allc(allc_path: str,
     # TODO write test
     # determine parallel or not
     parallel_chunk_size = 100000000
+    cpu = int(cpu)
     if cpu > 1 and region is None:
         return _extract_allc_parallel(allc_path=allc_path,
                                       output_prefix=output_prefix,
