@@ -110,17 +110,17 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
     future_dict = {}
     with ProcessPoolExecutor(cpu) as executor:
         for chunk_id, region in enumerate(regions):
-            future = executor(extract_allc,
-                              allc_path=allc_path,
-                              output_prefix=output_prefix + f'.{chunk_id}.',
-                              mc_contexts=mc_contexts,
-                              strandness=strandness,
-                              output_format=output_format,
-                              chrom_size_path=chrom_size_path,
-                              region=region,
-                              cov_cutoff=cov_cutoff,
-                              cpu=1,
-                              tabix=False)
+            future = executor.submit(extract_allc,
+                                     allc_path=allc_path,
+                                     output_prefix=output_prefix + f'.{chunk_id}.',
+                                     mc_contexts=mc_contexts,
+                                     strandness=strandness,
+                                     output_format=output_format,
+                                     chrom_size_path=chrom_size_path,
+                                     region=region,
+                                     cov_cutoff=cov_cutoff,
+                                     cpu=1,
+                                     tabix=False)
             future_dict[future] = chunk_id
 
         output_records = []
