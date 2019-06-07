@@ -161,9 +161,9 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
 def extract_allc(allc_path: str,
                  output_prefix: str,
                  mc_contexts: Union[str, list],
+                 chrom_size_path: str,
                  strandness: str = 'both',
                  output_format: str = 'allc',
-                 chrom_size_path: str = None,
                  region: str = None,
                  cov_cutoff: int = 9999,
                  tabix: bool = True,
@@ -192,7 +192,7 @@ def extract_allc(allc_path: str,
         3. bg-cov: bedgraph format, chrom, pos, pos, cov
         4. bg-rate: bedgraph format, chrom, pos, pos, mc/cov
     chrom_size_path
-        chrom_size_path_doc
+        {chrom_size_path_doc}
         If chrom_size_path provided, will use it to extract ALLC with chrom order,
         but if region provided, will ignore this.
     region

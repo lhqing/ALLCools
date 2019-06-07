@@ -350,6 +350,13 @@ def extract_context_allc_register_subparser(subparser):
         help=mc_contexts_doc
     )
 
+    parser_req.add_argument(
+        "--chrom_size_path",
+        type=str,
+        required=True,
+        help=chrom_size_path_doc
+    )
+
     parser.add_argument(
         "--strandness",
         type=str,
