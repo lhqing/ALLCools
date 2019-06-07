@@ -87,7 +87,7 @@ def _bedgraph_to_bigwig(input_file, chrom_size_file, path_to_wigtobigwig, remove
 def allc_to_bigwig(allc_path,
                    output_prefix,
                    chrom_size_path,
-                   mc_contexts,
+                   mc_contexts=None,
                    strandness='both',
                    bin_size=50,
                    remove_additional_chrom=False,

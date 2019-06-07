@@ -1,10 +1,11 @@
 from collections import defaultdict
+from concurrent.futures import ProcessPoolExecutor
 from subprocess import run
 from typing import Union, Tuple, Callable, List
 
 from ._doc import *
 from ._open import open_allc
-from .utilities import tabix_allc, parse_mc_pattern, parse_chrom_size
+from .utilities import tabix_allc, parse_mc_pattern, parse_chrom_size, genome_region_chunks
 
 
 def _merge_cg_strand(in_path, out_path):
@@ -235,3 +236,24 @@ def extract_allc(allc_path: str,
                 in_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
                 tabix_allc(in_path)
     return output_path_collect
+
+
+def extract_allc_parallel(chrom_size_path, cpu, chunk_size=100000000, **kwargs):
+    regions = genome_region_chunks(chrom_size_path=chrom_size_path,
+                                   bin_length=chunk_size,
+                                   combine_small=True)
+
+    with ProcessPoolExecutor(cpu) as executor:
+        for chunk_id, region in enumerate(regions):
+            executor(extract_allc,
+                     allc_path=kwargs['allc_path'],
+                     output_prefix=kwargs['output_prefix'] + f'.{chunk_id}.',
+                     mc_contexts=kwargs['mc_contexts'],
+                     strandness=kwargs['strandness'],
+                     output_format=kwargs['output_format'],
+                     chrom_size_path=kwargs['chrom_size_path'],
+                     region=region,
+                     cov_cutoff=kwargs['cov_cutoff']
+                     )
+
+        # agg chunk_output

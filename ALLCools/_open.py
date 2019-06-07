@@ -307,6 +307,10 @@ def open_bam(file_path, mode='r', region=None, include_header=True, samtools_par
 
 
 def open_gz(file_path, mode='r', compresslevel=3, threads=1, region=None):
+    if region is not None:
+        if not isinstance(region, str):
+            raise TypeError('region parameter need to be string.')
+
     if 'r' in mode:
         try:
             return PipedGzipReader(file_path, region=region, mode=mode)

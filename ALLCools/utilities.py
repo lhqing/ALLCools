@@ -88,7 +88,7 @@ def get_bin_id(chrom, chrom_index_dict, bin_start, bin_size) -> int:
     return chrom_index_start + n_bin
 
 
-def genome_region_chunks(chrom_size_file: str,
+def genome_region_chunks(chrom_size_path: str,
                          bin_length: int = 10000000,
                          combine_small: bool = True) -> List[str]:
     """
@@ -96,7 +96,7 @@ def genome_region_chunks(chrom_size_file: str,
 
     Parameters
     ----------
-    chrom_size_file
+    chrom_size_path
         Path of UCSC genome size file
     bin_length
         length of each bin
@@ -107,7 +107,7 @@ def genome_region_chunks(chrom_size_file: str,
     -------
     list of records in tabix query format
     """
-    chrom_size_dict = parse_chrom_size(chrom_size_file)
+    chrom_size_dict = parse_chrom_size(chrom_size_path)
 
     cur_chrom_pos = 0
     records = []
