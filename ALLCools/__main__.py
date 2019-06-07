@@ -388,6 +388,13 @@ def extract_context_allc_register_subparser(subparser):
         help=cov_cutoff_doc
     )
 
+    parser.add_argument(
+        "--cpu",
+        type=int,
+        default=1,
+        help='Number of processes to use.'
+    )
+
 
 def allc_to_region_count_register_subparser(subparser):
     parser = subparser.add_parser('allc-to-region-count',

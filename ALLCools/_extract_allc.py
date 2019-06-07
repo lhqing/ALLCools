@@ -1,10 +1,13 @@
+import subprocess
 from collections import defaultdict
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from subprocess import run
 from typing import Union, Tuple, Callable, List
 
+import pandas as pd
+
 from ._doc import *
-from ._open import open_allc
+from ._open import open_allc, open_gz
 from .utilities import tabix_allc, parse_mc_pattern, parse_chrom_size, genome_region_chunks
 
 
@@ -89,6 +92,68 @@ def _check_out_format_parameter(out_format) -> Tuple[str, Callable[[list], str]]
         raise ValueError(f'Unknown value for out_format: {out_format}')
 
 
+def _merge_gz_files(file_list, output_path):
+    with open_gz(output_path, 'w') as out_f:
+        for file_path in file_list:
+            with open_gz(file_path) as f:
+                out_f.write(f.read())
+            subprocess.run(['rm', '-f', file_path])
+    return output_path
+
+
+def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, output_format,
+                           chrom_size_path, cov_cutoff, cpu, chunk_size=100000000, tabix=True):
+    output_prefix = output_prefix.rstrip('.')
+    regions = genome_region_chunks(chrom_size_path=chrom_size_path,
+                                   bin_length=chunk_size,
+                                   combine_small=True)
+    future_dict = {}
+    with ProcessPoolExecutor(cpu) as executor:
+        for chunk_id, region in enumerate(regions):
+            future = executor(extract_allc,
+                              allc_path=allc_path,
+                              output_prefix=output_prefix + f'.{chunk_id}.',
+                              mc_contexts=mc_contexts,
+                              strandness=strandness,
+                              output_format=output_format,
+                              chrom_size_path=chrom_size_path,
+                              region=region,
+                              cov_cutoff=cov_cutoff,
+                              cpu=1,
+                              tabix=False)
+            future_dict[future] = chunk_id
+
+        output_records = []
+        for future in as_completed(future_dict):
+            output_path_list = future.result()
+            output_records += output_path_list
+
+        # agg chunk_output
+        records = []
+        for path in output_records:
+            chunk_id, *full_suffix = path.lstrip(output_prefix).strip('.').split('.')
+            full_suffix = '.'.join(full_suffix)
+            records.append([path, chunk_id, full_suffix])
+        total_output_df = pd.DataFrame(records, columns=['path', 'chunk_id', 'full_suffix'])
+
+        real_out_paths = []
+        need_tabix = []
+        for suffix, sub_df in total_output_df.groupby('full_suffix'):
+            ordered_index = sub_df['chunk_id'].astype(int).sort_values().index
+            ordered_file_list = sub_df.loc[ordered_index, 'path'].tolist()
+            real_file_path = f'{output_prefix}.{suffix}'
+            real_out_paths.append(real_file_path)
+            if tabix and 'allc' in suffix:
+                need_tabix.append(real_out_paths)
+            _merge_gz_files(ordered_file_list, real_file_path)
+
+        if tabix:
+            with ProcessPoolExecutor(cpu) as tabix_executor:
+                for path in need_tabix:
+                    tabix_executor.submit(tabix_allc, path)
+    return real_out_paths
+
+
 @doc_params(allc_path_doc=allc_path_doc,
             mc_contexts_doc=mc_contexts_doc,
             cov_cutoff_doc=cov_cutoff_doc,
@@ -101,7 +166,8 @@ def extract_allc(allc_path: str,
                  chrom_size_path: str = None,
                  region: str = None,
                  cov_cutoff: int = 9999,
-                 tabix: bool = True) -> List[str]:
+                 tabix: bool = True,
+                 cpu=1) -> List[str]:
     """\
     Extract information (strand, context) from 1 ALLC file. Save to several different format.
 
@@ -134,14 +200,29 @@ def extract_allc(allc_path: str,
     cov_cutoff
         {cov_cutoff_doc}
     tabix
-        Whether to generate tabix if format is ALLC
+        Whether to generate tabix if format is ALLC, only set this to False from _extract_allc_parallel
+    cpu
+        Number of cores to use
 
     Returns
     -------
     A list of output file paths, not include index files.
     """
-    # TODO add parallel to this
     # TODO write test
+    # determine parallel or not
+    parallel_chunk_size = 100000000
+    if cpu > 1 and region is None:
+        return _extract_allc_parallel(allc_path=allc_path,
+                                      output_prefix=output_prefix,
+                                      mc_contexts=mc_contexts,
+                                      strandness=strandness,
+                                      output_format=output_format,
+                                      chrom_size_path=chrom_size_path,
+                                      cov_cutoff=cov_cutoff,
+                                      cpu=cpu,
+                                      chunk_size=parallel_chunk_size,
+                                      tabix=tabix)
+
     # determine region
     if region is None:
         if chrom_size_path is not None:
@@ -243,24 +324,3 @@ def extract_allc(allc_path: str,
                 if tabix:
                     tabix_allc(in_path)
     return output_path_collect
-
-
-def extract_allc_parallel(chrom_size_path, cpu, chunk_size=100000000, **kwargs):
-    regions = genome_region_chunks(chrom_size_path=chrom_size_path,
-                                   bin_length=chunk_size,
-                                   combine_small=True)
-
-    with ProcessPoolExecutor(cpu) as executor:
-        for chunk_id, region in enumerate(regions):
-            executor(extract_allc,
-                     allc_path=kwargs['allc_path'],
-                     output_prefix=kwargs['output_prefix'] + f'.{chunk_id}.',
-                     mc_contexts=kwargs['mc_contexts'],
-                     strandness=kwargs['strandness'],
-                     output_format=kwargs['output_format'],
-                     chrom_size_path=chrom_size_path,
-                     region=region,
-                     cov_cutoff=kwargs['cov_cutoff']
-                     )
-
-        # agg chunk_output
