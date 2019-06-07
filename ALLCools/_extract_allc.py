@@ -100,7 +100,8 @@ def extract_allc(allc_path: str,
                  output_format: str = 'allc',
                  chrom_size_path: str = None,
                  region: str = None,
-                 cov_cutoff: int = 9999) -> List[str]:
+                 cov_cutoff: int = 9999,
+                 tabix: bool = True) -> List[str]:
     """\
     Extract information (strand, context) from 1 ALLC file. Save to several different format.
 
@@ -132,6 +133,8 @@ def extract_allc(allc_path: str,
         Only extract records from certain genome region(s) via tabix, multiple region can be provided in tabix form.
     cov_cutoff
         {cov_cutoff_doc}
+    tabix
+        Whether to generate tabix if format is ALLC
 
     Returns
     -------
@@ -218,9 +221,11 @@ def extract_allc(allc_path: str,
             # tabix ALLC file
             if strandness == 'Split':
                 in_path = output_prefix + f'.{mc_context}-Watson.{out_suffix}'
-                tabix_allc(in_path)
+                if tabix:
+                    tabix_allc(in_path)
                 in_path = output_prefix + f'.{mc_context}-Crick.{out_suffix}'
-                tabix_allc(in_path)
+                if tabix:
+                    tabix_allc(in_path)
             elif strandness == 'MergeTmp':
                 in_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
                 if 'CG' in mc_context:
@@ -231,10 +236,12 @@ def extract_allc(allc_path: str,
                     # for non-CG, there is no need to merge strand
                     out_path = output_prefix + f'.{mc_context}-Both.{out_suffix}'
                     run(['mv', in_path, out_path], check=True)
-                tabix_allc(out_path)
+                if tabix:
+                    tabix_allc(out_path)
             else:
                 in_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
-                tabix_allc(in_path)
+                if tabix:
+                    tabix_allc(in_path)
     return output_path_collect
 
 
@@ -251,7 +258,7 @@ def extract_allc_parallel(chrom_size_path, cpu, chunk_size=100000000, **kwargs):
                      mc_contexts=kwargs['mc_contexts'],
                      strandness=kwargs['strandness'],
                      output_format=kwargs['output_format'],
-                     chrom_size_path=kwargs['chrom_size_path'],
+                     chrom_size_path=chrom_size_path,
                      region=region,
                      cov_cutoff=kwargs['cov_cutoff']
                      )
