@@ -405,7 +405,10 @@ def extract_context_allc_register_subparser(subparser):
         "--cpu",
         type=int,
         default=1,
-        help=cpu_basic_doc
+        help=cpu_basic_doc + ' This function parallel on region level and '
+                             'will generate a bunch of small files if cpu > 1. '
+                             'Do not use cpu > 1 for single cell region count. '
+                             'For single cell data, parallel on cell level is better.'
     )
 
 
@@ -505,6 +508,16 @@ def allc_to_region_count_register_subparser(subparser):
              'only apply to region count but not the chromosome count.'
     )
     parser.set_defaults(save_zero_cov=False)
+
+    parser.add_argument(
+        "--cpu",
+        type=int,
+        default=1,
+        help=cpu_basic_doc + ' This function parallel on region level and '
+                             'will generate a bunch of small files if cpu > 1. '
+                             'Do not use cpu > 1 for single cell region count. '
+                             'For single cell data, parallel on cell level is better.'
+    )
 
 
 def allc_to_bigwig_register_subparser(subparser):

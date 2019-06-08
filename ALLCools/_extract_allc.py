@@ -196,6 +196,8 @@ def extract_allc(allc_path: str,
         Whether to generate tabix if format is ALLC, only set this to False from _extract_allc_parallel
     cpu
         {cpu_basic_doc}
+        This function parallel on region level and will generate a bunch of small files if cpu > 1.
+        Do not use cpu > 1 for single cell region count. For single cell data, parallel on cell level is better.
 
     Returns
     -------
