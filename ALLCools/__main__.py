@@ -91,6 +91,7 @@ def setup_logging(stdout=False, quiet=False, debug=False):
 
 def bam_to_allc_register_subparser(subparser):
     parser = subparser.add_parser('bam-to-allc',
+                                  aliases=['2allc'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Take 1 position sorted BAM file, generate 1 ALLC file.")
 
@@ -217,6 +218,7 @@ def standardize_allc_register_subparser(subparser):
 
 def tabix_allc_register_subparser(subparser):
     parser = subparser.add_parser('tabix-allc',
+                                  aliases=['tbi'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="a simple wrapper of tabix command to index 1 ALLC file")
     parser_req = parser.add_argument_group("required arguments")
@@ -276,6 +278,7 @@ def profile_allc_register_subparser(subparser):
 
 def merge_allc_register_subparser(subparser):
     parser = subparser.add_parser('merge-allc',
+                                  aliases=['merge'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Merge N ALLC files into 1 ALLC file")
 
@@ -322,6 +325,7 @@ def merge_allc_register_subparser(subparser):
 
 def extract_context_allc_register_subparser(subparser):
     parser = subparser.add_parser('extract-allc',
+                                  aliases=['extract'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Extract information (strand, context) from 1 ALLC file. "
                                        "Able to save to several different format.")
@@ -403,6 +407,7 @@ def extract_context_allc_register_subparser(subparser):
 
 def allc_to_region_count_register_subparser(subparser):
     parser = subparser.add_parser('allc-to-region-count',
+                                  aliases=['2region'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Calculate mC and cov at regional level. Region can be provided in 2 forms: "
                                        "1. BED file, provided by region_bed_paths, "
@@ -415,7 +420,8 @@ def allc_to_region_count_register_subparser(subparser):
     parser_req = parser.add_argument_group("required arguments")
 
     parser_req.add_argument(
-        "--allc_path",
+        "--allc_path", "-allc",
+        dest='allc_path',
         type=str,
         required=True,
         help=allc_path_doc
