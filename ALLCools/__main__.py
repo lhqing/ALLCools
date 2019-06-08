@@ -99,7 +99,8 @@ def bam_to_allc_register_subparser(subparser):
     parser_req = parser.add_argument_group("required arguments")
 
     parser_req.add_argument(
-        "--bam_path",
+        "--bam_path", '-bam',
+        dest='bam_path',
         type=str,
         required=True,
         help="Path to 1 position sorted BAM file"

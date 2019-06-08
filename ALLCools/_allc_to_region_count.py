@@ -1,6 +1,7 @@
 import pathlib
 import shlex
 import subprocess
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from functools import partial
 from typing import List
 
@@ -100,7 +101,8 @@ def _transfer_bin_size(bin_size: int) -> str:
             chrom_size_path_doc=chrom_size_path_doc,
             mc_contexts_doc=mc_contexts_doc,
             cov_cutoff_doc=cov_cutoff_doc,
-            split_strand_doc=split_strand_doc)
+            split_strand_doc=split_strand_doc,
+            cpu_basic_doc=cpu_basic_doc)
 def allc_to_region_count(allc_path: str,
                          output_prefix: str,
                          chrom_size_path: str,
@@ -111,7 +113,8 @@ def allc_to_region_count(allc_path: str,
                          bin_sizes: List[int] = None,
                          cov_cutoff: int = 9999,
                          save_zero_cov: bool = True,
-                         remove_tmp: bool = True):
+                         remove_tmp: bool = True,
+                         cpu: int = 1):
     """\
     Calculate mC and cov at regional level. Region can be provided in 2 forms:
     1. BED file, provided by region_bed_paths, containing arbitrary regions and use bedtools map to calculate;
@@ -145,6 +148,10 @@ def allc_to_region_count(allc_path: str,
         Whether to save the regions that have 0 cov, only apply to region count but not the chromosome count
     remove_tmp
         Whether to remove the temporary BED file
+    cpu
+        {cpu_basic_doc}
+        This function parallel on region level and will generate a bunch of small files if cpu > 1.
+        Do not use cpu > 1 for single cell region count. For single cell data, parallel on cell level is better.
 
     Returns
     -------
@@ -175,36 +182,43 @@ def allc_to_region_count(allc_path: str,
                                 output_format='bed5',
                                 chrom_size_path=chrom_size_path,
                                 region=None,
-                                cov_cutoff=cov_cutoff)
+                                cov_cutoff=cov_cutoff,
+                                cpu=cpu)
     path_dict = {}
     for path in output_paths:
         # this is according to extract_allc name pattern
         info_type = pathlib.Path(path).name.split('.')[-4]  # {mc_context}-{strandness}
         path_dict[info_type] = path
 
-    if region_bed_paths is not None:
-        print('Map to regions.')
-        save_flag = 'full' if save_zero_cov else 'sparse'
-        for region_name, region_bed_path in zip(region_bed_names, region_bed_paths):
-            for info_type, site_bed_path in path_dict.items():
-                try:
-                    _bedtools_map(region_bed=region_bed_path,
-                                  site_bed=site_bed_path,
-                                  out_bed=output_prefix + f'.{region_name}_{info_type}.{save_flag}.bed.gz',
-                                  save_zero_cov=save_zero_cov)
-                except subprocess.CalledProcessError as e:
-                    print(e.stderr)
-                    raise e
+    with ProcessPoolExecutor(cpu) as executor:
+        # TODO test if monitor result it really work
+        futures = []
+        if region_bed_paths is not None:
+            print('Map to regions.')
+            save_flag = 'full' if save_zero_cov else 'sparse'
+            for region_name, region_bed_path in zip(region_bed_names, region_bed_paths):
+                for info_type, site_bed_path in path_dict.items():
+                    future = executor.submit(_bedtools_map,
+                                             region_bed=region_bed_path,
+                                             site_bed=site_bed_path,
+                                             out_bed=output_prefix + f'.{region_name}_{info_type}.{save_flag}.bed.gz',
+                                             save_zero_cov=save_zero_cov)
+                    futures.append(future)
 
-    if bin_sizes is not None:
-        print('Map to chromosome bins.')
-        for bin_size in bin_sizes:
-            for info_type, site_bed_path in path_dict.items():
-                _map_to_sparse_chrom_bin(input_path=site_bed_path,
-                                         output_path=output_prefix + f'.chrom{_transfer_bin_size(bin_size)}'
-                                                                     f'_{info_type}.sparse.bed.gz',
-                                         chrom_size_file=chrom_size_path,
-                                         bin_size=bin_size)
+        if bin_sizes is not None:
+            print('Map to chromosome bins.')
+            for bin_size in bin_sizes:
+                for info_type, site_bed_path in path_dict.items():
+                    future = executor.submit(_map_to_sparse_chrom_bin,
+                                             input_path=site_bed_path,
+                                             output_path=output_prefix + f'.chrom{_transfer_bin_size(bin_size)}'
+                                                                         f'_{info_type}.sparse.bed.gz',
+                                             chrom_size_file=chrom_size_path,
+                                             bin_size=bin_size)
+                    futures.append(future)
+        for future in as_completed(futures):
+            # call all future.result to make sure finished successfully
+            future.result()
 
     if remove_tmp:
         print('Remove temporal files.')
