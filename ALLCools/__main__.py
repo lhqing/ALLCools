@@ -90,6 +90,7 @@ def setup_logging(stdout=False, quiet=False, debug=False):
 
 
 def bam_to_allc_register_subparser(subparser):
+    # TODO add alias to arguments
     parser = subparser.add_parser('bam-to-allc',
                                   aliases=['2allc'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -223,9 +224,8 @@ def tabix_allc_register_subparser(subparser):
                                   help="a simple wrapper of tabix command to index 1 ALLC file")
     parser_req = parser.add_argument_group("required arguments")
     parser_req.add_argument(
-        "--allc_path",
+        dest="allc_path",
         type=str,
-        required=True,
         help=allc_path_doc
     )
 
@@ -277,6 +277,7 @@ def profile_allc_register_subparser(subparser):
 
 
 def merge_allc_register_subparser(subparser):
+    # TODO add alias to arguments
     parser = subparser.add_parser('merge-allc',
                                   aliases=['merge'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -324,6 +325,7 @@ def merge_allc_register_subparser(subparser):
 
 
 def extract_context_allc_register_subparser(subparser):
+    # TODO add alias to arguments
     parser = subparser.add_parser('extract-allc',
                                   aliases=['extract'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -406,6 +408,7 @@ def extract_context_allc_register_subparser(subparser):
 
 
 def allc_to_region_count_register_subparser(subparser):
+    # TODO add alias to arguments
     parser = subparser.add_parser('allc-to-region-count',
                                   aliases=['2region'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -428,7 +431,8 @@ def allc_to_region_count_register_subparser(subparser):
     )
 
     parser_req.add_argument(
-        "--output_prefix",
+        "--output_prefix", '-out',
+        dest='output_prefix',
         type=str,
         required=True,
         help="Path prefix of the output region count file."
@@ -502,6 +506,7 @@ def allc_to_region_count_register_subparser(subparser):
 
 
 def allc_to_bigwig_register_subparser(subparser):
+    # TODO add alias to arguments
     parser = subparser.add_parser('allc-to-bigwig',
                                   aliases=['2bw'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
