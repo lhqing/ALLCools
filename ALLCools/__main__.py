@@ -497,6 +497,7 @@ def allc_to_region_count_register_subparser(subparser):
 
 def allc_to_bigwig_register_subparser(subparser):
     parser = subparser.add_parser('allc-to-bigwig',
+                                  aliases=['2bw'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Generate bigwig file(s) from 1 ALLC file.")
 
