@@ -225,6 +225,7 @@ def tabix_allc_register_subparser(subparser):
     parser_req = parser.add_argument_group("required arguments")
     parser_req.add_argument(
         dest="allc_path",
+        nargs=1,
         type=str,
         help=allc_path_doc
     )
