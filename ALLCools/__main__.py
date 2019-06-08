@@ -639,21 +639,21 @@ def main():
 
     cur_command = args_vars.pop('command').lower().replace('_', '-')
     # Do real import here:
-    if cur_command == 'bam-to-allc':
+    if cur_command in ['bam-to-allc', '2allc']:
         from ._bam_to_allc import bam_to_allc as func
-    elif cur_command == 'standardize-allc':
+    elif cur_command in ['standardize-allc']:
         from .utilities import standardize_allc as func
-    elif cur_command == 'tabix-allc':
+    elif cur_command in ['tabix-allc', 'tbi']:
         from .utilities import tabix_allc as func
-    elif cur_command == 'profile-allc':
+    elif cur_command in ['profile-allc']:
         from .utilities import profile_allc as func
-    elif cur_command == 'merge-allc':
+    elif cur_command in ['merge-allc', 'merge']:
         from ._merge_allc import merge_allc_files as func
-    elif cur_command == 'extract-allc':
+    elif cur_command in ['extract-allc', 'extract']:
         from ._extract_allc import extract_allc as func
-    elif cur_command == 'allc-to-region-count':
+    elif cur_command in ['allc-to-region-count', '2region']:
         from ._allc_to_region_count import allc_to_region_count as func
-    elif cur_command == 'allc-to-bigwig':
+    elif cur_command in ['allc-to-bigwig', '2bw']:
         from ._allc_to_bigwig import allc_to_bigwig as func
     else:
         log.debug(f'{cur_command} is not an valid sub-command')
