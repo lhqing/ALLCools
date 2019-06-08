@@ -1,13 +1,14 @@
 """
 This file is modified from methylpy https://github.com/yupenghe/methylpy
-
-Original author: Yupeng He
 """
 
 import logging
 import shlex
 import subprocess
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
+from ._doc import *
+from ._extract_allc import extract_allc
 from ._open import open_allc
 from .utilities import parse_chrom_size
 
@@ -16,12 +17,12 @@ log = logging.getLogger(__name__)
 log.addHandler(logging.NullHandler())
 
 
-def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_file,
+def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path,
                       remove_additional_chrom=False, bin_size=50):
     """
     Simply calculate cov and mc_rate for fixed genome bins. No mC context filter.
     """
-    chrom_dict = parse_chrom_size(chrom_size_file)
+    chrom_dict = parse_chrom_size(chrom_size_path)
     cur_chrom = 'TOTALLY_NOT_A_CHROM'
     cur_chrom_end = 0
     bin_start = 0
@@ -74,9 +75,9 @@ def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_file,
     return out_rate, out_cov
 
 
-def _bedgraph_to_bigwig(input_file, chrom_size_file, path_to_wigtobigwig, remove_bedgraph=True):
+def _bedgraph_to_bigwig(input_file, chrom_size_path, path_to_wigtobigwig, remove_bedgraph=True):
     output_file = input_file.rstrip('.bg') + '.bw'
-    cmd = f'{path_to_wigtobigwig}wigToBigWig {input_file} {chrom_size_file} {output_file}'
+    cmd = f'{path_to_wigtobigwig}wigToBigWig {input_file} {chrom_size_path} {output_file}'
 
     subprocess.run(shlex.split(cmd), check=True)
     if remove_bedgraph:
@@ -84,47 +85,100 @@ def _bedgraph_to_bigwig(input_file, chrom_size_file, path_to_wigtobigwig, remove
     return output_file
 
 
+@doc_params(allc_path_doc=allc_path_doc,
+            chrom_size_path_doc=chrom_size_path_doc,
+            mc_contexts_doc=mc_contexts_doc,
+            split_strand_doc=split_strand_doc,
+            remove_additional_chrom_doc=remove_additional_chrom_doc,
+            region_doc=region_doc,
+            cov_cutoff_doc=cov_cutoff_doc)
 def allc_to_bigwig(allc_path,
                    output_prefix,
                    chrom_size_path,
-                   mc_contexts=None,
-                   strandness='both',
+                   mc_contexts,
+                   split_strand=False,
                    bin_size=50,
                    remove_additional_chrom=False,
-                   remove_temp_bedgraph=True,
-                   path_to_wigtobigwig=""):
-    # TODO add context support and strandness support to this function
-    # TODO add CLI in __main__
-    # TODO write test
-    """
-    Generate coverage (cov) and ratio (mc/cov) bigwig track files from 1 ALLC file
+                   region=None,
+                   cov_cutoff=9999,
+                   path_to_wigtobigwig="",
+                   remove_temp=True,
+                   cpu=1):
+    """\
+    Generate bigwig file(s) from 1 ALLC file.
 
     Parameters
     ----------
     allc_path
+        {allc_path_doc}
     output_prefix
+        Output prefix of the bigwig file(s)
     chrom_size_path
+        {chrom_size_path_doc}
+    mc_contexts
+        {mc_contexts_doc}
+    split_strand
+        {split_strand_doc}
     bin_size
+        Minimum bin size of bigwig file
     remove_additional_chrom
-    remove_temp_bedgraph
+        {remove_additional_chrom_doc}
+    region
+        {region_doc}
+    cov_cutoff
+        {cov_cutoff_doc}
     path_to_wigtobigwig
+        Path to wigtobigwig to allow allcools to find it
+    remove_temp
+        debug parameter, whether to remove the temp file or not
+    cpu
+        Number of cores to use
 
     Returns
     -------
 
     """
+    # TODO write test
     # test wigToBigWig
     p = subprocess.run(f'{path_to_wigtobigwig}wigToBigWig', stderr=subprocess.PIPE, encoding='utf8')
-    if p.returncode != 255:
+    if p.returncode != 255:  # somehow, the p.returncode is 255 when set correctly...
         raise OSError(f'Try {path_to_wigtobigwig}wigToBigWig, got error {p.stderr}')
 
-    # TODO add mc context and strandness split
-    # prepare bedgraph
-    out_rate, out_cov = _allc_to_bedgraph(allc_path, output_prefix, chrom_size_path,
-                                          remove_additional_chrom=remove_additional_chrom,
-                                          bin_size=bin_size)
+    strandness = 'split' if split_strand else 'both'
 
-    # generate bigwig file
-    _bedgraph_to_bigwig(out_rate, chrom_size_path, path_to_wigtobigwig, remove_temp_bedgraph)
-    _bedgraph_to_bigwig(out_cov, chrom_size_path, path_to_wigtobigwig, remove_temp_bedgraph)
+    # prepare bedgraph
+    extracted_allc_paths = extract_allc(allc_path=allc_path,
+                                        output_prefix=output_prefix,
+                                        mc_contexts=mc_contexts,
+                                        chrom_size_path=chrom_size_path,
+                                        strandness=strandness,
+                                        output_format='allc',
+                                        region=region,
+                                        cov_cutoff=cov_cutoff,
+                                        tabix=False,
+                                        cpu=cpu)
+
+    with ProcessPoolExecutor(cpu) as executor:
+        # generate bigwig file
+        allc_future_dict = {}
+        for path in extracted_allc_paths:
+            future = executor.submit(_allc_to_bedgraph,
+                                     allc_path=path,
+                                     out_prefix=output_prefix,
+                                     chrom_size_path=chrom_size_path,
+                                     remove_additional_chrom=remove_additional_chrom,
+                                     bin_size=bin_size)
+            allc_future_dict[future] = path
+
+        for future in as_completed(allc_future_dict):
+            output_paths = future.result()
+            for path in output_paths:
+                executor.submit(_bedgraph_to_bigwig,
+                                input_file=path,
+                                chrom_size_path=chrom_size_path,
+                                path_to_wigtobigwig=path_to_wigtobigwig,
+                                remove_bedgraph=remove_temp)
+
+    if remove_temp:
+        subprocess.run(['rm', '-f'] + extracted_allc_paths)
     return

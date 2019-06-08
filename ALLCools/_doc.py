@@ -27,6 +27,17 @@ mc_contexts_doc = "Space separated mC context patterns to extract from ALLC. " \
 
 cov_cutoff_doc = "Max cov filter for a single site in ALLC. Sites with cov > cov_cutoff will be skipped."
 
+strandness_doc = "What to do with strand information, possible values are: " \
+                 "1. both: save +/- strand together in one file; " \
+                 "2. split: save +/- strand into two separate files, with suffix contain Watson (+) and Crick (-); " \
+                 "3. merge: This will only merge the count on adjacent CpG in +/- strands, " \
+                 "only work for CpG like context. For non-CG context, its the same as both."
+
+split_strand_doc = 'If true, Watson (+) and Crick (-) strands will be count separately'
+
+region_doc = "Only extract records from certain genome region(s) via tabix, " \
+             "multiple region can be provided in tabix form. If region is not None, will not run in parallel"
+
 
 def doc_params(**kwds):
     """\

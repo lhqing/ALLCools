@@ -31,8 +31,6 @@ def _bedtools_map(region_bed, site_bed, out_bed, save_zero_cov=True):
     return
 
 
-
-
 def _map_to_sparse_chrom_bin(input_path, output_path, chrom_size_file,
                              bin_size=500):
     """
@@ -98,8 +96,11 @@ def _transfer_bin_size(bin_size: int) -> str:
     return bin_size_str
 
 
-@doc_params(allc_path_doc=allc_path_doc, chrom_size_path_doc=chrom_size_path_doc,
-            mc_contexts_doc=mc_contexts_doc, cov_cutoff_doc=cov_cutoff_doc)
+@doc_params(allc_path_doc=allc_path_doc,
+            chrom_size_path_doc=chrom_size_path_doc,
+            mc_contexts_doc=mc_contexts_doc,
+            cov_cutoff_doc=cov_cutoff_doc,
+            split_strand_doc=split_strand_doc)
 def allc_to_region_count(allc_path: str,
                          output_prefix: str,
                          chrom_size_path: str,
@@ -129,7 +130,7 @@ def allc_to_region_count(allc_path: str,
     mc_contexts
         {mc_contexts_doc}
     split_strand
-        If true, Watson (+) and Crick (-) strands will be count separately
+        {split_strand_doc}
     region_bed_paths
         Arbitrary genomic regions can be defined in several BED files to count on.
         Space separated paths to each BED files, the fourth column of BED file should be unique id of the region.

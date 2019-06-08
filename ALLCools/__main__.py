@@ -373,19 +373,17 @@ def extract_context_allc_register_subparser(subparser):
         "--output_format",
         type=str,
         default='allc',
+        choices=['allc', 'bed5'],
         help="Output format of extracted information, possible values are: "
              "1. allc: keep the allc format; "
              "2. bed5: 5-column bed format, chrom, pos, pos, mc, cov; "
-             "3. bg-cov: bedgraph format, chrom, pos, pos, cov; "
-             "4. bg-rate: bedgraph format, chrom, pos, pos, mc/cov."
     )
 
     parser.add_argument(
         "--region",
         type=str,
         default=None,
-        help="Only extract records from certain genome region(s) via tabix, "
-             "multiple region can be provided in tabix form."
+        help=region_doc
     )
 
     parser.add_argument(
@@ -399,7 +397,7 @@ def extract_context_allc_register_subparser(subparser):
         "--cpu",
         type=int,
         default=1,
-        help='Number of processes to use.'
+        help=cpu_basic_doc
     )
 
 
@@ -449,7 +447,7 @@ def allc_to_region_count_register_subparser(subparser):
         "--split_strand",
         dest='split_strand',
         action='store_true',
-        help="If present, Watson (+) and Crick (-) strands will be count separately"
+        help=split_strand_doc
     )
     parser.set_defaults(split_strand=False)
 
@@ -495,6 +493,94 @@ def allc_to_region_count_register_subparser(subparser):
              'only apply to region count but not the chromosome count.'
     )
     parser.set_defaults(save_zero_cov=False)
+
+
+def allc_to_bigwig_register_subparser(subparser):
+    parser = subparser.add_parser('allc-to-bigwig',
+                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+                                  help="Generate bigwig file(s) from 1 ALLC file.")
+
+    parser_req = parser.add_argument_group("required arguments")
+
+    parser_req.add_argument(
+        "--allc_path",
+        type=str,
+        required=True,
+        help=allc_path_doc
+    )
+
+    parser_req.add_argument(
+        "--output_prefix",
+        type=str,
+        required=True,
+        help="Output prefix of the bigwig file(s)."
+    )
+
+    parser_req.add_argument(
+        "--chrom_size_path",
+        type=str,
+        required=True,
+        help=chrom_size_path_doc
+    )
+
+    parser_req.add_argument(
+        "--mc_contexts",
+        type=str,
+        nargs='+',
+        required=True,
+        help=mc_contexts_doc
+    )
+
+    parser.add_argument(
+        "--split_strand",
+        dest='split_strand',
+        action='store_true',
+        help=split_strand_doc
+    )
+    parser.set_defaults(split_strand=False)
+
+    parser.add_argument(
+        "--bin_size",
+        type=int,
+        default=None,
+        help="Minimum bin size of bigwig file"
+    )
+
+    parser.add_argument(
+        "--remove_additional_chrom",
+        dest='remove_additional_chrom',
+        action='store_true',
+        help=remove_additional_chrom_doc
+    )
+    parser.set_defaults(remove_additional_chrom=False)
+
+    parser.add_argument(
+        "--region",
+        type=str,
+        default=None,
+        help=region_doc
+    )
+
+    parser.add_argument(
+        "--cov_cutoff",
+        type=int,
+        default=9999,
+        help=cov_cutoff_doc
+    )
+
+    parser.add_argument(
+        "--path_to_wigtobigwig",
+        type=str,
+        default='',
+        help='Path to wigtobigwig to allow allcools to find it'
+    )
+
+    parser.add_argument(
+        "--cpu",
+        type=int,
+        default=1,
+        help=cpu_basic_doc
+    )
 
 
 def main():
@@ -554,6 +640,8 @@ def main():
         from ._extract_allc import extract_allc as func
     elif cur_command == 'allc-to-region-count':
         from ._allc_to_region_count import allc_to_region_count as func
+    elif cur_command == 'allc-to-bigwig':
+        from ._allc_to_bigwig import allc_to_bigwig as func
     else:
         log.debug(f'{cur_command} is not an valid sub-command')
         parser.parse_args(["-h"])
