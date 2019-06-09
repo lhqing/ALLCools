@@ -42,23 +42,24 @@ def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path,
             mc = int(mc)
             cov = int(cov)
             if pos >= bin_end or cur_chrom != chrom:
-                # write line
-                if temp_cov > 0:
-                    mc_level = temp_mc / temp_cov
-                    rate_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
-                    cov_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, temp_cov])) + "\n")
-
                 # reset_chrom
                 if cur_chrom != chrom:
-                    cur_chrom = chrom
                     try:
-                        cur_chrom_end = chrom_dict[chrom]
+                        this_chrom_end = chrom_dict[chrom]
                     except KeyError as e:
                         # chrom not in chrom size file
                         if remove_additional_chrom:
                             continue
                         else:
                             raise e
+                    cur_chrom_end = this_chrom_end
+
+                # write line after confirm the chrom
+                if temp_cov > 0:
+                    mc_level = temp_mc / temp_cov
+                    rate_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
+                    cov_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, temp_cov])) + "\n")
+                cur_chrom = chrom  # only update chrom after wrote the cur line
 
                 # reset bin
                 temp_mc, temp_cov = mc, cov
@@ -72,6 +73,7 @@ def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path,
             mc_level = temp_mc / temp_cov
             rate_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
             cov_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, temp_cov])) + "\n")
+
     print(f'Finish generate bedgraph for {allc_path}')
     return out_rate, out_cov
 
