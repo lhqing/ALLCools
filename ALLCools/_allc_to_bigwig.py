@@ -166,7 +166,7 @@ def allc_to_bigwig(allc_path,
         for path in extracted_allc_paths:
             future = executor.submit(_allc_to_bedgraph,
                                      allc_path=path,
-                                     out_prefix=output_prefix,
+                                     out_prefix=str(path).rstrip('.allc.tsv.gz'),  # use extracted ALLC prefix
                                      chrom_size_path=chrom_size_path,
                                      remove_additional_chrom=remove_additional_chrom,
                                      bin_size=bin_size)
