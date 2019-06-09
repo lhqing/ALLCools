@@ -72,6 +72,7 @@ def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path,
             mc_level = temp_mc / temp_cov
             rate_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
             cov_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, temp_cov])) + "\n")
+    print(f'Finish generate bedgraph for {allc_path}')
     return out_rate, out_cov
 
 
@@ -82,6 +83,7 @@ def _bedgraph_to_bigwig(input_file, chrom_size_path, path_to_wigtobigwig, remove
     subprocess.run(shlex.split(cmd), check=True)
     if remove_bedgraph:
         subprocess.run(shlex.split(f'rm -f {input_file}'), check=True)
+    print(f'Finish generate bigwig for {input_file}')
     return output_file
 
 
@@ -180,5 +182,5 @@ def allc_to_bigwig(allc_path,
                                 remove_bedgraph=remove_temp)
 
     if remove_temp:
-        subprocess.run(['rm', '-f'] + extracted_allc_paths)
+        subprocess.run(['rm', '-f'] + extracted_allc_paths, check=True)
     return

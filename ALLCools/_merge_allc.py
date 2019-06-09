@@ -307,3 +307,9 @@ def merge_allc_files(allc_paths, output_path, chrom_size_path, bin_length=100000
                                   bin_length=bin_length,
                                   cpu=cpu)
     return
+
+
+def prepare_merge_allc(group_table, output_dir):
+    # TODO take a simple table file_id, group/cluster_name, allc_path
+    # generate the command needed to merge this whole table, form it in the output dir
+    return

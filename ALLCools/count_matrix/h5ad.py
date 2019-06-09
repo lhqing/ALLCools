@@ -5,6 +5,9 @@ from ..utilities import parse_chrom_size, generate_chrom_bin_bed_dataframe
 
 def _transform_single_h5ad(adata_path, output_path, chrom_size_path,
                            bin_size, step_size, window_size, compression):
+    """
+    Resize non-overlap chrom bin count adata
+    """
     if (step_size % bin_size != 0) or (window_size % bin_size != 0):
         raise ValueError('step_size and window_size need to be integral multiple of bin_size')
     n = step_size // bin_size
