@@ -59,16 +59,22 @@ def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path,
                     mc_level = temp_mc / temp_cov
                     rate_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
                     cov_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, temp_cov])) + "\n")
-                cur_chrom = chrom  # only update chrom after wrote the cur line
+                cur_chrom = chrom  # only update chrom after wrote the cur line, cause this may belong to last chrom
 
                 # reset bin
-                temp_mc, temp_cov = mc, cov
-                bin_start = pos // bin_size * bin_size
+                _bin_start = pos // bin_size * bin_size
+                if _bin_start == bin_start:
+                    # this only happens when pos == cur_chrom_end,
+                    # we don't want the last base, just ignore it, usually happens at chrM last base...
+                    temp_mc, temp_cov = 0, 0
+                else:
+                    temp_mc, temp_cov = mc, cov
+                    bin_start = _bin_start
                 bin_end = min(cur_chrom_end, bin_start + bin_size)
             else:
                 temp_mc += mc
                 temp_cov += cov
-        # write last piece
+        # write last piece if there is anything
         if temp_cov > 0:
             mc_level = temp_mc / temp_cov
             rate_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
