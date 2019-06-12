@@ -6,7 +6,7 @@ import xarray as xr
 import pathlib
 
 from .._open import open_allc
-from ..utilities import parse_mc_pattern
+from ..utilities import parse_mc_pattern, parse_file_paths
 
 
 def count_data_to_xarray(total_data: dict):
@@ -52,6 +52,7 @@ def allc_count_motif(allc_paths, output_path, mc_contexts, c_motif_dir, count_bi
 
     """
     c_motif_dir = pathlib.Path(c_motif_dir).absolute()
+    allc_paths = parse_file_paths(allc_paths)
 
     context_to_pattern = {}
     for pattern in mc_contexts:
