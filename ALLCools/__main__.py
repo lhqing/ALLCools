@@ -655,7 +655,7 @@ def allc_count_motif_register_subparser(subparser):
         help='If present, will treat the methylation level as binary. '
              'If see mc > 0, then methylated, otherwise unmethylated. Only use this for single cell ALLC.'
     )
-    parser.set_defaults(split_strand=False)
+    parser.set_defaults(count_binary=False)
 
 
 def main():
