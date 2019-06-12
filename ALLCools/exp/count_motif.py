@@ -3,6 +3,7 @@ from collections import defaultdict
 import msgpack
 import pandas as pd
 import xarray as xr
+import pathlib
 
 from .._open import open_allc
 from ..utilities import parse_mc_pattern
@@ -22,8 +23,8 @@ def count_data_to_xarray(total_data: dict):
             pattern_df.columns.name = 'cell'
             data_list.append(xr.DataArray(pattern_df))
             mc_patterns.append(mc_pattern)
-        direction_da: xr.DataArray = xr.concat(data_list, dim='mc_pattern')
-        direction_da.coords['mc_pattern'] = mc_patterns
+        direction_da: xr.DataArray = xr.concat(data_list, dim='mc_type')
+        direction_da.coords['mc_type'] = mc_patterns
 
         dir_data_list.append(direction_da)
         directions.append(direction)
@@ -50,6 +51,8 @@ def allc_count_motif(allc_paths, output_path, mc_contexts, c_motif_dir, count_bi
     -------
 
     """
+    c_motif_dir = pathlib.Path(c_motif_dir).absolute()
+
     context_to_pattern = {}
     for pattern in mc_contexts:
         for context in parse_mc_pattern(pattern):
@@ -102,6 +105,7 @@ def allc_count_motif(allc_paths, output_path, mc_contexts, c_motif_dir, count_bi
         motif_names = msgpack.unpackb(f.read(), raw=False, use_list=False)
     motif_names = pd.Series({v: k for k, v in motif_names.items()})
     motif_names.index.name = 'motif'
+    total_da.coords['motif_names'] = motif_names
 
     total_da.to_netcdf(output_path)
     return

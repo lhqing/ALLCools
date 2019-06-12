@@ -619,10 +619,11 @@ def allc_count_motif_register_subparser(subparser):
     parser_req = parser.add_argument_group("required arguments")
 
     parser_req.add_argument(
-        "--allc_path",
+        "--allc_paths",
         type=str,
         required=True,
-        help=allc_path_doc
+        nargs='+',
+        help=allc_paths_doc
     )
 
     parser_req.add_argument(
