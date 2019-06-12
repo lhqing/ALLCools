@@ -366,7 +366,7 @@ def open_allc(file_path, mode='r', compresslevel=3, threads=1,
     if region is not None:
         # unzipped file
         if not file_path.endswith('gz'):
-            raise ValueError('File must be compressed by bgzip to use region query.')
+            raise ValueError(f'File must be compressed by bgzip to use region query. File path {file_path}')
         # normal gzipped file
         if not has_tabix(file_path):
             raise ValueError(f'Tried inspect {file_path}, '
