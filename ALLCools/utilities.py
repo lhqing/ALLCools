@@ -1,3 +1,4 @@
+import collections
 import functools
 import gzip
 import itertools
@@ -9,7 +10,6 @@ from functools import partial
 from subprocess import run, PIPE, CalledProcessError
 from typing import Union, List
 
-import collections
 import numpy as np
 import pandas as pd
 
@@ -33,6 +33,21 @@ IUPAC_TABLE = {
     'V': 'ACG',
     'N': 'ATCG'
 }
+
+COMPLIMENT_BASE = {'A': 'T', 'C': 'G', 'T': 'A', 'G': 'C',
+                   'a': 't', 'c': 'g', 't': 'a', 'g': 'c',
+                   'N': 'N', 'n': 'n'}
+
+
+def reverse_compliment(seq):
+    return ''.join(map(lambda i: COMPLIMENT_BASE[i], seq[::-1]))
+
+
+def get_allc_chroms(allc_path):
+    p = run(['tabix', '-l', allc_path],
+            check=True, stderr=PIPE, stdout=PIPE, encoding='utf8')
+    return p.stdout.strip('\n').split('\n')
+
 
 
 @functools.lru_cache(maxsize=100)
@@ -115,7 +130,7 @@ def genome_region_chunks(chrom_size_path: str,
     for chrom, chrom_length in chrom_size_dict.items():
         while cur_chrom_pos + bin_length <= chrom_length:
             # tabix region is 1 based and inclusive
-            records.append(f'{chrom}:{cur_chrom_pos}-{cur_chrom_pos+bin_length-1}')
+            records.append(f'{chrom}:{cur_chrom_pos}-{cur_chrom_pos + bin_length - 1}')
             cur_chrom_pos += bin_length
             record_lengths.append(bin_length)
         else:

@@ -610,6 +610,53 @@ def allc_to_bigwig_register_subparser(subparser):
     )
 
 
+def allc_count_motif_register_subparser(subparser):
+    parser = subparser.add_parser('allc-count-motif',
+                                  aliases=['motif'],
+                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+                                  help="Count over genome-wise motif regions")
+
+    parser_req = parser.add_argument_group("required arguments")
+
+    parser_req.add_argument(
+        "--allc_path",
+        type=str,
+        required=True,
+        help=allc_path_doc
+    )
+
+    parser_req.add_argument(
+        "--output_path",
+        type=str,
+        required=True,
+        help="Output path of the netCDF file."
+    )
+
+    parser_req.add_argument(
+        "--mc_contexts",
+        type=str,
+        nargs='+',
+        required=True,
+        help=mc_contexts_doc
+    )
+
+    parser_req.add_argument(
+        "--c_motif_dir",
+        type=str,
+        required=True,
+        help='Path to the C-Motif directory.'
+    )
+
+    parser.add_argument(
+        "--count_binary",
+        dest='count_binary',
+        action='store_true',
+        help='If present, will treat the methylation level as binary. '
+             'If see mc > 0, then methylated, otherwise unmethylated. Only use this for single cell ALLC.'
+    )
+    parser.set_defaults(split_strand=False)
+
+
 def main():
     parser = argparse.ArgumentParser(description=DESCRIPTION,
                                      epilog=EPILOG,
@@ -669,6 +716,8 @@ def main():
         from ._allc_to_region_count import allc_to_region_count as func
     elif cur_command in ['allc-to-bigwig', '2bw']:
         from ._allc_to_bigwig import allc_to_bigwig as func
+    elif cur_command in ['allc-count-motif']:
+        from .exp.count_motif import allc_count_motif as func
     else:
         log.debug(f'{cur_command} is not an valid sub-command')
         parser.parse_args(["-h"])

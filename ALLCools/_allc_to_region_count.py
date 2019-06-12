@@ -32,6 +32,11 @@ def _bedtools_map(region_bed, site_bed, out_bed, save_zero_cov=True):
     return
 
 
+def _map_to_non_overlap_bed():
+    # TODO
+    return
+
+
 def _map_to_sparse_chrom_bin(input_path, output_path, chrom_size_file,
                              bin_size=500):
     """
