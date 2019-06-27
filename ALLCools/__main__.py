@@ -89,6 +89,13 @@ def setup_logging(stdout=False, quiet=False, debug=False):
     log.addHandler(stream_handler)
 
 
+def _str_to_bool(v: str) -> bool:
+    if v.lower() in {'true', '1', 't', 'y', 'yes', 'yeah', 'yup', 'certainly', 'uh-huh'}:
+        return True
+    else:
+        return False
+
+
 def bam_to_allc_register_subparser(subparser):
     # TODO add alias to arguments
     parser = subparser.add_parser('bam-to-allc',
@@ -314,8 +321,8 @@ def merge_allc_register_subparser(subparser):
         type=int,
         default=10,
         help=f"{cpu_basic_doc} The real CPU usage is ~1.5 times than this number, "
-             f"due to the sub processes of handling ALLC files using tabix/bgzip. "
-             f"Monitor the CPU and Memory usage when running this function."
+        f"due to the sub processes of handling ALLC files using tabix/bgzip. "
+        f"Monitor the CPU and Memory usage when running this function."
     )
 
     parser.add_argument(
@@ -482,6 +489,14 @@ def allc_to_region_count_register_subparser(subparser):
         nargs='+',
         default=None,
         help="Space separated names for each BED file provided in region_bed_paths."
+    )
+
+    parser.add_argument(
+        "--non_overlap_bed",
+        type=_str_to_bool,
+        nargs='+',
+        default=False,
+        help="Whether the BED file(s) record non-overlap regions. If true, will use fast function to calculate."
     )
 
     parser.add_argument(

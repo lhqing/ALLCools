@@ -49,7 +49,6 @@ def get_allc_chroms(allc_path):
     return p.stdout.strip('\n').split('\n')
 
 
-
 @functools.lru_cache(maxsize=100)
 def parse_mc_pattern(pattern: str) -> set:
     """

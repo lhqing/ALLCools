@@ -320,6 +320,8 @@ def bam_to_allc(bam_path,
             output_path += '.gz'
 
     if cpu > 1:
+        raise NotImplementedError
+
         temp_out_paths = []
         for batch_id, region in enumerate(regions):
             temp_out_paths.append(output_path + f'.batch_{batch_id}.tmp.tsv.gz')
@@ -353,6 +355,8 @@ def bam_to_allc(bam_path,
             # aggregate ALLC
             with open_allc(output_path, mode='w', compresslevel=compress_level,
                            threads=1, region=None) as out_f:
+                # TODO: Parallel ALLC is overlaped, the split by region strategy only split reads, but reads can overlap
+                # need to adjust and merge end rows in aggregate ALLC
                 for out_temp_path in temp_out_paths:
                     with open_allc(out_temp_path) as f:
                         for line in f:
