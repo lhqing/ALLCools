@@ -34,7 +34,7 @@ def _bedtools_map(region_bed, site_bed, out_bed, save_zero_cov=True):
 
 def _iter_region_bed(region_bed_handle):
     for line in region_bed_handle:
-        chrom, start, end, region_id, *_ = line.split('\t')
+        chrom, start, end, region_id, *_ = line.rstrip('\n').split('\t')
         yield chrom, int(start), int(end), region_id
 
 
@@ -78,7 +78,7 @@ def _map_to_non_overlap_bed(input_path, output_path, region_bed_path, chrom_size
                             try:
                                 region_chrom, _region_start, _region_end, _region_id = bed_line_generator.__next__()
                                 if _region_start < region_end:
-                                    raise ValueError(f'Bed file is overlaped on region {region_id} and {_region_id}')
+                                    raise ValueError(f'Bed file is overlapped on region {region_id} and {_region_id}')
                                 else:
                                     region_start = _region_start
                                     region_end = _region_end
@@ -188,7 +188,7 @@ def allc_to_region_count(allc_path: str,
                          output_prefix: str,
                          chrom_size_path: str,
                          mc_contexts: List[str],
-                         split_strand: bool = True,
+                         split_strand: bool = False,
                          region_bed_paths: str = None,
                          region_bed_names: str = None,
                          non_overlap_bed: bool = False,
