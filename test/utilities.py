@@ -2,8 +2,6 @@ import os
 import shlex
 import subprocess
 
-REFERENCE_FASTA = '/gale/netapp/home/hanliu/ref/mouse/genome/fasta/with_chrl/mm10_with_chrl.fa'
-
 
 def data_file_path(path):
     return os.path.join(os.path.dirname(__file__), 'file', path)
@@ -23,3 +21,7 @@ def run_command(cmd):
         print(e.stdout)
         print(e.stderr)
         raise e
+
+
+REFERENCE_FASTA = '/home/hanliu/ref/mouse/genome/fasta/with_chrl/mm10_with_chrl.fa'
+CHROM_SIZE_PATH = data_file_path('mm10.main.chrom.sizes')

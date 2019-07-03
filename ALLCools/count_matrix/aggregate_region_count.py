@@ -216,7 +216,7 @@ def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_
 
 
 def aggregate_region_count_to_mcds(count_table_dataframe):
-    # TODO write prepare mcds
+    # TODO write prepare mcds.py
     # TODO write test
     # MCDS dimension: cell, feature, count_type, mc_type, strand
     # count_table_dataframe: at least cell, feature, file_path, optional mc_type, strand
