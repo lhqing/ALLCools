@@ -12,6 +12,60 @@ from ..utilities import parse_file_paths, \
     chrom_dict_to_id_index, \
     get_bin_id, \
     generate_chrom_bin_bed_dataframe
+from .._allc_to_region_count import allc_to_region_count
+
+
+def _batch_allc_to_region_count(allc_table,
+                                output_dir,
+                                chrom_size_path,
+                                mc_contexts,
+                                split_strand,
+                                region_bed_paths=None,
+                                region_bed_names=None,
+                                cpu=5):
+    allc_series = pd.read_csv(allc_table, header=None, index_col=0, squeeze=True, sep='\t')
+    if not isinstance(allc_series, pd.Series):
+        raise ValueError('allc_table malformed, should only have 2 columns, 1. file_uid, 2. file_path')
+    if allc_series.index.duplicated().sum() != 0:
+        raise ValueError('allc_table file uid have duplicates (1st column)')
+
+    output_dir = pathlib.Path(output_dir).resolve()
+    output_dir.mkdir(exist_ok=True)
+
+    # dump region_bed_path to output_dir for future records
+    if region_bed_paths is not None:
+        for region_bed_name, region_bed_path in zip(region_bed_names, region_bed_paths):
+            bed_df = pd.read_csv(region_bed_path, header=None, index_col=3, sep='\t')
+            bed_df['int_id'] = list(range(0, bed_df.shape[0]))
+            bed_df['int_id'].to_msgpack(output_dir / f'REGION_ID_{region_bed_name}.msg')
+
+    with ProcessPoolExecutor(cpu) as executor:
+        futures = {}
+        for cell_id, allc_path in allc_series.iteritems():
+            future = executor.submit(allc_to_region_count,
+                                     allc_path=allc_path,
+                                     output_prefix=str(output_dir / cell_id),
+                                     chrom_size_path=chrom_size_path,
+                                     mc_contexts=mc_contexts,
+                                     split_strand=split_strand,
+                                     region_bed_paths=region_bed_paths,
+                                     region_bed_names=region_bed_names,
+                                     bin_sizes=[10000, 100000],
+                                     cov_cutoff=2,
+                                     save_zero_cov=False,
+                                     remove_tmp=True,
+                                     cpu=1)
+            futures[future] = cell_id
+
+        records = {}
+        for future in as_completed(futures):
+            cell_id = futures[future]
+            try:
+                output_path_collect = future.result()
+                records[cell_id] = output_path_collect
+            except Exception as e:
+                print(f'{cell_id} raised an error!')
+                raise e
 
 
 def _bin_count_table_to_csr_npz(bin_count_tables,

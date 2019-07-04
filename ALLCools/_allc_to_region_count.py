@@ -236,3 +236,4 @@ def allc_to_region_count(allc_path: str,
 
     # TODO collect all output path, return a informative dict
     return output_collection
+
