@@ -215,6 +215,14 @@ def aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_
     return
 
 
+def _region_count_table_to_csr_npz():
+    return
+
+
+def _csr_matrix_to_mcds():
+    return
+
+
 def aggregate_region_count_to_mcds(count_table_dataframe):
     # TODO write prepare mcds.py
     # TODO write test

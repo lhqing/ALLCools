@@ -32,7 +32,7 @@ def _bedtools_map(region_bed, site_bed, out_bed, chrom_size_path, save_zero_cov=
                 break
             if save_zero_cov or (not line.endswith('\t0\n')):
                 out_handle.write(line)
-    return
+    return out_bed
 
 
 def _map_to_sparse_chrom_bin(site_bed, out_bed, chrom_size_path,
@@ -223,13 +223,16 @@ def allc_to_region_count(allc_path: str,
                                              chrom_size_path=chrom_size_path,
                                              bin_size=bin_size)
                     futures.append(future)
+        output_collection = []
         for future in as_completed(futures):
             # call all future.result to make sure finished successfully
-            future.result()
+            output_collection.append(future.result())
 
     if remove_tmp:
         print('Remove temporal files.')
         for site_bed_path in path_dict.values():
             subprocess.run(['rm', '-f', site_bed_path])
             subprocess.run(['rm', '-f', site_bed_path + '.tbi'])
-    return
+
+    # TODO collect all output path, return a informative dict
+    return output_collection
