@@ -118,6 +118,7 @@ def allc_to_region_count(allc_path: str,
                          save_zero_cov: bool = False,
                          remove_tmp: bool = True,
                          cpu: int = 1):
+    # TODO remove the save zero option and always assume sparse for chrombin and full for region bed
     """\
     Calculate mC and cov at regional level. Region can be provided in 2 forms:
     1. BED file, provided by region_bed_paths, containing arbitrary regions and use bedtools map to calculate;
@@ -148,7 +149,7 @@ def allc_to_region_count(allc_path: str,
     cov_cutoff
         {cov_cutoff_doc}
     save_zero_cov
-        Whether to save the regions that have 0 cov, only apply to bed region count but not the chromosome bin count
+        Whether to save the regions that have 0 cov, only apply to region count but not the chromosome count
     remove_tmp
         Whether to remove the temporary BED file
     cpu
