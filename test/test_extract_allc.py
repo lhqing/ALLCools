@@ -15,5 +15,5 @@ def test_extract_allc():
                              region=None,
                              cov_cutoff=9999,
                              tabix=True,
-                             cpu=cpu,
-                             _running_signal=True)
+                             cpu=cpu)
+    # TODO add correct answer and check the file carefully

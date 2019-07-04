@@ -16,22 +16,22 @@ def _bedtools_map(region_bed, site_bed, out_bed, chrom_size_path, save_zero_cov=
     Use bedtools map to map site_bed format into any bed file provided.
     """
     cmd = f'bedtools map -a {region_bed} -b {site_bed} -c 4,5 -o sum,sum -null 0 -g {chrom_size_path}'
-    bed_out = subprocess.run(shlex.split(cmd),
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                             encoding='utf8', check=True)
+    bed_out = subprocess.Popen(shlex.split(cmd),
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE,
+                               encoding='utf8')
     if out_bed.endswith('gz'):
         opener = partial(open_gz, mode='wt')
     else:
         opener = partial(open, mode='w')
 
     with opener(out_bed) as out_handle:
-        for line in bed_out.stdout:
-            if save_zero_cov:
+        while True:
+            line = bed_out.stdout.readline()
+            if line == '':
+                break
+            if save_zero_cov or (not line.endswith('\t0\n')):
                 out_handle.write(line)
-            else:
-                # the last item is cov
-                if not line.endswith('\t0\n'):
-                    out_handle.write(line)
     return
 
 
@@ -111,8 +111,8 @@ def allc_to_region_count(allc_path: str,
                          chrom_size_path: str,
                          mc_contexts: List[str],
                          split_strand: bool = False,
-                         region_bed_paths: str = None,
-                         region_bed_names: str = None,
+                         region_bed_paths: List[str] = None,
+                         region_bed_names: List[str] = None,
                          bin_sizes: List[int] = None,
                          cov_cutoff: int = 9999,
                          save_zero_cov: bool = False,
@@ -148,7 +148,7 @@ def allc_to_region_count(allc_path: str,
     cov_cutoff
         {cov_cutoff_doc}
     save_zero_cov
-        Whether to save the regions that have 0 cov, only apply to region count but not the chromosome count
+        Whether to save the regions that have 0 cov, only apply to bed region count but not the chromosome bin count
     remove_tmp
         Whether to remove the temporary BED file
     cpu
@@ -207,6 +207,7 @@ def allc_to_region_count(allc_path: str,
                                              site_bed=site_bed_path,
                                              out_bed=output_prefix + f'.{region_name}'
                                              f'_{info_type}.{save_flag}.bed.gz',
+                                             chrom_size_path=chrom_size_path,
                                              save_zero_cov=save_zero_cov)
                     futures.append(future)
 
@@ -215,10 +216,10 @@ def allc_to_region_count(allc_path: str,
             for bin_size in bin_sizes:
                 for info_type, site_bed_path in path_dict.items():
                     future = executor.submit(_map_to_sparse_chrom_bin,
-                                             input_path=site_bed_path,
-                                             output_path=output_prefix + f'.chrom{_transfer_bin_size(bin_size)}'
+                                             site_bed=site_bed_path,
+                                             out_bed=output_prefix + f'.chrom{_transfer_bin_size(bin_size)}'
                                              f'_{info_type}.sparse.bed.gz',
-                                             chrom_size_file=chrom_size_path,
+                                             chrom_size_path=chrom_size_path,
                                              bin_size=bin_size)
                     futures.append(future)
         for future in as_completed(futures):
@@ -229,4 +230,5 @@ def allc_to_region_count(allc_path: str,
         print('Remove temporal files.')
         for site_bed_path in path_dict.values():
             subprocess.run(['rm', '-f', site_bed_path])
+            subprocess.run(['rm', '-f', site_bed_path + '.tbi'])
     return

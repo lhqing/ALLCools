@@ -115,8 +115,7 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
                                      region=region,
                                      cov_cutoff=cov_cutoff,
                                      cpu=1,
-                                     tabix=False,
-                                     _running_signal=False)
+                                     tabix=False)
             future_dict[future] = chunk_id
 
         output_records = []
@@ -150,9 +149,6 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
                 for path in need_tabix:
                     tabix_executor.submit(tabix_allc, path)
 
-    # delete running signal
-    subprocess.run(['rm', '-f', output_prefix + '.running'])
-
     return real_out_paths
 
 
@@ -172,8 +168,7 @@ def extract_allc(allc_path: str,
                  region: str = None,
                  cov_cutoff: int = 9999,
                  tabix: bool = True,
-                 cpu=1,
-                 _running_signal=True) -> List[str]:
+                 cpu=1) -> List[str]:
     """\
     Extract information (strand, context) from 1 ALLC file.
     Save to several different format.
@@ -206,15 +201,12 @@ def extract_allc(allc_path: str,
         {cpu_basic_doc}
         This function parallel on region level and will generate a bunch of small files if cpu > 1.
         Do not use cpu > 1 for single cell region count. For single cell data, parallel on cell level is better.
-    _running_signal
-        internal use, do not set
 
     Returns
     -------
     A list of output file paths, not include index files.
     """
     # TODO write test
-
     parallel_chunk_size = 100000000
 
     # determine region
@@ -265,20 +257,6 @@ def extract_allc(allc_path: str,
             for mc_pattern in parsed_context_set:
                 context_handle[mc_pattern].append(_handle)
 
-    # check if all file exist, and no running signal, return right away
-    flag = True
-    for path in output_path_collect:
-        if not pathlib.Path(path).exists():
-            flag = False
-    signal_path = output_prefix + '.running'
-    if flag and not pathlib.Path(signal_path).exists():
-        return output_path_collect
-    else:
-        if _running_signal:
-            # create a running signal, delete when finish
-            with open(signal_path, 'w') as _:
-                pass
-
     # determine parallel or not
     cpu = int(cpu)
     if cpu > 1 and region is None:
@@ -319,35 +297,29 @@ def extract_allc(allc_path: str,
     for handle in handle_collect:
         handle.close()
 
-    if 'allc' in out_suffix:
-        for mc_context in mc_contexts:
-            # tabix ALLC file
-            if strandness == 'Split':
-                in_path = output_prefix + f'.{mc_context}-Watson.{out_suffix}'
-                if tabix:
-                    tabix_allc(in_path)
-                in_path = output_prefix + f'.{mc_context}-Crick.{out_suffix}'
-                if tabix:
-                    tabix_allc(in_path)
-            elif strandness == 'MergeTmp':
-                in_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
-                if 'CG' in mc_context:
-                    out_path = output_prefix + f'.{mc_context}-Merge.{out_suffix}'
-                    _merge_cg_strand(in_path, out_path)
-                    run(['rm', '-f', in_path], check=True)
-                else:
-                    # for non-CG, there is no need to merge strand
-                    out_path = output_prefix + f'.{mc_context}-Both.{out_suffix}'
-                    run(['mv', in_path, out_path], check=True)
-                if tabix:
-                    tabix_allc(out_path)
+    for mc_context in mc_contexts:
+        # tabix ALLC file
+        if strandness == 'Split':
+            in_path = output_prefix + f'.{mc_context}-Watson.{out_suffix}'
+            if tabix:
+                tabix_allc(in_path)
+            in_path = output_prefix + f'.{mc_context}-Crick.{out_suffix}'
+            if tabix:
+                tabix_allc(in_path)
+        elif strandness == 'MergeTmp':
+            in_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
+            if ('CG' in mc_context) and ('allc' in out_suffix):
+                out_path = output_prefix + f'.{mc_context}-Merge.{out_suffix}'
+                _merge_cg_strand(in_path, out_path)
+                run(['rm', '-f', in_path], check=True)
             else:
-                in_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
-                if tabix:
-                    tabix_allc(in_path)
-
-    # delete running signal
-    if _running_signal:
-        subprocess.run(['rm', '-f', output_prefix + '.running'], check=True)
-
+                # for non-CG, there is no need to merge strand
+                out_path = output_prefix + f'.{mc_context}-Both.{out_suffix}'
+                run(['mv', in_path, out_path], check=True)
+            if tabix:
+                tabix_allc(out_path)
+        else:
+            in_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
+            if tabix:
+                tabix_allc(in_path)
     return output_path_collect

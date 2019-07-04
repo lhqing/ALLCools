@@ -29,3 +29,4 @@ pathlib.Path(os.path.join(os.path.dirname(__file__), 'output')).mkdir(exist_ok=T
 
 REFERENCE_FASTA = '/home/hanliu/ref/mouse/genome/fasta/with_chrl/mm10_with_chrl.fa'
 CHROM_SIZE_PATH = data_file_path('mm10.main.chrom.sizes')
+GENE_BED = '/home/hanliu/ref/mouse/gencode/vm16/gencode.vM16.annotation.gene.bed.gz'

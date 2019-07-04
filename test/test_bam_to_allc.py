@@ -26,6 +26,7 @@ def test_bam_to_allc_api():
             assert ll[3][1] == 'C'
             assert int(ll[4]) <= int(ll[5])
 
+    """
     # Parallel
     bam_to_allc(bam_path=data_file_path('Cell02.bam'),
                 reference_fasta=REFERENCE_FASTA,
@@ -46,6 +47,7 @@ def test_bam_to_allc_api():
             assert len(ll[3]) == 3
             assert ll[3][0] == 'C'
             assert int(ll[4]) <= int(ll[5])
+    """
     return
 
 
