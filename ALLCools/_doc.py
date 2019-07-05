@@ -38,6 +38,9 @@ split_strand_doc = 'If true, Watson (+) and Crick (-) strands will be count sepa
 region_doc = "Only extract records from certain genome region(s) via tabix, " \
              "multiple region can be provided in tabix form. If region is not None, will not run in parallel"
 
+bin_sizes_doc = "Fix-size genomic bins can be defined by bin_sizes and chrom_size_path. " \
+                "Space separated sizes of genome bins, each size will be count separately."
+
 
 def doc_params(**kwds):
     """\

@@ -5,10 +5,18 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from functools import partial
 from typing import List
 
+import pandas as pd
+
 from ._doc import *
 from ._extract_allc import extract_allc
 from ._open import open_gz
-from .utilities import check_tbi_chroms, parse_chrom_size, chrom_dict_to_id_index, get_bin_id, _transfer_bin_size
+from .utilities import \
+    check_tbi_chroms, \
+    parse_chrom_size, \
+    chrom_dict_to_id_index, \
+    get_bin_id, \
+    _transfer_bin_size, \
+    generate_chrom_bin_bed_dataframe
 
 
 def _bedtools_map(region_bed, site_bed, out_bed, chrom_size_path, save_zero_cov=True):
@@ -90,7 +98,8 @@ def _map_to_sparse_chrom_bin(site_bed, out_bed, chrom_size_path,
             mc_contexts_doc=mc_contexts_doc,
             cov_cutoff_doc=cov_cutoff_doc,
             split_strand_doc=split_strand_doc,
-            cpu_basic_doc=cpu_basic_doc)
+            cpu_basic_doc=cpu_basic_doc,
+            bin_sizes_doc=bin_sizes_doc)
 def allc_to_region_count(allc_path: str,
                          output_prefix: str,
                          chrom_size_path: str,
@@ -129,8 +138,7 @@ def allc_to_region_count(allc_path: str,
     region_bed_names
         Space separated names for each BED file provided in region_bed_paths.
     bin_sizes
-        Fix-size genomic bins can be defined by bin_sizes and chrom_size_path.
-        Space separated sizes of genome bins, each size will be count separately.
+        {bin_sizes_doc}
     cov_cutoff
         {cov_cutoff_doc}
     save_zero_cov
@@ -163,7 +171,7 @@ def allc_to_region_count(allc_path: str,
                 raise ValueError(f'The bed file {region_bed_path} chromosome order is different '
                                  f'from the {chrom_size_path}')
 
-    print('Extract ALLC context')
+    # print('Extract ALLC context')
     output_prefix = output_prefix.rstrip('.')
     strandness = 'split' if split_strand else 'both'
     output_paths = extract_allc(allc_path=allc_path,
@@ -184,7 +192,7 @@ def allc_to_region_count(allc_path: str,
     with ProcessPoolExecutor(cpu) as executor:
         futures = []
         if region_bed_paths is not None:
-            print('Map to regions.')
+            # print('Map to regions.')
             save_flag = 'full' if save_zero_cov else 'sparse'
             for region_name, region_bed_path in zip(region_bed_names, region_bed_paths):
                 for info_type, site_bed_path in path_dict.items():
@@ -198,7 +206,7 @@ def allc_to_region_count(allc_path: str,
                     futures.append(future)
 
         if bin_sizes is not None:
-            print('Map to chromosome bins.')
+            # print('Map to chromosome bins.')
             for bin_size in bin_sizes:
                 for info_type, site_bed_path in path_dict.items():
                     future = executor.submit(_map_to_sparse_chrom_bin,
@@ -214,7 +222,7 @@ def allc_to_region_count(allc_path: str,
             output_collection.append(future.result())
 
     if remove_tmp:
-        print('Remove temporal files.')
+        # print('Remove temporal files.')
         for site_bed_path in path_dict.values():
             subprocess.run(['rm', '-f', site_bed_path])
             subprocess.run(['rm', '-f', site_bed_path + '.tbi'])
@@ -222,3 +230,83 @@ def allc_to_region_count(allc_path: str,
     # TODO collect all output path, return a informative dict
     return output_collection
 
+
+def batch_allc_to_region_count(allc_series,
+                               output_dir,
+                               chrom_size_path,
+                               mc_contexts,
+                               split_strand,
+                               bin_sizes=None,
+                               region_bed_paths=None,
+                               region_bed_names=None,
+                               cov_cutoff=9999,
+                               cpu=5):
+    output_dir = pathlib.Path(output_dir).resolve()
+    output_dir.mkdir(exist_ok=True)
+
+    # dump region_bed_path to output_dir for future records
+    if region_bed_paths is not None:
+        for region_bed_name, region_bed_path in zip(region_bed_names, region_bed_paths):
+            bed_df = pd.read_csv(region_bed_path, header=None, index_col=3, sep='\t')
+            bed_df.columns = ['chrom', 'start', 'end']
+            bed_df.index.name = region_bed_name
+            bed_df['int_id'] = list(range(0, bed_df.shape[0]))
+            bed_df['int_id'].to_msgpack(output_dir / f'REGION_ID_{region_bed_name}.msg')
+            bed_df.iloc[:, :3].to_msgpack(output_dir / f'REGION_BED_{region_bed_name}.msg')
+
+    if bin_sizes is not None:
+        for bin_size in bin_sizes:
+            bin_size_chr = _transfer_bin_size(bin_size)
+            region_name = f'chrom{bin_size_chr}'
+            bed_df = generate_chrom_bin_bed_dataframe(chrom_size_path=chrom_size_path,
+                                                      window_size=bin_size,
+                                                      step_size=bin_size)
+            bed_df['int_id'] = list(range(0, bed_df.shape[0]))
+            bed_df['int_id'].to_msgpack(output_dir / f'REGION_ID_{region_name}.msg')
+            bed_df.iloc[:, :3].to_msgpack(output_dir / f'REGION_BED_chrom{bin_size_chr}.msg')
+
+    with ProcessPoolExecutor(cpu) as executor:
+        futures = {}
+        for cell_id, allc_path in allc_series.iteritems():
+            future = executor.submit(allc_to_region_count,
+                                     allc_path=allc_path,
+                                     output_prefix=str(output_dir / cell_id),
+                                     chrom_size_path=chrom_size_path,
+                                     mc_contexts=mc_contexts,
+                                     split_strand=split_strand,
+                                     region_bed_paths=region_bed_paths,
+                                     region_bed_names=region_bed_names,
+                                     bin_sizes=bin_sizes,
+                                     cov_cutoff=cov_cutoff,
+                                     save_zero_cov=False,
+                                     remove_tmp=True,
+                                     cpu=1)
+            futures[future] = cell_id
+
+        records = {}
+        for future in as_completed(futures):
+            cell_id = futures[future]
+            try:
+                output_path_collect = future.result()
+                records[cell_id] = output_path_collect
+            except Exception as e:
+                print(f'{cell_id} raised an error!')
+                raise e
+
+    path_records = []
+    for file_id, out_paths in records.items():
+        for path in out_paths:
+            file_name = pathlib.Path(path).name
+            *_, region_mc_type_strand, _, _, _ = file_name.split('.')
+            region_name, mc_type, strandness = region_mc_type_strand.replace('_', '-').split('-')
+            path_dict = {
+                'region_name': region_name,
+                'mc_type': mc_type,
+                'strandness': strandness,
+                'file_id': file_id,
+                'file_path': path
+            }
+            path_records.append(path_dict)
+    path_df = pd.DataFrame(path_records)
+    path_df.to_msgpack(output_dir / 'REGION_COUNT_SUMMARY.msg')
+    return
