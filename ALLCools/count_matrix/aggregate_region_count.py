@@ -1,5 +1,6 @@
 import pathlib
 import subprocess
+from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import numpy as np
@@ -22,7 +23,7 @@ def _batch_allc_to_region_count(allc_table,
                                 chrom_size_path,
                                 mc_contexts,
                                 split_strand,
-                                bin_sizes,
+                                bin_sizes=None,
                                 region_bed_paths=None,
                                 region_bed_names=None,
                                 cpu=5):
@@ -42,8 +43,11 @@ def _batch_allc_to_region_count(allc_table,
     if region_bed_paths is not None:
         for region_bed_name, region_bed_path in zip(region_bed_names, region_bed_paths):
             bed_df = pd.read_csv(region_bed_path, header=None, index_col=3, sep='\t')
+            bed_df.columns = ['chrom', 'start', 'end']
+            bed_df.index.name = region_bed_name
             bed_df['int_id'] = list(range(0, bed_df.shape[0]))
             bed_df['int_id'].to_msgpack(output_dir / f'REGION_ID_{region_bed_name}.msg')
+            bed_df.iloc[:, :3].to_msgpack(output_dir / f'REGION_BED_{region_bed_name}.msg')
 
     if bin_sizes is not None:
         for bin_size in bin_sizes:
@@ -54,6 +58,7 @@ def _batch_allc_to_region_count(allc_table,
                                                       step_size=bin_size)
             bed_df['int_id'] = list(range(0, bed_df.shape[0]))
             bed_df['int_id'].to_msgpack(output_dir / f'REGION_ID_{region_name}.msg')
+            bed_df.iloc[:, :3].to_msgpack(output_dir / f'REGION_BED_chrom{bin_size_chr}.msg')
 
     with ProcessPoolExecutor(cpu) as executor:
         futures = {}
@@ -307,13 +312,25 @@ def _region_count_table_to_csr_npz(region_count_tables,
                                    region_id_map,
                                    output_prefix,
                                    compression=True):
+    """
+    helper func of aggregate_region_count_to_mcds
+
+    Take a list of region count table paths, read,
+    aggregate them into a 2D sparse matrix and save the mC and COV separately.
+    This function don't take care of any path selection, but assume all region_count_table is homogeneous type
+    It return the saved file path
+    """
     output_prefix = output_prefix.rstrip('.')
     mc_path = output_prefix + '.mc.npz'
     cov_path = output_prefix + '.cov.npz'
     if pathlib.Path(mc_path).exists() and pathlib.Path(cov_path).exists():
         return mc_path, cov_path
 
-    count_table_path_list = parse_file_paths(region_count_tables)
+    if len(region_count_tables) > 1:
+        count_table_path_list = parse_file_paths(region_count_tables)
+    else:
+        # only one path in the list, which is possible for last chunk
+        count_table_path_list = [pathlib.Path(region_count_tables[0]).resolve()]
 
     # read region_id to int_id (col location) map
     if isinstance(region_id_map, str):
@@ -356,6 +373,13 @@ def _csr_matrix_to_dataarray(matrix_table,
                              row_name, row_index,
                              col_name, col_index,
                              other_dim_info):
+    """
+    helper func of aggregate_region_count_to_mcds
+
+    This function aggregate sparse array files into a single xarray.DataArray,
+    combining cell chunks, mc/cov count type together.
+    The matrix_table provide all file paths, each row is for a cell chunk, with mc and cov matrix path separately.
+    """
     total_mc_matrix = ss.vstack([ss.load_npz(path) for path in matrix_table['mc']]).todense()
     total_cov_matrix = ss.vstack([ss.load_npz(path) for path in matrix_table['cov']]).todense()
 
@@ -378,50 +402,78 @@ def _csr_matrix_to_dataarray(matrix_table,
     return data_array
 
 
-def aggregate_region_count_to_mcds(output_dir, dataset_name, chunk_size=100, row_name='cell'):
+def aggregate_region_count_to_mcds(output_dir, dataset_name, chunk_size=100, row_name='cell', cpu=1, remove_files=True):
     # TODO write prepare mcds.py
     # TODO write test
     output_dir = pathlib.Path(output_dir)
     summary_df = pd.read_msgpack(output_dir / 'REGION_COUNT_SUMMARY.msg')
     file_uids = summary_df['file_id'].unique()
+    print(file_uids)
 
-    csr_matrix_records = {}
     region_index_dict = {}
-    for (mc_type, region_name, strandness), sub_summary_df in summary_df.groupby(
-            ['mc_type', 'region_name', 'strandness']):
-        if region_name not in region_index_dict:
-            region_index = pd.read_msgpack(output_dir / f'REGION_ID_{region_name}.msg').index
-            region_index.name = region_name
-            region_index_dict[region_name] = region_index
+    additional_coords = {}
+    with ProcessPoolExecutor(cpu) as executor:
+        # aggregate count table into 2D sparse array, parallel in cell chunks
+        future_dict = {}
+        for (mc_type, region_name, strandness), sub_summary_df in summary_df.groupby(
+                ['mc_type', 'region_name', 'strandness']):
+            sub_summary_df = sub_summary_df.set_index('file_id')
+            if region_name not in region_index_dict:
+                region_index = pd.read_msgpack(output_dir / f'REGION_ID_{region_name}.msg').index
+                region_index.name = region_name
+                region_index_dict[region_name] = region_index
 
-        records = []
-        for chunk_id, chunk_start in enumerate(range(0, file_uids.size, chunk_size)):
-            file_id_chunk = file_uids[chunk_start: chunk_start + chunk_size]
-            file_paths = sub_summary_df.loc[file_id_chunk]['file_path']
+                region_bed = pd.read_msgpack(output_dir / f'CHROM_SIZE_BED_chrom{region_name}.msg')
+                for col, value in region_bed.iteritems():
+                    _col = f'{region_name}_{col}'
+                    value.index.name = region_name
+                    additional_coords[_col] = value
 
-            mc_path, cov_path = _region_count_table_to_csr_npz(region_count_tables=file_paths,
-                                                               region_id_map='./5E/REGION_ID_gene.msg',
-                                                               output_prefix='5E/agg',
-                                                               compression=True)
-            records.append({'mc': mc_path, 'cov': cov_path})
-        matrix_table = pd.DataFrame(records)
-        if strandness.lower() == 'crick':
-            strandness = '-'
-        elif strandness.lower() == 'watson':
-            strandness = '+'
-        else:
-            strandness = 'both'
-        csr_matrix_records[(mc_type, region_name, strandness)] = matrix_table
+            for chunk_id, chunk_start in enumerate(range(0, file_uids.size, chunk_size)):
+                file_id_chunk = file_uids[chunk_start: chunk_start + chunk_size]
+                file_paths = sub_summary_df.loc[file_id_chunk]['file_path'].tolist()
+                print(file_paths)
+                future = executor.submit(_region_count_table_to_csr_npz,
+                                         region_count_tables=file_paths,
+                                         region_id_map=str(output_dir / f'REGION_ID_{region_name}.msg'),
+                                         output_prefix=str(
+                                             output_dir / f'{region_name}_{mc_type}_{strandness}_{chunk_id}'),
+                                         compression=True)
+                future_dict[future] = (mc_type, region_name, strandness, chunk_id)
 
+        records = defaultdict(list)
+        for future in as_completed(future_dict):
+            mc_type, region_name, strandness, chunk_id = future_dict[future]
+            try:
+                mc_path, cov_path = future.result()
+                records[(mc_type, region_name, strandness)] \
+                    .append({'mc': mc_path, 'cov': cov_path, 'index': chunk_id})
+            except Exception as e:
+                print(f'Error when calculating mc-{mc_type} region-{region_name} '
+                      f'strand-{strandness} chunk-{chunk_id}.')
+                raise e
+
+        # IMPORTANT order csr_matrix_records by chunk_id
+        csr_matrix_records = {k: pd.DataFrame(v).set_index('index').sort_index()
+                              for k, v in records.items()}
+
+    # aggregate all the sparse array into a single mcds, this step load everything and need large memory
     region_da_records = {}
     for region_name in summary_df['region_name'].unique():
         mc_type_da_records = []
         for mc_type in summary_df['mc_type'].unique():
             strand_da_records = []
             for strandness in summary_df['strandness'].unique():
+                matrix_table = csr_matrix_records[(mc_type, region_name, strandness)]
+                print(matrix_table)
+                if strandness.lower() == 'crick':
+                    strandness = '-'
+                elif strandness.lower() == 'watson':
+                    strandness = '+'
+                else:
+                    strandness = 'both'
                 other_dim_info = {'mc_type': mc_type,
                                   'strand_type': strandness}
-                matrix_table = csr_matrix_records[(mc_type, region_name, strandness)]
 
                 dataarray = _csr_matrix_to_dataarray(matrix_table=matrix_table,
                                                      row_name=row_name,
@@ -430,10 +482,18 @@ def aggregate_region_count_to_mcds(output_dir, dataset_name, chunk_size=100, row
                                                      col_index=region_index_dict[region_name],
                                                      other_dim_info=other_dim_info)
                 strand_da_records.append(dataarray)
-            mc_type_da = xr.concat(strand_da_records)
+            mc_type_da = xr.concat(strand_da_records, dim='strand_type')
             mc_type_da_records.append(mc_type_da)
-        region_da_records[region_name] = xr.concat(mc_type_da_records)
+        region_da_records[region_name + "_da"] = xr.concat(mc_type_da_records, dim='mc_type')
 
     total_ds = xr.Dataset(region_da_records)
+    total_ds.coords.update(additional_coords)
     total_ds.to_netcdf(output_dir / f'{dataset_name}.mcds')
-    return
+
+    if remove_files:
+        for path in summary_df['file_path']:
+            subprocess.run(['rm', '-f', path])
+        for matrix_table in csr_matrix_records.values():
+            for path in matrix_table.values.flat:
+                subprocess.run(['rm', '-f', path])
+    return total_ds
