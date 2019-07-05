@@ -358,6 +358,9 @@ def _region_count_table_to_csr_npz(region_count_tables,
                                   'mc': np.uint32,
                                   'cov': np.uint32},
                            index_col=0)
+        if data.shape[0] == 0:
+            # for rare case where the site_bed is empty
+            continue
         data.index = data.index.map(region_id_map)
         mc_matrix[obj_idx, data.index.values] = data['mc'].values
         cov_matrix[obj_idx, data.index.values] = data['cov'].values
@@ -423,7 +426,7 @@ def aggregate_region_count_to_mcds(output_dir, dataset_name, chunk_size=100, row
                 region_index.name = region_name
                 region_index_dict[region_name] = region_index
 
-                region_bed = pd.read_msgpack(output_dir / f'CHROM_SIZE_BED_chrom{region_name}.msg')
+                region_bed = pd.read_msgpack(output_dir / f'REGION_BED_{region_name}.msg')
                 for col, value in region_bed.iteritems():
                     _col = f'{region_name}_{col}'
                     value.index.name = region_name
@@ -437,7 +440,8 @@ def aggregate_region_count_to_mcds(output_dir, dataset_name, chunk_size=100, row
                                          region_count_tables=file_paths,
                                          region_id_map=str(output_dir / f'REGION_ID_{region_name}.msg'),
                                          output_prefix=str(
-                                             output_dir / f'{region_name}_{mc_type}_{strandness}_{chunk_id}'),
+                                             output_dir / f'{dataset_name}_{region_name}_'
+                                             f'{mc_type}_{strandness}_{chunk_id}'),
                                          compression=True)
                 future_dict[future] = (mc_type, region_name, strandness, chunk_id)
 
