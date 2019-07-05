@@ -453,3 +453,18 @@ def standardize_allc(allc_path, chrom_size_path, compress_level=5,
     run(shlex.split(f'rm -f {allc_path}.bp'), check=True)
     tabix_allc(allc_path, reindex=True)
     return
+
+
+def _transfer_bin_size(bin_size: int) -> str:
+    """Get proper str for a large bin_size"""
+    if bin_size > 1000000:
+        bin_size_mode = bin_size % 1000000
+        bin_size_mode = f'{bin_size_mode / 1000000:.1f}'[1:] if bin_size_mode >= 100000 else ''
+        bin_size_str = f'{bin_size // 1000000}{bin_size_mode}m'
+    elif bin_size > 1000:
+        bin_size_mode = bin_size % 1000
+        bin_size_mode = f'{bin_size_mode / 1000:.1f}'[1:] if bin_size_mode >= 100 else ''
+        bin_size_str = f'{bin_size // 1000}{bin_size_mode}k'
+    else:
+        bin_size_str = f'{bin_size}'
+    return bin_size_str

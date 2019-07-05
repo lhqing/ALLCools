@@ -8,7 +8,7 @@ from typing import List
 from ._doc import *
 from ._extract_allc import extract_allc
 from ._open import open_gz
-from .utilities import check_tbi_chroms, parse_chrom_size, chrom_dict_to_id_index, get_bin_id
+from .utilities import check_tbi_chroms, parse_chrom_size, chrom_dict_to_id_index, get_bin_id, _transfer_bin_size
 
 
 def _bedtools_map(region_bed, site_bed, out_bed, chrom_size_path, save_zero_cov=True):
@@ -83,21 +83,6 @@ def _map_to_sparse_chrom_bin(site_bed, out_bed, chrom_size_path,
             out_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end,
                                                  bin_id, temp_mc, temp_cov])) + "\n")
     return out_bed
-
-
-def _transfer_bin_size(bin_size: int) -> str:
-    """Get proper str for a large bin_size"""
-    if bin_size > 1000000:
-        bin_size_mode = bin_size % 1000000
-        bin_size_mode = f'{bin_size_mode / 1000000:.1f}'[1:] if bin_size_mode >= 100000 else ''
-        bin_size_str = f'{bin_size // 1000000}{bin_size_mode}m'
-    elif bin_size > 1000:
-        bin_size_mode = bin_size % 1000
-        bin_size_mode = f'{bin_size_mode / 1000:.1f}'[1:] if bin_size_mode >= 100 else ''
-        bin_size_str = f'{bin_size // 1000}{bin_size_mode}k'
-    else:
-        bin_size_str = f'{bin_size}'
-    return bin_size_str
 
 
 @doc_params(allc_path_doc=allc_path_doc,
