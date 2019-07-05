@@ -1,6 +1,4 @@
-DIMS = [
-    'cell',
-    'gene',
+PRESERVED_DIMS = [
     'mc_type',
     'count_type',
     'gene_count_type',
@@ -15,7 +13,7 @@ COORD_ALLOW_VALUES = {
 
 
 def check_custom_dim_name(dim_name):
-    if dim_name in DIMS:
+    if dim_name in PRESERVED_DIMS:
         raise ValueError(f'Dimension name {dim_name} is preserved, try another name.')
     if dim_name.startswith('chrom'):
         raise ValueError(f'Dimension name start with "chrom" is preserved, try another name.')
