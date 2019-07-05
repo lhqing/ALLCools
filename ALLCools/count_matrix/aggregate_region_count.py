@@ -18,7 +18,7 @@ from ..utilities import parse_file_paths, \
     _transfer_bin_size
 
 
-def _batch_allc_to_region_count(allc_table,
+def _batch_allc_to_region_count(allc_series,
                                 output_dir,
                                 chrom_size_path,
                                 mc_contexts,
@@ -27,15 +27,6 @@ def _batch_allc_to_region_count(allc_table,
                                 region_bed_paths=None,
                                 region_bed_names=None,
                                 cpu=5):
-    if isinstance(allc_table, str):
-        allc_series = pd.read_csv(allc_table, header=None, index_col=0, squeeze=True, sep='\t')
-        if not isinstance(allc_series, pd.Series):
-            raise ValueError('allc_table malformed, should only have 2 columns, 1. file_uid, 2. file_path')
-    else:
-        allc_series = allc_table
-    if allc_series.index.duplicated().sum() != 0:
-        raise ValueError('allc_table file uid have duplicates (1st column)')
-
     output_dir = pathlib.Path(output_dir).resolve()
     output_dir.mkdir(exist_ok=True)
 
@@ -388,7 +379,7 @@ def _csr_matrix_to_dataarray(matrix_table,
 
     data_arrays = []
     for count_type, matrix in zip(['mc', 'cov'], [total_mc_matrix, total_cov_matrix]):
-        data_array = xr.DataArray(total_mc_matrix,
+        data_array = xr.DataArray(matrix,
                                   dims=[row_name, col_name],
                                   coords={row_name: row_index,
                                           col_name: col_index.tolist()})
@@ -405,8 +396,12 @@ def _csr_matrix_to_dataarray(matrix_table,
     return data_array
 
 
-def aggregate_region_count_to_mcds(output_dir, dataset_name, chunk_size=100, row_name='cell', cpu=1, remove_files=True):
-    # TODO write prepare mcds.py
+def aggregate_region_count_to_mcds(output_dir,
+                                   dataset_name,
+                                   chunk_size=100,
+                                   row_name='cell',
+                                   cpu=1):
+
     # TODO write test
     output_dir = pathlib.Path(output_dir)
     summary_df = pd.read_msgpack(output_dir / 'REGION_COUNT_SUMMARY.msg')
@@ -492,12 +487,48 @@ def aggregate_region_count_to_mcds(output_dir, dataset_name, chunk_size=100, row
 
     total_ds = xr.Dataset(region_da_records)
     total_ds.coords.update(additional_coords)
-    total_ds.to_netcdf(output_dir / f'{dataset_name}.mcds')
 
-    if remove_files:
-        for path in summary_df['file_path']:
-            subprocess.run(['rm', '-f', path])
-        for matrix_table in csr_matrix_records.values():
-            for path in matrix_table.values.flat:
-                subprocess.run(['rm', '-f', path])
     return total_ds
+
+
+def generate_mcds(allc_table, output_prefix, chrom_size_path, mc_contexts,
+                  split_strand=False, bin_sizes=None, region_bed_paths=None, region_bed_names=None, cpu=1,
+                  remove_tmp=True):
+    if isinstance(allc_table, str):
+        allc_series = pd.read_csv(allc_table, header=None, index_col=0, squeeze=True, sep='\t')
+        if not isinstance(allc_series, pd.Series):
+            raise ValueError('allc_table malformed, should only have 2 columns, 1. file_uid, 2. file_path')
+    else:
+        allc_series = allc_table
+    if allc_series.index.duplicated().sum() != 0:
+        raise ValueError('allc_table file uid have duplicates (1st column)')
+
+    output_prefix = output_prefix.rstrip('.')
+    output_dir = pathlib.Path(output_prefix + '.tmp_dir')
+    output_dir.mkdir()
+    dataset_name = pathlib.Path(output_prefix).name
+
+    _batch_allc_to_region_count(allc_series=allc_series,
+                                output_dir=output_dir,
+                                chrom_size_path=chrom_size_path,
+                                mc_contexts=mc_contexts,
+                                split_strand=split_strand,
+                                bin_sizes=bin_sizes,
+                                region_bed_paths=region_bed_paths,
+                                region_bed_names=region_bed_names,
+                                cpu=max(int(cpu * 0.7), 1))
+
+    total_ds = aggregate_region_count_to_mcds(output_dir=output_dir,
+                                              dataset_name=dataset_name,
+                                              chunk_size=10,
+                                              row_name='cell',
+                                              cpu=max(int(cpu * 0.5), 1))
+    if not output_prefix.endswith('.mcds'):
+        output_path = output_prefix + '.mcds'
+    else:
+        output_path = output_prefix
+    total_ds.to_netcdf(output_path)
+
+    if remove_tmp:
+        subprocess.run(['rm', '-rf', str(output_dir)], check=True)
+    return
