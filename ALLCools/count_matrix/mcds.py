@@ -210,7 +210,6 @@ def _aggregate_region_count_to_mcds(output_dir,
             cov_cutoff_doc=cov_cutoff_doc,
             split_strand_doc=split_strand_doc,
             bin_sizes_doc=bin_sizes_doc,
-            cov_cutoff_doc=cov_cutoff_doc,
             cpu_basic_doc=cpu_basic_doc)
 def generate_mcds(allc_table,
                   output_prefix,
