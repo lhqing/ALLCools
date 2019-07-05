@@ -5,3 +5,4 @@ from ._extract_allc import extract_allc
 from ._merge_allc import merge_allc_files
 from ._open import open_allc
 from .utilities import profile_allc, tabix_allc, standardize_allc
+from .count_matrix.mcds import generate_mcds
