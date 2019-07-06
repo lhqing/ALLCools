@@ -177,6 +177,7 @@ def allc_to_region_count(allc_path: str,
     # print('Extract ALLC context')
     output_prefix = output_prefix.rstrip('.')
     strandness = 'split' if split_strand else 'both'
+    print(cpu)
     output_paths = extract_allc(allc_path=allc_path,
                                 output_prefix=output_prefix,
                                 mc_contexts=mc_contexts,
