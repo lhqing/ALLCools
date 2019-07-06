@@ -40,6 +40,9 @@ extract-allc         - extract information (strand, context) from 1 ALLC file
 [Get Region Level]
 allc-to-bigwig       - generate coverage (cov) and ratio (mc/cov) bigwig track files from 1 ALLC file
 allc-to-region-count - count region level mc, cov by genome bins or provided BED files.
+generate-mcds        - generate methylation dataset (MCDS) for a group of ALLC file and different region sets.
+                       This is a convenient wrapper function for a bunch of allc-to-region-count 
+                       and xarray integration codes. MCDS is inherit from xarray.DataSet
 """
 
 EPILOG = """

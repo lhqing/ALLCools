@@ -56,6 +56,7 @@ def _region_count_table_to_csr_npz(region_count_tables,
 
     # read each count table and add to matrix
     for obj_idx, file_path in enumerate(count_table_path_list):
+        # TODO save internal region count table as msg
         data = pd.read_csv(file_path,
                            usecols=[3, 4, 5],
                            sep='\t',
@@ -329,7 +330,7 @@ def generate_mcds(allc_table,
                                                dataset_name=dataset_name,
                                                chunk_size=cell_chunk_size,
                                                row_name='cell',
-                                               cpu=max(int(cpu * 0.5), 1))
+                                               cpu=max(int(cpu * 0.8), 1))
     if not output_prefix.endswith('.mcds'):
         output_path = output_prefix + '.mcds'
     else:
