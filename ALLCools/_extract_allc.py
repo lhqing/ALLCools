@@ -1,4 +1,3 @@
-import pathlib
 import subprocess
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed

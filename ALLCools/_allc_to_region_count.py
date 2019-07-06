@@ -285,6 +285,7 @@ def batch_allc_to_region_count(allc_series,
             futures[future] = cell_id
 
         records = {}
+        finish_count = 0
         for future in as_completed(futures):
             cell_id = futures[future]
             try:
@@ -293,6 +294,9 @@ def batch_allc_to_region_count(allc_series,
             except Exception as e:
                 print(f'{cell_id} raised an error!')
                 raise e
+            finish_count += 1
+            if finish_count % 100 == 0:
+                print(f'{finish_count} allc-to-region-count finished.')
 
     path_records = []
     for file_id, out_paths in records.items():

@@ -2,15 +2,16 @@ import pathlib
 import subprocess
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from math import ceil
 
 import numpy as np
 import pandas as pd
 import scipy.sparse as ss
 import xarray as xr
 
-from ..schema.mcds_schema import *
 from .._allc_to_region_count import batch_allc_to_region_count
 from .._doc import *
+from ..schema.mcds_schema import *
 from ..utilities import parse_file_paths
 
 
@@ -224,6 +225,7 @@ def generate_mcds(allc_table,
                   cov_cutoff=9999,
                   cpu=1,
                   remove_tmp=True,
+                  max_per_mcds=3072,
                   cell_chunk_size=100):
     """\
     Generate MCDS from a list of ALLC file provided with file id.
@@ -252,6 +254,9 @@ def generate_mcds(allc_table,
         {cpu_basic_doc}
     remove_tmp
         Whether to remove the temp directory for generating MCDS
+    max_per_mcds
+        Maximum number of ALLC files to aggregate into 1 MCDS, if number of ALLC provided > max_per_mcds,
+        will generate MCDS in chunks, with same prefix provided.
     cell_chunk_size
         Size of cell chunk in parallel aggregation. Do not have any effect on results.
         Large chunksize needs large memory.
@@ -269,6 +274,32 @@ def generate_mcds(allc_table,
     if allc_series.index.duplicated().sum() != 0:
         raise ValueError('allc_table file uid have duplicates (1st column)')
 
+    # if allc files exceed max_per_mcds, save them into chunks
+    if allc_series.size > max_per_mcds:
+        mcds_n_chunk = ceil(allc_series.size / max_per_mcds)
+        chunk_size = ceil(allc_series.size / mcds_n_chunk)
+        allc_series_chunks = [allc_series[chunk_start:chunk_start + chunk_size]
+                              for chunk_start in range(0, allc_series.size, chunk_size)]
+        print(f'Number of ALLC files {allc_series.size} > max_per_mcds {max_per_mcds}, ')
+        print(f'will generate MCDS in {len(allc_series_chunks)} chunks.')
+
+        # mcds chunks execute sequentially
+        for chunk_id, allc_series_chunk in enumerate(allc_series_chunks):
+            generate_mcds(allc_table=allc_series_chunk,
+                          output_prefix=f'{output_prefix}_{chunk_id}',
+                          chrom_size_path=chrom_size_path,
+                          mc_contexts=mc_contexts,
+                          split_strand=split_strand,
+                          bin_sizes=bin_sizes,
+                          region_bed_paths=region_bed_paths,
+                          region_bed_names=region_bed_names,
+                          cov_cutoff=cov_cutoff,
+                          cpu=cpu,
+                          remove_tmp=remove_tmp,
+                          max_per_mcds=max_per_mcds,
+                          cell_chunk_size=cell_chunk_size)
+        return
+
     # check region bed names
     if region_bed_names is not None:
         for region_bed_name in region_bed_names:
@@ -280,6 +311,7 @@ def generate_mcds(allc_table,
     dataset_name = pathlib.Path(output_prefix).name
 
     # count all the ALLC files, generate region count tables in a temp dir
+    print('Count ALLC files')
     batch_allc_to_region_count(allc_series=allc_series,
                                output_dir=output_dir,
                                chrom_size_path=chrom_size_path,
@@ -289,9 +321,10 @@ def generate_mcds(allc_table,
                                region_bed_paths=region_bed_paths,
                                region_bed_names=region_bed_names,
                                cov_cutoff=cov_cutoff,
-                               cpu=max(int(cpu * 0.7), 1))
+                               cpu=cpu)
 
     # aggregate all the region count table into a mcds
+    print('Aggregate Region Count Table')
     total_ds = _aggregate_region_count_to_mcds(output_dir=output_dir,
                                                dataset_name=dataset_name,
                                                chunk_size=cell_chunk_size,

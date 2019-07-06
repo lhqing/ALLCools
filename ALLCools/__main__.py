@@ -746,6 +746,14 @@ def generate_mcds_register_subparser(subparser):
     )
 
     parser.add_argument(
+        "--max_per_mcds",
+        type=int,
+        default=3072,
+        help='Maximum number of ALLC files to aggregate into 1 MCDS, if number of ALLC provided > max_per_mcds, '
+             'will generate MCDS in chunks, with same prefix provided.'
+    )
+
+    parser.add_argument(
         "--cell_chunk_size",
         type=int,
         default=100,
