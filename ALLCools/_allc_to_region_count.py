@@ -24,6 +24,7 @@ def _bedtools_map(region_bed, site_bed, out_bed, chrom_size_path, save_zero_cov=
     Use bedtools map to map site_bed format into any bed file provided.
     """
     cmd = f'bedtools map -a {region_bed} -b {site_bed} -c 4,5 -o sum,sum -null 0 -g {chrom_size_path}'
+    print(cmd)
     bed_out = subprocess.Popen(shlex.split(cmd),
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE,
@@ -177,7 +178,6 @@ def allc_to_region_count(allc_path: str,
     # print('Extract ALLC context')
     output_prefix = output_prefix.rstrip('.')
     strandness = 'split' if split_strand else 'both'
-    print(cpu)
     output_paths = extract_allc(allc_path=allc_path,
                                 output_prefix=output_prefix,
                                 mc_contexts=mc_contexts,
