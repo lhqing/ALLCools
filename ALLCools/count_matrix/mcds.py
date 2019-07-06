@@ -334,7 +334,7 @@ def generate_mcds(allc_table,
         output_path = output_prefix + '.mcds'
     else:
         output_path = output_prefix
-    total_ds.squeeze().to_netcdf(output_path)
+    total_ds.to_netcdf(output_path)
 
     # remove temp dir
     if remove_tmp:
