@@ -662,7 +662,7 @@ def allc_count_motif_register_subparser(subparser):
     parser.set_defaults(count_binary=False)
 
 
-def generate_mcds(subparser):
+def generate_mcds_register_subparser(subparser):
     parser = subparser.add_parser('generate-mcds',
                                   aliases=['mcds'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
