@@ -4,7 +4,7 @@ import subprocess
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from functools import partial
 from typing import List
-
+import time
 import pandas as pd
 
 from ._doc import *
@@ -41,6 +41,17 @@ def _bedtools_map(region_bed, site_bed, out_bed, chrom_size_path, save_zero_cov=
                 break
             if save_zero_cov or (not line.endswith('\t0\n')):
                 out_handle.write(line)
+
+    return_code = bed_out.poll()
+    if return_code is None:
+        # still running
+        bed_out.terminate()
+        time.sleep(0.01)
+    return_code = bed_out.poll()
+    if return_code is not None and return_code != 0:
+        message = bed_out.stderr.read().strip()
+        raise OSError(message)
+
     return out_bed
 
 

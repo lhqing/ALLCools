@@ -132,7 +132,9 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
 
         real_out_paths = []
         need_tabix = []
+
         with ProcessPoolExecutor(cpu) as merge_executor:
+            futures = []
             for suffix, sub_df in total_output_df.groupby('full_suffix'):
                 ordered_index = sub_df['chunk_id'].astype(int).sort_values().index
                 ordered_file_list = sub_df.loc[ordered_index, 'path'].tolist()
@@ -140,13 +142,21 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
                 real_out_paths.append(real_file_path)
                 if tabix and 'allc' in suffix:
                     need_tabix.append(real_out_paths)
-                merge_executor.submit(_merge_gz_files,
-                                      file_list=ordered_file_list,
-                                      output_path=real_file_path)
+                future = merge_executor.submit(_merge_gz_files,
+                                               file_list=ordered_file_list,
+                                               output_path=real_file_path)
+                futures.append(future)
+            for future in as_completed(futures):
+                future.result()
+
         if tabix:
             with ProcessPoolExecutor(cpu) as tabix_executor:
+                futures = []
                 for path in need_tabix:
-                    tabix_executor.submit(tabix_allc, path)
+                    future = tabix_executor.submit(tabix_allc, path)
+                    futures.append(future)
+                for future in as_completed(futures):
+                    future.result()
 
     return real_out_paths
 
