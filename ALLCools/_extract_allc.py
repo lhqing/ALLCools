@@ -208,11 +208,14 @@ def extract_allc(allc_path: str,
     # TODO write test
     parallel_chunk_size = 100000000
 
-    # determine region
+    # determine region and parallel
+    parallel = False
     if region is None:
         if chrom_size_path is not None:
             chrom_dict = parse_chrom_size(chrom_size_path)
             region = ' '.join(chrom_dict.keys())
+            if cpu > 1:
+                parallel = True
 
     # prepare params
     output_prefix = output_prefix.rstrip('.')
@@ -258,10 +261,7 @@ def extract_allc(allc_path: str,
 
     # determine parallel or not
     cpu = int(cpu)
-    print(cpu)
-    print(region is None, 'region')
-    print(region, 'region')
-    if (cpu > 1) and (region is None):
+    if parallel:
         print('Parallel extract ALLC')
         return _extract_allc_parallel(allc_path=allc_path,
                                       output_prefix=output_prefix,
