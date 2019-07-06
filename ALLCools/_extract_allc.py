@@ -259,6 +259,7 @@ def extract_allc(allc_path: str,
     # determine parallel or not
     cpu = int(cpu)
     if cpu > 1 and region is None:
+        print('Parallel extract ALLC')
         return _extract_allc_parallel(allc_path=allc_path,
                                       output_prefix=output_prefix,
                                       mc_contexts=mc_contexts,
