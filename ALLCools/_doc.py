@@ -41,6 +41,12 @@ region_doc = "Only extract records from certain genome region(s) via tabix, " \
 bin_sizes_doc = "Fix-size genomic bins can be defined by bin_sizes and chrom_size_path. " \
                 "Space separated sizes of genome bins, each size will be count separately."
 
+region_bed_paths_doc = 'Arbitrary genomic regions can be defined in several BED files to count on. ' \
+                       'Space separated paths to each BED files, ' \
+                       'the fourth column of BED file should be unique id of the region.'
+
+region_bed_names_doc = 'Space separated names for each BED file provided in region_bed_paths.'
+
 
 def doc_params(**kwds):
     """\

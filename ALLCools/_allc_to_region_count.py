@@ -99,7 +99,9 @@ def _map_to_sparse_chrom_bin(site_bed, out_bed, chrom_size_path,
             cov_cutoff_doc=cov_cutoff_doc,
             split_strand_doc=split_strand_doc,
             cpu_basic_doc=cpu_basic_doc,
-            bin_sizes_doc=bin_sizes_doc)
+            bin_sizes_doc=bin_sizes_doc,
+            region_bed_paths_doc=region_bed_paths_doc,
+            region_bed_names_doc=region_bed_names_doc)
 def allc_to_region_count(allc_path: str,
                          output_prefix: str,
                          chrom_size_path: str,
@@ -133,10 +135,9 @@ def allc_to_region_count(allc_path: str,
     split_strand
         {split_strand_doc}
     region_bed_paths
-        Arbitrary genomic regions can be defined in several BED files to count on.
-        Space separated paths to each BED files, the fourth column of BED file should be unique id of the region.
+        {region_bed_paths_doc}
     region_bed_names
-        Space separated names for each BED file provided in region_bed_paths.
+        {region_bed_names_doc}
     bin_sizes
         {bin_sizes_doc}
     cov_cutoff

@@ -210,7 +210,9 @@ def _aggregate_region_count_to_mcds(output_dir,
             cov_cutoff_doc=cov_cutoff_doc,
             split_strand_doc=split_strand_doc,
             bin_sizes_doc=bin_sizes_doc,
-            cpu_basic_doc=cpu_basic_doc)
+            cpu_basic_doc=cpu_basic_doc,
+            region_bed_paths_doc=region_bed_paths_doc,
+            region_bed_names_doc=region_bed_names_doc)
 def generate_mcds(allc_table,
                   output_prefix,
                   chrom_size_path,
@@ -241,7 +243,9 @@ def generate_mcds(allc_table,
     bin_sizes
         {bin_sizes_doc}
     region_bed_paths
+        {region_bed_paths_doc}
     region_bed_names
+        {region_bed_names_doc}
     cov_cutoff
         {cov_cutoff_doc}
     cpu

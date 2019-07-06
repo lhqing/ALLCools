@@ -478,9 +478,7 @@ def allc_to_region_count_register_subparser(subparser):
         type=str,
         nargs='+',
         default=None,
-        help="Arbitrary genomic regions can be defined in several BED files to count on. "
-             "Space separated paths to each BED files, "
-             "the fourth column of BED file should be unique id of the region."
+        help=region_bed_paths_doc
     )
 
     parser.add_argument(
@@ -488,15 +486,7 @@ def allc_to_region_count_register_subparser(subparser):
         type=str,
         nargs='+',
         default=None,
-        help="Space separated names for each BED file provided in region_bed_paths."
-    )
-
-    parser.add_argument(
-        "--non_overlap_bed",
-        type=_str_to_bool,
-        nargs='+',
-        default=False,
-        help="Whether the BED file(s) record non-overlap regions. If true, will use fast function to calculate."
+        help=region_bed_names_doc
     )
 
     parser.add_argument(
@@ -504,8 +494,7 @@ def allc_to_region_count_register_subparser(subparser):
         type=int,
         nargs='+',
         default=None,
-        help="Fix-size genomic bins can be defined by bin_sizes and chrom_size_path."
-             "Space separated sizes of genome bins, each size will be count separately."
+        help=bin_sizes_doc
     )
 
     parser.add_argument(
@@ -673,6 +662,98 @@ def allc_count_motif_register_subparser(subparser):
     parser.set_defaults(count_binary=False)
 
 
+def generate_mcds(subparser):
+    parser = subparser.add_parser('generate-mcds',
+                                  aliases=['mcds'],
+                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+                                  help="Generate MCDS from ALLC files and region sets.")
+
+    parser_req = parser.add_argument_group("required arguments")
+
+    parser_req.add_argument(
+        "--allc_table",
+        type=str,
+        required=True,
+        help='Contain all the ALLC file information in 2 columns: 1. file_uid, 2. file_path. No header'
+    )
+
+    parser_req.add_argument(
+        "--output_prefix",
+        type=str,
+        required=True,
+        help='Output prefix of the MCDS'
+    )
+
+    parser_req.add_argument(
+        "--chrom_size_path",
+        type=str,
+        required=True,
+        help=chrom_size_path_doc
+    )
+
+    parser_req.add_argument(
+        "--mc_contexts",
+        type=str,
+        required=True,
+        nargs='+',
+        help=mc_contexts_doc
+    )
+
+    parser.add_argument(
+        "--split_strand",
+        dest='split_strand',
+        action='store_true',
+        help=split_strand_doc
+    )
+    parser.set_defaults(split_strand=False)
+
+    parser.add_argument(
+        "--bin_sizes",
+        type=int,
+        nargs='+',
+        default=None,
+        help=bin_sizes_doc
+    )
+
+    parser.add_argument(
+        "--region_bed_paths",
+        type=str,
+        nargs='+',
+        default=None,
+        help=region_bed_paths_doc
+    )
+
+    parser.add_argument(
+        "--region_bed_names",
+        type=str,
+        nargs='+',
+        default=None,
+        help=region_bed_names_doc
+    )
+
+    parser.add_argument(
+        "--cov_cutoff",
+        type=int,
+        default=9999,
+        help=cov_cutoff_doc
+    )
+
+    parser.add_argument(
+        "--cpu",
+        type=int,
+        default=1,
+        help=cpu_basic_doc
+    )
+
+    parser.add_argument(
+        "--cell_chunk_size",
+        type=int,
+        default=100,
+        help='Size of cell chunk in parallel aggregation. Do not have any effect on results. '
+             'Large chunksize needs large memory.'
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description=DESCRIPTION,
                                      epilog=EPILOG,
@@ -734,6 +815,8 @@ def main():
         from ._allc_to_bigwig import allc_to_bigwig as func
     elif cur_command in ['allc-count-motif']:
         from .exp.count_motif import allc_count_motif as func
+    elif cur_command in ['generate-mcds', 'mcds']:
+        from .count_matrix.mcds import generate_mcds as func
     else:
         log.debug(f'{cur_command} is not an valid sub-command')
         parser.parse_args(["-h"])
