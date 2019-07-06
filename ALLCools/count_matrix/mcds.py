@@ -8,7 +8,7 @@ import pandas as pd
 import scipy.sparse as ss
 import xarray as xr
 
-from .mcds_schema import *
+from ..schema.mcds_schema import *
 from .._allc_to_region_count import batch_allc_to_region_count
 from .._doc import *
 from ..utilities import parse_file_paths
@@ -301,7 +301,7 @@ def generate_mcds(allc_table,
         output_path = output_prefix + '.mcds'
     else:
         output_path = output_prefix
-    total_ds.to_netcdf(output_path)
+    total_ds.squeeze().to_netcdf(output_path)
 
     # remove temp dir
     if remove_tmp:
