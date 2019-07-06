@@ -260,6 +260,7 @@ def extract_allc(allc_path: str,
     cpu = int(cpu)
     print(cpu)
     print(region is None, 'region')
+    print(region, 'region')
     if (cpu > 1) and (region is None):
         print('Parallel extract ALLC')
         return _extract_allc_parallel(allc_path=allc_path,
