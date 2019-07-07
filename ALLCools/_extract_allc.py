@@ -119,17 +119,18 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
                                      tabix=False)
             future_dict[future] = chunk_id
 
-        output_records = []
+        output_records = {}
         for future in as_completed(future_dict):
-            output_path_list = future.result()
-            output_records += output_path_list
+            output_path_dict = future.result()
+            chunk_id = future_dict[future]
+            output_records[chunk_id] = output_path_dict
 
         # agg chunk_output
         records = []
-        for path in output_records:
-            chunk_id, *full_suffix = path.lstrip(output_prefix).strip('.').split('.')
-            full_suffix = '.'.join(full_suffix)
-            records.append([path, chunk_id, full_suffix])
+        for chunk_id, paths_dict in output_records.items():
+            for (mc_context, strandness, out_suffix), path in paths_dict.items():
+                full_suffix = f'{mc_context}-{strandness}.{out_suffix}'
+                records.append([path, chunk_id, full_suffix])
         total_output_df = pd.DataFrame(records, columns=['path', 'chunk_id', 'full_suffix'])
 
         real_out_paths = []
@@ -179,7 +180,7 @@ def extract_allc(allc_path: str,
                  region: str = None,
                  cov_cutoff: int = 9999,
                  tabix: bool = True,
-                 cpu=1) -> List[str]:
+                 cpu=1):
     """\
     Extract information (strand, context) from 1 ALLC file.
     Save to several different format.
@@ -241,17 +242,17 @@ def extract_allc(allc_path: str,
     # each context may associate to multiple handle
     context_handle = defaultdict(list)
     handle_collect = []
-    output_path_collect = []
+    output_path_collect = {}
     for mc_context in mc_contexts:
         parsed_context_set = parse_mc_pattern(mc_context)
         if strandness == 'Split':
             file_path = output_prefix + f'.{mc_context}-Watson.{out_suffix}'
-            output_path_collect.append(file_path)
+            output_path_collect[(mc_context, 'Watson', out_suffix)] = file_path
             w_handle = open_allc(file_path, 'w')
             handle_collect.append(w_handle)
 
             file_path = output_prefix + f'.{mc_context}-Crick.{out_suffix}'
-            output_path_collect.append(file_path)
+            output_path_collect[(mc_context, 'Crick', out_suffix)] = file_path
             c_handle = open_allc(file_path, 'w')
             handle_collect.append(c_handle)
             for mc_pattern in parsed_context_set:
@@ -263,9 +264,10 @@ def extract_allc(allc_path: str,
             # handle for both strand
             file_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
             if strandness == 'MergeTmp':
-                output_path_collect.append(output_prefix + f'.{mc_context}-Merge.{out_suffix}')
+                output_path_collect[(mc_context, 'Merge', out_suffix)] = \
+                    output_prefix + f'.{mc_context}-Merge.{out_suffix}'
             else:
-                output_path_collect.append(file_path)
+                output_path_collect[(mc_context, strandness, out_suffix)] = file_path
             _handle = open_allc(file_path, 'w')
             handle_collect.append(_handle)
             for mc_pattern in parsed_context_set:
@@ -337,4 +339,6 @@ def extract_allc(allc_path: str,
             in_path = output_prefix + f'.{mc_context}-{strandness}.{out_suffix}'
             if tabix:
                 tabix_allc(in_path)
+
+    # return a dict, key is (mc_context, strandness, out_suffix), value is file path
     return output_path_collect

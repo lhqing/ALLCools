@@ -1,10 +1,11 @@
 import pathlib
 import shlex
 import subprocess
+import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from functools import partial
 from typing import List
-import time
+
 import pandas as pd
 
 from ._doc import *
@@ -189,19 +190,20 @@ def allc_to_region_count(allc_path: str,
     # print('Extract ALLC context')
     output_prefix = output_prefix.rstrip('.')
     strandness = 'split' if split_strand else 'both'
-    output_paths = extract_allc(allc_path=allc_path,
-                                output_prefix=output_prefix,
-                                mc_contexts=mc_contexts,
-                                strandness=strandness,
-                                output_format='bed5',
-                                chrom_size_path=chrom_size_path,
-                                region=None,
-                                cov_cutoff=cov_cutoff,
-                                cpu=cpu)
+    output_paths_dict = extract_allc(allc_path=allc_path,
+                                     output_prefix=output_prefix,
+                                     mc_contexts=mc_contexts,
+                                     strandness=strandness,
+                                     output_format='bed5',
+                                     chrom_size_path=chrom_size_path,
+                                     region=None,
+                                     cov_cutoff=cov_cutoff,
+                                     cpu=cpu)
+
     path_dict = {}
-    for path in output_paths:
-        # this is according to extract_allc name pattern
-        info_type = pathlib.Path(path).name.split('.')[-4]  # {mc_context}-{strandness}
+    for (mc_context, strandness, _), path in output_paths_dict:
+        # this is according to extract_allc return format
+        info_type = f'{mc_context}-{strandness}'
         path_dict[info_type] = path
 
     with ProcessPoolExecutor(cpu) as executor:

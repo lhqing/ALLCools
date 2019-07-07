@@ -157,16 +157,17 @@ def allc_to_bigwig(allc_path,
     strandness = 'split' if split_strand else 'both'
 
     # prepare bedgraph
-    extracted_allc_paths = extract_allc(allc_path=allc_path,
-                                        output_prefix=output_prefix,
-                                        mc_contexts=mc_contexts,
-                                        chrom_size_path=chrom_size_path,
-                                        strandness=strandness,
-                                        output_format='allc',
-                                        region=region,
-                                        cov_cutoff=cov_cutoff,
-                                        tabix=False,
-                                        cpu=cpu)
+    extracted_allc_path_dict = extract_allc(allc_path=allc_path,
+                                            output_prefix=output_prefix,
+                                            mc_contexts=mc_contexts,
+                                            chrom_size_path=chrom_size_path,
+                                            strandness=strandness,
+                                            output_format='allc',
+                                            region=region,
+                                            cov_cutoff=cov_cutoff,
+                                            tabix=False,
+                                            cpu=cpu)
+    extracted_allc_paths = list(extracted_allc_path_dict.values())
 
     with ProcessPoolExecutor(cpu) as executor:
         # generate bigwig file
