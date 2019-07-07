@@ -194,6 +194,7 @@ def get_md5(file_path):
 def check_tbi_chroms(file_path, genome_dict, same_order=False):
     file_tabix_path = pathlib.Path(str(file_path) + '.tbi')
     if not file_tabix_path.exists():
+        print(f'{file_path} do not have .tbi index. Use tabix to index it.')
         return False
 
     tbi_time = os.path.getmtime(file_tabix_path)
