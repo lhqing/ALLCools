@@ -1,8 +1,7 @@
-import subprocess
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from subprocess import run
-from typing import Union, Tuple, Callable, List
+from typing import Union, Tuple, Callable
 
 import pandas as pd
 
@@ -129,22 +128,26 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
         records = []
         for chunk_id, paths_dict in output_records.items():
             for (mc_context, strandness, out_suffix), path in paths_dict.items():
-                full_suffix = f'{mc_context}-{strandness}.{out_suffix}'
-                records.append([path, chunk_id, full_suffix])
-        total_output_df = pd.DataFrame(records, columns=['path', 'chunk_id', 'full_suffix'])
+                records.append([path, chunk_id, mc_context, strandness, out_suffix])
+        total_output_df = pd.DataFrame(records, columns=['path', 'chunk_id',
+                                                         'mc_context', 'strandness',
+                                                         'out_suffix'])
 
-        real_out_paths = []
+        real_out_paths_dict = {}
         need_tabix = []
 
     with ProcessPoolExecutor(cpu) as merge_executor:
         futures = []
-        for suffix, sub_df in total_output_df.groupby('full_suffix'):
+        for (mc_context, strandness, out_suffix), sub_df in total_output_df.groupby(
+                ['mc_context', 'strandness', 'out_suffix']):
             ordered_index = sub_df['chunk_id'].astype(int).sort_values().index
             ordered_file_list = sub_df.loc[ordered_index, 'path'].tolist()
-            real_file_path = f'{output_prefix}.{suffix}'
-            real_out_paths.append(real_file_path)
-            if tabix and 'allc' in suffix:
-                need_tabix.append(real_out_paths)
+            real_file_path = f'{output_prefix}.{mc_context}-{strandness}.{out_suffix}'
+
+            real_out_paths_dict[(mc_context, strandness, out_suffix)] = real_file_path
+
+            if tabix and 'allc' in out_suffix:
+                need_tabix.append(real_file_path)
             future = merge_executor.submit(_merge_gz_files,
                                            file_list=ordered_file_list,
                                            output_path=real_file_path)
@@ -161,7 +164,7 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
             for future in as_completed(futures):
                 future.result()
 
-    return real_out_paths
+    return real_out_paths_dict
 
 
 @doc_params(allc_path_doc=allc_path_doc,
