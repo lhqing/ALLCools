@@ -825,7 +825,7 @@ def main():
     elif cur_command in ['allc-to-bigwig', '2bw']:
         from ._allc_to_bigwig import allc_to_bigwig as func
     elif cur_command in ['allc-count-motif']:
-        from .exp.count_motif import allc_count_motif as func
+        from .motif.count_motif import allc_count_motif as func
     elif cur_command in ['generate-mcds', 'mcds']:
         from .count_matrix.mcds import generate_mcds as func
     else:
