@@ -22,6 +22,7 @@ def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path,
     """
     Simply calculate cov and mc_rate for fixed genome bins. No mC context filter.
     """
+
     chrom_dict = parse_chrom_size(chrom_size_path)
     cur_chrom = 'TOTALLY_NOT_A_CHROM'
     cur_chrom_end = 0
@@ -149,6 +150,9 @@ def allc_to_bigwig(allc_path,
 
     """
     # TODO write test
+    if bin_size is None:
+        bin_size = 50
+
     # test wigToBigWig
     p = subprocess.run(f'{path_to_wigtobigwig}wigToBigWig', stderr=subprocess.PIPE, encoding='utf8')
     if p.returncode != 255:  # somehow, the p.returncode is 255 when set correctly...

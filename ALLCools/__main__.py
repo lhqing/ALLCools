@@ -576,7 +576,7 @@ def allc_to_bigwig_register_subparser(subparser):
     parser.add_argument(
         "--bin_size",
         type=int,
-        default=None,
+        default=50,
         help="Minimum bin size of bigwig file"
     )
 
