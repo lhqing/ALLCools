@@ -34,8 +34,11 @@ def _split_meme_motif_file(meme_motif_path, output_dir):
         motif_tmp_text = ''
         for line in f:
             if line.startswith('MOTIF'):
-                _, uid, name = line.strip('\n').split(' ')
-
+                try:
+                    _, uid, name = line.strip('\n').split(' ')
+                except ValueError:
+                    _, uid = line.strip('\n').split(' ')
+                    name = ''
                 header = False
 
                 if motif_tmp_text != '':
@@ -94,7 +97,7 @@ def scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir):
 
     motif_file_records = _split_meme_motif_file(meme_motif_file, output_dir)
     print(f'{len(motif_file_records)} motifs to count.')
-    
+
     with ProcessPoolExecutor(cpu) as executor:
         futures = {}
         for uid, name, motif_file_path in motif_file_records:
