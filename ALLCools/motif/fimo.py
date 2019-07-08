@@ -82,6 +82,8 @@ def _fimo_runner(motif_path, fasta_path, output_path):
                  'score', 'p-value']
     try:
         fimo_out = pd.read_csv(tmp_path, sep='\t')
+        # same as sort -k1,1 -k2,2n, so in bedtools intersect, we can use --sorted
+        fimo_out = fimo_out.sort_values(by=['sequence_name', 'start']).reset_index(drop=True)
     except pd.errors.EmptyDataError:
         # if no result in tmp_path
         fimo_out = pd.DataFrame([], columns=col_order)
