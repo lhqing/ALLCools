@@ -1,7 +1,9 @@
 # ALLCools
 
 - A toolkit for ALLC format and bulk/single-cell methylation sequencing analysis. 
-- It provides all necessary functions about generating, manipulating and transfering the ALLC format, a simple tab-sparated text format storing base-level raw methylation information.
+- It provides all necessary functions about generating, manipulating and transfering 2 file formats:
+  - the ALLC format, a tab-sparated text format storing **base-level** raw methylation information for **1 sample**.
+  - the MCDS format, a integrated HDF5 dataset storing **region-level** raw methylation information for **a group of samples/cells**.
 - **This package is still under active development**
 
 ## ALLCools Function Map
