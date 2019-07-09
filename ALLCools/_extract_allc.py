@@ -136,6 +136,8 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
         real_out_paths_dict = {}
         need_tabix = []
 
+    # TODO this can be much more improved, learn how cutadapt do parallel read and write!
+
     with ProcessPoolExecutor(cpu) as merge_executor:
         futures = []
         for (mc_context, strandness, out_suffix), sub_df in total_output_df.groupby(

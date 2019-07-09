@@ -127,7 +127,6 @@ def allc_to_region_count(allc_path: str,
                          save_zero_cov: bool = False,
                          remove_tmp: bool = True,
                          cpu: int = 1):
-    # TODO remove the save zero option and always assume sparse for chrombin and full for region bed
     """\
     Calculate mC and cov at regional level. Region can be provided in 2 forms:
     1. BED file, provided by region_bed_paths, containing arbitrary regions and use bedtools map to calculate;
@@ -201,7 +200,7 @@ def allc_to_region_count(allc_path: str,
                                      cpu=cpu)
 
     path_dict = {}
-    for (mc_context, strandness, _), path in output_paths_dict:
+    for (mc_context, strandness, _), path in output_paths_dict.items():
         # this is according to extract_allc return format
         info_type = f'{mc_context}-{strandness}'
         path_dict[info_type] = path
