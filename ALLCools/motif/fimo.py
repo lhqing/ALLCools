@@ -60,9 +60,11 @@ def _split_meme_motif_file(meme_motif_path, output_dir):
     return motif_file_records
 
 
-def _fimo_runner(motif_path, fasta_path, output_path):
+def _fimo_runner(motif_path, fasta_path, output_path, path_to_fimo=''):
     """Run fimo for a single motif over single fasta file"""
-    cmd = f'fimo --text --skip-matched-sequence {motif_path} {fasta_path}'
+    if path_to_fimo != '':
+        path_to_fimo = path_to_fimo.rstrip('/') + '/'
+    cmd = f'{path_to_fimo}fimo --text --skip-matched-sequence {motif_path} {fasta_path}'
 
     tmp_path = str(output_path) + "tmp"
     with open(tmp_path, 'w') as out:
@@ -93,7 +95,7 @@ def _fimo_runner(motif_path, fasta_path, output_path):
     return output_path
 
 
-def scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir):
+def scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir, path_to_fimo=''):
     output_dir = pathlib.Path(output_dir).resolve()
     output_dir.mkdir(exist_ok=True, parents=True)
 
@@ -104,6 +106,7 @@ def scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir):
         futures = {}
         for uid, name, motif_file_path in motif_file_records:
             future = executor.submit(_fimo_runner,
+                                     path_to_fimo=path_to_fimo,
                                      motif_path=motif_file_path,
                                      fasta_path=fasta_path,
                                      output_path=output_dir / (pathlib.Path(motif_file_path).name[:-5] + '.bed.msg'))
