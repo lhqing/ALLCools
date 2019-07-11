@@ -9,6 +9,7 @@ When adding new function:
 import argparse
 import inspect
 import logging
+import subprocess
 import sys
 
 import ALLCools
@@ -67,7 +68,25 @@ class NiceFormatter(logging.Formatter):
 
 
 def validate_environment():
-    # TODO write validate environment function
+    try:
+        subprocess.run(['tabix', '--version'],
+                       stderr=subprocess.PIPE,
+                       stdout=subprocess.PIPE,
+                       encoding='utf8',
+                       check=True)
+        subprocess.run(['bgzip', '--version'],
+                       stderr=subprocess.PIPE,
+                       stdout=subprocess.PIPE,
+                       encoding='utf8',
+                       check=True)
+        subprocess.run(['bedtools', '--version'],
+                       stderr=subprocess.PIPE,
+                       stdout=subprocess.PIPE,
+                       encoding='utf8',
+                       check=True)
+    except subprocess.CalledProcessError as e:
+        print(e.stderr)
+        raise e
     return True
 
 
@@ -832,6 +851,8 @@ def main():
         log.debug(f'{cur_command} is not an valid sub-command')
         parser.parse_args(["-h"])
         return
+
+    validate_environment()
 
     # run the command
     log.info(f"Executing {cur_command}...")
