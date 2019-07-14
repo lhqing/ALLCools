@@ -71,7 +71,7 @@ def _get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_
     return output_path
 
 
-def _split_meme_motif_file(meme_motif_path, output_dir):
+def _split_meme_motif_file(meme_motif_paths, output_dir):
     """
     Given multi motif meme format file, split into single motif meme format file
 
@@ -84,34 +84,41 @@ def _split_meme_motif_file(meme_motif_path, output_dir):
     -------
 
     """
-    with open(meme_motif_path) as f:
-        first_line = f.readline()
-        if not first_line.startswith('MEME version'):
-            raise ValueError('Input file need to be MEME motif format.')
+    records = {}
+    uid_set = set()
+    for meme_motif_path in meme_motif_paths:
+        with open(meme_motif_path) as f:
+            first_line = f.readline()
+            if not first_line.startswith('MEME version'):
+                raise ValueError('Input file need to be MEME motif format.')
 
-        f.seek(0)
-        header = True
-        records = {}
-        header_text = ''
-        motif_tmp_text = ''
-        for line in f:
-            if line.startswith('MOTIF'):
-                try:
-                    _, uid, name = line.strip('\n').split(' ')
-                except ValueError:
-                    _, uid = line.strip('\n').split(' ')
-                    name = ''
-                header = False
+            f.seek(0)
+            header = True
+            header_text = ''
+            motif_tmp_text = ''
+            for line in f:
+                if line.startswith('MOTIF'):
+                    try:
+                        _, uid, name = line.strip('\n').split(' ')
+                    except ValueError:
+                        _, uid = line.strip('\n').split(' ')
+                        name = ''
+                    if uid in uid_set:
+                        raise ValueError(f'Found duplicate motif uid {uid} in file {meme_motif_path}. '
+                                         f'Motif uid should be unique across all meme files provided.')
+                    else:
+                        uid_set.add(uid)
+                    header = False
 
-                if motif_tmp_text != '':
-                    records[(uid, name)] = header_text + motif_tmp_text
-                motif_tmp_text = line
-            elif header:
-                header_text += line
-            else:
-                motif_tmp_text += line
-        if motif_tmp_text != '':
-            records[(uid, name)] = header_text + motif_tmp_text
+                    if motif_tmp_text != '':
+                        records[(uid, name)] = header_text + motif_tmp_text
+                    motif_tmp_text = line
+                elif header:
+                    header_text += line
+                else:
+                    motif_tmp_text += line
+            if motif_tmp_text != '':
+                records[(uid, name)] = header_text + motif_tmp_text
 
     motif_file_records = []
     for (uid, name), text in records.items():
@@ -124,7 +131,7 @@ def _split_meme_motif_file(meme_motif_path, output_dir):
 
 def _fimo_runner(motif_path, fasta_path, output_path, path_to_fimo='',
                  raw_score_thresh=6, raw_p_value_thresh=5e-4, is_genome_fasta=False,
-                 top_n=500000):
+                 top_n=300000):
     """Run fimo for a single motif over single fasta file"""
     if path_to_fimo != '':
         path_to_fimo = path_to_fimo.rstrip('/') + '/'
@@ -204,12 +211,10 @@ def _fimo_runner(motif_path, fasta_path, output_path, path_to_fimo='',
 
 
 def _scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir, path_to_fimo='',
-                           raw_score_thresh=7, raw_p_value_thresh=5e-4, top_n=500000,
+                           raw_score_thresh=7, raw_p_value_thresh=5e-4, top_n=300000,
                            is_genome_fasta=False):
-    if isinstance(meme_motif_file, list):
-        for _motif_file in meme_motif_file:
-            _scan_motif_over_fasta(_motif_file, fasta_path, cpu, output_dir, path_to_fimo='')
-        return
+    if isinstance(meme_motif_file, str):
+        meme_motif_file = [meme_motif_file]
 
     output_dir = pathlib.Path(output_dir).resolve()
     output_dir.mkdir(exist_ok=True, parents=True)
@@ -243,7 +248,8 @@ def _scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir, path_to
 
     lookup_table = pd.DataFrame(motif_records,
                                 columns=['uid', 'name', 'motif_file_path', 'output_file_path']).set_index('uid')
-    lookup_table.to_msgpack(output_dir / 'LOOKUP_TABLE.msg')
+
+    lookup_table.to_msgpack(output_dir / f'LOOKUP_TABLE.msg')
     return
 
 

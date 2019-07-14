@@ -120,11 +120,11 @@ def generate_cmotif_database(bed_file_paths,
                              top_n=300000,
                              cmotif_bin_size=10000000):
     """\
-    Generate lookup table for motifs all the cytosines belongs to. 
-    BED files are used to limit cytosine scan in certain regions. 
+    Generate lookup table for motifs all the cytosines belongs to.
+    BED files are used to limit cytosine scan in certain regions.
     Scanning motif over whole genome is very noisy, better scan it in some functional part of genome.
     The result files will be in the output
-    
+
     Parameters
     ----------
     bed_file_paths
@@ -221,5 +221,5 @@ def generate_cmotif_database(bed_file_paths,
     motif_file_dir.mkdir(exist_ok=True)
     for motif_file in motif_files:
         new_path = motif_file_dir / pathlib.Path(motif_file).name
-        subprocess.run(['mv', motif_file, new_path], check=True)
+        subprocess.run(['cp', motif_file, new_path], check=True)
     return
