@@ -28,22 +28,26 @@ flexible data query from the ALLC file.
 Current Tool List in ALLCools:
 
 [Generate ALLC]
-bam-to-allc          - generate 1 ALLC file from 1 position sorted BAM file via samtools mpileup.
+bam-to-allc          - Generate 1 ALLC file from 1 position sorted BAM file via samtools mpileup.
 
 [Manipulate ALLC]
-standardize-allc     - validate 1 ALLC file format, standardize the chromosome names, 
+standardize-allc     - Validate 1 ALLC file format, standardize the chromosome names, 
                        compression format (bgzip) and index (tabix).
-tabix-allc           - a simple wrapper of tabix command to index 1 ALLC file.
-profile-allc         - generate some summary statistics of 1 ALLC
-merge-allc           - merge N ALLC files into 1 ALLC file
-extract-allc         - extract information (strand, context) from 1 ALLC file
+tabix-allc           - A simple wrapper of tabix command to index 1 ALLC file.
+profile-allc         - Generate some summary statistics of 1 ALLC
+merge-allc           - Merge N ALLC files into 1 ALLC file
+extract-allc         - Extract information (strand, context) from 1 ALLC file
 
 [Get Region Level]
-allc-to-bigwig       - generate coverage (cov) and ratio (mc/cov) bigwig track files from 1 ALLC file
-allc-to-region-count - count region level mc, cov by genome bins or provided BED files.
-generate-mcds        - generate methylation dataset (MCDS) for a group of ALLC file and different region sets.
+allc-to-bigwig       - Generate coverage (cov) and ratio (mc/cov) bigwig track files from 1 ALLC file
+allc-to-region-count - Count region level mc, cov by genome bins or provided BED files.
+generate-mcds        - Generate methylation dataset (MCDS) for a group of ALLC file and different region sets.
                        This is a convenient wrapper function for a bunch of allc-to-region-count 
                        and xarray integration codes. MCDS is inherit from xarray.DataSet
+generate-cmotif-database - Generate C-Motif Database that used to scan motif methylation profile over ALLC files.
+allc_motif_scan      - Scan C-Motif Database over ALLC files. 
+                       Get overall motif mC and cov count for each motif in each ALLC file.
+
 """
 
 EPILOG = """
@@ -139,8 +143,7 @@ def bam_to_allc_register_subparser(subparser):
         "--reference_fasta",
         type=str,
         required=True,
-        help="Path to 1 genome reference FASTA file (the one used for mapping), "
-             "use samtools fadix to build .fai index first. Do not compress that file."
+        help=reference_fasta_doc
     )
 
     parser_req.add_argument(
@@ -636,20 +639,129 @@ def allc_to_bigwig_register_subparser(subparser):
     )
 
 
-def allc_count_motif_register_subparser(subparser):
-    parser = subparser.add_parser('allc-count-motif',
-                                  aliases=['motif'],
+def generate_cmotif_database_register_subparser(subparser):
+    parser = subparser.add_parser('generate-cmotif-database',
+                                  aliases=['cmotif-db'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-                                  help="Count over genome-wise motif regions")
+                                  help="Generate lookup table for motifs all the cytosines belongs to. "
+                                       "BED files are used to limit cytosine scan in certain regions. "
+                                       "Scanning motif over whole genome is very noisy, "
+                                       "better scan it in some functional part of genome. "
+                                       "The result files will be in the output")
 
     parser_req = parser.add_argument_group("required arguments")
 
     parser_req.add_argument(
-        "--allc_paths",
+        "--bed_file_paths",
         type=str,
         required=True,
         nargs='+',
-        help=allc_paths_doc
+        help='Paths of bed files. Multiple bed will be merged to get a final region set. '
+             'The motif scan will only happen on the regions defined in these bed files.'
+    )
+
+    parser_req.add_argument(
+        "--reference_fasta",
+        type=str,
+        required=True,
+        help=reference_fasta_doc
+    )
+
+    parser_req.add_argument(
+        "--motif_files",
+        type=str,
+        required=True,
+        nargs='+',
+        help='MEME motif files that contains all the motif information.'
+    )
+
+    parser_req.add_argument(
+        "--output_dir",
+        type=str,
+        required=True,
+        help='Output directory of C-Motif database'
+    )
+
+    parser.add_argument(
+        "--slop_b",
+        type=int,
+        default=None,
+        help='Whether add slop to both ends of bed files.'
+    )
+
+    parser.add_argument(
+        "--chrom_size_path",
+        type=str,
+        default=None,
+        help=f'{chrom_size_path_doc} Needed if slop_b is not None'
+    )
+
+    parser.add_argument(
+        "--cpu",
+        type=int,
+        default=1,
+        help=cpu_basic_doc
+    )
+
+    parser.add_argument(
+        "--sort_mem_gbs",
+        type=int,
+        default=5,
+        help='Maximum memory usage in GBs when sort bed files'
+    )
+
+    parser.add_argument(
+        "--path_to_fimo",
+        type=str,
+        default='',
+        help='Path to fimo executable, if fimo is not in PATH. '
+             'fimo is part of MEME suite, see MEME doc at meme-suite.org'
+    )
+
+    parser.add_argument(
+        "--raw_score_thresh",
+        type=float,
+        default=8.,
+        help='Threshold of raw motif match likelihood score, see fimo doc for more info.'
+    )
+
+    parser.add_argument(
+        "--raw_p_value_thresh",
+        type=float,
+        default=2e-4,
+        help='Threshold of raw motif match P-value, see fimo doc for more info.'
+    )
+
+    parser.add_argument(
+        "--top_n",
+        type=int,
+        default=300000,
+        help='If too much motif found, will order them by likelihood score and keep top matches.'
+    )
+
+    parser.add_argument(
+        "--cmotif_bin_size",
+        type=int,
+        default=10000000,
+        help='Bin size of single file in C-Motif database. No impact on results, better keep the default.'
+    )
+
+
+def allc_motif_scan_register_subparser(subparser):
+    parser = subparser.add_parser('allc-motif-scan',
+                                  aliases=['motif'],
+                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+                                  help="Scan a list of ALLC files using a C-Motif database."
+                                       "C-Motif Database, can be generated via 'allcools generate-cmotif-database' "
+                                       "Save the integrated multi-dimensional array into netCDF4 format using xarray.")
+
+    parser_req = parser.add_argument_group("required arguments")
+
+    parser_req.add_argument(
+        "--allc_table",
+        type=str,
+        required=True,
+        help=allc_table_doc
     )
 
     parser_req.add_argument(
@@ -664,14 +776,14 @@ def allc_count_motif_register_subparser(subparser):
         type=str,
         nargs='+',
         required=True,
-        help=mc_contexts_doc
+        help=mc_contexts_doc + " Do not allow overlapped contexts."
     )
 
     parser_req.add_argument(
         "--c_motif_dir",
         type=str,
         required=True,
-        help='Path to the C-Motif directory.'
+        help='Path to the C-Motif directory. C-Motif Database is generated by "allcools generate-cmotif-database"'
     )
 
     parser.add_argument(
@@ -679,9 +791,17 @@ def allc_count_motif_register_subparser(subparser):
         dest='count_binary',
         action='store_true',
         help='If present, will treat the methylation level as binary. '
-             'If see mc > 0, then methylated, otherwise unmethylated. Only use this for single cell ALLC.'
+             'If mC > 0, then methylated, otherwise unmethylated, '
+             'ambiguous site (mC > 0 & mC != cov) will be ignored. '
+             'Only use this for single cell ALLC.'
     )
     parser.set_defaults(count_binary=False)
+
+    parser.add_argument(
+        "--cpu",
+        type=int,
+        help=cpu_basic_doc
+    )
 
 
 def generate_mcds_register_subparser(subparser):
@@ -843,8 +963,10 @@ def main():
         from ._allc_to_region_count import allc_to_region_count as func
     elif cur_command in ['allc-to-bigwig', '2bw']:
         from ._allc_to_bigwig import allc_to_bigwig as func
-    elif cur_command in ['allc-count-motif']:
-        from .motif.count_motif import allc_count_motif as func
+    elif cur_command in ['generate-cmotif-database', 'cmotif-db']:
+        from .motif.cmotif import generate_cmotif_database as func
+    elif cur_command in ['allc-motif-scan', 'motif']:
+        from .motif.motif_scan import allc_motif_scan as func
     elif cur_command in ['generate-mcds', 'mcds']:
         from .count_matrix.mcds import generate_mcds as func
     else:

@@ -49,6 +49,9 @@ region_bed_names_doc = 'Space separated names for each BED file provided in regi
 
 allc_table_doc = 'Contain all the ALLC file information in 2 columns: 1. file_uid, 2. file_path. No header'
 
+reference_fasta_doc = 'Path to 1 genome reference FASTA file (the one used for mapping), ' \
+                      'use samtools fadix to build .fai index first. Do not compress that file.'
+
 
 def doc_params(**kwds):
     """\

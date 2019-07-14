@@ -234,7 +234,9 @@ def _aggregate_count_df(count_dfs):
     return total_df
 
 
-@doc_params(compress_level_doc=compress_level_doc, cpu_basic_doc=cpu_basic_doc)
+@doc_params(compress_level_doc=compress_level_doc,
+            cpu_basic_doc=cpu_basic_doc,
+            reference_fasta_doc=reference_fasta_doc)
 def bam_to_allc(bam_path,
                 reference_fasta,
                 output_path=None,
@@ -253,8 +255,7 @@ def bam_to_allc(bam_path,
     bam_path
         Path to 1 position sorted BAM file
     reference_fasta
-        Path to 1 genome reference FASTA file (the one used for mapping),
-        use samtools fadix to build .fai index first. Do not compress that file.
+        {reference_fasta_doc}
     output_path
         Path to 1 output ALLC file
     cpu

@@ -77,11 +77,13 @@ def _count_single_cmotif_bin_on_multiple_allc(cmotif_dict_path, allc_paths,
 
 @doc_params(allc_table_doc=allc_table_doc,
             cpu_basic_doc=cpu_basic_doc)
-def allc_count_motif(allc_table, output_path, mc_contexts, c_motif_dir,
-                     count_binary=True, cpu=1):
+def allc_motif_scan(allc_table, output_path, mc_contexts, c_motif_dir,
+                    count_binary=True, cpu=1):
     """\
     Scan a list of ALLC files using a C-Motif database.
+    C-Motif Database, can be generated via 'allcools generate-cmotif-database'
     Save the integrated multi-dimensional array into netCDF4 format using xarray.
+
 
     Parameters
     ----------

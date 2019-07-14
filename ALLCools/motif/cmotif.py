@@ -106,19 +106,19 @@ def _generate_c_motif_database(motif_bed, fasta_path, output_dir, bin_size=10000
 
 @doc_params(chrom_size_path_doc=chrom_size_path_doc,
             cpu_basic_doc=cpu_basic_doc)
-def bed_cmotif_profiles(bed_file_paths,
-                        genome_fasta_path,
-                        motif_files,
-                        output_dir,
-                        slop_b=None,
-                        chrom_size_path=None,
-                        cpu=1,
-                        sort_mem_gbs=1,
-                        path_to_fimo='',
-                        raw_score_thresh=8,
-                        raw_p_value_thresh=2e-4,
-                        top_n=300000,
-                        cmotif_bin_size=10000000):
+def generate_cmotif_database(bed_file_paths,
+                             reference_fasta,
+                             motif_files,
+                             output_dir,
+                             slop_b=None,
+                             chrom_size_path=None,
+                             cpu=1,
+                             sort_mem_gbs=5,
+                             path_to_fimo='',
+                             raw_score_thresh=8.,
+                             raw_p_value_thresh=2e-4,
+                             top_n=300000,
+                             cmotif_bin_size=10000000):
     """\
     Generate lookup table for motifs all the cytosines belongs to. 
     BED files are used to limit cytosine scan in certain regions. 
@@ -130,10 +130,10 @@ def bed_cmotif_profiles(bed_file_paths,
     bed_file_paths
         Paths of bed files. Multiple bed will be merged to get a final region set.
         The motif scan will only happen on the regions defined in these bed files.
-    genome_fasta_path
+    reference_fasta
         FASTA file path of the genome to scan
     motif_files
-        MEME motif files that contains all the motif informaiton.
+        MEME motif files that contains all the motif information.
     output_dir
         Output directory of C-Motif database
     slop_b
@@ -144,7 +144,7 @@ def bed_cmotif_profiles(bed_file_paths,
     cpu
         {cpu_basic_doc}
     sort_mem_gbs
-        Maximum memory usage in sort bed files
+        Maximum memory usage in GBs when sort bed files
     path_to_fimo
         Path to fimo executable, if fimo is not in PATH
     raw_score_thresh
@@ -154,7 +154,7 @@ def bed_cmotif_profiles(bed_file_paths,
     top_n
         If too much motif found, will order them by likelihood score and keep top matches.
     cmotif_bin_size
-        Bin size of single file in C-Motif database, better keep the default.
+        Bin size of single file in C-Motif database. No impact on results, better keep the default.
     Returns
     -------
 
@@ -175,7 +175,7 @@ def bed_cmotif_profiles(bed_file_paths,
 
     # step 1: Merge all bed files, get fasta file from the merged bed file.
     _get_fasta(bed_file_paths=bed_file_paths,
-               fasta_path=genome_fasta_path,
+               fasta_path=reference_fasta,
                output_path=bed_fasta_path,
                slop_b=slop_b,
                chrom_size_path=chrom_size_path,
@@ -207,7 +207,7 @@ def bed_cmotif_profiles(bed_file_paths,
 
     # step 4: generate cmotif dataset
     _generate_c_motif_database(motif_bed=total_motif_bed,
-                               fasta_path=genome_fasta_path,
+                               fasta_path=reference_fasta,
                                output_dir=output_dir,
                                bin_size=cmotif_bin_size)
 
