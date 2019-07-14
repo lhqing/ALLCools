@@ -5,11 +5,12 @@ from collections import defaultdict
 import msgpack
 import pandas as pd
 
+from .._doc import *
 from .fimo import _scan_motif_over_fasta, _aggregate_motif_beds, _get_fasta
 from .._bam_to_allc import _get_chromosome_sequence_upper, _read_faidx
 
 
-def _generate_c_motif_database(motif_bed, fasta_path, output_dir):
+def _generate_c_motif_database(motif_bed, fasta_path, output_dir, bin_size=10000000):
     fai_path = f'{fasta_path}.fai'
     fai_df = _read_faidx(fai_path)
 
@@ -72,8 +73,6 @@ def _generate_c_motif_database(motif_bed, fasta_path, output_dir):
     with open(output_dir / 'MOTIF_NAMES.msg', 'wb') as f:
         msgpack.dump(motif_names, f)
 
-    bin_size = 20000000
-
     # split msg into chrom bins
     bin_paths = []
     for path in chrom_file_paths:
@@ -101,14 +100,65 @@ def _generate_c_motif_database(motif_bed, fasta_path, output_dir):
                   'end': int(path.name.split('.')[1].split('-')[1])}
         records.append(record)
     df = pd.DataFrame(records)[['chrom', 'start', 'end', 'file_name']]
-    df.to_msgpack('LOOKUP_TABLE.msg')
+    df.to_msgpack(output_dir / 'LOOKUP_TABLE.msg')
     return
 
 
-def bed_cmotif_profiles(bed_file_paths, genome_fasta_path, motif_files,
-                        output_path, slop_b=None, chrom_size_path=None,
-                        cpu=1, sort_mem_gbs=1, path_to_fimo='', raw_score_thresh=7,
-                        raw_p_value_thresh=5e-4, top_n=500000):
+@doc_params(chrom_size_path_doc=chrom_size_path_doc,
+            cpu_basic_doc=cpu_basic_doc)
+def bed_cmotif_profiles(bed_file_paths,
+                        genome_fasta_path,
+                        motif_files,
+                        output_dir,
+                        slop_b=None,
+                        chrom_size_path=None,
+                        cpu=1,
+                        sort_mem_gbs=1,
+                        path_to_fimo='',
+                        raw_score_thresh=8,
+                        raw_p_value_thresh=2e-4,
+                        top_n=300000,
+                        cmotif_bin_size=10000000):
+    """\
+    Generate lookup table for motifs all the cytosines belongs to. 
+    BED files are used to limit cytosine scan in certain regions. 
+    Scanning motif over whole genome is very noisy, better scan it in some functional part of genome.
+    The result files will be in the output
+    
+    Parameters
+    ----------
+    bed_file_paths
+        Paths of bed files. Multiple bed will be merged to get a final region set.
+        The motif scan will only happen on the regions defined in these bed files.
+    genome_fasta_path
+        FASTA file path of the genome to scan
+    motif_files
+        MEME motif files that contains all the motif informaiton.
+    output_dir
+        Output directory of C-Motif database
+    slop_b
+        Whether add slop to both ends of bed files.
+    chrom_size_path
+        {chrom_size_path_doc}
+        Needed if slop_b is not None
+    cpu
+        {cpu_basic_doc}
+    sort_mem_gbs
+        Maximum memory usage in sort bed files
+    path_to_fimo
+        Path to fimo executable, if fimo is not in PATH
+    raw_score_thresh
+        Threshold of raw motif match likelihood score, see fimo doc for more info.
+    raw_p_value_thresh
+        Threshold of raw motif match P-value, see fimo doc for more info.
+    top_n
+        If too much motif found, will order them by likelihood score and keep top matches.
+    cmotif_bin_size
+        Bin size of single file in C-Motif database, better keep the default.
+    Returns
+    -------
+
+    """
     try:
         if path_to_fimo != '':
             path_to_fimo = path_to_fimo.rstrip('/') + '/'
@@ -119,8 +169,8 @@ def bed_cmotif_profiles(bed_file_paths, genome_fasta_path, motif_files,
 
     temp_paths = []
 
-    output_path = pathlib.Path(output_path).absolute()
-    bed_fasta_path = str(output_path) + '.fa'
+    output_dir = pathlib.Path(output_dir).absolute()
+    bed_fasta_path = str(output_dir) + '.fa'
     temp_paths.append(bed_fasta_path)
 
     # step 1: Merge all bed files, get fasta file from the merged bed file.
@@ -132,7 +182,7 @@ def bed_cmotif_profiles(bed_file_paths, genome_fasta_path, motif_files,
                cpu=cpu, sort_mem_gbs=sort_mem_gbs)
 
     # step 2: scan motif over bed_fasta
-    motif_scan_dir = str(output_path) + '.motif_scan'
+    motif_scan_dir = str(output_dir) + '.motif_scan'
     temp_paths.append(motif_scan_dir)
 
     _scan_motif_over_fasta(
@@ -147,7 +197,7 @@ def bed_cmotif_profiles(bed_file_paths, genome_fasta_path, motif_files,
         is_genome_fasta=False)
 
     # step 3: aggregate motif bed
-    total_motif_bed = str(output_path) + 'total_motif.bed'
+    total_motif_bed = str(output_dir) + '.total_motif.bed'
     lookup_table = pd.read_msgpack(f'{motif_scan_dir}/LOOKUP_TABLE.msg')
     bed_file_paths = lookup_table['output_file_path'].tolist()
     _aggregate_motif_beds(bed_file_paths=bed_file_paths,
@@ -158,5 +208,18 @@ def bed_cmotif_profiles(bed_file_paths, genome_fasta_path, motif_files,
     # step 4: generate cmotif dataset
     _generate_c_motif_database(motif_bed=total_motif_bed,
                                fasta_path=genome_fasta_path,
-                               output_dir=output_path)
+                               output_dir=output_dir,
+                               bin_size=cmotif_bin_size)
+
+    # step 5: cleaning
+    for path in temp_paths:
+        subprocess.run(['rm', '-rf', path])
+    # not delete this file, but gzip it.
+    subprocess.run(['bgzip', total_motif_bed])
+    # save motif files into output_dir
+    motif_file_dir = output_dir / 'MOTIF_FILE'
+    motif_file_dir.mkdir(exist_ok=True)
+    for motif_file in motif_files:
+        new_path = motif_file_dir / pathlib.Path(motif_file).name
+        subprocess.run(['mv', motif_file, new_path], check=True)
     return

@@ -207,7 +207,8 @@ def _aggregate_region_count_to_mcds(output_dir,
     return total_ds
 
 
-@doc_params(chrom_size_path_doc=chrom_size_path_doc,
+@doc_params(allc_table_doc=allc_table_doc,
+            chrom_size_path_doc=chrom_size_path_doc,
             mc_contexts_doc=mc_contexts_doc,
             cov_cutoff_doc=cov_cutoff_doc,
             split_strand_doc=split_strand_doc,
@@ -234,7 +235,7 @@ def generate_mcds(allc_table,
     Parameters
     ----------
     allc_table
-        Contain all the ALLC file information in 2 columns: 1. file_uid, 2. file_path. No header
+        {allc_table_doc}
     output_prefix
         Output prefix of the MCDS
     chrom_size_path

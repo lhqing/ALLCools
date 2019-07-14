@@ -696,7 +696,7 @@ def generate_mcds_register_subparser(subparser):
         "--allc_table",
         type=str,
         required=True,
-        help='Contain all the ALLC file information in 2 columns: 1. file_uid, 2. file_path. No header'
+        help=allc_table_doc
     )
 
     parser_req.add_argument(

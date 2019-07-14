@@ -47,6 +47,8 @@ region_bed_paths_doc = 'Arbitrary genomic regions can be defined in several BED 
 
 region_bed_names_doc = 'Space separated names for each BED file provided in region_bed_paths.'
 
+allc_table_doc = 'Contain all the ALLC file information in 2 columns: 1. file_uid, 2. file_path. No header'
+
 
 def doc_params(**kwds):
     """\
