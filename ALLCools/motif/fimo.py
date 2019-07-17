@@ -247,6 +247,7 @@ def _scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir, path_to
                 # by default parms, this rarely happens (2 in 1800).
                 # Usually its the motif too small so p value is large.
                 print(f'Motif {uid} {name} do not have any match under current settings.')
+                continue
             motif_records.append((uid, name, str(motif_file_path), str(output_path)))
             n += 1
             if n % 100 == 0:
