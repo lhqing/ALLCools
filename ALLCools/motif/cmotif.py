@@ -200,6 +200,10 @@ def generate_cmotif_database(bed_file_paths,
     total_motif_bed = str(output_dir) + '.total_motif.bed'
     lookup_table = pd.read_msgpack(f'{motif_scan_dir}/LOOKUP_TABLE.msg')
     bed_file_paths = lookup_table['output_file_path'].tolist()
+    if len(bed_file_paths) == 0:
+        print('None of the motif have any match in the current setting. Nothing to continue.'
+              'Does the region to small or the threshold too stringent?')
+        return
     _aggregate_motif_beds(bed_file_paths=bed_file_paths,
                           output_path=total_motif_bed,
                           cpu=cpu,
