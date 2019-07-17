@@ -77,7 +77,7 @@ def _split_meme_motif_file(meme_motif_paths, output_dir):
 
     Parameters
     ----------
-    meme_motif_path
+    meme_motif_paths
     output_dir
 
     Returns
@@ -98,6 +98,11 @@ def _split_meme_motif_file(meme_motif_paths, output_dir):
             motif_tmp_text = ''
             for line in f:
                 if line.startswith('MOTIF'):
+                    # save the previous one first
+                    if motif_tmp_text != '':
+                        records[(uid, name)] = header_text + motif_tmp_text
+                    motif_tmp_text = line
+
                     try:
                         _, uid, name = line.strip('\n').split(' ')
                     except ValueError:
@@ -109,10 +114,6 @@ def _split_meme_motif_file(meme_motif_paths, output_dir):
                     else:
                         uid_set.add(uid)
                     header = False
-
-                    if motif_tmp_text != '':
-                        records[(uid, name)] = header_text + motif_tmp_text
-                    motif_tmp_text = line
                 elif header:
                     header_text += line
                 else:
