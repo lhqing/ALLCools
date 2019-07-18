@@ -84,7 +84,6 @@ def allc_motif_scan(allc_table, output_path, mc_contexts, c_motif_dir,
     C-Motif Database, can be generated via 'allcools generate-cmotif-database'
     Save the integrated multi-dimensional array into netCDF4 format using xarray.
 
-
     Parameters
     ----------
     allc_table
@@ -173,5 +172,6 @@ def allc_motif_scan(allc_table, output_path, mc_contexts, c_motif_dir,
     motif_names.index.name = 'motif'
     total_da.coords['motif_names'] = motif_names
 
+    total_da.set_index(motif='motif_names', inplace=True)
     total_da.to_netcdf(output_path)
     return

@@ -800,6 +800,7 @@ def allc_motif_scan_register_subparser(subparser):
     parser.add_argument(
         "--cpu",
         type=int,
+        default=1,
         help=cpu_basic_doc
     )
 
