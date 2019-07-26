@@ -332,11 +332,22 @@ def generate_mcds(allc_table,
                                                chunk_size=cell_chunk_size,
                                                row_name='cell',
                                                cpu=cpu)
+
     if not output_prefix.endswith('.mcds'):
         output_path = output_prefix + '.mcds'
     else:
         output_path = output_prefix
     total_ds.to_netcdf(output_path)
+
+    # sanity check mC <= cov
+    for da_name, da in total_ds.data_vars.items():
+        mc_da = da.sel(count_type='mc')
+        cov_da = da.sel(count_type='cov')
+        try:
+            assert int((cov_da < mc_da).sum()) == 0
+        except AssertionError as e:
+            print(f'In {da_name}, found mC > cov.')
+            raise e
 
     # remove temp dir
     if remove_tmp:

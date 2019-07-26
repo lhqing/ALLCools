@@ -125,6 +125,8 @@ def allc_motif_scan(allc_table, output_path, mc_contexts, c_motif_dir,
 
     lookup_table = pd.read_msgpack(c_motif_dir / 'LOOKUP_TABLE.msg')
 
+    # TODO make this function more memory efficient
+
     region_mc_records = []
     region_cov_records = []
     with ProcessPoolExecutor(cpu) as executor:
@@ -172,6 +174,6 @@ def allc_motif_scan(allc_table, output_path, mc_contexts, c_motif_dir,
     motif_names.index.name = 'motif'
     total_da.coords['motif_names'] = motif_names
 
-    total_da.set_index(motif='motif_names', inplace=True)
+    total_da = total_da.set_index(motif='motif_names')
     total_da.to_netcdf(output_path)
     return
