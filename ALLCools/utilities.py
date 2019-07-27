@@ -469,3 +469,29 @@ def _transfer_bin_size(bin_size: int) -> str:
     else:
         bin_size_str = f'{bin_size}'
     return bin_size_str
+
+
+def parse_dtype(dtype):
+    if isinstance(dtype, str):
+        if dtype == 'uint8':
+            return np.uint16
+        elif dtype == 'uint16':
+            return np.uint16
+        elif dtype == 'uint32':
+            return np.uint32
+        elif dtype == 'uint64':
+            return np.uint64
+        elif dtype == 'int8':
+            return np.int8
+        elif dtype == 'int16':
+            return np.int16
+        elif dtype == 'int32':
+            return np.int32
+        elif dtype == 'int64':
+            return np.int64
+        elif dtype == 'bool':
+            return np.bool
+        else:
+            raise ValueError(f'Unknown dtype {dtype}')
+    else:
+        return dtype

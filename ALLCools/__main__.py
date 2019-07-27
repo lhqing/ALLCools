@@ -904,6 +904,18 @@ def generate_mcds_register_subparser(subparser):
              'Large chunksize needs large memory.'
     )
 
+    parser.add_argument(
+        "--dtype",
+        type=str,
+        default='uint32',
+        choices=['uint8', 'uint16', 'uint32', 'uint64',
+                 'int8', 'int16', 'int32', 'int64',
+                 'bool'],
+        help='Data type of MCDS count matrix. Default is np.uint32. '
+             'For single cell feature count, this can be set to np.uint16 [0, 65536]. '
+             'The values exceed min/max will be clipped.'
+    )
+
 
 def main():
     parser = argparse.ArgumentParser(description=DESCRIPTION,

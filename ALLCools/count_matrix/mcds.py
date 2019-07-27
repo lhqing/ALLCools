@@ -12,13 +12,16 @@ import xarray as xr
 from .._allc_to_region_count import batch_allc_to_region_count
 from .._doc import *
 from ..schema.mcds_schema import *
-from ..utilities import parse_file_paths
+from ..utilities import parse_file_paths, parse_dtype
+
+DEFAULT_MCDS_DTYPE = np.uint32
 
 
 def _region_count_table_to_csr_npz(region_count_tables,
                                    region_id_map,
                                    output_prefix,
-                                   compression=True):
+                                   compression=True,
+                                   dtype=DEFAULT_MCDS_DTYPE):
     """
     helper func of _aggregate_region_count_to_mcds
 
@@ -41,9 +44,9 @@ def _region_count_table_to_csr_npz(region_count_tables,
 
     # read region_id to int_id (col location) map
     if isinstance(region_id_map, str):
-        region_id_map = pd.read_msgpack(region_id_map).astype(np.uint32)
+        region_id_map = pd.read_msgpack(region_id_map).astype(dtype)
     else:
-        region_id_map = region_id_map.astype(np.uint32)
+        region_id_map = region_id_map.astype(dtype)
 
     # determine matrix shape
     n_obj = len(count_table_path_list)
@@ -51,8 +54,8 @@ def _region_count_table_to_csr_npz(region_count_tables,
 
     # init matrix
     # hint by scipy, lil_matrix is the only suitable format in construction step
-    mc_matrix = ss.lil_matrix((n_obj, n_feature), dtype=np.uint32)
-    cov_matrix = ss.lil_matrix((n_obj, n_feature), dtype=np.uint32)
+    mc_matrix = ss.lil_matrix((n_obj, n_feature), dtype=dtype)
+    cov_matrix = ss.lil_matrix((n_obj, n_feature), dtype=dtype)
 
     # read each count table and add to matrix
     for obj_idx, file_path in enumerate(count_table_path_list):
@@ -63,8 +66,8 @@ def _region_count_table_to_csr_npz(region_count_tables,
                            header=None,
                            names=['bin_id', 'mc', 'cov'],
                            dtype={'bin_id': str,
-                                  'mc': np.uint32,
-                                  'cov': np.uint32},
+                                  'mc': dtype,
+                                  'cov': dtype},
                            index_col=0)
         if data.shape[0] == 0:
             # for rare case where the site_bed is empty
@@ -117,7 +120,8 @@ def _aggregate_region_count_to_mcds(output_dir,
                                     dataset_name,
                                     chunk_size=100,
                                     row_name='cell',
-                                    cpu=1):
+                                    cpu=1,
+                                    dtype=DEFAULT_MCDS_DTYPE):
     """
     This function aggregate all the region count table into a single mcds
     """
@@ -154,7 +158,8 @@ def _aggregate_region_count_to_mcds(output_dir,
                                          output_prefix=str(
                                              output_dir / f'{dataset_name}_{region_name}_'
                                              f'{mc_type}_{strandness}_{chunk_id}'),
-                                         compression=True)
+                                         compression=True,
+                                         dtype=dtype)
                 future_dict[future] = (mc_type, region_name, strandness, chunk_id)
 
         records = defaultdict(list)
@@ -228,7 +233,8 @@ def generate_mcds(allc_table,
                   cpu=1,
                   remove_tmp=True,
                   max_per_mcds=3072,
-                  cell_chunk_size=100):
+                  cell_chunk_size=100,
+                  dtype=DEFAULT_MCDS_DTYPE):
     """\
     Generate MCDS from a list of ALLC file provided with file id.
 
@@ -262,11 +268,17 @@ def generate_mcds(allc_table,
     cell_chunk_size
         Size of cell chunk in parallel aggregation. Do not have any effect on results.
         Large chunksize needs large memory.
+    dtype
+        Data type of MCDS count matrix. Default is np.uint32.
+        For single cell feature count, this can be set to np.uint16, which means the value is 0-65536.
+        The values exceed max will be clipped.
 
     Returns
     -------
 
     """
+    dtype = parse_dtype(dtype)
+
     if isinstance(allc_table, str):
         allc_series = pd.read_csv(allc_table, header=None, index_col=0, squeeze=True, sep='\t')
         if not isinstance(allc_series, pd.Series):
@@ -299,7 +311,8 @@ def generate_mcds(allc_table,
                           cpu=cpu,
                           remove_tmp=remove_tmp,
                           max_per_mcds=max_per_mcds,
-                          cell_chunk_size=cell_chunk_size)
+                          cell_chunk_size=cell_chunk_size,
+                          dtype=dtype)
         return
 
     # check region bed names
@@ -331,7 +344,8 @@ def generate_mcds(allc_table,
                                                dataset_name=dataset_name,
                                                chunk_size=cell_chunk_size,
                                                row_name='cell',
-                                               cpu=cpu)
+                                               cpu=cpu,
+                                               dtype=dtype)
 
     if not output_prefix.endswith('.mcds'):
         output_path = output_prefix + '.mcds'
