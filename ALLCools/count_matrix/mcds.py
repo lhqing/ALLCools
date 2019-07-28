@@ -17,6 +17,19 @@ from ..utilities import parse_file_paths, parse_dtype
 DEFAULT_MCDS_DTYPE = np.uint32
 
 
+def clip_too_large_cov(data_df, machine_max):
+    for row in data_df.index[data_df['cov'] > machine_max]:
+        mc, cov = data_df.loc[row]
+        rate = (cov / machine_max)
+        ncov = int(cov / rate - 1)
+        nmc = max(0, int(mc / rate - 1))
+        assert nmc <= ncov
+        assert ncov < machine_max
+        data_df.at[row, 'mc'] = nmc
+        data_df.at[row, 'cov'] = ncov
+    return data_df
+
+
 def _region_count_table_to_csr_npz(region_count_tables,
                                    region_id_map,
                                    output_prefix,
@@ -30,6 +43,8 @@ def _region_count_table_to_csr_npz(region_count_tables,
     This function don't take care of any path selection, but assume all region_count_table is homogeneous type
     It return the saved file path
     """
+    machine_max = np.iinfo(dtype).max
+
     output_prefix = output_prefix.rstrip('.')
     mc_path = output_prefix + '.mc.npz'
     cov_path = output_prefix + '.cov.npz'
@@ -66,15 +81,25 @@ def _region_count_table_to_csr_npz(region_count_tables,
                            header=None,
                            names=['bin_id', 'mc', 'cov'],
                            dtype={'bin_id': str,
-                                  'mc': dtype,
-                                  'cov': dtype},
+                                  'mc': np.int64,
+                                  'cov': np.int64},  # here using a sufficient dtype to load data first
                            index_col=0)
         if data.shape[0] == 0:
             # for rare case where the site_bed is empty
             continue
+        if data['cov'].max() > machine_max:
+            # then check if max value is over the dtype range
+            # some times, if the feature is too large and dtype is too small,
+            # the cov will exceed dtype range first.
+            # This should only be used in single cell data, but not bulk count
+            data = clip_too_large_cov(data, machine_max)
+            print(f'Some value in the file exceed the range of {dtype}: {file_path}. \n'
+                  f'Both mC and Cov are clipped bellow the machine max with preserved ratio, '
+                  f'but if this happens too often or precise count is necessary, '
+                  f'consider using a larger dtype.')
         data.index = data.index.map(region_id_map)
-        mc_matrix[obj_idx, data.index.values] = data['mc'].values
-        cov_matrix[obj_idx, data.index.values] = data['cov'].values
+        mc_matrix[obj_idx, data.index.values] = data['mc'].astype(dtype).values
+        cov_matrix[obj_idx, data.index.values] = data['cov'].astype(dtype).values
     mc_matrix = mc_matrix.tocsr()
     ss.save_npz(mc_path, mc_matrix, compressed=compression)
 
