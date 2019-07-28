@@ -912,8 +912,8 @@ def generate_mcds_register_subparser(subparser):
                  'int8', 'int16', 'int32', 'int64',
                  'bool'],
         help='Data type of MCDS count matrix. Default is np.uint32. '
-             'For single cell feature count, this can be set to np.uint16 [0, 65536]. '
-             'The values exceed min/max will be clipped.'
+             'For single cell feature count, this can be set to np.uint16 [0, 65536] to decrease file size. '
+             'The values exceed min/max will be clipped while keep the mc/cov same, and a warning will be sent.'
     )
 
 

@@ -6,7 +6,8 @@ import msgpack
 import pandas as pd
 
 from .._doc import *
-from .fimo import _scan_motif_over_fasta, _aggregate_motif_beds, _get_fasta
+from .fimo import _scan_motif_over_fasta, _aggregate_motif_beds
+from .utilities import get_fasta
 from .._bam_to_allc import _get_chromosome_sequence_upper, _read_faidx
 
 
@@ -174,12 +175,12 @@ def generate_cmotif_database(bed_file_paths,
     temp_paths.append(bed_fasta_path)
 
     # step 1: Merge all bed files, get fasta file from the merged bed file.
-    _get_fasta(bed_file_paths=bed_file_paths,
-               fasta_path=reference_fasta,
-               output_path=bed_fasta_path,
-               slop_b=slop_b,
-               chrom_size_path=chrom_size_path,
-               cpu=cpu, sort_mem_gbs=sort_mem_gbs)
+    get_fasta(bed_file_paths=bed_file_paths,
+              fasta_path=reference_fasta,
+              output_path=bed_fasta_path,
+              slop_b=slop_b,
+              chrom_size_path=chrom_size_path,
+              cpu=cpu, sort_mem_gbs=sort_mem_gbs)
 
     # step 2: scan motif over bed_fasta
     motif_scan_dir = str(output_dir) + '.motif_scan'
