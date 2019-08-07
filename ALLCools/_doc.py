@@ -8,7 +8,7 @@ allc_path_doc = "Path to 1 ALLC file"
 allc_paths_doc = "Single ALLC path contain wildcard OR multiple space separated ALLC paths " \
                  "OR a file contains 1 ALLC path in each row."
 
-allc_table_doc = 'Contain all the ALLC file information in 2 columns: 1. file_uid, 2. file_path. No header'
+allc_table_doc = "Contain all the ALLC file information in 2 columns: 1. file_uid, 2. file_path. No header"
 
 bin_sizes_doc = "Fix-size genomic bins can be defined by bin_sizes and chrom_size_path. " \
                 "Space separated sizes of genome bins, each size will be count separately."
@@ -43,6 +43,9 @@ region_doc = "Only extract records from certain genome region(s) via tabix, " \
              "multiple region can be provided in tabix form. If region is not None, will not run in parallel"
 
 remove_additional_chrom_doc = "Whether to remove rows with unknown chromosome instead of raising KeyError"
+
+rna_table_doc = "This is only for mCT data when we have RNA BAM file for each single cell. " \
+                "Contain all the RNA BAM file information in 2 columns: 1. file_uid, 2. file_path. No header."
 
 split_strand_doc = 'If true, Watson (+) and Crick (-) strands will be count separately'
 

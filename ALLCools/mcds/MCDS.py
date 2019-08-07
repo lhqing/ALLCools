@@ -40,7 +40,7 @@ class MCDS(xr.Dataset):
         if isinstance(paths, str) and '*' not in paths:
             _this_ds = xr.open_dataset(paths, **kwargs)
         else:
-            _this_ds = xr.open_mfdataset(cls, paths, **kwargs)
+            _this_ds = xr.open_mfdataset(paths, **kwargs)
 
         if use_dataarrays is not None:
             if isinstance(use_dataarrays, str):

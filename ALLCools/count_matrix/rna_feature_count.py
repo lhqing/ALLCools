@@ -1,9 +1,10 @@
 import pathlib
-import pandas as pd
-import numpy as np
-import subprocess
 import shlex
+import subprocess
 from concurrent.futures import ProcessPoolExecutor, as_completed
+
+import numpy as np
+import pandas as pd
 
 
 def _execute_one_feature_count(record):
@@ -20,10 +21,10 @@ def _read_one_feature_count_output(record):
     out_path = record['out_path']
     summary_path = out_path + '.summary'
 
-    summary_df = pd.read_table(summary_path, index_col=0,
-                               names=record['samples'], skiprows=1)
+    summary_df = pd.read_csv(summary_path, index_col=0, sep='\t',
+                             names=record['samples'], skiprows=1)
 
-    count_df = pd.read_table(out_path, comment='#', index_col=0)
+    count_df = pd.read_csv(out_path, comment='#', index_col=0, sep='\t')
     count_df.columns = count_df.columns[:5].tolist() + record['samples']
     count_df = count_df.iloc[:, 5:].astype(np.uint32)
     count_df.index.name = 'gene'
@@ -91,7 +92,7 @@ def batch_feature_count(bam_dict, out_prefix, gtf_path,
             bam_paths_str = ' '.join(bam_paths)
             out_path = out_prefix + f'.tmp.{count_type}.{id_type}.{chunk_id}.tsv'
             cmd = f'featureCounts -t {count_type} ' \
-                  f'-g {id_type} -a {gtf_path} -o {str(out_path)} {bam_paths_str}'
+                f'-g {id_type} -a {gtf_path} -o {str(out_path)} {bam_paths_str}'
             cmd_dict = {
                 'cmd': cmd,
                 'samples': sample_ids,
@@ -105,7 +106,7 @@ def batch_feature_count(bam_dict, out_prefix, gtf_path,
     bam_paths_str = ' '.join(bam_paths)
     out_path = out_prefix + f'.tmp.{count_type}.{id_type}.{chunk_id}.tsv'
     cmd = f'featureCounts -t {count_type} ' \
-          f'-g {id_type} -a {gtf_path} -o {str(out_path)} {bam_paths_str}'
+        f'-g {id_type} -a {gtf_path} -o {str(out_path)} {bam_paths_str}'
     cmd_dict = {
         'cmd': cmd,
         'samples': sample_ids,

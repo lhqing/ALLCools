@@ -18,6 +18,7 @@ DEFAULT_MCDS_DTYPE = np.uint32
 
 
 def clip_too_large_cov(data_df, machine_max):
+    too_large_count = 0
     for row in data_df.index[data_df['cov'] > machine_max]:
         mc, cov = data_df.loc[row]
         rate = (cov / machine_max)
@@ -27,7 +28,8 @@ def clip_too_large_cov(data_df, machine_max):
         assert ncov < machine_max
         data_df.at[row, 'mc'] = nmc
         data_df.at[row, 'cov'] = ncov
-    return data_df
+        too_large_count += 1
+    return data_df, too_large_count
 
 
 def _region_count_table_to_csr_npz(region_count_tables,
@@ -92,8 +94,8 @@ def _region_count_table_to_csr_npz(region_count_tables,
             # some times, if the feature is too large and dtype is too small,
             # the cov will exceed dtype range first.
             # This should only be used in single cell data, but not bulk count
-            data = clip_too_large_cov(data, machine_max)
-            print(f'Some value in the file exceed the range of {dtype}: {file_path}. \n'
+            data, count = clip_too_large_cov(data, machine_max)
+            print(f'{count} row(s) in the file exceed the range of {dtype}: {file_path}. \n'
                   f'Both mC and Cov are clipped bellow the machine max with preserved ratio, '
                   f'but if this happens too often or precise count is necessary, '
                   f'consider using a larger dtype.')
@@ -245,11 +247,13 @@ def _aggregate_region_count_to_mcds(output_dir,
             bin_sizes_doc=bin_sizes_doc,
             cpu_basic_doc=cpu_basic_doc,
             region_bed_paths_doc=region_bed_paths_doc,
-            region_bed_names_doc=region_bed_names_doc)
+            region_bed_names_doc=region_bed_names_doc,
+            rna_table_doc=rna_table_doc)
 def generate_mcds(allc_table,
                   output_prefix,
                   chrom_size_path,
                   mc_contexts,
+                  rna_table=None,
                   split_strand=False,
                   bin_sizes=None,
                   region_bed_paths=None,
@@ -273,6 +277,8 @@ def generate_mcds(allc_table,
         {chrom_size_path_doc}
     mc_contexts
         {mc_contexts_doc}
+    rna_table
+        {rna_table_doc}
     split_strand
         {split_strand_doc}
     bin_sizes
@@ -309,9 +315,39 @@ def generate_mcds(allc_table,
         if not isinstance(allc_series, pd.Series):
             raise ValueError('allc_table malformed, should only have 2 columns, 1. file_uid, 2. file_path')
     else:
-        allc_series = allc_table
+        allc_series = allc_table.dropna()
     if allc_series.index.duplicated().sum() != 0:
         raise ValueError('allc_table file uid have duplicates (1st column)')
+
+    rna_series = pd.Series([])
+    if rna_table is not None:
+        if isinstance(rna_table, str):
+            rna_series = pd.read_csv(rna_table, header=None, index_col=0, squeeze=True, sep='\t')
+            if not isinstance(rna_series, pd.Series):
+                raise ValueError('rna_table malformed, should only have 2 columns, 1. file_uid, 2. file_path')
+        else:
+            rna_series = rna_table.dropna()
+        if rna_series.index.duplicated().sum() != 0:
+            raise ValueError('rna_table file uid have duplicates (1st column)')
+
+        n_matched = len(rna_series.index & allc_series.index)
+        if n_matched == 0:
+            raise ValueError('Zero file uid are matched between RNA and ALLC table, '
+                             'are you sure file_uids are correct? '
+                             'MCDS only intend to save RNA and mC count matrix together when they are generated '
+                             'from the SAME cell/sample that have the SAME cell/sample id. '
+                             'If you have to save RNA and mC in different cell/sample ids, '
+                             'it would be better to save them in separate files.')
+        else:
+            if n_matched < rna_series.size:
+                print(f'{rna_series.size - n_matched} file_uid in RNA table do not exist in ALLC table')
+            if n_matched < allc_series.size:
+                print(f'{allc_series.size - n_matched} file_uid in ALLC table do not exist in RNA table')
+
+        # reindex allc and rna series, this may create NaN, will be dropped
+        union_index = rna_series.index | allc_series.index
+        allc_series = allc_series.reindex(union_index)
+        rna_series = rna_series.reindex(union_index)
 
     # if allc files exceed max_per_mcds, save them into chunks
     if allc_series.size > max_per_mcds:
@@ -319,15 +355,23 @@ def generate_mcds(allc_table,
         chunk_size = ceil(allc_series.size / mcds_n_chunk)
         allc_series_chunks = [allc_series[chunk_start:chunk_start + chunk_size]
                               for chunk_start in range(0, allc_series.size, chunk_size)]
-        print(f'Number of ALLC files {allc_series.size} > max_per_mcds {max_per_mcds}, ')
+        if rna_table is not None:
+            rna_series_chunks = [rna_series[chunk_start:chunk_start + chunk_size]
+                                 for chunk_start in range(0, rna_series.size, chunk_size)]
+        print(f'Number of file_uids {allc_series.size} > max_per_mcds {max_per_mcds}, ')
         print(f'will generate MCDS in {len(allc_series_chunks)} chunks.')
 
         # mcds chunks execute sequentially
         for chunk_id, allc_series_chunk in enumerate(allc_series_chunks):
+            if rna_table is not None:
+                rna_series_chunk = rna_series_chunks[chunk_id]
+            else:
+                rna_series_chunk = None
             generate_mcds(allc_table=allc_series_chunk,
                           output_prefix=f'{output_prefix}_{chunk_id}',
                           chrom_size_path=chrom_size_path,
                           mc_contexts=mc_contexts,
+                          rna_table=rna_series_chunk,
                           split_strand=split_strand,
                           bin_sizes=bin_sizes,
                           region_bed_paths=region_bed_paths,
