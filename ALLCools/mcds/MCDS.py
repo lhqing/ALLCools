@@ -31,6 +31,7 @@ class MCDS(xr.Dataset):
             String or List of dataarray name
         use_cells
         sel_dict
+        squeeze
         kwargs
             Other key word arguments pass to xr.open_dataset or xr.open_mfdataset
         Returns

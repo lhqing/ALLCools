@@ -1,9 +1,11 @@
-import numpy as np
+import xarray as xr
 
 
-def calculate_posterior_mc_rate(mc_da, cov_da, var_dim,
-                                normalize_per_cell=True, clip_norm_value=10):
-    # TODO calculate cell_a, cell_b separately
+def calculate_posterior_mc_rate(mc_da,
+                                cov_da,
+                                var_dim,
+                                normalize_per_cell=True,
+                                clip_norm_value=10):
     # TODO add a parameter weighting var to adjust prior
     # so we can do post_rate only in a very small set of gene to prevent memory issue
 
@@ -32,8 +34,55 @@ def calculate_posterior_mc_rate(mc_da, cov_da, var_dim,
         prior_mean = cell_a / (cell_a + cell_b)
         post_rate = post_rate / prior_mean
         if clip_norm_value is not None:
-            post_rate.values[np.where(post_rate.values > clip_norm_value)] = clip_norm_value
+            post_rate = post_rate.where(post_rate < clip_norm_value, clip_norm_value)
     return post_rate
+
+
+def calculate_posterior_mc_rate_lazy(mc_da, cov_da, var_dim, output_prefix, cell_chunk=20000,
+                                     normalize_per_cell=True, clip_norm_value=10):
+    """
+    Running calculate_posterior_mc_rate with dask array and directly save to disk.
+    This is highly memory efficient. Use this for dataset larger then machine memory.
+
+    Parameters
+    ----------
+    mc_da
+    cov_da
+    var_dim
+    output_prefix
+    cell_chunk
+    normalize_per_cell
+    clip_norm_value
+
+    Returns
+    -------
+
+    """
+    cell_list = mc_da.get_index('cell')
+    cell_chunks = [cell_list[i:i + cell_chunk] for i in range(0, cell_list.size, cell_chunk)]
+
+    output_paths = []
+    for chunk_id, cell_list_chunk in enumerate(cell_chunks):
+        _mc_da = mc_da.sel(cell=cell_list_chunk)
+        _cov_da = cov_da.sel(cell=cell_list_chunk)
+        post_rate = calculate_posterior_mc_rate(mc_da=_mc_da,
+                                                cov_da=_cov_da,
+                                                var_dim=var_dim,
+                                                normalize_per_cell=normalize_per_cell,
+                                                clip_norm_value=clip_norm_value)
+        if len(cell_chunks) == 1:
+            chunk_id = ''
+        else:
+            chunk_id = f'.{chunk_id}'
+        output_path = output_prefix + f'.{var_dim}_da_rate{chunk_id}.mcds'
+
+        # to_netcdf trigger the dask computation, and save output directly into disk, quite memory efficient
+        post_rate.to_netcdf(output_path)
+        output_paths.append(output_path)
+
+    total_post_rate = xr.concat([xr.open_dataarray(path) for path in output_paths], dim='cell')
+    total_post_rate.chunk = mc_da.chunk
+    return total_post_rate
 
 
 def calculate_gch_rate(mcds, var_dim='chrom100k'):
