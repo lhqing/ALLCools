@@ -182,8 +182,6 @@ class MCDS(xr.Dataset):
         da_cov = self[da].sel(count_type='cov')
 
         if in_memory:
-            print('Calculate posterior rate in-memory, if the dataset contain large number of cells, '
-                  'consider using the in_memory=False option and provide output_prefix and cell_chunks.')
             rate = calculate_posterior_mc_rate(mc_da=da_mc,
                                                cov_da=da_cov,
                                                var_dim=dim,
@@ -250,9 +248,9 @@ class MCDS(xr.Dataset):
         else:
             return rate
 
-    def highly_variable_methylation_feature(self, da, mc_type):
-        cell_feature_matrix = self[da].sel(mc_type=mc_type)
-        feature_mean_cov = self[da].sel(count_type='cov', mc_type=mc_type).mean(dim='cell')
+    def highly_variable_methylation_feature(self, var_dim, mc_type):
+        cell_feature_matrix = self[f'{var_dim}_da_rate'].sel(mc_type=mc_type)
+        feature_mean_cov = self[f'{var_dim}_da'].sel(count_type='cov', mc_type=mc_type).mean(dim='cell')
         df = highly_variable_methylation_feature(cell_feature_matrix, feature_mean_cov)
         return df
 
