@@ -85,8 +85,8 @@ def calculate_posterior_mc_rate_lazy(mc_da, cov_da, var_dim, output_prefix, cell
         post_rate.to_netcdf(output_path)
         output_paths.append(output_path)
 
-    total_post_rate = xr.concat([xr.open_dataarray(path) for path in output_paths], dim='cell')
-    total_post_rate.chunk = mc_da.chunk
+    total_post_rate = xr.concat([xr.open_dataarray(path, chunks=mc_da.chunk)
+                                 for path in output_paths], dim='cell')
     return total_post_rate
 
 
@@ -109,12 +109,12 @@ def calculate_gch_rate(mcds, var_dim='chrom100k'):
     return real_gc_rate
 
 
-def get_mean_dispersion(x, obs_dim, var_dim):
+def get_mean_dispersion(x, obs_dim):
     # mean
-    mean = x.mean(dim=var_dim)
+    mean = x.mean(dim=obs_dim)
 
     # var
-    mean_sq = (x * x).mean(dim=var_dim)
+    mean_sq = (x * x).mean(dim=obs_dim)
     # enforce R convention (unbiased estimator) for variance
     var = (mean_sq - mean ** 2) * (x.sizes[obs_dim] / (x.sizes[obs_dim] - 1))
 
@@ -123,8 +123,8 @@ def get_mean_dispersion(x, obs_dim, var_dim):
     # raw dispersion is the variance normalized by mean
     dispersion = var / mean
 
-    mean.load()
-    dispersion.load()
+    mean.compute()
+    dispersion.compute()
     return mean, dispersion
 
 
