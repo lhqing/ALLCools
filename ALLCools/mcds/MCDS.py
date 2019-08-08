@@ -195,7 +195,8 @@ class MCDS(xr.Dataset):
                                                     normalize_per_cell=normalize_per_cell,
                                                     clip_norm_value=clip_norm_value,
                                                     output_prefix=output_prefix,
-                                                    cell_chunk=cell_chunks)
+                                                    cell_chunk=cell_chunks,
+                                                    dask_cell_chunk=500)
 
         if inplace:
             self[da + "_" + rate_da_suffix] = rate

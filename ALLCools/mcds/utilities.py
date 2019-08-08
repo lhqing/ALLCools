@@ -43,7 +43,8 @@ def calculate_posterior_mc_rate(mc_da,
     return post_rate
 
 
-def calculate_posterior_mc_rate_lazy(mc_da, cov_da, var_dim, output_prefix, cell_chunk=20000,
+def calculate_posterior_mc_rate_lazy(mc_da, cov_da, var_dim, output_prefix,
+                                     cell_chunk=20000, dask_cell_chunk=500,
                                      normalize_per_cell=True, clip_norm_value=10):
     """
     Running calculate_posterior_mc_rate with dask array and directly save to disk.
@@ -56,6 +57,7 @@ def calculate_posterior_mc_rate_lazy(mc_da, cov_da, var_dim, output_prefix, cell
     var_dim
     output_prefix
     cell_chunk
+    dask_cell_chunk
     normalize_per_cell
     clip_norm_value
 
@@ -85,7 +87,7 @@ def calculate_posterior_mc_rate_lazy(mc_da, cov_da, var_dim, output_prefix, cell
         post_rate.to_netcdf(output_path)
         output_paths.append(output_path)
 
-    chunks = {'cell': mc_da.chunks['cell']}
+    chunks = {'cell': dask_cell_chunk}
     total_post_rate = xr.concat([xr.open_dataarray(path, chunks=chunks)
                                  for path in output_paths], dim='cell')
     return total_post_rate
