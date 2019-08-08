@@ -251,10 +251,10 @@ class MCDS(xr.Dataset):
         else:
             return rate
 
-    def highly_variable_methylation_feature(self, var_dim, mc_type):
+    def highly_variable_methylation_feature(self, var_dim, mc_type, **kwargs):
         cell_feature_matrix = self[f'{var_dim}_da_rate'].sel(mc_type=mc_type)
         feature_mean_cov = self[f'{var_dim}_da'].sel(count_type='cov', mc_type=mc_type).mean(dim='cell')
-        df = highly_variable_methylation_feature(cell_feature_matrix, feature_mean_cov)
+        df = highly_variable_methylation_feature(cell_feature_matrix, feature_mean_cov, **kwargs)
         return df
 
     def to_ann(self, da, var_dim, obs_dim='cell', **sel_kwargs):
@@ -269,7 +269,7 @@ class MCDS(xr.Dataset):
                                  f'you must provide sel_kwargs to select additional dims, '
                                  f'AnnData can only be 2D.')
 
-        index_dict = self[da].indexes
+        index_dict = _data.indexes
         obs_df = pd.DataFrame({k: pd.Series(v.tolist())
                                for k, v in index_dict.items()
                                if (v.name == obs_dim) and (k != obs_dim)},
@@ -279,7 +279,7 @@ class MCDS(xr.Dataset):
                                if (v.name == var_dim) and (k != var_dim)},
                               index=index_dict[var_dim])
 
-        return AnnData(X=_data.copy(),
+        return AnnData(X=_data.values,
                        obs=obs_df,
                        var=var_df)
 
