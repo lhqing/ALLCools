@@ -135,14 +135,6 @@ class MCDS(xr.Dataset):
         """
         if dim not in self[da].dims:
             raise ValueError(f'{dim} is not a dimension of {da}')
-        region_mean = self[da] \
-            .sel(count_type='cov', mc_type=mc_type) \
-            .squeeze() \
-            .mean('cell')
-        if max_cov is None:
-            max_cov = np.inf
-        region_max = region_mean < max_cov
-        region_min = region_mean > min_cov
 
         # deal with white black list
         black_list = [] if black_list is None else black_list
@@ -152,13 +144,24 @@ class MCDS(xr.Dataset):
         black_and_white = black_set & white_set
         if len(black_and_white) != 0:
             raise ValueError(f'{len(black_and_white)} items in both black and white list. Check your input.')
-        black_judge = self.get_index(dim).map(lambda i: i not in black_set).values
-        white_judge = self.get_index(dim).map(lambda i: i in white_set).values
-        region_mask = np.all(np.vstack([region_max.values,
-                                        region_min.values,
-                                        black_judge]), axis=0)
-        region_mask = np.any(np.vstack([region_mask,
-                                        white_judge]), axis=0)
+        black_judge = ~self.coords[dim].isin(black_set)
+        white_judge = self.coords[dim].isin(white_set)
+        region_mean = self[da] \
+            .sel(count_type='cov', mc_type=mc_type) \
+            .squeeze() \
+            .mean('cell')
+        if max_cov is None:
+            max_cov = np.inf
+        region_max = region_mean <= max_cov
+        region_min = region_mean >= min_cov
+        region_mask = xr.concat([black_judge.reset_coords(drop=True),
+                                 region_max.reset_coords(drop=True),
+                                 region_min.reset_coords(drop=True)],
+                                dim='judges').sum('judges') == 3
+        region_mask = xr.concat([region_mask.reset_coords(drop=True),
+                                 white_judge.reset_coords(drop=True)],
+                                dim='judges').sum('judges') >= 1
+        region_mask.load()
 
         select_index = self.get_index(dim)[region_mask]
         filtered_ds = self.loc[{dim: select_index}]
