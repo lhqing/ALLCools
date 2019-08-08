@@ -163,7 +163,7 @@ def highly_variable_methylation_feature(
     x = cell_by_feature_matrix
     cov = feature_mean_cov
 
-    mean, dispersion = get_mean_dispersion(x, obs_dim=obs_dim, var_dim=var_dim)
+    mean, dispersion = get_mean_dispersion(x, obs_dim=obs_dim)
     dispersion = np.log(dispersion)
 
     # all of the following quantities are "per-feature" here
