@@ -3,7 +3,7 @@ import pandas as pd
 import xarray as xr
 from anndata import AnnData
 
-from .utilities import calculate_posterior_mc_rate
+from .utilities import calculate_posterior_mc_rate, calculate_posterior_mc_rate_lazy
 
 
 class MCDS(xr.Dataset):
@@ -161,10 +161,16 @@ class MCDS(xr.Dataset):
         filtered_ds = self.loc[{dim: select_index}]
         return MCDS(filtered_ds)
 
-    def add_mc_rate(self, dim, da,
+    def add_mc_rate(self,
+                    dim,
+                    da,
                     normalize_per_cell=True,
                     clip_norm_value=10,
-                    rate_da_suffix='rate', inplace=True):
+                    rate_da_suffix='rate',
+                    inplace=True,
+                    in_memory=True,
+                    output_prefix=None,
+                    cell_chunks=20000):
         if da not in self.data_vars:
             raise KeyError(f'{da} is not in this dataset')
         if dim not in self[da].dims:
@@ -172,34 +178,57 @@ class MCDS(xr.Dataset):
         da_mc = self[da].sel(count_type='mc')
         da_cov = self[da].sel(count_type='cov')
 
-        rate = calculate_posterior_mc_rate(mc_da=da_mc,
-                                           cov_da=da_cov,
-                                           var_dim=dim,
-                                           normalize_per_cell=normalize_per_cell,
-                                           clip_norm_value=clip_norm_value)
+        if in_memory:
+            print('Calculate posterior rate in-memory, if the dataset contain large number of cells, '
+                  'consider using the in_memory=False option and provide output_prefix and cell_chunks.')
+            rate = calculate_posterior_mc_rate(mc_da=da_mc,
+                                               cov_da=da_cov,
+                                               var_dim=dim,
+                                               normalize_per_cell=normalize_per_cell,
+                                               clip_norm_value=clip_norm_value)
+        else:
+            if output_prefix is None:
+                raise ValueError('output_prefix can not be None if in_memory==False')
+            rate = calculate_posterior_mc_rate_lazy(mc_da=da_mc,
+                                                    cov_da=da_cov,
+                                                    var_dim=dim,
+                                                    normalize_per_cell=normalize_per_cell,
+                                                    clip_norm_value=clip_norm_value,
+                                                    output_prefix=output_prefix,
+                                                    cell_chunk=cell_chunks)
+
         if inplace:
             self[da + "_" + rate_da_suffix] = rate
             return
         else:
             return rate
 
-    def add_gene_rate(self, dim='gene', da='gene_da', method='bayes',
-                      normalize_per_cell=True, clip_norm_value=10,
-                      rate_da_suffix='rate', inplace=True):
-        if da not in self.data_vars:
-            raise KeyError(f'{da} is not in this dataset')
-        if dim not in self[da].dims:
-            raise KeyError(f'{dim} is not a dimension of {da}')
-        da_mc = self[da].sel(count_type='mc')
-        da_cov = self[da].sel(count_type='cov')
-
+    def add_gene_rate(self,
+                      dim='gene',
+                      da='gene_da',
+                      method='bayes',
+                      normalize_per_cell=True,
+                      clip_norm_value=10,
+                      rate_da_suffix='rate',
+                      inplace=True,
+                      in_memory=False,
+                      output_prefix=None,
+                      cell_chunks=20000):
         if method == 'bayes':
-            rate = calculate_posterior_mc_rate(mc_da=da_mc,
-                                               cov_da=da_cov,
-                                               var_dim=dim,
-                                               normalize_per_cell=normalize_per_cell,
-                                               clip_norm_value=clip_norm_value)
+            rate = self.add_mc_rate(
+                dim=dim,
+                da=da,
+                normalize_per_cell=normalize_per_cell,
+                clip_norm_value=clip_norm_value,
+                rate_da_suffix=rate_da_suffix,
+                inplace=False,
+                in_memory=in_memory,
+                output_prefix=output_prefix,
+                cell_chunks=cell_chunks)
         elif method == 'naive':
+            da_mc = self[da].sel(count_type='mc')
+            da_cov = self[da].sel(count_type='cov')
+
             # for gene, we just use normal rate
             rate = da_mc / da_cov
 
