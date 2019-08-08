@@ -126,8 +126,8 @@ def get_mean_dispersion(x, obs_dim):
     # raw dispersion is the variance normalized by mean
     dispersion = var / mean
 
-    mean.compute()
-    dispersion.compute()
+    mean.load()
+    dispersion.load()
     return mean, dispersion
 
 
@@ -149,7 +149,7 @@ def highly_variable_methylation_feature(
         log.info('If you pass `n_top_feature`, all cutoffs are ignored.')
 
     # warning for extremely low cov
-    low_cov_portion = (feature_mean_cov < 30).sum() / feature_mean_cov.size
+    low_cov_portion = (feature_mean_cov < 10).sum() / feature_mean_cov.size
     if low_cov_portion > 0.2:
         log.warning(f'{int(low_cov_portion * 100)}% feature with < 10 mean cov, '
                     f'consider filter by cov before find highly variable feature. '
@@ -171,9 +171,9 @@ def highly_variable_methylation_feature(
 
     # all of the following quantities are "per-feature" here
     df = pd.DataFrame(index=cell_by_feature_matrix.get_index(var_dim))
-    df['mean'] = mean.to_pandas()
-    df['dispersion'] = dispersion.to_pandas()
-    df['cov'] = cov
+    df['mean'] = mean.to_pandas().copy()
+    df['dispersion'] = dispersion.to_pandas().copy()
+    df['cov'] = cov.to_pandas().copy()
 
     # instead of n_bins, use bin_size, because cov and mc are in different scale
     df['mean_bin'] = (df['mean'] / mean_binsize).astype(int)
