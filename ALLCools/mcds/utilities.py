@@ -85,7 +85,7 @@ def calculate_posterior_mc_rate_lazy(mc_da, cov_da, var_dim, output_prefix, cell
         post_rate.to_netcdf(output_path)
         output_paths.append(output_path)
 
-    total_post_rate = xr.concat([xr.open_dataarray(path, chunks=mc_da.chunk)
+    total_post_rate = xr.concat([xr.open_dataarray(path, chunks=mc_da.chunks)
                                  for path in output_paths], dim='cell')
     return total_post_rate
 
