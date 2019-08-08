@@ -258,7 +258,7 @@ class MCDS(xr.Dataset):
         return df
 
     def to_ann(self, da, var_dim, obs_dim='cell', **sel_kwargs):
-        _data = self[da].sel(**sel_kwargs).squeeze().values
+        _data = self[da].sel(**sel_kwargs).squeeze()
 
         if len(_data.shape) != 2:
             if ('mc_type' in self[da].dims) and ('mc_type' not in sel_kwargs):
