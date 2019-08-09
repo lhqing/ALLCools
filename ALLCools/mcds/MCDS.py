@@ -16,7 +16,14 @@ class MCDS(xr.Dataset):
         return
 
     @classmethod
-    def open(cls, paths, use_dataarrays=None, use_cells=None, sel_dict=None, squeeze=True, **kwargs):
+    def open(cls,
+             paths,
+             chunks=None,
+             use_dataarrays=None,
+             use_cells=None,
+             sel_dict=None,
+             squeeze=True,
+             **kwargs):
         """
         Open one (using xarray.open_dataset) or multiple (using xarray.open_mfdataset) MCDS files.
         If provide "chunks" in kwargs or the paths is a str glob (contain *) or list,
@@ -30,6 +37,7 @@ class MCDS(xr.Dataset):
             For single MCDS: single path string.
             For multiple MCDS: Either a string glob in the form "path/to/my/files/*.nc"
             or an explicit list of files to open.
+        chunks
         use_dataarrays
             String or List of dataarray name
         use_cells
@@ -65,6 +73,9 @@ class MCDS(xr.Dataset):
         if squeeze:
             _this_ds = _this_ds.squeeze()
 
+        if chunks is None:
+            chunks = {'cell': 500}
+        _this_ds = _this_ds.chunk(chunks)
         return cls(_this_ds)
 
     def filter_cell_cov(self, dim, da, mc_type,
@@ -216,7 +227,7 @@ class MCDS(xr.Dataset):
                       clip_norm_value=10,
                       rate_da_suffix='rate',
                       inplace=True,
-                      in_memory=False,
+                      in_memory=True,
                       output_prefix=None,
                       cell_chunks=20000):
         if method == 'bayes':
