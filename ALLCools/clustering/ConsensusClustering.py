@@ -204,6 +204,8 @@ class ConsensusClustering:
                            allow_single_cluster=True,
                            epsilon=0.2):
         if min_cluster_portion is not None:
+            if min_cluster_size is None:
+                min_cluster_size = 0
             min_cluster_size = max(min_cluster_size, self.n_obs * min_cluster_portion)
         else:
             if min_cluster_size is None:
@@ -429,8 +431,8 @@ class ConsensusClustering:
         print(f'{outlier_idx.size - _outlier_idx.size} outliers remained.')
         return
 
-    def save_model(self, output_path):
-        joblib.dump(self.supervise_model, output_path)
+    def save(self, output_path):
+        joblib.dump(self, output_path)
 
     # Plotting
     def plot_confusion_matrix(self, **heatmap_kws):
