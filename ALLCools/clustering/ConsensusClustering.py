@@ -5,6 +5,7 @@ import joblib
 import leidenalg
 import numpy as np
 import pandas as pd
+import seaborn as sns
 from hdbscan import HDBSCAN
 from imblearn.ensemble import BalancedRandomForestClassifier
 from natsort import natsorted
@@ -430,3 +431,29 @@ class ConsensusClustering:
 
     def save_model(self, output_path):
         joblib.dump(self.supervise_model, output_path)
+
+    # Plotting
+    def plot_confusion_matrix(self, **heatmap_kws):
+        _heatmap_kws = dict(vmin=0.,
+                            vmax=0.2,
+                            cmap='viridis',
+                            square=True)
+        _heatmap_kws.update(heatmap_kws)
+        ax = sns.heatmap((self.confusion_matrix / self.confusion_matrix.sum(axis=0))[::-1, :], **_heatmap_kws)
+
+        ax.set(ylim=(-0.5, self.confusion_matrix.shape[1] + 0.5),
+               xlabel='Predicted Label', ylabel='"True" Label')
+        return ax
+
+    def plot_prediction_probability(self, **dist_kws):
+        _dist_kws = dict(kde=False,
+                         bins=50)
+        _dist_kws.update(dist_kws)
+        sns.distplot(self.testing_proba.max(axis=1),
+                     label='Testing Obs',
+                     **_dist_kws)
+        ax = sns.distplot(self.outlier_proba.max(axis=1),
+                          label='Outliers',
+                          **_dist_kws)
+        ax.legend()
+        return ax
