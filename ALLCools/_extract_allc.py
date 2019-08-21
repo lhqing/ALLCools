@@ -48,7 +48,7 @@ def _check_strandness_parameter(strandness) -> str:
     strandness = str(strandness).lower()
     if strandness in {'both', 'b'}:
         return 'Both'
-    elif strandness in {'merge', 'm'}:
+    elif strandness in {'merge', 'mergetmp', 'm'}:
         # first getting both, deal with strand merge later
         return 'MergeTmp'
     elif strandness in {'split', 's'}:
@@ -282,6 +282,8 @@ def extract_allc(allc_path: str,
     cpu = int(cpu)
     if parallel:
         print('Parallel extract ALLC')
+        if strandness == 'MergeTmp':
+            strandness = 'Merge'
         return _extract_allc_parallel(allc_path=allc_path,
                                       output_prefix=output_prefix,
                                       mc_contexts=mc_contexts,
