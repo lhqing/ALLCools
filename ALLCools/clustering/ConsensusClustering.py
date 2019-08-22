@@ -418,17 +418,17 @@ class ConsensusClustering:
             return
 
         # predict_outlier in the end
-        outlier_label = self.supervise_model.predict(self.outlier_X)
-        self.outlier_proba = self.supervise_model.predict_proba(self.outlier_X)
-        # maximum probability of a outlier prediction
-        rescued = self.outlier_proba.max(axis=1) > outlier_proba_cutoff
-        _outlier_idx = outlier_idx[rescued]
-        _outlier_label = outlier_label[rescued]
-        _clusters = self.consensus_clusters.copy()
-        _clusters[_outlier_idx] = _outlier_label
-        self.consensus_clusters_rescued = _clusters
-        print(f'{_outlier_idx.size} / {outlier_idx.size} outliers is rescued by prediction.')
-        print(f'{outlier_idx.size - _outlier_idx.size} outliers remained.')
+        self.consensus_clusters_rescued = self.consensus_clusters.copy()
+        if len(outlier_idx) != 0:
+            outlier_label = self.supervise_model.predict(self.outlier_X)
+            self.outlier_proba = self.supervise_model.predict_proba(self.outlier_X)
+            # maximum probability of a outlier prediction
+            rescued = self.outlier_proba.max(axis=1) > outlier_proba_cutoff
+            _outlier_idx = outlier_idx[rescued]
+            _outlier_label = outlier_label[rescued]
+            self.consensus_clusters_rescued[_outlier_idx] = _outlier_label
+            print(f'{_outlier_idx.size} / {outlier_idx.size} outliers is rescued by prediction.')
+            print(f'{outlier_idx.size - _outlier_idx.size} outliers remained.')
         return
 
     def save(self, output_path):
