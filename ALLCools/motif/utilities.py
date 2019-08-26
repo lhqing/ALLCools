@@ -25,6 +25,7 @@ def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_p
     chrom_size_path
     cpu
     sort_mem_gbs
+    standard_length
 
     Returns
     -------
@@ -55,8 +56,8 @@ def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_p
                     for line in f:
                         ll = line.strip().split('\t')
                         center = (int(ll[1]) + int(ll[2])) / 2
-                        ll[1] = str(max(center - half, 0))
-                        ll[2] = str(min(center + half, chrom_dict[ll[0]]))
+                        ll[1] = str(int(max(center - half, 0)))
+                        ll[2] = str(int(min(center + half, chrom_dict[ll[0]])))
                         temp_f.write('\t'.join(ll) + '\n')
 
     sorted_temp = output_path + '.tmp_sorted.bed'
@@ -161,6 +162,9 @@ def split_meme_motif_file(meme_motif_paths, output_dir):
     -------
 
     """
+    if isinstance(meme_motif_paths, str):
+        meme_motif_paths = [meme_motif_paths]
+
     records = {}
     uid_set = set()
     for meme_motif_path in meme_motif_paths:

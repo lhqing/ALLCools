@@ -1,5 +1,8 @@
 import pathlib
+import subprocess
+
 from .utilities import get_fasta
+
 
 def parallel_ame(bed_files, background_files, motif_files,
                  output_dir, reference_fasta, cpu=1, slop_b=50):
@@ -48,7 +51,6 @@ def parallel_ame(bed_files, background_files, motif_files,
 
     # split motif files based on cpu
 
-
     # run single_bed_single_motif_runner
 
     # merge results
@@ -56,5 +58,21 @@ def parallel_ame(bed_files, background_files, motif_files,
     return
 
 
-def single_bed_single_motif_runner():
-    return
+def _single_ame_runner(fasta_path, motif_paths, **ame_kws):
+    options = ''
+    for k, v in ame_kws.items():
+        options += f' --{k} {v}'
+
+    if isinstance(motif_paths, list):
+        motif_paths = ' '.join(motif_paths)
+    cmd = f'ame {options} {fasta_path} {motif_paths} '
+    try:
+        subprocess.run(shlex.split(cmd),
+                       check=True,
+                       stdout=subprocess.PIPE,
+                       stderr=subprocess.PIPE,
+                       encoding='utf8')
+    except subprocess.CalledProcessError as e:
+        print(e.stderr)
+        raise e
+    return cmd
