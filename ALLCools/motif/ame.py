@@ -140,7 +140,8 @@ def ame(bed_file,
     with ProcessPoolExecutor(cpu) as pool:
         futures = []
         for chunk_id, chunk in enumerate(motif_path_chunks):
-            _ame_kws['oc'] = output_dir / f'{chunk_id}_temp'
+            chunk_output_dir = output_dir / f'{chunk_id}_temp'
+            ame_kws_str += f' --oc {chunk_output_dir}'
             future = pool.submit(_single_ame_runner,
                                  fasta_path=output_fasta_path,
                                  motif_paths=chunk,
