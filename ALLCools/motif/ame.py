@@ -164,8 +164,11 @@ def ame(bed_file,
     # merge results
     records = []
     for i in range(len(motif_path_chunks)):
-        chunk_df = pd.read_csv(output_dir / f'{i}_temp/ame.tsv',
-                               sep='\t', index_col=0, comment='#').reset_index(drop=True)
+        try:
+            chunk_df = pd.read_csv(output_dir / f'{i}_temp/ame.tsv',
+                                   sep='\t', index_col=0, comment='#').reset_index(drop=True)
+        except pd.errors.EmptyDataError:
+            continue
         records.append(chunk_df)
     total_records = pd.concat(records, sort=True).sort_values('E-value').reset_index(drop=True)
     total_records['motif_DB'] = total_records['motif_DB'].apply(lambda x: x.split('/')[-1])
