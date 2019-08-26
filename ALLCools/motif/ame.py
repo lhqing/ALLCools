@@ -116,7 +116,7 @@ def ame(bed_file,
     ame_motif_temp_dir.mkdir(exist_ok=True)
     motif_records = split_meme_motif_file(motif_files, ame_motif_temp_dir)
     motif_path_chunks = []
-    step = len(motif_records) // cpu + 1
+    step = min(len(motif_records) // cpu + 1, 100)
     for i in range(0, len(motif_records), step):
         # j is a list [motif_uid, motif_name, motif_path]
         # return by split_meme_motif_file
@@ -140,12 +140,13 @@ def ame(bed_file,
     with ProcessPoolExecutor(cpu) as pool:
         futures = []
         for chunk_id, chunk in enumerate(motif_path_chunks):
+            _ame_kws_str = ame_kws_str
             chunk_output_dir = output_dir / f'{chunk_id}_temp'
-            ame_kws_str += f' --oc {chunk_output_dir}'
+            _ame_kws_str += f' --oc {chunk_output_dir}'
             future = pool.submit(_single_ame_runner,
                                  fasta_path=output_fasta_path,
                                  motif_paths=chunk,
-                                 ame_kws_str=ame_kws_str)
+                                 ame_kws_str=_ame_kws_str)
             futures.append(future)
 
         for future in as_completed(futures):
