@@ -35,7 +35,9 @@ def ame(bed_file,
         cpu=1,
         standard_length=None,
         chrom_size_path=None,
-        ame_kws=None):
+        ame_kws=None,
+        sample=None,
+        seed=1):
     """\
     Motif enrichment analysis with AME from MEME Suite.
 
@@ -64,6 +66,10 @@ def ame(bed_file,
         If string provided, will directly insert into the final AME command,
         see AME documentation about AME options.
         e.g. '--seed 1 --method fisher --scoring avg'
+    sample
+        Sample input regions to this number to reduce run time or test
+    seed
+        Seed for random sample input regions, only apply when sample is not None
     Returns
     -------
 
@@ -91,6 +97,12 @@ def ame(bed_file,
     df = pd.read_csv(bed_file, sep='\t', header=None)
     n_region = df.shape[0]
     print(n_region, 'input regions')
+
+    if sample is not None and sample <= df.shape[0]:
+        df = df.sample(sample, random_state=seed)
+        df.to_csv(output_dir / 'INPUT_BED_SAMPLED.bed',
+                  sep='\t', index=None, header=None)
+        bed_file = output_dir / 'INPUT_BED_SAMPLED.bed'
 
     bed_file = pathlib.Path(bed_file)
     output_fasta_path = output_dir / (bed_file.name + '.fasta')

@@ -993,6 +993,20 @@ def ame_register_subparser(subparser):
              "see AME documentation about AME options. e.g. '--seed 1 --method fisher --scoring avg'"
     )
 
+    parser.add_argument(
+        "--sample",
+        type=int,
+        default=None,
+        help="Sample input regions to this number to reduce run time or test"
+    )
+
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Seed for random sample input regions, only apply when sample is not None"
+    )
+
 
 def main():
     parser = argparse.ArgumentParser(description=DESCRIPTION,
