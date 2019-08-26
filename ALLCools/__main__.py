@@ -982,15 +982,15 @@ def ame_register_subparser(subparser):
         "--chrom_size_path",
         type=str,
         default=None,
-        help=chrom_size_path_doc + ' Must provide is standard_length is not None.'
+        help=chrom_size_path_doc + '\nMust provide is standard_length is not None.'
     )
 
     parser.add_argument(
         "--ame_kws",
         type=str,
         default=None,
-        help="Additional options that will pass to AME, assume each option is separated by ';' "
-             "and key-value is separated by '=', e.g. 'seed=1;method=fisher;scoring=avg'"
+        help="Additional options that will pass to AME, will directly insert into the final AME command, "
+             "see AME documentation about AME options. e.g. '--seed 1 --method fisher --scoring avg'"
     )
 
 

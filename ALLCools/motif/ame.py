@@ -26,7 +26,7 @@ def _single_ame_runner(fasta_path, motif_paths, ame_kws_str=''):
     return cmd
 
 
-@doc_params(chrom_size_path=chrom_size_path_doc)
+@doc_params(chrom_size_path_doc=chrom_size_path_doc)
 def ame(bed_file,
         motif_files,
         output_path,
@@ -61,8 +61,9 @@ def ame(bed_file,
         Must provide is standard_length is not None.
     ame_kws
         Additional options that will pass to AME, provide either a dict or string.
-        If string provided, assume each option is separated by ';' and key-value is separated by '=',
-        e.g. 'seed=1;method=fisher;scoring=avg'
+        If string provided, will directly insert into the final AME command,
+        see AME documentation about AME options.
+        e.g. '--seed 1 --method fisher --scoring avg'
     Returns
     -------
 
