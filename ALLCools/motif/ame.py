@@ -95,14 +95,14 @@ def ame(bed_file,
 
     # get bed FASTQ
     df = pd.read_csv(bed_file, sep='\t', header=None)
-    n_region = df.shape[0]
-    print(n_region, 'input regions')
-
+    print(df.shape[0], 'total regions')
     if sample is not None and sample <= df.shape[0]:
         df = df.sample(sample, random_state=seed)
         df.to_csv(output_dir / 'INPUT_BED_SAMPLED.bed',
                   sep='\t', index=None, header=None)
         bed_file = output_dir / 'INPUT_BED_SAMPLED.bed'
+    n_region = df.shape[0]
+    print(n_region, 'input regions')
 
     bed_file = pathlib.Path(bed_file)
     output_fasta_path = output_dir / (bed_file.name + '.fasta')
@@ -137,7 +137,7 @@ def ame(bed_file,
     ame_motif_temp_dir.mkdir(exist_ok=True)
     motif_records = split_meme_motif_file(motif_files, ame_motif_temp_dir)
     motif_path_chunks = []
-    step = min(len(motif_records) // cpu + 1, 100)
+    step = min(len(motif_records) // cpu + 1, 10)
     for i in range(0, len(motif_records), step):
         # j is a list [motif_uid, motif_name, motif_path]
         # return by split_meme_motif_file
@@ -185,8 +185,8 @@ def ame(bed_file,
     total_records = pd.concat(records, sort=True).sort_values('E-value').reset_index(drop=True)
     total_records['motif_DB'] = total_records['motif_DB'].apply(lambda x: x.split('/')[-1])
     # add fold change
-    total_records['TP/(FP+1)'] = total_records['TP'] / (total_records['FP'] + 1)
-    total_records['log2(TP/(FP+1))'] = np.log2(total_records['TP/(FP+1)'])
+    total_records['TP/FP'] = total_records['%TP'] / (total_records['%FP'] + 0.0001)
+    total_records['log2(TP/FP))'] = np.log2(total_records['TP/FP'])
     # save output
     total_records.to_csv(output_path, sep='\t')
 
