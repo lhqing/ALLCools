@@ -346,8 +346,8 @@ def merge_allc_register_subparser(subparser):
         type=int,
         default=10,
         help=f"{cpu_basic_doc} The real CPU usage is ~1.5 times than this number, "
-        f"due to the sub processes of handling ALLC files using tabix/bgzip. "
-        f"Monitor the CPU and Memory usage when running this function."
+             f"due to the sub processes of handling ALLC files using tabix/bgzip. "
+             f"Monitor the CPU and Memory usage when running this function."
     )
 
     parser.add_argument(
@@ -917,6 +917,83 @@ def generate_mcds_register_subparser(subparser):
     )
 
 
+def ame_register_subparser(subparser):
+    parser = subparser.add_parser('ame',
+                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+                                  help="Motif enrichment analysis with AME from MEME Suite. "
+                                       "See AME doc for more information http://meme-suite.org/doc/ame.html")
+
+    parser_req = parser.add_argument_group("required arguments")
+
+    parser_req.add_argument(
+        "--bed_file",
+        type=str,
+        required=True,
+        help='Single bed file input to calculate motif enrichment'
+    )
+
+    parser_req.add_argument(
+        "--motif_files",
+        type=str,
+        nargs='+',
+        required=True,
+        help='One or multiple motif files in MEME format'
+    )
+
+    parser_req.add_argument(
+        "--output_path",
+        type=str,
+        required=True,
+        help='Output path of the AME result'
+    )
+
+    parser_req.add_argument(
+        "--reference_fasta",
+        type=str,
+        required=True,
+        help='Reference fasta of the bed_file and background_files'
+    )
+
+    parser.add_argument(
+        "--background_files",
+        type=str,
+        nargs='+',
+        default=None,
+        help='One or multiple bed files contain region as the control set of motif enrichment, '
+             'if not provided, will use --shuffle--. See MEME doc for more information.'
+    )
+
+    parser.add_argument(
+        "--cpu",
+        type=int,
+        default=1,
+        help='Number of CPUs to parallel AME'
+    )
+
+    parser.add_argument(
+        "--standard_length",
+        type=int,
+        default=None,
+        help='If not None, will standard the input region and control region (if provided) '
+             'in to same standard_length, each standardized region is centered to the original region center.'
+    )
+
+    parser.add_argument(
+        "--chrom_size_path",
+        type=str,
+        default=None,
+        help=chrom_size_path_doc + ' Must provide is standard_length is not None.'
+    )
+
+    parser.add_argument(
+        "--ame_kws",
+        type=str,
+        default=None,
+        help="Additional options that will pass to AME, assume each option is separated by ';' "
+             "and key-value is separated by '=', e.g. 'seed=1;method=fisher;scoring=avg'"
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description=DESCRIPTION,
                                      epilog=EPILOG,
@@ -982,6 +1059,8 @@ def main():
         from .motif.motif_scan import allc_motif_scan as func
     elif cur_command in ['generate-mcds', 'mcds']:
         from .count_matrix.mcds import generate_mcds as func
+    elif cur_command in ['ame']:
+        from .motif.ame import ame as func
     else:
         log.debug(f'{cur_command} is not an valid sub-command')
         parser.parse_args(["-h"])
