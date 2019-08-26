@@ -65,9 +65,16 @@ def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_p
         subprocess.run(
             shlex.split(f'sort -k1,1 -k2,2n --parallel={cpu} -S {sort_mem_gbs}G {temp_bed} -o {sorted_temp}'),
             stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding='utf8', check=True)
-    except subprocess.CalledProcessError as e:
-        print(e.stderr)
-        raise e
+    except subprocess.CalledProcessError:
+        # old sort version don't have parallel option
+        print('run sort without --parallel')
+        try:
+            subprocess.run(
+                shlex.split(f'sort -k1,1 -k2,2n -S {sort_mem_gbs}G {temp_bed} -o {sorted_temp}'),
+                stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding='utf8', check=True)
+        except subprocess.CalledProcessError as e:
+            print(e.stderr)
+            raise e
 
     sorted_bed = BedTool(sorted_temp)
     if slop_b:
