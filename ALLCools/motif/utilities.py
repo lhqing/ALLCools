@@ -6,10 +6,11 @@ import numpy as np
 from pybedtools import BedTool, cleanup
 
 from .._open import open_gz
+from ..utilities import parse_chrom_size
 
 
 def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_path=None,
-              cpu=1, sort_mem_gbs=1):
+              cpu=1, sort_mem_gbs=1, standard_length=None):
     """
     Extract fasta using bed files
     The name of sequence in generated fasta file are: "chr:start-end"
@@ -29,6 +30,10 @@ def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_p
     -------
 
     """
+    chrom_dict = None
+    if chrom_size_path is not None:
+        chrom_dict = parse_chrom_size(chrom_size_path)
+
     if isinstance(bed_file_paths, str):
         bed_file_paths = [bed_file_paths]
     output_path = str(pathlib.Path(output_path).resolve())
@@ -41,7 +46,18 @@ def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_p
             else:
                 opener = open
             with opener(bed_file_path) as f:
-                temp_f.write(f.read())
+                if standard_length is None:
+                    temp_f.write(f.read())
+                else:
+                    if chrom_dict is None:
+                        raise ValueError('chrom_size_path can not be None when standard_length is not None')
+                    half = int(standard_length / 2)
+                    for line in f:
+                        ll = line.strip().split('\t')
+                        center = (int(ll[1]) + int(ll[2])) / 2
+                        ll[1] = str(max(center - half, 0))
+                        ll[2] = str(min(center + half, chrom_dict[ll[0]]))
+                        temp_f.write('\t'.join(ll) + '\n')
 
     sorted_temp = output_path + '.tmp_sorted.bed'
     try:
@@ -130,3 +146,62 @@ def meme_to_homer(meme_path, homer_path, score_power=0.85):
             matrix_line = '\n'.join(['\t'.join(line) for line in matrix_line]) + '\n'
             f.write(homer_head_line + matrix_line)
     return
+
+
+def split_meme_motif_file(meme_motif_paths, output_dir):
+    """
+    Given multi motif meme format file, split into single motif meme format file
+
+    Parameters
+    ----------
+    meme_motif_paths
+    output_dir
+
+    Returns
+    -------
+
+    """
+    records = {}
+    uid_set = set()
+    for meme_motif_path in meme_motif_paths:
+        with open(meme_motif_path) as f:
+            first_line = f.readline()
+            if not first_line.startswith('MEME version'):
+                raise ValueError('Input file need to be MEME motif format.')
+
+            f.seek(0)
+            header = True
+            header_text = ''
+            motif_tmp_text = ''
+            for line in f:
+                if line.startswith('MOTIF'):
+                    # save the previous one first
+                    if motif_tmp_text != '':
+                        records[(uid, name)] = header_text + motif_tmp_text
+                    motif_tmp_text = line
+
+                    try:
+                        _, uid, name = line.strip('\n').split(' ')
+                    except ValueError:
+                        _, uid = line.strip('\n').split(' ')
+                        name = ''
+                    if uid in uid_set:
+                        raise ValueError(f'Found duplicate motif uid {uid} in file {meme_motif_path}. '
+                                         f'Motif uid should be unique across all meme files provided.')
+                    else:
+                        uid_set.add(uid)
+                    header = False
+                elif header:
+                    header_text += line
+                else:
+                    motif_tmp_text += line
+            if motif_tmp_text != '':
+                records[(uid, name)] = header_text + motif_tmp_text
+
+    motif_file_records = []
+    for (uid, name), text in records.items():
+        motif_file_path = output_dir / f'{uid}.meme'
+        motif_file_records.append([uid, name, motif_file_path])
+        with open(motif_file_path, 'w') as f:
+            f.write(text)
+    return motif_file_records

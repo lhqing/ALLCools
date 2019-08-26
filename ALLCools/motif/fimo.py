@@ -8,68 +8,11 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import pandas as pd
 
+from .utilities import split_meme_motif_file
+
 """
 Run FIMO to scan motif over FASTA sequences
 """
-
-
-def _split_meme_motif_file(meme_motif_paths, output_dir):
-    """
-    Given multi motif meme format file, split into single motif meme format file
-
-    Parameters
-    ----------
-    meme_motif_paths
-    output_dir
-
-    Returns
-    -------
-
-    """
-    records = {}
-    uid_set = set()
-    for meme_motif_path in meme_motif_paths:
-        with open(meme_motif_path) as f:
-            first_line = f.readline()
-            if not first_line.startswith('MEME version'):
-                raise ValueError('Input file need to be MEME motif format.')
-
-            f.seek(0)
-            header = True
-            header_text = ''
-            motif_tmp_text = ''
-            for line in f:
-                if line.startswith('MOTIF'):
-                    # save the previous one first
-                    if motif_tmp_text != '':
-                        records[(uid, name)] = header_text + motif_tmp_text
-                    motif_tmp_text = line
-
-                    try:
-                        _, uid, name = line.strip('\n').split(' ')
-                    except ValueError:
-                        _, uid = line.strip('\n').split(' ')
-                        name = ''
-                    if uid in uid_set:
-                        raise ValueError(f'Found duplicate motif uid {uid} in file {meme_motif_path}. '
-                                         f'Motif uid should be unique across all meme files provided.')
-                    else:
-                        uid_set.add(uid)
-                    header = False
-                elif header:
-                    header_text += line
-                else:
-                    motif_tmp_text += line
-            if motif_tmp_text != '':
-                records[(uid, name)] = header_text + motif_tmp_text
-
-    motif_file_records = []
-    for (uid, name), text in records.items():
-        motif_file_path = output_dir / f'{uid}.meme'
-        motif_file_records.append([uid, name, motif_file_path])
-        with open(motif_file_path, 'w') as f:
-            f.write(text)
-    return motif_file_records
 
 
 def _fimo_runner(motif_path, fasta_path, output_path, path_to_fimo='',
@@ -162,7 +105,7 @@ def _scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir, path_to
     output_dir = pathlib.Path(output_dir).resolve()
     output_dir.mkdir(exist_ok=True, parents=True)
 
-    motif_file_records = _split_meme_motif_file(meme_motif_file, output_dir)
+    motif_file_records = split_meme_motif_file(meme_motif_file, output_dir)
     print(f'{len(motif_file_records)} motifs to count.')
 
     with ProcessPoolExecutor(cpu) as executor:
