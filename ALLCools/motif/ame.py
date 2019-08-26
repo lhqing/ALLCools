@@ -161,7 +161,7 @@ def ame(bed_file,
     total_records['motif_DB'] = total_records['motif_DB'].apply(lambda x: x.split('/')[-1])
     # add fold change
     total_records['TP/(FP+1)'] = total_records['TP'] / (total_records['FP'] + 1)
-    total_records['log2(TP/(FP+1))'] = np.log2(total_records['TP/FP'])
+    total_records['log2(TP/(FP+1))'] = np.log2(total_records['TP/(FP+1)'])
     # save output
     total_records.to_csv(output_path, sep='\t')
 
