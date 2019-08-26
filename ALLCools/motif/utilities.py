@@ -4,13 +4,13 @@ import subprocess
 
 import numpy as np
 from pybedtools import BedTool, cleanup
-
+import pandas as pd
 from .._open import open_gz
 from ..utilities import parse_chrom_size
 
 
 def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_path=None,
-              cpu=1, sort_mem_gbs=1, standard_length=None, merge=False):
+              cpu=1, sort_mem_gbs=1, standard_length=None, merge=False, sample_region=None, seed=1):
     """
     Extract fasta using bed files
     The name of sequence in generated fasta file are: "chr:start-end"
@@ -26,6 +26,9 @@ def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_p
     cpu
     sort_mem_gbs
     standard_length
+    merge
+    sample_region
+    seed
 
     Returns
     -------
@@ -87,6 +90,12 @@ def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_p
         sorted_bed.merge().moveto(merged_temp)
     else:
         sorted_bed.moveto(merged_temp)
+
+    if sample_region is not None:
+        bed_df = pd.read_csv(merged_temp, header=None, sep='\t')
+        if sample_region <= bed_df.shape[0]:
+            bed_df = bed_df.sample(sample_region, random_state=seed)
+        bed_df.to_csv(merged_temp, sep='\t', index=None, header=None)
 
     subprocess.run(shlex.split(f'bedtools getfasta -fi {fasta_path} -bed {merged_temp} -fo {output_path}'),
                    stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding='utf8', check=True)

@@ -88,6 +88,10 @@ def ame(bed_file,
         background_files = [background_files]
 
     # get bed FASTQ
+    df = pd.read_csv(bed_file, sep='\t', header=None)
+    n_region = df.shape[0]
+    print(n_region, 'input regions')
+
     bed_file = pathlib.Path(bed_file)
     output_fasta_path = output_dir / (bed_file.name + '.fasta')
     get_fasta([bed_file],
@@ -96,7 +100,9 @@ def ame(bed_file,
               standard_length=standard_length,
               slop_b=None,
               chrom_size_path=chrom_size_path,
-              cpu=cpu, sort_mem_gbs=min(int(cpu * 3), 30))
+              cpu=cpu,
+              merge=False,
+              sort_mem_gbs=min(int(cpu * 3), 30))
 
     # get merged background FASTQ
     if background_files is None:
@@ -109,7 +115,10 @@ def ame(bed_file,
                   slop_b=None,
                   standard_length=standard_length,
                   chrom_size_path=chrom_size_path,
-                  cpu=cpu, sort_mem_gbs=min(int(cpu * 3), 30))
+                  cpu=cpu,
+                  merge=False,
+                  sample_region=min(100000, n_region),
+                  sort_mem_gbs=min(int(cpu * 3), 30))
 
     # split motif files based on cpu
     ame_motif_temp_dir = output_dir / 'MOTIF_TEMP'
