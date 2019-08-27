@@ -53,6 +53,7 @@ class ConsensusClustering:
 
         # model training and outlier rescue
         self.supervise_model = None
+        self.n_cluster = None
         self.training_X = None
         self.training_label = None
         self.testing_X = None
@@ -247,6 +248,7 @@ class ConsensusClustering:
         if -1 in self.consensus_clusters:
             final_size -= 1
         print(f'Final consensus clustering found {final_size} clusters')
+        self.n_cluster = final_size
 
         if self.supervise_model is not None:
             print('Consensus cluster changed, the supervised model is cleared, '
@@ -436,26 +438,40 @@ class ConsensusClustering:
 
     # Plotting
     def plot_confusion_matrix(self, **heatmap_kws):
+        if self.n_cluster is None:
+            print('Run supervise_training before plot_confusion_matrix')
+            return
+        if self.n_cluster < 2:
+            print(f'Only {self.n_cluster} detected, can not plot confusion matrix')
+            return
+
         _heatmap_kws = dict(vmin=0.,
                             vmax=0.2,
                             cmap='viridis',
                             square=True)
         _heatmap_kws.update(heatmap_kws)
-        ax = sns.heatmap((self.confusion_matrix / self.confusion_matrix.sum(axis=0))[::-1, :], **_heatmap_kws)
+
+        ax = sns.heatmap((self.confusion_matrix / self.confusion_matrix.sum(axis=0)), **_heatmap_kws)
 
         ax.set(ylim=(-0.5, self.confusion_matrix.shape[1] + 0.5),
                xlabel='Predicted Label', ylabel='"True" Label')
         return ax
 
     def plot_prediction_probability(self, **dist_kws):
+        if self.testing_proba is None:
+            print('Run supervise_training before plot_prediction_probability')
+            return
+
         _dist_kws = dict(kde=False,
                          bins=50)
         _dist_kws.update(dist_kws)
-        sns.distplot(self.testing_proba.max(axis=1),
-                     label='Testing Obs',
-                     **_dist_kws)
-        ax = sns.distplot(self.outlier_proba.max(axis=1),
-                          label='Outliers',
+        ax = sns.distplot(self.testing_proba.max(axis=1),
+                          label='Testing Obs',
                           **_dist_kws)
+
+        if (self.outlier_X is not None) and (self.outlier_X.shape[0] > 1):
+            ax = sns.distplot(self.outlier_proba.max(axis=1),
+                              label='Outliers',
+                              **_dist_kws)
         ax.legend()
         return ax
