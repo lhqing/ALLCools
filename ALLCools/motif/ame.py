@@ -182,7 +182,9 @@ def ame(bed_file,
         except pd.errors.EmptyDataError:
             continue
         records.append(chunk_df)
-    total_records = pd.concat(records, sort=True).sort_values('E-value').reset_index(drop=True)
+    total_records = pd.concat(records, sort=True)
+    total_records['E-value'].fillna(100, inplace=True)
+    total_records = total_records.sort_values('E-value').reset_index(drop=True)
     total_records['motif_DB'] = total_records['motif_DB'].apply(lambda x: x.split('/')[-1])
     # add fold change
     total_records['TP/FP'] = total_records['%TP'] / (total_records['%FP'] + 0.0001)
