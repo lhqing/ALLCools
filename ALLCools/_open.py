@@ -28,12 +28,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
-import gzip
-import sys
-import os
-import time
 import codecs
+import gzip
+import os
 import pathlib
+import sys
+import time
 from subprocess import Popen, PIPE, run
 
 try:
@@ -291,7 +291,53 @@ class PipedBamReader(Closing):
         return data
 
 
-def open_bam(file_path, mode='r', region=None, include_header=True, samtools_parms_str=None):
+class PipedBamWriter(Closing):
+    def __init__(self, path, mode='wt', threads=1):
+        """
+            mode -- one of 'w', 'wt', 'wb', 'a', 'at', 'ab'
+            threads (int) -- number of samtools threads
+        """
+        if mode not in ('w', 'wt', 'wb', 'a', 'at', 'ab'):
+            raise ValueError("Mode is '{0}', but it must be 'w', 'wt', 'wb', 'a', 'at' or 'ab'".format(mode))
+
+        self.outfile = open(path, mode)
+        self.devnull = open(os.devnull, mode)
+        self.closed = False
+        self.name = path
+
+        kwargs = dict(stdin=PIPE, stdout=self.outfile, stderr=self.devnull)
+        # Setting close_fds to True in the Popen arguments is necessary due to
+        # <http://bugs.python.org/issue12786>.
+        # However, close_fds is not supported on Windows. See
+        # <https://github.com/marcelm/cutadapt/issues/315>.
+        if sys.platform != 'win32':
+            kwargs['close_fds'] = True
+
+        try:
+            samtools_args = ['samtools', 'view', '-b', '-@', str(threads)]
+            self.process = Popen(samtools_args, **kwargs)
+            self.program = 'samtools'
+        except OSError:
+            self.outfile.close()
+            self.devnull.close()
+            raise
+        self._file = codecs.getwriter('utf-8')(self.process.stdin)
+        return
+
+    def write(self, arg):
+        self._file.write(arg)
+
+    def close(self):
+        self.closed = True
+        self._file.close()
+        return_code = self.process.wait()
+        self.outfile.close()
+        self.devnull.close()
+        if return_code != 0:
+            raise IOError(f"Output {self.program} process terminated with exit code {return_code}")
+
+
+def open_bam(file_path, mode='r', region=None, include_header=True, samtools_parms_str=None, threads=1):
     if 'r' in mode:
         if region is not None:
             if not has_bai(file_path):
@@ -303,7 +349,7 @@ def open_bam(file_path, mode='r', region=None, include_header=True, samtools_par
         except OSError as e:
             raise e
     else:
-        raise NotImplementedError('BAM writer not implemented yet... I am lazy')
+        return PipedBamWriter(file_path, mode, threads=threads)
 
 
 def open_gz(file_path, mode='r', compresslevel=3, threads=1, region=None):
