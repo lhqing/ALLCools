@@ -443,6 +443,14 @@ def extract_context_allc_register_subparser(subparser):
                              'For single cell data, parallel on cell level is better.'
     )
 
+    parser.add_argument(
+        "--binarize",
+        dest='binarize',
+        action='store_true',
+        help=binarize_doc
+    )
+    parser.set_defaults(binarize=False)
+
 
 def allc_to_region_count_register_subparser(subparser):
     # TODO add alias to arguments
@@ -548,6 +556,13 @@ def allc_to_region_count_register_subparser(subparser):
                              'For single cell data, parallel on cell level is better.'
     )
 
+    parser.add_argument(
+        "--binarize",
+        dest='binarize',
+        action='store_true',
+        help=binarize_doc
+    )
+    parser.set_defaults(binarize=False)
 
 def allc_to_bigwig_register_subparser(subparser):
     # TODO add alias to arguments
@@ -915,6 +930,14 @@ def generate_mcds_register_subparser(subparser):
              'For single cell feature count, this can be set to np.uint16 [0, 65536] to decrease file size. '
              'The values exceed min/max will be clipped while keep the mc/cov same, and a warning will be sent.'
     )
+
+    parser.add_argument(
+        "--binarize",
+        dest='binarize',
+        action='store_true',
+        help=binarize_doc
+    )
+    parser.set_defaults(binarize=False)
 
 
 def ame_register_subparser(subparser):

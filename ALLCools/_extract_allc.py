@@ -7,7 +7,7 @@ import pandas as pd
 
 from ._doc import *
 from ._open import open_allc, open_gz
-from .utilities import tabix_allc, parse_mc_pattern, parse_chrom_size, genome_region_chunks
+from .utilities import tabix_allc, parse_mc_pattern, parse_chrom_size, genome_region_chunks, binary_count
 
 
 def _merge_cg_strand(in_path, out_path):
@@ -57,15 +57,31 @@ def _check_strandness_parameter(strandness) -> str:
         raise ValueError(f'Unknown value for strandness: {strandness}')
 
 
-def _check_out_format_parameter(out_format) -> Tuple[str, Callable[[list], str]]:
-    def _extract_allc_format(allc_line_list):
-        # keep allc format
-        return '\t'.join(allc_line_list)
+def _check_out_format_parameter(out_format, binarize=False) -> Tuple[str, Callable[[list], str]]:
+    if binarize:
+        def _extract_allc_format(allc_line_list):
+            # keep allc format
+            # mc and cov is binarized
+            allc_line_list[4], allc_line_list[5] = \
+                binary_count(int(allc_line_list[4]), int(allc_line_list[5]))
+            return '\t'.join(map(str, allc_line_list))
 
-    def _extract_bed5_format(allc_line_list):
-        # only chrom, pos, pos, mc, cov
-        allc_line_list = [allc_line_list[i] for i in [0, 1, 1, 4, 5]]
-        return '\t'.join(allc_line_list) + '\n'
+        def _extract_bed5_format(allc_line_list):
+            # only chrom, pos, pos, mc, cov
+            # mc and cov is binarized
+            allc_line_list[4], allc_line_list[5] = \
+                binary_count(int(allc_line_list[4]), int(allc_line_list[5]))
+            allc_line_list = [allc_line_list[i] for i in [0, 1, 1, 4, 5]]
+            return '\t'.join(map(str, allc_line_list)) + '\n'
+    else:
+        def _extract_allc_format(allc_line_list):
+            # keep allc format
+            return '\t'.join(allc_line_list)
+
+        def _extract_bed5_format(allc_line_list):
+            # only chrom, pos, pos, mc, cov
+            allc_line_list = [allc_line_list[i] for i in [0, 1, 1, 4, 5]]
+            return '\t'.join(allc_line_list) + '\n'
 
     out_format = str(out_format).lower()
     if out_format == 'allc':
@@ -175,7 +191,8 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
             chrom_size_path_doc=chrom_size_path_doc,
             strandness_doc=strandness_doc,
             region_doc=region_doc,
-            cpu_basic_doc=cpu_basic_doc)
+            cpu_basic_doc=cpu_basic_doc,
+            binarize_doc=binarize_doc)
 def extract_allc(allc_path: str,
                  output_prefix: str,
                  mc_contexts: Union[str, list],
@@ -185,7 +202,8 @@ def extract_allc(allc_path: str,
                  region: str = None,
                  cov_cutoff: int = 9999,
                  tabix: bool = True,
-                 cpu=1):
+                 cpu=1,
+                 binarize=False):
     """\
     Extract information (strand, context) from 1 ALLC file.
     Save to several different format.
@@ -218,7 +236,8 @@ def extract_allc(allc_path: str,
         {cpu_basic_doc}
         This function parallel on region level and will generate a bunch of small files if cpu > 1.
         Do not use cpu > 1 for single cell region count. For single cell data, parallel on cell level is better.
-
+    binarize
+        {binarize_doc}
     Returns
     -------
     A list of output file paths, not include index files.
@@ -241,7 +260,7 @@ def extract_allc(allc_path: str,
         mc_contexts = mc_contexts.split(' ')
     mc_contexts = list(set(mc_contexts))
     strandness = _check_strandness_parameter(strandness)
-    out_suffix, line_func = _check_out_format_parameter(output_format)
+    out_suffix, line_func = _check_out_format_parameter(output_format, binarize=binarize)
 
     # because mc_contexts can overlap (e.g. CHN, CAN)
     # each context may associate to multiple handle

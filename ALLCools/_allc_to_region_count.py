@@ -114,7 +114,8 @@ def _map_to_sparse_chrom_bin(site_bed, out_bed, chrom_size_path,
             cpu_basic_doc=cpu_basic_doc,
             bin_sizes_doc=bin_sizes_doc,
             region_bed_paths_doc=region_bed_paths_doc,
-            region_bed_names_doc=region_bed_names_doc)
+            region_bed_names_doc=region_bed_names_doc,
+            binarize_doc=binarize_doc)
 def allc_to_region_count(allc_path: str,
                          output_prefix: str,
                          chrom_size_path: str,
@@ -126,7 +127,8 @@ def allc_to_region_count(allc_path: str,
                          cov_cutoff: int = 9999,
                          save_zero_cov: bool = False,
                          remove_tmp: bool = True,
-                         cpu: int = 1):
+                         cpu: int = 1,
+                         binarize: bool = False):
     """\
     Calculate mC and cov at regional level. Region can be provided in 2 forms:
     1. BED file, provided by region_bed_paths, containing arbitrary regions and use bedtools map to calculate;
@@ -164,7 +166,8 @@ def allc_to_region_count(allc_path: str,
         and will generate a bunch of small files if cpu > 1.
         Do not use cpu > 1 for single cell region count.
         For single cell data, parallel on cell level is better.
-
+    binarize
+        {binarize_doc}
     Returns
     -------
     """
@@ -198,7 +201,8 @@ def allc_to_region_count(allc_path: str,
                                      chrom_size_path=chrom_size_path,
                                      region=None,
                                      cov_cutoff=cov_cutoff,
-                                     cpu=cpu)
+                                     cpu=cpu,
+                                     binarize=binarize)
 
     path_dict = {}
     for (mc_context, strandness, _), path in output_paths_dict.items():
@@ -257,7 +261,8 @@ def batch_allc_to_region_count(allc_series,
                                region_bed_paths=None,
                                region_bed_names=None,
                                cov_cutoff=9999,
-                               cpu=5):
+                               cpu=5,
+                               binarize=False):
     output_dir = pathlib.Path(output_dir).resolve()
     output_dir.mkdir(exist_ok=True)
 
@@ -297,7 +302,8 @@ def batch_allc_to_region_count(allc_series,
                                      cov_cutoff=cov_cutoff,
                                      save_zero_cov=False,
                                      remove_tmp=True,
-                                     cpu=1)
+                                     cpu=1,
+                                     binarize=binarize)
             futures[future] = cell_id
 
         records = {}

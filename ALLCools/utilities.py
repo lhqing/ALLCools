@@ -495,3 +495,12 @@ def parse_dtype(dtype):
             raise ValueError(f'Unknown dtype {dtype}')
     else:
         return dtype
+
+
+def binary_count(mc, cov):
+    if mc == 0:
+        return 0, 1
+    elif mc == cov:
+        return 1, 1
+    else:
+        return 0, 0

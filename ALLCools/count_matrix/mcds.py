@@ -248,7 +248,8 @@ def _aggregate_region_count_to_mcds(output_dir,
             cpu_basic_doc=cpu_basic_doc,
             region_bed_paths_doc=region_bed_paths_doc,
             region_bed_names_doc=region_bed_names_doc,
-            rna_table_doc=rna_table_doc)
+            rna_table_doc=rna_table_doc,
+            binarize_doc=binarize_doc)
 def generate_mcds(allc_table,
                   output_prefix,
                   chrom_size_path,
@@ -263,7 +264,8 @@ def generate_mcds(allc_table,
                   remove_tmp=True,
                   max_per_mcds=3072,
                   cell_chunk_size=100,
-                  dtype=DEFAULT_MCDS_DTYPE):
+                  dtype=DEFAULT_MCDS_DTYPE,
+                  binarize=False):
     """\
     Generate MCDS from a list of ALLC file provided with file id.
 
@@ -303,6 +305,8 @@ def generate_mcds(allc_table,
         Data type of MCDS count matrix. Default is np.uint32.
         For single cell feature count, this can be set to np.uint16, which means the value is 0-65536.
         The values exceed max will be clipped.
+    binarize
+        {binarize_doc}
 
     Returns
     -------
@@ -381,7 +385,8 @@ def generate_mcds(allc_table,
                           remove_tmp=remove_tmp,
                           max_per_mcds=max_per_mcds,
                           cell_chunk_size=cell_chunk_size,
-                          dtype=dtype)
+                          dtype=dtype,
+                          binarize=binarize)
         return
 
     # check region bed names
@@ -405,7 +410,8 @@ def generate_mcds(allc_table,
                                region_bed_paths=region_bed_paths,
                                region_bed_names=region_bed_names,
                                cov_cutoff=cov_cutoff,
-                               cpu=cpu)
+                               cpu=cpu,
+                               binarize=binarize)
 
     # aggregate all the region count table into a mcds
     print('Aggregate Region Count Table')

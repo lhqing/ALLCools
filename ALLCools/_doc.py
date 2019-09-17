@@ -10,6 +10,11 @@ allc_paths_doc = "Single ALLC path contain wildcard OR multiple space separated 
 
 allc_table_doc = "Contain all the ALLC file information in 2 columns: 1. file_uid, 2. file_path. No header"
 
+binarize_doc = 'If set, binarize each single site in each individual ALLC file. ' \
+               'This means each cytosine will only contribute at most 1 cov and 0/1 mc, ' \
+               'this is suitable to account for single cell ALLC R1 R2 overlap issue, ' \
+               'Only use this on single cell ALLC, not bulk ALLC.'
+
 bin_sizes_doc = "Fix-size genomic bins can be defined by bin_sizes and chrom_size_path. " \
                 "Space separated sizes of genome bins, each size will be count separately."
 

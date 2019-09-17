@@ -15,6 +15,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 import numpy as np
 import psutil
 
+from ALLCools.utilities import binary_count
 from ._doc import *
 from ._open import open_allc
 from .utilities import parse_chrom_size, genome_region_chunks, parse_file_paths
@@ -43,7 +44,7 @@ def _increase_soft_fd_limit():
     resource.setrlimit(resource.RLIMIT_NOFILE, (HARD, HARD))
 
 
-def _batch_merge_allc_files_tabix(allc_files, out_file, chrom_size_file, bin_length, cpu=10):
+def _batch_merge_allc_files_tabix(allc_files, out_file, chrom_size_file, bin_length, cpu=10, binarize=False):
     regions = genome_region_chunks(chrom_size_file, bin_length=bin_length)
     log.info(f'Merge ALLC files with {cpu} processes')
     log.info(f'Split genome into {len(regions)} regions, each is {bin_length}bp')
@@ -89,7 +90,8 @@ def _batch_merge_allc_files_tabix(allc_files, out_file, chrom_size_file, bin_len
                                                            out_file=None,
                                                            chrom_size_file=chrom_size_file,
                                                            query_region=region,
-                                                           buffer_line_number=100000): region_id
+                                                           buffer_line_number=100000,
+                                                           binarize=binarize): region_id
                                            for region_id, region in enumerate(cur_regions)}
                     cur_id = 0
                     temp_dict = {}
@@ -109,7 +111,7 @@ def _batch_merge_allc_files_tabix(allc_files, out_file, chrom_size_file, bin_len
                                     data = temp_dict.pop(cur_id)
                                     out_handle.write(data)
                                     log.info(f'write {cur_regions[cur_id]} Cached: {len(temp_dict)}, '
-                                             f'Current memory size: {PROCESS.memory_info().rss/(1024**3):.2f}')
+                                             f'Current memory size: {PROCESS.memory_info().rss / (1024 ** 3):.2f}')
                                     cur_id += 1
                             except KeyError:
                                 continue
@@ -118,14 +120,14 @@ def _batch_merge_allc_files_tabix(allc_files, out_file, chrom_size_file, bin_len
                         data = temp_dict.pop(cur_id)
                         out_handle.write(data)
                         log.info(f'write {regions[cur_id]} Cached: {len(temp_dict)}, '
-                                 f'Current memory size: {PROCESS.memory_info().rss/(1024**3):.2f}')
+                                 f'Current memory size: {PROCESS.memory_info().rss / (1024 ** 3):.2f}')
                         cur_id += 1
                 gc.collect()
         # after merge, tabix output
         log.info('Tabix output ALLC file')
         subprocess.run(['tabix', '-b', '2', '-e', '2', '-s', '1', out_file],
                        check=True)
-        log.info(f'Current memory size: {PROCESS.memory_info().rss/(1024**3):.2f}')
+        log.info(f'Current memory size: {PROCESS.memory_info().rss / (1024 ** 3):.2f}')
     log.info('Merge finished.')
 
     # remove all batch allc but the last (final allc)
@@ -138,7 +140,8 @@ def _merge_allc_files_tabix(allc_files,
                             out_file,
                             chrom_size_file,
                             query_region=None,
-                            buffer_line_number=10000):
+                            buffer_line_number=10000,
+                            binarize=False):
     # only use bgzip and tabix
     # automatically take care the too many file open issue
     # do merge iteratively if file number exceed limit
@@ -196,8 +199,13 @@ def _merge_allc_files_tabix(allc_files,
         # select index whose cur_pos is smallest among all active handle
         for index in np.where((cur_pos == np.nanmin(cur_pos[active_handle]))
                               & active_handle)[0]:
-            mc += int(cur_fields[index][4])
-            cov += int(cur_fields[index][5])
+            if binarize:
+                mc, cov = binary_count(int(mc), int(cov))
+                mc += mc
+                cov += cov
+            else:
+                mc += int(cur_fields[index][4])
+                cov += int(cur_fields[index][5])
             if genome_info is None:
                 genome_info = cur_fields[index][:4]
 
@@ -257,8 +265,9 @@ def _merge_allc_files_tabix(allc_files,
 
 @doc_params(allc_paths_doc=allc_paths_doc,
             chrom_size_path_doc=chrom_size_path_doc,
-            cpu_basic_doc=cpu_basic_doc)
-def merge_allc_files(allc_paths, output_path, chrom_size_path, bin_length=10000000, cpu=10):
+            cpu_basic_doc=cpu_basic_doc,
+            binarize_doc=binarize_doc)
+def merge_allc_files(allc_paths, output_path, chrom_size_path, bin_length=10000000, cpu=10, binarize=False):
     """
     Merge N ALLC files into 1 ALLC file.
 
@@ -277,6 +286,8 @@ def merge_allc_files(allc_paths, output_path, chrom_size_path, bin_length=100000
         The real CPU usage is ~1.5 times than this number,
         due to the sub processes of handling ALLC files using tabix/bgzip.
         Monitor the CPU and Memory usage when running this function.
+    binarize
+        {binarize_doc}
     Returns
     -------
 
@@ -305,7 +316,8 @@ def merge_allc_files(allc_paths, output_path, chrom_size_path, bin_length=100000
                                   out_file=output_path,
                                   chrom_size_file=chrom_size_path,
                                   bin_length=bin_length,
-                                  cpu=cpu)
+                                  cpu=cpu,
+                                  binarize=binarize)
     return
 
 
