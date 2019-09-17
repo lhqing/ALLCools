@@ -357,6 +357,14 @@ def merge_allc_register_subparser(subparser):
         help="Length of the genome bin in each parallel job, large number means more memory usage."
     )
 
+    parser.add_argument(
+        "--binarize",
+        dest='binarize',
+        action='store_true',
+        help=binarize_doc
+    )
+    parser.set_defaults(binarize=False)
+
 
 def extract_context_allc_register_subparser(subparser):
     # TODO add alias to arguments
@@ -563,6 +571,7 @@ def allc_to_region_count_register_subparser(subparser):
         help=binarize_doc
     )
     parser.set_defaults(binarize=False)
+
 
 def allc_to_bigwig_register_subparser(subparser):
     # TODO add alias to arguments
