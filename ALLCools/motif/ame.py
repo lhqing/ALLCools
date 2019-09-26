@@ -185,7 +185,8 @@ def ame(bed_file,
     total_records = pd.concat(records, sort=True)
     total_records['E-value'] = total_records['E-value'].fillna(100).astype(float)
     total_records = total_records.sort_values('E-value').reset_index(drop=True)
-    total_records['motif_DB'] = total_records['motif_DB'].apply(lambda x: x.split('/')[-1])
+    total_records['motif_DB'] = total_records['motif_DB'].apply(
+        lambda x: x.split('/')[-1] if isinstance(x, str) else x)
     # add fold change
     total_records['TP/FP'] = total_records['%TP'] / (total_records['%FP'] + 0.0001)
     total_records['log2(TP/FP))'] = np.log2(total_records['TP/FP'])
