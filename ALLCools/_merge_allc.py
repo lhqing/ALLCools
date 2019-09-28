@@ -292,6 +292,11 @@ def merge_allc_files(allc_paths, output_path, chrom_size_path, bin_length=100000
     -------
 
     """
+    # TODO binarize do not work because when merge batch allc, the previous batch merged allc is not single cell
+    # can not treat that as binarize, need to reimplement merge ALLC to support binarize in merge allc
+    print('Right now binarize is not used, need fix this in merge ALLC fiction, set binarize=False')
+    binarize = False
+
     # TODO write test
     # a list of str, contain all absolute non-soft-link paths
     allc_files: list = parse_file_paths(allc_paths)
@@ -318,10 +323,4 @@ def merge_allc_files(allc_paths, output_path, chrom_size_path, bin_length=100000
                                   bin_length=bin_length,
                                   cpu=cpu,
                                   binarize=binarize)
-    return
-
-
-def prepare_merge_allc(group_table, output_dir):
-    # TODO take a simple table file_id, group/cluster_name, allc_path
-    # generate the command needed to merge this whole table, form it in the output dir
     return
