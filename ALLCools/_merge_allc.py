@@ -199,13 +199,16 @@ def _merge_allc_files_tabix(allc_files,
         # select index whose cur_pos is smallest among all active handle
         for index in np.where((cur_pos == np.nanmin(cur_pos[active_handle]))
                               & active_handle)[0]:
-            if binarize:
-                mc, cov = binary_count(int(mc), int(cov))
-                mc += mc
-                cov += cov
-            else:
-                mc += int(cur_fields[index][4])
-                cov += int(cur_fields[index][5])
+            mc += int(cur_fields[index][4])
+            cov += int(cur_fields[index][5])
+            # TODO fix binarize ALLC problem
+            # if binarize:
+            #     mc, cov = binary_count(int(mc), int(cov))
+            #     mc += mc
+            #     cov += cov
+            # else:
+            #     mc += int(cur_fields[index][4])
+            #     cov += int(cur_fields[index][5])
             if genome_info is None:
                 genome_info = cur_fields[index][:4]
 
