@@ -75,6 +75,7 @@ def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path,
             else:
                 temp_mc += mc
                 temp_cov += cov
+
         # write last piece if there is anything
         if temp_cov > 0:
             mc_level = temp_mc / temp_cov
