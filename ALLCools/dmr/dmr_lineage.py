@@ -6,7 +6,10 @@ import numpy as np
 import pandas as pd
 from networkx.algorithms.centrality import edge_betweenness_centrality
 from numpy import log
+from scipy.cluster.hierarchy import dendrogram
 from scipy.special import betaln
+
+from .dendrogram import extract_all_nodes
 
 
 def linkage_to_graph(linkage):
@@ -200,38 +203,146 @@ def _max_likelihood_tree_worker(tree_g, mc_df, cov_df, max_mutation=2, p_mutatio
         return pd.Series(patten_dict), pd.Series(likelihood_dict)
 
 
-def dmr_parsimony_fit(linkage, mc_df, cov_df, max_mutation=5, p_mutation=0.1, sub_tree_cutoff=12, cpu=1):
-    tree_g = linkage_to_graph(linkage)
+class DMRLineage:
+    def __init__(self,
+                 linkage,
+                 linkage_anno_list,
+                 mc_df: pd.DataFrame,
+                 cov_df: pd.DataFrame,
+                 max_mutation=5,
+                 p_mutation=0.1,
+                 sub_tree_cutoff=12):
+        # validate names
+        mc_names = mc_df.columns
+        cov_names = cov_df.columns
+        anno_names = pd.Index(linkage_anno_list)
+        union_names = mc_names & cov_names & anno_names
+        size_set = {mc_names.size, cov_names.size, anno_names.size, union_names.size}
+        try:
+            assert len(size_set) == 1
+        except AssertionError:
+            raise ValueError('Names in mc_df, cov_df and linkage_anno_list is inconsistent.')
 
-    chunk_size = int(min(mc_df.shape[0], 10))
-    futures = {}
-    with ProcessPoolExecutor(cpu) as executor:
-        for chunk_start in range(0, mc_df.shape[0], chunk_size):
-            _chunk_mc_df = mc_df.iloc[chunk_start:chunk_start + chunk_size, :].copy()
-            _chunk_cov_df = cov_df.iloc[chunk_start:chunk_start + chunk_size, :].copy()
-            future = executor.submit(_max_likelihood_tree_worker,
-                                     tree_g=tree_g,
-                                     mc_df=_chunk_mc_df,
-                                     cov_df=_chunk_cov_df,
-                                     max_mutation=max_mutation,
-                                     p_mutation=p_mutation,
-                                     sub_tree_cutoff=sub_tree_cutoff)
-            futures[future] = chunk_start
+        mc_df = mc_df[linkage_anno_list].copy()
+        cov_df = cov_df[linkage_anno_list].copy()
 
-    results_dict = {}
-    for future in as_completed(futures):
-        chunk_start = futures[future]
-        result = future.result()
-        results_dict[chunk_start] = result
+        self.linkage = linkage
+        self.dendrogram = dendrogram(linkage, no_plot=True, labels=linkage_anno_list)
+        self.tree_g = linkage_to_graph(linkage)
+        self.n_leaves = self.linkage.shape[0] + 1
 
-    dmr_best_mutations_list = []
-    dmr_likelihoods_list = []
-    for chunk_start in range(0, mc_df.shape[0], chunk_size):
-        _patterns, _likelihoods = results_dict[chunk_start]
-        dmr_best_mutations_list.append(_patterns)
-        dmr_likelihoods_list.append(_likelihoods)
-    total_records = pd.DataFrame({'mutation': pd.concat(dmr_best_mutations_list),
-                                  'likelihoods': pd.concat(dmr_likelihoods_list)})
-    best_choice = total_records.apply(lambda row: row['mutation'][row['likelihoods'].argmax()], axis=1)
-    best_likelihood = total_records['likelihoods'].apply(lambda i: i.argmax())
-    return best_choice, best_likelihood
+        # annotations
+        self.cluster_id_to_name = {i: name for i, name in enumerate(linkage_anno_list)}
+        self.cluster_name_to_id = {name: i for i, name in linkage_anno_list}
+        self.non_singleton_node_dict = extract_all_nodes(linkage, labels=linkage_anno_list)
+
+        self.mc_df_labeled = mc_df
+        self.cov_df_labeled = cov_df
+
+        self.mc_df = self.mc_df_labeled.copy()
+        self.mc_df.columns = self.mc_df.columns.map(self.cluster_name_to_id)
+        self.cov_df = self.cov_df_labeled.copy()
+        self.cov_df.columns = self.cov_df.columns.map(self.cluster_name_to_id)
+
+        self.max_mutation = max_mutation
+        self.p_mutation = p_mutation
+        self.sub_tree_cutoff = sub_tree_cutoff
+
+        self.best_choice = None
+        self.best_likelihood = None
+        return
+
+    def fit(self, cpu=1):
+        tree_g = self.tree_g
+
+        chunk_size = int(min(self.mc_df.shape[0], 10))
+        futures = {}
+        with ProcessPoolExecutor(cpu) as executor:
+            for chunk_start in range(0, self.mc_df.shape[0], chunk_size):
+                _chunk_mc_df = self.mc_df.iloc[chunk_start:chunk_start + chunk_size, :].copy()
+                _chunk_cov_df = self.cov_df.iloc[chunk_start:chunk_start + chunk_size, :].copy()
+                future = executor.submit(_max_likelihood_tree_worker,
+                                         tree_g=tree_g,
+                                         mc_df=_chunk_mc_df,
+                                         cov_df=_chunk_cov_df,
+                                         max_mutation=self.max_mutation,
+                                         p_mutation=self.p_mutation,
+                                         sub_tree_cutoff=self.sub_tree_cutoff)
+                futures[future] = chunk_start
+
+        results_dict = {}
+        for future in as_completed(futures):
+            chunk_start = futures[future]
+            result = future.result()
+            results_dict[chunk_start] = result
+
+        dmr_best_mutations_list = []
+        dmr_likelihoods_list = []
+        for chunk_start in range(0, self.mc_df.shape[0], chunk_size):
+            _patterns, _likelihoods = results_dict[chunk_start]
+            dmr_best_mutations_list.append(_patterns)
+            dmr_likelihoods_list.append(_likelihoods)
+        total_records = pd.DataFrame({'mutation': pd.concat(dmr_best_mutations_list),
+                                      'likelihoods': pd.concat(dmr_likelihoods_list)})
+        self.best_choice = total_records.apply(lambda row: row['mutation'][row['likelihoods'].argmax()], axis=1)
+        self.best_likelihood = total_records['likelihoods'].apply(lambda i: i.argmax())
+        return
+
+    def get_dmr_parsimony(self, dmr_id):
+        raw_rate = (self.mc_df / self.cov_df).loc[dmr_id]
+        tree_g = self.tree_g
+        epi_mutation = self.best_choice[dmr_id]
+
+        _this_mc_df = self.mc_df.loc[[dmr_id]].copy()
+        _this_cov_df = self.cov_df.loc[[dmr_id]].copy()
+
+        a, b = parse_one_pattern(tree_g, epi_mutation, _this_mc_df, _this_cov_df)
+        tree_rate = (a / (a + b)).loc[dmr_id]
+        data = pd.DataFrame([raw_rate, tree_rate, self.cov_df.loc[dmr_id]],
+                            index=['raw', 'tree', 'cov']).T
+        data.index.name = 'cluster'
+        data = data.reindex(self.dendrogram['leaves'])
+        data.index = self.dendrogram['ivl']
+        data.reset_index(inplace=True)
+        return data, epi_mutation
+
+    def dmr_mutation_profile(self, dmr_id):
+        _this_mc_df = self.mc_df.loc[[dmr_id]].copy()
+        _this_cov_df = self.cov_df.loc[[dmr_id]].copy()
+
+        _this_mc_df_with_name = self.mc_df_labeled[[dmr_id]].copy()
+        _this_cov_df_with_name = self.cov_df_labeled[[dmr_id]].copy()
+        epi_mutation = self.best_choice[dmr_id]
+
+        mutation_profile = {}
+        for edge in epi_mutation:
+            parent = max(edge)
+            this_child = min(edge)
+
+            # find brother
+            left, right, *_ = self.linkage.iloc[parent - self.n_leaves]
+            left = int(left)
+            right = int(right)
+
+            _this_nodes_dict = self.non_singleton_node_dict[parent]
+            _left_nodes = _this_nodes_dict['left']
+            _right_nodes = _this_nodes_dict['right']
+
+            if left == this_child:
+                this_brother = right
+                this_nodes = _left_nodes
+                brother_nodes = _right_nodes
+            elif right == this_child:
+                this_brother = left
+                this_nodes = _right_nodes
+                brother_nodes = _left_nodes
+            else:
+                raise ValueError('Child node not in the parent linkage records')
+
+            this_rate = _this_mc_df_with_name[this_nodes].values.sum() / _this_cov_df_with_name[this_nodes].values.sum()
+            brother_rate = _this_mc_df_with_name[brother_nodes].values.sum() / _this_cov_df_with_name[
+                brother_nodes].values.sum()
+
+            mutation_profile[this_child] = this_rate - brother_rate
+            mutation_profile[this_brother] = brother_rate - this_rate
+        return pd.Series(mutation_profile, name=dmr_id)

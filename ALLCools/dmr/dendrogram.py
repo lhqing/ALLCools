@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 
 def extract_all_nodes(linkage, labels=None):
@@ -6,6 +7,10 @@ def extract_all_nodes(linkage, labels=None):
     Given a linkage array output from scipy.cluster.hierarchy.linkage,
     calculate the left and right branches for all of the non-singleton nodes.
     """
+    if isinstance(linkage, pd.DataFrame):
+        linkage = linkage.values
+    if isinstance(labels, pd.Series):
+        labels = labels.tolist()
 
     cluster_dict = {}
     cur_cluster_id = len(linkage) + 1
