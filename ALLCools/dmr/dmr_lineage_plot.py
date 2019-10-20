@@ -103,7 +103,8 @@ def plot_dendrogram(linkage_df,
                                    vmax=max(node_size_norm))
 
         def node_smap(v):
-            return _size_norm(v) * (sizes[1] - sizes[0]) + sizes[0]
+            s = _size_norm(v) * (sizes[1] - sizes[0]) + sizes[0]
+            return min(1, max(0, s))
     else:
         node_size = {}
 
@@ -113,8 +114,7 @@ def plot_dendrogram(linkage_df,
                   for node in node_pos.keys()}
 
     for node_id, (node_x, node_y) in node_pos.items():
-        if node_id >= n_leaves:
-            ax.scatter(node_x, node_y, s=node_sizes[node_id], c=node_colors[node_id], zorder=3)
+        ax.scatter(node_x, node_y, s=node_sizes[node_id], c=node_colors[node_id], zorder=3)
 
     # line color
     nan_color = '#D3D3D3'
