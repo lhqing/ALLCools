@@ -170,7 +170,7 @@ def plot_dendrogram(linkage_df,
                                  plot_kws=dict(c=line_colors[right_child],
                                                linewidth=linewidth))
 
-    ax.set_ylim(0, ymax * 1.05)
+    ax.set_ylim(0 - ymax*0.05, ymax * 1.05)
     return node_pos
 
 
