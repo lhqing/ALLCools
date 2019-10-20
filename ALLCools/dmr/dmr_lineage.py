@@ -233,7 +233,7 @@ class DMRLineage:
 
         # annotations
         self.cluster_id_to_name = {i: name for i, name in enumerate(linkage_anno_list)}
-        self.cluster_name_to_id = {name: i for i, name in linkage_anno_list}
+        self.cluster_name_to_id = {name: i for i, name in enumerate(linkage_anno_list)}
         self.non_singleton_node_dict = extract_all_nodes(linkage, labels=linkage_anno_list)
 
         self.mc_df_labeled = mc_df
@@ -285,7 +285,7 @@ class DMRLineage:
         total_records = pd.DataFrame({'mutation': pd.concat(dmr_best_mutations_list),
                                       'likelihoods': pd.concat(dmr_likelihoods_list)})
         self.best_choice = total_records.apply(lambda row: row['mutation'][row['likelihoods'].argmax()], axis=1)
-        self.best_likelihood = total_records['likelihoods'].apply(lambda i: i.argmax())
+        self.best_likelihood = total_records['likelihoods'].apply(lambda i: i.max())
         return
 
     def get_dmr_parsimony(self, dmr_id):
@@ -310,8 +310,8 @@ class DMRLineage:
         _this_mc_df = self.mc_df.loc[[dmr_id]].copy()
         _this_cov_df = self.cov_df.loc[[dmr_id]].copy()
 
-        _this_mc_df_with_name = self.mc_df_labeled[[dmr_id]].copy()
-        _this_cov_df_with_name = self.cov_df_labeled[[dmr_id]].copy()
+        _this_mc_df_with_name = self.mc_df_labeled.loc[[dmr_id]].copy()
+        _this_cov_df_with_name = self.cov_df_labeled.loc[[dmr_id]].copy()
         epi_mutation = self.best_choice[dmr_id]
 
         mutation_profile = {}
