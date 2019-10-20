@@ -1,15 +1,16 @@
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from itertools import combinations
 
+import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import pandas as pd
 from networkx.algorithms.centrality import edge_betweenness_centrality
 from numpy import log
-from scipy.cluster.hierarchy import dendrogram
 from scipy.special import betaln
 
 from .dendrogram import extract_all_nodes
+from .dmr_lineage_plot import *
 
 
 def linkage_to_graph(linkage):
@@ -227,6 +228,7 @@ class DMRLineage:
         cov_df = cov_df[linkage_anno_list].copy()
 
         self.linkage = linkage
+        self.linkage_anno_list = linkage_anno_list
         self.dendrogram = dendrogram(linkage, no_plot=True, labels=linkage_anno_list)
         self.tree_g = linkage_to_graph(linkage)
         self.n_leaves = self.linkage.shape[0] + 1
@@ -346,3 +348,97 @@ class DMRLineage:
             mutation_profile[this_child] = this_rate - brother_rate
             mutation_profile[this_brother] = brother_rate - this_rate
         return pd.Series(mutation_profile, name=dmr_id)
+
+    def mutation_delta(self, cluster):
+        this_tree = self.tree_g.copy()
+        data, mutations = self.get_dmr_parsimony(cluster)
+        this_tree.remove_edges_from(mutations)
+
+        nodes_group_rate_dict = {}
+        for sub_g in nx.connected_component_subgraphs(this_tree):
+            members = [i for i in sub_g.nodes if i < self.n_leaves]
+            total_mc = self.mc_df.loc[cluster, members].sum()
+            total_cov = self.cov_df.loc[cluster, members].sum()
+            group_rate = total_mc / total_cov
+            for member in sub_g.nodes:
+                nodes_group_rate_dict[member] = group_rate
+
+        results = {}
+        for mutation_pair in mutations:
+            child, parent = sorted(mutation_pair)
+            mc_delta = nodes_group_rate_dict[child] - nodes_group_rate_dict[parent]
+            results[child] = mc_delta
+        return results, nodes_group_rate_dict
+
+    def plot_dmr_lineage(self, dmr_id,
+                         node_sizes=(10, 120),
+                         node_size_norm=(0.1, 0.3),
+                         hue_norm=(0.3, 0.8),
+                         palette='viridis',
+                         labelsize=7,
+                         tree_bar_cax_tuple=None):
+
+        if tree_bar_cax_tuple is None:
+            fig = plt.figure(figsize=(6, 4), dpi=300)
+            gs = fig.add_gridspec(20, 20, hspace=2, wspace=1)
+            ax_tree = fig.add_subplot(gs[:15, :-1])
+            ax_bar = fig.add_subplot(gs[15:, :-1])
+            cax = fig.add_subplot(gs[15:, -1:])
+        else:
+            ax_tree, ax_bar, cax = tree_bar_cax_tuple
+
+        # prepare plot data
+        data, mutation = self.get_dmr_parsimony(dmr_id)
+        mutation_profile, total_group_rate = self.mutation_delta(dmr_id)
+
+        node_pos = plot_dendrogram(
+            self.linkage,
+            self.mc_df.columns,
+            ax=ax_tree,
+            plot_node_id=False,
+            palette=palette,
+            node_hue=total_group_rate,
+            node_hue_norm=hue_norm,
+            node_size={k: abs(v)
+                       for k, v in mutation_profile.items()},
+            node_size_norm=node_size_norm,
+            line_hue=total_group_rate,
+            line_hue_norm=hue_norm,
+            sizes=node_sizes)
+
+        ymax = self.linkage[2].max()
+        for k, v in mutation_profile.items():
+            ax_tree.text(node_pos[k][0],
+                         node_pos[k][1] + ymax * 0.05,
+                         f'{v:.2f}',
+                         fontsize=labelsize,
+                         ha='left',
+                         va='center',
+                         rotation=90,
+                         rotation_mode='anchor',
+                         bbox=dict(
+                             boxstyle="round",
+                             linewidth=0.5,
+                             fc=(1, 1, 1, 0.9),
+                             ec=(0, 0, 0, 0.1),
+                         ))
+
+        ax_tree.set(xticks=[])
+        sns.despine(ax=ax_tree, bottom=True)
+        sns.despine(ax=ax_bar)
+
+        plot_parsimony_data(data=data, ax=ax_bar, hue_norm=hue_norm, palette=palette)
+        ax_bar.xaxis.set_tick_params(rotation=90)
+        ax_bar.set(ylim=(0, 1))
+        ax_bar.grid(axis='x', linewidth=0.3, alpha=0.5)
+        ax_bar.set_xlim(ax_tree.get_xlim())
+
+        plot_colorbar(cax,
+                      cmap=palette,
+                      cnorm=Normalize(*hue_norm),
+                      hue_norm=hue_norm,
+                      linewidth=0.7)
+
+        ax_tree.set(ylabel='Cluster Distance')
+        ax_bar.set(ylabel='mCG%', xlabel='Clusters')
+        return ax_tree, ax_bar, cax
