@@ -396,7 +396,7 @@ class DMRLineage:
             self.linkage,
             self.mc_df.columns,
             ax=ax_tree,
-            plot_node_id=False,
+            plot_node_id=plot_node_id,
             palette=palette,
             node_hue=total_group_rate,
             node_hue_norm=hue_norm,
@@ -405,8 +405,7 @@ class DMRLineage:
             node_size_norm=node_size_norm,
             line_hue=total_group_rate,
             line_hue_norm=hue_norm,
-            sizes=node_sizes,
-            plot_node_id=plot_node_id)
+            sizes=node_sizes)
 
         ymax = self.linkage[2].max()
         for k, v in mutation_profile.items():
