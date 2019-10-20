@@ -376,7 +376,8 @@ class DMRLineage:
                          hue_norm=(0.3, 0.8),
                          palette='viridis',
                          labelsize=7,
-                         tree_bar_cax_tuple=None):
+                         tree_bar_cax_tuple=None,
+                         plot_node_id=False):
 
         if tree_bar_cax_tuple is None:
             fig = plt.figure(figsize=(6, 4), dpi=300)
@@ -404,7 +405,8 @@ class DMRLineage:
             node_size_norm=node_size_norm,
             line_hue=total_group_rate,
             line_hue_norm=hue_norm,
-            sizes=node_sizes)
+            sizes=node_sizes,
+            plot_node_id=plot_node_id)
 
         ymax = self.linkage[2].max()
         for k, v in mutation_profile.items():

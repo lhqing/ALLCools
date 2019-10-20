@@ -104,7 +104,7 @@ def plot_dendrogram(linkage_df,
 
         def node_smap(v):
             v_norm = _size_norm(v)
-            v_norm = min(1, max(0, v_norm))
+            v_norm = min(1, max(0, v_norm)) # limit norm value to [0, 1]
             s = v_norm * (sizes[1] - sizes[0]) + sizes[0]
             return s
     else:
@@ -148,11 +148,11 @@ def plot_dendrogram(linkage_df,
             if node_id >= n_leaves:
                 ax.text(node_x, node_y, node_id,
                         fontsize=4 if 'fontsize' not in plot_kws else plot_kws['fontsize'],
-                        ha='center', va='center', c='w')
+                        ha='center', va='center', c='k')
             else:
                 ax.text(node_x, -0.01, node_id,
                         fontsize=4 if 'fontsize' not in plot_kws else plot_kws['fontsize'],
-                        ha='center', va='center', c='w')
+                        ha='center', va='center', c='k')
 
         # plot branch
         # only non-singleton node has branch:
