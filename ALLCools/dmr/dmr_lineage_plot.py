@@ -187,7 +187,7 @@ def plot_parsimony_data(data, ax, hue_norm, palette):
 
 def plot_colorbar(cax, cmap, cnorm, hue_norm, linewidth=0.5):
     if isinstance(cmap, str):
-        cmap = mpl.cm.get_cmap(cmap)
+        cmap = get_cmap(cmap)
 
     colorbar = ColorbarBase(cax, cmap=cmap, norm=cnorm,
                             orientation='vertical', extend='both')
