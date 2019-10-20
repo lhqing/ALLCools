@@ -176,9 +176,26 @@ def ame(bed_file,
     # merge results
     records = []
     for i in range(len(motif_path_chunks)):
+        ame_out_path = output_dir / f'{i}_temp/ame.tsv'
+        # some rare cases AME output file has no header,I have no idea why
+        # seems to be an AME bug.
+        # So here I read the first line to check if the file has header
+        with open(ame_out_path) as f:
+            has_header = f.readline().startswith('rank')
+
         try:
-            chunk_df = pd.read_csv(output_dir / f'{i}_temp/ame.tsv',
-                                   sep='\t', index_col=0, comment='#').reset_index(drop=True)
+            if has_header:
+                chunk_df = pd.read_csv(ame_out_path,
+                                       sep='\t', index_col=0, comment='#').reset_index(drop=True)
+            else:
+                chunk_df = pd.read_csv(ame_out_path, header=None,
+                                       sep='\t', index_col=0, comment='#').reset_index(drop=True)
+                chunk_df.columns = ['motif_DB', 'motif_ID', 'motif_alt_ID', 'consensus', 'p-value',
+                                    'adj_p-value', 'E-value', 'tests', 'FASTA_max', 'pos', 'neg', 'PWM_min',
+                                    'TP', '%TP', 'FP', '%FP']
+                chunk_df.index.name = 'rank'
+
+            print(i, chunk_df.shape)
         except pd.errors.EmptyDataError:
             continue
         records.append(chunk_df)
