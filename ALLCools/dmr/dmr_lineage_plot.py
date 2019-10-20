@@ -103,8 +103,10 @@ def plot_dendrogram(linkage_df,
                                    vmax=max(node_size_norm))
 
         def node_smap(v):
-            s = _size_norm(v) * (sizes[1] - sizes[0]) + sizes[0]
-            return min(1, max(0, s))
+            v_norm = _size_norm(v)
+            v_norm = min(1, max(0, v_norm))
+            s = v_norm * (sizes[1] - sizes[0]) + sizes[0]
+            return s
     else:
         node_size = {}
 
@@ -170,7 +172,7 @@ def plot_dendrogram(linkage_df,
                                  plot_kws=dict(c=line_colors[right_child],
                                                linewidth=linewidth))
 
-    ax.set_ylim(0 - ymax*0.05, ymax * 1.05)
+    ax.set_ylim(0 - ymax * 0.05, ymax * 1.05)
     return node_pos
 
 
