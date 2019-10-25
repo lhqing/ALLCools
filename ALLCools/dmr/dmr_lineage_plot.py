@@ -32,7 +32,8 @@ def plot_dendrogram(linkage_df,
                     line_hue_norm=None,
                     sizes=None,
                     size=30,
-                    linewidth=1):
+                    linewidth=1,
+                    color=None):
     if plot_kws is None:
         plot_kws = {}
 
@@ -64,7 +65,7 @@ def plot_dendrogram(linkage_df,
         raise
 
     # node colors
-    nan_color = '#D3D3D3'
+    nan_color = '#D3D3D3' if color is None else color
     if node_hue is not None:
         if node_hue_norm is None:
             values = node_hue.values()
@@ -119,7 +120,7 @@ def plot_dendrogram(linkage_df,
         ax.scatter(node_x, node_y, s=node_sizes[node_id], c=node_colors[node_id], zorder=3)
 
     # line color
-    nan_color = '#D3D3D3'
+    nan_color = '#D3D3D3' if color is None else color
     if line_hue is not None:
         if line_hue_norm is None:
             values = line_hue.values()
