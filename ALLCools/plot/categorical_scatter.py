@@ -2,8 +2,9 @@ import seaborn as sns
 from matplotlib.lines import Line2D
 
 from .color import level_one_palette
+from .contour import density_contour
 from .text_anno_scatter import _text_anno_scatter
-from .utilities import _make_tiny_axis_label, _density_based_sample, _extract_coords
+from .utilities import _make_tiny_axis_label, _density_based_sample, _extract_coords, zoom_ax
 
 
 def categorical_scatter(
@@ -28,7 +29,12 @@ def categorical_scatter(
         axis_format='tiny',
         max_points=5000,
         labelsize=4,
-        s=5
+        linewidth=1,
+        s=5,
+        zoomxy=1.05,
+        outline=None,
+        outline_pad=3,
+        outline_kws=None
 ):
     """
     Plot scatter plot with these options:
@@ -144,6 +150,20 @@ def categorical_scatter(
                            text_anno_kws=text_anno_kws,
                            labelsize=labelsize)
 
+    # deal with outline
+    if outline:
+        if isinstance(outline, str):
+            _data['outline'] = data[outline]
+        else:
+            _data['outline'] = outline
+        _outline_kws = {'linewidth': linewidth,
+                        'palette': None,
+                        'c': 'lightgray',
+                        'single_contour_pad': outline_pad}
+        if outline_kws is not None:
+            _outline_kws.update(outline_kws)
+        density_contour(ax=ax, data=_data, x='x', y='y', groupby='outline', **_outline_kws)
+
     # clean axis
     if axis_format == 'tiny':
         _make_tiny_axis_label(ax, x, y, arrow_kws=None, fontsize=labelsize)
@@ -178,4 +198,8 @@ def categorical_scatter(
         _legend_kws['handles'] = handles
         _legend_kws['labels'] = labels
         ax.legend(**_legend_kws)
+
+    if zoomxy is not None:
+        zoom_ax(ax, zoomxy)
+
     return ax, _data

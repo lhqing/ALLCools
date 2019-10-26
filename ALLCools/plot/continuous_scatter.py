@@ -5,8 +5,9 @@ from matplotlib.colors import Normalize
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 from .color import plot_colorbar
+from .contour import density_contour
 from .text_anno_scatter import _text_anno_scatter
-from .utilities import _density_based_sample, _extract_coords, _make_tiny_axis_label
+from .utilities import _density_based_sample, _extract_coords, _make_tiny_axis_label, zoom_ax
 
 
 def tight_hue_range(hue_data, portion):
@@ -61,7 +62,12 @@ def continuous_scatter(
         max_points=5000,
         s=5,
         labelsize=4,
-        cax=None
+        linewidth=.5,
+        cax=None,
+        zoomxy=1.05,
+        outline=None,
+        outline_kws=None,
+        outline_pad=2
 ):
     # add coords
     _data, x, y = _extract_coords(data, coord_base, x, y)
@@ -153,6 +159,20 @@ def continuous_scatter(
                            text_anno_kws=text_anno_kws,
                            labelsize=labelsize)
 
+    # deal with outline
+    if outline:
+        if isinstance(outline, str):
+            _data['outline'] = data[outline]
+        else:
+            _data['outline'] = outline
+        _outline_kws = {'linewidth': linewidth,
+                        'palette': None,
+                        'c': 'lightgray',
+                        'single_contour_pad': outline_pad}
+        if outline_kws is not None:
+            _outline_kws.update(outline_kws)
+        density_contour(ax=ax, data=_data, x='x', y='y', groupby='outline', **_outline_kws)
+
     # clean axis
     if axis_format == 'tiny':
         _make_tiny_axis_label(ax, x, y, arrow_kws=None, fontsize=labelsize)
@@ -182,4 +202,8 @@ def continuous_scatter(
     if sizebar and (size is not None):
         # TODO plot dot size bar
         pass
+
+    if zoomxy is not None:
+        zoom_ax(ax, zoomxy)
+
     return tuple(return_axes), _data

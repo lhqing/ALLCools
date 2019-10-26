@@ -83,3 +83,25 @@ def _extract_coords(data, coord_base, x, y):
     _data = pd.DataFrame({'x': data[x],
                           'y': data[y]})
     return _data, x, y
+
+
+def zoom_min_max(vmin, vmax, scale):
+    width = vmax - vmin
+    width_zoomed = width * scale
+    delta_value = (width_zoomed - width) / 2
+    return vmin - delta_value, vmax + delta_value
+
+
+def zoom_ax(ax, zoom_scale, on='both'):
+    on = on.lower()
+
+    xlim = ax.get_xlim()
+    xlim_zoomed = zoom_min_max(*xlim, zoom_scale)
+
+    ylim = ax.get_ylim()
+    ylim_zoomed = zoom_min_max(*ylim, zoom_scale)
+
+    if (on == 'both') or ('x' in on):
+        ax.set_xlim(xlim_zoomed)
+    if (on == 'both') or ('y' in on):
+        ax.set_ylim(ylim_zoomed)
