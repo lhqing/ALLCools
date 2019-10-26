@@ -42,7 +42,7 @@ def _translate_coord_name(coord_name):
     return coord_name.upper().replace('_', ' ')
 
 
-def _make_tiny_axis_label(ax, x, y, arrow_kws=None, fontsize=6):
+def _make_tiny_axis_label(ax, x, y, arrow_kws=None, fontsize=5):
     """this function assume coord is [0, 1]"""
     # clean ax axises
     ax.set(xticks=[], yticks=[], xlabel=None, ylabel=None)
@@ -52,14 +52,34 @@ def _make_tiny_axis_label(ax, x, y, arrow_kws=None, fontsize=6):
     if arrow_kws is not None:
         _arrow_kws.update(arrow_kws)
 
-    ax.arrow(0.06, 0.06, 0, 0.06, **_arrow_kws)
-    ax.arrow(0.06, 0.06, 0.06, 0, **_arrow_kws)
-    ax.text(0.09, 0.03, _translate_coord_name(x),
+    ax.arrow(0.06, 0.06, 0, 0.06, **_arrow_kws,
+             transform=ax.transAxes)
+    ax.arrow(0.06, 0.06, 0.06, 0, **_arrow_kws,
+             transform=ax.transAxes)
+    ax.text(0.06, 0.03, _translate_coord_name(x),
             fontdict=dict(fontsize=fontsize,
                           horizontalalignment='left',
-                          verticalalignment='center'))
-    ax.text(0.03, 0.09, _translate_coord_name(y),
-            fontdict=dict(fontsize=fontsize, rotation=90,
+                          verticalalignment='center'),
+            transform=ax.transAxes)
+    ax.text(0.03, 0.06, _translate_coord_name(y),
+            fontdict=dict(fontsize=fontsize,
+                          rotation=90, rotation_mode='anchor',
                           horizontalalignment='left',
-                          verticalalignment='center'))
+                          verticalalignment='center'),
+            transform=ax.transAxes)
     return
+
+
+def _extract_coords(data, coord_base, x, y):
+    if coord_base is not None:
+        x = f'{coord_base}_0'
+        y = f'{coord_base}_1'
+        if (x not in data.columns) or (y not in data.columns):
+            raise KeyError(f'coord_base {coord_base} is provided, '
+                           f'but {coord_base}_0 or {coord_base}_1 not found in columns')
+    else:
+        if (x is None) or (y is None):
+            raise ValueError('Either provide coord_base, or provide both x and y.')
+    _data = pd.DataFrame({'x': data[x],
+                          'y': data[y]})
+    return _data, x, y

@@ -1,7 +1,12 @@
-import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import numpy as np
 import seaborn as sns
+from matplotlib.cm import get_cmap
+from matplotlib.colorbar import ColorbarBase
+from matplotlib.colors import ListedColormap, Normalize
+
+from decimal import Decimal
 
 
 def _continuous_color_palette(color, n, skip_border=1):
@@ -28,13 +33,15 @@ def get_kv_dict(data_df, major, sub):
     return _dict
 
 
-def level_one_palette(name_list, order=None, palette='default'):
+def level_one_palette(name_list, order=None, palette='auto'):
     name_set = set(name_list)
-    if palette == 'default':
-        if len(set(name_list)) < 10:
+    if palette == 'auto':
+        if len(name_set) < 10:
             palette = 'tab10'
-        else:
+        elif len(name_set) < 20:
             palette = 'tab20'
+        else:
+            palette = 'rainbow'
 
     if order is None:
         order = list(sorted(name_set))
@@ -50,11 +57,9 @@ def level_one_palette(name_list, order=None, palette='default'):
 
 
 def level_two_palette(major_color, major_sub_dict,
-                      major_order=None, palette='default',
+                      major_order=None, palette='auto',
                       skip_border_color=2):
     if isinstance(major_color, list):
-        if len(major_color) > 20:
-            print(f'Warning: too much major color {len(major_color)} make the palette less distinguishable.')
         major_color_dict = level_one_palette(major_color, palette=palette, order=major_order)
     else:
         major_color_dict = major_color
@@ -85,7 +90,7 @@ def palplot(pal, transpose=False):
     if transpose:
         data = data.T
     ax.imshow(data, interpolation="nearest", aspect="auto",
-              cmap=mpl.colors.ListedColormap(list(pal.values())))
+              cmap=ListedColormap(list(pal.values())))
     if not transpose:
         ax.set(xticklabels=list(pal.keys()),
                xticks=range(0, len(pal)),
@@ -96,3 +101,40 @@ def palplot(pal, transpose=False):
                yticks=range(0, len(pal)),
                xticks=[])
     return fig, ax
+
+
+def plot_colorbar(cax, cmap, hue_norm, cnorm=None, label=None, orientation='vertical',
+                  labelsize=4, linewidth=0.5):
+    if isinstance(cmap, str):
+        cmap = get_cmap(cmap)
+    if cnorm is None:
+        cnorm = Normalize(vmin=hue_norm[0],
+                          vmax=hue_norm[1])
+
+    def fmt(x, pos):
+        if (x > 0.01) and (x < 1):
+            return f'{x:.2f}'.rstrip('0')
+        elif (x >= 1) and (x < 100):
+            return f'{int(x)}'
+        else:
+            t = f"{Decimal(x):.2E}"
+            if t == '0.00E+2':
+                return '0'
+            else:
+                return t
+
+    colorbar = ColorbarBase(cax,
+                            cmap=cmap,
+                            norm=cnorm,
+                            format=ticker.FuncFormatter(fmt),
+                            orientation=orientation,
+                            extend='both')
+    colorbar.locator = ticker.MaxNLocator(nbins=3)
+    colorbar.update_ticks()
+
+    colorbar.set_label(label, fontsize=labelsize)
+    colorbar.outline.set_linewidth(linewidth)
+    colorbar.ax.tick_params(size=labelsize,
+                            labelsize=labelsize,
+                            width=linewidth)
+    return cax

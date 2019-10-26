@@ -1,21 +1,23 @@
 import pandas as pd
 
 
-def text_anno_scatter(data: pd.DataFrame,
-                      ax,
-                      x: str,
-                      y: str,
-                      edge_color=(0.5, 0.5, 0.5, 0.2),
-                      face_color=(0.8, 0.8, 0.8, 0.2),
-                      palette: dict = None,
-                      dodge_text=False,
-                      anno_col='text_anno',
-                      text_anno_kws=None,
-                      dodge_kws=None,
-                      linewidth=0.5):
+def _text_anno_scatter(data: pd.DataFrame,
+                       ax,
+                       x: str,
+                       y: str,
+                       edge_color=(0.5, 0.5, 0.5, 0.2),
+                       face_color=(0.8, 0.8, 0.8, 0.2),
+                       palette: dict = None,
+                       dodge_text=False,
+                       anno_col='text_anno',
+                       text_anno_kws=None,
+                       text_transform=None,
+                       dodge_kws=None,
+                       linewidth=0.5,
+                       labelsize=5):
     """Add text annotation to a scatter plot"""
     # prepare kws
-    _text_anno_kws = dict(fontsize=10,
+    _text_anno_kws = dict(fontsize=labelsize,
                           fontweight='black',
                           horizontalalignment='center',
                           verticalalignment='center')
@@ -25,7 +27,10 @@ def text_anno_scatter(data: pd.DataFrame,
     # plot each text
     text_list = []
     for text, sub_df in data.groupby(anno_col):
-        text = str(text)
+        if text_transform is None:
+            text = str(text)
+        else:
+            text = text_transform(text)
         if text.lower() in ['', 'nan']:
             continue
         _x, _y = sub_df[[x, y]].median()
