@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -105,3 +107,16 @@ def zoom_ax(ax, zoom_scale, on='both'):
         ax.set_xlim(xlim_zoomed)
     if (on == 'both') or ('y' in on):
         ax.set_ylim(ylim_zoomed)
+
+
+def smart_number_format(x, pos=None):
+    if (x > 0.01) and (x < 1):
+        return f'{x:.2f}'.rstrip('0')
+    elif (x >= 1) and (x < 100):
+        return f'{int(x)}'
+    else:
+        t = f"{Decimal(x):.2E}"
+        if t == '0.00E+2':
+            return '0'
+        else:
+            return t

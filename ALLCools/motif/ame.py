@@ -210,7 +210,7 @@ def ame(bed_file,
 
     # add fold change
     total_records['TP/FP'] = (total_records['%TP'] + 0.0001) / (total_records['%FP'] + 0.0001)
-    total_records['log2(TP/FP))'] = np.log2(total_records['TP/FP'])
+    total_records['log2(TP/FP)'] = np.log2(total_records['TP/FP'])
     # save output
     total_records.to_csv(output_path, sep='\t')
 

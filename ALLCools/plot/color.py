@@ -110,23 +110,12 @@ def plot_colorbar(cax, cmap, hue_norm, cnorm=None, label=None, orientation='vert
     if cnorm is None:
         cnorm = Normalize(vmin=hue_norm[0],
                           vmax=hue_norm[1])
-
-    def fmt(x, pos):
-        if (x > 0.01) and (x < 1):
-            return f'{x:.2f}'.rstrip('0')
-        elif (x >= 1) and (x < 100):
-            return f'{int(x)}'
-        else:
-            t = f"{Decimal(x):.2E}"
-            if t == '0.00E+2':
-                return '0'
-            else:
-                return t
+    from .utilities import smart_number_format
 
     colorbar = ColorbarBase(cax,
                             cmap=cmap,
                             norm=cnorm,
-                            format=ticker.FuncFormatter(fmt),
+                            format=ticker.FuncFormatter(smart_number_format),
                             orientation=orientation,
                             extend='both')
     colorbar.locator = ticker.MaxNLocator(nbins=3)
