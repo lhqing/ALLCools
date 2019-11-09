@@ -1,10 +1,12 @@
 import pathlib
+import re
 import shlex
 import subprocess
-
+import logomaker
 import numpy as np
-from pybedtools import BedTool, cleanup
 import pandas as pd
+from pybedtools import BedTool, cleanup
+
 from .._open import open_gz
 from ..utilities import parse_chrom_size
 
@@ -210,6 +212,47 @@ def meme_motif_file_to_dict(meme_motif_paths):
             if motif_tmp_text != '':
                 records[(uid, name)] = header_text + motif_tmp_text
     return records
+
+
+def single_meme_txt_to_pfm_df(text, bits_scale=True):
+    sep = re.compile(r' +|\t')
+    enter = False
+    pfm_rows = []
+    for row in text.split('\n'):
+        if enter:
+            if row.startswith(' 0'):
+                pfm_rows.append(list(map(float, sep.split(row.strip()))))
+        else:
+            if row.startswith('letter-probability'):
+                enter = True
+            continue
+    pfm = pd.DataFrame(pfm_rows, columns=['A', 'C', 'G', 'T'])
+
+    if bits_scale:
+        information_content = (pfm * np.log2(pfm / 0.25)).sum(axis=1)
+        pfm = pfm.multiply(information_content, axis=0)
+    return pfm
+
+
+def meme_to_pfm_dict(meme_motif_paths, bits_scale=True):
+    records = meme_motif_file_to_dict(meme_motif_paths)
+    pfm_dict = {}
+    for (uid, _), text in records:
+        pfm_dict[uid] = single_meme_txt_to_pfm_df(text, bits_scale)
+    return pfm_dict
+
+
+def plot_pfm(pfm, ax=None, logo_kws=None):
+    _logo_kws = dict(font_name='helvetica',
+                     color_scheme=None,
+                     vpad=.1,
+                     ax=ax,
+                     width=.8)
+    if logo_kws is not None:
+        _logo_kws.update(logo_kws)
+    logo = logomaker.Logo(pfm, **_logo_kws)
+    logo.ax.set_xlim([-1, len(pfm)])
+    return logo
 
 
 def split_meme_motif_file(meme_motif_paths, output_dir):
