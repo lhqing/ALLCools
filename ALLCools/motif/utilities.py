@@ -169,19 +169,7 @@ def meme_to_homer(meme_path, homer_path, score_power=0.85):
     return
 
 
-def split_meme_motif_file(meme_motif_paths, output_dir):
-    """
-    Given multi motif meme format file, split into single motif meme format file
-
-    Parameters
-    ----------
-    meme_motif_paths
-    output_dir
-
-    Returns
-    -------
-
-    """
+def meme_motif_file_to_dict(meme_motif_paths):
     if isinstance(meme_motif_paths, str):
         meme_motif_paths = [meme_motif_paths]
 
@@ -221,6 +209,23 @@ def split_meme_motif_file(meme_motif_paths, output_dir):
                     motif_tmp_text += line
             if motif_tmp_text != '':
                 records[(uid, name)] = header_text + motif_tmp_text
+    return records
+
+
+def split_meme_motif_file(meme_motif_paths, output_dir):
+    """
+    Given multi motif meme format file, split into single motif meme format file
+
+    Parameters
+    ----------
+    meme_motif_paths
+    output_dir
+
+    Returns
+    -------
+
+    """
+    records = meme_motif_file_to_dict(meme_motif_paths)
 
     motif_file_records = []
     for (uid, name), text in records.items():

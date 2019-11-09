@@ -24,7 +24,7 @@ def categorical_scatter(
         text_transform=None,
         show_legend=False,
         legend_kws=None,
-        emphasize_by_size: dict = None,
+        emphasize_by_size: str = None,
         sizes: dict = None,
         axis_format='tiny',
         max_points=5000,
