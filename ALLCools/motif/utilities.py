@@ -237,7 +237,7 @@ def single_meme_txt_to_pfm_df(text, bits_scale=True):
 def meme_to_pfm_dict(meme_motif_paths, bits_scale=True):
     records = meme_motif_file_to_dict(meme_motif_paths)
     pfm_dict = {}
-    for (uid, _), text in records:
+    for (uid, _), text in records.items():
         pfm_dict[uid] = single_meme_txt_to_pfm_df(text, bits_scale)
     return pfm_dict
 
