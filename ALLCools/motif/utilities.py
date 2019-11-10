@@ -220,7 +220,7 @@ def single_meme_txt_to_pfm_df(text, bits_scale=True):
     pfm_rows = []
     for row in text.split('\n'):
         if enter:
-            if row.startswith(' 0'):
+            if row.startswith(' '):
                 pfm_rows.append(list(map(float, sep.split(row.strip()))))
         else:
             if row.startswith('letter-probability'):
