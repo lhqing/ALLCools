@@ -2,6 +2,7 @@ import pathlib
 import re
 import shlex
 import subprocess
+
 import logomaker
 import numpy as np
 import pandas as pd
@@ -215,13 +216,15 @@ def meme_motif_file_to_dict(meme_motif_paths):
 
 
 def single_meme_txt_to_pfm_df(text, bits_scale=True):
-    sep = re.compile(r' +|\t')
+    sep = re.compile(r'[01].[0-9]+')
     enter = False
     pfm_rows = []
     for row in text.split('\n'):
         if enter:
             if row.startswith(' '):
-                pfm_rows.append(list(map(float, sep.split(row.strip()))))
+                numbers = sep.findall(row)
+                if len(numbers) == 4:
+                    pfm_rows.append(list(map(float, numbers)))
         else:
             if row.startswith('letter-probability'):
                 enter = True
