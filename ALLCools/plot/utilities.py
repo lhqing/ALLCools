@@ -120,3 +120,18 @@ def smart_number_format(x, pos=None):
             return '0'
         else:
             return t
+
+
+def add_ax_box(ax, linewidth=1, expend=0):
+    import matplotlib.patches as patches
+    rect = patches.Rectangle((0 - expend, 0 - expend),
+                             1 + expend,
+                             1 + expend,
+                             linewidth=linewidth,
+                             edgecolor='k',
+                             facecolor='none',
+                             transform=ax.transAxes)
+
+    # Add the patch to the Axes
+    ax.add_patch(rect)
+    return ax

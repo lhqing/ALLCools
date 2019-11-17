@@ -291,7 +291,7 @@ class ConsensusClustering:
             n_splits=n_splits,
             shuffle=True,
             random_state=0)
-        
+
         # TODO change to balanced accuracy score
         scoring = make_scorer(
             fbeta_score,
