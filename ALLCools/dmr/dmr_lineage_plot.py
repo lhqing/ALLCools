@@ -174,7 +174,7 @@ def plot_dendrogram(linkage_df,
                                                linewidth=linewidth))
 
     ax.set_ylim(0 - ymax * 0.05, ymax * 1.05)
-    return node_pos
+    return node_pos, dendro
 
 
 def plot_parsimony_data(data, ax, hue_norm, palette):
