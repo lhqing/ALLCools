@@ -135,3 +135,24 @@ def add_ax_box(ax, linewidth=1, expend=0):
     # Add the patch to the Axes
     ax.add_patch(rect)
     return ax
+
+
+def tight_hue_range(hue_data, portion):
+    """Automatic select a SMALLEST data range that covers [portion] of the data"""
+    hue_data = hue_data[np.isfinite(hue_data)]
+    hue_quantiles = hue_data.quantile(q=np.arange(0, 1, 0.01))
+    min_window_right = hue_quantiles.rolling(window=int(portion * 100)) \
+        .apply(lambda i: i.max() - i.min(), raw=True) \
+        .idxmin()
+    min_window_left = max(0, min_window_right - portion)
+    vmin, vmax = tuple(hue_data.quantile(q=[min_window_left,
+                                            min_window_right]))
+    if np.isfinite(vmin):
+        vmin = max(hue_data.min(), vmin)
+    else:
+        vmin = hue_data.min()
+    if np.isfinite(vmax):
+        vmax = min(hue_data.max(), vmax)
+    else:
+        vmax = hue_data.max()
+    return vmin, vmax
