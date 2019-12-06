@@ -12,9 +12,14 @@ COORD_ALLOW_VALUES = {
 }
 
 
-def check_custom_dim_name(dim_name):
+def check_custom_dim_name_and_return(dim_name):
     if dim_name in PRESERVED_DIMS:
         raise ValueError(f'Dimension name {dim_name} is preserved, try another name.')
     if dim_name.startswith('chrom'):
         raise ValueError(f'Dimension name start with "chrom" is preserved, try another name.')
-    return
+    if '-' in dim_name:
+        _dim_name = dim_name
+        dim_name = dim_name.replace('-', '')
+        print(f'Dim name {_dim_name} contain "-", will be change to {dim_name} to prevent conflicts. '
+              f'Try to provide a name without "-".')
+    return dim_name

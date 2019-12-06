@@ -391,8 +391,7 @@ def generate_mcds(allc_table,
 
     # check region bed names
     if region_bed_names is not None:
-        for region_bed_name in region_bed_names:
-            check_custom_dim_name(region_bed_name)
+        region_bed_names = [check_custom_dim_name_and_return(name) for name in region_bed_names]
 
     output_prefix = output_prefix.rstrip('.')
     output_dir = pathlib.Path(output_prefix + '.tmp_dir')
