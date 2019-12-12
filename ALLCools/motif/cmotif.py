@@ -7,7 +7,7 @@ import pandas as pd
 
 from .._doc import *
 from .fimo import _scan_motif_over_fasta, _aggregate_motif_beds
-from .utilities import get_fasta
+from ..dmr.get_fasta import get_fasta
 from .._bam_to_allc import _get_chromosome_sequence_upper, _read_faidx
 
 

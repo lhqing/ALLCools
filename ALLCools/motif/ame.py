@@ -6,7 +6,8 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 import numpy as np
 import pandas as pd
 
-from .utilities import get_fasta, split_meme_motif_file
+from .utilities import split_meme_motif_file
+from ..dmr.get_fasta import get_fasta
 from .._doc import *
 
 
