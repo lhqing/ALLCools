@@ -1,3 +1,9 @@
+import pathlib
+import shlex
+import subprocess
+
+from pybedtools import BedTool, cleanup
+
 from ALLCools._open import open_gz
 from ALLCools.utilities import parse_chrom_size
 
