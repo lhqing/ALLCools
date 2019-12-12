@@ -8,7 +8,7 @@ from ALLCools._open import open_gz
 from ALLCools.utilities import parse_chrom_size
 
 
-def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_path=None, use_region_name='no',
+def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_path=None, use_region_name=False,
               cpu=1, sort_mem_gbs=1, standard_length=None, merge=False, sample_region=None, seed=1):
     """
     Extract genome sequence fasta using bed files
@@ -22,7 +22,7 @@ def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_p
     chrom_size_path
     use_region_name
         If region names provided in the fourth column of bed file:
-            if 'yes': use region name as seq name
+            if True: use region name as seq name
             else: use chr:start-end as seq name
     cpu
     sort_mem_gbs
@@ -88,9 +88,9 @@ def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_p
 
     merged_temp = output_path + 'tmp_merge.bed'
     if merge:
-        if use_region_name == 'yes':
+        if use_region_name:
             print('can not use region name when merge is True')
-            use_region_name = 'no'
+            use_region_name = False
         sorted_bed.merge().moveto(merged_temp)
     else:
         sorted_bed.moveto(merged_temp)
@@ -101,7 +101,7 @@ def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_p
             bed_df = bed_df.sample(sample_region, random_state=seed)
         bed_df.to_csv(merged_temp, sep='\t', index=None, header=None)
 
-    name_option = '-name' if use_region_name.lower()[0] == 'y' else ''
+    name_option = '-name' if use_region_name else ''
     subprocess.run(
         shlex.split(f'bedtools getfasta -fi {fasta_path} -bed {merged_temp} -fo {output_path} {name_option}'),
         stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding='utf8', check=True)
