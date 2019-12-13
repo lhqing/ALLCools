@@ -7,6 +7,8 @@ from pybedtools import BedTool, cleanup
 from ALLCools._open import open_gz
 from ALLCools.utilities import parse_chrom_size
 
+import pandas as pd
+
 
 def get_fasta(bed_file_paths, fasta_path, output_path, slop_b=None, chrom_size_path=None, use_region_name=False,
               cpu=1, sort_mem_gbs=1, standard_length=None, merge=False, sample_region=None, seed=1):
