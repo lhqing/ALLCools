@@ -11,10 +11,6 @@ import pandas as pd
 from ..motif.utilities import split_meme_motif_file
 from .get_fasta import get_fasta
 
-"""
-Run FIMO to scan motif over FASTA sequences
-"""
-
 
 def _fimo_runner(motif_path, fasta_path, output_path, path_to_fimo='',
                  raw_score_thresh=6, raw_p_value_thresh=1e-4, parse_genome_coords=False):
@@ -135,7 +131,7 @@ def scan_motif_over_bed(bed_path, motif_file, genome_fasta,
 
     _scan_motif_over_fasta(motif_file,
                            fasta_path=temp_fasta_path,
-                           output_dir=output_dir, cpu=10, path_to_fimo='',
+                           output_dir=output_dir, cpu=cpu, path_to_fimo='',
                            raw_score_thresh=6, raw_p_value_thresh=1e-4, parse_genome_coords=False)
 
     subprocess.run(['rm', '-f', temp_fasta_path])
