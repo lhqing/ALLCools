@@ -9,6 +9,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 import pandas as pd
 
 from ..motif.utilities import split_meme_motif_file
+from .get_fasta import get_fasta
 
 """
 Run FIMO to scan motif over FASTA sequences
@@ -65,7 +66,7 @@ def _fimo_runner(motif_path, fasta_path, output_path, path_to_fimo='',
     return output_path
 
 
-def _scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir, path_to_fimo='',
+def _scan_motif_over_fasta(meme_motif_file, fasta_path, output_dir, cpu=10, path_to_fimo='',
                            raw_score_thresh=6, raw_p_value_thresh=1e-4, parse_genome_coords=False):
     if isinstance(meme_motif_file, str):
         meme_motif_file = [meme_motif_file]
@@ -109,4 +110,33 @@ def _scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir, path_to
                                 columns=['uid', 'name', 'motif_file_path', 'output_file_path']).set_index('uid')
 
     lookup_table.to_msgpack(output_dir / f'LOOKUP_TABLE.msg')
+    return
+
+
+def scan_motif_over_bed(bed_path, motif_file, genome_fasta,
+                        output_dir, slop_b=None, chrom_size_path=None, use_region_name=False,
+                        cpu=10, sort_mem_gbs='10G', standard_length=500, sample_region=None):
+    output_dir = pathlib.Path(output_dir).absolute()
+    output_dir.mkdir(exist_ok=True)
+
+    temp_fasta_path = str(output_dir / 'TEMP.fa')
+    get_fasta([bed_path],
+              genome_fasta,
+              temp_fasta_path,
+              slop_b=slop_b,
+              chrom_size_path=chrom_size_path,
+              use_region_name=use_region_name,
+              cpu=cpu,
+              sort_mem_gbs=sort_mem_gbs,
+              standard_length=standard_length,
+              merge=False,
+              sample_region=sample_region,
+              seed=1)
+
+    _scan_motif_over_fasta(motif_file,
+                           fasta_path=temp_fasta_path,
+                           output_dir=output_dir, cpu=10, path_to_fimo='',
+                           raw_score_thresh=6, raw_p_value_thresh=1e-4, parse_genome_coords=False)
+
+    subprocess.run(['rm', '-f', temp_fasta_path])
     return
