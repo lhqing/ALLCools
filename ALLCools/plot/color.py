@@ -5,7 +5,7 @@ import seaborn as sns
 from matplotlib.cm import get_cmap
 from matplotlib.colorbar import ColorbarBase
 from matplotlib.colors import ListedColormap, Normalize
-
+from collections import OrderedDict
 from decimal import Decimal
 
 
@@ -85,21 +85,8 @@ def palplot(pal, transpose=False):
         fig, ax = plt.subplots(figsize=(1, len(pal)))
     else:
         fig, ax = plt.subplots(figsize=(len(pal), 1))
-    n = len(pal)
-    data = np.arange(n).reshape(1, n)
-    if transpose:
-        data = data.T
-    ax.imshow(data, interpolation="nearest", aspect="auto",
-              cmap=ListedColormap(list(pal.values())))
-    if not transpose:
-        ax.set(xticklabels=list(pal.keys()),
-               xticks=range(0, len(pal)),
-               yticks=[])
-        ax.xaxis.set_tick_params(labelrotation=90)
-    else:
-        ax.set(yticklabels=list(pal.keys()),
-               yticks=range(0, len(pal)),
-               xticks=[])
+
+    plot_color_legend(pal, ax, order=None, transpose=transpose)
     return fig, ax
 
 
@@ -127,3 +114,30 @@ def plot_colorbar(cax, cmap, hue_norm, cnorm=None, label=None, orientation='vert
                             labelsize=labelsize,
                             width=linewidth)
     return cax
+
+
+def plot_color_legend(palette, ax, order=None, interpolation=None, transpose=False):
+    _palette = palette.copy()
+    palette = OrderedDict()
+
+    if order is None:
+        order = _palette.values()
+    for c in order:
+        palette[c] = _palette[c]
+
+    n = len(palette)
+    data = np.arange(n).reshape(1, n)
+    if transpose:
+        data = data.T
+    ax.imshow(data, interpolation=interpolation, aspect="auto",
+              cmap=ListedColormap(list(palette.values())))
+    if not transpose:
+        ax.set(xticklabels=list(palette.keys()),
+               xticks=range(0, len(palette)),
+               yticks=[])
+        ax.xaxis.set_tick_params(labelrotation=90)
+    else:
+        ax.set(yticklabels=list(palette.keys()),
+               yticks=range(0, len(palette)),
+               xticks=[])
+    return
