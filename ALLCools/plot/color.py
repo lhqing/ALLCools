@@ -117,27 +117,26 @@ def plot_colorbar(cax, cmap, hue_norm, cnorm=None, label=None, orientation='vert
 
 
 def plot_color_legend(palette, ax, order=None, interpolation=None, transpose=False):
-    _palette = palette.copy()
-    palette = OrderedDict()
-
     if order is None:
-        order = _palette.values()
-    for c in order:
-        palette[c] = _palette[c]
+        order = palette.keys()
 
-    n = len(palette)
+    colors = []
+    for c in order:
+        colors.append(palette[c])
+
+    n = len(order)
     data = np.arange(n).reshape(1, n)
     if transpose:
         data = data.T
     ax.imshow(data, interpolation=interpolation, aspect="auto",
-              cmap=ListedColormap(list(palette.values())))
+              cmap=ListedColormap(colors))
     if not transpose:
-        ax.set(xticklabels=list(palette.keys()),
-               xticks=range(0, len(palette)),
+        ax.set(xticklabels=list(order),
+               xticks=range(0, n),
                yticks=[])
         ax.xaxis.set_tick_params(labelrotation=90)
     else:
-        ax.set(yticklabels=list(palette.keys()),
-               yticks=range(0, len(palette)),
+        ax.set(yticklabels=list(order),
+               yticks=range(0, n),
                xticks=[])
     return
