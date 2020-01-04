@@ -52,6 +52,8 @@ remove_additional_chrom_doc = "Whether to remove rows with unknown chromosome in
 rna_table_doc = "This is only for mCT data when we have RNA BAM file for each single cell. " \
                 "Contain all the RNA BAM file information in 2 columns: 1. file_uid, 2. file_path. No header."
 
+snp_doc = 'If true, means the input allc contain snp information, and the allc processing will take care that.'
+
 split_strand_doc = 'If true, Watson (+) and Crick (-) strands will be count separately'
 
 strandness_doc = "What to do with strand information, possible values are: " \

@@ -365,6 +365,14 @@ def merge_allc_register_subparser(subparser):
     )
     parser.set_defaults(binarize=False)
 
+    parser.add_argument(
+        "--snp",
+        dest='binarize',
+        action='store_true',
+        help=snp_doc
+    )
+    parser.set_defaults(snp=False)
+
 
 def extract_context_allc_register_subparser(subparser):
     # TODO add alias to arguments
