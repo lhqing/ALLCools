@@ -367,7 +367,7 @@ def merge_allc_register_subparser(subparser):
 
     parser.add_argument(
         "--snp",
-        dest='binarize',
+        dest='snp',
         action='store_true',
         help=snp_doc
     )
