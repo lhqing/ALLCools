@@ -27,19 +27,10 @@ def _std(a):
 
 
 @njit
-def corr(a, b, method='pearson'):
+def _corr(a, b):
     """
     Correlation between rows in a and b, no nan value
     """
-    if method.lower()[0] == 'p':
-        pass
-    elif method.lower()[0] == 's':
-        # turn a, b in to rank matrix
-        a = a.argsort(axis=1).argsort(axis=1)
-        b = b.argsort(axis=1).argsort(axis=1)
-    else:
-        raise ValueError('Method can only be Pearson or Spearman')
-
     n, k = a.shape
     m, k = b.shape
 
@@ -60,3 +51,16 @@ def corr(a, b, method='pearson'):
             else:
                 out[i, j] = (a[i] - mu_a[i]) @ (b[j] - mu_b[j]) / k / _sig_a / _sig_b
     return out
+
+
+def corr(a, b, method='pearson'):
+    if method.lower()[0] == 'p':
+        pass
+    elif method.lower()[0] == 's':
+        # turn a, b in to rank matrix
+        a = a.argsort(axis=1).argsort(axis=1)
+        b = b.argsort(axis=1).argsort(axis=1)
+    else:
+        raise ValueError('Method can only be pearson or spearman')
+
+    return _corr(a, b)
