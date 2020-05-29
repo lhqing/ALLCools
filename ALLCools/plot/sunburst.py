@@ -21,7 +21,6 @@ def sunbrust(pie_data, ax,
              anno_border=1.2, text_expend=1.05,
              uniform_section=False, order_dict=None):
     """
-
     Parameters
     ----------
     pie_data

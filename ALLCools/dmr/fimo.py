@@ -111,7 +111,8 @@ def _scan_motif_over_fasta(meme_motif_file, fasta_path, output_dir, cpu=10, path
 
 def scan_motif_over_bed(bed_path, motif_file, genome_fasta,
                         output_dir, slop_b=None, chrom_size_path=None, use_region_name=False,
-                        cpu=10, sort_mem_gbs='10G', standard_length=500, sample_region=None):
+                        cpu=10, sort_mem_gbs=10, standard_length=500, sample_region=None,
+                        raw_score_thresh=6, raw_p_value_thresh=1e-4):
     output_dir = pathlib.Path(output_dir).absolute()
     output_dir.mkdir(exist_ok=True)
 
@@ -132,7 +133,8 @@ def scan_motif_over_bed(bed_path, motif_file, genome_fasta,
     _scan_motif_over_fasta(motif_file,
                            fasta_path=temp_fasta_path,
                            output_dir=output_dir, cpu=cpu, path_to_fimo='',
-                           raw_score_thresh=6, raw_p_value_thresh=1e-4, parse_genome_coords=False)
+                           raw_score_thresh=raw_score_thresh,
+                           raw_p_value_thresh=raw_p_value_thresh, parse_genome_coords=False)
 
     subprocess.run(['rm', '-f', temp_fasta_path])
     return
