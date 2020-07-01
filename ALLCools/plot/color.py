@@ -5,8 +5,6 @@ import seaborn as sns
 from matplotlib.cm import get_cmap
 from matplotlib.colorbar import ColorbarBase
 from matplotlib.colors import ListedColormap, Normalize
-from collections import OrderedDict
-from decimal import Decimal
 
 
 def _continuous_color_palette(color, n, skip_border=1):

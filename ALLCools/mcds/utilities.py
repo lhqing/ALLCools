@@ -11,7 +11,6 @@ def calculate_posterior_mc_rate(mc_da,
                                 var_dim,
                                 normalize_per_cell=True,
                                 clip_norm_value=10):
-    # TODO add a parameter weighting var to adjust prior
     # so we can do post_rate only in a very small set of gene to prevent memory issue
 
     raw_rate = mc_da / cov_da
@@ -114,20 +113,17 @@ def calculate_gch_rate(mcds, var_dim='chrom100k'):
 
 def get_mean_dispersion(x, obs_dim):
     # mean
-    mean = x.mean(dim=obs_dim)
+    mean = x.mean(dim=obs_dim).load()
 
     # var
-    mean_sq = (x * x).mean(dim=obs_dim)
     # enforce R convention (unbiased estimator) for variance
+    mean_sq = (x * x).mean(dim=obs_dim).load()
     var = (mean_sq - mean ** 2) * (x.sizes[obs_dim] / (x.sizes[obs_dim] - 1))
 
     # now actually compute the dispersion
     mean.where(mean > 1e-12, 1e-12)  # set entries equal to zero to small value
     # raw dispersion is the variance normalized by mean
     dispersion = var / mean
-
-    mean.load()
-    dispersion.load()
     return mean, dispersion
 
 
@@ -139,14 +135,15 @@ def highly_variable_methylation_feature(
         n_top_feature=None, bin_min_features=5,
         mean_binsize=0.05, cov_binsize=100):
     """
-    Adapted from Scanpy, see license above
-    The main difference is that, this function normalize dispersion based on both mean and cov bins.
+    Adapted from Scanpy, the main difference is that,
+    this function normalize dispersion based on both mean and cov bins.
     """
     # RNA is only scaled by mean, but methylation is scaled by both mean and cov
     log.info('extracting highly variable features')
 
     if n_top_feature is not None:
-        log.info('If you pass `n_top_feature`, all cutoffs are ignored.')
+        log.info('If you pass `n_top_feature`, all cutoffs are ignored. '
+                 'Features are ordered by normalized dispersion.')
 
     # warning for extremely low cov
     low_cov_portion = (feature_mean_cov < 10).sum() / feature_mean_cov.size
@@ -187,7 +184,7 @@ def highly_variable_methylation_feature(
     bin_count.head()
     bin_more_than = bin_count[bin_count[0] > bin_min_features]
     if bin_more_than.shape[0] == 0:
-        raise ValueError(f'No bin have more than {bin_min_features} features, uss larger bin size.')
+        raise ValueError(f'No bin have more than {bin_min_features} features, use larger bin size.')
 
     # for those bin have too less features, merge them with closest bin in manhattan distance
     # this usually don't cause much difference (a few hundred features), but the scatter plot will look more nature
@@ -220,11 +217,7 @@ def highly_variable_methylation_feature(
 
     # Select n_top_feature
     if n_top_feature is not None:
-        dispersion_norm = dispersion_norm[~np.isnan(dispersion_norm)]
-        dispersion_norm[::-1].sort()  # interestingly, np.argpartition is slightly slower
-        disp_cut_off = dispersion_norm[n_top_feature - 1]
-        gene_subset = np.nan_to_num(df['dispersion_norm'].values) >= disp_cut_off
-        log.info(f'the {n_top_feature} top genes correspond to a normalized dispersion cutoff of {disp_cut_off}')
+        gene_subset = df.index.isin(df.sort_values('dispersion_norm', ascending=False).index[:5000])
     else:
         max_disp = np.inf if max_disp is None else max_disp
         dispersion_norm[np.isnan(dispersion_norm)] = 0  # similar to Seurat

@@ -73,15 +73,14 @@ def _make_tiny_axis_label(ax, x, y, arrow_kws=None, fontsize=5):
 
 
 def _extract_coords(data, coord_base, x, y):
-    if coord_base is not None:
+    if (x is not None) and (y is not None):
+        pass
+    else:
         x = f'{coord_base}_0'
         y = f'{coord_base}_1'
-        if (x not in data.columns) or (y not in data.columns):
-            raise KeyError(f'coord_base {coord_base} is provided, '
-                           f'but {coord_base}_0 or {coord_base}_1 not found in columns')
-    else:
-        if (x is None) or (y is None):
-            raise ValueError('Either provide coord_base, or provide both x and y.')
+    if (x not in data.columns) or (y not in data.columns):
+        raise KeyError(f'{x} or {y} not found in columns.')
+
     _data = pd.DataFrame({'x': data[x],
                           'y': data[y]})
     return _data, x, y

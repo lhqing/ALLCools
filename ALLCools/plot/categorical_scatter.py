@@ -10,38 +10,44 @@ from .utilities import _make_tiny_axis_label, _density_based_sample, _extract_co
 def categorical_scatter(
         data,
         ax,
+        # coords
         coord_base='umap',
         x=None,
         y=None,
-        scatter_kws=None,
+        # color
         hue=None,
         palette='auto',
+        # text annotation
         text_anno=None,
-        dodge_text=False,
-        dodge_kws=None,
         text_anno_kws=None,
         text_anno_palette=None,
         text_transform=None,
+        dodge_text=False,
+        dodge_kws=None,
+        # legend
         show_legend=False,
         legend_kws=None,
-        emphasize_by_size: str = None,
+        # size
+        s=5,
+        size=None,
         sizes: dict = None,
+        size_norm=None,
+        # other
         axis_format='tiny',
         max_points=5000,
         labelsize=4,
-        linewidth=1,
-        s=5,
+        linewidth=0,
         zoomxy=1.05,
         outline=None,
         outline_pad=3,
-        outline_kws=None
+        outline_kws=None,
+        scatter_kws=None,
 ):
     """
     Plot scatter plot with these options:
-    - Color by a categorical variable, and generate legend of the variable if needed
-    - Add text annotation using a categorical variable
-    - Emphasize certain category by different scatter size,
-      but using different size for more than 2 categories is probably not a good idea.
+        - Color by a categorical variable, and generate legend of the variable if needed
+        - Add text annotation using a categorical variable
+        - Circle categories with outlines
 
     Parameters
     ----------
@@ -55,27 +61,33 @@ def categorical_scatter(
         x coord name
     y
         y coord name
-    scatter_kws
-        kws dict pass to sns.scatterplot
     hue
-        col name or series
+        categorical col name or series for color hue
     palette
         palette of the hue, str or dict
     text_anno
-        col name or series
-    dodge_text
-    dodge_kws
+        categorical col name or series for text annotation
     text_anno_kws
     text_anno_palette
     text_transform
+    dodge_text
+    dodge_kws
     show_legend
     legend_kws
-    emphasize_by_size
+    s
+    size
     sizes
+    size_norm
     axis_format
     max_points
     labelsize
-    s
+    linewidth
+    zoomxy
+    outline
+    outline_pad
+    outline_kws
+    scatter_kws
+        kws dict pass to sns.scatterplot
 
     Returns
     -------
@@ -117,19 +129,12 @@ def categorical_scatter(
         _scatter_kws['palette'] = palette_dict
 
     # deal with size
-    s = _scatter_kws.pop('s')
-    if emphasize_by_size is not None:
-        if sizes is None:
-            raise ValueError('sizes must be provided together with emphasize_by_size.')
-        _data['size'] = data[emphasize_by_size]
-        _data['size'] = _data['size'].apply(lambda i: sizes[i] if i in sizes else s)
-    else:
-        _data['size'] = s
-    _scatter_kws['s'] = _data['size'].values
-    # here I do not use sns.scatterplot size option, but directly use ax.scatter s option
-
-    sns.scatterplot(x='x', y='y', hue=hue,
-                    data=_data, ax=ax, **_scatter_kws)
+    if size is not None:
+        # discard s from _scatter_kws and use size in sns.scatterplot
+        s = _scatter_kws.pop('s')
+    sns.scatterplot(x='x', y='y', data=_data, ax=ax, hue=hue,
+                    size=size, sizes=sizes, size_norm=size_norm,
+                    **_scatter_kws)
 
     # deal with text annotation
     if text_anno:
