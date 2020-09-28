@@ -123,7 +123,7 @@ def allc_motif_scan(allc_table, output_path, mc_contexts, c_motif_dir,
             else:
                 context_to_pattern[context] = pattern
 
-    lookup_table = pd.read_msgpack(c_motif_dir / 'LOOKUP_TABLE.msg')
+    lookup_table = pd.read_hdf(c_motif_dir / 'LOOKUP_TABLE.hdf')
 
     # TODO make this function more memory efficient
 

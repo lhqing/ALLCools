@@ -273,8 +273,8 @@ def batch_allc_to_region_count(allc_series,
             bed_df.columns = ['chrom', 'start', 'end']
             bed_df.index.name = region_bed_name
             bed_df['int_id'] = list(range(0, bed_df.shape[0]))
-            bed_df['int_id'].to_msgpack(output_dir / f'REGION_ID_{region_bed_name}.msg')
-            bed_df.iloc[:, :3].to_msgpack(output_dir / f'REGION_BED_{region_bed_name}.msg')
+            bed_df['int_id'].to_hdf(output_dir / f'REGION_ID_{region_bed_name}.hdf', key='data')
+            bed_df.iloc[:, :3].to_hdf(output_dir / f'REGION_BED_{region_bed_name}.hdf', key='data')
 
     if bin_sizes is not None:
         for bin_size in bin_sizes:
@@ -284,8 +284,8 @@ def batch_allc_to_region_count(allc_series,
                                                       window_size=bin_size,
                                                       step_size=bin_size)
             bed_df['int_id'] = list(range(0, bed_df.shape[0]))
-            bed_df['int_id'].to_msgpack(output_dir / f'REGION_ID_{region_name}.msg')
-            bed_df.iloc[:, :3].to_msgpack(output_dir / f'REGION_BED_chrom{bin_size_chr}.msg')
+            bed_df['int_id'].to_hdf(output_dir / f'REGION_ID_{region_name}.hdf', key='data')
+            bed_df.iloc[:, :3].to_hdf(output_dir / f'REGION_BED_chrom{bin_size_chr}.hdf', key='data')
 
     with ProcessPoolExecutor(cpu) as executor:
         futures = {}
@@ -335,5 +335,5 @@ def batch_allc_to_region_count(allc_series,
             }
             path_records.append(path_dict)
     path_df = pd.DataFrame(path_records)
-    path_df.to_msgpack(output_dir / 'REGION_COUNT_SUMMARY.msg')
+    path_df.to_hdf(output_dir / 'REGION_COUNT_SUMMARY.hdf', key='data')
     return

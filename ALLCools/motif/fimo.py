@@ -90,7 +90,7 @@ def _fimo_runner(motif_path, fasta_path, output_path, path_to_fimo='',
     print(f'{motif_path}, N motif total={final_df.shape[0]}')
 
     col_order = ['sequence_name', 'start', 'stop', 'motif_id', 'strand']
-    final_df.loc[:, col_order].to_msgpack(output_path, compress='zlib')
+    final_df.loc[:, col_order].to_hdf(output_path, key='data')
 
     subprocess.run(['rm', '-f', tmp_path], check=True)
     return output_path
@@ -115,7 +115,7 @@ def _scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir, path_to
                                      path_to_fimo=path_to_fimo,
                                      motif_path=motif_file_path,
                                      fasta_path=fasta_path,
-                                     output_path=output_dir / (pathlib.Path(motif_file_path).name[:-5] + '.bed.msg'),
+                                     output_path=output_dir / (pathlib.Path(motif_file_path).name[:-5] + '.bed.hdf'),
                                      raw_score_thresh=raw_score_thresh,
                                      raw_p_value_thresh=raw_p_value_thresh,
                                      is_genome_fasta=is_genome_fasta,
@@ -141,7 +141,7 @@ def _scan_motif_over_fasta(meme_motif_file, fasta_path, cpu, output_dir, path_to
     lookup_table = pd.DataFrame(motif_records,
                                 columns=['uid', 'name', 'motif_file_path', 'output_file_path']).set_index('uid')
 
-    lookup_table.to_msgpack(output_dir / f'LOOKUP_TABLE.msg')
+    lookup_table.to_hdf(output_dir / f'LOOKUP_TABLE.hdf', key='data')
     return
 
 
@@ -151,7 +151,7 @@ def _aggregate_motif_beds(bed_file_paths, output_path, cpu=1, sort_mem_gbs=1):
     temp_bed = output_path + '.tmp_input.bed'
     with open(temp_bed, 'w') as temp_f:
         for bed_file_path in bed_file_paths:
-            bed_df = pd.read_msgpack(bed_file_path)[['sequence_name', 'start', 'stop', 'motif_id', 'strand']]
+            bed_df = pd.read_hdf(bed_file_path)[['sequence_name', 'start', 'stop', 'motif_id', 'strand']]
             csv_string = bed_df.to_csv(sep='\t', header=None, index=None)
             temp_f.write(csv_string)
 

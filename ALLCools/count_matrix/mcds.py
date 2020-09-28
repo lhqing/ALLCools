@@ -61,7 +61,7 @@ def _region_count_table_to_csr_npz(region_count_tables,
 
     # read region_id to int_id (col location) map
     if isinstance(region_id_map, str):
-        region_id_map = pd.read_msgpack(region_id_map).astype(dtype)
+        region_id_map = pd.read_hdf(region_id_map).astype(dtype)
     else:
         region_id_map = region_id_map.astype(dtype)
 
@@ -76,7 +76,7 @@ def _region_count_table_to_csr_npz(region_count_tables,
 
     # read each count table and add to matrix
     for obj_idx, file_path in enumerate(count_table_path_list):
-        # TODO save internal region count table as msg
+        # TODO save internal region count table as hdf
         data = pd.read_csv(file_path,
                            usecols=[3, 4, 5],
                            sep='\t',
@@ -154,7 +154,7 @@ def _aggregate_region_count_to_mcds(output_dir,
     """
     # TODO write test
     output_dir = pathlib.Path(output_dir)
-    summary_df = pd.read_msgpack(output_dir / 'REGION_COUNT_SUMMARY.msg')
+    summary_df = pd.read_hdf(output_dir / 'REGION_COUNT_SUMMARY.hdf')
     file_uids = summary_df['file_id'].unique()
 
     region_index_dict = {}
@@ -166,11 +166,11 @@ def _aggregate_region_count_to_mcds(output_dir,
                 ['mc_type', 'region_name', 'strandness']):
             sub_summary_df = sub_summary_df.set_index('file_id')
             if region_name not in region_index_dict:
-                region_index = pd.read_msgpack(output_dir / f'REGION_ID_{region_name}.msg').index
+                region_index = pd.read_hdf(output_dir / f'REGION_ID_{region_name}.hdf').index
                 region_index.name = region_name
                 region_index_dict[region_name] = region_index
 
-                region_bed = pd.read_msgpack(output_dir / f'REGION_BED_{region_name}.msg')
+                region_bed = pd.read_hdf(output_dir / f'REGION_BED_{region_name}.hdf')
                 for col, value in region_bed.iteritems():
                     _col = f'{region_name}_{col}'
                     value.index.name = region_name
@@ -181,7 +181,7 @@ def _aggregate_region_count_to_mcds(output_dir,
                 file_paths = sub_summary_df.loc[file_id_chunk]['file_path'].tolist()
                 future = executor.submit(_region_count_table_to_csr_npz,
                                          region_count_tables=file_paths,
-                                         region_id_map=str(output_dir / f'REGION_ID_{region_name}.msg'),
+                                         region_id_map=str(output_dir / f'REGION_ID_{region_name}.hdf'),
                                          output_prefix=str(
                                              output_dir / f'{dataset_name}_{region_name}_'
                                              f'{mc_type}_{strandness}_{chunk_id}'),
@@ -312,6 +312,7 @@ def generate_mcds(allc_table,
     -------
 
     """
+    # TODO region bed should have unique id, check before generate mcds
     dtype = parse_dtype(dtype)
 
     if isinstance(allc_table, str):

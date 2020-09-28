@@ -101,7 +101,7 @@ def _generate_c_motif_database(motif_bed, fasta_path, output_dir, bin_size=10000
                   'end': int(path.name.split('.')[1].split('-')[1])}
         records.append(record)
     df = pd.DataFrame(records)[['chrom', 'start', 'end', 'file_name']]
-    df.to_msgpack(output_dir / 'LOOKUP_TABLE.msg')
+    df.to_hdf(output_dir / 'LOOKUP_TABLE.hdf', key='data')
     return
 
 
@@ -199,7 +199,7 @@ def generate_cmotif_database(bed_file_paths,
 
     # step 3: aggregate motif bed
     total_motif_bed = str(output_dir) + '.total_motif.bed'
-    lookup_table = pd.read_msgpack(f'{motif_scan_dir}/LOOKUP_TABLE.msg')
+    lookup_table = pd.read_hdf(f'{motif_scan_dir}/LOOKUP_TABLE.hdf')
     bed_file_paths = lookup_table['output_file_path'].tolist()
     if len(bed_file_paths) == 0:
         print('None of the motif have any match in the current setting. Nothing to continue.'

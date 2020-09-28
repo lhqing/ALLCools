@@ -57,7 +57,7 @@ def _fimo_runner(motif_path, fasta_path, output_path, path_to_fimo='',
 
     # motif stats are not saved
     print(f'{motif_path}, N motif total={final_df.shape[0]}')
-    final_df.to_msgpack(output_path, compress='zlib')
+    final_df.to_hdf(output_path, key='data')
     subprocess.run(['rm', '-f', tmp_path], check=True)
     return output_path
 
@@ -80,7 +80,7 @@ def _scan_motif_over_fasta(meme_motif_file, fasta_path, output_dir, cpu=10, path
                                      path_to_fimo=path_to_fimo,
                                      motif_path=motif_file_path,
                                      fasta_path=fasta_path,
-                                     output_path=output_dir / (pathlib.Path(motif_file_path).name[:-5] + '.bed.msg'),
+                                     output_path=output_dir / (pathlib.Path(motif_file_path).name[:-5] + '.bed.hdf'),
                                      raw_score_thresh=raw_score_thresh,
                                      raw_p_value_thresh=raw_p_value_thresh,
                                      parse_genome_coords=parse_genome_coords)
@@ -105,7 +105,7 @@ def _scan_motif_over_fasta(meme_motif_file, fasta_path, output_dir, cpu=10, path
     lookup_table = pd.DataFrame(motif_records,
                                 columns=['uid', 'name', 'motif_file_path', 'output_file_path']).set_index('uid')
 
-    lookup_table.to_msgpack(output_dir / f'LOOKUP_TABLE.msg')
+    lookup_table.to_hdf(output_dir / f'LOOKUP_TABLE.hdf', key='data')
     return
 
 
