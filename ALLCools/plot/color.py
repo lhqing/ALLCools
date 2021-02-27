@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 import seaborn as sns
+import copy
 from matplotlib.cm import get_cmap
 from matplotlib.colorbar import ColorbarBase
 from matplotlib.colors import ListedColormap, Normalize
@@ -91,7 +92,7 @@ def palplot(pal, transpose=False):
 def plot_colorbar(cax, cmap, hue_norm, cnorm=None, label=None, orientation='vertical',
                   labelsize=4, linewidth=0.5):
     if isinstance(cmap, str):
-        cmap = get_cmap(cmap)
+        cmap = copy.copy(get_cmap(cmap))
     if cnorm is None:
         cnorm = Normalize(vmin=hue_norm[0],
                           vmax=hue_norm[1])

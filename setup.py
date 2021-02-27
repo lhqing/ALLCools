@@ -1,25 +1,25 @@
 from setuptools import setup, find_packages
 
-allcools_version = '0.1'
-
 setup(
     name='allcools',
-    version=allcools_version,
+    use_scm_version=True,
+    setup_requires=['setuptools_scm'],
     author='Hanqing Liu',
     author_email='hanliu@salk.edu',
-    packages=find_packages(),
-    description='Tool kit for ALLC format and methylation analysis.',
+    description='Tool kit for single-cell methylome data analysis.',
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    url='https://github.com/lhqing/ALLCools',
+    license='MIT',
+    classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+    ],
+    packages=find_packages(exclude=('doc', 'test')),
     include_package_data=True,
-    install_requires=['pandas>=0.24', 'numpy', 'psutil', 'scipy', 'anndata>=0.6.20', 'h5py', 'xarray',
-                      'msgpack', 'pybedtools', 'hdbscan', 'seaborn', 'scikit-learn', 'scanpy', 'natsort', 'imblearn',
-                      'leidenalg', 'joblib', 'networkx', 'matplotlib', 'numba'],
+    install_requires=[],
     entry_points={
         'console_scripts': ['allcools=ALLCools.__main__:main'],
     }
 )
-
-if __name__ == '__main__':
-    f = open("ALLCools/__init__.py", 'w')
-    f.write(f"__version__ = '{allcools_version}'\n")
-    f.close()

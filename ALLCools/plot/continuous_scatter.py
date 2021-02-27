@@ -3,7 +3,7 @@ import seaborn as sns
 from matplotlib.cm import get_cmap, ScalarMappable
 from matplotlib.colors import Normalize
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-
+import copy
 from .color import plot_colorbar
 from .contour import density_contour
 from .text_anno_scatter import _text_anno_scatter
@@ -100,7 +100,7 @@ def continuous_scatter(
             hue_norm = tight_hue_range(_data['hue'], hue_portion)
         if isinstance(cmap, str):
             # from here, cmap become colormap object
-            cmap = get_cmap(cmap)
+            cmap = copy.copy(get_cmap(cmap))
             cmap.set_bad(color=(0.5, 0.5, 0.5, 0.5))
         else:
             if not isinstance(cmap, ScalarMappable):

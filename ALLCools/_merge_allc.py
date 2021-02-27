@@ -14,8 +14,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import numpy as np
 import psutil
-
-from ALLCools.utilities import binary_count
+from pysam import TabixFile
 from ._doc import *
 from ._open import open_allc
 from .utilities import parse_chrom_size, genome_region_chunks, parse_file_paths
@@ -28,6 +27,18 @@ log.addHandler(logging.NullHandler())
 SOFT, HARD = resource.getrlimit(resource.RLIMIT_NOFILE)
 DEFAULT_MAX_ALLC = 150
 PROCESS = psutil.Process(os.getpid())
+
+
+class _ALLC:
+    def __init__(self, path, region):
+        self.f = TabixFile(path)
+        self.f_region = self.f.fetch(region)
+
+    def readline(self):
+        return self.f_region.next()
+
+    def close(self):
+        self.f.close()
 
 
 def _increase_soft_fd_limit():
@@ -88,7 +99,7 @@ def _batch_merge_allc_files_tabix(allc_files, out_file, chrom_size_file, bin_len
             parallel_section = cpu
             for i in range(0, len(regions), parallel_section):
                 cur_regions = regions[i:min(i + parallel_section, len(regions))]
-                print(f'Running region from {cur_regions[0]} to {cur_regions[-1]}')
+                log.info(f'Running region from {cur_regions[0]} to {cur_regions[-1]}')
                 with ProcessPoolExecutor(max_workers=cpu) as executor:
                     future_merge_result = {executor.submit(merge_func,
                                                            allc_files=allc_files,
@@ -122,10 +133,11 @@ def _batch_merge_allc_files_tabix(allc_files, out_file, chrom_size_file, bin_len
                                 continue
                     # write last pieces of data
                     while len(temp_dict) > 0:
-                        data = temp_dict.pop(cur_id)
-                        out_handle.write(data)
-                        log.info(f'write {regions[cur_id]} Cached: {len(temp_dict)}, '
-                                 f'Current memory size: {PROCESS.memory_info().rss / (1024 ** 3):.2f}')
+                        if cur_id in temp_dict:
+                            data = temp_dict.pop(cur_id)
+                            out_handle.write(data)
+                            log.info(f'write {regions[cur_id]} Cached: {len(temp_dict)}, '
+                                     f'Current memory size: {PROCESS.memory_info().rss / (1024 ** 3):.2f}')
                         cur_id += 1
                 gc.collect()
         # after merge, tabix output
@@ -166,11 +178,11 @@ def _merge_allc_files_tabix(allc_files,
 
     # scan allc file to set up a table for fast look-up of lines belong
     # to different chromosomes
-    file_handles = [open_allc(allc_file,
-                              region=query_region)
+    file_handles = [_ALLC(allc_file,
+                          region=query_region)
                     for allc_file in allc_files]
     if out_file is not None:
-        out_handle = open_allc(out_file, 'w')
+        out_handle = open_allc(out_file, 'w', threads=3)
     else:
         out_handle = ''
 
@@ -183,13 +195,13 @@ def _merge_allc_files_tabix(allc_files,
 
     # init
     for index, allc_file in enumerate(allc_files):
-        line = file_handles[index].readline()
-        if line:
+        try:
+            line = file_handles[index].readline()
             fields = line.split("\t")
             cur_chrom[index] = fields[0]
             cur_pos[index] = int(fields[1])
             cur_fields[index] = fields
-        else:
+        except StopIteration:
             # file handle read nothing, the file is empty
             file_reading[index] = False
 
@@ -218,15 +230,15 @@ def _merge_allc_files_tabix(allc_files,
                 genome_info = cur_fields[index][:4]
 
             # update
-            line = file_handles[index].readline()
-            if line:
+            try:
+                line = file_handles[index].readline()
                 fields = line.split("\t")
-                # judge if chrom changed between two lines
-            else:
+            except StopIteration:
                 # read to the end of a file
                 fields = ['NOT_A_CHROM', 9999999999]
                 file_reading[index] = False
 
+            # judge if chrom changed between two lines
             this_chrom = cur_fields[index][0]
             next_chrom = fields[0]
             if next_chrom == this_chrom:
@@ -296,8 +308,8 @@ def _merge_allc_files_tabix_with_snp_info(allc_files,
 
     # scan allc file to set up a table for fast look-up of lines belong
     # to different chromosomes
-    file_handles = [open_allc(allc_file,
-                              region=query_region)
+    file_handles = [_ALLC(allc_file,
+                          region=query_region)
                     for allc_file in allc_files]
     if out_file is not None:
         out_handle = open_allc(out_file, 'w')
@@ -356,15 +368,15 @@ def _merge_allc_files_tabix_with_snp_info(allc_files,
                 genome_info = cur_fields[index][:4]
 
             # update
-            line = file_handles[index].readline()
-            if line:
+            try:
+                line = file_handles[index].readline()
                 fields = line.split("\t")
-                # judge if chrom changed between two lines
-            else:
+            except StopIteration:
                 # read to the end of a file
                 fields = ['NOT_A_CHROM', 9999999999]
                 file_reading[index] = False
 
+            # judge if chrom changed between two lines
             this_chrom = cur_fields[index][0]
             next_chrom = fields[0]
             if next_chrom == this_chrom:
@@ -444,7 +456,7 @@ def merge_allc_files(allc_paths, output_path, chrom_size_path, bin_length=100000
     """
     # TODO binarize do not work because when merge batch allc, the previous batch merged allc is not single cell
     # can not treat that as binarize, need to reimplement merge ALLC to support binarize in merge allc
-    print('Right now binarize is not used, need fix this in merge ALLC fiction, set binarize=False')
+    log.info('Right now binarize is not used, need fix this in merge ALLC fiction, set binarize=False')
     binarize = False
 
     # TODO write test

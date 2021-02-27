@@ -302,6 +302,7 @@ def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
             n += 1
             if (n_rows is not None) and (n >= n_rows):
                 break
+
     # overall count
     profile_df = pd.DataFrame({'partial_mc': mc_sum_dict,
                                'partial_cov': cov_sum_dict})

@@ -1,10 +1,23 @@
-import rpy2.robjects as robjects
-from rpy2.robjects.packages import importr
+import rpy2.robjects as ro
+from rpy2.robjects import pandas2ri
+from rpy2.robjects.conversion import localconverter
+from rpy2.robjects.vectors import StrVector
+from rpy2.robjects.packages import importr, isinstalled
 import pandas as pd
 import numpy as np
+from scipy.cluster.hierarchy import dendrogram
+import matplotlib.pyplot as plt
+import joblib
 
 
-def hclust_to_scipy_linkage(result, labels=None):
+def install_r_package(name):
+    if not isinstalled(name):
+        utils = importr('utils')
+        utils.chooseCRANmirror(ind=1)
+        utils.install_packages(StrVector([name]))
+
+
+def _hclust_to_scipy_linkage(result, plot=True):
     """Turn R hclust result obj into scipy linkage matrix format"""
     # in hclust merge matrix, negative value is for singleton
     raw_linkage = pd.DataFrame(np.array(result[0]))
@@ -17,11 +30,9 @@ def hclust_to_scipy_linkage(result, labels=None):
     scipy_linkage[raw_linkage.iloc[:, :2] < 0] += nobs
     scipy_linkage[raw_linkage.iloc[:, :2] > 0] += (nobs - 1)
     total_obs = nobs
-
     # add the 4th col: number of singleton
     cluster_dict = {}
-    if labels is None:
-        labels = list(range(total_obs))
+    labels = list(range(total_obs))
     for cur_cluster_id, (left, right, distance) in scipy_linkage.iterrows():
         left = int(left)
         right = int(right)
@@ -59,22 +70,61 @@ def hclust_to_scipy_linkage(result, labels=None):
         total_n = len(_sub_dict['left']) + len(_sub_dict['right'])
         cluster_records[cluster] = total_n
     scipy_linkage[3] = pd.Series(cluster_records)
-    return scipy_linkage
+
+    # dendrogram
+    orders = list(result[2])
+    labels = list(result[3])
+    # correct order of the final dendrogram
+    r_order = [labels[i - 1] for i in orders]
+    dendro = dendrogram(scipy_linkage.values, no_plot=True)
+    python_order = pd.Series({a: b for a, b in zip(dendro['leaves'], r_order)}).sort_index().tolist()
+    # python_order = [i[1:] for i in python_order]
+    if plot:
+        fig, ax = plt.subplots(dpi=300)
+        dendro = dendrogram(scipy_linkage.values, labels=tuple(python_order), no_plot=False, ax=ax)
+        ax.xaxis.set_tick_params(rotation=90)
+    else:
+        dendro = dendrogram(scipy_linkage.values, labels=tuple(python_order), no_plot=True)
+    return scipy_linkage, python_order, dendro
 
 
-def pvclust(matrix_path, nboot=100, method_dist='correlation', method_hclust='average', cpu=10):
-    base = importr("base")
-    pvclust = importr("pvclust")
-    dataframe = robjects.DataFrame.from_csvfile(matrix_path, sep=",", row_names=1)
+class Dendrogram:
+    def __init__(self,
+                 nboot=1000,
+                 method_dist='correlation',
+                 method_hclust='average',
+                 n_jobs=-1):
+        self.nboot = nboot
+        self.method_dist = method_dist
+        self.method_hclust = method_hclust
+        self.n_jobs = n_jobs
 
-    result = pvclust.pvclust(dataframe,
-                             nboot=nboot,
-                             method_dist=method_dist,
-                             method_hclust=method_hclust,
-                             parallel=cpu)
+        self.linkage = None
+        self.label_order = None
+        self.dendrogram = None
+        self.edge_stats = None
 
-    edge_profile = result[1]
-    edge_profile.to_csvfile(matrix_path + '.EdgeStats.csv')
-    linkage_df = hclust_to_scipy_linkage(result[0])
-    linkage_df.to_csv(matrix_path + '.Linkage.csv')
-    return
+    def fit(self, data, plot=True):
+        importr("base")
+        pvclust = importr("pvclust")
+        with localconverter(ro.default_converter + pandas2ri.converter):
+            r_df = ro.conversion.py2rpy(data)
+        if self.n_jobs == -1:
+            self.n_jobs = True
+        result = pvclust.pvclust(r_df,
+                                 nboot=self.nboot,
+                                 method_dist=self.method_dist,
+                                 method_hclust=self.method_hclust,
+                                 parallel=self.n_jobs)
+        # dendrogram info
+        hclust = result[0]
+        linkage, label_order, dendro = _hclust_to_scipy_linkage(hclust, plot)
+        self.linkage = linkage
+        self.label_order = label_order
+        self.dendrogram = dendro
+        # scores of edges by pvclust bootstrap
+        self.edge_stats = pd.DataFrame(result[1], index=result[1].colnames).T
+        return
+
+    def save(self, output_path):
+        joblib.dump(self, output_path)

@@ -94,29 +94,32 @@ def simple_violin(data, x, y, rotate_x=True):
     return fig, ax
 
 
-def cutoff_vs_cell_remain(data, cutoff_num=1000,
-                          xlim_quantile=(0.001, 0.999), distribution_ylim=None,
-                          bins=100, kde=False, count_percent=True):
+def cutoff_vs_cell_remain(data,
+                          name='',
+                          xlim_quantile=(0.001, 0.999),
+                          ylim=None,
+                          bins=100):
     xlim = tuple(np.quantile(data, xlim_quantile))
-    x = np.linspace(xlim[0], xlim[1], cutoff_num)
+    x = np.linspace(xlim[0], xlim[1], 500)
     count_list = np.array([(data > i).sum() for i in x])
     original_total_data = data.size
-    if count_percent:
-        count_list = count_list / original_total_data
+    count_list = count_list / original_total_data * 100
     data = data[(data < xlim[1]) & (data > xlim[0])]
 
     fig, ax1 = plt.subplots()
-    ax1 = sns.distplot(data, bins=bins, kde=kde,
-                       ax=ax1)
+    ax1 = sns.histplot(data, bins=bins, kde=False, ax=ax1)
     ax1.set_xlim(xlim)
-    ax1.set_xlabel('Data Point Count')
-    if distribution_ylim is not None:
-        ax1.set_ylim(*distribution_ylim)
+    ax1.set_xlabel(name)
+    if ylim is not None:
+        ax1.set_ylim(*ylim)
 
     ax2 = ax1.twinx()
-    sns.scatterplot(x=x, y=count_list, linewidth=0, legend=None,
-                    s=5, hue=x, palette='viridis', ax=ax2)
-    ax2.set_ylabel('% of Data Pass Filter')
+    ax2.plot(x,
+             count_list,
+             linewidth=2,
+             linestyle='--',
+             c='r')
+    ax2.set_ylabel('% of Data Pass Filter', color='r')
     ax2.grid()
     return fig, (ax1, ax2)
 
@@ -201,3 +204,7 @@ def plot_dispersion(data, hue='gene_subset',
                                       frames=100, interval=10, blit=False)
         ani.save(save_animate_path, writer='imagemagick')
     return fig, axes
+
+
+def plot_hvf_selection():
+    return

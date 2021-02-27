@@ -8,7 +8,8 @@ allc_path_doc = "Path to 1 ALLC file"
 allc_paths_doc = "Single ALLC path contain wildcard OR multiple space separated ALLC paths " \
                  "OR a file contains 1 ALLC path in each row."
 
-allc_table_doc = "Contain all the ALLC file information in 2 columns: 1. file_uid, 2. file_path. No header"
+allc_table_doc = "Contain all the ALLC file information in two tab-separated columns: " \
+                 "1. file_uid, 2. file_path. No header"
 
 binarize_doc = 'If set, binarize each single site in each individual ALLC file. ' \
                'This means each cytosine will only contribute at most 1 cov and 0/1 mc, ' \

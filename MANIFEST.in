@@ -1,0 +1,5 @@
+recursive-include ALLCools
+include LICENSE.txt
+recursive-exclude * __pycache__
+exclude doc
+exclude test

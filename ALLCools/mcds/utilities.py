@@ -8,14 +8,29 @@ log = logging.getLogger()
 
 def calculate_posterior_mc_rate(mc_da,
                                 cov_da,
-                                var_dim,
+                                var_dim=None,
                                 normalize_per_cell=True,
                                 clip_norm_value=10):
     # so we can do post_rate only in a very small set of gene to prevent memory issue
 
     raw_rate = mc_da / cov_da
-    cell_rate_mean = raw_rate.mean(dim=var_dim)  # this skip na
-    cell_rate_var = raw_rate.var(dim=var_dim)  # this skip na
+    if isinstance(raw_rate, np.ndarray):
+        # np.ndarray
+        ndarray = True
+    else:
+        ndarray = False
+
+    if ndarray:
+        cell_rate_mean = np.nanmean(raw_rate, axis=1)
+        cell_rate_var = np.nanvar(raw_rate, axis=1)
+    else:
+        # assume xr.DataArray
+        if var_dim is None:
+            cell_rate_mean = raw_rate.mean(axis=1)  # this skip na
+            cell_rate_var = raw_rate.var(axis=1)  # this skip na
+        else:
+            cell_rate_mean = raw_rate.mean(dim=var_dim)  # this skip na
+            cell_rate_var = raw_rate.var(dim=var_dim)  # this skip na
 
     # based on beta distribution mean, var
     # a / (a + b) = cell_rate_mean
@@ -25,7 +40,10 @@ def calculate_posterior_mc_rate(mc_da,
     cell_b = cell_a * (1 / cell_rate_mean - 1)
 
     # cell specific posterior rate
-    post_rate = (mc_da + cell_a) / (cov_da + cell_a + cell_b)
+    if ndarray:
+        post_rate = (mc_da + cell_a[:, None]) / (cov_da + cell_a[:, None] + cell_b[:, None])
+    else:
+        post_rate = (mc_da + cell_a) / (cov_da + cell_a + cell_b)
 
     if normalize_per_cell:
         # there are two ways of normalizing per cell, by posterior or prior mean:
@@ -36,9 +54,17 @@ def calculate_posterior_mc_rate(mc_da,
         # therefore all cov == 0 features will have normalized rate == 1 in all cells.
         # i.e. 0 cov feature will provide no info
         prior_mean = cell_a / (cell_a + cell_b)
-        post_rate = post_rate / prior_mean
+        if ndarray:
+            post_rate = post_rate / prior_mean[:, None]
+        else:
+            post_rate = post_rate / prior_mean
         if clip_norm_value is not None:
-            post_rate = post_rate.where(post_rate < clip_norm_value, clip_norm_value)
+            if isinstance(post_rate, np.ndarray):
+                # np.ndarray
+                post_rate[post_rate > clip_norm_value] = clip_norm_value
+            else:
+                # xarray.DataArray
+                post_rate = post_rate.where(post_rate < clip_norm_value, clip_norm_value)
     return post_rate
 
 
@@ -217,13 +243,13 @@ def highly_variable_methylation_feature(
 
     # Select n_top_feature
     if n_top_feature is not None:
-        gene_subset = df.index.isin(df.sort_values('dispersion_norm', ascending=False).index[:5000])
+        feature_subset = df.index.isin(df.sort_values('dispersion_norm', ascending=False).index[:5000])
     else:
         max_disp = np.inf if max_disp is None else max_disp
         dispersion_norm[np.isnan(dispersion_norm)] = 0  # similar to Seurat
-        gene_subset = np.logical_and.reduce((mean > min_mean, mean < max_mean,
+        feature_subset = np.logical_and.reduce((mean > min_mean, mean < max_mean,
                                              dispersion_norm > min_disp,
                                              dispersion_norm < max_disp))
-    df['gene_subset'] = gene_subset
+    df['feature_subset'] = feature_subset
     log.info('    finished')
     return df

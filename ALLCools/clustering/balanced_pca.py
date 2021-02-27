@@ -1,0 +1,45 @@
+from sklearn.preprocessing import StandardScaler
+import scanpy as sc
+
+
+def balanced_pca(adata, groups='pre_clusters', max_cell_prop=0.1, n_comps=200):
+    # downsample large clusters
+    use_cells = []
+    size_to_downsample = max(int(adata.shape[0] * max_cell_prop), 30)
+    for cluster, sub_df in adata.obs.groupby(groups):
+        if sub_df.shape[0] > size_to_downsample:
+            use_cells += sub_df.sample(size_to_downsample, random_state=0).index.tolist()
+        else:
+            use_cells += sub_df.index.tolist()
+
+    # get training adata
+    if len(use_cells) == adata.shape[0]:
+        downsample = False
+        adata_train = adata
+    else:
+        downsample = True
+        adata_train = adata[use_cells, :].copy()
+
+    # pca
+    scaler = StandardScaler()
+    adata_train.X = scaler.fit_transform(adata_train.X)
+    sc.pp.scale(adata_train)  # only scale training cells
+    sc.tl.pca(adata_train,
+              n_comps=n_comps,
+              zero_center=True,
+              svd_solver='arpack',
+              random_state=0,
+              return_info=False,
+              use_highly_variable=None,
+              dtype='float32',
+              copy=False,
+              chunked=False,
+              chunk_size=None)
+
+    # transfer PCA result to full adata
+    if downsample:
+        adata.X = scaler.transform(adata.X)  # scale all cells with the same scaler
+        adata.varm['PCs'] = adata_train.varm['PCs']
+        adata.obsm['X_pca'] = adata.X @ adata_train.varm['PCs']
+        adata.uns['pca'] = adata_train.uns['pca']
+    return adata

@@ -5,14 +5,60 @@ import joblib
 import leidenalg
 import numpy as np
 import pandas as pd
-import seaborn as sns
 from hdbscan import HDBSCAN
 from imblearn.ensemble import BalancedRandomForestClassifier
 from natsort import natsorted
 from scanpy.neighbors import Neighbors
-from sklearn.feature_selection import RFECV
-from sklearn.metrics import fbeta_score, make_scorer, confusion_matrix, balanced_accuracy_score
-from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import confusion_matrix, pairwise_distances, balanced_accuracy_score
+import networkx as nx
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import cross_val_predict
+
+
+def _r1_normalize(cmat):
+    """
+    Normalize the confusion matrix based on the total number of cells in each class
+    x(i,j) = max(cmat(i,j)/diagnol(i),cmat(j,i)/diagnol(j))
+    confusion rate between i and j is defined by the maximum ratio i is confused as j or j is confused as i.
+
+    Input
+    cmat: the confusion matrix
+
+    return
+    -----
+    the normalized confusion matrix
+    """
+    dmat = cmat
+    smat = np.diag(dmat) + 1  # in case some label has no correct prediction (0 in diag)
+    dim = cmat.shape[0]
+    xmat = np.zeros([dim, dim])
+    for i in range(dim):
+        for j in range(i + 1, dim):
+            xmat[i, j] = xmat[j, i] = max(dmat[i, j] / smat[j], dmat[j, i] / smat[i])
+    return xmat
+
+
+def _r2_normalize(cmat):
+    """
+    Normalize the confusion matrix based on the total number of cells.
+    x(i,j) = max(cmat(i,j)+cmat(j,i)/N)
+    N is total number of cells analyzed.
+    Confusion rate between i and j is defined by the sum of i confused as j or j confused as i.
+    Then divide by total number of cells.
+
+    Input
+    cmat: the confusion matrix
+
+    return
+    -----
+    the normalized confusion matrix
+    """
+    emat = np.copy(cmat)
+    s = np.sum(cmat)
+    emat = emat + emat.T
+    np.fill_diagonal(emat, 0)
+    return emat * 1.0 / s
 
 
 def _leiden_runner(g, random_states, partition_type, **partition_kwargs):
@@ -30,129 +76,209 @@ def _leiden_runner(g, random_states, partition_type, **partition_kwargs):
     return result_df
 
 
+def _split_train_test_per_group(x, y, frac, max_train, random_state):
+    y_series = pd.Series(y)
+    # split train test per group
+    train_idx = []
+    test_idx = []
+    outlier_idx = []
+    for cluster, sub_series in y_series.groupby(y_series):
+        if (cluster == -1) or (sub_series.size < 3):
+            outlier_idx += sub_series.index.tolist()
+        else:
+            n_train = max(1, min(max_train, int(sub_series.size * frac)))
+            is_train = sub_series.index.isin(sub_series.sample(n_train, random_state=random_state).index)
+            train_idx += sub_series.index[is_train].tolist()
+            test_idx += sub_series.index[~is_train].tolist()
+    x_train = x[train_idx]
+    y_train = y[train_idx]
+    x_test = x[test_idx]
+    y_test = y[test_idx]
+    return x_train, y_train, x_test, y_test
+
+
+def _single_supervise_evaluation(
+        clf,
+        x_train,
+        y_train,
+        x_test,
+        y_test,
+        r1_norm_step=0.01,
+        r2_norm_step=0.001,
+        plot=True):
+    # fit model
+    clf.fit(x_train, y_train)
+
+    # calc accuracy
+    y_train_pred = clf.predict(x_train)
+    accuracy_train = balanced_accuracy_score(y_true=y_train, y_pred=y_train_pred)
+    print(f"Balanced accuracy on the training set: {accuracy_train:.3f}")
+    y_test_pred = clf.predict(x_test)
+    accuracy_test = balanced_accuracy_score(y_true=y_test, y_pred=y_test_pred)
+    print(f"Balanced accuracy on the hold-out set: {accuracy_test:.3f}")
+
+    # get confusion matrix
+    y_pred = clf.predict(x_test)
+    cmat = confusion_matrix(y_test, y_pred)
+
+    # normalize confusion matrix
+    r1_cmat = _r1_normalize(cmat)
+    r2_cmat = _r2_normalize(cmat)
+    m1 = np.max(r1_cmat)
+    if np.isnan(m1):
+        m1 = 1.
+    m2 = np.max(r2_cmat)
+    r1_norm_cutoff = m1 - r1_norm_step
+    r2_norm_cutoff = m2 - r2_norm_step
+
+    # final binary matrix to calculate which clusters need to be merged
+    cluster_map = {}
+    judge = np.maximum.reduce([(r1_cmat > r1_norm_cutoff),
+                               (r2_cmat > r2_norm_cutoff)])
+    if judge.sum() > 0:
+        rows, cols = np.where(judge)
+        edges = zip(rows.tolist(), cols.tolist())
+        g = nx.Graph()
+        g.add_edges_from(edges)
+        for comp in nx.connected_components(g):
+            to_label = comp.pop()
+            for remain in comp:
+                cluster_map[remain] = to_label
+
+    if plot:
+        fig, axes = plt.subplots(figsize=(12, 3), dpi=300, ncols=4)
+        ax = axes[0]
+        sns.heatmap(np.log1p(cmat), ax=ax)
+        ax.set_title(f'confusion matrix')
+        ax = axes[1]
+        sns.heatmap(r1_cmat, ax=ax)
+        ax.set_title(f'R1 Norm. cutoff {r1_norm_cutoff:.3f}')
+        ax = axes[2]
+        sns.heatmap(r2_cmat, ax=ax)
+        ax.set_title(f'R2 Norm. cutoff {r2_norm_cutoff:.3f}')
+        ax = axes[3]
+        sns.heatmap(judge, ax=ax)
+        ax.set_title(f'Merge')
+        fig.tight_layout()
+        fig.show()
+    return clf, accuracy_test, cluster_map
+
+
 class ConsensusClustering:
-    def __init__(self, x):
-        self.n_obs, self.n_pcs = x.shape
-        self.X = x
-        self.supervise_X = None
+    def __init__(self,
+                 model=None,
+                 n_neighbors=25,
+                 metric='euclidean',
+                 min_cluster_size=10,
+                 consensus_rate=0.9,
+                 repeats=200,
+                 resolution=1,
+                 random_state=0,
+                 train_frac=0.5,
+                 train_max_n=500,
+                 max_iter=10,
+                 target_score=0.95,
+                 n_jobs=-1,
+                 outlier_cell_cutoff=0.25,
+                 outlier_label='Outlier',
+                 plot=True):
+        # input metrics
+        self.min_cluster_size = min_cluster_size
+        self.consensus_rate = consensus_rate
+        self.leiden_repeats = repeats
+        self.leiden_resolution = resolution
+        self.random_state = random_state
+        self.n_jobs = n_jobs
+        self.n_neighbors = n_neighbors
+        self.knn_metric = metric
+        self.train_frac = train_frac
+        self.train_max_n = train_max_n
+        self.plot = plot
+        self.max_iter = max_iter
+        self.target_score = target_score
+        self.outlier_cell_cutoff = outlier_cell_cutoff
+        self.outlier_label = outlier_label
 
-        adata = anndata.AnnData(X=None,
-                                obs=pd.DataFrame([], index=[f'obs{i}' for i in range(self.n_obs)]),
-                                var=pd.DataFrame([], index=[f'var{i}' for i in range(self.n_pcs)]))
-        adata.obsm['X_pca'] = self.X
-        # here neighbors should only use PCs
-        self.neighbors = Neighbors(adata=adata)
-        self.neighbors_computed = False
+        self.n_obs, self.n_pcs = None, None
+        self.X = None
+        self._neighbors = None
 
-        # clustering
+        # multiple leiden clustering
         self.leiden_result_df = None
-        self.hdbscan = None
-        self.consensus_clusters = None
-        self.consensus_clusters_rescued = None
-        self.consensus_clusters_proba = None
+        self._multi_leiden_clusters = None
 
         # model training and outlier rescue
-        self.supervise_model = None
-        self.n_cluster = None
-        self.training_X = None
-        self.training_label = None
-        self.testing_X = None
-        self.testing_label = None
-        self.testing_proba = None
-        self.outlier_X = None
-        self.outlier_proba = None
-        self.confusion_matrix = None
-        self.balanced_accuracy = None
+        self.supervise_model = model
+        self._label_with_leiden_outliers = None
+        self.label = None
+        self.label_proba = None
+        self.final_accuracy = None
         return
 
-    def fit_predict(self,
-                    n_neighbors,
-                    metric='euclidean',
-                    neighbor_kwds=None,
-                    leiden_repeats=200,
-                    seed=1,
-                    leiden_resolution=1,
-                    leiden_kwds=None,
-                    min_cluster_size=10,
-                    min_cluster_portion=None,
-                    min_samples=1,
-                    epsilon='auto',
-                    hdbscan_kwds=None,
-                    n_jobs=1):
+    def fit_predict(self, x, leiden_kwds=None):
+        self.n_obs, self.n_pcs = x.shape
+        self.X = x
+
         # Construct KNN graph
-        print('Run compute_neighbors')
-        kwds = dict(n_neighbors=n_neighbors,
-                    metric=metric)
-        if neighbor_kwds is None:
-            neighbor_kwds = kwds
-        else:
-            neighbor_kwds.update(kwds)
-        self.compute_neighbors(**neighbor_kwds)
+        print('Computing nearest neighbor graph')
+        self.compute_neighbors()
 
         # repeat Leiden clustering with different random seeds
-        print('Run multi_leiden_clustering')
-        kwds = dict(leiden_repeats=leiden_repeats,
-                    seed=seed,
-                    leiden_resolution=leiden_resolution,
-                    n_jobs=n_jobs)
+        print('Computing multiple clustering with different random seeds')
+        kwds = {}
         if leiden_kwds is None:
             leiden_kwds = kwds
         else:
             leiden_kwds.update(kwds)
         self.multi_leiden_clustering(**leiden_kwds)
 
-        # HDBSCAN to do consensus clustering on leiden results
-        print('Run hdbscan_clustering')
-        kwds = dict(min_cluster_size=min_cluster_size,
-                    min_cluster_portion=min_cluster_portion,
-                    min_samples=min_samples,
-                    epsilon=epsilon)
-        if hdbscan_kwds is None:
-            hdbscan_kwds = kwds
-        else:
-            hdbscan_kwds.update(kwds)
-        self.hdbscan_clustering(**hdbscan_kwds)
+        # merge the over clustering version by supervised learning
+        self.supervise_learning()
 
-    def compute_neighbors(self,
-                          n_neighbors,
-                          knn=True,
-                          method='umap',
-                          metric='euclidean',
-                          metric_kwds=None,
-                          seed=1):
-        metric_kwds = {} if metric_kwds is None else metric_kwds
+        # assign outliers
+        self.final_evaluation()
 
-        self.neighbors.compute_neighbors(
-            n_neighbors=n_neighbors, knn=knn, n_pcs=self.n_pcs, use_rep='X_pca',
-            method=method, metric=metric, metric_kwds=metric_kwds,
-            random_state=seed)
-        self.neighbors_computed = True
+    def compute_neighbors(self):
+        # nearest neighbors graph
+        adata = anndata.AnnData(X=None,
+                                obs=pd.DataFrame([], index=[f'obs{i}' for i in range(self.n_obs)]),
+                                var=pd.DataFrame([], index=[f'var{i}' for i in range(self.n_pcs)]))
+        adata.obsm['X_pca'] = self.X
+        # here neighbors should only use PCs
+        self._neighbors = Neighbors(adata=adata)
+        self._neighbors.compute_neighbors(
+            n_neighbors=self.n_neighbors,
+            knn=True,
+            n_pcs=self.n_pcs,
+            use_rep='X_pca',
+            method='umap',
+            metric=self.knn_metric,
+            random_state=self.random_state)
         return
 
     def multi_leiden_clustering(self,
-                                leiden_repeats=200,
-                                seed=1,
-                                leiden_resolution=1,
                                 partition_type=None,
                                 partition_kwargs=None,
                                 use_weights=True,
-                                n_iterations=-1,
-                                n_jobs=1):
+                                n_iterations=-1):
         """Modified from scanpy"""
-        if not self.neighbors_computed:
+        if self._neighbors is None:
             raise ValueError('Run compute_neighbors first before multi_leiden_clustering')
 
         # convert neighbors to igraph
-        g = self.neighbors.to_igraph()
+        g = self._neighbors.to_igraph()
 
         # generate n different seeds for each single leiden partition
-        np.random.seed(seed=seed)
+        np.random.seed(self.random_state)
+        leiden_repeats = self.leiden_repeats
+        n_jobs = self.n_jobs
         random_states = np.random.choice(range(99999999), size=leiden_repeats, replace=False)
         step = max(int(leiden_repeats / n_jobs), 20)
         random_state_chunks = [random_states[i: min(i + step, leiden_repeats)]
                                for i in range(0, leiden_repeats, step)]
 
         results = []
+        print(f'Repeating leiden clustering {leiden_repeats} times')
         with ProcessPoolExecutor(max_workers=n_jobs) as executor:
             future_dict = {}
             for i, random_state_chunk in enumerate(random_state_chunks):
@@ -171,8 +297,7 @@ class ConsensusClustering:
                 if use_weights:
                     partition_kwargs['weights'] = np.array(g.es['weight']).astype(np.float64)
                 partition_kwargs['n_iterations'] = n_iterations
-                if leiden_resolution is not None:
-                    partition_kwargs['resolution_parameter'] = leiden_resolution
+                partition_kwargs['resolution_parameter'] = self.leiden_resolution
                 # clustering proper
                 future = executor.submit(_leiden_runner,
                                          g=g,
@@ -192,82 +317,54 @@ class ConsensusClustering:
         total_result = pd.concat(results, axis=1, sort=True)
         self.leiden_result_df = total_result
         cluster_count = self.leiden_result_df.apply(lambda i: i.unique().size)
-        print(f'Repeating leiden clustering found {cluster_count.min()} - {cluster_count.max()} clusters, '
+        print(f'Found {cluster_count.min()} - {cluster_count.max()} clusters, '
               f'mean {cluster_count.mean():.1f}, std {cluster_count.std():.2f}')
+
+        # create a over-clustering version based on all the leiden runs
+        print('Summarizing multiple clustering results')
+        self.summarize_multi_leiden()
         return
 
-    def hdbscan_clustering(self,
-                           min_cluster_size=10,
-                           min_cluster_portion=None,
-                           min_samples=1,
-                           metric='hamming',
-                           cluster_selection_method='eom',
-                           allow_single_cluster=True,
-                           epsilon=0.2):
-        if min_cluster_portion is not None:
-            if min_cluster_size is None:
-                min_cluster_size = 0
-            min_cluster_size = max(min_cluster_size, self.n_obs * min_cluster_portion)
-        else:
-            if min_cluster_size is None:
-                raise ValueError('Either min_cluster_size or min_cluster_portion should be provided')
+    def summarize_multi_leiden(self):
+        # here we don't rely on hdbscan clustering, just use it to reduce the pairwise distances calculation
+        # the resulting clusters are simply disconnected components based on hamming dist graph
+        # This results an over-clustering, which will be merged by the supervise learning step.
+        hdbscan = HDBSCAN(min_cluster_size=2,
+                          min_samples=1,
+                          metric='hamming',
+                          cluster_selection_method='eom',
+                          allow_single_cluster=True)
+        hdbscan.fit(self.leiden_result_df)
+        clusters = {}
+        cur_num = 0
+        for _, sub_df in self.leiden_result_df.groupby(
+                pd.Series(hdbscan.labels_, index=self.leiden_result_df.index)
+        ):
+            pairwise_dist = pairwise_distances(sub_df, metric='hamming')
+            # create a graph, cells within hamming_dist_cutoff are connected
+            rows, cols = np.where(pairwise_dist < self.consensus_rate)
+            edges = zip(sub_df.index[rows].tolist(), sub_df.index[cols].tolist())
+            g = nx.Graph()
+            g.add_edges_from(edges)
+            for comp in nx.connected_components(g):
+                if len(comp) >= self.min_cluster_size:
+                    for node in comp:
+                        # each disconnected component assigned to a cluster
+                        clusters[node] = cur_num
+                    cur_num += 1
+                else:
+                    for node in comp:
+                        clusters[node] = -1
 
-        runner = HDBSCAN(min_cluster_size=int(min_cluster_size),
-                         min_samples=int(min_samples),
-                         metric=metric,
-                         cluster_selection_method=cluster_selection_method,
-                         allow_single_cluster=allow_single_cluster)
-
-        if self.leiden_result_df is None:
-            raise ValueError('Run multi_leiden_clustering first before hdbscan_clustering')
-        runner.fit(self.leiden_result_df)
-        self.hdbscan = runner
-        self.reselect_clusters(epsilon=epsilon,
-                               min_cluster_size=min_cluster_size)
-        return
-
-    def reselect_clusters(self, epsilon, min_cluster_size=10):
-        if epsilon == 'auto':
-            # the mean cluster number of leiden clustering
-            target_n_clusters = int(np.round(self.leiden_result_df.apply(lambda i: i.unique().size).min()))
-            for epsilon in np.arange(0.1, 0.5, 0.02):
-                self.consensus_clusters = self.hdbscan.single_linkage_tree_.get_clusters(
-                    cut_distance=epsilon,
-                    min_cluster_size=min_cluster_size)
-                n_cluster = np.unique(self.consensus_clusters).size
-                if -1 in self.consensus_clusters:
-                    n_cluster -= 1
-                if n_cluster <= target_n_clusters:
-                    break
-        else:
-            self.consensus_clusters = self.hdbscan.single_linkage_tree_.get_clusters(
-                cut_distance=epsilon,
-                min_cluster_size=min_cluster_size)
-
-        final_size = np.unique(self.consensus_clusters).size
-        if -1 in self.consensus_clusters:
-            final_size -= 1
-        print(f'Final consensus clustering found {final_size} clusters')
-        self.n_cluster = final_size
-
-        if self.supervise_model is not None:
-            print('Consensus cluster changed, the supervised model is cleared, '
-                  'redo training to fit new cluster assignment.')
-        self.supervise_model = None
-        self.training_X = None
-        self.testing_X = None
-        self.outlier_X = None
-        self.confusion_matrix = None
-        self.balanced_accuracy = None
+        clusters = pd.Series(clusters).sort_index()
+        print(f'{(clusters != -1).sum()} cells assigned to {clusters.unique().size} raw clusters')
+        print(f'{(clusters == -1).sum()} cells are outliers')
+        self._multi_leiden_clusters = clusters.values
         return
 
     def _create_model(self,
-                      n_estimators=500,
-                      n_splits=10,
-                      fbeta=1,
-                      average='weighted',
-                      n_jobs=1):
-        estimator = BalancedRandomForestClassifier(
+                      n_estimators=1000):
+        clf = BalancedRandomForestClassifier(
             n_estimators=n_estimators,
             criterion='gini',
             max_depth=None,
@@ -281,198 +378,113 @@ class ConsensusClustering:
             oob_score=False,
             sampling_strategy='auto',
             replacement=False,
-            n_jobs=n_jobs,
-            random_state=0,
+            n_jobs=self.n_jobs,
+            random_state=self.random_state,
             verbose=0,
             warm_start=False,
             class_weight=None)
+        return clf
 
-        cv = StratifiedKFold(
-            n_splits=n_splits,
-            shuffle=True,
-            random_state=0)
+    def supervise_learning(self):
+        if self._multi_leiden_clusters is None:
+            raise ValueError('Run multi_leiden_clustering first to get a '
+                             'clustering assignment before run supervise_learning.')
 
-        # TODO change to balanced accuracy score
-        scoring = make_scorer(
-            fbeta_score,
-            beta=fbeta,
-            average=average)
-
-        clf = RFECV(
-            estimator,
-            step=3,
-            min_features_to_select=1,
-            cv=cv,
-            scoring=scoring,
-            verbose=0,
-            n_jobs=10)
-
-        self.supervise_model = clf
-        return
-
-    def supervise_training(self,
-                           x=None,
-                           test_portion=0.1,
-                           n_estimators=500,
-                           n_splits=10,
-                           fbeta=1,
-                           average='weighted',
-                           n_jobs=1,
-                           outlier_proba_cutoff=0.5,
-                           confusion_merge_cutoff=0.2,
-                           seed=1):
-        if self.consensus_clusters is None:
-            raise ValueError('Run fit_predict first to get a clustering assignment before run supervise_training.')
-
-        n_cluster = np.unique(self.consensus_clusters[self.consensus_clusters != -1]).size
+        n_cluster = np.unique(self._multi_leiden_clusters[self._multi_leiden_clusters != -1]).size
         if n_cluster == 1:
             print('There is only one cluster except for outliers, can not train supervise model on that.')
             return
-        print(f'{n_cluster} input clusters')
+        print(f'\n=== Start supervise model training and cluster merging ===')
 
-        if x is None:
-            # use the same matrix as clustering
-            self.supervise_X = self.X
+        x = self.X
+        cur_y = self._multi_leiden_clusters.copy()
+        score = None
+
+        if self.supervise_model is None:
+            # create default model if no model provided
+            clf = self._create_model(n_estimators=500)
         else:
-            # or use the provided new matrix, could be selected raw features etc.
-            raise NotImplemented('This have not been fully supported yet, '
-                                 'ideally should take a full feature space and '
-                                 'run feature selection only using the training sample but not testing')
-            # self.supervise_X = x
+            clf = self.supervise_model
+        for cur_iter in range(1, self.max_iter + 1):
+            print(f'\n=== iteration {cur_iter} ===')
+            n_labels = np.unique(cur_y[cur_y != -1]).size
+            print(f'{n_labels} non-outlier labels')
+            if n_labels < 2:
+                print(f'Stop iteration because only {n_labels} cluster remain.')
 
-        # get training, testing and outlier idx
-        outlier_idx = np.where(self.consensus_clusters == -1)[0]
-        valid_idx = np.where(self.consensus_clusters != -1)[0]
-        n_test = max(1, int(valid_idx.size * test_portion))
-        np.random.seed(seed)
-        test_idx = np.random.choice(valid_idx, n_test, replace=False)
-        non_training_idx = np.concatenate((test_idx, outlier_idx))
-        train_idx = np.array([i for i in range(self.consensus_clusters.size)
-                              if i not in non_training_idx])
-        # get data
-        self.training_X = self.supervise_X[train_idx, :]
-        self.training_label = self.consensus_clusters[train_idx]
-        self.testing_X = self.supervise_X[test_idx, :]
-        self.testing_label = self.consensus_clusters[test_idx]
-        self.outlier_X = self.supervise_X[outlier_idx, :]
-        print(f'{len(train_idx)} training obs')
-        print(f'{len(test_idx)} testing obs')
-        print(f'{len(outlier_idx)} outliers')
-
-        # create model
-        print('Run RFECV')
-        self._create_model(
-            n_estimators=n_estimators,
-            n_splits=n_splits,
-            fbeta=fbeta,
-            average=average,
-            n_jobs=n_jobs)
-        # fit model
-        self.supervise_model.fit(self.training_X, self.training_label)
-
-        print('Final testing data')
-        # test model
-        testing_predict_label = self.supervise_model.predict(self.testing_X)
-        self.testing_proba = self.supervise_model.predict_proba(self.testing_X)
-        # test performance
-        self.confusion_matrix = confusion_matrix(self.testing_label, testing_predict_label)
-        self.balanced_accuracy = balanced_accuracy_score(self.testing_label,
-                                                         testing_predict_label)
-        print(f'Overall balanced accuracy: {self.balanced_accuracy:.2f}')
-
-        # check confusion matrix, if there are confusion pairs, merge them and redo training
-        confusion_groups = {}
-        normalized_confusion = self.confusion_matrix / self.confusion_matrix.sum(axis=0)
-        for a, b in zip(*np.where(normalized_confusion > confusion_merge_cutoff)):
-            if a == b:
-                continue
-            added = False
-            for head, member in confusion_groups.items():
-                # add pair to existing group
-                if (a in member) or (b in member):
-                    member.add(a)
-                    member.add(b)
-                    added = True
-            if not added:
-                confusion_groups[a] = {a, b}
-        if len(confusion_groups) != 0:
-            print(confusion_groups)
-            print(f'Found {len(confusion_groups)} groups of clusters have > {confusion_merge_cutoff} '
-                  f'confusing population in testing data. Merge each group of clusters together and redo training.')
-            merge_map = {}
-            for head, member in confusion_groups.items():
-                for c in member:
-                    merge_map[c] = head
-            # merge confusing cluster groups
-            self.consensus_clusters = np.array([merge_map[i] if i in merge_map else i
-                                                for i in self.consensus_clusters])
-            # then run supervise_training again, until no confusing group remained or only 1 cluster remained.
-            self.supervise_training(
+            x_train, y_train, x_test, y_test = _split_train_test_per_group(
                 x=x,
-                test_portion=test_portion,
-                n_estimators=n_estimators,
-                n_splits=n_splits,
-                fbeta=fbeta,
-                average=average,
-                n_jobs=n_jobs,
-                outlier_proba_cutoff=outlier_proba_cutoff,
-                # increase cutoff to fasten convergence
-                confusion_merge_cutoff=confusion_merge_cutoff + 0.05)
-            return
+                y=cur_y,
+                frac=self.train_frac,
+                max_train=self.train_max_n,
+                random_state=self.random_state + cur_iter  # every time train-test split got a different random state
+            )
+            clf, score, cluster_map = _single_supervise_evaluation(clf,
+                                                                   x_train,
+                                                                   y_train,
+                                                                   x_test,
+                                                                   y_test,
+                                                                   r1_norm_step=0.01,
+                                                                   r2_norm_step=0.001)
+            if self.target_score < score:
+                print('Stop iteration because score > target score.')
+                break
+            if len(cluster_map) > 0:
+                print(f'Merging {len(cluster_map)} clusters.')
+                cur_y = pd.Series(cur_y).apply(lambda i: cluster_map[i] if i in cluster_map else i)
+                # renumber labels from large to small
+                ordered_map = {c: i for i, c in enumerate(cur_y[cur_y != -1].value_counts().index)}
+                cur_y = pd.Series(cur_y).apply(lambda i: ordered_map[i] if i in ordered_map else i).values
+            else:
+                print('Stop iteration because there is no cluster to merge')
+                break
+        else:
+            print('Stop iteration because reaching maximum iteration.')
+        self._label_with_leiden_outliers = cur_y
+        self.label = cur_y
+        self.supervise_model = clf
+        self.final_accuracy = score
+        return
 
-        # predict_outlier in the end
-        self.consensus_clusters_rescued = self.consensus_clusters.copy()
+    def final_evaluation(self):
+        print(f'\n=== Assign final labels ===')
+        # final evaluation of non-outliers using cross val predict
+        _x = self.X[self.label != -1]
+        _idx = np.where(self.label != -1)[0]
+        _y = self.label[self.label != -1]
+        final_predict_proba = cross_val_predict(self.supervise_model,
+                                                _x,
+                                                y=_y,
+                                                method='predict_proba',
+                                                n_jobs=self.n_jobs,
+                                                verbose=0,
+                                                cv=10)
+        final_predict = pd.Series(np.argmax(final_predict_proba, axis=1), index=_idx)
+        final_cell_proba = pd.Series(np.max(final_predict_proba, axis=1), index=_idx)
+        final_acc = balanced_accuracy_score(_y, final_predict.values)
+        print(f'Final CV Accuracy on non-outliers: {final_acc:.3f}')
+
+        # predict outliers
+        outlier_x = self.X[self.label == -1]
+        outlier_idx = np.where(self.label == -1)[0]
         if len(outlier_idx) != 0:
-            outlier_label = self.supervise_model.predict(self.outlier_X)
-            self.outlier_proba = self.supervise_model.predict_proba(self.outlier_X)
-            # maximum probability of a outlier prediction
-            rescued = self.outlier_proba.max(axis=1) > outlier_proba_cutoff
-            _outlier_idx = outlier_idx[rescued]
-            _outlier_label = outlier_label[rescued]
-            self.consensus_clusters_rescued[_outlier_idx] = _outlier_label
-            print(f'{_outlier_idx.size} / {outlier_idx.size} outliers is rescued by prediction.')
-            print(f'{outlier_idx.size - _outlier_idx.size} outliers remained.')
+            outlier_predict = pd.Series(self.supervise_model.predict(outlier_x),
+                                        index=outlier_idx)
+            outlier_proba = self.supervise_model.predict_proba(outlier_x)
+            outlier_cell_proba = pd.Series(outlier_proba.max(axis=1),
+                                           index=outlier_idx)
+            final_predict = pd.concat([final_predict, outlier_predict]).sort_index()
+            final_cell_proba = pd.concat([final_cell_proba, outlier_cell_proba]).sort_index()
+
+        # final outlier assignment by cell-level max proba < outlier_cell_cutoff
+        final_predict[final_cell_proba.values < self.outlier_cell_cutoff] = -1
+        print(f'Assign {(final_predict == -1).sum()} cells as outliers '
+              f'based on cell-level max prediction probability < {self.outlier_cell_cutoff:.3f}')
+
+        self.label = final_predict.apply(lambda i: f'c{i:03d}' if i != -1 else self.outlier_label).values
+        self.label_proba = final_cell_proba.values
+        self.final_accuracy = final_acc
         return
 
     def save(self, output_path):
         joblib.dump(self, output_path)
-
-    # Plotting
-    def plot_confusion_matrix(self, **heatmap_kws):
-        if self.n_cluster is None:
-            print('Run supervise_training before plot_confusion_matrix')
-            return
-        if self.n_cluster < 2:
-            print(f'Only {self.n_cluster} detected, can not plot confusion matrix')
-            return
-
-        _heatmap_kws = dict(vmin=0.,
-                            vmax=0.2,
-                            cmap='viridis',
-                            square=True)
-        _heatmap_kws.update(heatmap_kws)
-
-        ax = sns.heatmap((self.confusion_matrix / self.confusion_matrix.sum(axis=0)), **_heatmap_kws)
-
-        ax.set(ylim=(-0.5, self.confusion_matrix.shape[1] + 0.5),
-               xlabel='Predicted Label', ylabel='"True" Label')
-        return ax
-
-    def plot_prediction_probability(self, **dist_kws):
-        if self.testing_proba is None:
-            print('Run supervise_training before plot_prediction_probability')
-            return
-
-        _dist_kws = dict(kde=False,
-                         bins=50)
-        _dist_kws.update(dist_kws)
-        ax = sns.distplot(self.testing_proba.max(axis=1),
-                          label='Testing Obs',
-                          **_dist_kws)
-
-        if (self.outlier_X is not None) and (self.outlier_X.shape[0] > 1):
-            ax = sns.distplot(self.outlier_proba.max(axis=1),
-                              label='Outliers',
-                              **_dist_kws)
-        ax.legend()
-        return ax
