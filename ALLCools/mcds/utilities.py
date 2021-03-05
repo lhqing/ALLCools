@@ -2,35 +2,38 @@ import logging
 import numpy as np
 import pandas as pd
 import xarray as xr
-
+import warnings
 log = logging.getLogger()
 
 
-def calculate_posterior_mc_rate(mc_da,
+def calculate_posterior_mc_frac(mc_da,
                                 cov_da,
                                 var_dim=None,
                                 normalize_per_cell=True,
                                 clip_norm_value=10):
-    # so we can do post_rate only in a very small set of gene to prevent memory issue
+    # so we can do post_frac only in a very small set of gene to prevent memory issue
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        # here we expected to see a true_divide warning due to cov=0
+        raw_frac = mc_da / cov_da
 
-    raw_rate = mc_da / cov_da
-    if isinstance(raw_rate, np.ndarray):
+    if isinstance(raw_frac, np.ndarray):
         # np.ndarray
         ndarray = True
     else:
         ndarray = False
 
     if ndarray:
-        cell_rate_mean = np.nanmean(raw_rate, axis=1)
-        cell_rate_var = np.nanvar(raw_rate, axis=1)
+        cell_rate_mean = np.nanmean(raw_frac, axis=1)
+        cell_rate_var = np.nanvar(raw_frac, axis=1)
     else:
         # assume xr.DataArray
         if var_dim is None:
-            cell_rate_mean = raw_rate.mean(axis=1)  # this skip na
-            cell_rate_var = raw_rate.var(axis=1)  # this skip na
+            cell_rate_mean = raw_frac.mean(axis=1)  # this skip na
+            cell_rate_var = raw_frac.var(axis=1)  # this skip na
         else:
-            cell_rate_mean = raw_rate.mean(dim=var_dim)  # this skip na
-            cell_rate_var = raw_rate.var(dim=var_dim)  # this skip na
+            cell_rate_mean = raw_frac.mean(dim=var_dim)  # this skip na
+            cell_rate_var = raw_frac.var(dim=var_dim)  # this skip na
 
     # based on beta distribution mean, var
     # a / (a + b) = cell_rate_mean
@@ -41,9 +44,9 @@ def calculate_posterior_mc_rate(mc_da,
 
     # cell specific posterior rate
     if ndarray:
-        post_rate = (mc_da + cell_a[:, None]) / (cov_da + cell_a[:, None] + cell_b[:, None])
+        post_frac = (mc_da + cell_a[:, None]) / (cov_da + cell_a[:, None] + cell_b[:, None])
     else:
-        post_rate = (mc_da + cell_a) / (cov_da + cell_a + cell_b)
+        post_frac = (mc_da + cell_a) / (cov_da + cell_a + cell_b)
 
     if normalize_per_cell:
         # there are two ways of normalizing per cell, by posterior or prior mean:
@@ -55,20 +58,20 @@ def calculate_posterior_mc_rate(mc_da,
         # i.e. 0 cov feature will provide no info
         prior_mean = cell_a / (cell_a + cell_b)
         if ndarray:
-            post_rate = post_rate / prior_mean[:, None]
+            post_frac = post_frac / prior_mean[:, None]
         else:
-            post_rate = post_rate / prior_mean
+            post_frac = post_frac / prior_mean
         if clip_norm_value is not None:
-            if isinstance(post_rate, np.ndarray):
+            if isinstance(post_frac, np.ndarray):
                 # np.ndarray
-                post_rate[post_rate > clip_norm_value] = clip_norm_value
+                post_frac[post_frac > clip_norm_value] = clip_norm_value
             else:
                 # xarray.DataArray
-                post_rate = post_rate.where(post_rate < clip_norm_value, clip_norm_value)
-    return post_rate
+                post_rate = post_frac.where(post_frac < clip_norm_value, clip_norm_value)
+    return post_frac
 
 
-def calculate_posterior_mc_rate_lazy(mc_da, cov_da, var_dim, output_prefix,
+def calculate_posterior_mc_frac_lazy(mc_da, cov_da, var_dim, output_prefix,
                                      cell_chunk=20000, dask_cell_chunk=500,
                                      normalize_per_cell=True, clip_norm_value=10):
     """
@@ -97,7 +100,7 @@ def calculate_posterior_mc_rate_lazy(mc_da, cov_da, var_dim, output_prefix,
     for chunk_id, cell_list_chunk in enumerate(cell_chunks):
         _mc_da = mc_da.sel(cell=cell_list_chunk)
         _cov_da = cov_da.sel(cell=cell_list_chunk)
-        post_rate = calculate_posterior_mc_rate(mc_da=_mc_da,
+        post_rate = calculate_posterior_mc_frac(mc_da=_mc_da,
                                                 cov_da=_cov_da,
                                                 var_dim=var_dim,
                                                 normalize_per_cell=normalize_per_cell,
@@ -106,7 +109,7 @@ def calculate_posterior_mc_rate_lazy(mc_da, cov_da, var_dim, output_prefix,
             chunk_id = ''
         else:
             chunk_id = f'.{chunk_id}'
-        output_path = output_prefix + f'.{var_dim}_da_rate{chunk_id}.mcds'
+        output_path = output_prefix + f'.{var_dim}_da_frac{chunk_id}.mcds'
 
         # to_netcdf trigger the dask computation, and save output directly into disk, quite memory efficient
         post_rate.to_netcdf(output_path)
@@ -250,6 +253,6 @@ def highly_variable_methylation_feature(
         feature_subset = np.logical_and.reduce((mean > min_mean, mean < max_mean,
                                              dispersion_norm > min_disp,
                                              dispersion_norm < max_disp))
-    df['feature_subset'] = feature_subset
+    df['feature_select'] = feature_subset
     log.info('    finished')
     return df

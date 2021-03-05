@@ -1,6 +1,38 @@
 from sklearn.preprocessing import StandardScaler
 import scanpy as sc
 
+from scipy.stats import ks_2samp
+
+
+def significant_pc_test(adata, p_cutoff=0.1, update=True, obsm='X_pca'):
+    """
+
+    Parameters
+    ----------
+    adata
+    p_cutoff
+    update
+
+    Returns
+    -------
+
+    """
+    pcs = adata.obsm[obsm]
+
+    i = 0
+    for i in range(pcs.shape[1] - 1):
+        cur_pc = pcs[:, i]
+        next_pc = pcs[:, i + 1]
+        p = ks_2samp(cur_pc, next_pc).pvalue
+        if p > p_cutoff:
+            break
+    n_components = min(i + 1, pcs.shape[1])
+    print(f'{n_components} components passed P cutoff of {p_cutoff}.')
+    if update:
+        adata.obsm[obsm] = pcs[:, :n_components]
+        print(f"Changing adata.obsm['X_pca'] from shape {pcs.shape} to {adata.obsm[obsm].shape}")
+    return n_components
+
 
 def balanced_pca(adata, groups='pre_clusters', max_cell_prop=0.1, n_comps=200):
     # downsample large clusters

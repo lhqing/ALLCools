@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.decomposition import PCA
-from ..mcds.utilities import calculate_posterior_mc_rate
+from ..mcds.utilities import calculate_posterior_mc_frac
 from scipy.stats import ks_2samp
 from pynndescent import NNDescent
 from sklearn.metrics import roc_curve
@@ -71,7 +71,7 @@ class MethylScrublet:
         if self.n_neighbors is None:
             self.n_neighbors = min(50, int(round(0.5 * np.sqrt(self._mc_obs.shape[0]))))
         print('Calculating mC frac of observations...')
-        self._frac_obs = calculate_posterior_mc_rate(mc_da=self._mc_obs,
+        self._frac_obs = calculate_posterior_mc_frac(mc_da=self._mc_obs,
                                                      cov_da=self._cov_obs)
 
         print('Simulating doublets...')
@@ -111,7 +111,7 @@ class MethylScrublet:
             mc2.coords['cell'] = range(n_sim)
             cov1.coords['cell'] = range(n_sim)
             cov2.coords['cell'] = range(n_sim)
-        self._frac_sim = calculate_posterior_mc_rate(mc1 + mc2, cov1 + cov2)
+        self._frac_sim = calculate_posterior_mc_frac(mc1 + mc2, cov1 + cov2)
         return
 
     def pca(self):

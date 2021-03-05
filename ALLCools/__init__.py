@@ -1,1 +1,1 @@
-__version__ = '0.1'
+from .mcds.MCDS import MCDS

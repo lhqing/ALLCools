@@ -7,6 +7,8 @@ import matplotlib as mpl
 def plot_decomp_scatters(adata, n_components, base_name='PC', obsm_name='X_pca',
                          hue=None, hue_quantile=(0.25, 0.75),
                          nrows=5, ncols=5):
+    available_comps = adata.obsm[obsm_name].shape[1]
+    nrows = min(nrows, available_comps // 2 // ncols + 1)
     fig, axes = plt.subplots(figsize=(ncols * 3, nrows * 3),
                              nrows=nrows,
                              ncols=ncols,
@@ -16,6 +18,9 @@ def plot_decomp_scatters(adata, n_components, base_name='PC', obsm_name='X_pca',
     for i, ax in enumerate(axes.ravel()):
         _x = i * 2
         _y = i * 2 + 1
+        if _y > available_comps:
+            ax.axis('off')
+            continue
         _plot_data = pd.DataFrame({
             f'{base_name}{_x + 1}': adata.obsm[obsm_name][:, _x],
             f'{base_name}{_y + 1}': adata.obsm[obsm_name][:, _y]

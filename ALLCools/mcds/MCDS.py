@@ -4,7 +4,9 @@ import xarray as xr
 import numpy as np
 from pybedtools import BedTool
 import dask
-from .utilities import highly_variable_methylation_feature, calculate_posterior_mc_rate
+import re
+import warnings
+from .utilities import highly_variable_methylation_feature, calculate_posterior_mc_frac
 from ..plot.qc_plots import cutoff_vs_cell_remain, plot_dispersion
 
 
@@ -54,12 +56,12 @@ class MCDS(xr.Dataset):
                                        concat_dim=obs_dim)
         return cls(ds).squeeze()
 
-    def add_mc_rate(self,
+    def add_mc_frac(self,
                     var_dim,
                     da=None,
                     normalize_per_cell=True,
                     clip_norm_value=10,
-                    rate_da_suffix='rate'):
+                    da_suffix='frac'):
         """
         Add posterior mC rate data array for certain feature type (var_dim).
 
@@ -73,13 +75,12 @@ class MCDS(xr.Dataset):
             if True, will normalize the mC rate data array per cell
         clip_norm_value
             reset larger values in the normalized mC rate data array to this
-        rate_da_suffix
+        da_suffix
             name suffix appended to the calculated mC rate data array
         Returns
         -------
 
         """
-
         if da is None:
             da = f'{var_dim}_da'
         if da not in self.data_vars:
@@ -89,14 +90,19 @@ class MCDS(xr.Dataset):
 
         da_mc = self[da].sel(count_type='mc')
         da_cov = self[da].sel(count_type='cov')
-
-        rate = calculate_posterior_mc_rate(mc_da=da_mc,
+        frac = calculate_posterior_mc_frac(mc_da=da_mc,
                                            cov_da=da_cov,
                                            var_dim=var_dim,
                                            normalize_per_cell=normalize_per_cell,
                                            clip_norm_value=clip_norm_value)
-        self[da + "_" + rate_da_suffix] = rate
-        return
+        self[da + "_" + da_suffix] = frac
+
+    def add_mc_rate(self, *args, **kwargs):
+        warnings.warn(
+            'MCDS.add_mc_rate is renamed to MCDS.add_mc_frac, the default suffix also changed from "rate" to "frac"',
+            DeprecationWarning
+        )
+        self.add_mc_frac(*args, **kwargs)
 
     def add_feature_cov_mean(self, var_dim, obs_dim='cell', plot=True):
         """
@@ -121,6 +127,13 @@ class MCDS(xr.Dataset):
         print(f"Feature {var_dim} mean cov across cells added in MCDS.coords['{var_dim}_cov_mean'].")
         if plot:
             cutoff_vs_cell_remain(feature_cov_mean, name=f'{var_dim}_cov_mean')
+        return
+
+    def add_cell_metadata(self, metadata, obs_name='cell'):
+        metadata.index.name = obs_name
+        mcds_index = self.get_index(obs_name)
+        for name, col in metadata.reindex(mcds_index).items():
+            self.coords[f'{obs_name}_{name}'] = col
         return
 
     def filter_feature_by_cov_mean(self, var_dim, min_cov=0, max_cov=999999):
@@ -192,13 +205,14 @@ class MCDS(xr.Dataset):
         -------
         MCDS
         """
-        feature_bed_df = self.get_feature_bed(var_dim=var_dim)
-        feature_bed = BedTool.from_dataframe(feature_bed_df)
-
-        black_list_bed = BedTool(black_list_path)
-        black_feature = feature_bed.intersect(black_list_bed, f=f, wa=True)
-        black_feature_index = black_feature.to_dataframe().set_index(
-            ['chrom', 'start', 'end']).index
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            feature_bed_df = self.get_feature_bed(var_dim=var_dim)
+            feature_bed = BedTool.from_dataframe(feature_bed_df)
+            black_list_bed = BedTool(black_list_path)
+            black_feature = feature_bed.intersect(black_list_bed, f=f, wa=True)
+            black_feature_index = black_feature.to_dataframe().set_index(
+                ['chrom', 'start', 'end']).index
         black_feature_id = pd.Index(
             feature_bed_df.reset_index().set_index(['chrom', 'start', 'end']).loc[black_feature_index][var_dim])
 
@@ -228,16 +242,15 @@ class MCDS(xr.Dataset):
             mcds = self.sel({var_dim: ~judge})
         return mcds
 
-    def calculate_hvf_svr(self, var_dim, mc_type, obs_dim='cell', n_top_feature=5000, da_suffix='_da',
-                          rate_suffix='_rate', plot=True):
+    def calculate_hvf_svr(self, var_dim, mc_type, obs_dim='cell', n_top_feature=5000, da_suffix='frac', plot=True):
         from sklearn.svm import SVR
         import plotly.graph_objects as go
 
-        feature_mc_frac_mean = self[f'{var_dim}{da_suffix}{rate_suffix}'].sel(mc_type=mc_type).mean(
+        feature_mc_frac_mean = self[f'{var_dim}_da_{da_suffix}'].sel(mc_type=mc_type).mean(
             dim=obs_dim).to_pandas()
-        feature_std = self[f'{var_dim}{da_suffix}{rate_suffix}'].sel(mc_type=mc_type).std(
+        feature_std = self[f'{var_dim}_da_{da_suffix}'].sel(mc_type=mc_type).std(
             dim=obs_dim).to_pandas()
-        feature_cov_mean = self[f'{var_dim}{da_suffix}'].sel(
+        feature_cov_mean = self[f'{var_dim}_da'].sel(
             mc_type=mc_type, count_type='cov').mean(dim=obs_dim).to_pandas()
 
         # remove bad features
@@ -281,16 +294,20 @@ class MCDS(xr.Dataset):
               f'({(selected_feature_index.size / judge.size * 100):.1f}%)')
 
         if plot:
+            if hvf_df.shape[0] > 5000:
+                plot_data = hvf_df.sample(5000)
+            else:
+                plot_data = hvf_df
             fig = go.Figure(data=[
                 go.Scatter3d(
-                    x=hvf_df['mean'],
-                    y=hvf_df['cov'],
-                    z=np.log2(hvf_df['dispersion']),
+                    x=plot_data['mean'],
+                    y=plot_data['cov'],
+                    z=np.log2(plot_data['dispersion']),
                     mode='markers',
                     hoverinfo='none',
                     marker=dict(
                         size=2,
-                        color=hvf_df['feature_select'].map({
+                        color=plot_data['feature_select'].map({
                             True: 'red',
                             False: 'gray'
                         }).tolist(),  # set color to an array/list of desired values
@@ -301,6 +318,9 @@ class MCDS(xr.Dataset):
                                          zaxis_title='log2(Dispersion)'),
                               margin=dict(r=0, b=0, l=0, t=0))
             fig.show()
+
+        for name, column in hvf_df.items():
+            self.coords[f'{var_dim}_{mc_type}_{name}'] = column
         return hvf_df
 
     def calculate_hvf(self,
@@ -369,20 +389,23 @@ class MCDS(xr.Dataset):
             mean_binsize=mean_binsize,
             cov_binsize=cov_binsize)
 
-        selection = hvf_df['feature_subset']
+        selection = hvf_df['feature_select']
         print(f'Total Feature Number:     {selection.size}')
         print(f'Highly Variable Feature:  {selection.sum()} ({(selection.sum() / selection.size * 100):.1f}%)')
 
         if plot:
             plot_dispersion(hvf_df,
-                            hue='feature_subset',
+                            hue='feature_select',
                             zlab='dispersion_norm',
                             data_quantile=(0.01, 0.99),
                             save_animate_path=None,
                             fig_kws=None)
+
+        for name, column in hvf_df.items():
+            self.coords[f'{var_dim}_{mc_type}_{name}'] = column
         return hvf_df
 
-    def get_adata(self, mc_type, var_dim, rate_matrix_suffix='_da_rate', obs_dim='cell'):
+    def get_adata(self, mc_type, var_dim, da_suffix='frac', obs_dim='cell', select_hvf=True):
         """
         Get anndata from MCDS mC rate matrix
         Parameters
@@ -391,28 +414,39 @@ class MCDS(xr.Dataset):
             mC rate type
         var_dim
             Name of variable
-        rate_matrix_suffix
+        da_suffix
             Suffix of mC rate matrix
         obs_dim
             Name of observation
+        select_hvf
+            Select HVF or not, if True, will use mcds.coords['{var_dim}_{mc_type}_feature_select'] to select HVFs
 
         Returns
         -------
         anndata.Anndata
         """
-        use_data = self[f'{var_dim}{rate_matrix_suffix}'].sel({'mc_type': mc_type}).squeeze()
+        if select_hvf:
+            try:
+                use_features = self.get_index(var_dim)[self.coords[f'{var_dim}_{mc_type}_feature_select']]
+                use_data = self[f'{var_dim}_da_{da_suffix}'].sel({'mc_type': mc_type, var_dim: use_features}).squeeze()
+            except KeyError:
+                print('feature_select==True, but no highly variable feature results found, use all features instead.')
+                use_data = self[f'{var_dim}_da_{da_suffix}'].sel({'mc_type': mc_type}).squeeze()
+        else:
+            use_data = self[f'{var_dim}_da_{da_suffix}'].sel({'mc_type': mc_type}).squeeze()
 
         obs_df = pd.DataFrame([], index=use_data.get_index(obs_dim).astype(str))
         var_df = pd.DataFrame([], index=use_data.get_index(var_dim).astype(str))
+        coord_prefix = re.compile(f'({obs_dim}|{var_dim})_')
         for k, v in use_data.coords.items():
-            if k in ['cell', var_dim]:
+            if k in [obs_dim, var_dim]:
                 continue
             try:
                 # v.dims should be size 1
                 if v.dims[0] == obs_dim:
-                    obs_df[k] = v.to_pandas()
+                    obs_df[coord_prefix.sub('', k)] = v.to_pandas()
                 elif v.dims[0] == var_dim:
-                    var_df[k] = v.to_pandas()
+                    var_df[coord_prefix.sub('', k)] = v.to_pandas()
                 else:
                     pass
             except IndexError:
