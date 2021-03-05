@@ -1,7 +1,18 @@
 # Table of contents
 # Learn more at https://jupyterbook.org/customize/toc.html
 - file: intro
-- file: content
-  sections:
-    - file: markdown
-    - file: notebooks
+- part: GET STARTED
+  chapters:
+    - file: start/installation
+    - file: start/intro
+
+- part: CELL LEVEL ANALYSIS
+  chapters:
+    - file: cell_level/basic/intro_basic_clustering
+      sections:
+        - file: cell_level/basic/mch_mcg_100k_basic
+        - file: cell_level/basic/mcg_5kb_basic
+    - file: cell_level/dmg/intro_dmg
+      sections:
+        - file: cell_level/dmg/generate_gene_mc_frac
+        - file: cell_level/dmg/pairwise_dmg
