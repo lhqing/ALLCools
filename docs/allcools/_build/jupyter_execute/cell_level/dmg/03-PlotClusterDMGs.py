@@ -9,7 +9,7 @@ import seaborn as sns
 import pybedtools
 import dask
 from ALLCools.plot import *
-from ALLCools.mcds.MCDS import MCDS
+from ALLCools.mcds.mcds import MCDS
 import pathlib
 import numpy as np
 import warnings

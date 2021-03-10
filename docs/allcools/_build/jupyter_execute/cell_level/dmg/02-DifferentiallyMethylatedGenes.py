@@ -9,7 +9,7 @@ import seaborn as sns
 import pybedtools
 import dask
 from ALLCools.plot import *
-from ALLCools.mcds.MCDS import MCDS
+from ALLCools.mcds.mcds import MCDS
 from ALLCools.clustering import PairwiseDMG, aggregate_pairwise_dmg
 import pathlib
 import numpy as np
