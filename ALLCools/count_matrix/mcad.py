@@ -8,6 +8,9 @@ import anndata
 import subprocess
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from ..utilities import parse_mc_pattern
+from functools import lru_cache
+
+from .._doc import *
 
 
 def _read_region_bed(bed_path):
@@ -17,7 +20,15 @@ def _read_region_bed(bed_path):
     return region_bed
 
 
-def _count_single_allc(allc_path, bed_path, mc_pattern, output_dir):
+@lru_cache(99999)
+def bin_sf(cov, mc, p):
+    if cov > mc:
+        return stats.binom(cov, p).sf(mc)
+    else:
+        return 0
+
+
+def _count_single_allc(allc_path, bed_path, mc_pattern, output_dir, cutoff=0.9):
     patterns = parse_mc_pattern(mc_pattern)
     region_bed = _read_region_bed(bed_path)
 
@@ -47,26 +58,38 @@ def _count_single_allc(allc_path, bed_path, mc_pattern, output_dir):
     # calculate binom sf (1-cdf) value, hypo bins are close to 1, hyper bins are close to 0
     mc_sum, cov_sum = bin_counts.sum()
     p = mc_sum / (cov_sum + 0.000001)  # prevent empty allc error
-    pv = bin_counts.apply(lambda x: stats.binom(x['cov'], p).sf(x['mc']) if x['mc'] < x['cov'] else 0,
+    pv = bin_counts.apply(lambda x: bin_sf(x['cov'], x['mc'], p),
                           axis=1).astype('float16')
-    pv = pv[pv > 0.5]  # get rid of most hyper bins
+    pv = pv[pv > cutoff]  # get rid of most hyper bins
     pv.to_hdf(f'{output_dir}/{pathlib.Path(allc_path).name}.hdf', key='data')
     return
 
 
-def generate_mcad(allc_table, bed_path, output_path, mc_pattern, cpu, cleanup=True):
+@doc_params(
+    allc_table_doc=allc_table_doc,
+    bed_path_doc=region_bed_path_mcad_doc,
+    cpu_doc=cpu_basic_doc,
+    mc_context_doc=mc_context_mcad_doc
+)
+def generate_mcad(allc_table, bed_path, cpu, output_prefix, mc_context, cleanup=True, cutoff=0.9):
     """
-    Generate cell-by-region sparse matrix for a single methylation pattern.
 
     Parameters
     ----------
     allc_table
+        {allc_table_doc}
     bed_path
-    output_path
-    mc_pattern
+        {bed_path_doc}
     cpu
+        {cpu_doc}
+    output_prefix
+        Output prefix of the MCAD
+    mc_context
+        {mc_context_doc}
     cleanup
-
+        Whether remove temp files or not
+    cutoff
+        Values smaller than cutoff will be stored as 0, which reduces the file size
     Returns
     -------
 
@@ -80,7 +103,8 @@ def generate_mcad(allc_table, bed_path, output_path, mc_pattern, cpu, cleanup=Tr
     allc_paths.index.name = 'cell'
 
     # temp dir
-    temp_dir = pathlib.Path(f'{output_path}_pv_temp')
+    _name = pathlib.Path(output_prefix).name
+    temp_dir = pathlib.Path(f'{_name}_pv_temp')
     temp_dir.mkdir(exist_ok=True)
 
     # calculating individual cells
@@ -96,8 +120,9 @@ def generate_mcad(allc_table, bed_path, output_path, mc_pattern, cpu, cleanup=Tr
             future = executor.submit(_count_single_allc,
                                      allc_path=allc_path,
                                      bed_path=bed_path,
-                                     mc_pattern=mc_pattern,
-                                     output_dir=temp_dir)
+                                     mc_pattern=mc_context,
+                                     output_dir=temp_dir,
+                                     cutoff=cutoff)
             futures[future] = cell_id
 
         for future in as_completed(futures):
@@ -130,7 +155,8 @@ def generate_mcad(allc_table, bed_path, output_path, mc_pattern, cpu, cleanup=Tr
     adata = anndata.AnnData(_data,
                             obs=pd.DataFrame([], index=allc_paths.index),
                             var=region_bed)
-    adata.write_h5ad(f'{output_path}.mcad')
+    adata.X = adata.X.astype('float16')
+    adata.write_h5ad(pathlib.Path(f'{output_prefix}.mcad'))
 
     # remove temp
     if cleanup:

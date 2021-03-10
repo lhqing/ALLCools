@@ -18,7 +18,7 @@ def plot_decomp_scatters(adata, n_components, base_name='PC', obsm_name='X_pca',
     for i, ax in enumerate(axes.ravel()):
         _x = i * 2
         _y = i * 2 + 1
-        if _y > available_comps:
+        if _y > available_comps - 1:
             ax.axis('off')
             continue
         _plot_data = pd.DataFrame({

@@ -14,7 +14,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import cross_val_predict
-
+from functools import lru_cache
 
 def _r1_normalize(cmat):
     """
@@ -97,73 +97,6 @@ def _split_train_test_per_group(x, y, frac, max_train, random_state):
     return x_train, y_train, x_test, y_test
 
 
-def _single_supervise_evaluation(
-        clf,
-        x_train,
-        y_train,
-        x_test,
-        y_test,
-        r1_norm_step=0.01,
-        r2_norm_step=0.001,
-        plot=True):
-    # fit model
-    clf.fit(x_train, y_train)
-
-    # calc accuracy
-    y_train_pred = clf.predict(x_train)
-    accuracy_train = balanced_accuracy_score(y_true=y_train, y_pred=y_train_pred)
-    print(f"Balanced accuracy on the training set: {accuracy_train:.3f}")
-    y_test_pred = clf.predict(x_test)
-    accuracy_test = balanced_accuracy_score(y_true=y_test, y_pred=y_test_pred)
-    print(f"Balanced accuracy on the hold-out set: {accuracy_test:.3f}")
-
-    # get confusion matrix
-    y_pred = clf.predict(x_test)
-    cmat = confusion_matrix(y_test, y_pred)
-
-    # normalize confusion matrix
-    r1_cmat = _r1_normalize(cmat)
-    r2_cmat = _r2_normalize(cmat)
-    m1 = np.max(r1_cmat)
-    if np.isnan(m1):
-        m1 = 1.
-    m2 = np.max(r2_cmat)
-    r1_norm_cutoff = m1 - r1_norm_step
-    r2_norm_cutoff = m2 - r2_norm_step
-
-    # final binary matrix to calculate which clusters need to be merged
-    cluster_map = {}
-    judge = np.maximum.reduce([(r1_cmat > r1_norm_cutoff),
-                               (r2_cmat > r2_norm_cutoff)])
-    if judge.sum() > 0:
-        rows, cols = np.where(judge)
-        edges = zip(rows.tolist(), cols.tolist())
-        g = nx.Graph()
-        g.add_edges_from(edges)
-        for comp in nx.connected_components(g):
-            to_label = comp.pop()
-            for remain in comp:
-                cluster_map[remain] = to_label
-
-    if plot:
-        fig, axes = plt.subplots(figsize=(12, 3), dpi=300, ncols=4)
-        ax = axes[0]
-        sns.heatmap(np.log1p(cmat), ax=ax)
-        ax.set_title(f'confusion matrix')
-        ax = axes[1]
-        sns.heatmap(r1_cmat, ax=ax)
-        ax.set_title(f'R1 Norm. cutoff {r1_norm_cutoff:.3f}')
-        ax = axes[2]
-        sns.heatmap(r2_cmat, ax=ax)
-        ax.set_title(f'R2 Norm. cutoff {r2_norm_cutoff:.3f}')
-        ax = axes[3]
-        sns.heatmap(judge, ax=ax)
-        ax.set_title(f'Merge')
-        fig.tight_layout()
-        fig.show()
-    return clf, accuracy_test, cluster_map
-
-
 class ConsensusClustering:
     def __init__(self,
                  model=None,
@@ -177,8 +110,8 @@ class ConsensusClustering:
                  train_frac=0.5,
                  train_max_n=500,
                  max_iter=10,
-                 target_score=0.95,
                  n_jobs=-1,
+                 tao=0.5,
                  outlier_cell_cutoff=0.25,
                  outlier_label='Outlier',
                  plot=True):
@@ -195,12 +128,12 @@ class ConsensusClustering:
         self.train_max_n = train_max_n
         self.plot = plot
         self.max_iter = max_iter
-        self.target_score = target_score
         self.outlier_cell_cutoff = outlier_cell_cutoff
         self.outlier_label = outlier_label
-
+        self.target_n_cluster = None  # estimated from multi leiden mean
         self.n_obs, self.n_pcs = None, None
         self.X = None
+        self.tao = tao  # this prevents merging gradient clusters
         self._neighbors = None
 
         # multiple leiden clustering
@@ -212,6 +145,7 @@ class ConsensusClustering:
         self._label_with_leiden_outliers = None
         self.label = None
         self.label_proba = None
+        self.cv_predicted_label = None
         self.final_accuracy = None
         return
 
@@ -319,7 +253,7 @@ class ConsensusClustering:
         cluster_count = self.leiden_result_df.apply(lambda i: i.unique().size)
         print(f'Found {cluster_count.min()} - {cluster_count.max()} clusters, '
               f'mean {cluster_count.mean():.1f}, std {cluster_count.std():.2f}')
-
+        self.target_n_cluster = int(cluster_count.mean())
         # create a over-clustering version based on all the leiden runs
         print('Summarizing multiple clustering results')
         self.summarize_multi_leiden()
@@ -357,7 +291,7 @@ class ConsensusClustering:
                         clusters[node] = -1
 
         clusters = pd.Series(clusters).sort_index()
-        print(f'{(clusters != -1).sum()} cells assigned to {clusters.unique().size} raw clusters')
+        print(f'{(clusters != -1).sum()} cells assigned to {clusters.unique().size - 1} raw clusters')
         print(f'{(clusters == -1).sum()} cells are outliers')
         self._multi_leiden_clusters = clusters.values
         return
@@ -384,6 +318,84 @@ class ConsensusClustering:
             warm_start=False,
             class_weight=None)
         return clf
+
+    @lru_cache(999)
+    def _cluster_pairs_hamming_dist(self, labels_tuple, c1, c2):
+        labels = np.array(labels_tuple)
+        return pairwise_distances(self.leiden_result_df.loc[labels == c1],
+                                  self.leiden_result_df.loc[labels == c2],
+                                  metric='hamming').mean()
+
+    def _single_supervise_evaluation(
+            self,
+            clf,
+            cur_y,
+            x_train,
+            y_train,
+            x_test,
+            y_test,
+            r1_norm_step=0.01,
+            r2_norm_step=0.001,
+            plot=True):
+        # fit model
+        clf.fit(x_train, y_train)
+
+        # calc accuracy
+        y_train_pred = clf.predict(x_train)
+        accuracy_train = balanced_accuracy_score(y_true=y_train, y_pred=y_train_pred)
+        print(f"Balanced accuracy on the training set: {accuracy_train:.3f}")
+        y_test_pred = clf.predict(x_test)
+        accuracy_test = balanced_accuracy_score(y_true=y_test, y_pred=y_test_pred)
+        print(f"Balanced accuracy on the hold-out set: {accuracy_test:.3f}")
+
+        # get confusion matrix
+        y_pred = clf.predict(x_test)
+        cmat = confusion_matrix(y_test, y_pred)
+
+        # normalize confusion matrix
+        r1_cmat = _r1_normalize(cmat)
+        r2_cmat = _r2_normalize(cmat)
+        m1 = np.max(r1_cmat)
+        if np.isnan(m1):
+            m1 = 1.
+        m2 = np.max(r2_cmat)
+
+        cluster_map = {}
+        while (len(cluster_map) == 0) and (m1 > 0) and (m2 > 0):
+            m1 -= r1_norm_step
+            m2 -= r2_norm_step
+
+            # final binary matrix to calculate which clusters need to be merged
+            judge = np.maximum.reduce([(r1_cmat > m1),
+                                       (r2_cmat > m2)])
+            if judge.sum() > 0:
+                rows, cols = np.where(judge)
+                edges = zip(rows.tolist(), cols.tolist())
+                g = nx.Graph()
+                g.add_edges_from(edges)
+                for comp in nx.connected_components(g):
+                    to_label = comp.pop()
+                    for remain in comp:
+                        cluster_dist = self._cluster_pairs_hamming_dist(tuple(cur_y), remain, to_label)
+                        if cluster_dist < self.tao:
+                            print(f'Distance between {remain} - {to_label}: '
+                                  f'{cluster_dist:.3f} < {self.tao:.3f}')
+                            cluster_map[remain] = to_label
+
+        if plot:
+            fig, axes = plt.subplots(figsize=(9, 3), dpi=300, ncols=3)
+            ax = axes[0]
+            sns.heatmap(np.log1p(cmat), ax=ax)
+            ax.set_title(f'confusion matrix')
+            ax = axes[1]
+            sns.heatmap(r1_cmat, ax=ax)
+            ax.set_title(f'R1 Norm. cutoff {m1:.3f}')
+            ax = axes[2]
+            sns.heatmap(r2_cmat, ax=ax)
+            ax.set_title(f'R2 Norm. cutoff {m2:.3f}')
+            fig.tight_layout()
+            fig.show()
+        return clf, accuracy_test, cluster_map
 
     def supervise_learning(self):
         if self._multi_leiden_clusters is None:
@@ -419,16 +431,14 @@ class ConsensusClustering:
                 max_train=self.train_max_n,
                 random_state=self.random_state + cur_iter  # every time train-test split got a different random state
             )
-            clf, score, cluster_map = _single_supervise_evaluation(clf,
-                                                                   x_train,
-                                                                   y_train,
-                                                                   x_test,
-                                                                   y_test,
-                                                                   r1_norm_step=0.01,
-                                                                   r2_norm_step=0.001)
-            if self.target_score < score:
-                print('Stop iteration because score > target score.')
-                break
+            clf, score, cluster_map = self._single_supervise_evaluation(clf,
+                                                                        cur_y,
+                                                                        x_train,
+                                                                        y_train,
+                                                                        x_test,
+                                                                        y_test,
+                                                                        r1_norm_step=0.01,
+                                                                        r2_norm_step=0.001)
             if len(cluster_map) > 0:
                 print(f'Merging {len(cluster_map)} clusters.')
                 cur_y = pd.Series(cur_y).apply(lambda i: cluster_map[i] if i in cluster_map else i)
@@ -437,6 +447,9 @@ class ConsensusClustering:
                 cur_y = pd.Series(cur_y).apply(lambda i: ordered_map[i] if i in ordered_map else i).values
             else:
                 print('Stop iteration because there is no cluster to merge')
+                break
+            if len(set(cur_y.tolist())) <= self.target_n_cluster:
+                print('Stop iteration because # of clusters <= multi-leiden mean # of clusters.')
                 break
         else:
             print('Stop iteration because reaching maximum iteration.')
@@ -448,21 +461,6 @@ class ConsensusClustering:
 
     def final_evaluation(self):
         print(f'\n=== Assign final labels ===')
-        # final evaluation of non-outliers using cross val predict
-        _x = self.X[self.label != -1]
-        _idx = np.where(self.label != -1)[0]
-        _y = self.label[self.label != -1]
-        final_predict_proba = cross_val_predict(self.supervise_model,
-                                                _x,
-                                                y=_y,
-                                                method='predict_proba',
-                                                n_jobs=self.n_jobs,
-                                                verbose=0,
-                                                cv=10)
-        final_predict = pd.Series(np.argmax(final_predict_proba, axis=1), index=_idx)
-        final_cell_proba = pd.Series(np.max(final_predict_proba, axis=1), index=_idx)
-        final_acc = balanced_accuracy_score(_y, final_predict.values)
-        print(f'Final CV Accuracy on non-outliers: {final_acc:.3f}')
 
         # predict outliers
         outlier_x = self.X[self.label == -1]
@@ -470,18 +468,26 @@ class ConsensusClustering:
         if len(outlier_idx) != 0:
             outlier_predict = pd.Series(self.supervise_model.predict(outlier_x),
                                         index=outlier_idx)
-            outlier_proba = self.supervise_model.predict_proba(outlier_x)
-            outlier_cell_proba = pd.Series(outlier_proba.max(axis=1),
-                                           index=outlier_idx)
-            final_predict = pd.concat([final_predict, outlier_predict]).sort_index()
-            final_cell_proba = pd.concat([final_cell_proba, outlier_cell_proba]).sort_index()
+            for cell, pred_label in outlier_predict.items():
+                self.label[cell] = pred_label
+        print(f'Assigned all the multi-leiden clustering outliers into clusters '
+              f'using the prediction model from final clustering version.')
 
-        # final outlier assignment by cell-level max proba < outlier_cell_cutoff
-        final_predict[final_cell_proba.values < self.outlier_cell_cutoff] = -1
-        print(f'Assign {(final_predict == -1).sum()} cells as outliers '
-              f'based on cell-level max prediction probability < {self.outlier_cell_cutoff:.3f}')
+        # final evaluation of non-outliers using cross val predict
+        final_predict_proba = cross_val_predict(self.supervise_model,
+                                                self.X,
+                                                y=self.label,
+                                                method='predict_proba',
+                                                n_jobs=self.n_jobs,
+                                                verbose=0,
+                                                cv=10)
+        final_predict = pd.Series(np.argmax(final_predict_proba, axis=1))
+        final_cell_proba = pd.Series(np.max(final_predict_proba, axis=1))
+        final_acc = balanced_accuracy_score(self.label, final_predict.values)
+        print(f'Final CV Accuracy on all the cells: {final_acc:.3f}')
 
-        self.label = final_predict.apply(lambda i: f'c{i:03d}' if i != -1 else self.outlier_label).values
+        self.label = [f'c{label}' for label in self.label]
+        self.cv_predicted_label = [f'c{label}' for label in final_predict]
         self.label_proba = final_cell_proba.values
         self.final_accuracy = final_acc
         return

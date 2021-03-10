@@ -2,10 +2,13 @@
 
 ## Content
 
-Here we go through the basic steps to perform cell clustering using genome non-overlapping 100Kb bins as features. We start from raw methylation data stored in MCDS format. It can be used to quickly evaluate get an idea on cell-type composition in a single-cell methylome dataset (e.g., the dataset from a single experiment).
+Here we go through the basic steps to perform cell clustering using genome non-overlapping 100Kb bins as features. We start from raw methylation base count data stored in MCDS format. It can be used to quickly evaluate get an idea on cell-type composition in a single-cell methylome dataset (e.g., the dataset from a single experiment).
+
+### Dataset used in this notebook
+- Adult (age P56) male mouse brain primary motor cortex (MOp) snmC-seq2 data from Liu et al. 2021 (REF)
 
 ## Input
-- MCDS files
+- MCDS files (contains chrom100k dim)
 - Cell metadata
 
 ## Output
@@ -25,15 +28,17 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 from ALLCools import MCDS
-from ALLCools.clustering import tsne, significant_pc_test
+from ALLCools.clustering import tsne, significant_pc_test, log_scale
 from ALLCools.plot import *
 
 ## Parameters
 
 # change this to the path to your metadata
-metadata_path = '../../data/MOp/MOp.CellMetadata.csv.gz'
+metadata_path = '../../data/Brain/MOp+CA.CellMetadata.csv.gz'
 
-# Basic filtering parameters
+# Basic filtering parameters. 
+# These are suggesting values, cutoff maybe different for different tissue and sequencing depths.
+# To determine each cutoff more appropriately, one need to plot the distribution of each metric.
 mapping_rate_cutoff = 0.5
 mapping_rate_col_name = 'MappingRate'  # Name may change
 final_reads_cutoff = 500000
@@ -48,7 +53,10 @@ mcg_col_name = 'mCGFrac'  # Name may change
 # change this to the paths to your MCDS files, 
 # ALLCools.MCDS can handle multiple MCDS files automatically
 mcds_path_list = [
-    '../../data/MOp/3C-171206.mcds'
+    '../../data/Brain/3C-171206.mcds',
+    '../../data/Brain/3C-171207.mcds',
+    '../../data/Brain/9H-190212.mcds',
+    '../../data/Brain/9H-190219.mcds',
 ]
 
 # Dimension name used to do clustering
@@ -101,7 +109,8 @@ judge = (metadata[mapping_rate_col_name] > mapping_rate_cutoff) & \
 metadata = metadata[judge].copy()
 print(f'{metadata.shape[0]} cells passed filtering')
 
-metadata.to_csv('CellMetadata.PassQC.csv.gz')
+# Save
+# metadata.to_csv('Brain.CellMetadata.PassQC.csv.gz')
 
 ## Load MCDS
 
@@ -177,11 +186,19 @@ mcg_hvf = mcds.calculate_hvf_svr(var_dim=var_dim,
 
 mch_adata = mcds.get_adata(mc_type=mch_pattern,
                            var_dim=var_dim,
-                           select_hvf=False)
+                           select_hvf=True)
 mch_adata
 
-mcg_adata = mcds.get_adata(mc_type=mcg_pattern, var_dim=var_dim, select_hvf=False)
+mcg_adata = mcds.get_adata(mc_type=mcg_pattern,
+                           var_dim=var_dim,
+                           select_hvf=True)
 mcg_adata
+
+## Scale
+
+log_scale(mch_adata)
+
+log_scale(mcg_adata)
 
 ## PCA
 
@@ -202,7 +219,7 @@ sc.tl.pca(mcg_adata)
 cg_n_components = significant_pc_test(mcg_adata)
 fig, axes = plot_decomp_scatters(mcg_adata,
                                  n_components=cg_n_components,
-                                 hue=mch_col_name,
+                                 hue=mcg_col_name,
                                  hue_quantile=(0.25, 0.75),
                                  nrows=3,
                                  ncols=5)
@@ -228,7 +245,7 @@ del adata.varm['PCs']
 
 ## Clustering
 
-### Calculate Nearest Neightbors
+### Calculate Nearest Neighbors
 
 if knn == -1:
     knn = max(15, int(np.log2(adata.shape[0])*2))
@@ -279,14 +296,17 @@ _ = categorical_scatter(data=adata.obs,
 
 ### Interactive plot
 
-interactive_scatter(data=adata.obs, hue='leiden', coord_base='umap')
+# in order to reduce the page size, I downsample the data here, you don't need to do this
+interactive_scatter(data=adata.obs.sample(2500),
+                    hue='leiden',
+                    coord_base='umap')
 
 ## Save Results
 
-adata.write_h5ad('adata.chrom100k-clustering.h5ad')
+adata.write_h5ad('Brain.chrom100k-clustering.h5ad')
 adata
 
-adata.obs.to_csv('clustering_results.csv.gz')
+adata.obs.to_csv('Brain.ClusteringResults.csv.gz')
 adata.obs.head()
 
 ## Sanity test
@@ -294,9 +314,7 @@ adata.obs.head()
 # This test dataset come from Liu et al. 2021 Nature, so we already annotated the cell types
 # For new datasets, see following notebooks about identifying cluster markers and annotate clusters
 if 'CellTypeAnno' in adata.obs:
-    adata.obs['CellTypeAnno'] = adata.obs['CellTypeAnno'].fillna('Outlier')
-    
-    fig, ax = plt.subplots(figsize=(4, 4), dpi=300)
+    fig, ax = plt.subplots(figsize=(4, 4), dpi=250)
     _ = categorical_scatter(data=adata.obs,
                             ax=ax,
                             coord_base='umap',
@@ -305,5 +323,5 @@ if 'CellTypeAnno' in adata.obs:
                             palette='tab20',
                             show_legend=True)
 
-You may notice that here is an outlier population near the IT-L4, IT-L5, IT-L6, which is likely correspond to potential doublets. We can identify doublets using the MethylScrublet notebook.
+You may notice that here is an outlier population (nan) near the IT-L4, IT-L5, IT-L6, which is likely correspond to potential doublets. We can identify doublets using the MethylScrublet notebook.
 

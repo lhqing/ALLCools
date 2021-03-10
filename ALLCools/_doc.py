@@ -36,6 +36,9 @@ mc_contexts_doc = "Space separated mC context patterns to extract from ALLC. " \
                   "The context length should be the same as ALLC file context. " \
                   "Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT."
 
+mc_context_mcad_doc = 'mC context pattern to extract from ALLC. ' \
+                      'Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT.'
+
 reference_fasta_doc = 'Path to 1 genome reference FASTA file (the one used for mapping), ' \
                       'use samtools fadix to build .fai index first. Do not compress that file.'
 
@@ -43,7 +46,10 @@ region_bed_names_doc = 'Space separated names for each BED file provided in regi
 
 region_bed_paths_doc = 'Arbitrary genomic regions can be defined in several BED files to count on. ' \
                        'Space separated paths to each BED files, ' \
-                       'the fourth column of BED file should be unique id of the region.'
+                       'The fourth column of the BED file should be unique id of the regions.'
+
+region_bed_path_mcad_doc = 'Arbitrary genomic regions can be defined in one BED file to count on. ' \
+                           'The fourth column of the BED file should be unique id of the regions.'
 
 region_doc = "Only extract records from certain genome region(s) via tabix, " \
              "multiple region can be provided in tabix form. If region is not None, will not run in parallel"

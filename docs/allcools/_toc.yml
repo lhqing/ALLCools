@@ -12,7 +12,20 @@
       sections:
         - file: cell_level/basic/mch_mcg_100k_basic
         - file: cell_level/basic/mcg_5kb_basic
+    - file: cell_level/step_by_step/intro_step_by_step_clustering
+      sections:
+        - file: cell_level/step_by_step/100kb/01-CellBasicFiltering
+        - file: cell_level/step_by_step/100kb/02-BasicFeatureFiltering
+        - file: cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection
+        - file: cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH
+        - file: cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG
+        - file: cell_level/step_by_step/100kb/05-DecompositionAndEmbedding
+        - file: cell_level/step_by_step/100kb/06-Clustering
     - file: cell_level/dmg/intro_dmg
       sections:
-        - file: cell_level/dmg/generate_gene_mc_frac
-        - file: cell_level/dmg/pairwise_dmg
+        - file: cell_level/dmg/01-AddGenemCFractions
+        - file: cell_level/dmg/02-DifferentiallyMethylatedGenes
+        - file: cell_level/dmg/03-PlotClusterDMGs
+    - file: cell_level/doublets/intro_doublets
+      sections:
+        - file: cell_level/doublets/doublet_score_chrom100k

@@ -1,46 +1,8 @@
-import scanpy as sc
-from scipy.stats import ks_2samp
 import numpy as np
 from statsmodels.stats.multitest import multipletests
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-
-
-def _simple_leiden(adata, k, n_components, resolution, plot):
-    sc.pp.scale(adata)
-
-    sc.tl.pca(adata,
-              n_comps=100,
-              zero_center=True,
-              svd_solver='arpack',
-              random_state=0,
-              return_info=False,
-              use_highly_variable=None,
-              dtype='float32',
-              copy=False,
-              chunked=False,
-              chunk_size=None)
-
-    if n_components == 'auto':
-        # determine automatically
-        for i in range(adata.obsm['X_pca'].shape[1] - 1):
-            cur_pc = adata.obsm['X_pca'][:, i]
-            next_pc = adata.obsm['X_pca'][:, i + 1]
-            p = ks_2samp(cur_pc, next_pc).pvalue
-            if p > 0.1:
-                break
-        n_components = i + 1
-    else:
-        n_components = int(n_components)
-        assert n_components > 1
-    sc.pp.neighbors(adata, n_neighbors=k, n_pcs=n_components)
-    sc.tl.leiden(adata, resolution=resolution)
-
-    if plot:
-        sc.tl.umap(adata)
-        sc.pl.umap(adata, color='leiden')
-    return adata
 
 
 def calculate_enrichment_score(raw_adata, labels):
@@ -56,8 +18,8 @@ def calculate_enrichment_score(raw_adata, labels):
                              columns=raw_adata.var_names).groupby(labels).sum()
     in_hypo_frac = in_hypo_n / sizes.values[:, None]
     # hypo-methylated cells not in the cluster
-    freature_sum = in_hypo_n.sum(axis=0)
-    out_hypo_n = freature_sum.values[None, :] - in_hypo_n
+    feature_sum = in_hypo_n.sum(axis=0)
+    out_hypo_n = feature_sum.values[None, :] - in_hypo_n
     out_sizes = n_cells - sizes
     out_hypo_frac = out_hypo_n / out_sizes.values[:, None]
 
@@ -70,8 +32,14 @@ def calculate_enrichment_score(raw_adata, labels):
                 in_mean * sizes.values[:, None]) / out_sizes.values[:, None]
 
     # finally, the enrichment score
-    enrichment = (in_hypo_frac + 0.1) / (out_hypo_frac + 0.1) * (
-            in_mean + 0.01) / (out_mean + 0.01)
+    # In Zeisel et al, the frac and mean change on the same direction,
+    # but in the mc frac case, larger fraction means smaller mean
+    # so the fraction part is reversed
+    enrichment = ((out_hypo_frac + 0.1) / (in_hypo_frac + 0.1)) * \
+                 ((in_mean + 0.01) / (out_mean + 0.01))
+    # enrichment direction is the same as mC fraction
+    # enrichment < 1, the gene is hypo-methylated in that cluster
+    # enrichment > 1, the gene is hyper-methylated in that cluster
     return enrichment
 
 
@@ -80,14 +48,14 @@ def _plot_enrichment_result(qvals, enrichment, null_enrichment, alpha):
 
     # plot feature with q_value pass cutoff
     ax = f_ax
-    sns.histplot((qvals < alpha).sum(axis=0), ax=ax)
+    sns.histplot((qvals < alpha).sum(axis=0), bins=30, ax=ax)
     ax.set_xlabel('# of clusters')
     ax.set_title(f'Features enriched in # of clusters (q<{alpha})')
     sns.despine(ax=ax)
 
     # plot q_value
     ax = q_ax
-    sns.histplot(qvals.ravel(), ax=ax)
+    sns.histplot(qvals.ravel(), ax=ax, bins=50)
     ax.set(yticks=[], ylabel='', xlabel='q value', title='q value distribution')
     sns.despine(ax=ax, left=True)
 
@@ -101,7 +69,13 @@ def _plot_enrichment_result(qvals, enrichment, null_enrichment, alpha):
     })
     plot_data = plot_data.unstack().reset_index()
     plot_data.columns = ['Type', '_', 'Enrichment Score']
-    sns.histplot(data=plot_data, x='Enrichment Score', hue='Type', ax=ax)
+    sns.histplot(data=plot_data,
+                 x='Enrichment Score',
+                 hue='Type',
+                 ax=ax,
+                 bins=100,
+                 binrange=enrichment.unstack().dropna().quantile(
+                     (0., 0.95)).tolist())
     ax.set(yticks=[], ylabel='', title='Enrichment score distribution')
     sns.despine(ax=ax, left=True)
 
@@ -109,24 +83,38 @@ def _plot_enrichment_result(qvals, enrichment, null_enrichment, alpha):
     return
 
 
-def feature_enrichment(adata, top_n=100, k=25, n_components='auto', resolution=1, alpha=0.05, plot=True,
-                       cluster_plot=False):
-    raw_adata = adata
-    # computation happens on a copy of adata, input adata is unchanged
-    print('Computing clusters')
-    adata = _simple_leiden(adata.copy(), k=k, n_components=n_components, resolution=resolution, plot=cluster_plot)
-    n_labels = adata.obs['leiden'].unique().size
+def cluster_enriched_features(adata,
+                              cluster_col,
+                              top_n=200,
+                              alpha=0.05,
+                              stat_plot=True):
+    """
+
+    Parameters
+    ----------
+    adata
+    cluster_col
+    top_n
+    alpha
+    stat_plot
+
+    Returns
+    -------
+
+    """
+    n_labels = adata.obs[cluster_col].unique().size
     print(f'Found {n_labels} clusters to compute feature enrichment score')
+
     if n_labels == 1:
         print('No clusters detected, returning all features')
         use_features = adata.var_names.copy()
 
     else:
         print('Computing enrichment score')
-        enrichment = calculate_enrichment_score(raw_adata, adata.obs['leiden'])
-        null_label = adata.obs.sample(n=adata.shape[0])['leiden']
+        enrichment = calculate_enrichment_score(adata, adata.obs[cluster_col])
+        null_label = adata.obs.sample(n=adata.shape[0])[cluster_col]
         null_label.index = adata.obs_names
-        null_enrichment = calculate_enrichment_score(raw_adata, null_label)
+        null_enrichment = calculate_enrichment_score(adata, null_label)
 
         print('Computing enrichment score FDR-corrected P values')
         qvals = np.zeros_like(enrichment)
@@ -137,7 +125,7 @@ def feature_enrichment(adata, top_n=100, k=25, n_components='auto', resolution=1
             (_, q, _, _) = multipletests(pvals, alpha, method="fdr_bh")
             qvals[:, ix] = q
 
-        if plot:
+        if stat_plot:
             _plot_enrichment_result(qvals=qvals, enrichment=enrichment, null_enrichment=null_enrichment, alpha=alpha)
 
         # calculate use_features without qvals
@@ -158,6 +146,9 @@ def feature_enrichment(adata, top_n=100, k=25, n_components='auto', resolution=1
                   f'use top enriched features that did not pass q<{alpha}')
             use_features = use_features_no_q
 
-    raw_adata.obs['pre_clusters'] = adata.obs['leiden']
-    raw_adata.var['pre_clusters_enriched'] = adata.var_names.isin(use_features)
+        adata.uns[f'{cluster_col}_feature_enrichment'] = {'qvals': qvals.T,
+                                                          'cluster_order': enrichment.index.tolist()}
+
+    # save the calculated results in the input adata
+    adata.var[f'{cluster_col}_enriched_features'] = adata.var_names.isin(use_features)
     return

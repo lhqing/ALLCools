@@ -1,7 +1,13 @@
 from sklearn.preprocessing import StandardScaler
 import scanpy as sc
-
+import numpy as np
 from scipy.stats import ks_2samp
+
+
+def log_scale(adata):
+    adata.X = np.log(adata.X)
+    sc.pp.scale(adata, zero_center=False)
+    return
 
 
 def significant_pc_test(adata, p_cutoff=0.1, update=True, obsm='X_pca'):
