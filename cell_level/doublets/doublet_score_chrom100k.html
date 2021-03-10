@@ -1,0 +1,675 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculate Cell Doublet Score &#8212; ALLCools</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Differential Methylated Genes Analysis" href="intro_doublets.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">ALLCools</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   ALLCools: ALL Cytosine tools
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  GET STARTED
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../start/installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../start/intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  CELL LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../basic/intro_basic_clustering.html">
+   Basic Clustering Walk-through
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic/mch_mcg_100k_basic.html">
+     Basic Cell Clustering Using 100Kb Bins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic/mcg_5kb_basic.html">
+     Basic Cell Clustering Using mCG-5Kb Bins
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../step_by_step/intro_step_by_step_clustering.html">
+   Step-by-step Clustering Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../step_by_step/100kb/01-CellBasicFiltering.html">
+     Cell Basic Filtering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../step_by_step/100kb/02-BasicFeatureFiltering.html">
+     Feature Basic Filtering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
+     Calculate Highly Variable Features And Get mC Fraction AnnData
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+     Preclustering and Cluster Enriched Features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+     Preclustering and Cluster Enriched Features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../step_by_step/100kb/05-DecompositionAndEmbedding.html">
+     Decomposition And Embedding
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../step_by_step/100kb/06-Clustering.html">
+     Consensus Clustering
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../dmg/intro_dmg.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../dmg/01-AddGenemCFractions.html">
+     Calculate Gene mC Fractions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../dmg/02-DifferentiallyMethylatedGenes.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../dmg/03-PlotClusterDMGs.html">
+     Plot Cluster DMGs
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="intro_doublets.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Calculate Cell Doublet Score
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/cell_level/doublets/doublet_score_chrom100k.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fcell_level/doublets/doublet_score_chrom100k.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/cell_level/doublets/doublet_score_chrom100k.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/lhqing/ALLCools/master?urlpath=tree/docs/allcools/cell_level/doublets/doublet_score_chrom100k.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prerequisite">
+   Prerequisite
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#input">
+   Input
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#output">
+   Output
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import">
+   Import
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parameters">
+   Parameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load">
+   Load
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#anndata-with-clustering-results">
+     AnnData with clustering results
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#raw-mc-counts">
+     Raw mC counts
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#calculate-doublet-scores">
+   Calculate Doublet Scores
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plots">
+   Plots
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="calculate-cell-doublet-score">
+<h1>Calculate Cell Doublet Score<a class="headerlink" href="#calculate-cell-doublet-score" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="content">
+<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">¶</a></h2>
+<p>Here we assign a doublet score to each cell. The MethylScrblet method we used here is adapted from the <a class="reference external" href="https://github.com/AllonKleinLab/scrublet">Scrublet package</a> (REF). High doublet score indicates the cell is likely merged from different cell types.</p>
+</div>
+<div class="section" id="prerequisite">
+<h2>Prerequisite<a class="headerlink" href="#prerequisite" title="Permalink to this headline">¶</a></h2>
+<p>Before this step, run the <a class="reference internal" href="../basic/mch_mcg_100k_basic.html"><span class="doc std std-doc">Basic Clustering Walk-through</span></a> to get the cell-by-feature AnnData file.</p>
+</div>
+<div class="section" id="input">
+<h2>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>MCDS Files (contains chrom100K dim)</p></li>
+<li><p>Cell Metadata</p></li>
+<li><p>Output AnnData file from <a class="reference internal" href="../basic/mch_mcg_100k_basic.html"><span class="doc std std-doc">Basic Clustering Walk-through</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Cell doublet score</p></li>
+</ul>
+</div>
+<div class="section" id="import">
+<h2>Import<a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">anndata</span>
+
+<span class="kn">from</span> <span class="nn">ALLCools.clustering</span> <span class="kn">import</span> <span class="n">MethylScrublet</span>
+<span class="kn">from</span> <span class="nn">ALLCools.plot</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">ALLCools</span> <span class="kn">import</span> <span class="n">MCDS</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_parameters docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># change this to the paths to your MCDS files</span>
+<span class="n">mcds_path_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;../../data/MOp/3C-171206.mcds&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">adata_path</span> <span class="o">=</span> <span class="s1">&#39;../basic/MOp.chrom100k-clustering.h5ad&#39;</span>
+<span class="n">var_name</span> <span class="o">=</span> <span class="s1">&#39;chrom100k&#39;</span>
+
+<span class="n">load</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">mc_type</span> <span class="o">=</span> <span class="s1">&#39;CHN&#39;</span>
+
+<span class="c1"># use feature type</span>
+<span class="c1"># HVF: all highly variable features</span>
+<span class="c1"># CEF: cluster enriched features</span>
+<span class="n">feature_type</span> <span class="o">=</span> <span class="s1">&#39;CEF&#39;</span>
+
+<span class="c1"># Clustering resolution</span>
+<span class="n">resolution</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">n_neighbors</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">expected_doublet_rate</span><span class="o">=</span><span class="mf">0.08</span>
+
+<span class="n">plot_type</span> <span class="o">=</span> <span class="s1">&#39;static&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load">
+<h2>Load<a class="headerlink" href="#load" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="anndata-with-clustering-results">
+<h3>AnnData with clustering results<a class="headerlink" href="#anndata-with-clustering-results" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="n">adata_path</span><span class="p">)</span>
+<span class="n">hvf</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">hvf</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">var_name</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">leiden</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="raw-mc-counts">
+<h3>Raw mC counts<a class="headerlink" href="#raw-mc-counts" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mcds_path_list</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="n">use_obs</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span> <span class="o">=</span> <span class="n">mcds</span><span class="p">[</span><span class="s1">&#39;chrom100k_da&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span>
+    <span class="s1">&#39;mc_type&#39;</span><span class="p">:</span> <span class="n">mc_type</span><span class="p">,</span>
+    <span class="s1">&#39;count_type&#39;</span><span class="p">:</span> <span class="s1">&#39;mc&#39;</span><span class="p">,</span>
+    <span class="n">hvf</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">hvf</span>
+<span class="p">})</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">mcds</span><span class="p">[</span><span class="s1">&#39;chrom100k_da&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span>
+    <span class="s1">&#39;mc_type&#39;</span><span class="p">:</span> <span class="n">mc_type</span><span class="p">,</span>
+    <span class="s1">&#39;count_type&#39;</span><span class="p">:</span> <span class="s1">&#39;cov&#39;</span><span class="p">,</span>
+    <span class="n">hvf</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">hvf</span>
+<span class="p">})</span>
+
+<span class="k">if</span> <span class="n">load</span> <span class="ow">and</span> <span class="p">(</span><span class="n">mcds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s1">&#39;cell&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">20000</span><span class="p">):</span>
+    <span class="n">mc</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">cov</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="calculate-doublet-scores">
+<h2>Calculate Doublet Scores<a class="headerlink" href="#calculate-doublet-scores" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scrublet</span> <span class="o">=</span> <span class="n">MethylScrublet</span><span class="p">(</span><span class="n">sim_doublet_ratio</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+                          <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span>
+                          <span class="n">expected_doublet_rate</span><span class="o">=</span><span class="n">expected_doublet_rate</span><span class="p">,</span>
+                          <span class="n">stdev_doublet_rate</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+                          <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">,</span>
+                          <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                          <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">score</span><span class="p">,</span> <span class="n">judge</span> <span class="o">=</span> <span class="n">scrublet</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">cluster_col_name</span><span class="p">])</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;doublet_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;is_doublet&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">judge</span>
+<span class="n">scrublet</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Calculating mC frac of observations...
+Simulating doublets...
+Cell cluster labels are given, will sample similar number of cells from each cluster.
+PCA...
+Calculating doublet scores...
+Automatically set threshold to 0.01
+Detected doublet rate = 5.8%
+Estimated detectable doublet fraction = 83.9%
+Overall doublet rate:
+	Expected   = 8.0%
+	Estimated  = 7.0%
+</pre></div>
+</div>
+<img alt="../../_images/doublet_score_chrom100k_13_1.png" src="../../_images/doublet_score_chrom100k_13_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">cluster_col_name</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/doublet_score_chrom100k_14_0.png" src="../../_images/doublet_score_chrom100k_14_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">continuous_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;doublet_score&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/doublet_score_chrom100k_15_0.png" src="../../_images/doublet_score_chrom100k_15_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="plots">
+<h2>Plots<a class="headerlink" href="#plots" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span>
+                        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                        <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span>
+                        <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">,</span>
+                        <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">,</span>
+                        <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/doublet_score_chrom100k_21_0.png" src="../../_images/doublet_score_chrom100k_21_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">continuous_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;doublet_score&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/doublet_score_chrom100k_22_0.png" src="../../_images/doublet_score_chrom100k_22_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;is_doublet&#39;</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/doublet_score_chrom100k_23_0.png" src="../../_images/doublet_score_chrom100k_23_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./cell_level/doublets"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro_doublets.html" title="previous page">Differential Methylated Genes Analysis</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Hanqing Liu<br/>
+        
+            &copy; Copyright 2019 - 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

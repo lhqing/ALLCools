@@ -1,0 +1,905 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cell Basic Filtering &#8212; ALLCools</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Feature Basic Filtering" href="02-BasicFeatureFiltering.html" />
+    <link rel="prev" title="Step-by-step Clustering Analysis" href="../intro_step_by_step_clustering.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">ALLCools</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../intro.html">
+   ALLCools: ALL Cytosine tools
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  GET STARTED
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../start/installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../start/intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  CELL LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../basic/intro_basic_clustering.html">
+   Basic Clustering Walk-through
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../basic/mch_mcg_100k_basic.html">
+     Basic Cell Clustering Using 100Kb Bins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../basic/mcg_5kb_basic.html">
+     Basic Cell Clustering Using mCG-5Kb Bins
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="../intro_step_by_step_clustering.html">
+   Step-by-step Clustering Analysis
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Cell Basic Filtering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02-BasicFeatureFiltering.html">
+     Feature Basic Filtering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03-HighlyVariableFeatureSelection.html">
+     Calculate Highly Variable Features And Get mC Fraction AnnData
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+     Preclustering and Cluster Enriched Features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+     Preclustering and Cluster Enriched Features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05-DecompositionAndEmbedding.html">
+     Decomposition And Embedding
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06-Clustering.html">
+     Consensus Clustering
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../dmg/intro_dmg.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../dmg/01-AddGenemCFractions.html">
+     Calculate Gene mC Fractions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../dmg/02-DifferentiallyMethylatedGenes.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../dmg/03-PlotClusterDMGs.html">
+     Plot Cluster DMGs
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../doublets/intro_doublets.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../doublets/doublet_score_chrom100k.html">
+     Calculate Cell Doublet Score
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/cell_level/step_by_step/100kb/01-CellBasicFiltering.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fcell_level/step_by_step/100kb/01-CellBasicFiltering.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/cell_level/step_by_step/100kb/01-CellBasicFiltering.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/lhqing/ALLCools/master?urlpath=tree/docs/allcools/cell_level/step_by_step/100kb/01-CellBasicFiltering.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#input">
+   Input
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#output">
+   Output
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#about-cell-mapping-metrics">
+   About Cell Mapping Metrics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import">
+   Import
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parameters">
+   Parameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-metadata">
+   Load metadata
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#filter-by-key-mapping-metrics">
+   Filter by key mapping metrics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bismark-mapping-rate">
+     Bismark Mapping Rate
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#final-reads">
+     Final Reads
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mccc-ccc">
+     mCCC / CCC
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mch-ch">
+     mCH / CH
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mcg">
+     mCG
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#combine-filters">
+   Combine filters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sanity-test">
+   Sanity Test
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#save-filtered-metadata">
+   Save filtered metadata
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="cell-basic-filtering">
+<h1>Cell Basic Filtering<a class="headerlink" href="#cell-basic-filtering" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="content">
+<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of this step is to get rid of cells having <strong>obvious</strong> issues, including the cells with low mapping rate (potentially contaminated), low final reads (empty well or lost a large amount of DNA during library prep.), or abnormal methylation fractions (failed in bisulfite conversion or contaminated).</p>
+<p>We have two principles when applying these filters:</p>
+<ol class="simple">
+<li><p><strong>We set the cutoff based on the distribution of the whole dataset</strong>, where we assume the input dataset is largely successful (mostly &gt; 80-90% cells will pass QC). The cutoffs below are typical values we used in brain methylome analysis. Still, you may need to adjust cutoffs based on different data quality or sample source.</p></li>
+<li><p><strong>The cutoff is intended to be loose.</strong> We do not use stringent cutoffs here to prevent potential data loss. Abormal cells may remain after basic filtering, and will likely be identified in the analysis based filtering (see later notebooks about doublet score and outliers in clustering)</p></li>
+</ol>
+</div>
+<div class="section" id="input">
+<h2>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Cell metadata table that contains mapping metric for basic QC filtering.</p></li>
+</ul>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Filtered cell metadata table that contains only cells passed QC.</p></li>
+</ul>
+</div>
+<div class="section" id="about-cell-mapping-metrics">
+<h2>About Cell Mapping Metrics<a class="headerlink" href="#about-cell-mapping-metrics" title="Permalink to this headline">¶</a></h2>
+<p>We usually gather many mapping metrics from each processing step, but not all of the metrics are relevant to the cell filtering. Below are the most relevant metrics that we use to filter cells. The name of these metrics might be different in your dataset. Change it according to the file you have.</p>
+<p>If you use <a class="reference external" href="https://hq-1.gitbook.io/mc">YAP</a> to do mapping, you can find up-to-date mapping metrics documentation for <a class="reference external" href="https://hq-1.gitbook.io/mc/mapping-metrics/key-mapping-metrics">key metrics</a> and <a class="reference external" href="https://hq-1.gitbook.io/mc/mapping-metrics/all-mapping-metrics">all metrics</a> in YAP doc.</p>
+</div>
+<div class="section" id="import">
+<h2>Import<a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pd</span><span class="p">,</span> <span class="n">sns</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">pkg</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas 1.1.4
+seaborn 0.11.1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s1">&#39;notebook&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_parameters docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># change this to the path to your metadata</span>
+<span class="n">metadata_path</span> <span class="o">=</span> <span class="s1">&#39;../../../data/Brain/MOp+CA.CellMetadata.csv.gz&#39;</span>
+
+<span class="c1"># Basic filtering parameters</span>
+<span class="n">mapping_rate_cutoff</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">mapping_rate_col_name</span> <span class="o">=</span> <span class="s1">&#39;MappingRate&#39;</span>  <span class="c1"># Name may change</span>
+<span class="n">final_reads_cutoff</span> <span class="o">=</span> <span class="mi">500000</span>
+<span class="n">final_reads_col_name</span> <span class="o">=</span> <span class="s1">&#39;FinalmCReads&#39;</span>  <span class="c1"># Name may change</span>
+<span class="n">mccc_cutoff</span> <span class="o">=</span> <span class="mf">0.03</span>
+<span class="n">mccc_col_name</span> <span class="o">=</span> <span class="s1">&#39;mCCCFrac&#39;</span>  <span class="c1"># Name may change</span>
+<span class="n">mch_cutoff</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">mch_col_name</span> <span class="o">=</span> <span class="s1">&#39;mCHFrac&#39;</span>  <span class="c1"># Name may change</span>
+<span class="n">mcg_cutoff</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">mcg_col_name</span> <span class="o">=</span> <span class="s1">&#39;mCGFrac&#39;</span>  <span class="c1"># Name may change</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load-metadata">
+<h2>Load metadata<a class="headerlink" href="#load-metadata" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">metadata_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">total_cells</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Metadata of </span><span class="si">{</span><span class="n">total_cells</span><span class="si">}</span><span class="s1"> cells&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Metadata of 5535 cells
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mCCCFrac</th>
+      <th>mCGFrac</th>
+      <th>mCHFrac</th>
+      <th>FinalmCReads</th>
+      <th>CellInputReadPairs</th>
+      <th>MappingRate</th>
+      <th>Plate</th>
+      <th>Col384</th>
+      <th>Row384</th>
+      <th>CellTypeAnno</th>
+    </tr>
+    <tr>
+      <th>cell</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3C_M_0</th>
+      <td>0.00738</td>
+      <td>0.75953</td>
+      <td>0.02543</td>
+      <td>1195574.0</td>
+      <td>2896392</td>
+      <td>0.625773</td>
+      <td>CEMBA171206-3C-1</td>
+      <td>18</td>
+      <td>0</td>
+      <td>IT-L23</td>
+    </tr>
+    <tr>
+      <th>3C_M_1</th>
+      <td>0.00938</td>
+      <td>0.77904</td>
+      <td>0.03741</td>
+      <td>1355517.0</td>
+      <td>3306366</td>
+      <td>0.631121</td>
+      <td>CEMBA171206-3C-1</td>
+      <td>18</td>
+      <td>1</td>
+      <td>IT-L5</td>
+    </tr>
+    <tr>
+      <th>3C_M_10</th>
+      <td>0.00915</td>
+      <td>0.82430</td>
+      <td>0.03678</td>
+      <td>2815807.0</td>
+      <td>7382298</td>
+      <td>0.657560</td>
+      <td>CEMBA171206-3C-1</td>
+      <td>21</td>
+      <td>1</td>
+      <td>L6b</td>
+    </tr>
+    <tr>
+      <th>3C_M_100</th>
+      <td>0.00978</td>
+      <td>0.79705</td>
+      <td>0.04231</td>
+      <td>2392650.0</td>
+      <td>5865154</td>
+      <td>0.671600</td>
+      <td>CEMBA171206-3C-1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>MGE-Pvalb</td>
+    </tr>
+    <tr>
+      <th>3C_M_1000</th>
+      <td>0.00776</td>
+      <td>0.78781</td>
+      <td>0.02789</td>
+      <td>1922013.0</td>
+      <td>4800236</td>
+      <td>0.646285</td>
+      <td>CEMBA171206-3C-4</td>
+      <td>3</td>
+      <td>8</td>
+      <td>IT-L6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="filter-by-key-mapping-metrics">
+<h2>Filter by key mapping metrics<a class="headerlink" href="#filter-by-key-mapping-metrics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bismark-mapping-rate">
+<h3>Bismark Mapping Rate<a class="headerlink" href="#bismark-mapping-rate" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Low mapping rate indicates potential contamination.</p></li>
+<li><p>Usually R1 mapping rate is 8-10% higher than R2 mapping rate for snmC based technologies, but they should be highly correlated. Here I am using the combined mapping rate. If you are using the R1MappingRate or R2MappingRate, change the cutoff accordingly.</p></li>
+<li><p>Usually there is a peak on the left, which corresponding to the empty wells.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_cutoff</span> <span class="o">=</span> <span class="n">mapping_rate_cutoff</span>
+<span class="n">_col_name</span> <span class="o">=</span> <span class="n">mapping_rate_col_name</span>
+
+<span class="c1"># plot distribution to make sure cutoff is appropriate</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="n">_col_name</span><span class="p">],</span> <span class="n">binrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">_cutoff</span><span class="p">,</span> <span class="n">_cutoff</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">(),</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+<span class="n">mapping_rate_judge</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="n">_col_name</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">_cutoff</span>
+<span class="n">_passed_cells</span> <span class="o">=</span> <span class="n">mapping_rate_judge</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_passed_cells</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="n">total_cells</span><span class="si">}</span><span class="s1"> cells (</span><span class="si">{</span><span class="n">_passed_cells</span> <span class="o">/</span> <span class="n">total_cells</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%) &#39;</span>
+    <span class="sa">f</span><span class="s1">&#39;passed the </span><span class="si">{</span><span class="n">_col_name</span><span class="si">}</span><span class="s1"> cutoff </span><span class="si">{</span><span class="n">_cutoff</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5083 / 5535 cells (91.8%) passed the MappingRate cutoff 0.5.
+</pre></div>
+</div>
+<img alt="../../../_images/01-CellBasicFiltering_11_1.png" src="../../../_images/01-CellBasicFiltering_11_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="final-reads">
+<h3>Final Reads<a class="headerlink" href="#final-reads" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The cutoff may change depending on how deep the library has been sequenced.</p></li>
+<li><p>Usually there is a peak on the left, which corresponding to the empty wells.</p></li>
+<li><p>There are also some cells having small number of reads, these wells may lost most of the DNA during library prep. Cells having too less reads can be hard to classify, since the methylome sequencing is an untargeted whole-genome sequencing.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_cutoff</span> <span class="o">=</span> <span class="n">final_reads_cutoff</span>
+<span class="n">_col_name</span> <span class="o">=</span> <span class="n">final_reads_col_name</span>
+
+<span class="c1"># plot distribution to make sure cutoff is appropriate</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="n">_col_name</span><span class="p">],</span> <span class="n">binrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">5e6</span><span class="p">))</span>
+<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">_cutoff</span><span class="p">,</span> <span class="n">_cutoff</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">(),</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+<span class="n">final_reads_judge</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="n">_col_name</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">_cutoff</span>
+<span class="n">_passed_cells</span> <span class="o">=</span> <span class="n">final_reads_judge</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_passed_cells</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="n">total_cells</span><span class="si">}</span><span class="s1"> cells (</span><span class="si">{</span><span class="n">_passed_cells</span> <span class="o">/</span> <span class="n">total_cells</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%) &#39;</span>
+    <span class="sa">f</span><span class="s1">&#39;passed the </span><span class="si">{</span><span class="n">_col_name</span><span class="si">}</span><span class="s1"> cutoff </span><span class="si">{</span><span class="n">_cutoff</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4982 / 5535 cells (90.0%) passed the FinalmCReads cutoff 500000.
+</pre></div>
+</div>
+<img alt="../../../_images/01-CellBasicFiltering_13_1.png" src="../../../_images/01-CellBasicFiltering_13_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="mccc-ccc">
+<h3>mCCC / CCC<a class="headerlink" href="#mccc-ccc" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The mCCC fraction is used as the proxy of the upper bound of the non-conversion rate for cell-level QC. The methylation level at CCC sites is the lowest among all of the different 3 base-contexts (CNN), and, in fact, it is very close to the unmethylated lambda mC fraction.</p></li>
+<li><p>However, mCCC fraction is correlated with mCH (especially in brain data), so you can see a similar shape of distribution of mCCC and mCH, but the range is different.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_cutoff</span> <span class="o">=</span> <span class="n">mccc_cutoff</span>
+<span class="n">_col_name</span> <span class="o">=</span> <span class="n">mccc_col_name</span>
+
+<span class="c1"># plot distribution to make sure cutoff is appropriate</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="n">_col_name</span><span class="p">],</span> <span class="n">binrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">))</span>
+<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">_cutoff</span><span class="p">,</span> <span class="n">_cutoff</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">(),</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+<span class="n">mccc_judge</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="n">_col_name</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">_cutoff</span>
+<span class="n">_passed_cells</span> <span class="o">=</span> <span class="n">mccc_judge</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_passed_cells</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="n">total_cells</span><span class="si">}</span><span class="s1"> cells (</span><span class="si">{</span><span class="n">_passed_cells</span> <span class="o">/</span> <span class="n">total_cells</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%) &#39;</span>
+    <span class="sa">f</span><span class="s1">&#39;passed the </span><span class="si">{</span><span class="n">_col_name</span><span class="si">}</span><span class="s1"> cutoff </span><span class="si">{</span><span class="n">_cutoff</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5512 / 5535 cells (99.6%) passed the mCCCFrac cutoff 0.03.
+</pre></div>
+</div>
+<img alt="../../../_images/01-CellBasicFiltering_15_1.png" src="../../../_images/01-CellBasicFiltering_15_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="mch-ch">
+<h3>mCH / CH<a class="headerlink" href="#mch-ch" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Usually failed cells (empty well or contaminated) tend to have abormal methylation level as well.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_cutoff</span> <span class="o">=</span> <span class="n">mch_cutoff</span>
+<span class="n">_col_name</span> <span class="o">=</span> <span class="n">mch_col_name</span>
+
+<span class="c1"># plot distribution to make sure cutoff is appropriate</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="n">_col_name</span><span class="p">],</span> <span class="n">binrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">))</span>
+<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">_cutoff</span><span class="p">,</span> <span class="n">_cutoff</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">(),</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+<span class="n">mch_judge</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="n">_col_name</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">_cutoff</span>
+<span class="n">_passed_cells</span> <span class="o">=</span> <span class="n">mch_judge</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_passed_cells</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="n">total_cells</span><span class="si">}</span><span class="s1"> cells (</span><span class="si">{</span><span class="n">_passed_cells</span> <span class="o">/</span> <span class="n">total_cells</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%) &#39;</span>
+    <span class="sa">f</span><span class="s1">&#39;passed the </span><span class="si">{</span><span class="n">_col_name</span><span class="si">}</span><span class="s1"> cutoff </span><span class="si">{</span><span class="n">_cutoff</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5532 / 5535 cells (99.9%) passed the mCHFrac cutoff 0.2.
+</pre></div>
+</div>
+<img alt="../../../_images/01-CellBasicFiltering_17_1.png" src="../../../_images/01-CellBasicFiltering_17_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="mcg">
+<h3>mCG<a class="headerlink" href="#mcg" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Usually failed cells (empty well or contaminated) tend to have abormal methylation level as well.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_cutoff</span> <span class="o">=</span> <span class="n">mcg_cutoff</span>
+<span class="n">_col_name</span> <span class="o">=</span> <span class="n">mcg_col_name</span>
+
+<span class="c1"># plot distribution to make sure cutoff is appropriate</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="n">_col_name</span><span class="p">],</span> <span class="n">binrange</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">_cutoff</span><span class="p">,</span> <span class="n">_cutoff</span><span class="p">),</span> <span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">(),</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+<span class="n">mcg_judge</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="n">_col_name</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">_cutoff</span>
+<span class="n">_passed_cells</span> <span class="o">=</span> <span class="n">mcg_judge</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_passed_cells</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="n">total_cells</span><span class="si">}</span><span class="s1"> cells (</span><span class="si">{</span><span class="n">_passed_cells</span> <span class="o">/</span> <span class="n">total_cells</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%) &#39;</span>
+    <span class="sa">f</span><span class="s1">&#39;passed the </span><span class="si">{</span><span class="n">_col_name</span><span class="si">}</span><span class="s1"> cutoff </span><span class="si">{</span><span class="n">_cutoff</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5531 / 5535 cells (99.9%) passed the mCGFrac cutoff 0.5.
+</pre></div>
+</div>
+<img alt="../../../_images/01-CellBasicFiltering_19_1.png" src="../../../_images/01-CellBasicFiltering_19_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="combine-filters">
+<h2>Combine filters<a class="headerlink" href="#combine-filters" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">judge</span> <span class="o">=</span> <span class="n">mapping_rate_judge</span> <span class="o">&amp;</span> <span class="n">final_reads_judge</span> <span class="o">&amp;</span> <span class="n">mccc_judge</span> <span class="o">&amp;</span> <span class="n">mch_judge</span> <span class="o">&amp;</span> <span class="n">mcg_judge</span>
+<span class="n">passed_cells</span> <span class="o">=</span> <span class="n">judge</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">passed_cells</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="n">total_cells</span><span class="si">}</span><span class="s1"> cells (</span><span class="si">{</span><span class="n">passed_cells</span> <span class="o">/</span> <span class="n">total_cells</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%) &#39;</span>
+    <span class="sa">f</span><span class="s1">&#39;passed all the filters.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4958 / 5535 cells (89.6%) passed all the filters.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="sanity-test">
+<h2>Sanity Test<a class="headerlink" href="#sanity-test" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">passed_cells</span> <span class="o">/</span> <span class="n">total_cells</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.6</span>
+<span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">args</span> <span class="o">+=</span> <span class="p">(</span>
+        <span class="s1">&#39;A large amount of the cells do not pass filter, check your cutoffs or overall dataset quality.&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">raise</span> <span class="n">e</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">passed_cells</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">args</span> <span class="o">+=</span> <span class="p">(</span><span class="s1">&#39;No cell remained after all the filters.&#39;</span><span class="p">,</span> <span class="p">)</span>
+    <span class="k">raise</span> <span class="n">e</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Feel good&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Feel good
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="save-filtered-metadata">
+<h2>Save filtered metadata<a class="headerlink" href="#save-filtered-metadata" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata_filtered</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="n">judge</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">metadata_filtered</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;CellMetadata.PassQC.csv.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./cell_level/step_by_step/100kb"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../intro_step_by_step_clustering.html" title="previous page">Step-by-step Clustering Analysis</a>
+    <a class='right-next' id="next-link" href="02-BasicFeatureFiltering.html" title="next page">Feature Basic Filtering</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Hanqing Liu<br/>
+        
+            &copy; Copyright 2019 - 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

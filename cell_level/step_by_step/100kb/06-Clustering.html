@@ -1,0 +1,883 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consensus Clustering &#8212; ALLCools</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Differential Methylated Genes Analysis" href="../../dmg/intro_dmg.html" />
+    <link rel="prev" title="Decomposition And Embedding" href="05-DecompositionAndEmbedding.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">ALLCools</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../intro.html">
+   ALLCools: ALL Cytosine tools
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  GET STARTED
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../start/installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../start/intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  CELL LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../basic/intro_basic_clustering.html">
+   Basic Clustering Walk-through
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../basic/mch_mcg_100k_basic.html">
+     Basic Cell Clustering Using 100Kb Bins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../basic/mcg_5kb_basic.html">
+     Basic Cell Clustering Using mCG-5Kb Bins
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="../intro_step_by_step_clustering.html">
+   Step-by-step Clustering Analysis
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01-CellBasicFiltering.html">
+     Cell Basic Filtering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02-BasicFeatureFiltering.html">
+     Feature Basic Filtering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03-HighlyVariableFeatureSelection.html">
+     Calculate Highly Variable Features And Get mC Fraction AnnData
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+     Preclustering and Cluster Enriched Features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+     Preclustering and Cluster Enriched Features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05-DecompositionAndEmbedding.html">
+     Decomposition And Embedding
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Consensus Clustering
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../dmg/intro_dmg.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../dmg/01-AddGenemCFractions.html">
+     Calculate Gene mC Fractions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../dmg/02-DifferentiallyMethylatedGenes.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../dmg/03-PlotClusterDMGs.html">
+     Plot Cluster DMGs
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../doublets/intro_doublets.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../doublets/doublet_score_chrom100k.html">
+     Calculate Cell Doublet Score
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/cell_level/step_by_step/100kb/06-Clustering.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fcell_level/step_by_step/100kb/06-Clustering.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/cell_level/step_by_step/100kb/06-Clustering.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/lhqing/ALLCools/master?urlpath=tree/docs/allcools/cell_level/step_by_step/100kb/06-Clustering.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#purpose">
+   Purpose
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#input">
+   Input
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#output">
+   Output
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import">
+   Import
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parameters">
+   Parameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-data">
+   Load Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Consensus Clustering
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot">
+   Plot
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cluster-lables">
+     Cluster Lables
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#final-prediction-probability">
+     Final Prediction Probability
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prediction-probability-per-cluster">
+     Prediction Probability Per Cluster
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#calculate-cluster-dendrogram">
+   Calculate Cluster Dendrogram
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sanity-test">
+   Sanity Test
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#save">
+   Save
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="consensus-clustering">
+<h1>Consensus Clustering<a class="headerlink" href="#consensus-clustering" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of this step is to run consensus clustering.</p>
+</div>
+<div class="section" id="input">
+<h2>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>HVF adata files.</p></li>
+</ul>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>HVF adata file with cluster annotated.</p></li>
+</ul>
+</div>
+<div class="section" id="import">
+<h2>Import<a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">anndata</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">ALLCools.clustering</span> <span class="kn">import</span> <span class="n">ConsensusClustering</span><span class="p">,</span> <span class="n">Dendrogram</span>
+<span class="kn">from</span> <span class="nn">ALLCools.plot</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_parameters docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># clustering name</span>
+<span class="n">clustering_name</span> <span class="o">=</span> <span class="s1">&#39;L1&#39;</span>
+
+<span class="c1"># input data</span>
+<span class="n">cell_meta_path</span> <span class="o">=</span> <span class="s1">&#39;./CellMetadata.PassQC.csv.gz&#39;</span>
+<span class="n">adata_path</span> <span class="o">=</span> <span class="s1">&#39;./adata.with_coords.h5ad&#39;</span>
+<span class="n">coord_base</span> <span class="o">=</span> <span class="s1">&#39;tsne&#39;</span>
+
+<span class="c1"># ConsensusClustering</span>
+<span class="n">n_neighbors</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span>
+<span class="n">min_cluster_size</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">consensus_rate</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">leiden_repeats</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">leiden_resolution</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">train_frac</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">train_max_n</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">outlier_cell_cutoff</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">outlier_label</span> <span class="o">=</span> <span class="s1">&#39;Outlier&#39;</span>
+
+<span class="c1"># Dendrogram via Multiscale Bootstrap Resampling</span>
+<span class="n">nboot</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">method_dist</span> <span class="o">=</span> <span class="s1">&#39;correlation&#39;</span>
+<span class="n">method_hclust</span> <span class="o">=</span> <span class="s1">&#39;average&#39;</span>
+
+<span class="n">plot_type</span> <span class="o">=</span> <span class="s1">&#39;static&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load-data">
+<h2>Load Data<a class="headerlink" href="#load-data" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cell_meta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">cell_meta_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="n">adata_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Consensus Clustering<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cc</span> <span class="o">=</span> <span class="n">ConsensusClustering</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span>
+                         <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+                         <span class="n">min_cluster_size</span><span class="o">=</span><span class="n">min_cluster_size</span><span class="p">,</span>
+                         <span class="n">consensus_rate</span><span class="o">=</span><span class="n">consensus_rate</span><span class="p">,</span>
+                         <span class="n">repeats</span><span class="o">=</span><span class="n">leiden_repeats</span><span class="p">,</span>
+                         <span class="n">resolution</span><span class="o">=</span><span class="n">leiden_resolution</span><span class="p">,</span>
+                         <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+                         <span class="n">train_frac</span><span class="o">=</span><span class="n">train_frac</span><span class="p">,</span>
+                         <span class="n">train_max_n</span><span class="o">=</span><span class="n">train_max_n</span><span class="p">,</span>
+                         <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+                         <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+                         <span class="n">outlier_cell_cutoff</span><span class="o">=</span><span class="n">outlier_cell_cutoff</span><span class="p">,</span>
+                         <span class="n">outlier_label</span><span class="o">=</span><span class="n">outlier_label</span><span class="p">,</span>
+                         <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s1">&#39;X_pca&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+        <span class="s1">&#39;X_pca do not exist in the adata file, run PCA first before clustering.&#39;</span>
+    <span class="p">)</span>
+<span class="n">cc</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;X_pca&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computing nearest neighbor graph
+Computing multiple clustering with different random seeds
+Repeating leiden clustering 500 times
+Found 26 - 27 clusters, mean 27.0, std 0.04
+Summarizing multiple clustering results
+4825 cells assigned to 43 raw clusters
+133 cells are outliers
+
+=== Start supervise model training and cluster merging ===
+
+=== iteration 1 ===
+43 non-outlier labels
+Balanced accuracy on the training set: 0.966
+Balanced accuracy on the hold-out set: 0.911
+Distance between 7 - 8: 0.004 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 2 ===
+42 non-outlier labels
+Balanced accuracy on the training set: 0.965
+Balanced accuracy on the hold-out set: 0.914
+Distance between 35 - 0: 0.002 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 3 ===
+41 non-outlier labels
+Balanced accuracy on the training set: 0.966
+Balanced accuracy on the hold-out set: 0.897
+Distance between 23 - 10: 0.008 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 4 ===
+40 non-outlier labels
+Balanced accuracy on the training set: 0.970
+Balanced accuracy on the hold-out set: 0.928
+Distance between 7 - 26: 0.054 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 5 ===
+39 non-outlier labels
+Balanced accuracy on the training set: 0.967
+Balanced accuracy on the hold-out set: 0.937
+Distance between 4 - 35: 0.362 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 6 ===
+38 non-outlier labels
+Balanced accuracy on the training set: 0.976
+Balanced accuracy on the hold-out set: 0.927
+Distance between 36 - 3: 0.283 &lt; 0.500
+Distance between 23 - 10: 0.004 &lt; 0.500
+Merging 2 clusters.
+
+=== iteration 7 ===
+36 non-outlier labels
+Balanced accuracy on the training set: 0.966
+Balanced accuracy on the hold-out set: 0.931
+Distance between 4 - 33: 0.338 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 8 ===
+35 non-outlier labels
+Balanced accuracy on the training set: 0.968
+Balanced accuracy on the hold-out set: 0.950
+Distance between 34 - 8: 0.005 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 9 ===
+34 non-outlier labels
+Balanced accuracy on the training set: 0.975
+Balanced accuracy on the hold-out set: 0.957
+Distance between 31 - 4: 0.327 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 10 ===
+33 non-outlier labels
+Balanced accuracy on the training set: 0.980
+Balanced accuracy on the hold-out set: 0.960
+Distance between 7 - 4: 0.020 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 11 ===
+32 non-outlier labels
+Balanced accuracy on the training set: 0.977
+Balanced accuracy on the hold-out set: 0.958
+Distance between 31 - 0: 0.016 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 12 ===
+31 non-outlier labels
+Balanced accuracy on the training set: 0.986
+Balanced accuracy on the hold-out set: 0.974
+Distance between 24 - 0: 0.012 &lt; 0.500
+Merging 1 clusters.
+
+=== iteration 13 ===
+30 non-outlier labels
+Balanced accuracy on the training set: 0.986
+Balanced accuracy on the hold-out set: 0.964
+Stop iteration because there is no cluster to merge
+
+=== Assign final labels ===
+Assigned all the multi-leiden clustering outliers into clusters using the prediction model from final clustering version.
+Final CV Accuracy on all the cells: 0.974
+</pre></div>
+</div>
+<img alt="../../../_images/06-Clustering_9_1.png" src="../../../_images/06-Clustering_9_1.png" />
+<img alt="../../../_images/06-Clustering_9_2.png" src="../../../_images/06-Clustering_9_2.png" />
+<img alt="../../../_images/06-Clustering_9_3.png" src="../../../_images/06-Clustering_9_3.png" />
+<img alt="../../../_images/06-Clustering_9_4.png" src="../../../_images/06-Clustering_9_4.png" />
+<img alt="../../../_images/06-Clustering_9_5.png" src="../../../_images/06-Clustering_9_5.png" />
+<img alt="../../../_images/06-Clustering_9_6.png" src="../../../_images/06-Clustering_9_6.png" />
+<img alt="../../../_images/06-Clustering_9_7.png" src="../../../_images/06-Clustering_9_7.png" />
+<img alt="../../../_images/06-Clustering_9_8.png" src="../../../_images/06-Clustering_9_8.png" />
+<img alt="../../../_images/06-Clustering_9_9.png" src="../../../_images/06-Clustering_9_9.png" />
+<img alt="../../../_images/06-Clustering_9_10.png" src="../../../_images/06-Clustering_9_10.png" />
+<img alt="../../../_images/06-Clustering_9_11.png" src="../../../_images/06-Clustering_9_11.png" />
+<img alt="../../../_images/06-Clustering_9_12.png" src="../../../_images/06-Clustering_9_12.png" />
+<img alt="../../../_images/06-Clustering_9_13.png" src="../../../_images/06-Clustering_9_13.png" />
+</div>
+</div>
+</div>
+<div class="section" id="plot">
+<h2>Plot<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cluster-lables">
+<h3>Cluster Lables<a class="headerlink" href="#cluster-lables" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">clustering_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">label</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span>
+                        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                        <span class="n">hue</span><span class="o">=</span><span class="n">clustering_name</span><span class="p">,</span>
+                        <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span>
+                        <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">,</span>
+                        <span class="n">text_anno</span><span class="o">=</span><span class="n">clustering_name</span><span class="p">,</span>
+                        <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/06-Clustering_11_0.png" src="../../../_images/06-Clustering_11_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="final-prediction-probability">
+<h3>Final Prediction Probability<a class="headerlink" href="#final-prediction-probability" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">clustering_name</span> <span class="o">+</span> <span class="s1">&#39;_proba&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">label_proba</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">continuous_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span>
+                       <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                       <span class="n">hue_norm</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                       <span class="n">hue</span><span class="o">=</span><span class="n">clustering_name</span> <span class="o">+</span> <span class="s1">&#39;_proba&#39;</span><span class="p">,</span>
+                       <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/06-Clustering_13_0.png" src="../../../_images/06-Clustering_13_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="prediction-probability-per-cluster">
+<h3>Prediction Probability Per Cluster<a class="headerlink" href="#prediction-probability-per-cluster" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span>
+               <span class="n">x</span><span class="o">=</span><span class="n">clustering_name</span><span class="p">,</span>
+               <span class="n">y</span><span class="o">=</span><span class="n">clustering_name</span> <span class="o">+</span> <span class="s1">&#39;_proba&#39;</span><span class="p">,</span>
+               <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;width&#39;</span><span class="p">,</span>
+               <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+               <span class="n">cut</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+               <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Prediction Probability Per Cluster&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/06-Clustering_15_0.png" src="../../../_images/06-Clustering_15_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="calculate-cluster-dendrogram">
+<h2>Calculate Cluster Dendrogram<a class="headerlink" href="#calculate-cluster-dendrogram" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># using the cluster centroids in PC space to calculate dendrogram</span>
+<span class="n">pc_matrix</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;X_pca&#39;</span><span class="p">]</span>
+<span class="n">pc_center</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pc_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">clustering_name</span><span class="p">])</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="n">pc_center</span> <span class="o">=</span> <span class="n">pc_center</span><span class="p">[</span><span class="n">pc_center</span><span class="o">.</span><span class="n">index</span> <span class="o">!=</span> <span class="n">outlier_label</span><span class="p">]</span>
+<span class="c1"># Dendrogram take feature-by-sample dataframe as R pvclust function does.</span>
+<span class="n">pc_center</span> <span class="o">=</span> <span class="n">pc_center</span><span class="o">.</span><span class="n">T</span>
+<span class="n">idx_to_cluster</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pc_center</span><span class="o">.</span><span class="n">index</span><span class="p">)}</span>
+
+<span class="n">pc_center</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span><span class="s1">&#39;ClusterPCCenters.hdf&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+<span class="n">pc_center</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(67, 30)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dendro</span> <span class="o">=</span> <span class="n">Dendrogram</span><span class="p">(</span><span class="n">nboot</span><span class="o">=</span><span class="n">nboot</span><span class="p">,</span>
+                    <span class="n">method_dist</span><span class="o">=</span><span class="n">method_dist</span><span class="p">,</span>
+                    <span class="n">method_hclust</span><span class="o">=</span><span class="n">method_hclust</span><span class="p">,</span>
+                    <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+<span class="n">dendro</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pc_center</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating a temporary cluster...done:
+socket cluster with 40 nodes on host ‘localhost’
+Multiscale bootstrap... Done.
+</pre></div>
+</div>
+<img alt="../../../_images/06-Clustering_18_1.png" src="../../../_images/06-Clustering_18_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="sanity-test">
+<h2>Sanity Test<a class="headerlink" href="#sanity-test" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s1">&#39;CellTypeAnno&#39;</span> <span class="ow">in</span> <span class="n">cell_meta</span><span class="p">:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span>
+                            <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                            <span class="n">hue</span><span class="o">=</span><span class="n">clustering_name</span><span class="p">,</span>
+                            <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span>
+                            <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">,</span>
+                            <span class="n">text_anno</span><span class="o">=</span><span class="n">clustering_name</span><span class="p">,</span>
+                            <span class="n">show_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell_meta</span><span class="p">[</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">]</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">]),</span>
+                            <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                            <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">,</span>
+                            <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span>
+                            <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">,</span>
+                            <span class="n">text_anno</span><span class="o">=</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">,</span>
+                            <span class="n">show_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/06-Clustering_20_0.png" src="../../../_images/06-Clustering_20_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="save">
+<h2>Save<a class="headerlink" href="#save" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cc</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;ConcensusClustering.model.lib&#39;</span><span class="p">)</span>
+<span class="n">dendro</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;Dendrogram.lib&#39;</span><span class="p">)</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">write_h5ad</span><span class="p">(</span><span class="n">adata_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>... storing &#39;L1&#39; as categorical
+... storing &#39;CellTypeAnno&#39; as categorical
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AnnData object with n_obs × n_vars = 4958 × 2868
+    obs: &#39;leiden&#39;, &#39;mCHFrac&#39;, &#39;tsne_0&#39;, &#39;tsne_1&#39;, &#39;umap_0&#39;, &#39;umap_1&#39;, &#39;L1&#39;, &#39;L1_proba&#39;, &#39;CellTypeAnno&#39;
+    var: &#39;chrom&#39;, &#39;bin_start&#39;, &#39;bin_end&#39;, &#39;CHN_mean&#39;, &#39;CHN_dispersion&#39;, &#39;CHN_cov&#39;, &#39;CHN_score&#39;, &#39;CHN_feature_select&#39;, &#39;CGN_mean&#39;, &#39;CGN_dispersion&#39;, &#39;CGN_cov&#39;, &#39;CGN_score&#39;, &#39;CGN_feature_select&#39;, &#39;leiden_enriched_features&#39;, &#39;mean&#39;, &#39;std&#39;
+    uns: &#39;leiden&#39;, &#39;leiden_colors&#39;, &#39;leiden_feature_enrichment&#39;, &#39;leiden_sizes&#39;, &#39;neighbors&#39;, &#39;paga&#39;, &#39;umap&#39;
+    obsm: &#39;X_pca&#39;, &#39;X_tsne&#39;, &#39;X_umap&#39;
+    obsp: &#39;connectivities&#39;, &#39;distances&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./cell_level/step_by_step/100kb"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="05-DecompositionAndEmbedding.html" title="previous page">Decomposition And Embedding</a>
+    <a class='right-next' id="next-link" href="../../dmg/intro_dmg.html" title="next page">Differential Methylated Genes Analysis</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Hanqing Liu<br/>
+        
+            &copy; Copyright 2019 - 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
