@@ -10,7 +10,7 @@ from numpy import log
 from scipy.special import betaln
 
 from .dendrogram import extract_all_nodes
-from .dmr_lineage_plot import *
+from ALLCools.plot.dendro import *
 
 
 def linkage_to_graph(linkage):
@@ -397,7 +397,7 @@ class DMRLineage:
             self.mc_df.columns,
             ax=ax_tree,
             plot_node_id=plot_node_id,
-            palette=palette,
+            node_palette=palette,
             node_hue=total_group_rate,
             node_hue_norm=hue_norm,
             node_size={k: abs(v)

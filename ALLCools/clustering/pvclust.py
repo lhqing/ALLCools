@@ -104,11 +104,23 @@ class Dendrogram:
         self.dendrogram = None
         self.edge_stats = None
 
-    def fit(self, data, plot=True):
+    def fit(self, data):
+        """
+
+        Parameters
+        ----------
+        data
+            The data is in obs-by-var form, row is obs.
+
+        Returns
+        -------
+
+        """
         importr("base")
         pvclust = importr("pvclust")
         with localconverter(ro.default_converter + pandas2ri.converter):
-            r_df = ro.conversion.py2rpy(data)
+            # The data is in obs-by-var form, row is obs. Transpose for R.
+            r_df = ro.conversion.py2rpy(data.T)
         if self.n_jobs == -1:
             self.n_jobs = True
         result = pvclust.pvclust(r_df,
@@ -118,12 +130,19 @@ class Dendrogram:
                                  parallel=self.n_jobs)
         # dendrogram info
         hclust = result[0]
-        linkage, label_order, dendro = _hclust_to_scipy_linkage(hclust, plot)
+        linkage, label_order, dendro = _hclust_to_scipy_linkage(hclust, plot=False)
         self.linkage = linkage
         self.label_order = label_order
         self.dendrogram = dendro
         # scores of edges by pvclust bootstrap
-        self.edge_stats = pd.DataFrame(result[1], index=result[1].colnames).T
+        edge_stats = pd.DataFrame(result[1], index=result[1].colnames).T
+        edge_stats.index = linkage.index
+        child_dict = {}
+        # pvclust edge stat is only for parents, here turn it into child basis
+        for parent, (left, right, *_) in linkage.iterrows():
+            child_dict[int(left)] = edge_stats.loc[parent]
+            child_dict[int(right)] = edge_stats.loc[parent]
+        self.edge_stats = pd.DataFrame(child_dict).T.sort_index()
         return
 
     def save(self, output_path):

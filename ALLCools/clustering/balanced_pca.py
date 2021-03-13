@@ -2,6 +2,7 @@ from sklearn.preprocessing import StandardScaler
 import scanpy as sc
 import numpy as np
 from scipy.stats import ks_2samp
+import pandas as pd
 
 
 def log_scale(adata):
@@ -81,3 +82,12 @@ def balanced_pca(adata, groups='pre_clusters', max_cell_prop=0.1, n_comps=200):
         adata.obsm['X_pca'] = adata.X @ adata_train.varm['PCs']
         adata.uns['pca'] = adata_train.uns['pca']
     return adata
+
+
+def get_pc_centers(adata, group, outlier_label=None, obsm='X_pca'):
+    pc_matrix = adata.obsm[obsm]
+    pc_center = pd.DataFrame(pc_matrix, index=adata.obs_names).groupby(
+        adata.obs[group]).median()
+    if outlier_label is not None:
+        pc_center = pc_center[pc_center.index != outlier_label]
+    return pc_center

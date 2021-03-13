@@ -9,8 +9,10 @@ from sklearn.metrics import roc_auc_score
 from itertools import combinations
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import subprocess
-
+import matplotlib.pyplot as plt
 from sklearn.metrics import pairwise_distances
+from ..plot import categorical_scatter, continuous_scatter
+
 
 def single_pairwise_dmg(cluster_l, cluster_r,
                         top_n, adj_p_cutoff,
@@ -121,7 +123,8 @@ class PairwiseDMG:
         self._outlier_label = outlier
 
         self.X = x
-        self.groups = groups
+        use_order = x.get_index(obs_dim)
+        self.groups = groups.astype('category').reindex(use_order)
 
         # save adata for each group to dict
         print('Generating cluster AnnData files')
@@ -167,7 +170,7 @@ class PairwiseDMG:
         n_pairs = len(pairs)
 
         with ProcessPoolExecutor(min(n_pairs, self.n_jobs)) as exe:
-            step = max(1, n_pairs // 20)
+            step = max(1, n_pairs // 10)
             futures = {}
             for (cluster_l, cluster_r) in pairs:
                 f = exe.submit(single_pairwise_dmg,
@@ -191,23 +194,113 @@ class PairwiseDMG:
     def _cleanup(self):
         subprocess.run(['rm', '-rf', str(self._adata_dir), str(self._dmg_dir)], check=True)
 
+    def aggregate_pairwise_dmg(self, adata, groupby, obsm='X_pca'):
+        # using the cluster centroids in PC space to calculate dendrogram
+        pc_matrix = adata.obsm[obsm]
+        pc_center = pd.DataFrame(pc_matrix, index=adata.obs_names).groupby(adata.obs[groupby]).median()
+        # calculate cluster pairwise similarity
+        cluster_dist = pairwise_distances(pc_center)
+        cluster_dist = pd.DataFrame(cluster_dist, index=pc_center.index, columns=pc_center.index)
+        cluster_dist_norm = cluster_dist / cluster_dist.values.max()
+        cluster_sim = 1 - cluster_dist_norm
+        cluster_pair_sim_dict = {f'{a}-{b}': value for (a, b), value in cluster_sim.unstack().iteritems()}
+        self.dmg_table['similarity'] = self.dmg_table['left-right'].map(cluster_pair_sim_dict)
 
-def aggregate_pairwise_dmg(dmg_table, adata, groupby):
-    # using the cluster centroids in PC space to calculate dendrogram
-    pc_matrix = adata.obsm['X_pca']
-    pc_center = pd.DataFrame(pc_matrix, index=adata.obs_names).groupby(adata.obs[groupby]).median()
-    # calculate cluster pairwise similarity
-    cluster_dist = pairwise_distances(pc_center)
-    cluster_dist = pd.DataFrame(cluster_dist, index=pc_center.index, columns=pc_center.index)
-    cluster_dist_norm = cluster_dist / cluster_dist.values.max()
-    cluster_sim = 1 - cluster_dist_norm
-    cluster_pair_sim_dict = {f'{a}-{b}': value for (a, b), value in cluster_sim.unstack().iteritems()}
-    dmg_table['similarity'] = dmg_table['left-right'].map(cluster_pair_sim_dict)
+        # aggregate pairwise DMG to get the cluster level DMG, use the similarity to normalize AUROC
+        cluster_dmgs = {}
+        for cluster, sub_df in self.dmg_table.groupby('hypo_in'):
+            values = sub_df['AUROC'] * sub_df['similarity']
+            cluster_dmg_order = values.groupby(values.index).sum().sort_values(ascending=False)
+            cluster_dmgs[cluster] = cluster_dmg_order
+        return cluster_dmgs
 
-    # aggregate pairwise DMG to get the cluster level DMG, use the similarity to normalize AUROC
-    cluster_dmgs = {}
-    for cluster, sub_df in dmg_table.groupby('hypo_in'):
-        values = sub_df['AUROC'] * sub_df['similarity']
-        cluster_dmg_order = values.groupby(values.index).sum().sort_values(ascending=False)
-        cluster_dmgs[cluster] = cluster_dmg_order
-    return cluster_dmgs
+
+def single_ovr_dmg(cell_label, mcds, obs_dim, var_dim, mc_type, top_n, adj_p_cutoff, fc_cutoff, auroc_cutoff):
+    # get adata
+    cell_judge = mcds.get_index(obs_dim).isin(cell_label.index)
+    adata = mcds.sel({obs_dim: cell_judge}).get_adata(mc_type=mc_type, var_dim=var_dim, select_hvf=False)
+    adata.var = pd.DataFrame([], index=adata.var_names)
+    adata.obs['groups'] = cell_label.astype('category')
+
+    # calc DMG
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        sc.tl.rank_genes_groups(adata,
+                                groupby='groups',
+                                n_genes=top_n,
+                                method='wilcoxon')
+    dmg_result = pd.DataFrame({
+        data_key: pd.DataFrame(adata.uns['rank_genes_groups'][data_key]).stack()
+        for data_key in ['names', 'pvals_adj']
+    })
+    dmg_result = dmg_result[dmg_result.index.get_level_values(1).astype(bool)].reset_index(drop=True)
+    # add fold change
+    in_cells_mean = adata.X[adata.obs['groups'].astype(bool),].mean(axis=0)
+    out_cells_mean = adata.X[~adata.obs['groups'].astype(bool),].mean(axis=0)
+    fc = pd.Series(in_cells_mean / out_cells_mean, index=adata.var_names)
+    dmg_result['fc'] = dmg_result['names'].map(fc)
+    # filter
+    dmg_result = dmg_result[(dmg_result['pvals_adj'] < adj_p_cutoff) & (
+            dmg_result['fc'] < fc_cutoff)].copy()
+    dmg_result = dmg_result.set_index('names').drop_duplicates()
+
+    # add AUROC and filter again
+    auroc = {}
+    for gene, row in dmg_result.iterrows():
+        yscore = adata.obs_vector(gene)
+        ylabel = adata.obs['groups'] == True
+        score = roc_auc_score(ylabel, yscore)
+        score = abs(score - 0.5) + 0.5
+        auroc[gene] = score
+    dmg_result['AUROC'] = pd.Series(auroc)
+    dmg_result = dmg_result[(dmg_result['AUROC'] > auroc_cutoff)].copy()
+    return dmg_result
+
+
+def one_vs_rest_dmg(cell_meta, group, mcds,
+                    obs_dim='cell', var_dim='gene', mc_type='CHN',
+                    top_n=1000, adj_p_cutoff=0.01, fc_cutoff=0.8, auroc_cutoff=0.8,
+                    max_cluster_cells=2000, max_other_fold=5):
+    """
+
+    Parameters
+    ----------
+    cell_meta
+    group
+    mcds
+    obs_dim
+    var_dim
+    mc_type
+    top_n
+    adj_p_cutoff
+    fc_cutoff
+    auroc_cutoff
+    max_cluster_cells
+    max_other_fold
+
+    Returns
+    -------
+
+    """
+    clusters = cell_meta[group].unique()
+    dmg_table = []
+    for cluster in clusters:
+        print(f'Calculating {cluster} DMGs.')
+        # determine cells to use
+        cluster_judge = cell_meta[group] == cluster
+        in_cells = cluster_judge[cluster_judge]
+        out_cells = cluster_judge[~cluster_judge]
+        if in_cells.size > max_cluster_cells:
+            in_cells = in_cells.sample(max_cluster_cells, random_state=0)
+
+        max_other_cells = in_cells.size * max_other_fold
+        if out_cells.size > max_other_cells:
+            out_cells = out_cells.sample(max_other_cells, random_state=0)
+
+        cell_label = pd.concat([in_cells, out_cells])
+        dmg_df = single_ovr_dmg(cell_label, mcds, obs_dim, var_dim, mc_type, top_n, adj_p_cutoff, fc_cutoff,
+                                auroc_cutoff)
+        dmg_df['cluster'] = cluster
+        dmg_table.append(dmg_df)
+    dmg_table = pd.concat(dmg_table)
+    return dmg_table

@@ -444,9 +444,15 @@ class MCDS(xr.Dataset):
             try:
                 # v.dims should be size 1
                 if v.dims[0] == obs_dim:
-                    obs_df[coord_prefix.sub('', k)] = v.to_pandas()
+                    series = v.to_pandas()
+                    # adata.obs_name is str type
+                    series.index = series.index.astype(str)
+                    obs_df[coord_prefix.sub('', k)] = series
                 elif v.dims[0] == var_dim:
-                    var_df[coord_prefix.sub('', k)] = v.to_pandas()
+                    series = v.to_pandas()
+                    # adata.var_name is str type
+                    series.index = series.index.astype(str)
+                    var_df[coord_prefix.sub('', k)] = series
                 else:
                     pass
             except IndexError:

@@ -9,12 +9,14 @@ from hdbscan import HDBSCAN
 from imblearn.ensemble import BalancedRandomForestClassifier
 from natsort import natsorted
 from scanpy.neighbors import Neighbors
-from sklearn.metrics import confusion_matrix, pairwise_distances, balanced_accuracy_score
+from sklearn.metrics import confusion_matrix, pairwise_distances, balanced_accuracy_score, adjusted_rand_score
 import networkx as nx
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import cross_val_predict
 from functools import lru_cache
+from ..plot import categorical_scatter
+
 
 def _r1_normalize(cmat):
     """
@@ -103,38 +105,49 @@ class ConsensusClustering:
                  n_neighbors=25,
                  metric='euclidean',
                  min_cluster_size=10,
-                 consensus_rate=0.9,
-                 repeats=200,
-                 resolution=1,
+                 leiden_repeats=200,
+                 leiden_resolution=1,
+                 consensus_rate=0.5,
                  random_state=0,
                  train_frac=0.5,
                  train_max_n=500,
-                 max_iter=10,
-                 n_jobs=-1,
-                 tao=0.5,
-                 outlier_cell_cutoff=0.25,
-                 outlier_label='Outlier',
-                 plot=True):
+                 max_iter=20,
+                 n_jobs=-1):
+        """
+        Perform consensus clustering by multi-leiden clustering + supervised model
+
+        Parameters
+        ----------
+        model
+        n_neighbors
+        metric
+        min_cluster_size
+        consensus_rate
+        leiden_repeats
+        leiden_resolution
+        random_state
+        train_frac
+        train_max_n
+        max_iter
+        n_jobs
+        """
         # input metrics
         self.min_cluster_size = min_cluster_size
-        self.consensus_rate = consensus_rate
-        self.leiden_repeats = repeats
-        self.leiden_resolution = resolution
+        self.consensus_rate = consensus_rate  # this prevents merging gradient clusters
+        self.leiden_repeats = leiden_repeats
+        self.leiden_resolution = leiden_resolution
         self.random_state = random_state
         self.n_jobs = n_jobs
         self.n_neighbors = n_neighbors
         self.knn_metric = metric
         self.train_frac = train_frac
         self.train_max_n = train_max_n
-        self.plot = plot
         self.max_iter = max_iter
-        self.outlier_cell_cutoff = outlier_cell_cutoff
-        self.outlier_label = outlier_label
-        self.target_n_cluster = None  # estimated from multi leiden mean
+        self.minimum_n_cluster = None  # estimated from multi leiden mean
         self.n_obs, self.n_pcs = None, None
         self.X = None
-        self.tao = tao  # this prevents merging gradient clusters
         self._neighbors = None
+        self.step_data = {}
 
         # multiple leiden clustering
         self.leiden_result_df = None
@@ -155,7 +168,7 @@ class ConsensusClustering:
 
         # Construct KNN graph
         print('Computing nearest neighbor graph')
-        self.compute_neighbors()
+        self._compute_neighbors()
 
         # repeat Leiden clustering with different random seeds
         print('Computing multiple clustering with different random seeds')
@@ -164,15 +177,15 @@ class ConsensusClustering:
             leiden_kwds = kwds
         else:
             leiden_kwds.update(kwds)
-        self.multi_leiden_clustering(**leiden_kwds)
+        self._multi_leiden_clustering(**leiden_kwds)
 
         # merge the over clustering version by supervised learning
-        self.supervise_learning()
+        self._supervise_learning()
 
         # assign outliers
-        self.final_evaluation()
+        self._final_evaluation()
 
-    def compute_neighbors(self):
+    def _compute_neighbors(self):
         # nearest neighbors graph
         adata = anndata.AnnData(X=None,
                                 obs=pd.DataFrame([], index=[f'obs{i}' for i in range(self.n_obs)]),
@@ -190,11 +203,11 @@ class ConsensusClustering:
             random_state=self.random_state)
         return
 
-    def multi_leiden_clustering(self,
-                                partition_type=None,
-                                partition_kwargs=None,
-                                use_weights=True,
-                                n_iterations=-1):
+    def _multi_leiden_clustering(self,
+                                 partition_type=None,
+                                 partition_kwargs=None,
+                                 use_weights=True,
+                                 n_iterations=-1):
         """Modified from scanpy"""
         if self._neighbors is None:
             raise ValueError('Run compute_neighbors first before multi_leiden_clustering')
@@ -253,13 +266,13 @@ class ConsensusClustering:
         cluster_count = self.leiden_result_df.apply(lambda i: i.unique().size)
         print(f'Found {cluster_count.min()} - {cluster_count.max()} clusters, '
               f'mean {cluster_count.mean():.1f}, std {cluster_count.std():.2f}')
-        self.target_n_cluster = int(cluster_count.mean())
+        self.minimum_n_cluster = max(1, int(cluster_count.mean() * 0.8))
         # create a over-clustering version based on all the leiden runs
         print('Summarizing multiple clustering results')
-        self.summarize_multi_leiden()
+        self._summarize_multi_leiden()
         return
 
-    def summarize_multi_leiden(self):
+    def _summarize_multi_leiden(self):
         # here we don't rely on hdbscan clustering, just use it to reduce the pairwise distances calculation
         # the resulting clusters are simply disconnected components based on hamming dist graph
         # This results an over-clustering, which will be merged by the supervise learning step.
@@ -292,7 +305,7 @@ class ConsensusClustering:
 
         clusters = pd.Series(clusters).sort_index()
         print(f'{(clusters != -1).sum()} cells assigned to {clusters.unique().size - 1} raw clusters')
-        print(f'{(clusters == -1).sum()} cells are outliers')
+        print(f'{(clusters == -1).sum()} cells are multi-leiden outliers')
         self._multi_leiden_clusters = clusters.values
         return
 
@@ -335,8 +348,7 @@ class ConsensusClustering:
             x_test,
             y_test,
             r1_norm_step=0.01,
-            r2_norm_step=0.001,
-            plot=True):
+            r2_norm_step=0.001):
         # fit model
         clf.fit(x_train, y_train)
 
@@ -361,7 +373,9 @@ class ConsensusClustering:
         m2 = np.max(r2_cmat)
 
         cluster_map = {}
-        while (len(cluster_map) == 0) and (m1 > 0) and (m2 > 0):
+        init_m1 = m1
+        init_m2 = m2
+        while (len(cluster_map) == 0) and (m1 > init_m1 * 0.5) and (m2 > init_m2 * 0.5):
             m1 -= r1_norm_step
             m2 -= r2_norm_step
 
@@ -377,27 +391,13 @@ class ConsensusClustering:
                     to_label = comp.pop()
                     for remain in comp:
                         cluster_dist = self._cluster_pairs_hamming_dist(tuple(cur_y), remain, to_label)
-                        if cluster_dist < self.tao:
+                        if cluster_dist < self.consensus_rate:
                             print(f'Distance between {remain} - {to_label}: '
-                                  f'{cluster_dist:.3f} < {self.tao:.3f}')
+                                  f'{cluster_dist:.3f} < {self.consensus_rate:.3f}')
                             cluster_map[remain] = to_label
+        return clf, accuracy_test, cluster_map, cmat, r1_cmat, r2_cmat
 
-        if plot:
-            fig, axes = plt.subplots(figsize=(9, 3), dpi=300, ncols=3)
-            ax = axes[0]
-            sns.heatmap(np.log1p(cmat), ax=ax)
-            ax.set_title(f'confusion matrix')
-            ax = axes[1]
-            sns.heatmap(r1_cmat, ax=ax)
-            ax.set_title(f'R1 Norm. cutoff {m1:.3f}')
-            ax = axes[2]
-            sns.heatmap(r2_cmat, ax=ax)
-            ax.set_title(f'R2 Norm. cutoff {m2:.3f}')
-            fig.tight_layout()
-            fig.show()
-        return clf, accuracy_test, cluster_map
-
-    def supervise_learning(self):
+    def _supervise_learning(self):
         if self._multi_leiden_clusters is None:
             raise ValueError('Run multi_leiden_clustering first to get a '
                              'clustering assignment before run supervise_learning.')
@@ -431,14 +431,20 @@ class ConsensusClustering:
                 max_train=self.train_max_n,
                 random_state=self.random_state + cur_iter  # every time train-test split got a different random state
             )
-            clf, score, cluster_map = self._single_supervise_evaluation(clf,
-                                                                        cur_y,
-                                                                        x_train,
-                                                                        y_train,
-                                                                        x_test,
-                                                                        y_test,
-                                                                        r1_norm_step=0.01,
-                                                                        r2_norm_step=0.001)
+            clf, score, cluster_map, cmat, r1_cmat, r2_cmat = self._single_supervise_evaluation(
+                clf,
+                cur_y,
+                x_train,
+                y_train,
+                x_test,
+                y_test,
+                r1_norm_step=0.01,
+                r2_norm_step=0.001)
+
+            # save step data for plotting
+            self.step_data[cur_iter] = [cur_y, cmat, r1_cmat, r2_cmat, cluster_map]
+
+            # judge results
             if len(cluster_map) > 0:
                 print(f'Merging {len(cluster_map)} clusters.')
                 cur_y = pd.Series(cur_y).apply(lambda i: cluster_map[i] if i in cluster_map else i)
@@ -448,8 +454,9 @@ class ConsensusClustering:
             else:
                 print('Stop iteration because there is no cluster to merge')
                 break
-            if len(set(cur_y.tolist())) <= self.target_n_cluster:
-                print('Stop iteration because # of clusters <= multi-leiden mean # of clusters.')
+            if len(set(cur_y.tolist())) <= self.minimum_n_cluster:
+                print('Stop iteration because # of clusters is much smaller '
+                      'than average # of clusters in leiden clustering.')
                 break
         else:
             print('Stop iteration because reaching maximum iteration.')
@@ -459,7 +466,7 @@ class ConsensusClustering:
         self.final_accuracy = score
         return
 
-    def final_evaluation(self):
+    def _final_evaluation(self):
         print(f'\n=== Assign final labels ===')
 
         # predict outliers
@@ -484,7 +491,7 @@ class ConsensusClustering:
         final_predict = pd.Series(np.argmax(final_predict_proba, axis=1))
         final_cell_proba = pd.Series(np.max(final_predict_proba, axis=1))
         final_acc = balanced_accuracy_score(self.label, final_predict.values)
-        print(f'Final CV Accuracy on all the cells: {final_acc:.3f}')
+        print(f'Final ten-fold CV Accuracy on all the cells: {final_acc:.3f}')
 
         self.label = [f'c{label}' for label in self.label]
         self.cv_predicted_label = [f'c{label}' for label in final_predict]
@@ -494,3 +501,97 @@ class ConsensusClustering:
 
     def save(self, output_path):
         joblib.dump(self, output_path)
+
+    def plot_leiden_cases(self,
+                          coord_data,
+                          coord_base='umap',
+                          plot_size=3,
+                          dpi=300,
+                          plot_n_cases=4,
+                          s=3):
+        # choose some most different leiden runs by rand index
+        sample_cells = min(1000, self.leiden_result_df.shape[0])
+        sample_runs = min(30, self.leiden_result_df.shape[1])
+        use_df = self.leiden_result_df.sample(sample_cells).T.sample(sample_runs)
+        rand_index_rank = pd.DataFrame(
+            pairwise_distances(use_df, metric=adjusted_rand_score),
+            index=use_df.index,
+            columns=use_df.index).unstack().sort_values()
+        plot_cases = set()
+        for pairs in rand_index_rank[:10].index:
+            plot_cases.add(pairs[0])
+            plot_cases.add(pairs[1])
+            if len(plot_cases) > plot_n_cases:
+                break
+        plot_cases = list(plot_cases)[:plot_n_cases]
+
+        # plot
+        plot_data = coord_data.copy()
+        fig, axes = plt.subplots(figsize=(plot_n_cases * plot_size, plot_size),
+                                 ncols=plot_n_cases,
+                                 dpi=dpi)
+
+        for case, ax in zip(plot_cases, axes):
+            plot_data[f'Leiden {case}'] = self.leiden_result_df[case].values
+            categorical_scatter(ax=ax,
+                                data=plot_data,
+                                coord_base=coord_base,
+                                hue=f'Leiden {case}',
+                                s=s)
+        return fig, axes
+
+    def plot_steps(self, coord_data, coord_base='umap', plot_size=3, dpi=300):
+        plot_data = coord_data.copy()
+
+        # initial clusters
+        for i, step in enumerate(sorted(self.step_data.keys())):
+            cur_y, cmat, r1_cmat, r2_cmat, cluster_map = self.step_data[step]
+            if i == 0:
+                fig, ax = plt.subplots(figsize=(3, 3), dpi=dpi)
+                plot_data['cur_y'] = cur_y
+                _ = categorical_scatter(data=plot_data,
+                                        ax=ax,
+                                        hue='cur_y',
+                                        coord_base=coord_base,
+                                        palette='tab20',
+                                        text_anno='cur_y',
+                                        show_legend=False)
+                ax.set(title='Initial Labels From\nMulti-leiden Clustering')
+
+            fig, axes = plt.subplots(figsize=(4 * plot_size, plot_size),
+                                     ncols=4,
+                                     dpi=dpi)
+            ax = axes[0]
+            sns.heatmap(ax=ax, data=cmat, cbar=None, cmap='Reds')
+            ax.set(title='Confusion Matrix', ylabel=f'Step {step}')
+            ax = axes[1]
+            sns.heatmap(ax=ax, data=r1_cmat, cbar=None, cmap='Reds')
+            ax.set(title='R1 Norm.')
+            ax = axes[2]
+            sns.heatmap(ax=ax, data=r2_cmat, cbar=None, cmap='Reds')
+            ax.set(title='R2 Norm.')
+            ax = axes[3]
+            if len(cluster_map) > 0:
+                involved_clusters = set(
+                    list(cluster_map.keys()) + list(cluster_map.values()))
+                cur_y = pd.Series(cur_y, index=plot_data.index)
+                cur_y = cur_y.apply(lambda i: cluster_map[i] if i in cluster_map else i)
+                # if not involved, mark as -1
+                cur_y = cur_y.apply(lambda i: i if i in involved_clusters else -1)
+                plot_data['cur_y'] = cur_y
+                n_color = cur_y.unique().size - 1
+                colors = list(sns.color_palette('tab10', n_color))
+                cmap = {
+                    c: colors.pop() if c != -1 else (0.9, 0.9, 0.9)
+                    for c in cur_y.unique()
+                }
+                categorical_scatter(ax=ax,
+                                    data=plot_data,
+                                    coord_base=coord_base,
+                                    hue='cur_y',
+                                    palette=cmap,
+                                    s=3)
+                ax.set(title=f'Step {step} Cells After Merge')
+            else:
+                ax.axis('off')
+        return
