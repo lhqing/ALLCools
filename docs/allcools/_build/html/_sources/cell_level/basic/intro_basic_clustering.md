@@ -1,1 +1,0 @@
-# Basic Clustering Walk-through
