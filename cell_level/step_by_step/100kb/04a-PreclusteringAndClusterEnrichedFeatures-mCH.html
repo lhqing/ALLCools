@@ -138,40 +138,73 @@
    Step-by-step Clustering Analysis
   </a>
   <ul class="current collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="01-CellBasicFiltering.html">
-     Cell Basic Filtering
+   <li class="toctree-l2 current active collapsible-parent">
+    <a class="reference internal" href="intro_100kb.html">
+     Step-by-step Clustering Using 100Kb bins
     </a>
+    <ul class="current collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="02-BasicFeatureFiltering.html">
+       Feature Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="03-HighlyVariableFeatureSelection.html">
+       Calculate Highly Variable Features And Get mC Fraction AnnData
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="05-DecompositionAndEmbedding.html">
+       Decomposition And Embedding
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="06-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="02-BasicFeatureFiltering.html">
-     Feature Basic Filtering
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../5kb/intro_5kb.html">
+     Step-by-step Clustering using mCG-5Kb Input
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="03-HighlyVariableFeatureSelection.html">
-     Calculate Highly Variable Features And Get mC Fraction AnnData
-    </a>
-   </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     Preclustering and Cluster Enriched Features
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
-     Preclustering and Cluster Enriched Features
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="05-DecompositionAndEmbedding.html">
-     Decomposition And Embedding
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="06-Clustering.html">
-     Consensus Clustering
-    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../5kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../5kb/02-DecompositionAndEmbedding.html">
+       Decomposition Using mCG-5Kb Bins
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../5kb/03-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
    </li>
   </ul>
   <i class="fas fa-chevron-down">
@@ -189,12 +222,36 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../dmg/02-DifferentiallyMethylatedGenes.html">
-     Differential Methylated Genes - Pairwise
+     Cluster Differentially Methylated Genes
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../dmg/03-PlotClusterDMGs.html">
      Plot Cluster DMGs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../dmg/04-PairwiseDMG.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../integration/intro_integration.html">
+   Data Integration
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../integration/PreprocessRNA.html">
+     RNA Data Preprocessing Before Integration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../integration/HarmonyIntegration.html">
+     Integrating mC and RNA using Harmony
     </a>
    </li>
   </ul>
@@ -203,7 +260,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../../doublets/intro_doublets.html">
-   Differential Methylated Genes Analysis
+   Doublets Identification
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -292,23 +349,6 @@
                     class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/lhqing/ALLCools/master?urlpath=tree/docs/allcools/cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
 
     </div>
 
@@ -501,7 +541,7 @@ Changing adata.obsm[&#39;X_pca&#39;] from shape (4958, 100) to (4958, 46)
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 30 clusters to compute feature enrichment score
 Computing enrichment score
 Computing enrichment score FDR-corrected P values
-Selected 2868 unique features
+Selected 2869 unique features
 </pre></div>
 </div>
 <img alt="../../../_images/04a-PreclusteringAndClusterEnrichedFeatures-mCH_11_1.png" src="../../../_images/04a-PreclusteringAndClusterEnrichedFeatures-mCH_11_1.png" />
@@ -522,7 +562,7 @@ Selected 2868 unique features
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AnnData object with n_obs × n_vars = 4958 × 20000
     obs: &#39;leiden&#39;
     var: &#39;chrom&#39;, &#39;bin_start&#39;, &#39;bin_end&#39;, &#39;CHN_mean&#39;, &#39;CHN_dispersion&#39;, &#39;CHN_cov&#39;, &#39;CHN_score&#39;, &#39;CHN_feature_select&#39;, &#39;CGN_mean&#39;, &#39;CGN_dispersion&#39;, &#39;CGN_cov&#39;, &#39;CGN_score&#39;, &#39;CGN_feature_select&#39;, &#39;leiden_enriched_features&#39;
-    uns: &#39;leiden&#39;, &#39;leiden_colors&#39;, &#39;leiden_feature_enrichment&#39;, &#39;neighbors&#39;, &#39;pca&#39;, &#39;umap&#39;
+    uns: &#39;pca&#39;, &#39;neighbors&#39;, &#39;leiden&#39;, &#39;umap&#39;, &#39;leiden_colors&#39;, &#39;leiden_feature_enrichment&#39;
     obsm: &#39;X_pca&#39;, &#39;X_umap&#39;
 </pre></div>
 </div>

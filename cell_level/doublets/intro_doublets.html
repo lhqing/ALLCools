@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Differential Methylated Genes Analysis &#8212; ALLCools</title>
+    <title>Doublets Identification &#8212; ALLCools</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,7 +56,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Calculate Cell Doublet Score" href="doublet_score_chrom100k.html" />
-    <link rel="prev" title="Plot Cluster DMGs" href="../dmg/03-PlotClusterDMGs.html" />
+    <link rel="prev" title="Integrating mC and RNA using Harmony" href="../integration/HarmonyIntegration.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -138,40 +138,73 @@
    Step-by-step Clustering Analysis
   </a>
   <ul class="collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/01-CellBasicFiltering.html">
-     Cell Basic Filtering
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../step_by_step/100kb/intro_100kb.html">
+     Step-by-step Clustering Using 100Kb bins
     </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/02-BasicFeatureFiltering.html">
+       Feature Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
+       Calculate Highly Variable Features And Get mC Fraction AnnData
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/05-DecompositionAndEmbedding.html">
+       Decomposition And Embedding
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/06-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/02-BasicFeatureFiltering.html">
-     Feature Basic Filtering
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../step_by_step/5kb/intro_5kb.html">
+     Step-by-step Clustering using mCG-5Kb Input
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
-     Calculate Highly Variable Features And Get mC Fraction AnnData
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
-     Preclustering and Cluster Enriched Features
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
-     Preclustering and Cluster Enriched Features
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/05-DecompositionAndEmbedding.html">
-     Decomposition And Embedding
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/06-Clustering.html">
-     Consensus Clustering
-    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/5kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/5kb/02-DecompositionAndEmbedding.html">
+       Decomposition Using mCG-5Kb Bins
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/5kb/03-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
    </li>
   </ul>
   <i class="fas fa-chevron-down">
@@ -189,12 +222,36 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../dmg/02-DifferentiallyMethylatedGenes.html">
-     Differential Methylated Genes - Pairwise
+     Cluster Differentially Methylated Genes
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../dmg/03-PlotClusterDMGs.html">
      Plot Cluster DMGs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../dmg/04-PairwiseDMG.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../integration/intro_integration.html">
+   Data Integration
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integration/PreprocessRNA.html">
+     RNA Data Preprocessing Before Integration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integration/HarmonyIntegration.html">
+     Integrating mC and RNA using Harmony
     </a>
    </li>
   </ul>
@@ -203,7 +260,7 @@
  </li>
  <li class="toctree-l1 current active collapsible-parent">
   <a class="current reference internal" href="#">
-   Differential Methylated Genes Analysis
+   Doublets Identification
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -305,8 +362,8 @@
         
               <div>
                 
-  <div class="section" id="differential-methylated-genes-analysis">
-<h1>Differential Methylated Genes Analysis<a class="headerlink" href="#differential-methylated-genes-analysis" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="doublets-identification">
+<h1>Doublets Identification<a class="headerlink" href="#doublets-identification" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
 </div>
@@ -339,7 +396,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../dmg/03-PlotClusterDMGs.html" title="previous page">Plot Cluster DMGs</a>
+    <a class='left-prev' id="prev-link" href="../integration/HarmonyIntegration.html" title="previous page">Integrating mC and RNA using Harmony</a>
     <a class='right-next' id="next-link" href="doublet_score_chrom100k.html" title="next page">Calculate Cell Doublet Score</a>
 
     </div>

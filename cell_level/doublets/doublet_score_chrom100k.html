@@ -55,7 +55,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="Differential Methylated Genes Analysis" href="intro_doublets.html" />
+    <link rel="prev" title="Doublets Identification" href="intro_doublets.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -137,40 +137,73 @@
    Step-by-step Clustering Analysis
   </a>
   <ul class="collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/01-CellBasicFiltering.html">
-     Cell Basic Filtering
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../step_by_step/100kb/intro_100kb.html">
+     Step-by-step Clustering Using 100Kb bins
     </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/02-BasicFeatureFiltering.html">
+       Feature Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
+       Calculate Highly Variable Features And Get mC Fraction AnnData
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/05-DecompositionAndEmbedding.html">
+       Decomposition And Embedding
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/100kb/06-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/02-BasicFeatureFiltering.html">
-     Feature Basic Filtering
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../step_by_step/5kb/intro_5kb.html">
+     Step-by-step Clustering using mCG-5Kb Input
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
-     Calculate Highly Variable Features And Get mC Fraction AnnData
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
-     Preclustering and Cluster Enriched Features
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
-     Preclustering and Cluster Enriched Features
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/05-DecompositionAndEmbedding.html">
-     Decomposition And Embedding
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../step_by_step/100kb/06-Clustering.html">
-     Consensus Clustering
-    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/5kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/5kb/02-DecompositionAndEmbedding.html">
+       Decomposition Using mCG-5Kb Bins
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../step_by_step/5kb/03-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
    </li>
   </ul>
   <i class="fas fa-chevron-down">
@@ -188,12 +221,36 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../dmg/02-DifferentiallyMethylatedGenes.html">
-     Differential Methylated Genes - Pairwise
+     Cluster Differentially Methylated Genes
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../dmg/03-PlotClusterDMGs.html">
      Plot Cluster DMGs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../dmg/04-PairwiseDMG.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../integration/intro_integration.html">
+   Data Integration
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integration/PreprocessRNA.html">
+     RNA Data Preprocessing Before Integration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../integration/HarmonyIntegration.html">
+     Integrating mC and RNA using Harmony
     </a>
    </li>
   </ul>
@@ -202,7 +259,7 @@
  </li>
  <li class="toctree-l1 current active collapsible-parent">
   <a class="reference internal" href="intro_doublets.html">
-   Differential Methylated Genes Analysis
+   Doublets Identification
   </a>
   <ul class="current collapse-ul">
    <li class="toctree-l2 current active">
@@ -291,23 +348,6 @@
                     class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/lhqing/ALLCools/master?urlpath=tree/docs/allcools/cell_level/doublets/doublet_score_chrom100k.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
 
     </div>
 
@@ -422,7 +462,7 @@
 
 <span class="kn">from</span> <span class="nn">ALLCools.clustering</span> <span class="kn">import</span> <span class="n">MethylScrublet</span>
 <span class="kn">from</span> <span class="nn">ALLCools.plot</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">ALLCools</span> <span class="kn">import</span> <span class="n">MCDS</span>
+<span class="kn">from</span> <span class="nn">ALLCools.mcds</span> <span class="kn">import</span> <span class="n">MCDS</span>
 </pre></div>
 </div>
 </div>
@@ -434,24 +474,21 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># change this to the paths to your MCDS files</span>
 <span class="n">mcds_path_list</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;../../data/MOp/3C-171206.mcds&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;../../data/Brain/3C-171206.mcds&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="n">adata_path</span> <span class="o">=</span> <span class="s1">&#39;../basic/MOp.chrom100k-clustering.h5ad&#39;</span>
-<span class="n">var_name</span> <span class="o">=</span> <span class="s1">&#39;chrom100k&#39;</span>
+<span class="n">adata_path</span> <span class="o">=</span> <span class="s1">&#39;../step_by_step/100kb/adata.with_coords.h5ad&#39;</span>
+<span class="n">cef_path</span> <span class="o">=</span> <span class="s1">&#39;../step_by_step/100kb/L1_enriched_features.mCH.txt&#39;</span>
+<span class="n">var_dim</span> <span class="o">=</span> <span class="s1">&#39;chrom100k&#39;</span>
+<span class="n">obs_dim</span> <span class="o">=</span> <span class="s1">&#39;cell&#39;</span>
+<span class="n">cluster_col</span> <span class="o">=</span> <span class="s1">&#39;L1&#39;</span>
 
 <span class="n">load</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">mc_type</span> <span class="o">=</span> <span class="s1">&#39;CHN&#39;</span>
 
-<span class="c1"># use feature type</span>
-<span class="c1"># HVF: all highly variable features</span>
-<span class="c1"># CEF: cluster enriched features</span>
-<span class="n">feature_type</span> <span class="o">=</span> <span class="s1">&#39;CEF&#39;</span>
-
 <span class="c1"># Clustering resolution</span>
-<span class="n">resolution</span> <span class="o">=</span> <span class="mf">0.3</span>
 <span class="n">n_neighbors</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">expected_doublet_rate</span><span class="o">=</span><span class="mf">0.08</span>
+<span class="n">expected_doublet_rate</span><span class="o">=</span><span class="mf">0.06</span>
 
 <span class="n">plot_type</span> <span class="o">=</span> <span class="s1">&#39;static&#39;</span>
 </pre></div>
@@ -466,22 +503,9 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="n">adata_path</span><span class="p">)</span>
-<span class="n">hvf</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="n">hvf</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">var_name</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">leiden</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">use_features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">cef_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+<span class="n">use_features</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">var_dim</span>
 </pre></div>
 </div>
 </div>
@@ -491,7 +515,8 @@
 <h3>Raw mC counts<a class="headerlink" href="#raw-mc-counts" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mcds_path_list</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="n">use_obs</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mcds_path_list</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span> <span class="n">use_obs</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
+<span class="n">adata</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">mcds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">obs_dim</span><span class="p">),</span> <span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -501,12 +526,12 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span> <span class="o">=</span> <span class="n">mcds</span><span class="p">[</span><span class="s1">&#39;chrom100k_da&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span>
     <span class="s1">&#39;mc_type&#39;</span><span class="p">:</span> <span class="n">mc_type</span><span class="p">,</span>
     <span class="s1">&#39;count_type&#39;</span><span class="p">:</span> <span class="s1">&#39;mc&#39;</span><span class="p">,</span>
-    <span class="n">hvf</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">hvf</span>
+    <span class="n">use_features</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">use_features</span>
 <span class="p">})</span>
 <span class="n">cov</span> <span class="o">=</span> <span class="n">mcds</span><span class="p">[</span><span class="s1">&#39;chrom100k_da&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span>
     <span class="s1">&#39;mc_type&#39;</span><span class="p">:</span> <span class="n">mc_type</span><span class="p">,</span>
     <span class="s1">&#39;count_type&#39;</span><span class="p">:</span> <span class="s1">&#39;cov&#39;</span><span class="p">,</span>
-    <span class="n">hvf</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">hvf</span>
+    <span class="n">use_features</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">use_features</span>
 <span class="p">})</span>
 
 <span class="k">if</span> <span class="n">load</span> <span class="ow">and</span> <span class="p">(</span><span class="n">mcds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s1">&#39;cell&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">20000</span><span class="p">):</span>
@@ -529,7 +554,7 @@
                           <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">,</span>
                           <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                           <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">score</span><span class="p">,</span> <span class="n">judge</span> <span class="o">=</span> <span class="n">scrublet</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">cluster_col_name</span><span class="p">])</span>
+<span class="n">score</span><span class="p">,</span> <span class="n">judge</span> <span class="o">=</span> <span class="n">scrublet</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">cluster_col</span><span class="p">])</span>
 <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;doublet_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
 <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;is_doublet&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">judge</span>
 <span class="n">scrublet</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
@@ -543,25 +568,25 @@ Cell cluster labels are given, will sample similar number of cells from each clu
 PCA...
 Calculating doublet scores...
 Automatically set threshold to 0.01
-Detected doublet rate = 5.8%
-Estimated detectable doublet fraction = 83.9%
+Detected doublet rate = 8.2%
+Estimated detectable doublet fraction = 83.0%
 Overall doublet rate:
-	Expected   = 8.0%
-	Estimated  = 7.0%
+	Expected   = 6.0%
+	Estimated  = 9.8%
 </pre></div>
 </div>
-<img alt="../../_images/doublet_score_chrom100k_13_1.png" src="../../_images/doublet_score_chrom100k_13_1.png" />
+<img alt="../../_images/doublet_score_chrom100k_11_1.png" src="../../_images/doublet_score_chrom100k_11_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">cluster_col_name</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">cluster_col</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/doublet_score_chrom100k_14_0.png" src="../../_images/doublet_score_chrom100k_14_0.png" />
+<img alt="../../_images/doublet_score_chrom100k_12_0.png" src="../../_images/doublet_score_chrom100k_12_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -572,7 +597,7 @@ Overall doublet rate:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/doublet_score_chrom100k_15_0.png" src="../../_images/doublet_score_chrom100k_15_0.png" />
+<img alt="../../_images/doublet_score_chrom100k_13_0.png" src="../../_images/doublet_score_chrom100k_13_0.png" />
 </div>
 </div>
 </div>
@@ -585,13 +610,14 @@ Overall doublet rate:
                         <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
                         <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span>
                         <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">,</span>
+                        <span class="n">text_anno</span><span class="o">=</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">,</span>
                         <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">,</span>
                         <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/doublet_score_chrom100k_21_0.png" src="../../_images/doublet_score_chrom100k_21_0.png" />
+<img alt="../../_images/doublet_score_chrom100k_15_0.png" src="../../_images/doublet_score_chrom100k_15_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -602,7 +628,7 @@ Overall doublet rate:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/doublet_score_chrom100k_22_0.png" src="../../_images/doublet_score_chrom100k_22_0.png" />
+<img alt="../../_images/doublet_score_chrom100k_16_0.png" src="../../_images/doublet_score_chrom100k_16_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -613,7 +639,7 @@ Overall doublet rate:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/doublet_score_chrom100k_23_0.png" src="../../_images/doublet_score_chrom100k_23_0.png" />
+<img alt="../../_images/doublet_score_chrom100k_17_0.png" src="../../_images/doublet_score_chrom100k_17_0.png" />
 </div>
 </div>
 </div>
@@ -647,7 +673,7 @@ Overall doublet rate:
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="intro_doublets.html" title="previous page">Differential Methylated Genes Analysis</a>
+    <a class='left-prev' id="prev-link" href="intro_doublets.html" title="previous page">Doublets Identification</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
