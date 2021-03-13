@@ -1,1 +1,1 @@
-from mcds import MCDS
+from .mcds import MCDS
