@@ -55,7 +55,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Introduction" href="intro.html" />
+    <link rel="next" title="Input Files" href="input_files.html" />
     <link rel="prev" title="ALLCools: ALL Cytosine tools" href="../intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -103,8 +103,133 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   Introduction
+  <a class="reference internal" href="input_files.html">
+   Input Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="analysis_steps.html">
+   Analysis Steps
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  COMMAND LINE TOOLS
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools.html">
+   Entry Point
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_standard.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     standard
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_profile.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     profile
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_tbi.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     tbi
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_merge.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     merge
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_extract.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     extract
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_bw.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     bw
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_region.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     region
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_mcds.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcds
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_mcad.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcad
+    </span>
+   </code>
   </a>
  </li>
 </ul>
@@ -273,6 +398,37 @@
   </i>
  </li>
 </ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  CLUSTER LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../cluster_level/intro.html">
+   Cluster Level Analysis
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  PROJECT INFO
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../project_info/citation.html">
+   Citation And Reference
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/lhqing/ALLCools/releases">
+   Changelog
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
 
 </nav> <!-- To handle the deprecated key -->
 
@@ -355,6 +511,76 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-conda-and-analysis-environment">
+   Setup Conda and Analysis Environment
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-conda-from-miniconda-or-anaconda">
+     Install conda from miniconda or anaconda.
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conda-init">
+     Conda init
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#add-channels">
+     Add channels
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-environment-with-required-packages">
+     Create Environment With Required Packages
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#content-of-allcools-env-yaml">
+       Content of
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         allcools_env.yaml
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#activate-environment">
+   Activate Environment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install-allcools">
+   Install ALLCools
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install">
+     Install
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#update">
+     Update
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -364,6 +590,101 @@
                 
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="setup-conda-and-analysis-environment">
+<h2>Setup Conda and Analysis Environment<a class="headerlink" href="#setup-conda-and-analysis-environment" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-conda-from-miniconda-or-anaconda">
+<h3>Install conda from miniconda or anaconda.<a class="headerlink" href="#install-conda-from-miniconda-or-anaconda" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>IMPORTANT: select python 3</p></li>
+<li><p><a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a> (recommended)</p></li>
+<li><p><a class="reference external" href="https://www.anaconda.com/products/individual">anaconda</a> (larger)</p></li>
+</ul>
+</div>
+<div class="section" id="conda-init">
+<h3>Conda init<a class="headerlink" href="#conda-init" title="Permalink to this headline">¶</a></h3>
+<p>After installed conda, use conda init on your favorite shell</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># e.g., bash or zsh</span>
+conda init bash
+<span class="c1"># you need to restart shell after conda init</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-channels">
+<h3>Add channels<a class="headerlink" href="#add-channels" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># run these command to add bioconda into your conda channel, </span>
+<span class="c1"># the order of these 3 line matters</span>
+conda config --add channels defaults
+conda config --add channels bioconda
+conda config --add channels conda-forge
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-environment-with-required-packages">
+<h3>Create Environment With Required Packages<a class="headerlink" href="#create-environment-with-required-packages" title="Permalink to this headline">¶</a></h3>
+<p>This command will create a conda environment called “allcools” and install all required packages for you.
+The <code class="docutils literal notranslate"><span class="pre">allcools_env.yaml</span></code> contains the detail about the environment, you can copy the content of that file below.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># conda is a bit slow, this step will take ~30 min in my server, </span>
+<span class="c1"># but you only need to do this once.</span>
+conda env create -f allcools_env.yaml
+</pre></div>
+</div>
+<div class="section" id="content-of-allcools-env-yaml">
+<h4>Content of <code class="docutils literal notranslate"><span class="pre">allcools_env.yaml</span></code><a class="headerlink" href="#content-of-allcools-env-yaml" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">allcools</span>
+<span class="nt">channels</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">bioconda</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">defaults</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">python=3.7</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">jupyter</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">jupyter_contrib_nbextensions</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pandas</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">seaborn</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">matplotlib</span>
+  <span class="p p-Indicator">-</span> <span class="nt">pip</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">papermill</span>
+<span class="c1"># TODO this list is not completed yet</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="activate-environment">
+<h2>Activate Environment<a class="headerlink" href="#activate-environment" title="Permalink to this headline">¶</a></h2>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Remember to enter the environment every time before you start any analysis.</p>
+</div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter env</span>
+conda activate allcools
+
+<span class="c1"># exit env</span>
+conda deactivate
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-allcools">
+<h2>Install ALLCools<a class="headerlink" href="#install-allcools" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install">
+<h3>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter env first</span>
+pip install allcools
+</pre></div>
+</div>
+</div>
+<div class="section" id="update">
+<h3>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter env first</span>
+pip install --upgrade allcools
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -395,7 +716,7 @@
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">ALLCools: ALL Cytosine tools</a>
-    <a class='right-next' id="next-link" href="intro.html" title="next page">Introduction</a>
+    <a class='right-next' id="next-link" href="input_files.html" title="next page">Input Files</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

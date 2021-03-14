@@ -102,8 +102,133 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="start/intro.html">
-   Introduction
+  <a class="reference internal" href="start/input_files.html">
+   Input Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="start/analysis_steps.html">
+   Analysis Steps
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  COMMAND LINE TOOLS
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="command_line/allcools.html">
+   Entry Point
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="command_line/allcools_standard.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     standard
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="command_line/allcools_profile.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     profile
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="command_line/allcools_tbi.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     tbi
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="command_line/allcools_merge.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     merge
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="command_line/allcools_extract.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     extract
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="command_line/allcools_bw.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     bw
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="command_line/allcools_region.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     region
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="command_line/allcools_mcds.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcds
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="command_line/allcools_mcad.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcad
+    </span>
+   </code>
   </a>
  </li>
 </ul>
@@ -272,6 +397,37 @@
   </i>
  </li>
 </ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  CLUSTER LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="cluster_level/intro.html">
+   Cluster Level Analysis
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  PROJECT INFO
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="project_info/citation.html">
+   Citation And Reference
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/lhqing/ALLCools/releases">
+   Changelog
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
 
 </nav> <!-- To handle the deprecated key -->
 
@@ -370,6 +526,11 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#support">
+   Support
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#citation">
    Citation
   </a>
@@ -389,31 +550,59 @@
                 
   <div class="section" id="allcools-all-cytosine-tools">
 <h1>ALLCools: ALL Cytosine tools<a class="headerlink" href="#allcools-all-cytosine-tools" title="Permalink to this headline">¶</a></h1>
-<p>ALLCools is a python package for single-cell DNA methylome data analysis. It includes preparing input files, performing cell-level analysis (e.g., clustering), and cluster-level analysis (e.g., DMR calling and following analysis).</p>
+<p>ALLCools is a python package for single-cell DNA methylome data analysis.
+It includes functions to prepare input files, perform cell-level analysis
+(e.g., clustering), and cluster-level analysis
+(e.g., DMR calling and following analysis).</p>
 <div class="section" id="documentation-organization">
 <h2>Documentation Organization<a class="headerlink" href="#documentation-organization" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
-<li><p>To install the ALLCools and have an overview of the package design, please read the “GET STARTED” part.</p></li>
-<li><p>To generate analysis files using ALLCools, please read the “COMMAND LINE TOOLS” part.</p></li>
-<li><p>After getting the files ready, the analysis steps in ALLCools is organized in two parts:</p>
+<li><p>To install and get an overview, please read the <strong>GET STARTED</strong> part;</p></li>
+<li><p>To generate analysis files, please read the <strong>COMMAND LINE TOOLS</strong> part;</p></li>
+<li><p>The analysis steps in ALLCools are organized in two parts:</p>
 <ol class="simple">
-<li><p>the “CELL LEVEL ANALYSIS” part go through the analysis performed on single-cell level.</p></li>
-<li><p>The “CLUSTER LEVEL ANALYSIS” part go through the analysis performed on cluster level.</p></li>
+<li><p>The <strong>CELL LEVEL ANALYSIS</strong> part go through the clustering, cluster DMG, and integration analysis;</p></li>
+<li><p>The <strong>CLUSTER LEVEL ANALYSIS</strong> part go through the DMR and enhancer calling analysis;</p></li>
 </ol>
 </li>
-<li><p>To customize data visualization, please read the “VISUALIZATION” part.</p></li>
-<li><p>To read more discussions on miscellaneous analysis topics, please read the “DISCUSSION” part.</p></li>
-<li><p>The “API” part provides detail documentation of each function.</p></li>
+<li><p>To customize visualization, please read the <strong>VISUALIZATION</strong> part;</p></li>
+<li><p>The <strong>DISCUSSION</strong> part provides more details on the analysis steps;</p></li>
+<li><p>The <strong>API</strong> part provides reference to each function.</p></li>
 </ol>
+<div class="figure align-default" id="doc-organize-fig">
+<a class="reference internal image-reference" href="_images/doc_organize.png"><img alt="_images/doc_organize.png" src="_images/doc_organize.png" style="height: 250px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">ALLCools documentation organization.</span><a class="headerlink" href="#doc-organize-fig" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 <div class="section" id="author">
 <h2>Author<a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h2>
 <p>Hanqing Liu</p>
 </div>
+<div class="section" id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The source code is on <a class="reference external" href="https://github.com/lhqing/ALLCools">github</a>;</p></li>
+<li><p>For releases and changelog, see <a class="reference external" href="https://github.com/lhqing/ALLCools/releases">github releases page</a>;</p></li>
+<li><p>For bugs and feature requests, please use the <a class="reference external" href="https://github.com/lhqing/ALLCools/issues">issue tracker</a>.</p></li>
+</ul>
+</div>
 <div class="section" id="citation">
 <h2>Citation<a class="headerlink" href="#citation" title="Permalink to this headline">¶</a></h2>
-<p>When using ALLCools, please cite our paper</p>
-<p><a class="reference external" href="https://doi.org/10.1101/2020.04.30.069377">Liu, Hanqing, Jingtian Zhou, et al. 2020. “DNA Methylation Atlas of the Mouse Brain at Single-Cell Resolution.” bioRxiv.</a></p>
+<p>When using ALLCools, please cite our paper and related methods papers.
+For more details, please read the <a class="reference internal" href="project_info/citation.html"><span class="doc std std-doc">citation page</span></a>.</p>
+<p><a class="reference external" href="https://doi.org/10.1101/2020.04.30.069377">Hanqing Liu, Jingtian Zhou, Wei Tian, Chongyuan Luo, Anna Bartlett, Andrew Aldridge, Jacinta Lucero,
+Julia K. Osteen, Joseph R. Nery, Huaming Chen, Angeline Rivkin, Rosa G Castanon, Ben Clock, Yang Eric Li,
+Xiaomeng Hou, Olivier B. Poirion, Sebastian Preissl, Antonio Pinto-Duarte, Carolyn O’Connor, Lara Boggeman,
+Conor Fitzpatrick, Michael Nunn, Eran A. Mukamel, Zhuzhu Zhang, Edward M. Callaway, Bing Ren, Jesse R. Dixon,
+M. Margarita Behrens, Joseph R. Ecker. 2020.
+“DNA Methylation Atlas of the Mouse Brain at Single-Cell Resolution.” bioRxiv.
+</a></p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
