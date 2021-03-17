@@ -55,7 +55,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Entry Point" href="../command_line/allcools.html" />
+    <link rel="next" title="Executable Documentation" href="interactive.html" />
     <link rel="prev" title="Input Files" href="input_files.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -112,6 +112,11 @@
    Analysis Steps
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="interactive.html">
+   Executable Documentation
+  </a>
+ </li>
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
@@ -122,6 +127,18 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../command_line/allcools.html">
    Entry Point
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_allc.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     allc
+    </span>
+   </code>
   </a>
  </li>
  <li class="toctree-l1">
@@ -412,6 +429,42 @@
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
+  VISUALIZATION
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../visualization/intro.html">
+   Visualization
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  DISCUSSION
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../discuss/intro.html">
+   Discussion
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  API
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../api/intro.html">
+   API
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
   PROJECT INFO
  </span>
 </p>
@@ -522,13 +575,18 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#input-files">
-     Input Files
+    <a class="reference internal nav-link" href="#sections">
+     Sections
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tow-clustering-strategies">
-     Tow Clustering Strategies
+    <a class="reference internal nav-link" href="#input">
+     Input
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tow-clustering-strategies-and-which-one-to-use">
+     Tow Clustering Strategies (And which one to use)
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -552,18 +610,35 @@
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id1">
+     Sections
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#input-files">
      Input Files
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dmr-calling">
-     DMR Calling
+    <a class="reference internal nav-link" href="#pseudo-bulk-files">
+     Pseudo-bulk Files
     </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dmr-analysis">
-     DMR Analysis
-    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#merge-allc">
+       Merge ALLC
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#allc-to-bigwig">
+       ALLC to BigWig
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#dmr-dataset">
+       DMR Dataset
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -602,34 +677,90 @@
 <p>In general, the <strong>cell-level analysis</strong> is focused on individual cells’ overall diversity
 using relatively large features (kilobase-level regions or whole gene body).
 One of the key results from <strong>cell-level analysis</strong> is the identification of <strong>cell clusters</strong>.
-The “cluster-level analysis” will use the cluster labels to merge pseudo-bulk methylomes from
-single-cell methylomes. The high-coverage pseudo-bulk methylomes allow us to analyze cluster-level
-methylation diversity at higher genome resolution (hundred bps or even single base).</p>
+The <strong>cluster-level analysis</strong> will use these cell cluster labels to merge the cells into pseudo-bulk methylomes.
+The high-coverage pseudo-bulk methylomes allow us to analyze methylation diversity at higher genome resolution
+(hundred bps or even single base).</p>
 <div class="section" id="cell-level-analysis">
 <h2>Cell Level Analysis<a class="headerlink" href="#cell-level-analysis" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="input-files">
-<h3>Input Files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="sections">
+<h3>Sections<a class="headerlink" href="#sections" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../cell_level/basic/intro_basic_clustering.html"><span class="doc std std-doc">Basic walk-through of the clustering analysis</span></a>.</p></li>
+<li><p><a class="reference internal" href="../cell_level/step_by_step/intro_step_by_step_clustering.html"><span class="doc std std-doc">Step-by-step description of the clustering analysis</span></a>.</p></li>
+<li><p><a class="reference internal" href="../cell_level/dmg/intro_dmg.html"><span class="doc std std-doc">Identification of cluster Differentially Methylated Genes</span></a>.</p></li>
+<li><p><a class="reference internal" href="../cell_level/integration/intro_integration.html"><span class="doc std std-doc">Cell-level data integration</span></a>.</p></li>
+<li><p><a class="reference internal" href="../cell_level/doublets/intro_doublets.html"><span class="doc std std-doc">Potential cell doublets identification</span></a>.</p></li>
+</ul>
 </div>
-<div class="section" id="tow-clustering-strategies">
-<h3>Tow Clustering Strategies<a class="headerlink" href="#tow-clustering-strategies" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="input">
+<h3>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Cell metadata contains quality metrics (Defined by user, used in basic cell filtering).</p></li>
+<li><p>Cell-by-feature raw count matrix (MCDS files) generated from single-cell ALLC files via <a class="reference internal" href="../command_line/allcools_mcds.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">mcds</span></code></span></a>. Usually contains large genomic regions (e.g., 100Kb bin) for clustering
+and gene body regions for gene analysis.</p></li>
+<li><p>(AND/OR) Cell-by-feature hypo-methylation score matrix (MCAD files) generated from single-cell ALLC files via
+<a class="reference internal" href="../command_line/allcools_mcad.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">mcad</span></code></span></a></p></li>
+</ul>
+</div>
+<div class="section" id="tow-clustering-strategies-and-which-one-to-use">
+<h3>Tow Clustering Strategies (And which one to use)<a class="headerlink" href="#tow-clustering-strategies-and-which-one-to-use" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="clustering-using-raw-counts-from-100kb-genomic-bins">
 <h4>Clustering using raw counts from 100Kb genomic bins<a class="headerlink" href="#clustering-using-raw-counts-from-100kb-genomic-bins" title="Permalink to this headline">¶</a></h4>
+<p>In this strategy, we start from the cell-by-100kb-bin raw count matrix (<a class="reference internal" href="input_files.html#mcds-fig"><span class="std std-ref">MCDS</span></a>) for clustering analysis.
+A quick demo is <a class="reference internal" href="../cell_level/basic/mch_mcg_100k_basic.html"><span class="doc std std-doc">here</span></a>, the step-by-step descriptions can be found
+<a class="reference internal" href="../cell_level/step_by_step/100kb/intro_100kb.html"><span class="doc std std-doc">here</span></a></p>
+<p>We found [add reference] using 100Kb genomic bins provides good clustering ability and is also computationally
+efficient due to the relatively small number of features (27K features in mm10, v.s. 540K features using 5Kb bins).
+We also tested the effect of different feature sizes in clustering adult mouse brain single-cell methylomes,
+and found the size of features do not have major impact on the clustering results [add discussion page].
+However, this conclusion may not apply to all tissues, as the scale of methylation diversity might be different in
+different tissue or cell types. We suggest using the 100Kb bin size as a start point, and test other bin sizes if the
+results when necessary. The <a class="reference internal" href="../command_line/allcools_mcds.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">mcds</span></code></span></a> does provide the flexibility to
+generate feature matrix at any bin size or user-defined region sets.</p>
 </div>
 <div class="section" id="clustering-using-hypo-methylation-score-from-5kb-genomic-bins">
 <h4>Clustering using hypo-methylation score from 5Kb genomic bins<a class="headerlink" href="#clustering-using-hypo-methylation-score-from-5kb-genomic-bins" title="Permalink to this headline">¶</a></h4>
+<p>Through the practice of analyzing different tissues, we noticed that for some tissues (pituitary, PBMC, etc.), the
+100Kb bin clustering strategy had a hard time identifying some known cell types. One possible explanation is that the
+methylation diversity of these cell types mainly occur at small discontinuous regulatory regions (DMRs) while the large
+100Kb bins can only capture DMV or large-hypo DMR level diversities. To solve this problem, we developed another
+strategy by using <a class="reference internal" href="../cell_level/step_by_step/5kb/intro_5kb.html"><span class="doc std std-doc">algorithms adapted from snATAC-seq</span></a> on small features
+(5Kb by default).</p>
+<p>Specifically, this strategy start from cell-by-5kb-bin hypo-methylation score matrix (<a class="reference internal" href="input_files.html#mcad-fig"><span class="std std-ref">MCAD</span></a>) for clustering
+analysis. A quick demo is <a class="reference internal" href="../cell_level/basic/mcg_5kb_basic.html"><span class="doc std std-doc">here</span></a>, the step-by-step descriptions can be found
+<a class="reference internal" href="../cell_level/step_by_step/5kb/intro_5kb.html"><span class="doc std std-doc">here</span></a></p>
 </div>
 </div>
 </div>
 <div class="section" id="cluster-level-analysis">
 <h2>Cluster Level Analysis<a class="headerlink" href="#cluster-level-analysis" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
-<h3>Input Files<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Sections<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
 </div>
-<div class="section" id="dmr-calling">
-<h3>DMR Calling<a class="headerlink" href="#dmr-calling" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="input-files">
+<h3>Input Files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Single-cell ALLC files</p></li>
+<li><p>Cell cluster labels</p></li>
+</ul>
 </div>
-<div class="section" id="dmr-analysis">
-<h3>DMR Analysis<a class="headerlink" href="#dmr-analysis" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="pseudo-bulk-files">
+<h3>Pseudo-bulk Files<a class="headerlink" href="#pseudo-bulk-files" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="merge-allc">
+<h4>Merge ALLC<a class="headerlink" href="#merge-allc" title="Permalink to this headline">¶</a></h4>
+<p>The first step of cluster-level analysis is to merge single-cell ALLC files based on cell cluster labels via
+<a class="reference internal" href="../command_line/allcools_merge.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">merge</span></code></span></a>. Each merged ALLC file is the pseudo-bulk level methylome
+of that cell cluster.</p>
+</div>
+<div class="section" id="allc-to-bigwig">
+<h4>ALLC to BigWig<a class="headerlink" href="#allc-to-bigwig" title="Permalink to this headline">¶</a></h4>
+<p>BigWig files are convenient for genome browser visualization and region-level analysis. The <a class="reference internal" href="../command_line/allcools_bw.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">bw</span></code></span></a> can generate BigWig files from ALLC files.</p>
+</div>
+<div class="section" id="dmr-dataset">
+<h4>DMR Dataset<a class="headerlink" href="#dmr-dataset" title="Permalink to this headline">¶</a></h4>
+<p>TODO</p>
+</div>
 </div>
 </div>
 </div>
@@ -663,7 +794,7 @@ methylation diversity at higher genome resolution (hundred bps or even single ba
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="input_files.html" title="previous page">Input Files</a>
-    <a class='right-next' id="next-link" href="../command_line/allcools.html" title="next page">Entry Point</a>
+    <a class='right-next' id="next-link" href="interactive.html" title="next page">Executable Documentation</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

@@ -112,6 +112,11 @@
    Analysis Steps
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="interactive.html">
+   Executable Documentation
+  </a>
+ </li>
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
@@ -122,6 +127,18 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../command_line/allcools.html">
    Entry Point
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../command_line/allcools_allc.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     allc
+    </span>
+   </code>
   </a>
  </li>
  <li class="toctree-l1">
@@ -412,6 +429,42 @@
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
+  VISUALIZATION
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../visualization/intro.html">
+   Visualization
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  DISCUSSION
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../discuss/intro.html">
+   Discussion
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  API
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../api/intro.html">
+   API
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
   PROJECT INFO
  </span>
 </p>
@@ -522,36 +575,79 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#base-level-single-methylome-file">
-   Base-level, Single Methylome File
+  <a class="reference internal nav-link" href="#allcools-uses-three-file-formats">
+   ALLCools Uses Three File Formats
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#relationships-between-these-file-formats">
+     Relationships between these file formats
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#base-level-single-methylome">
+   Base-level, Single Methylome
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#allc-file">
      ALLC File
     </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#from-bam-to-allc">
-     From BAM to ALLC
-    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#columns-in-allc-file">
+       Columns in ALLC file
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#compression-and-indexing-allc">
+       Compression and Indexing ALLC
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#region-level-multiple-methylome-file">
-   Region-level, Multiple Methylome File
+  <a class="reference internal nav-link" href="#region-level-multiple-methylomes">
+   Region-level, Multiple Methylomes
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#mcds-file-n-d-dense-matrix-for-raw-counts">
      MCDS File - N-D dense matrix for raw counts
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mcds-store-multiple-region-sets-together">
+       MCDS store multiple region sets together
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mcds-enables-on-disk-data-handling">
+       MCDS enables on-disk data handling
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#mcad-file-2-d-sparse-matrix-for-hypo-methylation-score">
      MCAD File - 2-D sparse matrix for hypo-methylation score
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mcad-store-processed-hypo-methylation-score">
+       MCAD store processed hypo-methylation score
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hypo-methylation-score">
+       Hypo-methylation score
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -577,27 +673,200 @@ demultiplexing single-cell reads and mapping them on to reference genome.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For all the data generated by snmC-seq and related single-cell multi-omics technologies in Ecker Lab,
-we use <a class="reference external" href="https://hq-1.gitbook.io/mc/">YAP</a> to demultiplex and map the reads.</p>
+we use <a class="reference external" href="https://hq-1.gitbook.io/mc/">YAP</a> pipeline to demultiplex and map the reads. YAP usus the bismark
+to map reads, and generate single-cell ALLC files from each filtered BAM files.</p>
 </div>
-<p>After demultiplexing and mapping, you should get one sorted BAM file per cell containing unique mapped reads,
-you can then <a class="reference external" href="#from-bam-to-allc">create ALLC files from BAM</a> using <code class="docutils literal notranslate"><span class="pre">allcools</span></code> command line tools.</p>
+<p>After demultiplexing and mapping, you should get one BAM file per cell containing sorted, non-duplicated,
+uniquely mapped reads, you can then create ALLC files
+using <a class="reference internal" href="../command_line/allcools.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span></code> command line tools</span></a>.</p>
 </div>
-<div class="section" id="base-level-single-methylome-file">
-<h2>Base-level, Single Methylome File<a class="headerlink" href="#base-level-single-methylome-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="allcools-uses-three-file-formats">
+<h2>ALLCools Uses Three File Formats<a class="headerlink" href="#allcools-uses-three-file-formats" title="Permalink to this headline">¶</a></h2>
+<p>We use three file formats to store three different levels of information:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>File Format</strong></p></th>
+<th class="head"><p><strong>Number of Methylomes</strong></p></th>
+<th class="head"><p><strong>Genome Resolution</strong></p></th>
+<th class="head"><p><strong>Data Type</strong></p></th>
+<th class="head"><p><strong>mC Context</strong></p></th>
+<th class="head"><p><strong>Matrix Form</strong></p></th>
+<th class="head"><p><strong>Based On</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ALLC</p></td>
+<td><p>single</p></td>
+<td><p>single base pair</p></td>
+<td><p>raw counts</p></td>
+<td><p>all mC context</p></td>
+<td><p>N.A.</p></td>
+<td><p>tab-separated table</p></td>
+</tr>
+<tr class="row-odd"><td><p>MCDS</p></td>
+<td><p>multiple</p></td>
+<td><p>genome region<br/>(large size, small number)</p></td>
+<td><p>raw counts</p></td>
+<td><p>all mC context</p></td>
+<td><p>N-D Dense Matrix</p></td>
+<td><p><a class="reference external" href="http://xarray.pydata.org/en/stable/data-structures.html#dataset"><code class="docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p>MCAD</p></td>
+<td><p>multiple</p></td>
+<td><p>genome region<br/>(small size, large number)</p></td>
+<td><p>hypo-methylation score</p></td>
+<td><p>single mC context</p></td>
+<td><p>2-D Sparse Matrix</p></td>
+<td><p><a class="reference external" href="https://anndata.readthedocs.io/en/latest/index.html"><code class="docutils literal notranslate"><span class="pre">anndata.AnnData</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="relationships-between-these-file-formats">
+<h3>Relationships between these file formats<a class="headerlink" href="#relationships-between-these-file-formats" title="Permalink to this headline">¶</a></h3>
+<p>The ALLC files are generated from sequencing data, the MCDS and MCAD files are then generated from a set of ALLC files
+(usually, thousands of cells coming from the same experiment). The MCDS or MCAD files are the starting point of
+cell-level analysis.</p>
+<div class="figure align-default" id="data-model-fig">
+<a class="reference internal image-reference" href="../_images/data_model.png"><img alt="../_images/data_model.png" src="../_images/data_model.png" style="height: 300px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">ALLCools data model for handling single-cell methylomes and performing cell-level analysis.</span><a class="headerlink" href="#data-model-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="base-level-single-methylome">
+<h2>Base-level, Single Methylome<a class="headerlink" href="#base-level-single-methylome" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="allc-file">
 <h3>ALLC File<a class="headerlink" href="#allc-file" title="Permalink to this headline">¶</a></h3>
+<p>The ALLC (ALL Cytosine) format is a tab-separated table containing <strong>base level methylation and coverage counts</strong>.
+This format is originally defined by <a class="reference external" href="https://github.com/yupenghe/methylpy"><code class="docutils literal notranslate"><span class="pre">methylpy</span></code></a>, a python package developed
+in the Ecker lab for bulk WGBS-seq data analysis. Each row in an ALLC file corresponds to one cytosine in the genome.
+An ALLC file contains 7 mandatory columns and no header. ALLCools assumes all the ALLC files are compressed and
+indexed by <a class="reference external" href="http://www.htslib.org/doc/bgzip.html"><code class="docutils literal notranslate"><span class="pre">bgzip</span></code></a> and <a class="reference external" href="http://www.htslib.org/doc/tabix.html"><code class="docutils literal notranslate"><span class="pre">tabix</span></code></a> from
+the <a class="reference external" href="http://www.htslib.org/">htslib</a>. The ALLC file
+<a class="reference internal" href="../command_line/allcools_allc.html"><span class="doc std std-doc">generated from a single-cell BAM file</span></a>
+only contains information from a single cell, while the ALLC file can also be
+<a class="reference internal" href="../command_line/allcools_merge.html"><span class="doc std std-doc">merged from multiple ALLC files</span></a> (e.g., by cell cluster) as a pseudo-bulk-level
+methylation table.</p>
+<p>For more details on generating and handling ALLC files, please read the <a class="reference internal" href="../command_line/allcools.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span></code> command line tools</span></a> introduction.</p>
+<div class="section" id="columns-in-allc-file">
+<h4>Columns in ALLC file<a class="headerlink" href="#columns-in-allc-file" title="Permalink to this headline">¶</a></h4>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>index</strong></p></th>
+<th class="head"><p><strong>column name</strong></p></th>
+<th class="head"><p><strong>example</strong></p></th>
+<th class="head"><p><strong>note</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>chromosome</p></td>
+<td><p>chr12</p></td>
+<td><p>chromosome names need to be the same as genome FASTA</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>position</p></td>
+<td><p>18283342</p></td>
+<td><p>1-based</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>strand</p></td>
+<td><p>+</p></td>
+<td><p>either + or -</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>sequence context</p></td>
+<td><p>CGT</p></td>
+<td><p>can be more than 3 bases</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>mc</p></td>
+<td><p>1</p></td>
+<td><p>count of reads supporting methylation</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>cov</p></td>
+<td><p>2</p></td>
+<td><p>read coverage</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>methylated</p></td>
+<td><p>1</p></td>
+<td><p>indicator of significant methylation (1 if no test is performed)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="section" id="from-bam-to-allc">
-<h3>From BAM to ALLC<a class="headerlink" href="#from-bam-to-allc" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="compression-and-indexing-allc">
+<h4>Compression and Indexing ALLC<a class="headerlink" href="#compression-and-indexing-allc" title="Permalink to this headline">¶</a></h4>
+<p>All the ALLC files generated by ALLCools are compressed by <a class="reference external" href="http://www.htslib.org/doc/bgzip.html"><code class="docutils literal notranslate"><span class="pre">bgzip</span></code></a>
+and indexed by <a class="reference external" href="http://www.htslib.org/doc/tabix.html"><code class="docutils literal notranslate"><span class="pre">tabix</span></code></a>. The <code class="docutils literal notranslate"><span class="pre">tabix</span></code> enable us to query ALLC files with
+specific genomic regions. To check whether your ALLC files meet the standard, you can use
+<a class="reference internal" href="../command_line/allcools_standard.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">standard</span></code></span></a> to validate the compression and indexing.
+You can also use <a class="reference internal" href="../command_line/allcools_tbi.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">tbi</span></code></span></a> to index ALLC file using <code class="docutils literal notranslate"><span class="pre">tabix</span></code>.</p>
 </div>
 </div>
-<div class="section" id="region-level-multiple-methylome-file">
-<h2>Region-level, Multiple Methylome File<a class="headerlink" href="#region-level-multiple-methylome-file" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="region-level-multiple-methylomes">
+<h2>Region-level, Multiple Methylomes<a class="headerlink" href="#region-level-multiple-methylomes" title="Permalink to this headline">¶</a></h2>
+<p>For cell-level analysis like clustering, we need to first aggregate the base-level methylation information into
+region-level, and gathering thousands of cells together into a data matrix. To do so, we provide two kinds
+of format MCDS and MCAD for different purpose.</p>
 <div class="section" id="mcds-file-n-d-dense-matrix-for-raw-counts">
 <h3>MCDS File - N-D dense matrix for raw counts<a class="headerlink" href="#mcds-file-n-d-dense-matrix-for-raw-counts" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-default" id="mcds-fig">
+<a class="reference internal image-reference" href="../_images/mcds.png"><img alt="../_images/mcds.png" src="../_images/mcds.png" style="height: 250px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Schematic of one MCDS file.</span><a class="headerlink" href="#mcds-fig" title="Permalink to this image">¶</a></p>
+</div>
+<p>The MCDS is a versatile data matrix format for storing region-level raw methylation counts from a set of cells.
+It aims to handle relatively large regions (KBs to MBs), such as 100Kb genomic bins or gene body regions.
+Because these regions are large, with the typical coverage of single-cell methylome data (for snmC-seq2,
+1.6M reads per cell), the raw count matrix is not sparse at all (~80-90% non-zero values). Therefore, we store
+MCDS as dense N-dimensional matrix, with <strong>four common dimensions</strong> representing the cells, regions, methylation
+context (e.g., CH or CG), and count type (e.g, methylated base count (mc in ALLC) or total base count (cov in ALLC)).</p>
+<div class="section" id="mcds-store-multiple-region-sets-together">
+<h4>MCDS store multiple region sets together<a class="headerlink" href="#mcds-store-multiple-region-sets-together" title="Permalink to this headline">¶</a></h4>
+<p>It is also necessary to count the same cell using different region sets. For example, in the brain cell clustering
+analysis, we will <a class="reference internal" href="../cell_level/basic/mch_mcg_100k_basic.html"><span class="doc std std-doc">use 100Kb genomic bins in clustering</span></a> and <a class="reference internal" href="../cell_level/dmg/intro_dmg.html"><span class="doc std std-doc">use the
+gene body regions to identify DMGs</span></a>. One MCDS can save multiple region sets together,
+making it easy to switch between different region sets.</p>
+</div>
+<div class="section" id="mcds-enables-on-disk-data-handling">
+<h4>MCDS enables on-disk data handling<a class="headerlink" href="#mcds-enables-on-disk-data-handling" title="Permalink to this headline">¶</a></h4>
+<p>Single-cell methylome dataset is essentially hundreds of thousands of whole-genome sequencing datasets. Due to this
+high coverage (million reads per cell) nature, cell-level analysis, especially preprocessing steps before dimension
+reduction, can be quite memory intensive. One of the most important reason we chose <code class="docutils literal notranslate"><span class="pre">xarray.Dataset</span></code>
+to model MCDS is because <a class="reference external" href="http://xarray.pydata.org/en/stable/dask.html">it allows on-disk data manipulation and lazy computation</a>. This feature enabled by python package <code class="docutils literal notranslate"><span class="pre">xarray</span></code> and <code class="docutils literal notranslate"><span class="pre">dask</span></code> allow us to
+handle hundreds of thousands of single-cell methylomes that don’t fit into the memory of a single computational node.
+Still, memory consumption need to be carefully monitored when doing the single-cell methylome data analysis, especially
+before dimension reduction.</p>
+</div>
 </div>
 <div class="section" id="mcad-file-2-d-sparse-matrix-for-hypo-methylation-score">
 <h3>MCAD File - 2-D sparse matrix for hypo-methylation score<a class="headerlink" href="#mcad-file-2-d-sparse-matrix-for-hypo-methylation-score" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-default" id="mcad-fig">
+<a class="reference internal image-reference" href="../_images/mcad.png"><img alt="../_images/mcad.png" src="../_images/mcad.png" style="height: 250px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Schematic of one MCAD file.</span><a class="headerlink" href="#mcad-fig" title="Permalink to this image">¶</a></p>
+</div>
+<p>Alternatively, one may need to count the single-cell methylomes with even small genomic regions (e.g., 5Kb genomic
+bins or hundreds of bp DMRs), since smaller regions might capture methylation diversity at cis-regulatory elements
+better during cell-level analysis. In practice, we found the clustering results is improved</p>
+<p>The caveats of using small regions are that 1) the matrix sparsity increases when the region is small; 2) the
+number of total regions need to be considered also goes up quickly. Therefore, storing the matrix in dense format
+like MCDS did is not appropriate anymore, we switch to use the anndata.AnnData class to store sparse matrix.</p>
+<div class="section" id="mcad-store-processed-hypo-methylation-score">
+<h4>MCAD store processed hypo-methylation score<a class="headerlink" href="#mcad-store-processed-hypo-methylation-score" title="Permalink to this headline">¶</a></h4>
+<p>Currently, one MCAD file only store one kind of methylation context (e.g., mCG) from one set of regions (e.g.,
+5Kb genomic bins). To further reduce the matrix size, we calculated hypo-methylation score (see below) from the raw
+counts, and filter the hypo-methylation score by a loose cutoff (0.9 by default, adjustable in the CLI) to only store
+significant values.</p>
+</div>
+<div class="section" id="hypo-methylation-score">
+<h4>Hypo-methylation score<a class="headerlink" href="#hypo-methylation-score" title="Permalink to this headline">¶</a></h4>
+<p>The hypo-methylation score is calculated by performing binomial test on each individual base count pair, and then used
+the survival function (1 - p) as the value. This value range from 0 to 1, with a higher value indicates more
+hypo-methylated (potentially, more open and active). During <a class="reference internal" href="../cell_level/basic/mcg_5kb_basic.html"><span class="doc std std-doc">analysis using this matrix</span></a>, we will apply more filters and then binarize it to apply the algorithms
+adapted from snATAC-seq analysis.</p>
+</div>
 </div>
 </div>
 </div>
