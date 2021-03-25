@@ -450,6 +450,11 @@
    Discussion
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../discuss/dmr_benchmark.html">
+   DMR Caller Benchmark
+  </a>
+ </li>
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
@@ -614,31 +619,9 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#input-files">
-     Input Files
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pseudo-bulk-files">
      Pseudo-bulk Files
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#merge-allc">
-       Merge ALLC
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#allc-to-bigwig">
-       ALLC to BigWig
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#dmr-dataset">
-       DMR Dataset
-      </a>
-     </li>
-    </ul>
    </li>
   </ul>
  </li>
@@ -659,18 +642,18 @@
 <ol class="simple">
 <li><p>Cell-level analysis, including</p>
 <ul class="simple">
-<li><p>Clustering Analysis</p></li>
-<li><p>Differentially Methylated Gene (DMG) Analysis</p></li>
-<li><p>Data Integration</p></li>
+<li><p>Clustering analysis</p></li>
+<li><p>Differentially Methylated Gene (DMG) analysis</p></li>
+<li><p>Data integration</p></li>
+<li><p>Identify potential doublets</p></li>
 </ul>
 </li>
 <li><p>Cluster-level analysis, including</p>
 <ul class="simple">
-<li><p>Differentially Methylated Region (DMR) Analysis</p></li>
-<li><p>DMR Annotation</p></li>
-<li><p>DMR Motif Analysis</p></li>
-<li><p>DMR - Gene Correlation Analysis</p></li>
-<li><p>Enhancer Prediction</p></li>
+<li><p>Differentially Methylated Region (DMR) analysis</p></li>
+<li><p>DMR annotation</p></li>
+<li><p>DMR motif analysis (upstream regulators of DMRs)</p></li>
+<li><p>DMR - Gene correlation analysis (downstream targets of DMRs)</p></li>
 </ul>
 </li>
 </ol>
@@ -736,30 +719,31 @@ analysis. A quick demo is <a class="reference internal" href="../cell_level/basi
 <h2>Cluster Level Analysis<a class="headerlink" href="#cluster-level-analysis" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
 <h3>Sections<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>TODO</p>
-</div>
-<div class="section" id="input-files">
-<h3>Input Files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>Single-cell ALLC files</p></li>
-<li><p>Cell cluster labels</p></li>
+<li><p>Prepare pseudo-bulk ALLC files</p></li>
+<li><p>Call Differentially Methylated Region (DMR)</p></li>
+<li><p>DMR annotation</p></li>
+<li><p>DMR motif analysis (finding upstream regulators of DMRs)</p></li>
+<li><p>DMR - Gene correlation analysis (finding downstream targets of DMRs)</p></li>
 </ul>
 </div>
 <div class="section" id="pseudo-bulk-files">
 <h3>Pseudo-bulk Files<a class="headerlink" href="#pseudo-bulk-files" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="merge-allc">
-<h4>Merge ALLC<a class="headerlink" href="#merge-allc" title="Permalink to this headline">¶</a></h4>
-<p>The first step of cluster-level analysis is to merge single-cell ALLC files based on cell cluster labels via
-<a class="reference internal" href="../command_line/allcools_merge.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">merge</span></code></span></a>. Each merged ALLC file is the pseudo-bulk level methylome
-of that cell cluster.</p>
-</div>
-<div class="section" id="allc-to-bigwig">
-<h4>ALLC to BigWig<a class="headerlink" href="#allc-to-bigwig" title="Permalink to this headline">¶</a></h4>
-<p>BigWig files are convenient for genome browser visualization and region-level analysis. The <a class="reference internal" href="../command_line/allcools_bw.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">bw</span></code></span></a> can generate BigWig files from ALLC files.</p>
-</div>
-<div class="section" id="dmr-dataset">
-<h4>DMR Dataset<a class="headerlink" href="#dmr-dataset" title="Permalink to this headline">¶</a></h4>
-<p>TODO</p>
+<p>Starting from <strong>single-cell ALLC files</strong> and <strong>cluster labels</strong> from the cell-level analysis, there are three steps to
+perpare cluster-level data files.</p>
+<ol class="simple">
+<li><p>We create pseudo-bulk ALLC files by merging from single-cell ALLC files via
+<a class="reference internal" href="../command_line/allcools_merge.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">merge</span></code></span></a>.</p></li>
+<li><p>We then use proper algorithms (<a class="reference internal" href="../discuss/dmr_benchmark.html"><span class="doc std std-doc">see discussion</span></a>) to identify DMRs. The expected results of this step are a DMR
+region list and associated statistics.</p></li>
+<li><p>Using the DMR regions and additional datasets, we can annotate DMRs with multiple kinds of information, and store the
+DMR-by-feature information in anndata.AnnData format, where the <code class="docutils literal notranslate"><span class="pre">obs</span></code> dimension are the DMRs, the <code class="docutils literal notranslate"><span class="pre">var</span></code> dimension are
+all kinds of features.</p></li>
+</ol>
+<p>The data model is illustrated in the following figure:</p>
+<div class="figure align-default" id="cluster-level-analysis-fig">
+<a class="reference internal image-reference" href="../_images/cluster-level-analysis.png"><img alt="../_images/cluster-level-analysis.png" src="../_images/cluster-level-analysis.png" style="height: 300px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Cluster level analysis data model.</span><a class="headerlink" href="#cluster-level-analysis-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>

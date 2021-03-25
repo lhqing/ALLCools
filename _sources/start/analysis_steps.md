@@ -2,15 +2,15 @@
 
 ALLCools separates the analysis into two parts:
 1. Cell-level analysis, including
-    - Clustering Analysis
-    - Differentially Methylated Gene (DMG) Analysis
-    - Data Integration
+    - Clustering analysis
+    - Differentially Methylated Gene (DMG) analysis
+    - Data integration
+    - Identify potential doublets
 2. Cluster-level analysis, including
-    - Differentially Methylated Region (DMR) Analysis
-    - DMR Annotation
-    - DMR Motif Analysis
-    - DMR - Gene Correlation Analysis
-    - Enhancer Prediction
+    - Differentially Methylated Region (DMR) analysis
+    - DMR annotation
+    - DMR motif analysis (upstream regulators of DMRs)
+    - DMR - Gene correlation analysis (downstream targets of DMRs)
 
 In general, the **cell-level analysis** is focused on individual cells' overall diversity 
 using relatively large features (kilobase-level regions or whole gene body). 
@@ -66,22 +66,35 @@ analysis. A quick demo is [here](../cell_level/basic/mcg_5kb_basic.ipynb), the s
 
 
 ## Cluster Level Analysis
-### Sections
-TODO
 
-### Input Files
-- Single-cell ALLC files
-- Cell cluster labels
+
+### Sections
+- Prepare pseudo-bulk ALLC files
+- Call Differentially Methylated Region (DMR)
+- DMR annotation
+- DMR motif analysis (finding upstream regulators of DMRs)
+- DMR - Gene correlation analysis (finding downstream targets of DMRs)
 
 ### Pseudo-bulk Files
-#### Merge ALLC
-The first step of cluster-level analysis is to merge single-cell ALLC files based on cell cluster labels via
-[`allcools merge`](../command_line/allcools_merge.ipynb). Each merged ALLC file is the pseudo-bulk level methylome 
-of that cell cluster.
+Starting from **single-cell ALLC files** and **cluster labels** from the cell-level analysis, there are three steps to 
+perpare cluster-level data files.
 
-#### ALLC to BigWig
-BigWig files are convenient for genome browser visualization and region-level analysis. The [`allcools bw`](
-../command_line/allcools_bw.ipynb) can generate BigWig files from ALLC files.
+1. We create pseudo-bulk ALLC files by merging from single-cell ALLC files via 
+[`allcools merge`](../command_line/allcools_merge.ipynb). 
 
-#### DMR Dataset
-TODO
+2. We then use proper algorithms ([see discussion](../discuss/dmr_benchmark.md)) to identify DMRs. The expected results of this step are a DMR 
+region list and associated statistics.
+
+3. Using the DMR regions and additional datasets, we can annotate DMRs with multiple kinds of information, and store the 
+DMR-by-feature information in anndata.AnnData format, where the `obs` dimension are the DMRs, the `var` dimension are 
+all kinds of features.
+
+The data model is illustrated in the following figure:
+
+```{figure} ./cluster-level-analysis.png
+---
+height: 300px
+name: cluster-level-analysis-fig
+---
+Cluster level analysis data model.
+```

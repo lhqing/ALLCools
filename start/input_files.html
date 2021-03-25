@@ -450,6 +450,11 @@
    Discussion
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../discuss/dmr_benchmark.html">
+   DMR Caller Benchmark
+  </a>
+ </li>
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
@@ -683,6 +688,7 @@ using <a class="reference internal" href="../command_line/allcools.html"><span c
 <div class="section" id="allcools-uses-three-file-formats">
 <h2>ALLCools Uses Three File Formats<a class="headerlink" href="#allcools-uses-three-file-formats" title="Permalink to this headline">¶</a></h2>
 <p>We use three file formats to store three different levels of information:</p>
+<div class="full-width docutils">
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>File Format</strong></p></th>
@@ -701,13 +707,13 @@ using <a class="reference internal" href="../command_line/allcools.html"><span c
 <td><p>raw counts</p></td>
 <td><p>all mC context</p></td>
 <td><p>N.A.</p></td>
-<td><p>tab-separated table</p></td>
+<td><p>tab-separated table, compressed by <a class="reference external" href="http://www.htslib.org/doc/bgzip.html">bgzip</a>, indexed by <a class="reference external" href="http://www.htslib.org/doc/tabix.html">tabix</a></p></td>
 </tr>
 <tr class="row-odd"><td><p>MCDS</p></td>
 <td><p>multiple</p></td>
 <td><p>genome region<br/>(large size, small number)</p></td>
 <td><p>raw counts</p></td>
-<td><p>all mC context</p></td>
+<td><p>multiple user-defined mC context</p></td>
 <td><p>N-D Dense Matrix</p></td>
 <td><p><a class="reference external" href="http://xarray.pydata.org/en/stable/data-structures.html#dataset"><code class="docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a></p></td>
 </tr>
@@ -721,6 +727,7 @@ using <a class="reference internal" href="../command_line/allcools.html"><span c
 </tr>
 </tbody>
 </table>
+</div>
 <div class="section" id="relationships-between-these-file-formats">
 <h3>Relationships between these file formats<a class="headerlink" href="#relationships-between-these-file-formats" title="Permalink to this headline">¶</a></h3>
 <p>The ALLC files are generated from sequencing data, the MCDS and MCAD files are then generated from a set of ALLC files
@@ -857,11 +864,15 @@ like MCDS did is not appropriate anymore, we switch to use the anndata.AnnData c
 <h4>MCAD store processed hypo-methylation score<a class="headerlink" href="#mcad-store-processed-hypo-methylation-score" title="Permalink to this headline">¶</a></h4>
 <p>Currently, one MCAD file only store one kind of methylation context (e.g., mCG) from one set of regions (e.g.,
 5Kb genomic bins). To further reduce the matrix size, we calculated hypo-methylation score (see below) from the raw
-counts, and filter the hypo-methylation score by a loose cutoff (0.9 by default, adjustable in the CLI) to only store
+counts, and filter the hypo-methylation score by a loose cutoff (0.9 by default, adjustable in the command line) to only store
 significant values.</p>
 </div>
 <div class="section" id="hypo-methylation-score">
 <h4>Hypo-methylation score<a class="headerlink" href="#hypo-methylation-score" title="Permalink to this headline">¶</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The hypo-methylation score range from 0 to 1, larger value means the region is more hypo-methylated in the cell.</p>
+</div>
 <p>The hypo-methylation score is calculated by performing binomial test on each individual base count pair, and then used
 the survival function (1 - p) as the value. This value range from 0 to 1, with a higher value indicates more
 hypo-methylated (potentially, more open and active). During <a class="reference internal" href="../cell_level/basic/mcg_5kb_basic.html"><span class="doc std std-doc">analysis using this matrix</span></a>, we will apply more filters and then binarize it to apply the algorithms

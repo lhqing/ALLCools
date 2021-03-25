@@ -18,12 +18,13 @@ using [`allcools` command line tools](../command_line/allcools.ipynb).
 
 ## ALLCools Uses Three File Formats
 We use three file formats to store three different levels of information: 
-
+```{div} full-width
 **File Format**|**Number of Methylomes**|**Genome Resolution**|**Data Type**|**mC Context**|**Matrix Form**|**Based On**
 -----|-----|-----|-----|-----|-----|-----
-ALLC|single|single base pair|raw counts|all mC context|N.A.|tab-separated table
-MCDS|multiple|genome region<br/>(large size, small number)|raw counts|all mC context|N-D Dense Matrix|[`xarray.Dataset`](http://xarray.pydata.org/en/stable/data-structures.html#dataset)
+ALLC|single|single base pair|raw counts|all mC context|N.A.|tab-separated table, compressed by [bgzip](http://www.htslib.org/doc/bgzip.html), indexed by [tabix](http://www.htslib.org/doc/tabix.html)
+MCDS|multiple|genome region<br/>(large size, small number)|raw counts|multiple user-defined mC context|N-D Dense Matrix|[`xarray.Dataset`](http://xarray.pydata.org/en/stable/data-structures.html#dataset)
 MCAD|multiple|genome region<br/>(small size, large number)|hypo-methylation score|single mC context|2-D Sparse Matrix|[`anndata.AnnData`](https://anndata.readthedocs.io/en/latest/index.html)
+```
 
 ### Relationships between these file formats
 The ALLC files are generated from sequencing data, the MCDS and MCAD files are then generated from a set of ALLC files 
@@ -132,10 +133,13 @@ like MCDS did is not appropriate anymore, we switch to use the anndata.AnnData c
 #### MCAD store processed hypo-methylation score
 Currently, one MCAD file only store one kind of methylation context (e.g., mCG) from one set of regions (e.g., 
 5Kb genomic bins). To further reduce the matrix size, we calculated hypo-methylation score (see below) from the raw 
-counts, and filter the hypo-methylation score by a loose cutoff (0.9 by default, adjustable in the CLI) to only store
+counts, and filter the hypo-methylation score by a loose cutoff (0.9 by default, adjustable in the command line) to only store
 significant values.
 
 #### Hypo-methylation score
+```{note}
+The hypo-methylation score range from 0 to 1, larger value means the region is more hypo-methylated in the cell.
+```
 The hypo-methylation score is calculated by performing binomial test on each individual base count pair, and then used
 the survival function (1 - p) as the value. This value range from 0 to 1, with a higher value indicates more 
 hypo-methylated (potentially, more open and active). During [analysis using this matrix](

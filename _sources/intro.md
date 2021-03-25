@@ -6,7 +6,6 @@ It includes functions to prepare input files, perform cell-level analysis
 (e.g., clustering), and cluster-level analysis 
 (e.g., DMR calling and following analysis).
 
-
 ## Documentation Organization
 1. To install and get an overview, please read the **GET STARTED** part;
 2. To generate analysis files, please read the **COMMAND LINE TOOLS** part;
@@ -19,15 +18,15 @@ It includes functions to prepare input files, perform cell-level analysis
 
 ```{figure} ./doc_organize.png
 ---
-height: 250px
+height: 350px
 name: doc-organize-fig
 ---
 ALLCools documentation organization.
 ```
 
-
-## Author
-Hanqing Liu
+## Authors
+- Hanqing Liu, developer, initial conception
+- Jingtian Zhou, developer, clustering algorithms
 
 ## Support
 - The source code is on [github](https://github.com/lhqing/ALLCools);
