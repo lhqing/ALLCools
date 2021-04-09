@@ -35,13 +35,17 @@ def _merge_cg_strand(in_path, out_path):
                 if int(prev_line[1]) + 1 == int(cur_line[1]) and prev_line[2] != cur_line[2]:
                     new_line = prev_line[:4] + [str(int(prev_line[4]) + int(cur_line[4])),
                                                 str(int(prev_line[5]) + int(cur_line[5])), '1']
-                    out_allc.write('\t'.join(new_line) + '\n')
                     prev_line = None
                 # otherwise, only write and update prev_line
                 else:
-                    out_allc.write('\t'.join(prev_line) + '\n')
+                    if prev_line[2] == '-':
+                        # change all the '-' strand to '+' strand
+                        new_line = [prev_line[0], str(int(prev_line[1]) - 1), '+'] + prev_line[3:]
+                    else:
+                        new_line = prev_line.copy()
                     prev_line = cur_line
-    return None
+                out_allc.write('\t'.join(new_line) + '\n')
+    return
 
 
 def _check_strandness_parameter(strandness) -> str:

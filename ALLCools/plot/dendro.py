@@ -107,34 +107,40 @@ def plot_dendrogram(
     # ------------------ Plot nodes ------------------
     # node colors
     nan_color = '#D3D3D3' if marker_color is None else marker_color
-    if node_hue is not None:
-        if node_hue_norm is None:
-            values = node_hue.values
-            _hue_norm = Normalize(vmin=min(values), vmax=max(values))
-        else:
-            _hue_norm = Normalize(vmin=min(node_hue_norm),
-                                  vmax=max(node_hue_norm))
-        _cmap = get_cmap(node_palette)
-
-        def node_cmap(v):
-            return (_cmap(_hue_norm(v)),)
-
-        if node_hue_cbar:
-            ax.figure.colorbar(mpl.cm.ScalarMappable(norm=_hue_norm, cmap=_cmap),
-                               ax=ax.figure.axes,
-                               shrink=0.6,
-                               fraction=node_hue_cbar_frac,
-                               label='Node Color')
+    if isinstance(node_palette, dict):
+        # categorical node color
+        node_colors = {node: node_palette[node] if (node in node_palette) else nan_color for node in node_pos.keys()}
     else:
-        node_hue = {}
+        # continous node color
+        if node_hue is not None:
+            if node_hue_norm is None:
+                values = node_hue.values
+                _hue_norm = Normalize(vmin=min(values), vmax=max(values))
+            else:
+                _hue_norm = Normalize(vmin=min(node_hue_norm),
+                                      vmax=max(node_hue_norm))
+            _cmap = get_cmap(node_palette)
 
-        def node_cmap(_):
-            return nan_color
+            def node_cmap(v):
+                return (_cmap(_hue_norm(v)),)
 
-    node_colors = {
-        node: node_cmap(node_hue[node]) if (node in node_hue) else nan_color
-        for node in node_pos.keys()
-    }
+            if node_hue_cbar:
+                ax.figure.colorbar(mpl.cm.ScalarMappable(norm=_hue_norm, cmap=_cmap),
+                                   ax=ax.figure.axes,
+                                   shrink=0.6,
+                                   fraction=node_hue_cbar_frac,
+                                   label='Node Color')
+        else:
+            node_hue = {}
+
+            def node_cmap(_):
+                return nan_color
+
+        node_colors = {
+            node: node_cmap(node_hue[node]) if (node in node_hue) else nan_color
+            for node in node_pos.keys()
+        }
+
     # node sizes
     nan_size = marker_size
     if node_size is not None:

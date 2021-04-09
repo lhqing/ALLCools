@@ -18,17 +18,16 @@ from ._doc import *
 log = logging.getLogger()
 
 DESCRIPTION = """
-ALLCools (ALLC tools) is a toolkit for ALLC format and methylation sequencing analysis
-
-This toolkit contain functions related to all steps about manipulating the ALLC format, 
-a core tab-separated values file format that stores single base level methylation information.
+The ALLCools command line toolkit contains multiple functions to manipulate the ALLC format, 
+a core file format that stores single base level methylation information.
 Throughout this toolkit, we use bgzip/tabix to compress and index the ALLC file to allow 
 flexible data query from the ALLC file.
 
 Current Tool List in ALLCools:
 
 [Generate ALLC]
-bam-to-allc          - Generate 1 ALLC file from 1 position sorted BAM file via samtools mpileup.
+bam-to-allc          - Generate 1 ALLC file from 1 position sorted BAM file via 
+                       samtools mpileup.
 
 [Manipulate ALLC]
 standardize-allc     - Validate 1 ALLC file format, standardize the chromosome names, 
@@ -39,21 +38,21 @@ merge-allc           - Merge N ALLC files into 1 ALLC file
 extract-allc         - Extract information (strand, context) from 1 ALLC file
 
 [Get Region Level]
-allc-to-bigwig       - Generate coverage (cov) and ratio (mc/cov) bigwig track files from 1 ALLC file
+allc-to-bigwig       - Generate coverage (cov) and ratio (mc/cov) bigwig track files 
+                       from 1 ALLC file
 allc-to-region-count - Count region level mc, cov by genome bins or provided BED files.
-generate-mcds        - Generate methylation dataset (MCDS) for a group of ALLC file and different region sets.
-                       This is a convenient wrapper function for a bunch of allc-to-region-count 
-                       and xarray integration codes. MCDS is inherit from xarray.DataSet
-generate-cmotif-database - Generate C-Motif Database that used to scan motif methylation profile over ALLC files.
-allc_motif_scan      - Scan C-Motif Database over ALLC files. 
-                       Get overall motif mC and cov count for each motif in each ALLC file.
-
+generate-mcds        - Generate methylation dataset (MCDS) for a group of ALLC file and 
+                       different region sets. This is a convenient wrapper function for 
+                       a bunch of allc-to-region-count and xarray integration codes. 
+                       MCDS is inherit from xarray.DataSet
+generate-mcad        - Generate mCG hypo-methylation score AnnData dataset (MCAD) for 
+                       a group of ALLC file and one region set.
 """
 
 EPILOG = """
-Author: Hanqing Liu, hanliu@salk.edu
+Author: Hanqing Liu
 
-If this looks good, send coffee to...
+See ALLCools documentation here: https://lhqing.github.io/ALLCools/intro.html
 """
 
 
@@ -123,9 +122,8 @@ def _str_to_bool(v: str) -> bool:
 
 
 def bam_to_allc_register_subparser(subparser):
-    # TODO add alias to arguments
     parser = subparser.add_parser('bam-to-allc',
-                                  aliases=['2allc'],
+                                  aliases=['allc', '2allc'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Take 1 position sorted BAM file, generate 1 ALLC file.")
 
@@ -210,6 +208,7 @@ def bam_to_allc_register_subparser(subparser):
 
 def standardize_allc_register_subparser(subparser):
     parser = subparser.add_parser('standardize-allc',
+                                  aliases=['standard'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Standardize 1 ALLC file by checking: "
                                        "1. No header in the ALLC file; "
@@ -274,6 +273,7 @@ def tabix_allc_register_subparser(subparser):
 
 def profile_allc_register_subparser(subparser):
     parser = subparser.add_parser('profile-allc',
+                                  aliases=['profile'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Generate some summary statistics of 1 ALLC.")
 
@@ -358,14 +358,6 @@ def merge_allc_register_subparser(subparser):
     )
 
     parser.add_argument(
-        "--binarize",
-        dest='binarize',
-        action='store_true',
-        help=binarize_doc
-    )
-    parser.set_defaults(binarize=False)
-
-    parser.add_argument(
         "--snp",
         dest='snp',
         action='store_true',
@@ -375,7 +367,6 @@ def merge_allc_register_subparser(subparser):
 
 
 def extract_context_allc_register_subparser(subparser):
-    # TODO add alias to arguments
     parser = subparser.add_parser('extract-allc',
                                   aliases=['extract'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -458,20 +449,12 @@ def extract_context_allc_register_subparser(subparser):
                              'Do not use cpu > 1 for single cell region count. '
                              'For single cell data, parallel on cell level is better.'
     )
-
-    parser.add_argument(
-        "--binarize",
-        dest='binarize',
-        action='store_true',
-        help=binarize_doc
-    )
-    parser.set_defaults(binarize=False)
+    return
 
 
 def allc_to_region_count_register_subparser(subparser):
-    # TODO add alias to arguments
     parser = subparser.add_parser('allc-to-region-count',
-                                  aliases=['2region'],
+                                  aliases=['region', '2region'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Calculate mC and cov at regional level. Region can be provided in 2 forms: "
                                        "1. BED file, provided by region_bed_paths, "
@@ -571,20 +554,12 @@ def allc_to_region_count_register_subparser(subparser):
                              'Do not use cpu > 1 for single cell region count. '
                              'For single cell data, parallel on cell level is better.'
     )
-
-    parser.add_argument(
-        "--binarize",
-        dest='binarize',
-        action='store_true',
-        help=binarize_doc
-    )
-    parser.set_defaults(binarize=False)
+    return
 
 
 def allc_to_bigwig_register_subparser(subparser):
-    # TODO add alias to arguments
     parser = subparser.add_parser('allc-to-bigwig',
-                                  aliases=['2bw'],
+                                  aliases=['bw', '2bw'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Generate bigwig file(s) from 1 ALLC file.")
 
@@ -669,9 +644,11 @@ def allc_to_bigwig_register_subparser(subparser):
         default=1,
         help=cpu_basic_doc
     )
+    return
 
 
 def generate_cmotif_database_register_subparser(subparser):
+    # TODO should I keep this function in CLI?
     parser = subparser.add_parser('generate-cmotif-database',
                                   aliases=['cmotif-db'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -780,6 +757,7 @@ def generate_cmotif_database_register_subparser(subparser):
 
 
 def allc_motif_scan_register_subparser(subparser):
+    # TODO should I keep this function in CLI?
     parser = subparser.add_parser('allc-motif-scan',
                                   aliases=['motif'],
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -947,17 +925,63 @@ def generate_mcds_register_subparser(subparser):
              'For single cell feature count, this can be set to np.uint16 [0, 65536] to decrease file size. '
              'The values exceed min/max will be clipped while keep the mc/cov same, and a warning will be sent.'
     )
+    return
+
+
+def generate_mcad_register_subparser(subparser):
+    parser = subparser.add_parser('generate-mcad',
+                                  aliases=['mcad'],
+                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+                                  help="Generate MCAD from ALLC files and one region set.")
+
+    parser_req = parser.add_argument_group("required arguments")
+
+    parser_req.add_argument(
+        "--allc_table",
+        type=str,
+        required=True,
+        help=allc_table_doc
+    )
+
+    parser_req.add_argument(
+        "--bed_path",
+        type=str,
+        required=True,
+        help=region_bed_path_mcad_doc
+    )
+
+    parser_req.add_argument(
+        "--output_prefix",
+        type=str,
+        required=True,
+        help='Output prefix of the MCAD, a suffix ".mcad" will be added.'
+    )
+
+    parser_req.add_argument(
+        "--mc_context",
+        type=str,
+        required=True,
+        help=mc_context_mcad_doc
+    )
 
     parser.add_argument(
-        "--binarize",
-        dest='binarize',
-        action='store_true',
-        help=binarize_doc
+        "--cpu",
+        type=int,
+        default=1,
+        help=cpu_basic_doc
     )
-    parser.set_defaults(binarize=False)
+
+    parser.add_argument(
+        "--cutoff",
+        type=float,
+        default=0.9,
+        help='Values smaller than cutoff will be stored as 0, which reduces the file size.'
+    )
+    return
 
 
 def ame_register_subparser(subparser):
+    # TODO should I keep this function in CLI?
     parser = subparser.add_parser('ame',
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   help="Motif enrichment analysis with AME from MEME Suite. "
@@ -1084,6 +1108,7 @@ def main():
     if not logging.root.handlers:
         setup_logging(stdout=True,
                       quiet=False)
+
     # execute command
     args_vars = vars(args)
     for k, v in args_vars.items():
@@ -1091,21 +1116,21 @@ def main():
 
     cur_command = args_vars.pop('command').lower().replace('_', '-')
     # Do real import here:
-    if cur_command in ['bam-to-allc', '2allc']:
+    if cur_command in ['bam-to-allc', 'allc', '2allc']:
         from ._bam_to_allc import bam_to_allc as func
-    elif cur_command in ['standardize-allc']:
+    elif cur_command in ['standardize-allc', 'standard']:
         from .utilities import standardize_allc as func
     elif cur_command in ['tabix-allc', 'tbi']:
         from .utilities import tabix_allc as func
-    elif cur_command in ['profile-allc']:
+    elif cur_command in ['profile-allc', 'profile']:
         from .utilities import profile_allc as func
     elif cur_command in ['merge-allc', 'merge']:
         from ._merge_allc import merge_allc_files as func
     elif cur_command in ['extract-allc', 'extract']:
         from ._extract_allc import extract_allc as func
-    elif cur_command in ['allc-to-region-count', '2region']:
+    elif cur_command in ['allc-to-region-count', 'region', '2region']:
         from ._allc_to_region_count import allc_to_region_count as func
-    elif cur_command in ['allc-to-bigwig', '2bw']:
+    elif cur_command in ['allc-to-bigwig', 'bw', '2bw']:
         from ._allc_to_bigwig import allc_to_bigwig as func
     elif cur_command in ['generate-cmotif-database', 'cmotif-db']:
         from .motif.cmotif import generate_cmotif_database as func
@@ -1113,6 +1138,8 @@ def main():
         from .motif.motif_scan import allc_motif_scan as func
     elif cur_command in ['generate-mcds', 'mcds']:
         from .count_matrix.mcds import generate_mcds as func
+    elif cur_command in ['generate-mcad', 'mcad']:
+        from .count_matrix.mcad import generate_mcad as func
     elif cur_command in ['ame']:
         from .motif.ame import ame as func
     else:

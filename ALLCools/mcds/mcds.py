@@ -35,25 +35,17 @@ class MCDS(xr.Dataset):
         -------
         MCDS
         """
-        if use_obs is not None:
-            def preprocess(_ds):
-                _use_obs = use_obs & _ds.get_index(obs_dim)
-                _ds = _ds.sel({obs_dim: _use_obs})
-                return _ds
-        else:
-            preprocess = None
-
         if isinstance(mcds_paths, str) and '*' not in mcds_paths:
             ds = xr.open_dataset(mcds_paths)
-            if preprocess is not None:
-                ds = preprocess(ds)
         else:
             with dask.config.set(**{'array.slicing.split_large_chunks': False}):
                 ds = xr.open_mfdataset(mcds_paths,
-                                       preprocess=preprocess,
                                        parallel=False,
                                        combine='nested',
                                        concat_dim=obs_dim)
+        if use_obs is not None:
+            use_obs = ds.get_index(obs_dim).intersection(use_obs)
+            ds = ds.sel({obs_dim: use_obs})
         return cls(ds).squeeze()
 
     def add_mc_frac(self,

@@ -37,7 +37,8 @@ mc_contexts_doc = "Space separated mC context patterns to extract from ALLC. " \
                   "Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT."
 
 mc_context_mcad_doc = 'mC context pattern to extract from ALLC. ' \
-                      'Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT.'
+                      'Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT.' \
+                      'Note that generate_mcad only take one mC context'
 
 reference_fasta_doc = 'Path to 1 genome reference FASTA file (the one used for mapping), ' \
                       'use samtools fadix to build .fai index first. Do not compress that file.'

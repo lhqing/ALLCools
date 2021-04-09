@@ -284,8 +284,8 @@ def one_vs_rest_dmg(cell_meta, group, mcds,
     """
     clusters = cell_meta[group].unique()
     dmg_table = []
-    for cluster in clusters:
-        print(f'Calculating {cluster} DMGs.')
+    for cluster in sorted(clusters):
+        print(f'Calculating cluster {cluster} DMGs.')
         # determine cells to use
         cluster_judge = cell_meta[group] == cluster
         in_cells = cluster_judge[cluster_judge]

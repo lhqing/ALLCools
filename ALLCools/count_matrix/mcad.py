@@ -71,7 +71,7 @@ def _count_single_allc(allc_path, bed_path, mc_pattern, output_dir, cutoff=0.9):
     cpu_doc=cpu_basic_doc,
     mc_context_doc=mc_context_mcad_doc
 )
-def generate_mcad(allc_table, bed_path, cpu, output_prefix, mc_context, cleanup=True, cutoff=0.9):
+def generate_mcad(allc_table, bed_path, output_prefix, mc_context, cpu=1, cleanup=True, cutoff=0.9):
     """
 
     Parameters
@@ -83,7 +83,7 @@ def generate_mcad(allc_table, bed_path, cpu, output_prefix, mc_context, cleanup=
     cpu
         {cpu_doc}
     output_prefix
-        Output prefix of the MCAD
+        Output prefix of the MCAD, a suffix ".mcad" will be added.
     mc_context
         {mc_context_doc}
     cleanup
