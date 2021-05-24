@@ -15,6 +15,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 import numpy as np
 import psutil
 from pysam import TabixFile
+from pysam.libctabix import TabixIterator
 from ._doc import *
 from ._open import open_allc
 from .utilities import parse_chrom_size, genome_region_chunks, parse_file_paths
@@ -32,7 +33,10 @@ PROCESS = psutil.Process(os.getpid())
 class _ALLC:
     def __init__(self, path, region):
         self.f = TabixFile(path)
-        self.f_region = self.f.fetch(region)
+        try:
+            self.f_region = self.f.fetch(region)
+        except ValueError:
+            self.f_region = TabixIterator()
 
     def readline(self):
         return self.f_region.next()
@@ -56,7 +60,7 @@ def _increase_soft_fd_limit():
 
 
 def _batch_merge_allc_files_tabix(allc_files, out_file, chrom_size_file, bin_length, cpu=10, binarize=False, snp=False):
-    regions = genome_region_chunks(chrom_size_file, bin_length=bin_length)
+    regions = genome_region_chunks(chrom_size_file, bin_length=bin_length, combine_small=False)
     log.info(f'Merge ALLC files with {cpu} processes')
     log.info(f'Split genome into {len(regions)} regions, each is {bin_length}bp')
     log.info(f'{len(allc_files)} to merge, the default ALLC file handel in 1 run is {DEFAULT_MAX_ALLC}')
