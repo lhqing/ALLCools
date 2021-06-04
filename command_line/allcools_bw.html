@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>allcools bw &#8212; ALLCools</title>
     
-  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -19,14 +20,10 @@
 
     
       
-  <link rel="stylesheet"
-    href="../_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -34,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
 
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -44,7 +41,7 @@
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -57,14 +54,14 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="allcools region" href="allcools_region.html" />
     <link rel="prev" title="allcools extract" href="allcools_extract.html" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
-
-
-
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -73,30 +70,30 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../index.html">
-  
-  
-  <h1 class="site-logo" id="site-title">ALLCools</h1>
-  
-</a>
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      <h1 class="site-logo" id="site-title">ALLCools</h1>
+      
+    </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro.html">
    ALLCools: ALL Cytosine tools
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   GET STARTED
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../start/installation.html">
    Installation
@@ -118,12 +115,210 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
+ <span class="caption-text">
+  CELL LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cell_level/basic/intro_basic_clustering.html">
+   Basic Clustering Walk-through
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cell_level/basic/mch_mcg_100k_basic.html">
+     Basic Cell Clustering Using 100Kb Bins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cell_level/basic/mcg_5kb_basic.html">
+     Basic Cell Clustering Using mCG-5Kb Bins
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cell_level/step_by_step/intro_step_by_step_clustering.html">
+   Step-by-step Clustering Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../cell_level/step_by_step/100kb/intro_100kb.html">
+     Step-by-step Clustering Using 100Kb bins
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../cell_level/step_by_step/100kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../cell_level/step_by_step/100kb/02-BasicFeatureFiltering.html">
+       Feature Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
+       Calculate Highly Variable Features And Get mC Fraction AnnData
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../cell_level/step_by_step/100kb/05-DecompositionAndEmbedding.html">
+       Decomposition And Embedding
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../cell_level/step_by_step/100kb/06-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../cell_level/step_by_step/5kb/intro_5kb.html">
+     Step-by-step Clustering using mCG-5Kb Input
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
+       Decomposition Using mCG-5Kb Bins
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../cell_level/step_by_step/5kb/03-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cell_level/dmg/intro_dmg.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cell_level/dmg/01-AddGenemCFractions.html">
+     Calculate Gene mC Fractions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cell_level/dmg/02-DifferentiallyMethylatedGenes.html">
+     Cluster Differentially Methylated Genes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cell_level/dmg/03-PlotClusterDMGs.html">
+     Plot Cluster DMGs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cell_level/dmg/04-PairwiseDMG.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cell_level/integration/intro_integration.html">
+   Data Integration
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cell_level/integration/PreprocessRNA.html">
+     RNA Data Preprocessing Before Integration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cell_level/integration/HarmonyIntegration.html">
+     Integrating mC and RNA using Harmony
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cell_level/doublets/intro_doublets.html">
+   Doublets Identification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cell_level/doublets/doublet_score_chrom100k.html">
+     Calculate Cell Doublet Score
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  CLUSTER LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../cluster_level/intro.html">
+   Cluster Level Analysis
+  </a>
+ </li>
+</ul>
+<p class="caption">
  <span class="caption-text">
   COMMAND LINE TOOLS
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="allcools.html">
    Entry Point
@@ -250,201 +445,24 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
- <span class="caption-text">
-  CELL LEVEL ANALYSIS
- </span>
-</p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../cell_level/basic/intro_basic_clustering.html">
-   Basic Clustering Walk-through
-  </a>
-  <ul class="collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="../cell_level/basic/mch_mcg_100k_basic.html">
-     Basic Cell Clustering Using 100Kb Bins
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../cell_level/basic/mcg_5kb_basic.html">
-     Basic Cell Clustering Using mCG-5Kb Bins
-    </a>
-   </li>
-  </ul>
-  <i class="fas fa-chevron-down">
-  </i>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../cell_level/step_by_step/intro_step_by_step_clustering.html">
-   Step-by-step Clustering Analysis
-  </a>
-  <ul class="collapse-ul">
-   <li class="toctree-l2 collapsible-parent">
-    <a class="reference internal" href="../cell_level/step_by_step/100kb/intro_100kb.html">
-     Step-by-step Clustering Using 100Kb bins
-    </a>
-    <ul class="collapse-ul">
-     <li class="toctree-l3">
-      <a class="reference internal" href="../cell_level/step_by_step/100kb/01-CellBasicFiltering.html">
-       Cell Basic Filtering
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../cell_level/step_by_step/100kb/02-BasicFeatureFiltering.html">
-       Feature Basic Filtering
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
-       Calculate Highly Variable Features And Get mC Fraction AnnData
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
-       Preclustering and Cluster Enriched Features
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
-       Preclustering and Cluster Enriched Features
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../cell_level/step_by_step/100kb/05-DecompositionAndEmbedding.html">
-       Decomposition And Embedding
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../cell_level/step_by_step/100kb/06-Clustering.html">
-       Consensus Clustering
-      </a>
-     </li>
-    </ul>
-    <i class="fas fa-chevron-down">
-    </i>
-   </li>
-   <li class="toctree-l2 collapsible-parent">
-    <a class="reference internal" href="../cell_level/step_by_step/5kb/intro_5kb.html">
-     Step-by-step Clustering using mCG-5Kb Input
-    </a>
-    <ul class="collapse-ul">
-     <li class="toctree-l3">
-      <a class="reference internal" href="../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
-       Cell Basic Filtering
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
-       Decomposition Using mCG-5Kb Bins
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../cell_level/step_by_step/5kb/03-Clustering.html">
-       Consensus Clustering
-      </a>
-     </li>
-    </ul>
-    <i class="fas fa-chevron-down">
-    </i>
-   </li>
-  </ul>
-  <i class="fas fa-chevron-down">
-  </i>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../cell_level/dmg/intro_dmg.html">
-   Differential Methylated Genes Analysis
-  </a>
-  <ul class="collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="../cell_level/dmg/01-AddGenemCFractions.html">
-     Calculate Gene mC Fractions
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../cell_level/dmg/02-DifferentiallyMethylatedGenes.html">
-     Cluster Differentially Methylated Genes
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../cell_level/dmg/03-PlotClusterDMGs.html">
-     Plot Cluster DMGs
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../cell_level/dmg/04-PairwiseDMG.html">
-     Differential Methylated Genes - Pairwise
-    </a>
-   </li>
-  </ul>
-  <i class="fas fa-chevron-down">
-  </i>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../cell_level/integration/intro_integration.html">
-   Data Integration
-  </a>
-  <ul class="collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="../cell_level/integration/PreprocessRNA.html">
-     RNA Data Preprocessing Before Integration
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../cell_level/integration/HarmonyIntegration.html">
-     Integrating mC and RNA using Harmony
-    </a>
-   </li>
-  </ul>
-  <i class="fas fa-chevron-down">
-  </i>
- </li>
- <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../cell_level/doublets/intro_doublets.html">
-   Doublets Identification
-  </a>
-  <ul class="collapse-ul">
-   <li class="toctree-l2">
-    <a class="reference internal" href="../cell_level/doublets/doublet_score_chrom100k.html">
-     Calculate Cell Doublet Score
-    </a>
-   </li>
-  </ul>
-  <i class="fas fa-chevron-down">
-  </i>
- </li>
-</ul>
-<p class="caption collapsible-parent">
- <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
- </span>
-</p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../cluster_level/intro.html">
-   Cluster Level Analysis
-  </a>
- </li>
-</ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   VISUALIZATION
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../visualization/intro.html">
    Visualization
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   DISCUSSION
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../discuss/intro.html">
    Discussion
@@ -456,24 +474,24 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   API
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../api/intro.html">
    API
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   PROJECT INFO
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../project_info/citation.html">
    Citation And Reference
@@ -482,12 +500,11 @@
  <li class="toctree-l1">
   <a class="reference external" href="https://github.com/lhqing/ALLCools/releases">
    Changelog
-   <i class="fas fa-external-link-alt">
-   </i>
   </a>
  </li>
 </ul>
 
+    </div>
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
@@ -503,21 +520,21 @@
           
 <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
     
-    <div class="row topbar fixed-top container-xl">
-    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
-    </div>
-    <div class="col pl-2 topbar-main">
-        
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-arrow-left"></i>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-        
-        
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
@@ -535,7 +552,7 @@
     </div>
 </div>
 
-        <!-- Source interaction buttons -->
+            <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
@@ -555,20 +572,21 @@
     </div>
 </div>
 
+            <!-- Full screen (wrap in <a> to have style consistency -->
 
-        <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                title="Fullscreen mode"><i
-                    class="fas fa-expand"></i></button></a>
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
-        <!-- Launch buttons -->
+            <!-- Launch buttons -->
 
-    </div>
+        </div>
 
-    <!-- Table of contents -->
-    <div class="d-none d-md-block col-md-2 bd-toc show">
-        
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
     </div>
 </div>
     <div id="main-content" class="row">
@@ -604,16 +622,16 @@ optional arguments:
                         Whether to remove rows with unknown chromosome instead
                         of raising KeyError <span class="o">(</span>default: False<span class="o">)</span>
   --region REGION       Only extract records from certain genome region<span class="o">(</span>s<span class="o">)</span> via
-                        tabix, multiple region can be provided <span class="k">in</span> tabix form.
-                        If region is not None, will not run <span class="k">in</span> parallel
+                        tabix, multiple region can be provided in tabix form.
+                        If region is not None, will not run in parallel
                         <span class="o">(</span>default: None<span class="o">)</span>
   --cov_cutoff COV_CUTOFF
-                        Max cov filter <span class="k">for</span> a single site <span class="k">in</span> ALLC. Sites with
+                        Max cov filter <span class="k">for</span> a single site in ALLC. Sites with
                         cov &gt; cov_cutoff will be skipped. <span class="o">(</span>default: <span class="m">9999</span><span class="o">)</span>
   --path_to_wigtobigwig PATH_TO_WIGTOBIGWIG
                         Path to wigtobigwig to allow allcools to find it
                         <span class="o">(</span>default: <span class="o">)</span>
-  --cpu CPU             Number of processes to use <span class="k">in</span> parallel. <span class="o">(</span>default: <span class="m">1</span><span class="o">)</span>
+  --cpu CPU             Number of processes to use in parallel. <span class="o">(</span>default: <span class="m">1</span><span class="o">)</span>
 
 required arguments:
   --allc_path ALLC_PATH
@@ -663,15 +681,15 @@ required arguments:
 
               </div>
               
-        </div>
-    </div>
-    
-    
-    <div class='prev-next-bottom'>
         
+        <div class='prev-next-bottom'>
+            
     <a class='left-prev' id="prev-link" href="allcools_extract.html" title="previous page"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">extract</span></code></a>
     <a class='right-next' id="next-link" href="allcools_region.html" title="next page"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">region</span></code></a>
 
+        </div>
+        
+        </div>
     </div>
     <footer class="footer mt-5 mt-md-0">
     <div class="container">
@@ -688,11 +706,9 @@ required arguments:
 
       </div>
     </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-    
-  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
-
-
-    
+  
   </body>
 </html>

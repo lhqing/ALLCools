@@ -14,11 +14,12 @@ and real single-cell methylome input.
 3. dmrseq
 
 ## Pseudo-bulk methylome coverage:
+Using DG as an example.
 Merge 10, 20, 50, 100, 200, 500, 1000 cells, plot
 
-1. % of C covered
+1. Percentage of C covered
 2. ave. C coverage
-3. compare to bulk WGBS from encode
+3. compare to bulk WGBS from ENCODE
 
 ## Simulation
 1. choose a deep pseudo-bulk profile as reference

@@ -29,9 +29,19 @@ ALLCools documentation organization.
 - Jingtian Zhou, developer, clustering algorithms
 
 ## Support
+```{figure} ./open_issue.png
+---
+height: 150px
+name: open-issue-fig
+figclass: margin
+---
+Click on this to create a page specific issue.
+```
 - The source code is on [github](https://github.com/lhqing/ALLCools);
 - For releases and changelog, see [github releases page](https://github.com/lhqing/ALLCools/releases);
 - For bugs and feature requests, please use the [issue tracker](https://github.com/lhqing/ALLCools/issues).
+- For page-specific issues, please use the "open issue" button on the top-right toggle.
+
 
 ## Citation
 When using ALLCools, please cite our paper and related methods papers. 

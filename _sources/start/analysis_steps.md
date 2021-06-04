@@ -36,34 +36,34 @@ The high-coverage pseudo-bulk methylomes allow us to analyze methylation diversi
 - (AND/OR) Cell-by-feature hypo-methylation score matrix (MCAD files) generated from single-cell ALLC files via 
   [`allcools mcad`](../command_line/allcools_mcad.ipynb)
 
-### Tow Clustering Strategies (And which one to use)
+### Two Clustering Strategies (And which one to use)
 
 #### Clustering using raw counts from 100Kb genomic bins
 In this strategy, we start from the cell-by-100kb-bin raw count matrix ([MCDS](mcds-fig)) for clustering analysis. 
 A quick demo is [here](../cell_level/basic/mch_mcg_100k_basic.ipynb), the step-by-step descriptions can be found 
-[here](../cell_level/step_by_step/100kb/intro_100kb.md)
+[here](../cell_level/step_by_step/100kb/intro_100kb.md).
 
 We found [add reference] using 100Kb genomic bins provides good clustering ability and is also computationally 
 efficient due to the relatively small number of features (27K features in mm10, v.s. 540K features using 5Kb bins). 
 We also tested the effect of different feature sizes in clustering adult mouse brain single-cell methylomes, 
 and found the size of features do not have major impact on the clustering results [add discussion page]. 
 However, this conclusion may not apply to all tissues, as the scale of methylation diversity might be different in 
-different tissue or cell types. We suggest using the 100Kb bin size as a start point, and test other bin sizes if the 
-results when necessary. The [`allcools mcds`](../command_line/allcools_mcds.ipynb) does provide the flexibility to 
-generate feature matrix at any bin size or user-defined region sets.
+different tissue or cell types. We suggest using the 100Kb bin size as a start point, and test other bin sizes when 
+necessary. The [`allcools mcds`](../command_line/allcools_mcds.ipynb) does provide the flexibility to 
+generate feature matrix at any bin size or through user-defined region sets.
 
 #### Clustering using hypo-methylation score from 5Kb genomic bins
-Through the practice of analyzing different tissues, we noticed that for some tissues (pituitary, PBMC, etc.), the 
+Through the practice of analyzing different tissues, we noticed that for some tissues (pituitary, PBMC etc.), the 
 100Kb bin clustering strategy had a hard time identifying some known cell types. One possible explanation is that the 
 methylation diversity of these cell types mainly occur at small discontinuous regulatory regions (DMRs) while the large 
-100Kb bins can only capture DMV or large-hypo DMR level diversities. To solve this problem, we developed another 
-strategy by using [algorithms adapted from snATAC-seq](../cell_level/step_by_step/5kb/intro_5kb.md) on small features 
-(5Kb by default).
+100Kb bins can only capture DMV [add reference] or large-hypo DMR level diversities [add reference]. 
+To solve this problem, we developed another strategy by using 
+[algorithms adapted from snATAC-seq](../cell_level/step_by_step/5kb/intro_5kb.md) 
+on small genomic bins (5Kb by default).
 
 Specifically, this strategy start from cell-by-5kb-bin hypo-methylation score matrix ([MCAD](mcad-fig)) for clustering 
 analysis. A quick demo is [here](../cell_level/basic/mcg_5kb_basic.ipynb), the step-by-step descriptions can be found
-[here](../cell_level/step_by_step/5kb/intro_5kb.md)
-
+[here](../cell_level/step_by_step/5kb/intro_5kb.md).
 
 ## Cluster Level Analysis
 
