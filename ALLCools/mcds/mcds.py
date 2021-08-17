@@ -112,8 +112,8 @@ class MCDS(xr.Dataset):
         -------
         None
         """
-        feature_cov_mean = self[f'{var_dim}_da'].squeeze().sel(
-            count_type='cov').sum(dim='mc_type').mean(dim=obs_dim).to_pandas()
+        feature_cov_mean = self[f'{var_dim}_da'].sel(
+            count_type='cov').sum(dim='mc_type').mean(dim=obs_dim).squeeze().to_pandas()
         self.coords[f'{var_dim}_cov_mean'] = feature_cov_mean
 
         print(f"Feature {var_dim} mean cov across cells added in MCDS.coords['{var_dim}_cov_mean'].")
@@ -203,8 +203,12 @@ class MCDS(xr.Dataset):
             feature_bed = BedTool.from_dataframe(feature_bed_df)
             black_list_bed = BedTool(black_list_path)
             black_feature = feature_bed.intersect(black_list_bed, f=f, wa=True)
-            black_feature_index = black_feature.to_dataframe().set_index(
-                ['chrom', 'start', 'end']).index
+            try:
+                black_feature_index = black_feature.to_dataframe().set_index(
+                    ['chrom', 'start', 'end']).index
+            except pd.errors.EmptyDataError:
+                print('No feature overlapping the black list bed file.')
+                return self
         black_feature_id = pd.Index(
             feature_bed_df.reset_index().set_index(['chrom', 'start', 'end']).loc[black_feature_index][var_dim])
 
