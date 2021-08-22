@@ -31,7 +31,7 @@ IUPAC_TABLE = {
     'D': 'AGT',
     'H': 'ATC',
     'V': 'ACG',
-    'N': 'ATCG'
+    'N': 'ATCGN'
 }
 
 COMPLIMENT_BASE = {'A': 'T', 'C': 'G', 'T': 'A', 'G': 'C',

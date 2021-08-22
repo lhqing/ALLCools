@@ -31,11 +31,11 @@ def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path,
     temp_mc, temp_cov = 0, 0
 
     out_prefix = out_prefix.rstrip('.')
-    out_rate = out_prefix + '.rate.bg'
+    out_frac = out_prefix + '.frac.bg'
     out_cov = out_prefix + '.cov.bg'
 
     with open_allc(allc_path) as allc, \
-            open(out_rate, 'w') as rate_handle, \
+            open(out_frac, 'w') as frac_handle, \
             open(out_cov, 'w') as cov_handle:
         for line in allc:
             chrom, pos, _, _, mc, cov, *_ = line.split("\t")
@@ -58,12 +58,12 @@ def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path,
                 # write line after confirm the chrom
                 if temp_cov > 0:
                     mc_level = temp_mc / temp_cov
-                    rate_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
+                    frac_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
                     cov_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, temp_cov])) + "\n")
                 cur_chrom = chrom  # only update chrom after wrote the cur line, cause this may belong to last chrom
 
                 # reset bin
-                _bin_start = pos // bin_size * bin_size
+                _bin_start = (pos - 1) // bin_size * bin_size
                 if _bin_start == bin_start:
                     # this only happens when pos == cur_chrom_end,
                     # we don't want the last base, just ignore it, usually happens at chrM last base...
@@ -79,11 +79,11 @@ def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path,
         # write last piece if there is anything
         if temp_cov > 0:
             mc_level = temp_mc / temp_cov
-            rate_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
+            frac_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
             cov_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, temp_cov])) + "\n")
 
     print(f'Finish generate bedgraph for {allc_path}')
-    return out_rate, out_cov
+    return out_frac, out_cov
 
 
 def _bedgraph_to_bigwig(input_file, chrom_size_path, path_to_wigtobigwig, remove_bedgraph=True):
