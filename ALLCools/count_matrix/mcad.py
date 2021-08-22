@@ -28,7 +28,7 @@ def bin_sf(cov, mc, p):
         return 0
 
 
-def _count_single_allc(allc_path, bed_path, mc_pattern, output_dir, cutoff=0.9):
+def _count_single_allc(allc_path, bed_path, mc_pattern, output_dir, cutoff=0.9, reverse_value=False):
     patterns = parse_mc_pattern(mc_pattern)
     region_bed = _read_region_bed(bed_path)
 
@@ -60,6 +60,9 @@ def _count_single_allc(allc_path, bed_path, mc_pattern, output_dir, cutoff=0.9):
     p = mc_sum / (cov_sum + 0.000001)  # prevent empty allc error
     pv = bin_counts.apply(lambda x: bin_sf(x['cov'], x['mc'], p),
                           axis=1).astype('float16')
+    if reverse_value:
+        # use cdf instead of sf when looking for hyper methylation
+        pv = 1 - pv
     pv = pv[pv > cutoff]  # get rid of most hyper bins
     pv.to_hdf(f'{output_dir}/{pathlib.Path(allc_path).name}.hdf', key='data')
     return
@@ -71,7 +74,8 @@ def _count_single_allc(allc_path, bed_path, mc_pattern, output_dir, cutoff=0.9):
     cpu_doc=cpu_basic_doc,
     mc_context_doc=mc_context_mcad_doc
 )
-def generate_mcad(allc_table, bed_path, output_prefix, mc_context, cpu=1, cleanup=True, cutoff=0.9):
+def generate_mcad(allc_table, bed_path, output_prefix, mc_context, cpu=1, cleanup=True, cutoff=0.9,
+                  reverse_value=False):
     """
 
     Parameters
@@ -90,6 +94,8 @@ def generate_mcad(allc_table, bed_path, output_prefix, mc_context, cpu=1, cleanu
         Whether remove temp files or not
     cutoff
         Values smaller than cutoff will be stored as 0, which reduces the file size
+    reverse_value
+        If true, use cdf instead of sf to make hyper-methylation events having higher values
     Returns
     -------
 
@@ -122,7 +128,8 @@ def generate_mcad(allc_table, bed_path, output_prefix, mc_context, cpu=1, cleanu
                                      bed_path=bed_path,
                                      mc_pattern=mc_context,
                                      output_dir=temp_dir,
-                                     cutoff=cutoff)
+                                     cutoff=cutoff,
+                                     reverse_value=reverse_value)
             futures[future] = cell_id
 
         for future in as_completed(futures):

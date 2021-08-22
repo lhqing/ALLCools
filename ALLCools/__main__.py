@@ -977,6 +977,14 @@ def generate_mcad_register_subparser(subparser):
         default=0.9,
         help='Values smaller than cutoff will be stored as 0, which reduces the file size.'
     )
+
+    parser.add_argument(
+        "--reverse_value",
+        dest='reverse_value',
+        action='store_true',
+        help="If present, use cdf instead of sf to make hyper-methylation events having higher values."
+    )
+    parser.set_defaults(reverse_value=False)
     return
 
 
