@@ -16,7 +16,7 @@ Author
 
 
 ## Author
-Hanqing Liu
+- Hanqing Liu
 
 
 ## Citation
