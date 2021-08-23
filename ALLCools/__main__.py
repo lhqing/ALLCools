@@ -603,7 +603,7 @@ def allc_to_bigwig_register_subparser(subparser):
 
     parser.add_argument(
         "--strandness",
-        type='str',
+        type=str,
         choices=['split', 'both'],
         default='split',
         help=strandness_doc
