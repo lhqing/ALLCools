@@ -576,14 +576,14 @@ def allc_to_bigwig_register_subparser(subparser):
         "--output_prefix",
         type=str,
         required=True,
-        help="Output prefix of the bigwig file(s)."
+        help="Path prefix of the output BigWig file."
     )
 
-    parser_req.add_argument(
-        "--chrom_size_path",
-        type=str,
-        required=True,
-        help=chrom_size_path_doc
+    parser.add_argument(
+        "--bin_size",
+        type=int,
+        default=50,
+        help=bw_bin_sizes_doc
     )
 
     parser_req.add_argument(
@@ -594,55 +594,19 @@ def allc_to_bigwig_register_subparser(subparser):
         help=mc_contexts_doc
     )
 
-    parser.add_argument(
-        "--split_strand",
-        dest='split_strand',
-        action='store_true',
-        help=split_strand_doc
-    )
-    parser.set_defaults(split_strand=False)
-
-    parser.add_argument(
-        "--bin_size",
-        type=int,
-        default=50,
-        help="Minimum bin size of bigwig file"
-    )
-
-    parser.add_argument(
-        "--remove_additional_chrom",
-        dest='remove_additional_chrom',
-        action='store_true',
-        help=remove_additional_chrom_doc
-    )
-    parser.set_defaults(remove_additional_chrom=False)
-
-    parser.add_argument(
-        "--region",
+    parser_req.add_argument(
+        "--chrom_size_path",
         type=str,
-        default=None,
-        help=region_doc
+        required=True,
+        help=chrom_size_path_doc
     )
 
     parser.add_argument(
-        "--cov_cutoff",
-        type=int,
-        default=9999,
-        help=cov_cutoff_doc
-    )
-
-    parser.add_argument(
-        "--path_to_wigtobigwig",
-        type=str,
-        default='',
-        help='Path to wigtobigwig to allow allcools to find it'
-    )
-
-    parser.add_argument(
-        "--cpu",
-        type=int,
-        default=1,
-        help=cpu_basic_doc
+        "--strandness",
+        type='str',
+        choices=['split', 'both'],
+        default='split',
+        help=strandness_doc
     )
     return
 
@@ -1139,7 +1103,7 @@ def main():
     elif cur_command in ['allc-to-region-count', 'region', '2region']:
         from ._allc_to_region_count import allc_to_region_count as func
     elif cur_command in ['allc-to-bigwig', 'bw', '2bw']:
-        from ._allc_to_bigwig import allc_to_bigwig as func
+        from ._allc_to_bigwig_new import allc_to_bigwig as func
     elif cur_command in ['generate-cmotif-database', 'cmotif-db']:
         from .motif.cmotif import generate_cmotif_database as func
     elif cur_command in ['allc-motif-scan', 'motif']:

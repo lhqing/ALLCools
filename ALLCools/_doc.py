@@ -19,6 +19,8 @@ binarize_doc = 'If set, binarize each single site in each individual ALLC file. 
 bin_sizes_doc = "Fix-size genomic bins can be defined by bin_sizes and chrom_size_path. " \
                 "Space separated sizes of genome bins, each size will be count separately."
 
+bw_bin_sizes_doc = "Bin size of the BigWig files."
+
 chrom_size_path_doc = "Path to UCSC chrom size file. " \
                       "This can be generated from the genome fasta or downloaded via UCSC fetchChromSizes tools. " \
                       "All ALLCools functions will refer to this file whenever possible to check for " \

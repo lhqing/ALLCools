@@ -156,8 +156,6 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
         real_out_paths_dict = {}
         need_tabix = []
 
-    # TODO this can be much more improved, learn how cutadapt do parallel read and write!
-
     with ProcessPoolExecutor(cpu) as merge_executor:
         futures = []
         for (mc_context, strandness, out_suffix), sub_df in total_output_df.groupby(
@@ -165,7 +163,6 @@ def _extract_allc_parallel(allc_path, output_prefix, mc_contexts, strandness, ou
             ordered_index = sub_df['chunk_id'].astype(int).sort_values().index
             ordered_file_list = sub_df.loc[ordered_index, 'path'].tolist()
             real_file_path = f'{output_prefix}.{mc_context}-{strandness}.{out_suffix}'
-
             real_out_paths_dict[(mc_context, strandness, out_suffix)] = real_file_path
 
             if tabix and 'allc' in out_suffix:
