@@ -51,8 +51,8 @@ class StrandContextCounter:
                 self.mc_watson_counts[c] += mc
                 self.cov_watson_counts[c] += cov
             else:
-                self.mc_crick_counts += mc
-                self.cov_crick_counts += cov
+                self.mc_crick_counts[c] += mc
+                self.cov_crick_counts[c] += cov
 
 
 def write_entry(counter, context_handle, mc_contexts, strandness, chrom,
@@ -62,54 +62,51 @@ def write_entry(counter, context_handle, mc_contexts, strandness, chrom,
             # Watson strand
             mc = counter.mc_watson_counts[context]
             cov = counter.cov_watson_counts[context]
-            if cov == 0:
-                continue
-            frac = mc / cov
-            frac_handle = context_handle[context, 'Watson', 'frac']
-            frac_handle.addEntries(chrom,
-                                   starts=[bin_start],
-                                   values=[frac],
-                                   span=bin_size)
-            cov_handle = context_handle[context, 'Watson', 'cov']
-            cov_handle.addEntries(chrom,
-                                  starts=[bin_start],
-                                  values=[cov],
-                                  span=bin_size)
+            if cov != 0:
+                frac = mc / cov
+                frac_handle = context_handle[context, '+', 'frac']
+                frac_handle.addEntries(chrom,
+                                       starts=[bin_start],
+                                       values=[frac],
+                                       span=bin_size)
+                cov_handle = context_handle[context, '+', 'cov']
+                cov_handle.addEntries(chrom,
+                                      starts=[bin_start],
+                                      values=[cov],
+                                      span=bin_size)
 
             # Crick strand
-            mc = counter.mc_watson_counts[context]
-            cov = counter.cov_watson_counts[context]
-            if cov == 0:
-                continue
-            frac = mc / cov
-            frac_handle = context_handle[context, 'Watson', 'frac']
-            frac_handle.addEntries(chrom,
-                                   starts=[bin_start],
-                                   values=[frac],
-                                   span=bin_size)
-            cov_handle = context_handle[context, 'Watson', 'cov']
-            cov_handle.addEntries(chrom,
-                                  starts=[bin_start],
-                                  values=[cov],
-                                  span=bin_size)
+            mc = counter.mc_crick_counts[context]
+            cov = counter.cov_crick_counts[context]
+            if cov != 0:
+                frac = mc / cov
+                frac_handle = context_handle[context, '-', 'frac']
+                frac_handle.addEntries(chrom,
+                                       starts=[bin_start],
+                                       values=[frac],
+                                       span=bin_size)
+                cov_handle = context_handle[context, '-', 'cov']
+                cov_handle.addEntries(chrom,
+                                      starts=[bin_start],
+                                      values=[cov],
+                                      span=bin_size)
     else:
         for context in mc_contexts:
             # Both strand
             mc = counter.mc_counts[context]
             cov = counter.cov_counts[context]
-            if cov == 0:
-                continue
-            frac = mc / cov
-            frac_handle = context_handle[context, 'frac']
-            frac_handle.addEntries(chrom,
-                                   starts=[bin_start],
-                                   values=[frac],
-                                   span=bin_size)
-            cov_handle = context_handle[context, 'cov']
-            cov_handle.addEntries(chrom,
-                                  starts=[bin_start],
-                                  values=[cov],
-                                  span=bin_size)
+            if cov != 0:
+                frac = mc / cov
+                frac_handle = context_handle[context, 'frac']
+                frac_handle.addEntries(chrom,
+                                       starts=[bin_start],
+                                       values=[frac],
+                                       span=bin_size)
+                cov_handle = context_handle[context, 'cov']
+                cov_handle.addEntries(chrom,
+                                      starts=[bin_start],
+                                      values=[cov],
+                                      span=bin_size)
     return
 
 
@@ -157,7 +154,7 @@ def allc_to_bigwig(allc_path,
     for bw_type in ['frac', 'cov']:
         out_suffix = f'{bw_type}.bw'
         for mc_context in mc_contexts:
-            if strandness == 'Split':
+            if strandness == 'split':
                 file_path = output_prefix + f'.{mc_context}-Watson.{out_suffix}'
                 output_path_collect[(mc_context, 'Watson', out_suffix)] = file_path
                 # handle for Watson/+ strand
@@ -215,12 +212,12 @@ def allc_to_bigwig(allc_path,
                     # initiate next bin
                     cur_bin = this_bin
                     counter = _init_counter(mc_contexts, strandness)
+
+                # add counts
+                if strandness == 'split':
+                    counter.add(context, strand, mc, cov)
                 else:
-                    # add counts
-                    if strandness == 'split':
-                        counter.add(context, strand, mc, cov)
-                    else:
-                        counter.add(context, mc, cov)
+                    counter.add(context, mc, cov)
 
             # final bin of the chrom
             bin_start = int(cur_bin * bin_size)
