@@ -40,7 +40,6 @@ parse:
     # - replacements
     # - smartquotes
     - substitution
-
   myst_url_schemes          : [mailto, http, https]  # URI schemes that will be recognised as external URLs in Markdown links
 
 #######################################################################################
@@ -79,6 +78,11 @@ repository:
   branch                    : master  # Which branch of the repository should be used when creating links
 
 #######################################################################################
+# Reference
+bibtex_bibfiles:
+    - references.bib
+
+#######################################################################################
 # Advanced and power-user settings
 sphinx:
   extra_extensions          :   # A list of extra extensions to load by Sphinx (added to those already used by JB).
@@ -86,3 +90,4 @@ sphinx:
   config                    :   # key-value pairs to directly over-ride the Sphinx configuration
     html_js_files:
       - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
+
