@@ -28,8 +28,8 @@ MCAD|multiple|genome region<br/>(small size, large number)|hypo-methylation scor
 
 ### Relationships between these file formats
 The ALLC files are generated from sequencing data, the MCDS and MCAD files are then generated from a set of ALLC files 
-(usually, thousands of cells coming from the same experiment). The MCDS or MCAD files are the starting point of 
-cell-level analysis.
+(usually, thousands of single-cell ALLC files coming from the same experiment). 
+The MCDS or MCAD files are the starting point of cell-level analysis.
 
 ```{figure} ./data_model.png
 ---
@@ -50,8 +50,8 @@ indexed by [`bgzip`](http://www.htslib.org/doc/bgzip.html) and [`tabix`](http://
 the [htslib](http://www.htslib.org/). The ALLC file 
 [generated from a single-cell BAM file](../command_line/allcools_allc.ipynb) 
 only contains information from a single cell, while the ALLC file can also be 
-[merged from multiple ALLC files](../command_line/allcools_merge.ipynb) (e.g., by cell cluster) as a pseudo-bulk-level 
-methylation table.
+[merged from multiple ALLC files](../command_line/allcools_merge.ipynb) 
+(e.g., merge by cell cluster) as a pseudo-bulk-level methylation table.
 
 For more details on generating and handling ALLC files, please read the [`allcools` command line tools](
 ../command_line/allcools.ipynb) introduction.
@@ -122,19 +122,18 @@ name: mcad-fig
 Schematic of one MCAD file.
 ```
 
-Alternatively, one may need to count the single-cell methylomes with even small genomic regions (e.g., 5Kb genomic 
+Alternatively, one may need to count the single-cell methylomes with small genomic regions (e.g., 5Kb genomic 
 bins or hundreds of bp DMRs), since smaller regions might capture methylation diversity at cis-regulatory elements 
-better during cell-level analysis. In practice, we found the clustering results is improved 
+better during cell-level analysis.
 
 The caveats of using small regions are that 1) the matrix sparsity increases when the region is small; 2) the 
 number of total regions need to be considered also goes up quickly. Therefore, storing the matrix in dense format 
-like MCDS did is not appropriate anymore, we switch to use the anndata.AnnData class to store sparse matrix.
+like MCDS did is not appropriate anymore, we switch to use the anndata.AnnData class to store a sparse matrix.
 
 #### MCAD store processed hypo-methylation score
 Currently, one MCAD file only store one kind of methylation context (e.g., mCG) from one set of regions (e.g., 
 5Kb genomic bins). To further reduce the matrix size, we calculated hypo-methylation score (see below) from the raw 
-counts, and filter the hypo-methylation score by a loose cutoff (0.9 by default, adjustable in the command line) to only store
-significant values.
+counts, and filter the hypo-methylation score by a loose cutoff (0.9 by default) to only store significant values.
 
 #### Hypo-methylation score
 ```{note}

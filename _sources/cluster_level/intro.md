@@ -21,9 +21,8 @@ ALLC files before doing the merge ALLC step, as this will greatly fasilitate the
 
 #### Merge CpG strand
 
-It has been reported [ref] that merge the paired CpG sites could increase the performance of DMR calling algorithms, 
-since paired CpG sites should have the same methylation status 
-(DNMT1 copying to the daughter strands during DNA replication). 
+Merge the paired CpG sites could increase the performance of DMR calling algorithms, 
+since paired CpG sites should have the same methylation status. 
 To achieve this, just add an `--strandness merge` flat in the `allcools extract` command.
 
 ### Generate BigWig File From ALLC File
