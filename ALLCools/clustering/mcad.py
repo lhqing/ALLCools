@@ -78,7 +78,7 @@ def filter_regions(adata, hypo_cutoff=None):
     return
 
 
-def lsi(adata, scale_factor=100000, n_components=50, algorithm='arpack', obsm='X_pca', random_state=0):
+def lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='X_pca', random_state=0):
     """
     Run TF-IDF on the binarized adata.X, followed by TruncatedSVD and then scale the components by svd.singular_values_
 
@@ -95,8 +95,6 @@ def lsi(adata, scale_factor=100000, n_components=50, algorithm='arpack', obsm='X
     -------
 
     """
-    if n_components == 'auto':
-        n_components = 100
     # tf-idf
     data = adata.X.astype(np.int8).copy()
     col_sum = data.sum(axis=0).A1

@@ -107,7 +107,11 @@ def cutoff_vs_cell_remain(data,
     data = data[(data < xlim[1]) & (data > xlim[0])]
 
     fig, ax1 = plt.subplots()
-    ax1 = sns.histplot(data, bins=bins, kde=False, ax=ax1)
+    try:
+        ax1 = sns.histplot(data, bins=bins, kde=False, ax=ax1)
+    except AttributeError:
+        # old seaborn version
+        ax1 = sns.distplot(a=data, bins=bins, kde=False, ax=ax1)
     ax1.set_xlim(xlim)
     ax1.set_xlabel(name)
     if ylim is not None:

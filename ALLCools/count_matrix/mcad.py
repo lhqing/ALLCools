@@ -100,6 +100,10 @@ def generate_mcad(allc_table, bed_path, output_prefix, mc_context, cpu=1, cleanu
     -------
 
     """
+    # validate
+    if (cutoff < 0) or (cutoff > 1):
+        raise ValueError(f'Cutoff must between 0 to 1, got {cutoff}.')
+
     # allc table has 2 columns: cell_id \t allc_path
     allc_paths = pd.read_csv(allc_table,
                              sep='\t',
