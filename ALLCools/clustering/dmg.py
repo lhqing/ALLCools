@@ -9,9 +9,8 @@ from sklearn.metrics import roc_auc_score
 from itertools import combinations
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import subprocess
-import matplotlib.pyplot as plt
 from sklearn.metrics import pairwise_distances
-from ..plot import categorical_scatter, continuous_scatter
+from ..mcds import MCDS
 
 
 def single_pairwise_dmg(cluster_l, cluster_r,
@@ -235,8 +234,8 @@ def single_ovr_dmg(cell_label, mcds, obs_dim, var_dim, mc_type, top_n, adj_p_cut
     })
     dmg_result = dmg_result[dmg_result.index.get_level_values(1).astype(bool)].reset_index(drop=True)
     # add fold change
-    in_cells_mean = adata.X[adata.obs['groups'].astype(bool),].mean(axis=0)
-    out_cells_mean = adata.X[~adata.obs['groups'].astype(bool),].mean(axis=0)
+    in_cells_mean = adata.X[adata.obs['groups'].astype(bool), ].mean(axis=0)
+    out_cells_mean = adata.X[~adata.obs['groups'].astype(bool), ].mean(axis=0)
     fc = pd.Series(in_cells_mean / out_cells_mean, index=adata.var_names)
     dmg_result['fc'] = dmg_result['names'].map(fc)
     # filter
@@ -257,17 +256,17 @@ def single_ovr_dmg(cell_label, mcds, obs_dim, var_dim, mc_type, top_n, adj_p_cut
     return dmg_result
 
 
-def one_vs_rest_dmg(cell_meta, group, mcds,
+def one_vs_rest_dmg(cell_meta, group, mcds_paths,
                     obs_dim='cell', var_dim='gene', mc_type='CHN',
                     top_n=1000, adj_p_cutoff=0.01, fc_cutoff=0.8, auroc_cutoff=0.8,
-                    max_cluster_cells=2000, max_other_fold=5):
+                    max_cluster_cells=2000, max_other_fold=5, cpu=1):
     """
 
     Parameters
     ----------
     cell_meta
     group
-    mcds
+    mcds_paths
     obs_dim
     var_dim
     mc_type
@@ -284,23 +283,69 @@ def one_vs_rest_dmg(cell_meta, group, mcds,
     """
     clusters = cell_meta[group].unique()
     dmg_table = []
-    for cluster in sorted(clusters):
-        print(f'Calculating cluster {cluster} DMGs.')
-        # determine cells to use
-        cluster_judge = cell_meta[group] == cluster
-        in_cells = cluster_judge[cluster_judge]
-        out_cells = cluster_judge[~cluster_judge]
-        if in_cells.size > max_cluster_cells:
-            in_cells = in_cells.sample(max_cluster_cells, random_state=0)
+    with ProcessPoolExecutor(cpu) as exe:
+        futures = {}
+        for cluster in sorted(clusters):
+            print(f'Calculating cluster {cluster} DMGs.')
+            f = exe.submit(_one_vs_rest_dmr_runner,
+                           cell_meta=cell_meta,
+                           group=group,
+                           cluster=cluster,
+                           max_cluster_cells=max_cluster_cells,
+                           max_other_fold=max_other_fold,
+                           mcds_paths=mcds_paths,
+                           obs_dim=obs_dim,
+                           var_dim=var_dim,
+                           mc_type=mc_type,
+                           top_n=top_n,
+                           adj_p_cutoff=adj_p_cutoff,
+                           fc_cutoff=fc_cutoff,
+                           auroc_cutoff=auroc_cutoff)
+            futures[f] = cluster
 
-        max_other_cells = in_cells.size * max_other_fold
-        if out_cells.size > max_other_cells:
-            out_cells = out_cells.sample(max_other_cells, random_state=0)
-
-        cell_label = pd.concat([in_cells, out_cells])
-        dmg_df = single_ovr_dmg(cell_label, mcds, obs_dim, var_dim, mc_type, top_n, adj_p_cutoff, fc_cutoff,
-                                auroc_cutoff)
-        dmg_df['cluster'] = cluster
-        dmg_table.append(dmg_df)
+        for f in as_completed(futures):
+            cluster = futures[f]
+            print(f'{cluster} Finished.')
+            dmg_df = f.result()
+            dmg_df['cluster'] = cluster
+            dmg_table.append(dmg_df)
     dmg_table = pd.concat(dmg_table)
     return dmg_table
+
+
+def _one_vs_rest_dmr_runner(cell_meta,
+                            group,
+                            cluster,
+                            max_cluster_cells,
+                            max_other_fold,
+                            mcds_paths,
+                            obs_dim,
+                            var_dim,
+                            mc_type,
+                            top_n,
+                            adj_p_cutoff,
+                            fc_cutoff,
+                            auroc_cutoff):
+    mcds = MCDS.open(mcds_paths)
+    # determine cells to use
+    cluster_judge = cell_meta[group] == cluster
+    in_cells = cluster_judge[cluster_judge]
+    out_cells = cluster_judge[~cluster_judge]
+    if in_cells.size > max_cluster_cells:
+        in_cells = in_cells.sample(max_cluster_cells, random_state=0)
+
+    max_other_cells = in_cells.size * max_other_fold
+    if out_cells.size > max_other_cells:
+        out_cells = out_cells.sample(max_other_cells, random_state=0)
+
+    cell_label = pd.concat([in_cells, out_cells])
+    dmg_df = single_ovr_dmg(cell_label,
+                            mcds,
+                            obs_dim,
+                            var_dim,
+                            mc_type,
+                            top_n,
+                            adj_p_cutoff,
+                            fc_cutoff,
+                            auroc_cutoff)
+    return dmg_df

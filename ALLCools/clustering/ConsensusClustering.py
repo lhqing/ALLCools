@@ -175,7 +175,7 @@ class ConsensusClustering:
                  random_state=0,
                  train_frac=0.5,
                  train_max_n=500,
-                 max_iter=20,
+                 max_iter=50,
                  n_jobs=-1):
         """
         Perform consensus clustering by multi-leiden clustering + supervised model
