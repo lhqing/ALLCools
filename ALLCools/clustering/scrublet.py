@@ -29,6 +29,7 @@ class MethylScrublet:
         self._pcs_obs = None
         self._pcs_sim = None
         self.clusters = None
+        self.batches = None
 
         # initialize doublets score
         self.doublet_scores_obs_ = None
@@ -54,7 +55,7 @@ class MethylScrublet:
         self.overall_doublet_rate_ = None
 
     # Core Scrublet functions
-    def fit(self, mc, cov, clusters=None):
+    def fit(self, mc, cov, clusters=None, batches=None):
         if isinstance(mc, xr.DataArray) and isinstance(cov, xr.DataArray):
             self._xarray_input = True
         elif isinstance(mc, np.ndarray) and isinstance(cov, np.ndarray):
@@ -68,6 +69,7 @@ class MethylScrublet:
         self._cov_obs = cov
         self.n_obs = mc.shape[0]
         self.clusters = clusters
+        self.batches = batches
         if self.n_neighbors is None:
             self.n_neighbors = min(50, int(round(0.5 * np.sqrt(self._mc_obs.shape[0]))))
         print('Calculating mC frac of observations...')
@@ -86,20 +88,9 @@ class MethylScrublet:
         return self.doublet_scores_obs_, self.predicted_doublets_
 
     def simulate_doublets(self):
-        """ Simulate doublets by adding the counts of random observed transcriptome pairs."""
+        """ Simulate doublets by adding the counts of random observed cell pairs."""
         n_sim = int(self.n_obs * self.sim_doublet_ratio)
-        if self.clusters is not None:
-            print('Cell cluster labels are given, will sample similar number of cells from each cluster.')
-            clusters = self.clusters.reset_index(drop=True)
-            major = clusters.value_counts()[0]
-            use_cells = []
-            for _, sub_series in clusters.groupby(clusters):
-                replace = sub_series.size < major
-                use_cells += pd.DataFrame(sub_series).sample(major, replace=replace).index.tolist()
-            pair_ix = np.array([choices(use_cells, k=n_sim),
-                                choices(use_cells, k=n_sim)]).T
-        else:
-            pair_ix = np.random.randint(0, self.n_obs, size=(n_sim, 2))
+        pair_ix = np.random.randint(0, self.n_obs, size=(n_sim, 2))
 
         # calculate mc frac of simulated data
         mc1 = self._mc_obs[pair_ix[:, 0], :]

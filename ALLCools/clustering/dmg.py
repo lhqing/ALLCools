@@ -286,7 +286,6 @@ def one_vs_rest_dmg(cell_meta, group, mcds_paths,
     with ProcessPoolExecutor(cpu) as exe:
         futures = {}
         for cluster in sorted(clusters):
-            print(f'Calculating cluster {cluster} DMGs.')
             f = exe.submit(_one_vs_rest_dmr_runner,
                            cell_meta=cell_meta,
                            group=group,
@@ -326,6 +325,8 @@ def _one_vs_rest_dmr_runner(cell_meta,
                             adj_p_cutoff,
                             fc_cutoff,
                             auroc_cutoff):
+    print(f'Calculating cluster {cluster} DMGs.')
+
     mcds = MCDS.open(mcds_paths)
     # determine cells to use
     cluster_judge = cell_meta[group] == cluster
