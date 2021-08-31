@@ -718,13 +718,13 @@
 <div class="cell tag_parameters docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># change this to the path to your metadata</span>
-<span class="n">metadata_path</span> <span class="o">=</span> <span class="s1">&#39;../../../data/Brain/MOp+CA.CellMetadata.csv.gz&#39;</span>
+<span class="n">metadata_path</span> <span class="o">=</span> <span class="s1">&#39;../../../data/Brain/snmC-seq2/HIP.CellMetadata.csv.gz&#39;</span>
 
 <span class="c1"># Basic filtering parameters</span>
 <span class="n">mapping_rate_cutoff</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="n">mapping_rate_col_name</span> <span class="o">=</span> <span class="s1">&#39;MappingRate&#39;</span>  <span class="c1"># Name may change</span>
 <span class="n">final_reads_cutoff</span> <span class="o">=</span> <span class="mi">500000</span>
-<span class="n">final_reads_col_name</span> <span class="o">=</span> <span class="s1">&#39;FinalmCReads&#39;</span>  <span class="c1"># Name may change</span>
+<span class="n">final_reads_col_name</span> <span class="o">=</span> <span class="s1">&#39;FinalReads&#39;</span>  <span class="c1"># Name may change</span>
 <span class="n">mccc_cutoff</span> <span class="o">=</span> <span class="mf">0.03</span>
 <span class="n">mccc_col_name</span> <span class="o">=</span> <span class="s1">&#39;mCCCFrac&#39;</span>  <span class="c1"># Name may change</span>
 <span class="n">mch_cutoff</span> <span class="o">=</span> <span class="mf">0.2</span>
@@ -747,7 +747,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Metadata of 5535 cells
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Metadata of 16985 cells
 </pre></div>
 </div>
 </div>
@@ -777,96 +777,131 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>AllcPath</th>
       <th>mCCCFrac</th>
       <th>mCGFrac</th>
+      <th>mCGFracAdj</th>
       <th>mCHFrac</th>
-      <th>FinalmCReads</th>
-      <th>CellInputReadPairs</th>
+      <th>mCHFracAdj</th>
+      <th>FinalReads</th>
+      <th>InputReads</th>
+      <th>MappedReads</th>
+      <th>DissectionRegion</th>
+      <th>BamFilteringRate</th>
       <th>MappingRate</th>
       <th>Plate</th>
       <th>Col384</th>
       <th>Row384</th>
-      <th>CellTypeAnno</th>
-    </tr>
-    <tr>
-      <th>cell</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>FANSDate</th>
+      <th>Slice</th>
+      <th>Sample</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>3C_M_0</th>
-      <td>0.00738</td>
-      <td>0.75953</td>
-      <td>0.02543</td>
-      <td>1195574.0</td>
-      <td>2896392</td>
-      <td>0.625773</td>
-      <td>CEMBA171206-3C-1</td>
-      <td>18</td>
+      <th>10E_M_0</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.008198</td>
+      <td>0.822633</td>
+      <td>0.821166</td>
+      <td>0.041640</td>
+      <td>0.033718</td>
+      <td>1626504.0</td>
+      <td>4407752</td>
+      <td>2892347.0</td>
+      <td>10E</td>
+      <td>0.562347</td>
+      <td>0.656195</td>
+      <td>CEMBA190625-10E-1</td>
       <td>0</td>
-      <td>IT-L23</td>
-    </tr>
-    <tr>
-      <th>3C_M_1</th>
-      <td>0.00938</td>
-      <td>0.77904</td>
-      <td>0.03741</td>
-      <td>1355517.0</td>
-      <td>3306366</td>
-      <td>0.631121</td>
-      <td>CEMBA171206-3C-1</td>
-      <td>18</td>
-      <td>1</td>
-      <td>IT-L5</td>
-    </tr>
-    <tr>
-      <th>3C_M_10</th>
-      <td>0.00915</td>
-      <td>0.82430</td>
-      <td>0.03678</td>
-      <td>2815807.0</td>
-      <td>7382298</td>
-      <td>0.657560</td>
-      <td>CEMBA171206-3C-1</td>
-      <td>21</td>
-      <td>1</td>
-      <td>L6b</td>
-    </tr>
-    <tr>
-      <th>3C_M_100</th>
-      <td>0.00978</td>
-      <td>0.79705</td>
-      <td>0.04231</td>
-      <td>2392650.0</td>
-      <td>5865154</td>
-      <td>0.671600</td>
-      <td>CEMBA171206-3C-1</td>
       <td>0</td>
-      <td>3</td>
-      <td>MGE-Pvalb</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
     </tr>
     <tr>
-      <th>3C_M_1000</th>
-      <td>0.00776</td>
-      <td>0.78781</td>
-      <td>0.02789</td>
-      <td>1922013.0</td>
-      <td>4800236</td>
-      <td>0.646285</td>
-      <td>CEMBA171206-3C-4</td>
+      <th>10E_M_1</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006019</td>
+      <td>0.743035</td>
+      <td>0.741479</td>
+      <td>0.024127</td>
+      <td>0.018218</td>
+      <td>2009998.0</td>
+      <td>5524084</td>
+      <td>3657352.0</td>
+      <td>10E</td>
+      <td>0.549577</td>
+      <td>0.662074</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
+    </tr>
+    <tr>
+      <th>10E_M_10</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006569</td>
+      <td>0.750172</td>
+      <td>0.748520</td>
+      <td>0.027665</td>
+      <td>0.021235</td>
+      <td>1383636.0</td>
+      <td>3455260</td>
+      <td>2172987.0</td>
+      <td>10E</td>
+      <td>0.636744</td>
+      <td>0.628892</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
+    </tr>
+    <tr>
+      <th>10E_M_101</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006353</td>
+      <td>0.760898</td>
+      <td>0.759369</td>
+      <td>0.026547</td>
+      <td>0.020323</td>
+      <td>2474670.0</td>
+      <td>7245482</td>
+      <td>4778768.0</td>
+      <td>10E</td>
+      <td>0.517847</td>
+      <td>0.659551</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>18</td>
       <td>3</td>
-      <td>8</td>
-      <td>IT-L6</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
+    </tr>
+    <tr>
+      <th>10E_M_102</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.005409</td>
+      <td>0.752980</td>
+      <td>0.751637</td>
+      <td>0.019497</td>
+      <td>0.014164</td>
+      <td>2430290.0</td>
+      <td>7004754</td>
+      <td>4609570.0</td>
+      <td>10E</td>
+      <td>0.527227</td>
+      <td>0.658063</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>19</td>
+      <td>2</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
     </tr>
   </tbody>
 </table>
@@ -900,7 +935,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5083 / 5535 cells (91.8%) passed the MappingRate cutoff 0.5.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16985 / 16985 cells (100.0%) passed the MappingRate cutoff 0.5.
 </pre></div>
 </div>
 <img alt="../../../_images/01-CellBasicFiltering_11_1.png" src="../../../_images/01-CellBasicFiltering_11_1.png" />
@@ -932,7 +967,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4982 / 5535 cells (90.0%) passed the FinalmCReads cutoff 500000.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16985 / 16985 cells (100.0%) passed the FinalReads cutoff 500000.
 </pre></div>
 </div>
 <img alt="../../../_images/01-CellBasicFiltering_13_1.png" src="../../../_images/01-CellBasicFiltering_13_1.png" />
@@ -963,7 +998,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5512 / 5535 cells (99.6%) passed the mCCCFrac cutoff 0.03.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16985 / 16985 cells (100.0%) passed the mCCCFrac cutoff 0.03.
 </pre></div>
 </div>
 <img alt="../../../_images/01-CellBasicFiltering_15_1.png" src="../../../_images/01-CellBasicFiltering_15_1.png" />
@@ -993,7 +1028,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5532 / 5535 cells (99.9%) passed the mCHFrac cutoff 0.2.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16985 / 16985 cells (100.0%) passed the mCHFrac cutoff 0.2.
 </pre></div>
 </div>
 <img alt="../../../_images/01-CellBasicFiltering_17_1.png" src="../../../_images/01-CellBasicFiltering_17_1.png" />
@@ -1023,7 +1058,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5531 / 5535 cells (99.9%) passed the mCGFrac cutoff 0.5.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16985 / 16985 cells (100.0%) passed the mCGFrac cutoff 0.5.
 </pre></div>
 </div>
 <img alt="../../../_images/01-CellBasicFiltering_19_1.png" src="../../../_images/01-CellBasicFiltering_19_1.png" />
@@ -1044,7 +1079,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4958 / 5535 cells (89.6%) passed all the filters.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16985 / 16985 cells (100.0%) passed all the filters.
 </pre></div>
 </div>
 </div>
@@ -1115,96 +1150,131 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>AllcPath</th>
       <th>mCCCFrac</th>
       <th>mCGFrac</th>
+      <th>mCGFracAdj</th>
       <th>mCHFrac</th>
-      <th>FinalmCReads</th>
-      <th>CellInputReadPairs</th>
+      <th>mCHFracAdj</th>
+      <th>FinalReads</th>
+      <th>InputReads</th>
+      <th>MappedReads</th>
+      <th>DissectionRegion</th>
+      <th>BamFilteringRate</th>
       <th>MappingRate</th>
       <th>Plate</th>
       <th>Col384</th>
       <th>Row384</th>
-      <th>CellTypeAnno</th>
-    </tr>
-    <tr>
-      <th>cell</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>FANSDate</th>
+      <th>Slice</th>
+      <th>Sample</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>3C_M_0</th>
-      <td>0.00738</td>
-      <td>0.75953</td>
-      <td>0.02543</td>
-      <td>1195574.0</td>
-      <td>2896392</td>
-      <td>0.625773</td>
-      <td>CEMBA171206-3C-1</td>
-      <td>18</td>
+      <th>10E_M_0</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.008198</td>
+      <td>0.822633</td>
+      <td>0.821166</td>
+      <td>0.041640</td>
+      <td>0.033718</td>
+      <td>1626504.0</td>
+      <td>4407752</td>
+      <td>2892347.0</td>
+      <td>10E</td>
+      <td>0.562347</td>
+      <td>0.656195</td>
+      <td>CEMBA190625-10E-1</td>
       <td>0</td>
-      <td>IT-L23</td>
-    </tr>
-    <tr>
-      <th>3C_M_1</th>
-      <td>0.00938</td>
-      <td>0.77904</td>
-      <td>0.03741</td>
-      <td>1355517.0</td>
-      <td>3306366</td>
-      <td>0.631121</td>
-      <td>CEMBA171206-3C-1</td>
-      <td>18</td>
-      <td>1</td>
-      <td>IT-L5</td>
-    </tr>
-    <tr>
-      <th>3C_M_10</th>
-      <td>0.00915</td>
-      <td>0.82430</td>
-      <td>0.03678</td>
-      <td>2815807.0</td>
-      <td>7382298</td>
-      <td>0.657560</td>
-      <td>CEMBA171206-3C-1</td>
-      <td>21</td>
-      <td>1</td>
-      <td>L6b</td>
-    </tr>
-    <tr>
-      <th>3C_M_100</th>
-      <td>0.00978</td>
-      <td>0.79705</td>
-      <td>0.04231</td>
-      <td>2392650.0</td>
-      <td>5865154</td>
-      <td>0.671600</td>
-      <td>CEMBA171206-3C-1</td>
       <td>0</td>
-      <td>3</td>
-      <td>MGE-Pvalb</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
     </tr>
     <tr>
-      <th>3C_M_1000</th>
-      <td>0.00776</td>
-      <td>0.78781</td>
-      <td>0.02789</td>
-      <td>1922013.0</td>
-      <td>4800236</td>
-      <td>0.646285</td>
-      <td>CEMBA171206-3C-4</td>
+      <th>10E_M_1</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006019</td>
+      <td>0.743035</td>
+      <td>0.741479</td>
+      <td>0.024127</td>
+      <td>0.018218</td>
+      <td>2009998.0</td>
+      <td>5524084</td>
+      <td>3657352.0</td>
+      <td>10E</td>
+      <td>0.549577</td>
+      <td>0.662074</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
+    </tr>
+    <tr>
+      <th>10E_M_10</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006569</td>
+      <td>0.750172</td>
+      <td>0.748520</td>
+      <td>0.027665</td>
+      <td>0.021235</td>
+      <td>1383636.0</td>
+      <td>3455260</td>
+      <td>2172987.0</td>
+      <td>10E</td>
+      <td>0.636744</td>
+      <td>0.628892</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
+    </tr>
+    <tr>
+      <th>10E_M_101</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006353</td>
+      <td>0.760898</td>
+      <td>0.759369</td>
+      <td>0.026547</td>
+      <td>0.020323</td>
+      <td>2474670.0</td>
+      <td>7245482</td>
+      <td>4778768.0</td>
+      <td>10E</td>
+      <td>0.517847</td>
+      <td>0.659551</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>18</td>
       <td>3</td>
-      <td>8</td>
-      <td>IT-L6</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
+    </tr>
+    <tr>
+      <th>10E_M_102</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.005409</td>
+      <td>0.752980</td>
+      <td>0.751637</td>
+      <td>0.019497</td>
+      <td>0.014164</td>
+      <td>2430290.0</td>
+      <td>7004754</td>
+      <td>4609570.0</td>
+      <td>10E</td>
+      <td>0.527227</td>
+      <td>0.658063</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>19</td>
+      <td>2</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
     </tr>
   </tbody>
 </table>

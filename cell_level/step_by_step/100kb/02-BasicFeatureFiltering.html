@@ -682,7 +682,8 @@
 <h2>Import<a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">from</span> <span class="nn">ALLCools.mcds</span> <span class="kn">import</span> <span class="n">MCDS</span>
 </pre></div>
@@ -705,12 +706,7 @@
 <span class="n">metadata_path</span> <span class="o">=</span> <span class="s1">&#39;CellMetadata.PassQC.csv.gz&#39;</span>
 
 <span class="c1"># change this to the paths to your MCDS files</span>
-<span class="n">mcds_path_list</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;../../../data/Brain/3C-171206.mcds&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;../../../data/Brain/3C-171207.mcds&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;../../../data/Brain/9H-190212.mcds&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;../../../data/Brain/9H-190219.mcds&#39;</span><span class="p">,</span>
-<span class="p">]</span>
+<span class="n">mcds_path_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;../../../data/Brain/snmC-seq2/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.mcds&#39;</span><span class="p">))</span>
 
 <span class="c1"># Dimension name used to do clustering</span>
 <span class="n">obs_dim</span> <span class="o">=</span> <span class="s1">&#39;cell&#39;</span>  <span class="c1"># observation</span>
@@ -743,7 +739,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Metadata of 4958 cells
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Metadata of 16985 cells
 </pre></div>
 </div>
 </div>
@@ -773,96 +769,131 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>AllcPath</th>
       <th>mCCCFrac</th>
       <th>mCGFrac</th>
+      <th>mCGFracAdj</th>
       <th>mCHFrac</th>
-      <th>FinalmCReads</th>
-      <th>CellInputReadPairs</th>
+      <th>mCHFracAdj</th>
+      <th>FinalReads</th>
+      <th>InputReads</th>
+      <th>MappedReads</th>
+      <th>DissectionRegion</th>
+      <th>BamFilteringRate</th>
       <th>MappingRate</th>
       <th>Plate</th>
       <th>Col384</th>
       <th>Row384</th>
-      <th>CellTypeAnno</th>
-    </tr>
-    <tr>
-      <th>cell</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>FANSDate</th>
+      <th>Slice</th>
+      <th>Sample</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>3C_M_0</th>
-      <td>0.00738</td>
-      <td>0.75953</td>
-      <td>0.02543</td>
-      <td>1195574.0</td>
-      <td>2896392</td>
-      <td>0.625773</td>
-      <td>CEMBA171206-3C-1</td>
-      <td>18</td>
+      <th>10E_M_0</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.008198</td>
+      <td>0.822633</td>
+      <td>0.821166</td>
+      <td>0.041640</td>
+      <td>0.033718</td>
+      <td>1626504.0</td>
+      <td>4407752</td>
+      <td>2892347.0</td>
+      <td>10E</td>
+      <td>0.562347</td>
+      <td>0.656195</td>
+      <td>CEMBA190625-10E-1</td>
       <td>0</td>
-      <td>IT-L23</td>
-    </tr>
-    <tr>
-      <th>3C_M_1</th>
-      <td>0.00938</td>
-      <td>0.77904</td>
-      <td>0.03741</td>
-      <td>1355517.0</td>
-      <td>3306366</td>
-      <td>0.631121</td>
-      <td>CEMBA171206-3C-1</td>
-      <td>18</td>
-      <td>1</td>
-      <td>IT-L5</td>
-    </tr>
-    <tr>
-      <th>3C_M_10</th>
-      <td>0.00915</td>
-      <td>0.82430</td>
-      <td>0.03678</td>
-      <td>2815807.0</td>
-      <td>7382298</td>
-      <td>0.657560</td>
-      <td>CEMBA171206-3C-1</td>
-      <td>21</td>
-      <td>1</td>
-      <td>L6b</td>
-    </tr>
-    <tr>
-      <th>3C_M_100</th>
-      <td>0.00978</td>
-      <td>0.79705</td>
-      <td>0.04231</td>
-      <td>2392650.0</td>
-      <td>5865154</td>
-      <td>0.671600</td>
-      <td>CEMBA171206-3C-1</td>
       <td>0</td>
-      <td>3</td>
-      <td>MGE-Pvalb</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
     </tr>
     <tr>
-      <th>3C_M_1000</th>
-      <td>0.00776</td>
-      <td>0.78781</td>
-      <td>0.02789</td>
-      <td>1922013.0</td>
-      <td>4800236</td>
-      <td>0.646285</td>
-      <td>CEMBA171206-3C-4</td>
+      <th>10E_M_1</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006019</td>
+      <td>0.743035</td>
+      <td>0.741479</td>
+      <td>0.024127</td>
+      <td>0.018218</td>
+      <td>2009998.0</td>
+      <td>5524084</td>
+      <td>3657352.0</td>
+      <td>10E</td>
+      <td>0.549577</td>
+      <td>0.662074</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
+    </tr>
+    <tr>
+      <th>10E_M_10</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006569</td>
+      <td>0.750172</td>
+      <td>0.748520</td>
+      <td>0.027665</td>
+      <td>0.021235</td>
+      <td>1383636.0</td>
+      <td>3455260</td>
+      <td>2172987.0</td>
+      <td>10E</td>
+      <td>0.636744</td>
+      <td>0.628892</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
+    </tr>
+    <tr>
+      <th>10E_M_101</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006353</td>
+      <td>0.760898</td>
+      <td>0.759369</td>
+      <td>0.026547</td>
+      <td>0.020323</td>
+      <td>2474670.0</td>
+      <td>7245482</td>
+      <td>4778768.0</td>
+      <td>10E</td>
+      <td>0.517847</td>
+      <td>0.659551</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>18</td>
       <td>3</td>
-      <td>8</td>
-      <td>IT-L6</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
+    </tr>
+    <tr>
+      <th>10E_M_102</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.005409</td>
+      <td>0.752980</td>
+      <td>0.751637</td>
+      <td>0.019497</td>
+      <td>0.014164</td>
+      <td>2430290.0</td>
+      <td>7004754</td>
+      <td>4609570.0</td>
+      <td>10E</td>
+      <td>0.527227</td>
+      <td>0.658063</td>
+      <td>CEMBA190625-10E-1</td>
+      <td>19</td>
+      <td>2</td>
+      <td>190625</td>
+      <td>10</td>
+      <td>10E_190625</td>
     </tr>
   </tbody>
 </table>
@@ -875,6 +906,19 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mcds_path_list</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="n">use_obs</span><span class="o">=</span><span class="n">metadata</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 <span class="n">total_feature</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">var_dim</span><span class="p">)</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hanliu/miniconda3/envs/allcools/lib/python3.8/site-packages/xarray/core/indexing.py:1369: PerformanceWarning: Slicing is producing a large chunk. To accept the large
+chunk and silence this warning, set the option
+    &gt;&gt;&gt; with dask.config.set(**{&#39;array.slicing.split_large_chunks&#39;: False}):
+    ...     array[indexer]
+
+To avoid creating the large chunks, set the option
+    &gt;&gt;&gt; with dask.config.set(**{&#39;array.slicing.split_large_chunks&#39;: True}):
+    ...     array[indexer]
+  return self.array[key]
 </pre></div>
 </div>
 </div>
@@ -1238,26 +1282,131 @@ dl.xr-attrs {
   fill: currentColor;
 }
 </style><pre class='xr-text-repr-fallback'>&lt;xarray.MCDS&gt;
-Dimensions:              (cell: 4958, chrom100k: 27269, count_type: 2, gene: 55487, mc_type: 2)
+Dimensions:              (cell: 16985, chrom100k: 27269, count_type: 2, geneslop2k: 55487, mc_type: 2)
 Coordinates:
   * mc_type              (mc_type) object &#x27;CGN&#x27; &#x27;CHN&#x27;
-  * cell                 (cell) object &#x27;3C_M_0&#x27; &#x27;3C_M_1&#x27; ... &#x27;9H_M_3061&#x27;
-  * gene                 (gene) object &#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSMUSG000...
+  * cell                 (cell) object &#x27;10E_M_0&#x27; &#x27;10E_M_1&#x27; ... &#x27;9J_M_3036&#x27;
   * count_type           (count_type) object &#x27;mc&#x27; &#x27;cov&#x27;
     strand_type          &lt;U4 &#x27;both&#x27;
-    gene_chrom           (gene) object dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
-    gene_start           (gene) int64 dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
-    gene_end             (gene) int64 dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
   * chrom100k            (chrom100k) int64 0 1 2 3 4 ... 27265 27266 27267 27268
     chrom100k_chrom      (chrom100k) object dask.array&lt;chunksize=(27269,), meta=np.ndarray&gt;
     chrom100k_bin_start  (chrom100k) int64 dask.array&lt;chunksize=(27269,), meta=np.ndarray&gt;
     chrom100k_bin_end    (chrom100k) int64 dask.array&lt;chunksize=(27269,), meta=np.ndarray&gt;
+  * geneslop2k           (geneslop2k) object &#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSM...
+    geneslop2k_chrom     (geneslop2k) object dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
+    geneslop2k_start     (geneslop2k) int64 dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
+    geneslop2k_end       (geneslop2k) int64 dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
 Data variables:
-    gene_da              (cell, gene, mc_type, count_type) uint16 dask.array&lt;chunksize=(1199, 55487, 2, 2), meta=np.ndarray&gt;
-    chrom100k_da         (cell, chrom100k, mc_type, count_type) uint16 dask.array&lt;chunksize=(1199, 27269, 2, 2), meta=np.ndarray&gt;</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.MCDS</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-6ff1f346-a737-492b-ab07-c57eb72db564' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-6ff1f346-a737-492b-ab07-c57eb72db564' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>cell</span>: 4958</li><li><span class='xr-has-index'>chrom100k</span>: 27269</li><li><span class='xr-has-index'>count_type</span>: 2</li><li><span class='xr-has-index'>gene</span>: 55487</li><li><span class='xr-has-index'>mc_type</span>: 2</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-6f814bbe-a1a2-42c2-9651-b0956565ffe1' class='xr-section-summary-in' type='checkbox'  checked><label for='section-6f814bbe-a1a2-42c2-9651-b0956565ffe1' class='xr-section-summary' >Coordinates: <span>(12)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>mc_type</span></div><div class='xr-var-dims'>(mc_type)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;CGN&#x27; &#x27;CHN&#x27;</div><input id='attrs-6455d3f0-e405-40fb-ab0c-85d0219ae216' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-6455d3f0-e405-40fb-ab0c-85d0219ae216' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ee63c46d-296c-49c9-aa0a-b8ffd35858fe' class='xr-var-data-in' type='checkbox'><label for='data-ee63c46d-296c-49c9-aa0a-b8ffd35858fe' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;CGN&#x27;, &#x27;CHN&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>cell</span></div><div class='xr-var-dims'>(cell)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;3C_M_0&#x27; &#x27;3C_M_1&#x27; ... &#x27;9H_M_3061&#x27;</div><input id='attrs-b4af4d29-ef6e-4c6c-982b-3131ba26d59e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-b4af4d29-ef6e-4c6c-982b-3131ba26d59e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-8f615da3-cde7-434f-9351-92e3c3aa3ae5' class='xr-var-data-in' type='checkbox'><label for='data-8f615da3-cde7-434f-9351-92e3c3aa3ae5' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;3C_M_0&#x27;, &#x27;3C_M_1&#x27;, &#x27;3C_M_10&#x27;, ..., &#x27;9H_M_3057&#x27;, &#x27;9H_M_3059&#x27;,
-       &#x27;9H_M_3061&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>gene</span></div><div class='xr-var-dims'>(gene)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSM...</div><input id='attrs-d9d2de96-8eed-4a5c-a660-76c4b0d373ca' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d9d2de96-8eed-4a5c-a660-76c4b0d373ca' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b55f61d3-a102-40d4-90e7-bbfa6a20c6dd' class='xr-var-data-in' type='checkbox'><label for='data-b55f61d3-a102-40d4-90e7-bbfa6a20c6dd' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;ENSMUSG00000102693.1&#x27;, &#x27;ENSMUSG00000064842.1&#x27;, &#x27;ENSMUSG00000051951.5&#x27;,
+    chrom100k_da         (cell, chrom100k, mc_type, count_type) uint16 dask.array&lt;chunksize=(473, 27269, 2, 2), meta=np.ndarray&gt;
+    geneslop2k_da        (cell, geneslop2k, mc_type, count_type) uint32 dask.array&lt;chunksize=(473, 55487, 2, 2), meta=np.ndarray&gt;</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.MCDS</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-d4ab0e64-90a3-4660-a945-b371187d2197' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-d4ab0e64-90a3-4660-a945-b371187d2197' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>cell</span>: 16985</li><li><span class='xr-has-index'>chrom100k</span>: 27269</li><li><span class='xr-has-index'>count_type</span>: 2</li><li><span class='xr-has-index'>geneslop2k</span>: 55487</li><li><span class='xr-has-index'>mc_type</span>: 2</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-78a387b7-7fc1-41e7-be6a-664bee62c399' class='xr-section-summary-in' type='checkbox'  checked><label for='section-78a387b7-7fc1-41e7-be6a-664bee62c399' class='xr-section-summary' >Coordinates: <span>(12)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>mc_type</span></div><div class='xr-var-dims'>(mc_type)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;CGN&#x27; &#x27;CHN&#x27;</div><input id='attrs-fc296b6b-8085-4a54-bbe1-83a12d1e4ad3' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-fc296b6b-8085-4a54-bbe1-83a12d1e4ad3' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-07a599c9-b9d1-4020-8b7e-c3e986a406ac' class='xr-var-data-in' type='checkbox'><label for='data-07a599c9-b9d1-4020-8b7e-c3e986a406ac' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;CGN&#x27;, &#x27;CHN&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>cell</span></div><div class='xr-var-dims'>(cell)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;10E_M_0&#x27; &#x27;10E_M_1&#x27; ... &#x27;9J_M_3036&#x27;</div><input id='attrs-54920d52-b26e-4ccd-9b79-8b4e0950df82' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-54920d52-b26e-4ccd-9b79-8b4e0950df82' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2199ec8d-9e17-479a-8019-1718feba8369' class='xr-var-data-in' type='checkbox'><label for='data-2199ec8d-9e17-479a-8019-1718feba8369' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;10E_M_0&#x27;, &#x27;10E_M_1&#x27;, &#x27;10E_M_10&#x27;, ..., &#x27;9J_M_3034&#x27;, &#x27;9J_M_3035&#x27;,
+       &#x27;9J_M_3036&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>count_type</span></div><div class='xr-var-dims'>(count_type)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;mc&#x27; &#x27;cov&#x27;</div><input id='attrs-a8577d28-4d70-4a69-94fb-568ddb5a0add' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a8577d28-4d70-4a69-94fb-568ddb5a0add' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-dbb1560b-2c3d-44fe-b7dc-412e38cffbac' class='xr-var-data-in' type='checkbox'><label for='data-dbb1560b-2c3d-44fe-b7dc-412e38cffbac' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;mc&#x27;, &#x27;cov&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>strand_type</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>&lt;U4</div><div class='xr-var-preview xr-preview'>&#x27;both&#x27;</div><input id='attrs-07731712-b837-496c-9df9-4828fc6fbade' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-07731712-b837-496c-9df9-4828fc6fbade' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3ba70482-e238-499f-9f07-de8f5da44b23' class='xr-var-data-in' type='checkbox'><label for='data-3ba70482-e238-499f-9f07-de8f5da44b23' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(&#x27;both&#x27;, dtype=&#x27;&lt;U4&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chrom100k</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 ... 27265 27266 27267 27268</div><input id='attrs-4a0a2d45-8b39-41e9-90ed-5eb789765c20' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4a0a2d45-8b39-41e9-90ed-5eb789765c20' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2cf9ed25-605b-41ad-b449-897ffdd15c48' class='xr-var-data-in' type='checkbox'><label for='data-2cf9ed25-605b-41ad-b449-897ffdd15c48' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([    0,     1,     2, ..., 27266, 27267, 27268])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_chrom</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(27269,), meta=np.ndarray&gt;</div><input id='attrs-f8cf0a6b-0556-4682-865c-f5cfdddeb1bf' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f8cf0a6b-0556-4682-865c-f5cfdddeb1bf' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c825c5a4-3e86-4526-bb14-6ea0f3f1dc7c' class='xr-var-data-in' type='checkbox'><label for='data-c825c5a4-3e86-4526-bb14-6ea0f3f1dc7c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 218.15 kB </td> <td> 218.15 kB </td></tr>
+    <tr><th> Shape </th><td> (27269,) </td> <td> (27269,) </td></tr>
+    <tr><th> Count </th><td> 75 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> object </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >27269</text>
+  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_bin_start</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(27269,), meta=np.ndarray&gt;</div><input id='attrs-ec0ab769-acbc-475c-b893-9b26875b62e5' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ec0ab769-acbc-475c-b893-9b26875b62e5' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e0ff477c-7dbb-44ae-9d5f-d21d3ef18c5d' class='xr-var-data-in' type='checkbox'><label for='data-e0ff477c-7dbb-44ae-9d5f-d21d3ef18c5d' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 218.15 kB </td> <td> 218.15 kB </td></tr>
+    <tr><th> Shape </th><td> (27269,) </td> <td> (27269,) </td></tr>
+    <tr><th> Count </th><td> 49 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >27269</text>
+  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_bin_end</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(27269,), meta=np.ndarray&gt;</div><input id='attrs-67aa406d-c7d4-44d7-95f1-28aad17a4cfd' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-67aa406d-c7d4-44d7-95f1-28aad17a4cfd' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-cc019166-b70a-4cbf-95a1-dfbb410d18f1' class='xr-var-data-in' type='checkbox'><label for='data-cc019166-b70a-4cbf-95a1-dfbb410d18f1' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 218.15 kB </td> <td> 218.15 kB </td></tr>
+    <tr><th> Shape </th><td> (27269,) </td> <td> (27269,) </td></tr>
+    <tr><th> Count </th><td> 49 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >27269</text>
+  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>geneslop2k</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSM...</div><input id='attrs-124b35eb-63bd-4579-87df-60155e42f0fb' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-124b35eb-63bd-4579-87df-60155e42f0fb' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-984237d7-45c3-43a5-882e-1f4476a98a51' class='xr-var-data-in' type='checkbox'><label for='data-984237d7-45c3-43a5-882e-1f4476a98a51' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;ENSMUSG00000102693.1&#x27;, &#x27;ENSMUSG00000064842.1&#x27;, &#x27;ENSMUSG00000051951.5&#x27;,
        ..., &#x27;ENSMUSG00000064370.1&#x27;, &#x27;ENSMUSG00000064371.1&#x27;,
-       &#x27;ENSMUSG00000064372.1&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>count_type</span></div><div class='xr-var-dims'>(count_type)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;mc&#x27; &#x27;cov&#x27;</div><input id='attrs-3b08db5a-beb3-4ed0-81a3-1221ed34c8af' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-3b08db5a-beb3-4ed0-81a3-1221ed34c8af' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c27c7bc3-e1a3-403b-8ac7-759ce4922c0c' class='xr-var-data-in' type='checkbox'><label for='data-c27c7bc3-e1a3-403b-8ac7-759ce4922c0c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;mc&#x27;, &#x27;cov&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>strand_type</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>&lt;U4</div><div class='xr-var-preview xr-preview'>&#x27;both&#x27;</div><input id='attrs-579d7ae4-f9d6-48a0-be01-98268f2ae18a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-579d7ae4-f9d6-48a0-be01-98268f2ae18a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b8dc76e7-ec13-45f2-9496-7f78bcb5c9b4' class='xr-var-data-in' type='checkbox'><label for='data-b8dc76e7-ec13-45f2-9496-7f78bcb5c9b4' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(&#x27;both&#x27;, dtype=&#x27;&lt;U4&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>gene_chrom</span></div><div class='xr-var-dims'>(gene)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-d718ddd7-6cad-4adc-b2c7-00e65799acf5' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d718ddd7-6cad-4adc-b2c7-00e65799acf5' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c7b6c6a4-83a4-4219-8274-230f970c5955' class='xr-var-data-in' type='checkbox'><label for='data-c7b6c6a4-83a4-4219-8274-230f970c5955' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+       &#x27;ENSMUSG00000064372.1&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_chrom</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-97d039eb-8c20-4bac-9965-25e62d9a8426' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-97d039eb-8c20-4bac-9965-25e62d9a8426' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2f66c9f6-734e-428b-9c8d-4e42fe7b18c7' class='xr-var-data-in' type='checkbox'><label for='data-2f66c9f6-734e-428b-9c8d-4e42fe7b18c7' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
 <tr>
 <td>
 <table>
@@ -1267,7 +1416,7 @@ Data variables:
   <tbody>
     <tr><th> Bytes </th><td> 443.90 kB </td> <td> 443.90 kB </td></tr>
     <tr><th> Shape </th><td> (55487,) </td> <td> (55487,) </td></tr>
-    <tr><th> Count </th><td> 15 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Count </th><td> 75 Tasks </td><td> 1 Chunks </td></tr>
     <tr><th> Type </th><td> object </td><td> numpy.ndarray </td></tr>
   </tbody>
 </table>
@@ -1292,7 +1441,7 @@ Data variables:
 </svg>
 </td>
 </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>gene_start</span></div><div class='xr-var-dims'>(gene)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-6a04ecef-2ade-4ff7-91c5-f87a4823d11c' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-6a04ecef-2ade-4ff7-91c5-f87a4823d11c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-23da52bc-3e15-4f13-a9bf-1adfe5b98c07' class='xr-var-data-in' type='checkbox'><label for='data-23da52bc-3e15-4f13-a9bf-1adfe5b98c07' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_start</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-36f1c0d2-d972-4bf8-9693-d7dea9388963' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-36f1c0d2-d972-4bf8-9693-d7dea9388963' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e0e751d3-1a6c-4999-add1-d318b8966d47' class='xr-var-data-in' type='checkbox'><label for='data-e0e751d3-1a6c-4999-add1-d318b8966d47' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
 <tr>
 <td>
 <table>
@@ -1302,7 +1451,7 @@ Data variables:
   <tbody>
     <tr><th> Bytes </th><td> 443.90 kB </td> <td> 443.90 kB </td></tr>
     <tr><th> Shape </th><td> (55487,) </td> <td> (55487,) </td></tr>
-    <tr><th> Count </th><td> 13 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Count </th><td> 49 Tasks </td><td> 1 Chunks </td></tr>
     <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
   </tbody>
 </table>
@@ -1327,7 +1476,7 @@ Data variables:
 </svg>
 </td>
 </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>gene_end</span></div><div class='xr-var-dims'>(gene)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-7a8df7aa-58e6-45fd-af1c-7fc803e63768' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7a8df7aa-58e6-45fd-af1c-7fc803e63768' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-80dc85ae-d34e-490d-a383-0f3f62839332' class='xr-var-data-in' type='checkbox'><label for='data-80dc85ae-d34e-490d-a383-0f3f62839332' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_end</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-a7198862-cbd0-4952-b92e-9d65acd7c941' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a7198862-cbd0-4952-b92e-9d65acd7c941' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ddf89ba8-d9fd-41e7-9020-a99adea43297' class='xr-var-data-in' type='checkbox'><label for='data-ddf89ba8-d9fd-41e7-9020-a99adea43297' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
 <tr>
 <td>
 <table>
@@ -1337,7 +1486,7 @@ Data variables:
   <tbody>
     <tr><th> Bytes </th><td> 443.90 kB </td> <td> 443.90 kB </td></tr>
     <tr><th> Shape </th><td> (55487,) </td> <td> (55487,) </td></tr>
-    <tr><th> Count </th><td> 13 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Count </th><td> 49 Tasks </td><td> 1 Chunks </td></tr>
     <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
   </tbody>
 </table>
@@ -1362,7 +1511,7 @@ Data variables:
 </svg>
 </td>
 </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chrom100k</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 ... 27265 27266 27267 27268</div><input id='attrs-b1153503-c4f1-4620-b542-56e82b53b4dd' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-b1153503-c4f1-4620-b542-56e82b53b4dd' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1e57c3e2-04f7-4bf3-b1bd-5cd7bd6dfe91' class='xr-var-data-in' type='checkbox'><label for='data-1e57c3e2-04f7-4bf3-b1bd-5cd7bd6dfe91' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([    0,     1,     2, ..., 27266, 27267, 27268])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_chrom</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(27269,), meta=np.ndarray&gt;</div><input id='attrs-5d0d9e06-03cd-42e0-80e4-fa596f075c68' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5d0d9e06-03cd-42e0-80e4-fa596f075c68' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-46bd4874-7b84-46ec-99f5-b5a9a4cbac4b' class='xr-var-data-in' type='checkbox'><label for='data-46bd4874-7b84-46ec-99f5-b5a9a4cbac4b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-fde8484b-e590-4f9f-8cc5-bdbe85c55a44' class='xr-section-summary-in' type='checkbox'  checked><label for='section-fde8484b-e590-4f9f-8cc5-bdbe85c55a44' class='xr-section-summary' >Data variables: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_da</span></div><div class='xr-var-dims'>(cell, chrom100k, mc_type, count_type)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(473, 27269, 2, 2), meta=np.ndarray&gt;</div><input id='attrs-0b02e2bf-60bd-48ed-9a09-7ddc5ad8f338' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-0b02e2bf-60bd-48ed-9a09-7ddc5ad8f338' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-fd54dd9f-ee1a-4420-a064-ac53d35f4c0d' class='xr-var-data-in' type='checkbox'><label for='data-fd54dd9f-ee1a-4420-a064-ac53d35f4c0d' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
 <tr>
 <td>
 <table>
@@ -1370,181 +1519,88 @@ Data variables:
     <tr><td> </td><th> Array </th><th> Chunk </th></tr>
   </thead>
   <tbody>
-    <tr><th> Bytes </th><td> 218.15 kB </td> <td> 218.15 kB </td></tr>
-    <tr><th> Shape </th><td> (27269,) </td> <td> (27269,) </td></tr>
-    <tr><th> Count </th><td> 15 Tasks </td><td> 1 Chunks </td></tr>
-    <tr><th> Type </th><td> object </td><td> numpy.ndarray </td></tr>
-  </tbody>
-</table>
-</td>
-<td>
-<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
-
-  <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
-  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Vertical lines -->
-  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
-  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Colored Rectangle -->
-  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
-
-  <!-- Text -->
-  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >27269</text>
-  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
-</svg>
-</td>
-</tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_bin_start</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(27269,), meta=np.ndarray&gt;</div><input id='attrs-227cf566-48f5-4cb6-8603-07f14af715ed' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-227cf566-48f5-4cb6-8603-07f14af715ed' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e262439d-2904-428b-84d4-ef195ade9655' class='xr-var-data-in' type='checkbox'><label for='data-e262439d-2904-428b-84d4-ef195ade9655' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
-<tr>
-<td>
-<table>
-  <thead>
-    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
-  </thead>
-  <tbody>
-    <tr><th> Bytes </th><td> 218.15 kB </td> <td> 218.15 kB </td></tr>
-    <tr><th> Shape </th><td> (27269,) </td> <td> (27269,) </td></tr>
-    <tr><th> Count </th><td> 13 Tasks </td><td> 1 Chunks </td></tr>
-    <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
-  </tbody>
-</table>
-</td>
-<td>
-<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
-
-  <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
-  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Vertical lines -->
-  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
-  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Colored Rectangle -->
-  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
-
-  <!-- Text -->
-  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >27269</text>
-  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
-</svg>
-</td>
-</tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_bin_end</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(27269,), meta=np.ndarray&gt;</div><input id='attrs-f9279ce6-495a-4292-867b-19e346f0b6c6' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f9279ce6-495a-4292-867b-19e346f0b6c6' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4aace6e8-b06d-40d0-b39b-b1f6cafb6881' class='xr-var-data-in' type='checkbox'><label for='data-4aace6e8-b06d-40d0-b39b-b1f6cafb6881' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
-<tr>
-<td>
-<table>
-  <thead>
-    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
-  </thead>
-  <tbody>
-    <tr><th> Bytes </th><td> 218.15 kB </td> <td> 218.15 kB </td></tr>
-    <tr><th> Shape </th><td> (27269,) </td> <td> (27269,) </td></tr>
-    <tr><th> Count </th><td> 13 Tasks </td><td> 1 Chunks </td></tr>
-    <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
-  </tbody>
-</table>
-</td>
-<td>
-<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
-
-  <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
-  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Vertical lines -->
-  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
-  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Colored Rectangle -->
-  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
-
-  <!-- Text -->
-  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >27269</text>
-  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
-</svg>
-</td>
-</tr>
-</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-58cc5611-2b6b-45ff-9f97-818d010a8b8d' class='xr-section-summary-in' type='checkbox'  checked><label for='section-58cc5611-2b6b-45ff-9f97-818d010a8b8d' class='xr-section-summary' >Data variables: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>gene_da</span></div><div class='xr-var-dims'>(cell, gene, mc_type, count_type)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(1199, 55487, 2, 2), meta=np.ndarray&gt;</div><input id='attrs-55e401e6-475d-4102-8364-3faffa96171a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-55e401e6-475d-4102-8364-3faffa96171a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3ebffff3-df00-4c46-be54-9b57035a890e' class='xr-var-data-in' type='checkbox'><label for='data-3ebffff3-df00-4c46-be54-9b57035a890e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
-<tr>
-<td>
-<table>
-  <thead>
-    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
-  </thead>
-  <tbody>
-    <tr><th> Bytes </th><td> 2.20 GB </td> <td> 583.28 MB </td></tr>
-    <tr><th> Shape </th><td> (4958, 55487, 2, 2) </td> <td> (1314, 55487, 2, 2) </td></tr>
-    <tr><th> Count </th><td> 22 Tasks </td><td> 4 Chunks </td></tr>
+    <tr><th> Bytes </th><td> 3.71 GB </td> <td> 294.07 MB </td></tr>
+    <tr><th> Shape </th><td> (16985, 27269, 2, 2) </td> <td> (1348, 27269, 2, 2) </td></tr>
+    <tr><th> Count </th><td> 87 Tasks </td><td> 16 Chunks </td></tr>
     <tr><th> Type </th><td> uint16 </td><td> numpy.ndarray </td></tr>
   </tbody>
 </table>
 </td>
 <td>
-<svg width="360" height="146" style="stroke:rgb(0,0,0);stroke-width:1" >
+<svg width="434" height="146" style="stroke:rgb(0,0,0);stroke-width:1" >
 
   <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="37" y2="0" style="stroke-width:2" />
-  <line x1="0" y1="25" x2="37" y2="25" style="stroke-width:2" />
+  <line x1="0" y1="0" x2="74" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="74" y2="25" style="stroke-width:2" />
 
   <!-- Vertical lines -->
   <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="2" y1="0" x2="2" y2="25" />
+  <line x1="7" y1="0" x2="7" y2="25" />
   <line x1="9" y1="0" x2="9" y2="25" />
-  <line x1="18" y1="0" x2="18" y2="25" />
-  <line x1="27" y1="0" x2="27" y2="25" />
-  <line x1="37" y1="0" x2="37" y2="25" style="stroke-width:2" />
+  <line x1="9" y1="0" x2="9" y2="25" />
+  <line x1="15" y1="0" x2="15" y2="25" />
+  <line x1="20" y1="0" x2="20" y2="25" />
+  <line x1="26" y1="0" x2="26" y2="25" />
+  <line x1="31" y1="0" x2="31" y2="25" />
+  <line x1="37" y1="0" x2="37" y2="25" />
+  <line x1="42" y1="0" x2="42" y2="25" />
+  <line x1="48" y1="0" x2="48" y2="25" />
+  <line x1="52" y1="0" x2="52" y2="25" />
+  <line x1="57" y1="0" x2="57" y2="25" />
+  <line x1="63" y1="0" x2="63" y2="25" />
+  <line x1="69" y1="0" x2="69" y2="25" />
+  <line x1="74" y1="0" x2="74" y2="25" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="0.0,0.0 37.964080386182005,0.0 37.964080386182005,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="0.0,0.0 74.7442150427225,0.0 74.7442150427225,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Text -->
-  <text x="18.982040" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >4958</text>
-  <text x="57.964080" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,57.964080,12.706308)">1</text>
+  <text x="37.372108" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >16985</text>
+  <text x="94.744215" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,94.744215,12.706308)">1</text>
 
 
   <!-- Horizontal lines -->
-  <line x1="107" y1="0" x2="177" y2="70" style="stroke-width:2" />
-  <line x1="107" y1="25" x2="177" y2="96" style="stroke-width:2" />
+  <line x1="144" y1="0" x2="214" y2="70" style="stroke-width:2" />
+  <line x1="144" y1="25" x2="214" y2="96" style="stroke-width:2" />
 
   <!-- Vertical lines -->
-  <line x1="107" y1="0" x2="107" y2="25" style="stroke-width:2" />
-  <line x1="177" y1="70" x2="177" y2="96" style="stroke-width:2" />
+  <line x1="144" y1="0" x2="144" y2="25" style="stroke-width:2" />
+  <line x1="214" y1="70" x2="214" y2="96" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="107.0,0.0 177.58823529411765,70.58823529411765 177.58823529411765,96.00085180870013 107.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="144.0,0.0 214.58823529411765,70.58823529411765 214.58823529411765,96.00085180870013 144.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Horizontal lines -->
-  <line x1="107" y1="0" x2="132" y2="0" style="stroke-width:2" />
-  <line x1="177" y1="70" x2="203" y2="70" style="stroke-width:2" />
+  <line x1="144" y1="0" x2="169" y2="0" style="stroke-width:2" />
+  <line x1="214" y1="70" x2="240" y2="70" style="stroke-width:2" />
 
   <!-- Vertical lines -->
-  <line x1="107" y1="0" x2="177" y2="70" style="stroke-width:2" />
-  <line x1="132" y1="0" x2="203" y2="70" style="stroke-width:2" />
+  <line x1="144" y1="0" x2="214" y2="70" style="stroke-width:2" />
+  <line x1="169" y1="0" x2="240" y2="70" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="107.0,0.0 132.41261651458248,0.0 203.00085180870013,70.58823529411765 177.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="144.0,0.0 169.41261651458248,0.0 240.00085180870013,70.58823529411765 214.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Horizontal lines -->
-  <line x1="177" y1="70" x2="203" y2="70" style="stroke-width:2" />
-  <line x1="177" y1="96" x2="203" y2="96" style="stroke-width:2" />
+  <line x1="214" y1="70" x2="240" y2="70" style="stroke-width:2" />
+  <line x1="214" y1="96" x2="240" y2="96" style="stroke-width:2" />
 
   <!-- Vertical lines -->
-  <line x1="177" y1="70" x2="177" y2="96" style="stroke-width:2" />
-  <line x1="203" y1="70" x2="203" y2="96" style="stroke-width:2" />
+  <line x1="214" y1="70" x2="214" y2="96" style="stroke-width:2" />
+  <line x1="240" y1="70" x2="240" y2="96" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="177.58823529411765,70.58823529411765 203.00085180870013,70.58823529411765 203.00085180870013,96.00085180870013 177.58823529411765,96.00085180870013" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="214.58823529411765,70.58823529411765 240.00085180870013,70.58823529411765 240.00085180870013,96.00085180870013 214.58823529411765,96.00085180870013" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Text -->
-  <text x="190.294544" y="116.000852" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
-  <text x="223.000852" y="83.294544" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,223.000852,83.294544)">2</text>
-  <text x="132.294118" y="80.706734" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,132.294118,80.706734)">55487</text>
+  <text x="227.294544" y="116.000852" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
+  <text x="260.000852" y="83.294544" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,260.000852,83.294544)">2</text>
+  <text x="169.294118" y="80.706734" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,169.294118,80.706734)">27269</text>
 </svg>
 </td>
 </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_da</span></div><div class='xr-var-dims'>(cell, chrom100k, mc_type, count_type)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(1199, 27269, 2, 2), meta=np.ndarray&gt;</div><input id='attrs-638a3135-d442-45fc-9244-4e824d6483ec' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-638a3135-d442-45fc-9244-4e824d6483ec' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a604d8ad-3d52-4647-9595-ed8489423c15' class='xr-var-data-in' type='checkbox'><label for='data-a604d8ad-3d52-4647-9595-ed8489423c15' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_da</span></div><div class='xr-var-dims'>(cell, geneslop2k, mc_type, count_type)</div><div class='xr-var-dtype'>uint32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(473, 55487, 2, 2), meta=np.ndarray&gt;</div><input id='attrs-f09f624e-cb35-4b3d-9f88-7245f39a0aea' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f09f624e-cb35-4b3d-9f88-7245f39a0aea' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-5d6a4d0b-bb00-4502-af22-10e567f5b111' class='xr-var-data-in' type='checkbox'><label for='data-5d6a4d0b-bb00-4502-af22-10e567f5b111' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
 <tr>
 <td>
 <table>
@@ -1552,76 +1608,88 @@ Data variables:
     <tr><td> </td><th> Array </th><th> Chunk </th></tr>
   </thead>
   <tbody>
-    <tr><th> Bytes </th><td> 1.08 GB </td> <td> 286.65 MB </td></tr>
-    <tr><th> Shape </th><td> (4958, 27269, 2, 2) </td> <td> (1314, 27269, 2, 2) </td></tr>
-    <tr><th> Count </th><td> 22 Tasks </td><td> 4 Chunks </td></tr>
-    <tr><th> Type </th><td> uint16 </td><td> numpy.ndarray </td></tr>
+    <tr><th> Bytes </th><td> 15.08 GB </td> <td> 1.20 GB </td></tr>
+    <tr><th> Shape </th><td> (16985, 55487, 2, 2) </td> <td> (1348, 55487, 2, 2) </td></tr>
+    <tr><th> Count </th><td> 87 Tasks </td><td> 16 Chunks </td></tr>
+    <tr><th> Type </th><td> uint32 </td><td> numpy.ndarray </td></tr>
   </tbody>
 </table>
 </td>
 <td>
-<svg width="368" height="146" style="stroke:rgb(0,0,0);stroke-width:1" >
+<svg width="372" height="146" style="stroke:rgb(0,0,0);stroke-width:1" >
 
   <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="41" y2="0" style="stroke-width:2" />
-  <line x1="0" y1="25" x2="41" y2="25" style="stroke-width:2" />
+  <line x1="0" y1="0" x2="43" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="43" y2="25" style="stroke-width:2" />
 
   <!-- Vertical lines -->
   <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
-  <line x1="10" y1="0" x2="10" y2="25" />
-  <line x1="20" y1="0" x2="20" y2="25" />
+  <line x1="1" y1="0" x2="1" y2="25" />
+  <line x1="4" y1="0" x2="4" y2="25" />
+  <line x1="5" y1="0" x2="5" y2="25" />
+  <line x1="5" y1="0" x2="5" y2="25" />
+  <line x1="8" y1="0" x2="8" y2="25" />
+  <line x1="12" y1="0" x2="12" y2="25" />
+  <line x1="15" y1="0" x2="15" y2="25" />
+  <line x1="18" y1="0" x2="18" y2="25" />
+  <line x1="21" y1="0" x2="21" y2="25" />
+  <line x1="24" y1="0" x2="24" y2="25" />
+  <line x1="28" y1="0" x2="28" y2="25" />
   <line x1="30" y1="0" x2="30" y2="25" />
-  <line x1="41" y1="0" x2="41" y2="25" style="stroke-width:2" />
+  <line x1="33" y1="0" x2="33" y2="25" />
+  <line x1="37" y1="0" x2="37" y2="25" />
+  <line x1="40" y1="0" x2="40" y2="25" />
+  <line x1="43" y1="0" x2="43" y2="25" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="0.0,0.0 41.59732749150097,0.0 41.59732749150097,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="0.0,0.0 43.61185640009032,0.0 43.61185640009032,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Text -->
-  <text x="20.798664" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >4958</text>
-  <text x="61.597327" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,61.597327,12.706308)">1</text>
+  <text x="21.805928" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >16985</text>
+  <text x="63.611856" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,63.611856,12.706308)">1</text>
 
 
   <!-- Horizontal lines -->
-  <line x1="111" y1="0" x2="181" y2="70" style="stroke-width:2" />
-  <line x1="111" y1="25" x2="181" y2="96" style="stroke-width:2" />
+  <line x1="113" y1="0" x2="183" y2="70" style="stroke-width:2" />
+  <line x1="113" y1="25" x2="183" y2="96" style="stroke-width:2" />
 
   <!-- Vertical lines -->
-  <line x1="111" y1="0" x2="111" y2="25" style="stroke-width:2" />
-  <line x1="181" y1="70" x2="181" y2="96" style="stroke-width:2" />
+  <line x1="113" y1="0" x2="113" y2="25" style="stroke-width:2" />
+  <line x1="183" y1="70" x2="183" y2="96" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="111.0,0.0 181.58823529411765,70.58823529411765 181.58823529411765,96.00085180870013 111.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="113.0,0.0 183.58823529411765,70.58823529411765 183.58823529411765,96.00085180870013 113.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Horizontal lines -->
-  <line x1="111" y1="0" x2="136" y2="0" style="stroke-width:2" />
-  <line x1="181" y1="70" x2="207" y2="70" style="stroke-width:2" />
+  <line x1="113" y1="0" x2="138" y2="0" style="stroke-width:2" />
+  <line x1="183" y1="70" x2="209" y2="70" style="stroke-width:2" />
 
   <!-- Vertical lines -->
-  <line x1="111" y1="0" x2="181" y2="70" style="stroke-width:2" />
-  <line x1="136" y1="0" x2="207" y2="70" style="stroke-width:2" />
+  <line x1="113" y1="0" x2="183" y2="70" style="stroke-width:2" />
+  <line x1="138" y1="0" x2="209" y2="70" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="111.0,0.0 136.41261651458248,0.0 207.00085180870013,70.58823529411765 181.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="113.0,0.0 138.41261651458248,0.0 209.00085180870013,70.58823529411765 183.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Horizontal lines -->
-  <line x1="181" y1="70" x2="207" y2="70" style="stroke-width:2" />
-  <line x1="181" y1="96" x2="207" y2="96" style="stroke-width:2" />
+  <line x1="183" y1="70" x2="209" y2="70" style="stroke-width:2" />
+  <line x1="183" y1="96" x2="209" y2="96" style="stroke-width:2" />
 
   <!-- Vertical lines -->
-  <line x1="181" y1="70" x2="181" y2="96" style="stroke-width:2" />
-  <line x1="207" y1="70" x2="207" y2="96" style="stroke-width:2" />
+  <line x1="183" y1="70" x2="183" y2="96" style="stroke-width:2" />
+  <line x1="209" y1="70" x2="209" y2="96" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="181.58823529411765,70.58823529411765 207.00085180870013,70.58823529411765 207.00085180870013,96.00085180870013 181.58823529411765,96.00085180870013" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="183.58823529411765,70.58823529411765 209.00085180870013,70.58823529411765 209.00085180870013,96.00085180870013 183.58823529411765,96.00085180870013" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Text -->
-  <text x="194.294544" y="116.000852" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
-  <text x="227.000852" y="83.294544" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,227.000852,83.294544)">2</text>
-  <text x="136.294118" y="80.706734" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,136.294118,80.706734)">27269</text>
+  <text x="196.294544" y="116.000852" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
+  <text x="229.000852" y="83.294544" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,229.000852,83.294544)">2</text>
+  <text x="138.294118" y="80.706734" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,138.294118,80.706734)">55487</text>
 </svg>
 </td>
 </tr>
-</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-71e4afe4-2f34-4e1d-8d26-9d58fac57444' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-71e4afe4-2f34-4e1d-8d26-9d58fac57444' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div></div>
+</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-89cb79f8-0024-4292-aa24-d2668c0f1767' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-89cb79f8-0024-4292-aa24-d2668c0f1767' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div></div>
 </div>
 </div>
 </div>
@@ -1654,7 +1722,7 @@ Data variables:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Before cov mean filter: 27269 chrom100k
- After cov mean filter: 25235 chrom100k 92.5%
+ After cov mean filter: 25242 chrom100k 92.6%
 </pre></div>
 </div>
 </div>
@@ -1673,7 +1741,7 @@ Data variables:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1187 chrom100k features removed due to overlapping (bedtools intersect -f 0.2) with black list regions.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1189 chrom100k features removed due to overlapping (bedtools intersect -f 0.2) with black list regions.
 </pre></div>
 </div>
 </div>
@@ -1688,7 +1756,7 @@ Data variables:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18 chrom100k features in [&#39;chrM&#39;, &#39;chrY&#39;] removed.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20 chrom100k features in [&#39;chrM&#39;, &#39;chrY&#39;] removed.
 </pre></div>
 </div>
 </div>
@@ -1706,7 +1774,7 @@ Data variables:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>24042 (88.2%) chrom100k remained after all the basic filter.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>24045 (88.2%) chrom100k remained after all the basic filter.
 </pre></div>
 </div>
 </div>
@@ -2079,27 +2147,132 @@ dl.xr-attrs {
   fill: currentColor;
 }
 </style><pre class='xr-text-repr-fallback'>&lt;xarray.MCDS&gt;
-Dimensions:              (cell: 4958, chrom100k: 24042, count_type: 2, gene: 55487, mc_type: 2)
+Dimensions:              (cell: 16985, chrom100k: 24045, count_type: 2, geneslop2k: 55487, mc_type: 2)
 Coordinates: (12/13)
   * mc_type              (mc_type) object &#x27;CGN&#x27; &#x27;CHN&#x27;
-  * cell                 (cell) object &#x27;3C_M_0&#x27; &#x27;3C_M_1&#x27; ... &#x27;9H_M_3061&#x27;
-  * gene                 (gene) object &#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSMUSG000...
+  * cell                 (cell) object &#x27;10E_M_0&#x27; &#x27;10E_M_1&#x27; ... &#x27;9J_M_3036&#x27;
   * count_type           (count_type) object &#x27;mc&#x27; &#x27;cov&#x27;
     strand_type          &lt;U4 &#x27;both&#x27;
-    gene_chrom           (gene) object dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
-    ...                   ...
-    gene_end             (gene) int64 dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
   * chrom100k            (chrom100k) int64 30 31 32 33 ... 26335 26336 26337
-    chrom100k_chrom      (chrom100k) object dask.array&lt;chunksize=(24042,), meta=np.ndarray&gt;
-    chrom100k_bin_start  (chrom100k) int64 dask.array&lt;chunksize=(24042,), meta=np.ndarray&gt;
-    chrom100k_bin_end    (chrom100k) int64 dask.array&lt;chunksize=(24042,), meta=np.ndarray&gt;
-    chrom100k_cov_mean   (chrom100k) float64 1.386e+03 1.37e+03 ... 718.3 699.7
+    chrom100k_chrom      (chrom100k) object dask.array&lt;chunksize=(24045,), meta=np.ndarray&gt;
+    ...                   ...
+    chrom100k_bin_end    (chrom100k) int64 dask.array&lt;chunksize=(24045,), meta=np.ndarray&gt;
+  * geneslop2k           (geneslop2k) object &#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSM...
+    geneslop2k_chrom     (geneslop2k) object dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
+    geneslop2k_start     (geneslop2k) int64 dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
+    geneslop2k_end       (geneslop2k) int64 dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;
+    chrom100k_cov_mean   (chrom100k) float64 1.4e+03 1.378e+03 ... 715.3 696.9
 Data variables:
-    gene_da              (cell, gene, mc_type, count_type) uint16 dask.array&lt;chunksize=(1199, 55487, 2, 2), meta=np.ndarray&gt;
-    chrom100k_da         (cell, chrom100k, mc_type, count_type) uint16 dask.array&lt;chunksize=(1199, 24042, 2, 2), meta=np.ndarray&gt;</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.MCDS</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-65bdb1de-f192-4ee4-aad5-aa15d0943def' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-65bdb1de-f192-4ee4-aad5-aa15d0943def' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>cell</span>: 4958</li><li><span class='xr-has-index'>chrom100k</span>: 24042</li><li><span class='xr-has-index'>count_type</span>: 2</li><li><span class='xr-has-index'>gene</span>: 55487</li><li><span class='xr-has-index'>mc_type</span>: 2</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-ff52e733-a769-4720-bcb7-7beb4ff44118' class='xr-section-summary-in' type='checkbox'  checked><label for='section-ff52e733-a769-4720-bcb7-7beb4ff44118' class='xr-section-summary' >Coordinates: <span>(13)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>mc_type</span></div><div class='xr-var-dims'>(mc_type)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;CGN&#x27; &#x27;CHN&#x27;</div><input id='attrs-74a106bd-c978-4e6f-b491-0271da7d8bde' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-74a106bd-c978-4e6f-b491-0271da7d8bde' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-8a8556f7-ccef-4642-9f84-ae31b89c9c6f' class='xr-var-data-in' type='checkbox'><label for='data-8a8556f7-ccef-4642-9f84-ae31b89c9c6f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;CGN&#x27;, &#x27;CHN&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>cell</span></div><div class='xr-var-dims'>(cell)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;3C_M_0&#x27; &#x27;3C_M_1&#x27; ... &#x27;9H_M_3061&#x27;</div><input id='attrs-2f1cc464-f140-443c-bbec-6d8fd8bc0126' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-2f1cc464-f140-443c-bbec-6d8fd8bc0126' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ba1c4616-df4e-44ca-a2bd-87f236ba84e4' class='xr-var-data-in' type='checkbox'><label for='data-ba1c4616-df4e-44ca-a2bd-87f236ba84e4' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;3C_M_0&#x27;, &#x27;3C_M_1&#x27;, &#x27;3C_M_10&#x27;, ..., &#x27;9H_M_3057&#x27;, &#x27;9H_M_3059&#x27;,
-       &#x27;9H_M_3061&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>gene</span></div><div class='xr-var-dims'>(gene)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSM...</div><input id='attrs-5cba0643-6834-4a4b-84f2-2162496641a7' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5cba0643-6834-4a4b-84f2-2162496641a7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d91d0e9c-34e0-4f46-8f3f-abaa4e2ecbd4' class='xr-var-data-in' type='checkbox'><label for='data-d91d0e9c-34e0-4f46-8f3f-abaa4e2ecbd4' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;ENSMUSG00000102693.1&#x27;, &#x27;ENSMUSG00000064842.1&#x27;, &#x27;ENSMUSG00000051951.5&#x27;,
+    chrom100k_da         (cell, chrom100k, mc_type, count_type) uint16 dask.array&lt;chunksize=(473, 24045, 2, 2), meta=np.ndarray&gt;
+    geneslop2k_da        (cell, geneslop2k, mc_type, count_type) uint32 dask.array&lt;chunksize=(473, 55487, 2, 2), meta=np.ndarray&gt;</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.MCDS</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-0d61d48a-1dda-4b6f-9ba3-06430f585701' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-0d61d48a-1dda-4b6f-9ba3-06430f585701' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>cell</span>: 16985</li><li><span class='xr-has-index'>chrom100k</span>: 24045</li><li><span class='xr-has-index'>count_type</span>: 2</li><li><span class='xr-has-index'>geneslop2k</span>: 55487</li><li><span class='xr-has-index'>mc_type</span>: 2</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-42d69f7b-7311-4545-9bda-d150005212e4' class='xr-section-summary-in' type='checkbox'  checked><label for='section-42d69f7b-7311-4545-9bda-d150005212e4' class='xr-section-summary' >Coordinates: <span>(13)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>mc_type</span></div><div class='xr-var-dims'>(mc_type)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;CGN&#x27; &#x27;CHN&#x27;</div><input id='attrs-4cd9298a-51f4-4629-ab35-e7a218b8794c' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4cd9298a-51f4-4629-ab35-e7a218b8794c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d6f83f12-83e9-4209-a16f-86774628b7b9' class='xr-var-data-in' type='checkbox'><label for='data-d6f83f12-83e9-4209-a16f-86774628b7b9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;CGN&#x27;, &#x27;CHN&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>cell</span></div><div class='xr-var-dims'>(cell)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;10E_M_0&#x27; &#x27;10E_M_1&#x27; ... &#x27;9J_M_3036&#x27;</div><input id='attrs-b5b69f96-b21c-408b-b7fe-73aceec67390' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-b5b69f96-b21c-408b-b7fe-73aceec67390' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-83f21ab9-a2b4-41cf-b0ca-bd6038d6253a' class='xr-var-data-in' type='checkbox'><label for='data-83f21ab9-a2b4-41cf-b0ca-bd6038d6253a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;10E_M_0&#x27;, &#x27;10E_M_1&#x27;, &#x27;10E_M_10&#x27;, ..., &#x27;9J_M_3034&#x27;, &#x27;9J_M_3035&#x27;,
+       &#x27;9J_M_3036&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>count_type</span></div><div class='xr-var-dims'>(count_type)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;mc&#x27; &#x27;cov&#x27;</div><input id='attrs-f9dcf0bc-3520-4fa0-b007-326f22b33694' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f9dcf0bc-3520-4fa0-b007-326f22b33694' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-0467ade4-6139-41d1-a584-d67c8a34a251' class='xr-var-data-in' type='checkbox'><label for='data-0467ade4-6139-41d1-a584-d67c8a34a251' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;mc&#x27;, &#x27;cov&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>strand_type</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>&lt;U4</div><div class='xr-var-preview xr-preview'>&#x27;both&#x27;</div><input id='attrs-dc6fb02f-4d63-4a7a-b5d1-48e57b04bdb8' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-dc6fb02f-4d63-4a7a-b5d1-48e57b04bdb8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a9384aa4-fe14-4a86-baab-7df9a0eadab7' class='xr-var-data-in' type='checkbox'><label for='data-a9384aa4-fe14-4a86-baab-7df9a0eadab7' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(&#x27;both&#x27;, dtype=&#x27;&lt;U4&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chrom100k</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>30 31 32 33 ... 26335 26336 26337</div><input id='attrs-be28fbf3-350c-4af2-aefc-8778d87fca07' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-be28fbf3-350c-4af2-aefc-8778d87fca07' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-5bcf3d98-0d23-4647-b8ef-c099f12e7667' class='xr-var-data-in' type='checkbox'><label for='data-5bcf3d98-0d23-4647-b8ef-c099f12e7667' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   30,    31,    32, ..., 26335, 26336, 26337])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_chrom</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(24045,), meta=np.ndarray&gt;</div><input id='attrs-901d83e4-5db1-4856-9d4c-86e36d3b34cb' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-901d83e4-5db1-4856-9d4c-86e36d3b34cb' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b909890a-b165-4ea7-ba43-e61956ef71cb' class='xr-var-data-in' type='checkbox'><label for='data-b909890a-b165-4ea7-ba43-e61956ef71cb' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 192.36 kB </td> <td> 192.36 kB </td></tr>
+    <tr><th> Shape </th><td> (24045,) </td> <td> (24045,) </td></tr>
+    <tr><th> Count </th><td> 78 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> object </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >24045</text>
+  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_bin_start</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(24045,), meta=np.ndarray&gt;</div><input id='attrs-de18b690-7b06-471c-b8f9-4b16896bf224' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-de18b690-7b06-471c-b8f9-4b16896bf224' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9a0943c7-a937-4fd3-9424-3a5439d492e0' class='xr-var-data-in' type='checkbox'><label for='data-9a0943c7-a937-4fd3-9424-3a5439d492e0' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 192.36 kB </td> <td> 192.36 kB </td></tr>
+    <tr><th> Shape </th><td> (24045,) </td> <td> (24045,) </td></tr>
+    <tr><th> Count </th><td> 52 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >24045</text>
+  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_bin_end</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(24045,), meta=np.ndarray&gt;</div><input id='attrs-a18bdf16-3961-4caa-8133-2d5488441729' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a18bdf16-3961-4caa-8133-2d5488441729' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-981f9018-47b0-4d6c-b7f0-9f62f151f2c7' class='xr-var-data-in' type='checkbox'><label for='data-981f9018-47b0-4d6c-b7f0-9f62f151f2c7' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 192.36 kB </td> <td> 192.36 kB </td></tr>
+    <tr><th> Shape </th><td> (24045,) </td> <td> (24045,) </td></tr>
+    <tr><th> Count </th><td> 52 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >24045</text>
+  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>geneslop2k</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSM...</div><input id='attrs-01b30fe1-7609-44e6-97e1-5867f72cf616' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-01b30fe1-7609-44e6-97e1-5867f72cf616' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b1958249-d6a4-4338-8e08-b3bef512da6f' class='xr-var-data-in' type='checkbox'><label for='data-b1958249-d6a4-4338-8e08-b3bef512da6f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;ENSMUSG00000102693.1&#x27;, &#x27;ENSMUSG00000064842.1&#x27;, &#x27;ENSMUSG00000051951.5&#x27;,
        ..., &#x27;ENSMUSG00000064370.1&#x27;, &#x27;ENSMUSG00000064371.1&#x27;,
-       &#x27;ENSMUSG00000064372.1&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>count_type</span></div><div class='xr-var-dims'>(count_type)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;mc&#x27; &#x27;cov&#x27;</div><input id='attrs-9e39f2fe-e3b8-4af9-918f-548b28160cb7' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-9e39f2fe-e3b8-4af9-918f-548b28160cb7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-56744131-a741-42d4-b138-578776beae86' class='xr-var-data-in' type='checkbox'><label for='data-56744131-a741-42d4-b138-578776beae86' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;mc&#x27;, &#x27;cov&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>strand_type</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>&lt;U4</div><div class='xr-var-preview xr-preview'>&#x27;both&#x27;</div><input id='attrs-9ddf6276-956d-4199-9eba-6c71e65b4cd2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-9ddf6276-956d-4199-9eba-6c71e65b4cd2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1bf2b2e4-51be-422f-b861-f4f87994bc14' class='xr-var-data-in' type='checkbox'><label for='data-1bf2b2e4-51be-422f-b861-f4f87994bc14' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(&#x27;both&#x27;, dtype=&#x27;&lt;U4&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>gene_chrom</span></div><div class='xr-var-dims'>(gene)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-6623a817-2d2d-4ead-b199-0cfa5669cbd1' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-6623a817-2d2d-4ead-b199-0cfa5669cbd1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6bc36146-59be-42d1-919f-f80b1d87392c' class='xr-var-data-in' type='checkbox'><label for='data-6bc36146-59be-42d1-919f-f80b1d87392c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+       &#x27;ENSMUSG00000064372.1&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_chrom</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-16edf2c2-afc4-42f0-8b36-a9930c1555e9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-16edf2c2-afc4-42f0-8b36-a9930c1555e9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-212c434b-b637-4ce0-b57d-eaf07822838c' class='xr-var-data-in' type='checkbox'><label for='data-212c434b-b637-4ce0-b57d-eaf07822838c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
 <tr>
 <td>
 <table>
@@ -2109,7 +2282,7 @@ Data variables:
   <tbody>
     <tr><th> Bytes </th><td> 443.90 kB </td> <td> 443.90 kB </td></tr>
     <tr><th> Shape </th><td> (55487,) </td> <td> (55487,) </td></tr>
-    <tr><th> Count </th><td> 15 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Count </th><td> 75 Tasks </td><td> 1 Chunks </td></tr>
     <tr><th> Type </th><td> object </td><td> numpy.ndarray </td></tr>
   </tbody>
 </table>
@@ -2134,7 +2307,7 @@ Data variables:
 </svg>
 </td>
 </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>gene_start</span></div><div class='xr-var-dims'>(gene)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-e29b9ff3-9308-412d-8d4c-dd554b05c4da' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e29b9ff3-9308-412d-8d4c-dd554b05c4da' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-333d2ffe-9f5b-419f-9034-2310a46055f9' class='xr-var-data-in' type='checkbox'><label for='data-333d2ffe-9f5b-419f-9034-2310a46055f9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_start</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-3c1962ed-bbf2-4f37-9d5d-68d8ba42f318' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-3c1962ed-bbf2-4f37-9d5d-68d8ba42f318' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a4b76219-c21b-42d7-be9e-044bb4e79783' class='xr-var-data-in' type='checkbox'><label for='data-a4b76219-c21b-42d7-be9e-044bb4e79783' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
 <tr>
 <td>
 <table>
@@ -2144,7 +2317,7 @@ Data variables:
   <tbody>
     <tr><th> Bytes </th><td> 443.90 kB </td> <td> 443.90 kB </td></tr>
     <tr><th> Shape </th><td> (55487,) </td> <td> (55487,) </td></tr>
-    <tr><th> Count </th><td> 13 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Count </th><td> 49 Tasks </td><td> 1 Chunks </td></tr>
     <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
   </tbody>
 </table>
@@ -2169,7 +2342,7 @@ Data variables:
 </svg>
 </td>
 </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>gene_end</span></div><div class='xr-var-dims'>(gene)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-013caccf-7e89-4d12-8282-f8afee81e02e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-013caccf-7e89-4d12-8282-f8afee81e02e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-555cd445-b216-472f-bb99-74faefa1cef3' class='xr-var-data-in' type='checkbox'><label for='data-555cd445-b216-472f-bb99-74faefa1cef3' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_end</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(55487,), meta=np.ndarray&gt;</div><input id='attrs-911fa2f2-fd0c-4ee0-ac2f-496145a06d1a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-911fa2f2-fd0c-4ee0-ac2f-496145a06d1a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ec339c29-2ecf-4815-adb7-ee4fc9197ffc' class='xr-var-data-in' type='checkbox'><label for='data-ec339c29-2ecf-4815-adb7-ee4fc9197ffc' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
 <tr>
 <td>
 <table>
@@ -2179,7 +2352,7 @@ Data variables:
   <tbody>
     <tr><th> Bytes </th><td> 443.90 kB </td> <td> 443.90 kB </td></tr>
     <tr><th> Shape </th><td> (55487,) </td> <td> (55487,) </td></tr>
-    <tr><th> Count </th><td> 13 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Count </th><td> 49 Tasks </td><td> 1 Chunks </td></tr>
     <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
   </tbody>
 </table>
@@ -2204,7 +2377,8 @@ Data variables:
 </svg>
 </td>
 </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chrom100k</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>30 31 32 33 ... 26335 26336 26337</div><input id='attrs-5018fd49-3572-4612-9447-24ea67cff918' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5018fd49-3572-4612-9447-24ea67cff918' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-41168cf9-63d1-408a-be6c-99372fbe733a' class='xr-var-data-in' type='checkbox'><label for='data-41168cf9-63d1-408a-be6c-99372fbe733a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   30,    31,    32, ..., 26335, 26336, 26337])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_chrom</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(24042,), meta=np.ndarray&gt;</div><input id='attrs-2e8236a8-07a8-430c-86eb-b196b76d68eb' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-2e8236a8-07a8-430c-86eb-b196b76d68eb' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-40d8064e-5746-4444-8213-47e1686fccd3' class='xr-var-data-in' type='checkbox'><label for='data-40d8064e-5746-4444-8213-47e1686fccd3' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_cov_mean</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>1.4e+03 1.378e+03 ... 715.3 696.9</div><input id='attrs-4f03f3d0-3ee2-48fe-8c48-1027c1596a53' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4f03f3d0-3ee2-48fe-8c48-1027c1596a53' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a6bb8f69-ed2c-4a54-b150-c422749a686f' class='xr-var-data-in' type='checkbox'><label for='data-a6bb8f69-ed2c-4a54-b150-c422749a686f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([1400.02778923, 1377.60153076, 1449.94012364, ...,  752.07282897,
+        715.28654695,  696.88118928])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-3e17de14-a82b-4821-aebd-075ec2e73ea4' class='xr-section-summary-in' type='checkbox'  checked><label for='section-3e17de14-a82b-4821-aebd-075ec2e73ea4' class='xr-section-summary' >Data variables: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_da</span></div><div class='xr-var-dims'>(cell, chrom100k, mc_type, count_type)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(473, 24045, 2, 2), meta=np.ndarray&gt;</div><input id='attrs-25e9ab3d-f4b1-4a32-949b-4e6437f0a7c7' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-25e9ab3d-f4b1-4a32-949b-4e6437f0a7c7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9826b28a-72bc-43a2-ac37-e1da99322c33' class='xr-var-data-in' type='checkbox'><label for='data-9826b28a-72bc-43a2-ac37-e1da99322c33' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
 <tr>
 <td>
 <table>
@@ -2212,259 +2386,177 @@ Data variables:
     <tr><td> </td><th> Array </th><th> Chunk </th></tr>
   </thead>
   <tbody>
-    <tr><th> Bytes </th><td> 192.34 kB </td> <td> 192.34 kB </td></tr>
-    <tr><th> Shape </th><td> (24042,) </td> <td> (24042,) </td></tr>
-    <tr><th> Count </th><td> 18 Tasks </td><td> 1 Chunks </td></tr>
-    <tr><th> Type </th><td> object </td><td> numpy.ndarray </td></tr>
-  </tbody>
-</table>
-</td>
-<td>
-<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
-
-  <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
-  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Vertical lines -->
-  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
-  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Colored Rectangle -->
-  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
-
-  <!-- Text -->
-  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >24042</text>
-  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
-</svg>
-</td>
-</tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_bin_start</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(24042,), meta=np.ndarray&gt;</div><input id='attrs-e10e9106-2c9f-4d8c-b5c0-8c8910e1415b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e10e9106-2c9f-4d8c-b5c0-8c8910e1415b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-74ecb99a-3ec5-48d3-b962-8a9f00baf022' class='xr-var-data-in' type='checkbox'><label for='data-74ecb99a-3ec5-48d3-b962-8a9f00baf022' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
-<tr>
-<td>
-<table>
-  <thead>
-    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
-  </thead>
-  <tbody>
-    <tr><th> Bytes </th><td> 192.34 kB </td> <td> 192.34 kB </td></tr>
-    <tr><th> Shape </th><td> (24042,) </td> <td> (24042,) </td></tr>
-    <tr><th> Count </th><td> 16 Tasks </td><td> 1 Chunks </td></tr>
-    <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
-  </tbody>
-</table>
-</td>
-<td>
-<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
-
-  <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
-  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Vertical lines -->
-  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
-  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Colored Rectangle -->
-  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
-
-  <!-- Text -->
-  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >24042</text>
-  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
-</svg>
-</td>
-</tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_bin_end</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(24042,), meta=np.ndarray&gt;</div><input id='attrs-3165fdde-4fd7-4e23-b9b3-b6fe426fbc4e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-3165fdde-4fd7-4e23-b9b3-b6fe426fbc4e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-bd405c3f-dfa3-4dee-a58e-c1672fd6a604' class='xr-var-data-in' type='checkbox'><label for='data-bd405c3f-dfa3-4dee-a58e-c1672fd6a604' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
-<tr>
-<td>
-<table>
-  <thead>
-    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
-  </thead>
-  <tbody>
-    <tr><th> Bytes </th><td> 192.34 kB </td> <td> 192.34 kB </td></tr>
-    <tr><th> Shape </th><td> (24042,) </td> <td> (24042,) </td></tr>
-    <tr><th> Count </th><td> 16 Tasks </td><td> 1 Chunks </td></tr>
-    <tr><th> Type </th><td> int64 </td><td> numpy.ndarray </td></tr>
-  </tbody>
-</table>
-</td>
-<td>
-<svg width="170" height="75" style="stroke:rgb(0,0,0);stroke-width:1" >
-
-  <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
-  <line x1="0" y1="25" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Vertical lines -->
-  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
-  <line x1="120" y1="0" x2="120" y2="25" style="stroke-width:2" />
-
-  <!-- Colored Rectangle -->
-  <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
-
-  <!-- Text -->
-  <text x="60.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >24042</text>
-  <text x="140.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)">1</text>
-</svg>
-</td>
-</tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_cov_mean</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>1.386e+03 1.37e+03 ... 718.3 699.7</div><input id='attrs-5eca8e80-e00b-430e-a182-8c15ad806381' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5eca8e80-e00b-430e-a182-8c15ad806381' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d5a7a20f-b5c0-49aa-8bb6-e11cec1ae5bb' class='xr-var-data-in' type='checkbox'><label for='data-d5a7a20f-b5c0-49aa-8bb6-e11cec1ae5bb' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([1386.04840662, 1369.82755143, 1438.85599032, ...,  746.41185962,
-        718.3182735 ,  699.6607503 ])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-072159be-99f2-4420-801d-54896cf1005a' class='xr-section-summary-in' type='checkbox'  checked><label for='section-072159be-99f2-4420-801d-54896cf1005a' class='xr-section-summary' >Data variables: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>gene_da</span></div><div class='xr-var-dims'>(cell, gene, mc_type, count_type)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(1199, 55487, 2, 2), meta=np.ndarray&gt;</div><input id='attrs-53576600-46dd-4b31-93dd-de0d586db24a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-53576600-46dd-4b31-93dd-de0d586db24a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2f4a1c89-d224-402d-a04f-0e341511e7f4' class='xr-var-data-in' type='checkbox'><label for='data-2f4a1c89-d224-402d-a04f-0e341511e7f4' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
-<tr>
-<td>
-<table>
-  <thead>
-    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
-  </thead>
-  <tbody>
-    <tr><th> Bytes </th><td> 2.20 GB </td> <td> 583.28 MB </td></tr>
-    <tr><th> Shape </th><td> (4958, 55487, 2, 2) </td> <td> (1314, 55487, 2, 2) </td></tr>
-    <tr><th> Count </th><td> 22 Tasks </td><td> 4 Chunks </td></tr>
+    <tr><th> Bytes </th><td> 3.27 GB </td> <td> 259.30 MB </td></tr>
+    <tr><th> Shape </th><td> (16985, 24045, 2, 2) </td> <td> (1348, 24045, 2, 2) </td></tr>
+    <tr><th> Count </th><td> 135 Tasks </td><td> 16 Chunks </td></tr>
     <tr><th> Type </th><td> uint16 </td><td> numpy.ndarray </td></tr>
   </tbody>
 </table>
 </td>
 <td>
-<svg width="360" height="146" style="stroke:rgb(0,0,0);stroke-width:1" >
+<svg width="454" height="146" style="stroke:rgb(0,0,0);stroke-width:1" >
 
   <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="37" y2="0" style="stroke-width:2" />
-  <line x1="0" y1="25" x2="37" y2="25" style="stroke-width:2" />
+  <line x1="0" y1="0" x2="84" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="84" y2="25" style="stroke-width:2" />
 
   <!-- Vertical lines -->
   <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
-  <line x1="9" y1="0" x2="9" y2="25" />
-  <line x1="18" y1="0" x2="18" y2="25" />
-  <line x1="27" y1="0" x2="27" y2="25" />
-  <line x1="37" y1="0" x2="37" y2="25" style="stroke-width:2" />
-
-  <!-- Colored Rectangle -->
-  <polygon points="0.0,0.0 37.964080386182005,0.0 37.964080386182005,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
-
-  <!-- Text -->
-  <text x="18.982040" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >4958</text>
-  <text x="57.964080" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,57.964080,12.706308)">1</text>
-
-
-  <!-- Horizontal lines -->
-  <line x1="107" y1="0" x2="177" y2="70" style="stroke-width:2" />
-  <line x1="107" y1="25" x2="177" y2="96" style="stroke-width:2" />
-
-  <!-- Vertical lines -->
-  <line x1="107" y1="0" x2="107" y2="25" style="stroke-width:2" />
-  <line x1="177" y1="70" x2="177" y2="96" style="stroke-width:2" />
-
-  <!-- Colored Rectangle -->
-  <polygon points="107.0,0.0 177.58823529411765,70.58823529411765 177.58823529411765,96.00085180870013 107.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
-
-  <!-- Horizontal lines -->
-  <line x1="107" y1="0" x2="132" y2="0" style="stroke-width:2" />
-  <line x1="177" y1="70" x2="203" y2="70" style="stroke-width:2" />
-
-  <!-- Vertical lines -->
-  <line x1="107" y1="0" x2="177" y2="70" style="stroke-width:2" />
-  <line x1="132" y1="0" x2="203" y2="70" style="stroke-width:2" />
-
-  <!-- Colored Rectangle -->
-  <polygon points="107.0,0.0 132.41261651458248,0.0 203.00085180870013,70.58823529411765 177.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
-
-  <!-- Horizontal lines -->
-  <line x1="177" y1="70" x2="203" y2="70" style="stroke-width:2" />
-  <line x1="177" y1="96" x2="203" y2="96" style="stroke-width:2" />
-
-  <!-- Vertical lines -->
-  <line x1="177" y1="70" x2="177" y2="96" style="stroke-width:2" />
-  <line x1="203" y1="70" x2="203" y2="96" style="stroke-width:2" />
-
-  <!-- Colored Rectangle -->
-  <polygon points="177.58823529411765,70.58823529411765 203.00085180870013,70.58823529411765 203.00085180870013,96.00085180870013 177.58823529411765,96.00085180870013" style="fill:#ECB172A0;stroke-width:0"/>
-
-  <!-- Text -->
-  <text x="190.294544" y="116.000852" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
-  <text x="223.000852" y="83.294544" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,223.000852,83.294544)">2</text>
-  <text x="132.294118" y="80.706734" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,132.294118,80.706734)">55487</text>
-</svg>
-</td>
-</tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_da</span></div><div class='xr-var-dims'>(cell, chrom100k, mc_type, count_type)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(1199, 24042, 2, 2), meta=np.ndarray&gt;</div><input id='attrs-a65d0746-a2a3-4bc2-9e50-ff2b376cb2e9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a65d0746-a2a3-4bc2-9e50-ff2b376cb2e9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-396493ae-09d8-4f53-a178-94cfa53983e8' class='xr-var-data-in' type='checkbox'><label for='data-396493ae-09d8-4f53-a178-94cfa53983e8' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
-<tr>
-<td>
-<table>
-  <thead>
-    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
-  </thead>
-  <tbody>
-    <tr><th> Bytes </th><td> 953.60 MB </td> <td> 252.73 MB </td></tr>
-    <tr><th> Shape </th><td> (4958, 24042, 2, 2) </td> <td> (1314, 24042, 2, 2) </td></tr>
-    <tr><th> Count </th><td> 34 Tasks </td><td> 4 Chunks </td></tr>
-    <tr><th> Type </th><td> uint16 </td><td> numpy.ndarray </td></tr>
-  </tbody>
-</table>
-</td>
-<td>
-<svg width="370" height="146" style="stroke:rgb(0,0,0);stroke-width:1" >
-
-  <!-- Horizontal lines -->
-  <line x1="0" y1="0" x2="42" y2="0" style="stroke-width:2" />
-  <line x1="0" y1="25" x2="42" y2="25" style="stroke-width:2" />
-
-  <!-- Vertical lines -->
-  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="2" y1="0" x2="2" y2="25" />
+  <line x1="8" y1="0" x2="8" y2="25" />
   <line x1="10" y1="0" x2="10" y2="25" />
-  <line x1="20" y1="0" x2="20" y2="25" />
-  <line x1="30" y1="0" x2="30" y2="25" />
-  <line x1="42" y1="0" x2="42" y2="25" style="stroke-width:2" />
+  <line x1="11" y1="0" x2="11" y2="25" />
+  <line x1="17" y1="0" x2="17" y2="25" />
+  <line x1="23" y1="0" x2="23" y2="25" />
+  <line x1="29" y1="0" x2="29" y2="25" />
+  <line x1="35" y1="0" x2="35" y2="25" />
+  <line x1="42" y1="0" x2="42" y2="25" />
+  <line x1="48" y1="0" x2="48" y2="25" />
+  <line x1="55" y1="0" x2="55" y2="25" />
+  <line x1="59" y1="0" x2="59" y2="25" />
+  <line x1="65" y1="0" x2="65" y2="25" />
+  <line x1="72" y1="0" x2="72" y2="25" />
+  <line x1="78" y1="0" x2="78" y2="25" />
+  <line x1="84" y1="0" x2="84" y2="25" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="0.0,0.0 42.13835485432128,0.0 42.13835485432128,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="0.0,0.0 84.76606363069246,0.0 84.76606363069246,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Text -->
-  <text x="21.069177" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >4958</text>
-  <text x="62.138355" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,62.138355,12.706308)">1</text>
+  <text x="42.383032" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >16985</text>
+  <text x="104.766064" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,104.766064,12.706308)">1</text>
 
 
   <!-- Horizontal lines -->
-  <line x1="112" y1="0" x2="182" y2="70" style="stroke-width:2" />
-  <line x1="112" y1="25" x2="182" y2="96" style="stroke-width:2" />
+  <line x1="154" y1="0" x2="224" y2="70" style="stroke-width:2" />
+  <line x1="154" y1="25" x2="224" y2="96" style="stroke-width:2" />
 
   <!-- Vertical lines -->
-  <line x1="112" y1="0" x2="112" y2="25" style="stroke-width:2" />
-  <line x1="182" y1="70" x2="182" y2="96" style="stroke-width:2" />
+  <line x1="154" y1="0" x2="154" y2="25" style="stroke-width:2" />
+  <line x1="224" y1="70" x2="224" y2="96" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="112.0,0.0 182.58823529411765,70.58823529411765 182.58823529411765,96.00085180870013 112.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="154.0,0.0 224.58823529411765,70.58823529411765 224.58823529411765,96.00085180870013 154.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Horizontal lines -->
-  <line x1="112" y1="0" x2="137" y2="0" style="stroke-width:2" />
-  <line x1="182" y1="70" x2="208" y2="70" style="stroke-width:2" />
+  <line x1="154" y1="0" x2="179" y2="0" style="stroke-width:2" />
+  <line x1="224" y1="70" x2="250" y2="70" style="stroke-width:2" />
 
   <!-- Vertical lines -->
-  <line x1="112" y1="0" x2="182" y2="70" style="stroke-width:2" />
-  <line x1="137" y1="0" x2="208" y2="70" style="stroke-width:2" />
+  <line x1="154" y1="0" x2="224" y2="70" style="stroke-width:2" />
+  <line x1="179" y1="0" x2="250" y2="70" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="112.0,0.0 137.41261651458248,0.0 208.00085180870013,70.58823529411765 182.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="154.0,0.0 179.41261651458248,0.0 250.00085180870013,70.58823529411765 224.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Horizontal lines -->
-  <line x1="182" y1="70" x2="208" y2="70" style="stroke-width:2" />
-  <line x1="182" y1="96" x2="208" y2="96" style="stroke-width:2" />
+  <line x1="224" y1="70" x2="250" y2="70" style="stroke-width:2" />
+  <line x1="224" y1="96" x2="250" y2="96" style="stroke-width:2" />
 
   <!-- Vertical lines -->
-  <line x1="182" y1="70" x2="182" y2="96" style="stroke-width:2" />
-  <line x1="208" y1="70" x2="208" y2="96" style="stroke-width:2" />
+  <line x1="224" y1="70" x2="224" y2="96" style="stroke-width:2" />
+  <line x1="250" y1="70" x2="250" y2="96" style="stroke-width:2" />
 
   <!-- Colored Rectangle -->
-  <polygon points="182.58823529411765,70.58823529411765 208.00085180870013,70.58823529411765 208.00085180870013,96.00085180870013 182.58823529411765,96.00085180870013" style="fill:#ECB172A0;stroke-width:0"/>
+  <polygon points="224.58823529411765,70.58823529411765 250.00085180870013,70.58823529411765 250.00085180870013,96.00085180870013 224.58823529411765,96.00085180870013" style="fill:#ECB172A0;stroke-width:0"/>
 
   <!-- Text -->
-  <text x="195.294544" y="116.000852" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
-  <text x="228.000852" y="83.294544" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,228.000852,83.294544)">2</text>
-  <text x="137.294118" y="80.706734" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,137.294118,80.706734)">24042</text>
+  <text x="237.294544" y="116.000852" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
+  <text x="270.000852" y="83.294544" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,270.000852,83.294544)">2</text>
+  <text x="179.294118" y="80.706734" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,179.294118,80.706734)">24045</text>
 </svg>
 </td>
 </tr>
-</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-1a302669-0a85-4bdc-b0a8-e70601bb8520' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-1a302669-0a85-4bdc-b0a8-e70601bb8520' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div></div>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_da</span></div><div class='xr-var-dims'>(cell, geneslop2k, mc_type, count_type)</div><div class='xr-var-dtype'>uint32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(473, 55487, 2, 2), meta=np.ndarray&gt;</div><input id='attrs-e862a46a-046c-4e5d-b287-cf98d6d509c2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e862a46a-046c-4e5d-b287-cf98d6d509c2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d0553a26-e40d-458e-91f6-f23889f63bea' class='xr-var-data-in' type='checkbox'><label for='data-d0553a26-e40d-458e-91f6-f23889f63bea' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 15.08 GB </td> <td> 1.20 GB </td></tr>
+    <tr><th> Shape </th><td> (16985, 55487, 2, 2) </td> <td> (1348, 55487, 2, 2) </td></tr>
+    <tr><th> Count </th><td> 87 Tasks </td><td> 16 Chunks </td></tr>
+    <tr><th> Type </th><td> uint32 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="372" height="146" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="43" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="43" y2="25" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="1" y1="0" x2="1" y2="25" />
+  <line x1="4" y1="0" x2="4" y2="25" />
+  <line x1="5" y1="0" x2="5" y2="25" />
+  <line x1="5" y1="0" x2="5" y2="25" />
+  <line x1="8" y1="0" x2="8" y2="25" />
+  <line x1="12" y1="0" x2="12" y2="25" />
+  <line x1="15" y1="0" x2="15" y2="25" />
+  <line x1="18" y1="0" x2="18" y2="25" />
+  <line x1="21" y1="0" x2="21" y2="25" />
+  <line x1="24" y1="0" x2="24" y2="25" />
+  <line x1="28" y1="0" x2="28" y2="25" />
+  <line x1="30" y1="0" x2="30" y2="25" />
+  <line x1="33" y1="0" x2="33" y2="25" />
+  <line x1="37" y1="0" x2="37" y2="25" />
+  <line x1="40" y1="0" x2="40" y2="25" />
+  <line x1="43" y1="0" x2="43" y2="25" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 43.61185640009032,0.0 43.61185640009032,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="21.805928" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >16985</text>
+  <text x="63.611856" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,63.611856,12.706308)">1</text>
+
+
+  <!-- Horizontal lines -->
+  <line x1="113" y1="0" x2="183" y2="70" style="stroke-width:2" />
+  <line x1="113" y1="25" x2="183" y2="96" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="113" y1="0" x2="113" y2="25" style="stroke-width:2" />
+  <line x1="183" y1="70" x2="183" y2="96" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="113.0,0.0 183.58823529411765,70.58823529411765 183.58823529411765,96.00085180870013 113.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="113" y1="0" x2="138" y2="0" style="stroke-width:2" />
+  <line x1="183" y1="70" x2="209" y2="70" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="113" y1="0" x2="183" y2="70" style="stroke-width:2" />
+  <line x1="138" y1="0" x2="209" y2="70" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="113.0,0.0 138.41261651458248,0.0 209.00085180870013,70.58823529411765 183.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="183" y1="70" x2="209" y2="70" style="stroke-width:2" />
+  <line x1="183" y1="96" x2="209" y2="96" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="183" y1="70" x2="183" y2="96" style="stroke-width:2" />
+  <line x1="209" y1="70" x2="209" y2="96" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="183.58823529411765,70.58823529411765 209.00085180870013,70.58823529411765 209.00085180870013,96.00085180870013 183.58823529411765,96.00085180870013" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="196.294544" y="116.000852" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
+  <text x="229.000852" y="83.294544" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,229.000852,83.294544)">2</text>
+  <text x="138.294118" y="80.706734" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,138.294118,80.706734)">55487</text>
+</svg>
+</td>
+</tr>
+</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-dbcd3a0d-aa9b-44d6-90aa-49768f0e34fa' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-dbcd3a0d-aa9b-44d6-90aa-49768f0e34fa' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div></div>
 </div>
 </div>
 </div>

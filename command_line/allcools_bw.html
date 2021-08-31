@@ -587,39 +587,34 @@
 <div class="cell_output docutils container">
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ allcools allc-to-bigwig -h
 usage: allcools allc-to-bigwig <span class="o">[</span>-h<span class="o">]</span> --allc_path ALLC_PATH --output_prefix
-                               OUTPUT_PREFIX --chrom_size_path CHROM_SIZE_PATH
+                               OUTPUT_PREFIX <span class="o">[</span>--bin_size BIN_SIZE<span class="o">]</span>
                                --mc_contexts MC_CONTEXTS <span class="o">[</span>MC_CONTEXTS ...<span class="o">]</span>
-                               <span class="o">[</span>--split_strand<span class="o">]</span> <span class="o">[</span>--bin_size BIN_SIZE<span class="o">]</span>
-                               <span class="o">[</span>--remove_additional_chrom<span class="o">]</span> <span class="o">[</span>--region REGION<span class="o">]</span>
-                               <span class="o">[</span>--cov_cutoff COV_CUTOFF<span class="o">]</span>
-                               <span class="o">[</span>--path_to_wigtobigwig PATH_TO_WIGTOBIGWIG<span class="o">]</span>
-                               <span class="o">[</span>--cpu CPU<span class="o">]</span>
+                               --chrom_size_path CHROM_SIZE_PATH
+                               <span class="o">[</span>--strandness <span class="o">{</span>split,both<span class="o">}]</span>
 
 optional arguments:
   -h, --help            show this <span class="nb">help</span> message and <span class="nb">exit</span>
-  --split_strand        If true, Watson <span class="o">(</span>+<span class="o">)</span> and Crick <span class="o">(</span>-<span class="o">)</span> strands will be
-                        count separately <span class="o">(</span>default: False<span class="o">)</span>
-  --bin_size BIN_SIZE   Minimum bin size of bigwig file <span class="o">(</span>default: <span class="m">50</span><span class="o">)</span>
-  --remove_additional_chrom
-                        Whether to remove rows with unknown chromosome instead
-                        of raising KeyError <span class="o">(</span>default: False<span class="o">)</span>
-  --region REGION       Only extract records from certain genome region<span class="o">(</span>s<span class="o">)</span> via
-                        tabix, multiple region can be provided <span class="k">in</span> tabix form.
-                        If region is not None, will not run <span class="k">in</span> parallel
-                        <span class="o">(</span>default: None<span class="o">)</span>
-  --cov_cutoff COV_CUTOFF
-                        Max cov filter <span class="k">for</span> a single site <span class="k">in</span> ALLC. Sites with
-                        cov &gt; cov_cutoff will be skipped. <span class="o">(</span>default: <span class="m">9999</span><span class="o">)</span>
-  --path_to_wigtobigwig PATH_TO_WIGTOBIGWIG
-                        Path to wigtobigwig to allow allcools to find it
-                        <span class="o">(</span>default: <span class="o">)</span>
-  --cpu CPU             Number of processes to use <span class="k">in</span> parallel. <span class="o">(</span>default: <span class="m">1</span><span class="o">)</span>
+  --bin_size BIN_SIZE   Bin size of the BigWig files. <span class="o">(</span>default: <span class="m">50</span><span class="o">)</span>
+  --strandness <span class="o">{</span>split,both<span class="o">}</span>
+                        What to <span class="k">do</span> with strand information, possible values
+                        are: <span class="m">1</span>. both: save +/- strand together <span class="k">in</span> one file<span class="p">;</span> <span class="m">2</span>.
+                        split: save +/- strand into two separate files, with
+                        suffix contain Watson <span class="o">(</span>+<span class="o">)</span> and Crick <span class="o">(</span>-<span class="o">)</span><span class="p">;</span> <span class="m">3</span>. merge:
+                        This will only merge the count on adjacent CpG <span class="k">in</span> +/-
+                        strands, only work <span class="k">for</span> CpG like context. For non-CG
+                        context, its the same as both. <span class="o">(</span>default: both<span class="o">)</span>
 
 required arguments:
   --allc_path ALLC_PATH
                         Path to <span class="m">1</span> ALLC file <span class="o">(</span>default: None<span class="o">)</span>
   --output_prefix OUTPUT_PREFIX
-                        Output prefix of the bigwig file<span class="o">(</span>s<span class="o">)</span>. <span class="o">(</span>default: None<span class="o">)</span>
+                        Path prefix of the output BigWig file. <span class="o">(</span>default: None<span class="o">)</span>
+  --mc_contexts MC_CONTEXTS <span class="o">[</span>MC_CONTEXTS ...<span class="o">]</span>
+                        Space separated mC context patterns to extract from
+                        ALLC. The context length should be the same as ALLC
+                        file context. Context pattern follows IUPAC nucleotide
+                        code, e.g. N <span class="k">for</span> ATCG, H <span class="k">for</span> ATC, Y <span class="k">for</span> CT. <span class="o">(</span>default:
+                        None<span class="o">)</span>
   --chrom_size_path CHROM_SIZE_PATH
                         Path to UCSC chrom size file. This can be generated
                         from the genome fasta or downloaded via UCSC
@@ -629,12 +624,6 @@ required arguments:
                         a chrom size file consistent to the reference fasta
                         file ever since mapping. ALLCools functions will not
                         change or infer chromosome names. <span class="o">(</span>default: None<span class="o">)</span>
-  --mc_contexts MC_CONTEXTS <span class="o">[</span>MC_CONTEXTS ...<span class="o">]</span>
-                        Space separated mC context patterns to extract from
-                        ALLC. The context length should be the same as ALLC
-                        file context. Context pattern follows IUPAC nucleotide
-                        code, e.g. N <span class="k">for</span> ATCG, H <span class="k">for</span> ATC, Y <span class="k">for</span> CT. <span class="o">(</span>default:
-                        None<span class="o">)</span>
 </pre></div>
 </div>
 </div>

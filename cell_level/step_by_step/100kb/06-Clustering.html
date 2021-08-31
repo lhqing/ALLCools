@@ -723,17 +723,23 @@
 <span class="n">coord_base</span> <span class="o">=</span> <span class="s1">&#39;tsne&#39;</span>
 
 <span class="c1"># ConsensusClustering</span>
+<span class="c1"># Important factores</span>
 <span class="n">n_neighbors</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">leiden_resolution</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># this parameter is the final target that limit the total number of clusters</span>
+<span class="c1"># Higher accuracy means more conservative clustering results and less number of clusters</span>
+<span class="n">target_accuracy</span> <span class="o">=</span> <span class="mf">0.96</span>
+<span class="n">min_cluster_size</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="c1"># Other ConsensusClustering parameters</span>
 <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span>
-<span class="n">min_cluster_size</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">consensus_rate</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">consensus_rate</span> <span class="o">=</span> <span class="mf">0.7</span>
 <span class="n">leiden_repeats</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">leiden_resolution</span> <span class="o">=</span> <span class="mf">0.8</span>
 <span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">40</span>
 <span class="n">train_frac</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="n">train_max_n</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">40</span>
 
 <span class="c1"># Dendrogram via Multiscale Bootstrap Resampling</span>
 <span class="n">nboot</span> <span class="o">=</span> <span class="mi">10000</span>
@@ -772,7 +778,8 @@
                          <span class="n">train_frac</span><span class="o">=</span><span class="n">train_frac</span><span class="p">,</span>
                          <span class="n">train_max_n</span><span class="o">=</span><span class="n">train_max_n</span><span class="p">,</span>
                          <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
-                         <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+                         <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+                         <span class="n">target_accuracy</span><span class="o">=</span><span class="n">target_accuracy</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -791,86 +798,76 @@
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computing nearest neighbor graph
 Computing multiple clustering with different random seeds
 Repeating leiden clustering 500 times
-Found 26 - 27 clusters, mean 27.0, std 0.04
+Found 26 - 31 clusters, mean 28.7, std 0.76
 Summarizing multiple clustering results
-4841 cells assigned to 43 raw clusters
-117 cells are multi-leiden outliers
+16912 cells assigned to 42 raw clusters
+73 cells are multi-leiden outliers
 
 === Start supervise model training and cluster merging ===
 
 === iteration 1 ===
-43 non-outlier labels
-Balanced accuracy on the training set: 0.960
-Balanced accuracy on the hold-out set: 0.883
-Distance between 19 - 18: 0.002 &lt; 0.500
-Merging 1 clusters.
+42 non-outlier labels
+Balanced accuracy on the training set: 0.933
+Balanced accuracy on the hold-out set: 0.852
+Merging 4 clusters.
 
 === iteration 2 ===
-42 non-outlier labels
-Balanced accuracy on the training set: 0.959
-Balanced accuracy on the hold-out set: 0.909
-Distance between 3 - 41: 0.008 &lt; 0.500
-Distance between 30 - 10: 0.010 &lt; 0.500
-Merging 2 clusters.
+38 non-outlier labels
+Balanced accuracy on the training set: 0.941
+Balanced accuracy on the hold-out set: 0.896
+Merging 4 clusters.
 
 === iteration 3 ===
-40 non-outlier labels
-Balanced accuracy on the training set: 0.971
-Balanced accuracy on the hold-out set: 0.929
-Distance between 33 - 0: 0.008 &lt; 0.500
-Distance between 7 - 27: 0.044 &lt; 0.500
-Distance between 36 - 10: 0.135 &lt; 0.500
-Merging 3 clusters.
+34 non-outlier labels
+Balanced accuracy on the training set: 0.959
+Balanced accuracy on the hold-out set: 0.937
+Merging 1 clusters.
 
 === iteration 4 ===
-37 non-outlier labels
-Balanced accuracy on the training set: 0.969
-Balanced accuracy on the hold-out set: 0.934
-Distance between 4 - 35: 0.351 &lt; 0.500
-Distance between 10 - 25: 0.011 &lt; 0.500
+33 non-outlier labels
+Balanced accuracy on the training set: 0.965
+Balanced accuracy on the hold-out set: 0.944
 Merging 2 clusters.
 
 === iteration 5 ===
-35 non-outlier labels
-Balanced accuracy on the training set: 0.973
-Balanced accuracy on the hold-out set: 0.956
-Distance between 31 - 4: 0.340 &lt; 0.500
-Merging 1 clusters.
-
-=== iteration 6 ===
-34 non-outlier labels
-Balanced accuracy on the training set: 0.976
-Balanced accuracy on the hold-out set: 0.952
-Distance between 3 - 32: 0.331 &lt; 0.500
-Distance between 4 - 33: 0.325 &lt; 0.500
+31 non-outlier labels
+Balanced accuracy on the training set: 0.962
+Balanced accuracy on the hold-out set: 0.946
 Merging 2 clusters.
 
+=== iteration 6 ===
+29 non-outlier labels
+Balanced accuracy on the training set: 0.970
+Balanced accuracy on the hold-out set: 0.953
+Merging 1 clusters.
+
 === iteration 7 ===
-32 non-outlier labels
-Balanced accuracy on the training set: 0.980
-Balanced accuracy on the hold-out set: 0.967
-Distance between 2 - 8: 0.029 &lt; 0.500
-Distance between 7 - 30: 0.006 &lt; 0.500
+28 non-outlier labels
+Balanced accuracy on the training set: 0.973
+Balanced accuracy on the hold-out set: 0.959
 Merging 2 clusters.
 
 === iteration 8 ===
-30 non-outlier labels
-Balanced accuracy on the training set: 0.982
-Balanced accuracy on the hold-out set: 0.968
-Distance between 24 - 0: 0.016 &lt; 0.500
-Merging 1 clusters.
-
-=== iteration 9 ===
-29 non-outlier labels
-Balanced accuracy on the training set: 0.984
-Balanced accuracy on the hold-out set: 0.977
-Stop iteration because there is no cluster to merge
+26 non-outlier labels
+Balanced accuracy on the training set: 0.974
+Balanced accuracy on the hold-out set: 0.961
+Stop iteration because current accuracy 0.961 &gt; target accuracy 0.960.
 
 === Assign final labels ===
 Assigned all the multi-leiden clustering outliers into clusters using the prediction model from final clustering version.
-Final ten-fold CV Accuracy on all the cells: 0.974
+Final ten-fold CV Accuracy on all the cells: 0.963
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cc</span><span class="o">.</span><span class="n">plot_merge_process</span><span class="p">(</span><span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/06-Clustering_10_0.png" src="../../../_images/06-Clustering_10_0.png" />
 </div>
 </div>
 </div>
@@ -886,7 +883,7 @@ Final ten-fold CV Accuracy on all the cells: 0.974
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_11_0.png" src="../../../_images/06-Clustering_11_0.png" />
+<img alt="../../../_images/06-Clustering_12_0.png" src="../../../_images/06-Clustering_12_0.png" />
 </div>
 </div>
 </div>
@@ -899,16 +896,15 @@ Final ten-fold CV Accuracy on all the cells: 0.974
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_13_0.png" src="../../../_images/06-Clustering_13_0.png" />
-<img alt="../../../_images/06-Clustering_13_1.png" src="../../../_images/06-Clustering_13_1.png" />
-<img alt="../../../_images/06-Clustering_13_2.png" src="../../../_images/06-Clustering_13_2.png" />
-<img alt="../../../_images/06-Clustering_13_3.png" src="../../../_images/06-Clustering_13_3.png" />
-<img alt="../../../_images/06-Clustering_13_4.png" src="../../../_images/06-Clustering_13_4.png" />
-<img alt="../../../_images/06-Clustering_13_5.png" src="../../../_images/06-Clustering_13_5.png" />
-<img alt="../../../_images/06-Clustering_13_6.png" src="../../../_images/06-Clustering_13_6.png" />
-<img alt="../../../_images/06-Clustering_13_7.png" src="../../../_images/06-Clustering_13_7.png" />
-<img alt="../../../_images/06-Clustering_13_8.png" src="../../../_images/06-Clustering_13_8.png" />
-<img alt="../../../_images/06-Clustering_13_9.png" src="../../../_images/06-Clustering_13_9.png" />
+<img alt="../../../_images/06-Clustering_14_0.png" src="../../../_images/06-Clustering_14_0.png" />
+<img alt="../../../_images/06-Clustering_14_1.png" src="../../../_images/06-Clustering_14_1.png" />
+<img alt="../../../_images/06-Clustering_14_2.png" src="../../../_images/06-Clustering_14_2.png" />
+<img alt="../../../_images/06-Clustering_14_3.png" src="../../../_images/06-Clustering_14_3.png" />
+<img alt="../../../_images/06-Clustering_14_4.png" src="../../../_images/06-Clustering_14_4.png" />
+<img alt="../../../_images/06-Clustering_14_5.png" src="../../../_images/06-Clustering_14_5.png" />
+<img alt="../../../_images/06-Clustering_14_6.png" src="../../../_images/06-Clustering_14_6.png" />
+<img alt="../../../_images/06-Clustering_14_7.png" src="../../../_images/06-Clustering_14_7.png" />
+<img alt="../../../_images/06-Clustering_14_8.png" src="../../../_images/06-Clustering_14_8.png" />
 </div>
 </div>
 </div>
@@ -933,7 +929,7 @@ Final ten-fold CV Accuracy on all the cells: 0.974
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_15_0.png" src="../../../_images/06-Clustering_15_0.png" />
+<img alt="../../../_images/06-Clustering_16_0.png" src="../../../_images/06-Clustering_16_0.png" />
 </div>
 </div>
 </div>
@@ -948,12 +944,13 @@ Final ten-fold CV Accuracy on all the cells: 0.974
                        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
                        <span class="n">hue_norm</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
                        <span class="n">hue</span><span class="o">=</span><span class="n">clustering_name</span> <span class="o">+</span> <span class="s1">&#39;_proba&#39;</span><span class="p">,</span>
+                        <span class="n">text_anno</span><span class="o">=</span><span class="n">clustering_name</span><span class="p">,</span>
                        <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_17_0.png" src="../../../_images/06-Clustering_17_0.png" />
+<img alt="../../../_images/06-Clustering_18_0.png" src="../../../_images/06-Clustering_18_0.png" />
 </div>
 </div>
 </div>
@@ -978,7 +975,7 @@ Final ten-fold CV Accuracy on all the cells: 0.974
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_19_0.png" src="../../../_images/06-Clustering_19_0.png" />
+<img alt="../../../_images/06-Clustering_20_0.png" src="../../../_images/06-Clustering_20_0.png" />
 </div>
 </div>
 </div>
@@ -1020,7 +1017,7 @@ Multiscale bootstrap... Done.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_22_0.png" src="../../../_images/06-Clustering_22_0.png" />
+<img alt="../../../_images/06-Clustering_23_0.png" src="../../../_images/06-Clustering_23_0.png" />
 </div>
 </div>
 </div>
@@ -1028,7 +1025,11 @@ Multiscale bootstrap... Done.
 <h2>Sanity Test<a class="headerlink" href="#sanity-test" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s1">&#39;CellTypeAnno&#39;</span> <span class="ow">in</span> <span class="n">cell_meta</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">anno</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;../../../data/Brain/snmC-seq2/HIP.Annotated.CellMetadata.csv.gz&#39;</span><span class="p">,</span>
+    <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">anno</span><span class="p">[</span><span class="s1">&#39;MajorType&#39;</span><span class="p">]</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span>
@@ -1039,7 +1040,6 @@ Multiscale bootstrap... Done.
                             <span class="n">text_anno</span><span class="o">=</span><span class="n">clustering_name</span><span class="p">,</span>
                             <span class="n">show_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell_meta</span><span class="p">[</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">]</span>
     <span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">]),</span>
                             <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
                             <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">,</span>
@@ -1047,11 +1047,13 @@ Multiscale bootstrap... Done.
                             <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">,</span>
                             <span class="n">text_anno</span><span class="o">=</span><span class="s1">&#39;CellTypeAnno&#39;</span><span class="p">,</span>
                             <span class="n">show_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">BaseException</span><span class="p">:</span>
+    <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_24_0.png" src="../../../_images/06-Clustering_24_0.png" />
+<img alt="../../../_images/06-Clustering_25_0.png" src="../../../_images/06-Clustering_25_0.png" />
 </div>
 </div>
 </div>
@@ -1079,9 +1081,9 @@ Multiscale bootstrap... Done.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AnnData object with n_obs × n_vars = 4958 × 2869
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AnnData object with n_obs × n_vars = 16985 × 3102
     obs: &#39;leiden&#39;, &#39;mCHFrac&#39;, &#39;tsne_0&#39;, &#39;tsne_1&#39;, &#39;umap_0&#39;, &#39;umap_1&#39;, &#39;L1&#39;, &#39;L1_proba&#39;, &#39;CellTypeAnno&#39;
-    var: &#39;chrom&#39;, &#39;bin_start&#39;, &#39;bin_end&#39;, &#39;CHN_mean&#39;, &#39;CHN_dispersion&#39;, &#39;CHN_cov&#39;, &#39;CHN_score&#39;, &#39;CHN_feature_select&#39;, &#39;CGN_mean&#39;, &#39;CGN_dispersion&#39;, &#39;CGN_cov&#39;, &#39;CGN_score&#39;, &#39;CGN_feature_select&#39;, &#39;leiden_enriched_features&#39;, &#39;mean&#39;, &#39;std&#39;
+    var: &#39;chrom&#39;, &#39;bin_start&#39;, &#39;bin_end&#39;, &#39;CHN_mean&#39;, &#39;CHN_dispersion&#39;, &#39;CHN_cov&#39;, &#39;CHN_score&#39;, &#39;CHN_feature_select&#39;, &#39;leiden_enriched_features&#39;, &#39;mean&#39;, &#39;std&#39;
     uns: &#39;leiden&#39;, &#39;leiden_colors&#39;, &#39;leiden_feature_enrichment&#39;, &#39;leiden_sizes&#39;, &#39;neighbors&#39;, &#39;paga&#39;, &#39;umap&#39;
     obsm: &#39;X_pca&#39;, &#39;X_tsne&#39;, &#39;X_umap&#39;
     obsp: &#39;connectivities&#39;, &#39;distances&#39;
