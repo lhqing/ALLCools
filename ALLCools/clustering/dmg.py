@@ -256,7 +256,7 @@ def single_ovr_dmg(cell_label, mcds, obs_dim, var_dim, mc_type, top_n, adj_p_cut
     return dmg_result
 
 
-def one_vs_rest_dmg(cell_meta, group, mcds_paths,
+def one_vs_rest_dmg(cell_meta, group, mcds_or_paths,
                     obs_dim='cell', var_dim='gene', mc_type='CHN',
                     top_n=1000, adj_p_cutoff=0.01, fc_cutoff=0.8, auroc_cutoff=0.8,
                     max_cluster_cells=2000, max_other_fold=5, cpu=1):
@@ -281,6 +281,19 @@ def one_vs_rest_dmg(cell_meta, group, mcds_paths,
     -------
 
     """
+    
+    if isinstance(mcds_or_paths, MCDS):
+        import tempfile
+        import os
+        tmpf, tmpfn = tempfile.mkstemp(suffix='.tmp')
+        mcds.to_netcdf(tmpfn)
+        mcds_paths = tmpfn
+        tmp_created = True
+    else:
+        mcds_paths = mcds_or_paths
+        tmp_created = False
+        
+    
     clusters = cell_meta[group].unique()
     dmg_table = []
     with ProcessPoolExecutor(cpu) as exe:
@@ -309,6 +322,10 @@ def one_vs_rest_dmg(cell_meta, group, mcds_paths,
             dmg_df['cluster'] = cluster
             dmg_table.append(dmg_df)
     dmg_table = pd.concat(dmg_table)
+    
+    if tmp_created:
+        os.unlink(tmpfn)
+
     return dmg_table
 
 
