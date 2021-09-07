@@ -167,7 +167,11 @@ def generate_mcad(allc_table, bed_path, output_prefix, mc_context, cpu=1, cleanu
                             obs=pd.DataFrame([], index=allc_paths.index),
                             var=region_bed)
     adata.X = adata.X.astype('float16')
-    adata.write_h5ad(pathlib.Path(f'{output_prefix}.mcad'))
+    if str(output_prefix)[-5:] in {'.mcad', '.h5ad'}:
+        output_h5ad_path = output_prefix
+    else:
+        output_h5ad_path = f'{output_prefix}.mcad'
+    adata.write_h5ad(pathlib.Path(output_h5ad_path))
 
     # remove temp
     if cleanup:
