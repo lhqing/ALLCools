@@ -115,6 +115,8 @@ def categorical_scatter(
             _data['hue'] = data[hue]
         else:
             _data['hue'] = hue
+        _data['hue'] = _data['hue'].cat.remove_unused_categories()
+
         hue = 'hue'
         _data['hue'] = _data['hue'].astype('category')
         # deal with color palette
