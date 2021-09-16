@@ -483,7 +483,6 @@ class ConsensusClustering:
             else:
                 print('Stop iteration because there is no cluster to merge')
                 break
-
         else:
             print('Stop iteration because reaching maximum iteration.')
         self._label_with_leiden_outliers = cur_y
