@@ -115,11 +115,7 @@ def categorical_scatter(
             _data['hue'] = data[hue]
         else:
             _data['hue'] = hue
-        try:
-            _data['hue'] = _data['hue'].cat.remove_unused_categories()
-        except AttributeError:
-            # not category type
-            pass
+        _data['hue'] = _data['hue'].astype('category').cat.remove_unused_categories()
 
         hue = 'hue'
         _data['hue'] = _data['hue'].astype('category')
