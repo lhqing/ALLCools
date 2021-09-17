@@ -139,7 +139,7 @@ def categorical_scatter(
                     **_scatter_kws)
 
     # deal with text annotation
-    if text_anno:
+    if text_anno is not None:
         if isinstance(text_anno, str):
             _data['text_anno'] = data[text_anno]
         else:
