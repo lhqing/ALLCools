@@ -18,6 +18,8 @@ from ..plot import categorical_scatter
 
 def _r1_normalize(cmat):
     """
+    Adapted from https://github.com/SCCAF/sccaf/blob/develop/SCCAF/__init__.py
+
     Normalize the confusion matrix based on the total number of cells in each class
     x(i,j) = max(cmat(i,j)/diagnol(i),cmat(j,i)/diagnol(j))
     confusion rate between i and j is defined by the maximum ratio i is confused as j or j is confused as i.
@@ -47,6 +49,8 @@ def _r1_normalize(cmat):
 
 def _r2_normalize(cmat):
     """
+    Adapted from https://github.com/SCCAF/sccaf/blob/develop/SCCAF/__init__.py
+
     Normalize the confusion matrix based on the total number of cells.
     x(i,j) = max(cmat(i,j)+cmat(j,i)/N)
     N is total number of cells analyzed.
@@ -226,13 +230,18 @@ class ConsensusClustering:
         self.final_accuracy = None
         return
 
-    def fit_predict(self, x, leiden_kwds=None):
+    def add_data(self, x):
+        # just add X, but not doing computation
+        # use this for step-by-step computation
         self.n_obs, self.n_pcs = x.shape
         self.X = x
 
+    def fit_predict(self, x, leiden_kwds=None):
+        self.add_data(x)
+
         # Construct KNN graph
         print('Computing nearest neighbor graph')
-        self._compute_neighbors()
+        self.compute_neighbors()
 
         # repeat Leiden clustering with different random seeds
         print('Computing multiple clustering with different random seeds')
@@ -241,15 +250,15 @@ class ConsensusClustering:
             leiden_kwds = kwds
         else:
             leiden_kwds.update(kwds)
-        self._multi_leiden_clustering(**leiden_kwds)
+        self.multi_leiden_clustering(**leiden_kwds)
 
         # merge the over clustering version by supervised learning
-        self._supervise_learning()
+        self.supervise_learning()
 
         # assign outliers
-        self._final_evaluation()
+        self.final_evaluation()
 
-    def _compute_neighbors(self):
+    def compute_neighbors(self):
         # nearest neighbors graph
         adata = anndata.AnnData(
             X=None,
@@ -267,11 +276,11 @@ class ConsensusClustering:
                                           random_state=self.random_state)
         return
 
-    def _multi_leiden_clustering(self,
-                                 partition_type=None,
-                                 partition_kwargs=None,
-                                 use_weights=True,
-                                 n_iterations=-1):
+    def multi_leiden_clustering(self,
+                                partition_type=None,
+                                partition_kwargs=None,
+                                use_weights=True,
+                                n_iterations=-1):
         """Modified from scanpy"""
         if self._neighbors is None:
             raise ValueError(
@@ -406,7 +415,7 @@ class ConsensusClustering:
                                              class_weight=None)
         return clf
 
-    def _supervise_learning(self):
+    def supervise_learning(self):
         if self._multi_leiden_clusters is None:
             raise ValueError(
                 'Run multi_leiden_clustering first to get a '
@@ -491,7 +500,7 @@ class ConsensusClustering:
         self.final_accuracy = score
         return
 
-    def _final_evaluation(self):
+    def final_evaluation(self):
         print(f'\n=== Assign final labels ===')
 
         # predict outliers
