@@ -37,7 +37,7 @@ def _kmeans_iter(matrix, cells, max_group_size, k=None, parent_label=None):
         if group.size <= max_group_size:
             records.append(group)
         else:
-            # group is over sized, keep spliting
+            # group is over sized, keep splitting
             # get matrix of this group
             group_matrix = matrix[cells.isin(group.index), :]
             group_cells = group.index
@@ -65,7 +65,7 @@ def _calculate_cell_group(clusters, total_matrix, cluster_size_cutoff=100, max_g
         cells = clusters[clusters == cluster].index
         matrix = total_matrix[clusters == cluster].copy()
         record = _kmeans_iter(matrix, cells, max_group_size, k=None, parent_label=None)
-        record = record.apply(lambda i: f'{cluster}-{i}')
+        record = record.apply(lambda i: f'{cluster}::{i}')
         records.append(record)
     records = pd.concat(records)
     return records
@@ -132,5 +132,5 @@ def generate_pseudo_cells(adata,
     adata.obs['cell_group'] = cell_group
     pseudo_cell_adata = _merge_pseudo_cell(adata=adata,
                                            aggregate_func=aggregate_func)
-    pseudo_cell_adata.obs[cluster_col] = pseudo_cell_adata.obs_names.map(lambda i: '-'.join(i.split('-')[:-1]))
+    pseudo_cell_adata.obs[cluster_col] = pseudo_cell_adata.obs_names.str.split('::')[0]
     return pseudo_cell_adata

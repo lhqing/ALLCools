@@ -11,7 +11,7 @@ def log_scale(adata):
     return
 
 
-def significant_pc_test(adata, p_cutoff=0.1, update=True, obsm='X_pca'):
+def significant_pc_test(adata, p_cutoff=0.1, update=True, obsm='X_pca', downsample=50000):
     """
 
     Parameters
@@ -19,21 +19,27 @@ def significant_pc_test(adata, p_cutoff=0.1, update=True, obsm='X_pca'):
     adata
     p_cutoff
     update
+    obsm
+    downsample
 
     Returns
     -------
 
     """
     pcs = adata.obsm[obsm]
-
+    if pcs.shape[0] > downsample:
+        print(f'Downsample PC matrix to {downsample} cells to calculate significant PC components')
+        use_pcs = pd.DataFrame(pcs).sample(downsample).values
+    else:
+        use_pcs = pcs
     i = 0
-    for i in range(pcs.shape[1] - 1):
-        cur_pc = pcs[:, i]
-        next_pc = pcs[:, i + 1]
+    for i in range(use_pcs.shape[1] - 1):
+        cur_pc = use_pcs[:, i]
+        next_pc = use_pcs[:, i + 1]
         p = ks_2samp(cur_pc, next_pc).pvalue
         if p > p_cutoff:
             break
-    n_components = min(i + 1, pcs.shape[1])
+    n_components = min(i + 1, use_pcs.shape[1])
     print(f'{n_components} components passed P cutoff of {p_cutoff}.')
     if update:
         adata.obsm[obsm] = pcs[:, :n_components]
