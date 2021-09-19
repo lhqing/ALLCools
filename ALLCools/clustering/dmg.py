@@ -35,6 +35,7 @@ def single_pairwise_dmg(cluster_l, cluster_r,
     except AssertionError as e:
         print(cluster_l, cluster_r)
         raise e
+
     # reverse_adata, centered by 1 because after normalization all prior is center to 1
     adata.X = (adata.X - 1) * -1 + 1
 
@@ -148,6 +149,7 @@ class PairwiseDMG:
             output_path = adata_dir / f'{cluster}.h5ad'
             if output_path.exists():
                 continue
+            sub_series = sub_series.cat.remove_unused_categories()
             if sub_series.size > self.max_cell_per_group:
                 sub_series = sub_series.sample(self.max_cell_per_group,
                                                random_state=self.random_state)
@@ -286,7 +288,7 @@ def one_vs_rest_dmg(cell_meta, group, mcds_or_paths,
         import tempfile
         import os
         tmpf, tmpfn = tempfile.mkstemp(suffix='.tmp')
-        mcds.to_netcdf(tmpfn)
+        mcds_or_paths.to_netcdf(tmpfn)
         mcds_paths = tmpfn
         tmp_created = True
     else:
