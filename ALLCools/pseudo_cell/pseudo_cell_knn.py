@@ -96,16 +96,16 @@ def sample_pseudo_cells(cell_meta, cluster_col, coords, target_pseudo_size, min_
             else:
                 warnings.warn(f'Size of cluster "{c}" is smaller than target pseudo-cell size.')
                 small_cluster_flags.append(True)
-                pseudo_centers = [cmeta.index.tolist()[0]]
-                pseudo_groups = [cmeta.index.tolist()]
+                pseudo_centers = [0]
+                pseudo_groups = [list(range(cmeta.shape[0]))]
         else:
             small_cluster_flags.append(False)
             sampler = ContractedExamplerSampler(coords[cmeta.index], n_components)
             pseudo_centers, pseudo_groups = sampler.sample_contracted_examplers(n_pseudos, target_pseudo_size,
                                                                                 min_pseudo_size, ovlp_tol=0)
         for i, (pcenter, pgroup) in enumerate(zip(pseudo_centers, pseudo_groups)):
-            _cell_meta.loc[cmeta.loc[pcenter].name, 'pseudo_center'] = f'{c}::{i}'
-            _cell_meta.loc[cmeta.loc[pgroup].index, 'pseudo_cell'] = f'{c}::{i}'
+            _cell_meta.loc[cmeta.iloc[pcenter].name, 'pseudo_center'] = f'{c}::{i}'
+            _cell_meta.loc[cmeta.iloc[pgroup].index, 'pseudo_cell'] = f'{c}::{i}'
 
     _cell_meta = _cell_meta.set_index(index_name)
 
@@ -130,6 +130,11 @@ def generate_pseudo_cells(adata,
                           ignore_small_cluster=False,
                           n_components=None,
                           aggregate_func='downsample'):
+    if n_components is None:
+        n_components = adata.obsm[obsm].shape[1]
+    if min_pseudo_size is None:
+        min_pseudo_size = 1
+
     # determine cell group
     cell_group, stats = sample_pseudo_cells(cell_meta=adata.obs,
                                             cluster_col=cluster_col,
@@ -141,5 +146,5 @@ def generate_pseudo_cells(adata,
     adata.obs['cell_group'] = cell_group['pseudo_cell']
     pseudo_cell_adata = _merge_pseudo_cell(adata=adata,
                                            aggregate_func=aggregate_func)
-    pseudo_cell_adata.obs[cluster_col] = pseudo_cell_adata.obs_names.str.split('::')[0]
+    pseudo_cell_adata.obs[cluster_col] = pseudo_cell_adata.obs_names.str.split('::').str[0]
     return pseudo_cell_adata

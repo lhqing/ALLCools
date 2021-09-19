@@ -132,5 +132,5 @@ def generate_pseudo_cells(adata,
     adata.obs['cell_group'] = cell_group
     pseudo_cell_adata = _merge_pseudo_cell(adata=adata,
                                            aggregate_func=aggregate_func)
-    pseudo_cell_adata.obs[cluster_col] = pseudo_cell_adata.obs_names.str.split('::')[0]
+    pseudo_cell_adata.obs[cluster_col] = pseudo_cell_adata.obs_names.str.split('::').str[0]
     return pseudo_cell_adata
