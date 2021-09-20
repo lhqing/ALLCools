@@ -427,6 +427,7 @@ class ConsensusClustering:
             print(
                 'There is only one cluster except for outliers, can not train supervise model on that.'
             )
+            self.label = np.zeros(self.n_obs, dtype=int)
             return
         print(f'\n=== Start supervise model training and cluster merging ===')
 
@@ -447,6 +448,7 @@ class ConsensusClustering:
             if n_labels < 2:
                 print(
                     f'Stop iteration because only {n_labels} cluster remain.')
+                break
 
             x_train, y_train, x_test, y_test = _split_train_test_per_group(
                 x=x,
@@ -503,35 +505,45 @@ class ConsensusClustering:
     def final_evaluation(self):
         print(f'\n=== Assign final labels ===')
 
-        # predict outliers
-        outlier_x = self.X[self.label == -1]
-        outlier_idx = np.where(self.label == -1)[0]
-        if len(outlier_idx) != 0:
-            outlier_predict = pd.Series(
-                self.supervise_model.predict(outlier_x), index=outlier_idx)
-            for cell, pred_label in outlier_predict.items():
-                self.label[cell] = pred_label
-        print(
-            f'Assigned all the multi-leiden clustering outliers into clusters '
-            f'using the prediction model from final clustering version.')
+        # skip if there is only one cluster
+        n_cluster = len(set(self.label[self.label != -1]))
+        if n_cluster < 2:
+            print(f'Skip final evaluation because only {n_cluster} cluster label exist.')
+            # name all cluster as c0
+            self.label = np.zeros(self.label.size, dtype=int)
+            self.cv_predicted_label = [f'c{label}' for label in self.label]
+            self.label_proba = np.ones(self.label.size, dtype=int)
+            self.final_accuracy = 1
+        else:
+            # predict outliers
+            outlier_x = self.X[self.label == -1]
+            outlier_idx = np.where(self.label == -1)[0]
+            if len(outlier_idx) != 0:
+                outlier_predict = pd.Series(
+                    self.supervise_model.predict(outlier_x), index=outlier_idx)
+                for cell, pred_label in outlier_predict.items():
+                    self.label[cell] = pred_label
+            print(
+                f'Assigned all the multi-leiden clustering outliers into clusters '
+                f'using the prediction model from final clustering version.')
 
-        # final evaluation of non-outliers using cross val predict
-        final_predict_proba = cross_val_predict(self.supervise_model,
-                                                self.X,
-                                                y=self.label,
-                                                method='predict_proba',
-                                                n_jobs=self.n_jobs,
-                                                verbose=0,
-                                                cv=10)
-        final_predict = pd.Series(np.argmax(final_predict_proba, axis=1))
-        final_cell_proba = pd.Series(np.max(final_predict_proba, axis=1))
-        final_acc = balanced_accuracy_score(self.label, final_predict.values)
-        print(f'Final ten-fold CV Accuracy on all the cells: {final_acc:.3f}')
+            # final evaluation of non-outliers using cross val predict
+            final_predict_proba = cross_val_predict(self.supervise_model,
+                                                    self.X,
+                                                    y=self.label,
+                                                    method='predict_proba',
+                                                    n_jobs=self.n_jobs,
+                                                    verbose=0,
+                                                    cv=10)
+            final_predict = pd.Series(np.argmax(final_predict_proba, axis=1))
+            final_cell_proba = pd.Series(np.max(final_predict_proba, axis=1))
+            final_acc = balanced_accuracy_score(self.label, final_predict.values)
+            print(f'Final ten-fold CV Accuracy on all the cells: {final_acc:.3f}')
+            self.cv_predicted_label = [f'c{label}' for label in final_predict]
+            self.label_proba = final_cell_proba.values
+            self.final_accuracy = final_acc
 
         self.label = [f'c{label}' for label in self.label]
-        self.cv_predicted_label = [f'c{label}' for label in final_predict]
-        self.label_proba = final_cell_proba.values
-        self.final_accuracy = final_acc
         return
 
     def save(self, output_path):
@@ -577,6 +589,9 @@ class ConsensusClustering:
         return fig, axes
 
     def plot_before_after(self, coord_data, coord_base='umap', plot_size=3, dpi=300):
+        if len(self.step_data) == 0:
+            print('No merge step to plot')
+            return
         plot_data = coord_data.copy()
         # initial clusters
         cur_y, *_ = self.step_data[1]
@@ -604,6 +619,9 @@ class ConsensusClustering:
         return
 
     def plot_steps(self, coord_data, coord_base='umap', plot_size=3, dpi=300):
+        if len(self.step_data) == 0:
+            print('No merge step to plot')
+            return
         plot_data = coord_data.copy()
         self.plot_before_after(coord_data, coord_base=coord_base, plot_size=plot_size, dpi=dpi)
 
@@ -651,6 +669,9 @@ class ConsensusClustering:
         return
 
     def plot_merge_process(self, plot_size=3):
+        if len(self.step_data) == 0:
+            print('No merge step to plot')
+            return
         plot_data = []
         for step, (cur_y, *_, score, _) in self.step_data.items():
             cur_n_cluster = len(set(cur_y)) - 1

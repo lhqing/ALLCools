@@ -50,7 +50,7 @@ def significant_pc_test(adata, p_cutoff=0.1, update=True, obsm='X_pca', downsamp
 def balanced_pca(adata, groups='pre_clusters', max_cell_prop=0.1, n_comps=200):
     # downsample large clusters
     use_cells = []
-    size_to_downsample = max(int(adata.shape[0] * max_cell_prop), 30)
+    size_to_downsample = max(int(adata.shape[0] * max_cell_prop), 50)
     for cluster, sub_df in adata.obs.groupby(groups):
         if sub_df.shape[0] > size_to_downsample:
             use_cells += sub_df.sample(size_to_downsample, random_state=0).index.tolist()
@@ -64,6 +64,9 @@ def balanced_pca(adata, groups='pre_clusters', max_cell_prop=0.1, n_comps=200):
     else:
         downsample = True
         adata_train = adata[use_cells, :].copy()
+
+    # in case cells are smaller than n_comps
+    n_comps = min(min(adata_train.shape), n_comps)
 
     # pca
     scaler = StandardScaler()
