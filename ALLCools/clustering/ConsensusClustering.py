@@ -651,7 +651,7 @@ class ConsensusClustering:
                 cur_y = cur_y.apply(lambda i: i
                 if i in involved_clusters else -1)
                 plot_data['cur_y'] = cur_y
-                n_color = cur_y.unique().size - 1
+                n_color = cur_y.unique().size
                 colors = list(sns.color_palette('tab10', n_color))
                 cmap = {
                     c: colors.pop() if c != -1 else (0.9, 0.9, 0.9)
