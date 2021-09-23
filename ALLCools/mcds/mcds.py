@@ -252,7 +252,8 @@ class MCDS(xr.Dataset):
         # remove bad features
         judge = (feature_mc_frac_mean > 0) & (feature_std > 0) & (feature_cov_mean > 0)
         if n_top_feature >= judge.size:
-            raise ValueError('n_top_feature must be smaller than total number of features')
+            n_top_feature = judge.size
+            print('n_top_feature is than total number of features, will use all features')
         feature_mc_frac_mean = feature_mc_frac_mean[judge]
         feature_var = feature_std[judge] ** 2  # to be consistent with previous bin-based method, use var here
         feature_cov_mean = feature_cov_mean[judge]

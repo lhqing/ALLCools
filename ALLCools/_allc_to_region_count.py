@@ -7,6 +7,7 @@ from functools import partial
 from typing import List
 
 import pandas as pd
+import pybedtools
 
 from ._doc import *
 from ._extract_allc import extract_allc
@@ -268,13 +269,27 @@ def batch_allc_to_region_count(allc_series,
 
     # dump region_bed_path to output_dir for future records
     if region_bed_paths is not None:
+        new_paths = []
         for region_bed_name, region_bed_path in zip(region_bed_names, region_bed_paths):
-            bed_df = pd.read_csv(region_bed_path, header=None, index_col=3, sep='\t')
+            # sort by chrom sizes, bgzip and tabix
+            bed_df = pd.read_csv(region_bed_path, sep='\t', header=None)
+            chrom_size = parse_chrom_size(chrom_size_path)
+            bed_df = bed_df[bed_df.iloc[:, 0].isin(chrom_size.keys())].copy()
+            bed_sorted_df = pybedtools.BedTool.from_dataframe(bed_df).sort(g=chrom_size_path).to_dataframe()
+            new_path = str(output_dir / f'{region_bed_name}.bed')
+            bed_sorted_df.to_csv(new_path, sep='\t', index=None, header=None)
+            subprocess.run(['bgzip', '-f', new_path], check=True)
+            subprocess.run(['tabix', '-f', f'{new_path}.gz'], check=True)
+            new_path = f'{new_path}.gz'
+
+            # save hdf
+            bed_df = pd.read_csv(new_path, header=None, index_col=3, sep='\t')
             bed_df.columns = ['chrom', 'start', 'end']
             bed_df.index.name = region_bed_name
             bed_df['int_id'] = list(range(0, bed_df.shape[0]))
             bed_df['int_id'].to_hdf(output_dir / f'REGION_ID_{region_bed_name}.hdf', key='data')
             bed_df.iloc[:, :3].to_hdf(output_dir / f'REGION_BED_{region_bed_name}.hdf', key='data')
+        region_bed_paths = new_paths
 
     if bin_sizes is not None:
         for bin_size in bin_sizes:
