@@ -30,7 +30,7 @@ def tight_hue_range(hue_data, portion):
         vmax = hue_data.max()
 
     if vmin == vmax:
-        return hue_data.min, hue_data.max
+        return hue_data.min(), hue_data.max()
     return vmin, vmax
 
 
@@ -98,6 +98,9 @@ def continuous_scatter(
         if hue_norm is None:
             # get the smallest range that include "hue_portion" of data
             hue_norm = tight_hue_range(_data['hue'], hue_portion)
+        # cnorm is the normalizer for color
+        cnorm = Normalize(vmin=hue_norm[0],
+                          vmax=hue_norm[1])
         if isinstance(cmap, str):
             # from here, cmap become colormap object
             cmap = copy.copy(get_cmap(cmap))
@@ -105,9 +108,6 @@ def continuous_scatter(
         else:
             if not isinstance(cmap, ScalarMappable):
                 raise TypeError(f'cmap can only be str or ScalarMappable, got {type(cmap)}')
-        # cnorm is the normalizer for color
-        cnorm = Normalize(vmin=hue_norm[0],
-                          vmax=hue_norm[1])
     else:
         hue_norm = None
         cnorm = None
