@@ -281,6 +281,7 @@ def batch_allc_to_region_count(allc_series,
             subprocess.run(['bgzip', '-f', new_path], check=True)
             subprocess.run(['tabix', '-f', f'{new_path}.gz'], check=True)
             new_path = f'{new_path}.gz'
+            new_paths.append(new_path)
 
             # save hdf
             bed_df = pd.read_csv(new_path, header=None, index_col=3, sep='\t')
