@@ -6,6 +6,8 @@ import anndata
 
 
 def _kmeans_division(matrix, cells, max_pseudo_size, max_k=50):
+    if max_pseudo_size <= 1:
+        return '|'+pd.Series(range(cells.size), index=cells).astype(str)
     labels = pd.Series(index=cells)
     to_process = [(cells, '')]
     while len(to_process) > 0:
@@ -31,8 +33,9 @@ def _kmeans_division(matrix, cells, max_pseudo_size, max_k=50):
         mbk.fit(curr_matrix)
         curr_labels = curr_prefix + '|' + pd.Series(mbk.labels_).astype(str)
         labels.loc[curr_cells] = curr_labels.tolist()
+        curr_labels = labels.loc[curr_cells]
 
-        for cluster_label, cluster_cells in labels.loc[curr_cells].groupby(labels.loc[curr_cells]):
+        for cluster_label, cluster_cells in curr_labels.groupby(curr_labels):
             if cluster_cells.size <= max_pseudo_size:
                 continue
             else:
