@@ -43,6 +43,7 @@ def categorical_scatter(
         outline_pad=3,
         outline_kws=None,
         scatter_kws=None,
+        return_fig=False
 ):
     """
     Plot scatter plot with these options:
@@ -216,4 +217,7 @@ def categorical_scatter(
     if zoomxy is not None:
         zoom_ax(ax, zoomxy)
 
-    return ax, _data
+    if return_fig:
+        return ax, _data
+    else:
+        return

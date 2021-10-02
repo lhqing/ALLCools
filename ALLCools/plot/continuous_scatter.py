@@ -67,7 +67,8 @@ def continuous_scatter(
         zoomxy=1.05,
         outline=None,
         outline_kws=None,
-        outline_pad=2
+        outline_pad=2,
+        return_fig=False
 ):
     if isinstance(data, anndata.AnnData):
         data = anndata.obs
@@ -212,4 +213,7 @@ def continuous_scatter(
     if zoomxy is not None:
         zoom_ax(ax, zoomxy)
 
-    return tuple(return_axes), _data
+    if return_fig:
+        return tuple(return_axes), _data
+    else:
+        return
