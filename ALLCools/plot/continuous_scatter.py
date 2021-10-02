@@ -71,11 +71,13 @@ def continuous_scatter(
         return_fig=False
 ):
     if isinstance(data, anndata.AnnData):
-        data = anndata.obs
+        adata = data
+        data = adata.obs
         x = f'{coord_base}_0'
         y = f'{coord_base}_1'
-        _data = pd.DataFrame({'x': anndata.obsm[f'X_{coord_base}'][:, 0],
-                              'y': anndata.obsm[f'X_{coord_base}'][:, 1]})
+        _data = pd.DataFrame({'x': adata.obsm[f'X_{coord_base}'][:, 0],
+                              'y': adata.obsm[f'X_{coord_base}'][:, 1]},
+                             index=adata.obs_names)
     else:
         # add coords
         _data, x, y = _extract_coords(data, coord_base, x, y)

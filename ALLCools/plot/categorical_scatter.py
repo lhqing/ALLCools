@@ -1,6 +1,7 @@
 import seaborn as sns
 from matplotlib.lines import Line2D
 import anndata
+import pandas as pd
 
 from .color import level_one_palette
 from .contour import density_contour
@@ -96,11 +97,13 @@ def categorical_scatter(
 
     """
     if isinstance(data, anndata.AnnData):
-        data = data.obs
+        adata = data
+        data = adata.obs
         x = f'{coord_base}_0'
         y = f'{coord_base}_1'
-        _data = pd.DataFrame({'x': anndata.obsm[f'X_{coord_base}'][:, 0],
-                              'y': anndata.obsm[f'X_{coord_base}'][:, 1]})
+        _data = pd.DataFrame({'x': adata.obsm[f'X_{coord_base}'][:, 0],
+                              'y': adata.obsm[f'X_{coord_base}'][:, 1]},
+                             index=adata.obs_names)
     else:
         # add coords
         _data, x, y = _extract_coords(data, coord_base, x, y)
