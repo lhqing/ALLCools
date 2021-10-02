@@ -69,8 +69,15 @@ def continuous_scatter(
         outline_kws=None,
         outline_pad=2
 ):
-    # add coords
-    _data, x, y = _extract_coords(data, coord_base, x, y)
+    if isinstance(data, anndata.AnnData):
+        data = anndata.obs
+        x = f'{coord_base}_0'
+        y = f'{coord_base}_1'
+        _data = pd.DataFrame({'x': anndata.obsm[f'X_{coord_base}'][:, 0],
+                              'y': anndata.obsm[f'X_{coord_base}'][:, 1]})
+    else:
+        # add coords
+        _data, x, y = _extract_coords(data, coord_base, x, y)
     # _data has 2 cols: "x" and "y"
 
     # down sample plot data if needed.
@@ -87,12 +94,11 @@ def continuous_scatter(
     # deal with color
     if hue is not None:
         if isinstance(hue, str):
-            _data['hue'] = data[hue]
+            _data['hue'] = data[hue].astype(float)
             colorbar_label = hue
         else:
-            _data['hue'] = hue
+            _data['hue'] = hue.astype(float)
             colorbar_label = hue.name
-        _data['hue'] = _data['hue'].astype(float)
         hue = 'hue'
 
         if hue_norm is None:

@@ -1,5 +1,6 @@
 import seaborn as sns
 from matplotlib.lines import Line2D
+import anndata
 
 from .color import level_one_palette
 from .contour import density_contour
@@ -93,8 +94,15 @@ def categorical_scatter(
     -------
 
     """
-    # add coords
-    _data, x, y = _extract_coords(data, coord_base, x, y)
+    if isinstance(data, anndata.AnnData):
+        data = anndata.obs
+        x = f'{coord_base}_0'
+        y = f'{coord_base}_1'
+        _data = pd.DataFrame({'x': anndata.obsm[f'X_{coord_base}'][:, 0],
+                              'y': anndata.obsm[f'X_{coord_base}'][:, 1]})
+    else:
+        # add coords
+        _data, x, y = _extract_coords(data, coord_base, x, y)
     # _data has 2 cols: "x" and "y"
 
     # down sample plot data if needed.
@@ -112,13 +120,12 @@ def categorical_scatter(
     palette_dict = None
     if hue is not None:
         if isinstance(hue, str):
-            _data['hue'] = data[hue]
+            _data['hue'] = data[hue].copy()
         else:
-            _data['hue'] = hue
+            _data['hue'] = hue.copy()
+        hue = 'hue'
         _data['hue'] = _data['hue'].astype('category').cat.remove_unused_categories()
 
-        hue = 'hue'
-        _data['hue'] = _data['hue'].astype('category')
         # deal with color palette
         palette = _scatter_kws['palette']
         if isinstance(palette, str) or isinstance(palette, list):
@@ -133,7 +140,7 @@ def categorical_scatter(
     # deal with size
     if size is not None:
         # discard s from _scatter_kws and use size in sns.scatterplot
-        s = _scatter_kws.pop('s')
+        _scatter_kws.pop('s')
     sns.scatterplot(x='x', y='y', data=_data, ax=ax, hue=hue,
                     size=size, sizes=sizes, size_norm=size_norm,
                     **_scatter_kws)
@@ -141,9 +148,9 @@ def categorical_scatter(
     # deal with text annotation
     if text_anno is not None:
         if isinstance(text_anno, str):
-            _data['text_anno'] = data[text_anno]
+            _data['text_anno'] = data[text_anno].copy()
         else:
-            _data['text_anno'] = text_anno
+            _data['text_anno'] = text_anno.copy()
 
         _text_anno_scatter(data=_data[['x', 'y', 'text_anno']],
                            ax=ax,
@@ -160,9 +167,9 @@ def categorical_scatter(
     # deal with outline
     if outline:
         if isinstance(outline, str):
-            _data['outline'] = data[outline]
+            _data['outline'] = data[outline].copy()
         else:
-            _data['outline'] = outline
+            _data['outline'] = outline.copy()
         _outline_kws = {'linewidth': linewidth,
                         'palette': None,
                         'c': 'lightgray',
