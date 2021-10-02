@@ -4,17 +4,18 @@ from sklearn.cluster import MiniBatchKMeans
 from scipy.sparse import issparse, csr_matrix, vstack
 import anndata
 
+
 def _kmeans_division(matrix, cells, max_pseudo_size, max_k=50):
     if max_pseudo_size <= 1:
         return '|'+pd.Series(range(cells.size), index=cells).astype(str)
     labels = pd.Series(index=cells)
-    to_process = [(cells,'')]
-    while len(to_process)>0:
+    to_process = [(cells, '')]
+    while len(to_process) > 0:
         curr_cells, curr_prefix = to_process.pop()
         curr_matrix = matrix[cells.isin(curr_cells)]
 
         # MiniBatchKMeans causes seg fault with huge k; bound with max_k
-        k = min(len(curr_cells)//max_pseudo_size+1, max_k)
+        k = min(len(curr_cells) // max_pseudo_size + 1, max_k)
 
         mbk = MiniBatchKMeans(n_clusters=k,
                               init='k-means++',
@@ -30,7 +31,7 @@ def _kmeans_division(matrix, cells, max_pseudo_size, max_k=50):
                               reassignment_ratio=0.1)
 
         mbk.fit(curr_matrix)
-        curr_labels = curr_prefix+'|'+pd.Series(mbk.labels_).astype(str)
+        curr_labels = curr_prefix + '|' + pd.Series(mbk.labels_).astype(str)
         labels.loc[curr_cells] = curr_labels.tolist()
         curr_labels = labels.loc[curr_cells]
 
@@ -42,9 +43,9 @@ def _kmeans_division(matrix, cells, max_pseudo_size, max_k=50):
     return labels
 
 
-def _calculate_pseudo_group(clusters, total_matrix, pseudoable_cluster_size=100, max_pseudo_size=25):
+def _calculate_pseudo_group(clusters, total_matrix, cluster_size_cutoff=100, max_pseudo_size=25):
     cluster_cells = clusters.value_counts()
-    max_pseudo_sizes = (cluster_cells // pseudoable_cluster_size + 1).astype(int)
+    max_pseudo_sizes = (cluster_cells // cluster_size_cutoff + 1).astype(int)
     max_pseudo_sizes[max_pseudo_sizes > max_pseudo_size] = max_pseudo_size
 
     records = []
@@ -56,6 +57,7 @@ def _calculate_pseudo_group(clusters, total_matrix, pseudoable_cluster_size=100,
         records.append(record)
     records = pd.concat(records)
     return records
+
 
 def _merge_pseudo_cell(adata, aggregate_func, pseudo_group_key):
     is_sparse = issparse(adata.X)
@@ -102,26 +104,53 @@ def _merge_pseudo_cell(adata, aggregate_func, pseudo_group_key):
     return pseudo_cell_adata
 
 
-
 def generate_pseudo_cells(adata,
                           cluster_col='leiden',
                           obsm='X_pca',
-                          pseudoable_cluster_size=100,
+                          cluster_size_cutoff=100,
                           max_pseudo_size=25,
-                          aggregate_func='downsample',):
+                          aggregate_func='downsample'):
+    """
+    Balance the clusters by merge or downsample cells within each cluster.
+    We first group the data by pre-defined clusters (cluster_col),
+    then run k-means clustering iteratively on clusters with size > cluster_size_cutoff,
+    the k-means clusters are called cell groups, and the maximum cell group size < max_pseudo_size,
+    Finally, we generate a new adata for the balanced dataset.
 
-    pseudo_group_key='pseudo_group'
+    Parameters
+    ----------
+    adata :
+        Original AnnData object, raw count in X is recommended if aggregate_func is sum.
+    cluster_col :
+        The clustering label for downsample
+    obsm :
+        The obsm key name to use for performing k-means clustering within clusters.
+    cluster_size_cutoff :
+        Cluster size smaller than the cutoff will not be downsample or aggregated.
+    max_pseudo_size :
+        Maximum number of cells in one pseudo-cell group
+    aggregate_func :
+        'downsample' means randomly select one cell from one pseudo-cell group;
+        'sum' means sum up all values in a pseudo-cell group
+        'mean' means take the average of each feature in a pseudo-cell group
+        'median' means take the median of each feature in a pseudo-cell group
+
+    Returns
+    -------
+
+    """
+    pseudo_group_key = 'pseudo_group'
 
     # determine cell group
     clusters = adata.obs[cluster_col]
     total_matrix = adata.obsm[obsm]
     pseudo_group = _calculate_pseudo_group(clusters=clusters,
                                            total_matrix=total_matrix,
-                                           pseudoable_cluster_size=pseudoable_cluster_size,
+                                           cluster_size_cutoff=cluster_size_cutoff,
                                            max_pseudo_size=max_pseudo_size)
     adata.obs[pseudo_group_key] = pseudo_group
     pseudo_cell_adata = _merge_pseudo_cell(adata=adata,
                                            aggregate_func=aggregate_func,
-                                           pseudo_group_key=pseudo_group_key,)
+                                           pseudo_group_key=pseudo_group_key, )
     pseudo_cell_adata.obs[cluster_col] = pseudo_cell_adata.obs_names.str.split('::').str[:-1].str.join('::')
     return pseudo_cell_adata

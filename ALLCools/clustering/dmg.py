@@ -261,7 +261,7 @@ def single_ovr_dmg(cell_label, mcds, obs_dim, var_dim, mc_type, top_n, adj_p_cut
 def one_vs_rest_dmg(cell_meta, group, mcds_or_paths,
                     obs_dim='cell', var_dim='gene', mc_type='CHN',
                     top_n=1000, adj_p_cutoff=0.01, fc_cutoff=0.8, auroc_cutoff=0.8,
-                    max_cluster_cells=2000, max_other_fold=5, cpu=1):
+                    max_cluster_cells=2000, max_other_fold=5, cpu=1, mcds=None):
     """
 
     Parameters
@@ -283,7 +283,9 @@ def one_vs_rest_dmg(cell_meta, group, mcds_or_paths,
     -------
 
     """
-    
+    if mcds is not None:
+        mcds_or_paths = mcds
+
     if isinstance(mcds_or_paths, MCDS):
         import tempfile
         import os
@@ -294,8 +296,7 @@ def one_vs_rest_dmg(cell_meta, group, mcds_or_paths,
     else:
         mcds_paths = mcds_or_paths
         tmp_created = False
-        
-    
+
     clusters = cell_meta[group].unique()
     dmg_table = []
     with ProcessPoolExecutor(cpu) as exe:
