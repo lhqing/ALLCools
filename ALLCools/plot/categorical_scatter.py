@@ -96,7 +96,7 @@ def categorical_scatter(
 
     """
     if isinstance(data, anndata.AnnData):
-        data = anndata.obs
+        data = data.obs
         x = f'{coord_base}_0'
         y = f'{coord_base}_1'
         _data = pd.DataFrame({'x': anndata.obsm[f'X_{coord_base}'][:, 0],
