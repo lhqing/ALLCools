@@ -643,8 +643,7 @@
 <h2>Load<a class="headerlink" href="#load" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">anndata</span>
 <span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
 <span class="kn">from</span> <span class="nn">ALLCools.mcds</span> <span class="kn">import</span> <span class="n">MCDS</span>
@@ -658,8 +657,7 @@
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gene_frac_dir</span> <span class="o">=</span> <span class="s1">&#39;gene_frac/&#39;</span>
-
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds_paths</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;gene_frac/*_da_frac.mcds&#39;</span>
 <span class="n">cell_meta_path</span> <span class="o">=</span> <span class="s1">&#39;../step_by_step/100kb/L1.ClusteringResults.csv.gz&#39;</span>
 <span class="n">cluster_col</span> <span class="o">=</span> <span class="s1">&#39;L1&#39;</span>
 
@@ -673,6 +671,7 @@
 <span class="n">fc_cutoff</span> <span class="o">=</span> <span class="mf">0.8</span>
 <span class="n">max_cluster_cells</span> <span class="o">=</span> <span class="mi">2000</span>
 <span class="n">max_other_fold</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">cpu</span> <span class="o">=</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
@@ -682,11 +681,178 @@
 <h2>Load<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{gene_frac_dir}</span><span class="s1">/*_da_frac.mcds&#39;</span><span class="p">)</span>
-<span class="n">cell_meta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">cell_meta_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cell_meta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../cell_level/step_by_step/100kb/L1.ClusteringResults.csv.gz&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cell_meta</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AllcPath</th>
+      <th>mCCCFrac</th>
+      <th>mCGFrac</th>
+      <th>mCGFracAdj</th>
+      <th>mCHFrac</th>
+      <th>mCHFracAdj</th>
+      <th>FinalReads</th>
+      <th>InputReads</th>
+      <th>MappedReads</th>
+      <th>DissectionRegion</th>
+      <th>...</th>
+      <th>Sample</th>
+      <th>leiden</th>
+      <th>mCHFrac.1</th>
+      <th>tsne_0</th>
+      <th>tsne_1</th>
+      <th>umap_0</th>
+      <th>umap_1</th>
+      <th>L1</th>
+      <th>L1_proba</th>
+      <th>CellTypeAnno</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10E_M_0</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.008198</td>
+      <td>0.822633</td>
+      <td>0.821166</td>
+      <td>0.041640</td>
+      <td>0.033718</td>
+      <td>1626504.0</td>
+      <td>4407752</td>
+      <td>2892347.0</td>
+      <td>10E</td>
+      <td>...</td>
+      <td>10E_190625</td>
+      <td>14</td>
+      <td>0.041640</td>
+      <td>4.422312</td>
+      <td>32.817532</td>
+      <td>-2.776936</td>
+      <td>0.910858</td>
+      <td>c7</td>
+      <td>0.718517</td>
+      <td>MGE-Sst</td>
+    </tr>
+    <tr>
+      <th>10E_M_1</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006019</td>
+      <td>0.743035</td>
+      <td>0.741479</td>
+      <td>0.024127</td>
+      <td>0.018218</td>
+      <td>2009998.0</td>
+      <td>5524084</td>
+      <td>3657352.0</td>
+      <td>10E</td>
+      <td>...</td>
+      <td>10E_190625</td>
+      <td>8</td>
+      <td>0.024127</td>
+      <td>-44.612333</td>
+      <td>-33.222181</td>
+      <td>9.975079</td>
+      <td>10.775970</td>
+      <td>c4</td>
+      <td>0.724762</td>
+      <td>CA3</td>
+    </tr>
+    <tr>
+      <th>10E_M_10</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006569</td>
+      <td>0.750172</td>
+      <td>0.748520</td>
+      <td>0.027665</td>
+      <td>0.021235</td>
+      <td>1383636.0</td>
+      <td>3455260</td>
+      <td>2172987.0</td>
+      <td>10E</td>
+      <td>...</td>
+      <td>10E_190625</td>
+      <td>8</td>
+      <td>0.027665</td>
+      <td>-43.991445</td>
+      <td>-28.466108</td>
+      <td>9.412707</td>
+      <td>9.894364</td>
+      <td>c4</td>
+      <td>0.828400</td>
+      <td>CA3</td>
+    </tr>
+    <tr>
+      <th>10E_M_101</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.006353</td>
+      <td>0.760898</td>
+      <td>0.759369</td>
+      <td>0.026547</td>
+      <td>0.020323</td>
+      <td>2474670.0</td>
+      <td>7245482</td>
+      <td>4778768.0</td>
+      <td>10E</td>
+      <td>...</td>
+      <td>10E_190625</td>
+      <td>8</td>
+      <td>0.026547</td>
+      <td>-40.476595</td>
+      <td>-17.625580</td>
+      <td>7.975397</td>
+      <td>7.598768</td>
+      <td>c4</td>
+      <td>0.714865</td>
+      <td>CA3</td>
+    </tr>
+    <tr>
+      <th>10E_M_102</th>
+      <td>/gale/raidix/rdx-4/mapping/10E/CEMBA190625-10E...</td>
+      <td>0.005409</td>
+      <td>0.752980</td>
+      <td>0.751637</td>
+      <td>0.019497</td>
+      <td>0.014164</td>
+      <td>2430290.0</td>
+      <td>7004754</td>
+      <td>4609570.0</td>
+      <td>10E</td>
+      <td>...</td>
+      <td>10E_190625</td>
+      <td>23</td>
+      <td>0.019497</td>
+      <td>-26.758905</td>
+      <td>16.534931</td>
+      <td>-0.437397</td>
+      <td>10.436956</td>
+      <td>c5</td>
+      <td>0.503633</td>
+      <td>CA1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 27 columns</p>
+</div></div></div>
 </div>
 </div>
 <div class="section" id="calculate-dmg">
@@ -694,17 +860,74 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dmg_table</span> <span class="o">=</span> <span class="n">one_vs_rest_dmg</span><span class="p">(</span><span class="n">cell_meta</span><span class="p">,</span>
-                <span class="n">group</span><span class="o">=</span><span class="n">cluster_col</span><span class="p">,</span>
-                <span class="n">mcds</span><span class="o">=</span><span class="n">mcds</span><span class="p">,</span>
-                <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
-                <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
-                <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
-                <span class="n">top_n</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span>
-                <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="n">adj_p_cutoff</span><span class="p">,</span>
-                <span class="n">fc_cutoff</span><span class="o">=</span><span class="n">fc_cutoff</span><span class="p">,</span>
-                <span class="n">auroc_cutoff</span><span class="o">=</span><span class="n">auroc_cutoff</span><span class="p">,</span>
-                <span class="n">max_cluster_cells</span><span class="o">=</span><span class="n">max_cluster_cells</span><span class="p">,</span>
-                <span class="n">max_other_fold</span><span class="o">=</span><span class="n">max_other_fold</span><span class="p">)</span>
+                            <span class="n">group</span><span class="o">=</span><span class="n">cluster_col</span><span class="p">,</span>
+                            <span class="n">mcds_paths</span><span class="o">=</span><span class="n">mcds_paths</span><span class="p">,</span>
+                            <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
+                            <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
+                            <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
+                            <span class="n">top_n</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span>
+                            <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="n">adj_p_cutoff</span><span class="p">,</span>
+                            <span class="n">fc_cutoff</span><span class="o">=</span><span class="n">fc_cutoff</span><span class="p">,</span>
+                            <span class="n">auroc_cutoff</span><span class="o">=</span><span class="n">auroc_cutoff</span><span class="p">,</span>
+                            <span class="n">max_cluster_cells</span><span class="o">=</span><span class="n">max_cluster_cells</span><span class="p">,</span>
+                            <span class="n">max_other_fold</span><span class="o">=</span><span class="n">max_other_fold</span><span class="p">,</span>
+                            <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Calculating cluster c0 DMGs.
+Calculating cluster c1 DMGs.
+Calculating cluster c10 DMGs.
+Calculating cluster c11 DMGs.
+Calculating cluster c12 DMGs.
+Calculating cluster c13 DMGs.
+Calculating cluster c14 DMGs.
+Calculating cluster c15 DMGs.
+Calculating cluster c16 DMGs.
+Calculating cluster c17 DMGs.
+c17 Finished.
+Calculating cluster c18 DMGs.
+c16 Finished.
+Calculating cluster c19 DMGs.
+c15 Finished.
+Calculating cluster c2 DMGs.
+c14 Finished.
+Calculating cluster c20 DMGs.
+c13 Finished.
+Calculating cluster c21 DMGs.
+c12 Finished.
+Calculating cluster c22 DMGs.
+c11 Finished.
+Calculating cluster c23 DMGs.
+c10 Finished.
+Calculating cluster c24 DMGs.
+c19 Finished.
+Calculating cluster c25 DMGs.
+c18 Finished.
+Calculating cluster c3 DMGs.
+c21 Finished.
+Calculating cluster c4 DMGs.
+c22 Finished.
+Calculating cluster c5 DMGs.
+c20 Finished.
+Calculating cluster c6 DMGs.
+c23 Finished.
+Calculating cluster c7 DMGs.
+c24 Finished.
+Calculating cluster c8 DMGs.
+c25 Finished.
+Calculating cluster c9 DMGs.
+c9 Finished.
+c8 Finished.
+c7 Finished.
+c6 Finished.
+c5 Finished.
+c2 Finished.
+c4 Finished.
+c3 Finished.
+c0 Finished.
+c1 Finished.
 </pre></div>
 </div>
 </div>
