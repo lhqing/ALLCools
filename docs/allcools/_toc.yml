@@ -38,8 +38,10 @@
         - file: cell_level/dmg/04-PairwiseDMG
     - file: cell_level/integration/intro_integration
       sections:
-        - file: cell_level/integration/PreprocessRNA
-        - file: cell_level/integration/HarmonyIntegration
+        - file: cell_level/integration/multi_modalities/Neurons/01-preprocess_10x
+        - file: cell_level/integration/multi_modalities/Neurons/02-preprocess_SMART
+        - file: cell_level/integration/multi_modalities/Neurons/03-preprocess_snATAC
+        - file: cell_level/integration/multi_modalities/Neurons/04-integration
     - file: cell_level/doublets/intro_doublets
       sections:
         - file: cell_level/doublets/doublet_score_chrom100k
