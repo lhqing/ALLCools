@@ -236,8 +236,8 @@ def single_ovr_dmg(cell_label, mcds, obs_dim, var_dim, mc_type, top_n, adj_p_cut
     })
     dmg_result = dmg_result[dmg_result.index.get_level_values(1).astype(bool)].reset_index(drop=True)
     # add fold change
-    in_cells_mean = adata.X[adata.obs['groups'].astype(bool), ].mean(axis=0)
-    out_cells_mean = adata.X[~adata.obs['groups'].astype(bool), ].mean(axis=0)
+    in_cells_mean = adata.X[adata.obs['groups'].astype(bool),].mean(axis=0)
+    out_cells_mean = adata.X[~adata.obs['groups'].astype(bool),].mean(axis=0)
     fc = pd.Series(in_cells_mean / out_cells_mean, index=adata.var_names)
     dmg_result['fc'] = dmg_result['names'].map(fc)
     # filter
@@ -258,16 +258,18 @@ def single_ovr_dmg(cell_label, mcds, obs_dim, var_dim, mc_type, top_n, adj_p_cut
     return dmg_result
 
 
-def one_vs_rest_dmg(cell_meta, group, mcds_or_paths,
+def one_vs_rest_dmg(cell_meta, group, mcds=None, mcds_paths=None,
                     obs_dim='cell', var_dim='gene', mc_type='CHN',
                     top_n=1000, adj_p_cutoff=0.01, fc_cutoff=0.8, auroc_cutoff=0.8,
-                    max_cluster_cells=2000, max_other_fold=5, cpu=1, mcds=None):
+                    max_cluster_cells=2000, max_other_fold=5, cpu=1):
     """
+    Calculating cluster marker genes using one-vs-rest strategy.
 
     Parameters
     ----------
     cell_meta
     group
+    mcds
     mcds_paths
     obs_dim
     var_dim
@@ -283,19 +285,18 @@ def one_vs_rest_dmg(cell_meta, group, mcds_or_paths,
     -------
 
     """
-    if mcds is not None:
-        mcds_or_paths = mcds
-
-    if isinstance(mcds_or_paths, MCDS):
+    tmpfn = None
+    if mcds_paths is not None:
+        tmp_created = False
+    elif mcds is not None:
         import tempfile
         import os
         tmpf, tmpfn = tempfile.mkstemp(suffix='.tmp')
-        mcds_or_paths.to_netcdf(tmpfn)
+        mcds.to_netcdf(tmpfn)
         mcds_paths = tmpfn
         tmp_created = True
     else:
-        mcds_paths = mcds_or_paths
-        tmp_created = False
+        raise ValueError(f'Need to provide either "mcds_path" or "mcds".')
 
     clusters = cell_meta[group].unique()
     dmg_table = []
@@ -325,7 +326,7 @@ def one_vs_rest_dmg(cell_meta, group, mcds_or_paths,
             dmg_df['cluster'] = cluster
             dmg_table.append(dmg_df)
     dmg_table = pd.concat(dmg_table)
-    
+
     if tmp_created:
         os.unlink(tmpfn)
 
@@ -360,13 +361,13 @@ def _one_vs_rest_dmr_runner(cell_meta,
         out_cells = out_cells.sample(max_other_cells, random_state=0)
 
     cell_label = pd.concat([in_cells, out_cells])
-    dmg_df = single_ovr_dmg(cell_label,
-                            mcds,
-                            obs_dim,
-                            var_dim,
-                            mc_type,
-                            top_n,
-                            adj_p_cutoff,
-                            fc_cutoff,
-                            auroc_cutoff)
+    dmg_df = single_ovr_dmg(cell_label=cell_label,
+                            mcds=mcds,
+                            obs_dim=obs_dim,
+                            var_dim=var_dim,
+                            mc_type=mc_type,
+                            top_n=top_n,
+                            adj_p_cutoff=adj_p_cutoff,
+                            fc_cutoff=fc_cutoff,
+                            auroc_cutoff=auroc_cutoff)
     return dmg_df
