@@ -4,6 +4,9 @@ from matplotlib.cm import get_cmap, ScalarMappable
 from matplotlib.colors import Normalize
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import copy
+import anndata
+import pandas as pd
+
 from .color import plot_colorbar
 from .contour import density_contour
 from .text_anno_scatter import _text_anno_scatter
