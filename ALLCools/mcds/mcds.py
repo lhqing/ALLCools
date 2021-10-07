@@ -6,8 +6,46 @@ from pybedtools import BedTool
 import dask
 import re
 import warnings
+import pathlib
+import glob
 from .utilities import highly_variable_methylation_feature, calculate_posterior_mc_frac
 from ..plot.qc_plots import cutoff_vs_cell_remain, plot_dispersion
+
+
+def _determine_engine(mcds_paths):
+    def _single_path(path):
+        if pathlib.Path(f'{path}/.zgroup').exists():
+            e = 'zarr'
+        else:
+            e = None  # default for None is netcdf4
+        return e
+
+    def _multi_paths(paths):
+        engines = []
+        for path in paths:
+            e = _single_path(path)
+            engines.append(e)
+        engine = list(set(engines))
+        if len(engine) > 1:
+            raise ValueError(f'Can not open a mixture of netcdf4 and zarr files in "{mcds_paths}"')
+        else:
+            engine = engine[0]
+        return engine
+
+    if isinstance(mcds_paths, str):
+        if '*' in mcds_paths:
+            engine = _multi_paths(list(glob.glob(mcds_paths)))
+        else:
+            # single mcds path
+            engine = _single_path(mcds_paths)
+    else:
+        engine = _multi_paths(mcds_paths)
+
+    if engine is None:
+        print(f'Open MCDS with netcdf4 engine.')
+    else:
+        print(f'Open MCDS with {engine} engine.')
+    return engine
 
 
 class MCDS(xr.Dataset):
@@ -35,17 +73,19 @@ class MCDS(xr.Dataset):
         -------
         MCDS
         """
+        engine = _determine_engine(mcds_paths)
         if isinstance(mcds_paths, str) and '*' not in mcds_paths:
-            ds = xr.open_dataset(mcds_paths)
+            ds = xr.open_dataset(mcds_paths, engine=engine)
         else:
             with dask.config.set(**{'array.slicing.split_large_chunks': False}):
                 ds = xr.open_mfdataset(mcds_paths,
                                        parallel=False,
                                        combine='nested',
-                                       concat_dim=obs_dim)
+                                       concat_dim=obs_dim,
+                                       engine=engine)
         if use_obs is not None:
-            use_obs = ds.get_index(obs_dim).intersection(use_obs)
-            ds = ds.sel({obs_dim: use_obs})
+            use_obs_bool = ds.get_index(obs_dim).isin(use_obs)
+            ds = ds.sel({obs_dim: use_obs_bool})
         return cls(ds).squeeze()
 
     def add_mc_frac(self,
