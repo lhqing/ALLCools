@@ -808,64 +808,76 @@
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computing nearest neighbor graph
 Computing multiple clustering with different random seeds
 Repeating leiden clustering 500 times
-Found 26 - 31 clusters, mean 28.7, std 0.76
+Found 27 - 33 clusters, mean 29.5, std 0.82
 Summarizing multiple clustering results
-16912 cells assigned to 42 raw clusters
-73 cells are multi-leiden outliers
+16814 cells assigned to 46 raw clusters
+171 cells are multi-leiden outliers
 
 === Start supervise model training and cluster merging ===
 
 === iteration 1 ===
-42 non-outlier labels
-Balanced accuracy on the training set: 0.933
-Balanced accuracy on the hold-out set: 0.852
-Merging 4 clusters.
-
-=== iteration 2 ===
-38 non-outlier labels
-Balanced accuracy on the training set: 0.941
-Balanced accuracy on the hold-out set: 0.896
-Merging 4 clusters.
-
-=== iteration 3 ===
-34 non-outlier labels
-Balanced accuracy on the training set: 0.959
-Balanced accuracy on the hold-out set: 0.937
-Merging 1 clusters.
-
-=== iteration 4 ===
-33 non-outlier labels
-Balanced accuracy on the training set: 0.965
-Balanced accuracy on the hold-out set: 0.944
+46 non-outlier labels
+Balanced accuracy on the training set: 0.936
+Balanced accuracy on the hold-out set: 0.906
 Merging 2 clusters.
 
+=== iteration 2 ===
+44 non-outlier labels
+Balanced accuracy on the training set: 0.946
+Balanced accuracy on the hold-out set: 0.913
+Merging 1 clusters.
+
+=== iteration 3 ===
+43 non-outlier labels
+Balanced accuracy on the training set: 0.949
+Balanced accuracy on the hold-out set: 0.927
+Merging 3 clusters.
+
+=== iteration 4 ===
+40 non-outlier labels
+Balanced accuracy on the training set: 0.961
+Balanced accuracy on the hold-out set: 0.940
+Merging 3 clusters.
+
 === iteration 5 ===
-31 non-outlier labels
-Balanced accuracy on the training set: 0.962
-Balanced accuracy on the hold-out set: 0.946
+37 non-outlier labels
+Balanced accuracy on the training set: 0.963
+Balanced accuracy on the hold-out set: 0.943
 Merging 2 clusters.
 
 === iteration 6 ===
-29 non-outlier labels
-Balanced accuracy on the training set: 0.970
-Balanced accuracy on the hold-out set: 0.953
-Merging 1 clusters.
+35 non-outlier labels
+Balanced accuracy on the training set: 0.967
+Balanced accuracy on the hold-out set: 0.944
+Merging 2 clusters.
 
 === iteration 7 ===
-28 non-outlier labels
-Balanced accuracy on the training set: 0.973
-Balanced accuracy on the hold-out set: 0.959
+33 non-outlier labels
+Balanced accuracy on the training set: 0.969
+Balanced accuracy on the hold-out set: 0.951
 Merging 2 clusters.
 
 === iteration 8 ===
-26 non-outlier labels
-Balanced accuracy on the training set: 0.974
-Balanced accuracy on the hold-out set: 0.961
-Stop iteration because current accuracy 0.961 &gt; target accuracy 0.960.
+31 non-outlier labels
+Balanced accuracy on the training set: 0.977
+Balanced accuracy on the hold-out set: 0.958
+Merging 2 clusters.
+
+=== iteration 9 ===
+29 non-outlier labels
+Balanced accuracy on the training set: 0.976
+Balanced accuracy on the hold-out set: 0.955
+Merging 1 clusters.
+
+=== iteration 10 ===
+28 non-outlier labels
+Balanced accuracy on the training set: 0.977
+Balanced accuracy on the hold-out set: 0.969
+Stop iteration because current accuracy 0.969 &gt; target accuracy 0.960.
 
 === Assign final labels ===
 Assigned all the multi-leiden clustering outliers into clusters using the prediction model from final clustering version.
-Final ten-fold CV Accuracy on all the cells: 0.963
+Final ten-fold CV Accuracy on all the cells: 0.967
 </pre></div>
 </div>
 </div>
@@ -885,6 +897,7 @@ Final ten-fold CV Accuracy on all the cells: 0.963
 <h2>Plot ConsensusClustering Details<a class="headerlink" href="#plot-consensusclustering-details" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="individual-leiden-runs-with-different-random-states">
 <h3>Individual Leiden runs with different random states<a class="headerlink" href="#individual-leiden-runs-with-different-random-states" title="Permalink to this headline">¶</a></h3>
+<p>Check the randomness of individual leiden runs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">plot_leiden_cases</span><span class="p">(</span><span class="n">coord_data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span>
@@ -901,20 +914,34 @@ Final ten-fold CV Accuracy on all the cells: 0.963
 <h3>Merging steps<a class="headerlink" href="#merging-steps" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cc</span><span class="o">.</span><span class="n">_multi_leiden_clusters</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cc</span><span class="o">.</span><span class="n">label</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(47, 28)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cc</span><span class="o">.</span><span class="n">plot_steps</span><span class="p">(</span><span class="n">coord_data</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_14_0.png" src="../../../_images/06-Clustering_14_0.png" />
-<img alt="../../../_images/06-Clustering_14_1.png" src="../../../_images/06-Clustering_14_1.png" />
-<img alt="../../../_images/06-Clustering_14_2.png" src="../../../_images/06-Clustering_14_2.png" />
-<img alt="../../../_images/06-Clustering_14_3.png" src="../../../_images/06-Clustering_14_3.png" />
-<img alt="../../../_images/06-Clustering_14_4.png" src="../../../_images/06-Clustering_14_4.png" />
-<img alt="../../../_images/06-Clustering_14_5.png" src="../../../_images/06-Clustering_14_5.png" />
-<img alt="../../../_images/06-Clustering_14_6.png" src="../../../_images/06-Clustering_14_6.png" />
-<img alt="../../../_images/06-Clustering_14_7.png" src="../../../_images/06-Clustering_14_7.png" />
-<img alt="../../../_images/06-Clustering_14_8.png" src="../../../_images/06-Clustering_14_8.png" />
+<img alt="../../../_images/06-Clustering_15_0.png" src="../../../_images/06-Clustering_15_0.png" />
+<img alt="../../../_images/06-Clustering_15_1.png" src="../../../_images/06-Clustering_15_1.png" />
+<img alt="../../../_images/06-Clustering_15_2.png" src="../../../_images/06-Clustering_15_2.png" />
+<img alt="../../../_images/06-Clustering_15_3.png" src="../../../_images/06-Clustering_15_3.png" />
+<img alt="../../../_images/06-Clustering_15_4.png" src="../../../_images/06-Clustering_15_4.png" />
+<img alt="../../../_images/06-Clustering_15_5.png" src="../../../_images/06-Clustering_15_5.png" />
+<img alt="../../../_images/06-Clustering_15_6.png" src="../../../_images/06-Clustering_15_6.png" />
+<img alt="../../../_images/06-Clustering_15_7.png" src="../../../_images/06-Clustering_15_7.png" />
+<img alt="../../../_images/06-Clustering_15_8.png" src="../../../_images/06-Clustering_15_8.png" />
+<img alt="../../../_images/06-Clustering_15_9.png" src="../../../_images/06-Clustering_15_9.png" />
+<img alt="../../../_images/06-Clustering_15_10.png" src="../../../_images/06-Clustering_15_10.png" />
 </div>
 </div>
 </div>
@@ -939,7 +966,7 @@ Final ten-fold CV Accuracy on all the cells: 0.963
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_16_0.png" src="../../../_images/06-Clustering_16_0.png" />
+<img alt="../../../_images/06-Clustering_17_0.png" src="../../../_images/06-Clustering_17_0.png" />
 </div>
 </div>
 </div>
@@ -960,7 +987,7 @@ Final ten-fold CV Accuracy on all the cells: 0.963
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_18_0.png" src="../../../_images/06-Clustering_18_0.png" />
+<img alt="../../../_images/06-Clustering_19_0.png" src="../../../_images/06-Clustering_19_0.png" />
 </div>
 </div>
 </div>
@@ -985,7 +1012,7 @@ Final ten-fold CV Accuracy on all the cells: 0.963
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_20_0.png" src="../../../_images/06-Clustering_20_0.png" />
+<img alt="../../../_images/06-Clustering_21_0.png" src="../../../_images/06-Clustering_21_0.png" />
 </div>
 </div>
 </div>
@@ -1027,7 +1054,7 @@ Multiscale bootstrap... Done.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_23_0.png" src="../../../_images/06-Clustering_23_0.png" />
+<img alt="../../../_images/06-Clustering_24_0.png" src="../../../_images/06-Clustering_24_0.png" />
 </div>
 </div>
 </div>
@@ -1063,7 +1090,7 @@ Multiscale bootstrap... Done.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/06-Clustering_25_0.png" src="../../../_images/06-Clustering_25_0.png" />
+<img alt="../../../_images/06-Clustering_26_0.png" src="../../../_images/06-Clustering_26_0.png" />
 </div>
 </div>
 </div>
@@ -1092,9 +1119,9 @@ Multiscale bootstrap... Done.
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AnnData object with n_obs × n_vars = 16985 × 3102
-    obs: &#39;leiden&#39;, &#39;mCHFrac&#39;, &#39;tsne_0&#39;, &#39;tsne_1&#39;, &#39;umap_0&#39;, &#39;umap_1&#39;, &#39;L1&#39;, &#39;L1_proba&#39;, &#39;CellTypeAnno&#39;
-    var: &#39;chrom&#39;, &#39;bin_start&#39;, &#39;bin_end&#39;, &#39;CHN_mean&#39;, &#39;CHN_dispersion&#39;, &#39;CHN_cov&#39;, &#39;CHN_score&#39;, &#39;CHN_feature_select&#39;, &#39;leiden_enriched_features&#39;, &#39;mean&#39;, &#39;std&#39;
-    uns: &#39;leiden&#39;, &#39;leiden_colors&#39;, &#39;leiden_feature_enrichment&#39;, &#39;leiden_sizes&#39;, &#39;neighbors&#39;, &#39;paga&#39;, &#39;umap&#39;
+    obs: &#39;leiden&#39;, &#39;L1&#39;, &#39;mCHFrac&#39;, &#39;tsne_0&#39;, &#39;tsne_1&#39;, &#39;umap_0&#39;, &#39;umap_1&#39;, &#39;L1_proba&#39;, &#39;CellTypeAnno&#39;
+    var: &#39;chrom&#39;, &#39;bin_start&#39;, &#39;bin_end&#39;, &#39;CHN_mean&#39;, &#39;CHN_dispersion&#39;, &#39;CHN_cov&#39;, &#39;CHN_score&#39;, &#39;CHN_feature_select&#39;, &#39;leiden_enriched_features&#39;, &#39;L1_enriched_features&#39;
+    uns: &#39;L1_feature_enrichment&#39;, &#39;leiden&#39;, &#39;leiden_colors&#39;, &#39;leiden_feature_enrichment&#39;, &#39;leiden_sizes&#39;, &#39;log&#39;, &#39;neighbors&#39;, &#39;paga&#39;, &#39;umap&#39;
     obsm: &#39;X_pca&#39;, &#39;X_tsne&#39;, &#39;X_umap&#39;
     obsp: &#39;connectivities&#39;, &#39;distances&#39;
 </pre></div>
