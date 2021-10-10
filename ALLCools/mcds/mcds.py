@@ -57,7 +57,7 @@ class MCDS(xr.Dataset):
         return
 
     @classmethod
-    def open(cls, mcds_paths, obs_dim='cell', use_obs=None):
+    def open(cls, mcds_paths, obs_dim='cell', use_obs=None, split_large_chunks=False):
         """
         Take one or multiple MCDS file paths and create single MCDS concatenated on obs_dim
 
@@ -69,6 +69,8 @@ class MCDS(xr.Dataset):
             Dimension name of observations, default is 'cell'
         use_obs
             Subset the MCDS by a list of observation IDs.
+        split_large_chunks
+            Whether split large chunks in dask config array.slicing.split_large_chunks
         Returns
         -------
         MCDS
@@ -77,15 +79,16 @@ class MCDS(xr.Dataset):
         if isinstance(mcds_paths, str) and '*' not in mcds_paths:
             ds = xr.open_dataset(mcds_paths, engine=engine)
         else:
-            with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+            with dask.config.set(**{'array.slicing.split_large_chunks': split_large_chunks}):
                 ds = xr.open_mfdataset(mcds_paths,
                                        parallel=False,
                                        combine='nested',
                                        concat_dim=obs_dim,
                                        engine=engine)
         if use_obs is not None:
-            use_obs_bool = ds.get_index(obs_dim).isin(use_obs)
-            ds = ds.sel({obs_dim: use_obs_bool})
+            with dask.config.set(**{'array.slicing.split_large_chunks': split_large_chunks}):
+                use_obs_bool = ds.get_index(obs_dim).isin(use_obs)
+                ds = ds.sel({obs_dim: use_obs_bool})
         return cls(ds).squeeze()
 
     def add_mc_frac(self,
