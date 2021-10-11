@@ -57,7 +57,7 @@ class MCDS(xr.Dataset):
         return
 
     @classmethod
-    def open(cls, mcds_paths, obs_dim='cell', use_obs=None, split_large_chunks=False):
+    def open(cls, mcds_paths, obs_dim='cell', use_obs=None, split_large_chunks=True):
         """
         Take one or multiple MCDS file paths and create single MCDS concatenated on obs_dim
 
@@ -445,7 +445,8 @@ class MCDS(xr.Dataset):
             self.coords[f'{var_dim}_{mc_type}_{name}'] = column
         return hvf_df
 
-    def get_adata(self, mc_type, var_dim, da_suffix='frac', obs_dim='cell', select_hvf=True):
+    def get_adata(self, mc_type, var_dim, da_suffix='frac', obs_dim='cell', select_hvf=True,
+                  split_large_chunks=True):
         """
         Get anndata from MCDS mC rate matrix
         Parameters
@@ -460,46 +461,51 @@ class MCDS(xr.Dataset):
             Name of observation
         select_hvf
             Select HVF or not, if True, will use mcds.coords['{var_dim}_{mc_type}_feature_select'] to select HVFs
+        split_large_chunks
+            Whether split large chunks in dask config array.slicing.split_large_chunks
 
         Returns
         -------
         anndata.Anndata
         """
-        if select_hvf:
-            try:
-                use_features = self.get_index(var_dim)[self.coords[f'{var_dim}_{mc_type}_feature_select']]
-                use_data = self[f'{var_dim}_da_{da_suffix}'].sel({'mc_type': mc_type, var_dim: use_features}).squeeze()
-            except KeyError:
-                print('feature_select==True, but no highly variable feature results found, use all features instead.')
+        with dask.config.set(**{'array.slicing.split_large_chunks': split_large_chunks}):
+            if select_hvf:
+                try:
+                    use_features = self.get_index(var_dim)[self.coords[f'{var_dim}_{mc_type}_feature_select']]
+                    use_data = self[f'{var_dim}_da_{da_suffix}'].sel(
+                        {'mc_type': mc_type, var_dim: use_features}).squeeze()
+                except KeyError:
+                    print('feature_select==True, but no highly variable feature results found, '
+                          'use all features instead.')
+                    use_data = self[f'{var_dim}_da_{da_suffix}'].sel({'mc_type': mc_type}).squeeze()
+            else:
                 use_data = self[f'{var_dim}_da_{da_suffix}'].sel({'mc_type': mc_type}).squeeze()
-        else:
-            use_data = self[f'{var_dim}_da_{da_suffix}'].sel({'mc_type': mc_type}).squeeze()
 
-        obs_df = pd.DataFrame([], index=use_data.get_index(obs_dim).astype(str))
-        var_df = pd.DataFrame([], index=use_data.get_index(var_dim).astype(str))
-        coord_prefix = re.compile(f'({obs_dim}|{var_dim})_')
-        for k, v in use_data.coords.items():
-            if k in [obs_dim, var_dim]:
-                continue
-            try:
-                # v.dims should be size 1
-                if v.dims[0] == obs_dim:
-                    series = v.to_pandas()
-                    # adata.obs_name is str type
-                    series.index = series.index.astype(str)
-                    obs_df[coord_prefix.sub('', k)] = series
-                elif v.dims[0] == var_dim:
-                    series = v.to_pandas()
-                    # adata.var_name is str type
-                    series.index = series.index.astype(str)
-                    var_df[coord_prefix.sub('', k)] = series
-                else:
+            obs_df = pd.DataFrame([], index=use_data.get_index(obs_dim).astype(str))
+            var_df = pd.DataFrame([], index=use_data.get_index(var_dim).astype(str))
+            coord_prefix = re.compile(f'({obs_dim}|{var_dim})_')
+            for k, v in use_data.coords.items():
+                if k in [obs_dim, var_dim]:
+                    continue
+                try:
+                    # v.dims should be size 1
+                    if v.dims[0] == obs_dim:
+                        series = v.to_pandas()
+                        # adata.obs_name is str type
+                        series.index = series.index.astype(str)
+                        obs_df[coord_prefix.sub('', k)] = series
+                    elif v.dims[0] == var_dim:
+                        series = v.to_pandas()
+                        # adata.var_name is str type
+                        series.index = series.index.astype(str)
+                        var_df[coord_prefix.sub('', k)] = series
+                    else:
+                        pass
+                except IndexError:
+                    # v.dims is 0, just ignore
                     pass
-            except IndexError:
-                # v.dims is 0, just ignore
-                pass
 
-        adata = anndata.AnnData(X=use_data.transpose(obs_dim, var_dim).values,
-                                obs=obs_df,
-                                var=var_df)
+            adata = anndata.AnnData(X=use_data.transpose(obs_dim, var_dim).values,
+                                    obs=obs_df,
+                                    var=var_df)
         return adata
