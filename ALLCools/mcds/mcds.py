@@ -412,7 +412,7 @@ class MCDS(xr.Dataset):
         -------
         pd.DataFrame
         """
-        matrix = self[f'{var_dim}_da_rate'].sel(mc_type=mc_type).squeeze()
+        matrix = self[f'{var_dim}_da_frac'].sel(mc_type=mc_type).squeeze()
         feature_mean_cov = self.coords[f'{var_dim}_cov_mean']
 
         hvf_df = highly_variable_methylation_feature(
@@ -475,7 +475,7 @@ class MCDS(xr.Dataset):
                     use_data = self[f'{var_dim}_da_{da_suffix}'].sel(
                         {'mc_type': mc_type, var_dim: use_features}).squeeze()
                 except KeyError:
-                    print('feature_select==True, but no highly variable feature results found, '
+                    print('select_hvf is True, but no highly variable feature results found, '
                           'use all features instead.')
                     use_data = self[f'{var_dim}_da_{da_suffix}'].sel({'mc_type': mc_type}).squeeze()
             else:
