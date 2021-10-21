@@ -471,7 +471,8 @@ class MCDS(xr.Dataset):
         with dask.config.set(**{'array.slicing.split_large_chunks': split_large_chunks}):
             if select_hvf:
                 try:
-                    use_features = self.get_index(var_dim)[self.coords[f'{var_dim}_{mc_type}_feature_select']]
+                    use_features = self.coords[f'{var_dim}_{mc_type}_feature_select'].to_pandas().dropna().astype(bool)
+                    use_features = use_features[use_features].index
                     use_data = self[f'{var_dim}_da_{da_suffix}'].sel(
                         {'mc_type': mc_type, var_dim: use_features}).squeeze()
                 except KeyError:

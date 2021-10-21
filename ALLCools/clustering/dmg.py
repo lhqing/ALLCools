@@ -101,6 +101,7 @@ class PairwiseDMG:
         self._var_dim = ''
         self.dmg_table = None
         self._outlier_label = None
+        self.selected_pairs = None
 
         # parameters
         self.max_cell_per_group = max_cell_per_group
@@ -115,7 +116,8 @@ class PairwiseDMG:
         self._adata_dir = '_adata_for_dmg'
         self._dmg_dir = '_dmg_results'
 
-    def fit_predict(self, x, groups, obs_dim='cell', var_dim='gene', outlier='Outlier', cleanup=True):
+    def fit_predict(self, x, groups, obs_dim='cell', var_dim='gene', outlier='Outlier', cleanup=True,
+                    selected_pairs=None):
         if (len(x.shape) != 2) or not isinstance(x, xr.DataArray):
             raise ValueError('Expect an cell-by-feature 2D xr.DataArray as input matrix.')
         self._obs_dim = obs_dim
@@ -125,6 +127,7 @@ class PairwiseDMG:
         self.X = x
         use_order = x.get_index(obs_dim)
         self.groups = groups.astype('category').reindex(use_order)
+        self.selected_pairs = selected_pairs
 
         # save adata for each group to dict
         print('Generating cluster AnnData files')
@@ -139,10 +142,21 @@ class PairwiseDMG:
             self._cleanup()
 
     def _save_cluster_adata(self):
+        if self.selected_pairs is not None:
+            use_label = set()
+            for a, b in self.selected_pairs:
+                use_label.add(a)
+                use_label.add(b)
+        else:
+            use_label = None
         adata_dir = pathlib.Path(self._adata_dir)
         adata_dir.mkdir(exist_ok=True)
 
+        total_cells = self.X.get_index(self._obs_dim)
+
         for cluster, sub_series in self.groups.groupby(self.groups):
+            if (use_label is not None) and (cluster not in use_label):
+                continue
             if cluster == self._outlier_label:
                 # skip outlier
                 continue
@@ -153,7 +167,8 @@ class PairwiseDMG:
             if sub_series.size > self.max_cell_per_group:
                 sub_series = sub_series.sample(self.max_cell_per_group,
                                                random_state=self.random_state)
-            cluster_adata = anndata.AnnData(X=self.X.sel({self._obs_dim: sub_series.index}).values,
+            cluster_adata = anndata.AnnData(X=self.X.sel(
+                {self._obs_dim: total_cells.intersection(sub_series.index)}).values,
                                             obs=pd.DataFrame({'groups': sub_series.astype('category')}),
                                             var=pd.DataFrame([], index=self.X.get_index(self._var_dim)))
             cluster_adata.write_h5ad(output_path)
@@ -163,10 +178,14 @@ class PairwiseDMG:
         dmg_dir = pathlib.Path(self._dmg_dir)
         dmg_dir.mkdir(exist_ok=True)
 
-        pairs = [
-            i for i in combinations(sorted(self.groups.unique()), 2)
-            if self._outlier_label not in i
-        ]
+        if self.selected_pairs is None:
+            pairs = [
+                i for i in combinations(sorted(self.groups.unique()), 2)
+                if self._outlier_label not in i
+            ]
+        else:
+            print('Using user provided gene pairs')
+            pairs = self.selected_pairs
         print(len(pairs), 'pairwise DMGs')
         n_pairs = len(pairs)
 

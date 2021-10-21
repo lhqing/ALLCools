@@ -690,3 +690,23 @@ class ConsensusClustering:
         ax.axhline(y=self.target_accuracy, color='red', linewidth=0.8, linestyle='--')
         ax.set(ylim=(plot_data['Score'].min() - 0.03, min(1, self.target_accuracy + 0.01)))
         return
+
+
+def select_confusion_pairs(true_label, predicted_label, ratio_cutoff=0.001):
+    labels = pd.DataFrame({'true': true_label, 'pred': predicted_label})
+    confusion_matrix = labels.groupby('true')['pred'].value_counts().unstack().fillna(0).astype(int)
+
+    row_sum = confusion_matrix.sum(axis=1)
+    row_norm = (confusion_matrix / row_sum.values[:, None]).unstack()
+    row_pairs = row_norm[row_norm > ratio_cutoff].reset_index().iloc[:, :2]
+    col_sum = confusion_matrix.sum(axis=0)
+    col_norm = (confusion_matrix / col_sum.values[None, :]).unstack()
+    col_pairs = col_norm[col_norm > ratio_cutoff].reset_index().iloc[:, :2]
+
+    include_pairs = set()
+    for _, s in pd.concat([row_pairs, col_pairs]).iterrows():
+        a, b = s.sort_values()
+        if a == b:
+            continue
+        include_pairs.add((a, b))
+    return list(include_pairs)
