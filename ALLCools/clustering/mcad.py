@@ -81,6 +81,18 @@ def filter_regions(adata, hypo_cutoff=None):
     return
 
 
+def tf_idf(data, scale_factor):
+    col_sum = data.sum(axis=0).A1
+    row_sum = data.sum(axis=1).A1
+
+    idf = np.log(1 + data.shape[0] / col_sum)
+    tf = data
+    tf.data = tf.data / np.repeat(row_sum, row_sum)
+    tf.data = np.log(tf.data * scale_factor + 1)
+    tf = tf.multiply(idf)
+    return tf
+
+
 def lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='X_pca', random_state=0):
     """
     Run TF-IDF on the binarized adata.X, followed by TruncatedSVD and then scale the components by svd.singular_values_
@@ -100,14 +112,7 @@ def lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='
     """
     # tf-idf
     data = adata.X.astype(np.int8).copy()
-    col_sum = data.sum(axis=0).A1
-    row_sum = data.sum(axis=1).A1
-
-    idf = np.log(1 + data.shape[0] / col_sum)
-    tf = data
-    tf.data = tf.data / np.repeat(row_sum, row_sum)
-    tf.data = np.log(tf.data * scale_factor + 1)
-    tf = tf.multiply(idf)
+    tf = tf_idf(data, scale_factor)
     svd = TruncatedSVD(n_components=n_components, algorithm=algorithm, random_state=random_state)
     matrix_reduce = svd.fit_transform(tf)
     matrix_reduce = matrix_reduce / svd.singular_values_
