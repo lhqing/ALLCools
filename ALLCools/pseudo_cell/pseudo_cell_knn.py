@@ -82,7 +82,7 @@ class ContractedExamplerSampler:
 
 
 def sample_pseudo_cells(cell_meta, cluster_col, coords, target_pseudo_size, min_pseudo_size=None,
-                        ignore_small_cluster=False, n_components=30):
+                        ignore_small_cluster=False, n_components=30, pseudo_ovlp=0):
     _cell_meta = cell_meta[[cluster_col]].copy()
     index_name = _cell_meta.index.name
     _cell_meta = _cell_meta.reset_index()
@@ -102,7 +102,7 @@ def sample_pseudo_cells(cell_meta, cluster_col, coords, target_pseudo_size, min_
             small_cluster_flags.append(False)
             sampler = ContractedExamplerSampler(coords[cmeta.index], n_components)
             pseudo_centers, pseudo_groups = sampler.sample_contracted_examplers(n_pseudos, target_pseudo_size,
-                                                                                min_pseudo_size, ovlp_tol=0)
+                                                                                min_pseudo_size, ovlp_tol=pseudo_ovlp)
         for i, (pcenter, pgroup) in enumerate(zip(pseudo_centers, pseudo_groups)):
             _cell_meta.loc[cmeta.iloc[pcenter].name, 'pseudo_center'] = f'{c}::{i}'
             _cell_meta.loc[cmeta.iloc[pgroup].index, 'pseudo_cell'] = f'{c}::{i}'
@@ -129,7 +129,8 @@ def generate_pseudo_cells(adata,
                           min_pseudo_size=None,
                           ignore_small_cluster=False,
                           n_components=None,
-                          aggregate_func='downsample'):
+                          aggregate_func='downsample', 
+                          pseudo_ovlp=0):
     if n_components is None:
         n_components = adata.obsm[obsm].shape[1]
     if min_pseudo_size is None:
@@ -142,7 +143,8 @@ def generate_pseudo_cells(adata,
                                             target_pseudo_size=target_pseudo_size,
                                             min_pseudo_size=min_pseudo_size,
                                             ignore_small_cluster=ignore_small_cluster,
-                                            n_components=n_components)
+                                            n_components=n_components, 
+                                            pseudo_ovlp=pseudo_ovlp,)
     adata.obs['cell_group'] = cell_group['pseudo_cell']
     pseudo_cell_adata = _merge_pseudo_cell(adata=adata,
                                            aggregate_func=aggregate_func)
