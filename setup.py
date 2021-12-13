@@ -19,7 +19,7 @@ setup(
     packages=find_packages(exclude=('docs', 'test')),
     include_package_data=True,
     install_requires=['imblearn', 'plotly', 'opentsne', 'xarray', 'pybedtools',
-                      'dask', 'rpy2', 'numba', 'pynndescent'],
+                      'dask', 'numba', 'pynndescent'],
     entry_points={
         'console_scripts': ['allcools=ALLCools.__main__:main'],
     }

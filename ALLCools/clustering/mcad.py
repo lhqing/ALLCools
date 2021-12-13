@@ -93,7 +93,7 @@ def tf_idf(data, scale_factor):
     return tf
 
 
-def lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='X_pca', random_state=0):
+def lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='X_pca', random_state=0, fit_size=None):
     """
     Run TF-IDF on the binarized adata.X, followed by TruncatedSVD and then scale the components by svd.singular_values_
 
@@ -105,6 +105,8 @@ def lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='
     algorithm
     obsm
     random_state
+    fit_size
+        Ratio or absolute int value, use to downsample when fitting the SVD to speed up run time.
 
     Returns
     -------
@@ -113,8 +115,24 @@ def lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='
     # tf-idf
     data = adata.X.astype(np.int8).copy()
     tf = tf_idf(data, scale_factor)
+    n_rows, n_cols = tf.shape
+    n_components = min(n_rows, n_cols, n_components)
     svd = TruncatedSVD(n_components=n_components, algorithm=algorithm, random_state=random_state)
-    matrix_reduce = svd.fit_transform(tf)
+
+    if fit_size is None:
+        # fit the SVD using all rows
+        matrix_reduce = svd.fit_transform(tf)
+    elif fit_size >= n_rows:
+        # fit size is larger than actual data size
+        matrix_reduce = svd.fit_transform(tf)
+    else:
+        # fit the SVD using partial rows to speed up
+        if fit_size < 1:
+            fit_size = max(int(n_rows * fit_size), n_components)
+        use_cells = pd.Series(range(n_rows)).sample(fit_size, random_state=random_state).sort_index().tolist()
+        svd.fit(tf.tocsr()[use_cells, :])
+        matrix_reduce = svd.transform(tf)
+
     matrix_reduce = matrix_reduce / svd.singular_values_
 
     # PCA is the default name for many following steps in scanpy, use the name here for convenience.
