@@ -17,6 +17,9 @@ setup(
         "Programming Language :: Python :: 3.7",
     ],
     packages=find_packages(exclude=('docs', 'test')),
+    package_data={
+        '': ['*.meme', '*.csv']
+    },
     include_package_data=True,
     install_requires=['imblearn', 'plotly', 'opentsne', 'xarray', 'pybedtools',
                       'dask', 'numba', 'pynndescent'],

@@ -5,9 +5,9 @@ from ._extract_allc import extract_allc
 from ._merge_allc import merge_allc_files
 from ._open import open_allc
 from .count_matrix.mcds import generate_mcds
-from .motif.cmotif import generate_cmotif_database
-from .motif.motif_scan import allc_motif_scan
-from .motif.ame import ame
+from ALLCools.motif.old.cmotif import generate_cmotif_database
+from ALLCools.motif.old.motif_scan import allc_motif_scan
+from ALLCools.motif.old.ame import ame
 from .utilities import profile_allc, tabix_allc, standardize_allc
 
 _ = allc_to_bigwig.__doc__

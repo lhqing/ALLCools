@@ -1106,15 +1106,15 @@ def main():
         from ._allc_to_bigwig_new import allc_to_bigwig as func
         # from ._allc_to_bigwig import allc_to_bigwig as func  # old version using ucsc tools
     elif cur_command in ['generate-cmotif-database', 'cmotif-db']:
-        from .motif.cmotif import generate_cmotif_database as func
+        from ALLCools.motif.old.cmotif import generate_cmotif_database as func
     elif cur_command in ['allc-motif-scan', 'motif']:
-        from .motif.motif_scan import allc_motif_scan as func
+        from ALLCools.motif.old.motif_scan import allc_motif_scan as func
     elif cur_command in ['generate-mcds', 'mcds']:
         from .count_matrix.mcds import generate_mcds as func
     elif cur_command in ['generate-mcad', 'mcad']:
         from .count_matrix.mcad import generate_mcad as func
     elif cur_command in ['ame']:
-        from .motif.ame import ame as func
+        from ALLCools.motif.old.ame import ame as func
     else:
         log.debug(f'{cur_command} is not an valid sub-command')
         parser.parse_args(["-h"])

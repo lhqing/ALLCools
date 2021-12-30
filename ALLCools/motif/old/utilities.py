@@ -7,8 +7,8 @@ import shlex
 import subprocess
 from pybedtools import BedTool, cleanup
 
-from .._open import open_gz
-from ..utilities import parse_chrom_size
+from ALLCools._open import open_gz
+from ALLCools.utilities import parse_chrom_size
 
 
 def meme_to_homer(meme_path, homer_path, score_power=0.85):

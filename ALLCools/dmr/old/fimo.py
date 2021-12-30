@@ -8,7 +8,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import pandas as pd
 
-from ..motif.utilities import split_meme_motif_file
+from ALLCools.motif.old.utilities import split_meme_motif_file
 from .get_fasta import get_fasta
 
 

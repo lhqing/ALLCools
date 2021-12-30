@@ -8,7 +8,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import pandas as pd
 
-from .utilities import split_meme_motif_file
+from ALLCools.motif.old.utilities import split_meme_motif_file
 
 """
 Run FIMO to scan motif over FASTA sequences

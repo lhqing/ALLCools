@@ -1,4 +1,7 @@
+import glob
 import logging
+import pathlib
+
 import numpy as np
 import pandas as pd
 import xarray as xr
@@ -256,3 +259,34 @@ def highly_variable_methylation_feature(
     df['feature_select'] = feature_subset
     log.info('    finished')
     return df
+
+
+def determine_engine(dataset_paths):
+    def _single_path(path):
+        if pathlib.Path(f'{path}/.zgroup').exists():
+            e = 'zarr'
+        else:
+            e = None  # default for None is netcdf4
+        return e
+
+    def _multi_paths(paths):
+        engines = []
+        for path in paths:
+            e = _single_path(path)
+            engines.append(e)
+        engine = list(set(engines))
+        if len(engine) > 1:
+            raise ValueError(f'Can not open a mixture of netcdf4 and zarr files in "{dataset_paths}"')
+        else:
+            engine = engine[0]
+        return engine
+
+    if isinstance(dataset_paths, str):
+        if '*' in dataset_paths:
+            engine = _multi_paths(list(glob.glob(dataset_paths)))
+        else:
+            # single mcds path
+            engine = _single_path(dataset_paths)
+    else:
+        engine = _multi_paths(dataset_paths)
+    return engine

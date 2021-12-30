@@ -100,6 +100,7 @@ def lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='
     Parameters
     ----------
     adata
+
     scale_factor
     n_components
     algorithm
@@ -138,4 +139,4 @@ def lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='
     # PCA is the default name for many following steps in scanpy, use the name here for convenience.
     # However, this is not PCA
     adata.obsm[obsm] = matrix_reduce
-    return
+    return svd

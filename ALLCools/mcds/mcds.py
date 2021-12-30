@@ -6,46 +6,8 @@ from pybedtools import BedTool
 import dask
 import re
 import warnings
-import pathlib
-import glob
-from .utilities import highly_variable_methylation_feature, calculate_posterior_mc_frac
+from .utilities import highly_variable_methylation_feature, calculate_posterior_mc_frac, determine_engine
 from ..plot.qc_plots import cutoff_vs_cell_remain, plot_dispersion
-
-
-def _determine_engine(mcds_paths):
-    def _single_path(path):
-        if pathlib.Path(f'{path}/.zgroup').exists():
-            e = 'zarr'
-        else:
-            e = None  # default for None is netcdf4
-        return e
-
-    def _multi_paths(paths):
-        engines = []
-        for path in paths:
-            e = _single_path(path)
-            engines.append(e)
-        engine = list(set(engines))
-        if len(engine) > 1:
-            raise ValueError(f'Can not open a mixture of netcdf4 and zarr files in "{mcds_paths}"')
-        else:
-            engine = engine[0]
-        return engine
-
-    if isinstance(mcds_paths, str):
-        if '*' in mcds_paths:
-            engine = _multi_paths(list(glob.glob(mcds_paths)))
-        else:
-            # single mcds path
-            engine = _single_path(mcds_paths)
-    else:
-        engine = _multi_paths(mcds_paths)
-
-    if engine is None:
-        print(f'Open MCDS with netcdf4 engine.')
-    else:
-        print(f'Open MCDS with {engine} engine.')
-    return engine
 
 
 class MCDS(xr.Dataset):
@@ -75,7 +37,11 @@ class MCDS(xr.Dataset):
         -------
         MCDS
         """
-        engine = _determine_engine(mcds_paths)
+        engine = determine_engine(mcds_paths)
+        if engine is None:
+            print(f'Open MCDS with netcdf4 engine.')
+        else:
+            print(f'Open MCDS with {engine} engine.')
         if isinstance(mcds_paths, str) and '*' not in mcds_paths:
             ds = xr.open_dataset(mcds_paths, engine=engine)
         else:
@@ -510,3 +476,35 @@ class MCDS(xr.Dataset):
                                     obs=obs_df,
                                     var=var_df)
         return adata
+
+    def merge_cluster(self, cluster_col, obs_dim='cell',
+                      add_mc_frac=True, add_overall_mc=True, overall_mc_da='chrom100k_da'):
+        if isinstance(cluster_col, str):
+            cluster_col = cluster_col
+        else:
+            self.coords[cluster_col.name] = cluster_col
+            cluster_col = cluster_col.name
+
+        with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+            cluster_mcds = self.groupby(cluster_col).sum(dim=obs_dim).load()
+            cluster_mcds = MCDS(cluster_mcds)
+
+            if add_mc_frac:
+                for name, da in cluster_mcds.data_vars.items():
+                    if name.endswith('_da') and ('count_type' in da.dims):
+                        cluster_mcds.add_mc_frac(var_dim=name[:-3])
+
+            if add_overall_mc:
+                for mc_type in cluster_mcds.get_index('mc_type'):
+                    overall_mc_dim = overall_mc_da[:-3]
+                    mc = cluster_mcds[overall_mc_da].sel(mc_type=mc_type, count_type='mc').sum(dim=overall_mc_dim)
+                    cov = cluster_mcds[overall_mc_da].sel(mc_type=mc_type, count_type='cov').sum(dim=overall_mc_dim)
+                    cluster_mcds.coords[f'{cluster_col}_{mc_type}'] = (mc / cov).to_pandas()
+        return cluster_mcds
+
+    def to_region_ds(self, region_dim):
+        from .region_ds import RegionDS
+        _region_ds = RegionDS(self, region_dim=region_dim)
+        return _region_ds
+
+

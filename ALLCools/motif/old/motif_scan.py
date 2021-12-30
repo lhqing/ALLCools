@@ -6,9 +6,9 @@ import msgpack
 import pandas as pd
 import xarray as xr
 
-from .._doc import *
-from .._open import open_allc
-from ..utilities import parse_mc_pattern
+from ALLCools._doc import *
+from ALLCools._open import open_allc
+from ALLCools.utilities import parse_mc_pattern
 
 
 def _count_data_to_xarray(total_data: dict, allc_series):

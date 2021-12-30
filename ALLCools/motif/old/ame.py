@@ -6,9 +6,9 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 import numpy as np
 import pandas as pd
 
-from .utilities import split_meme_motif_file
-from ..dmr.get_fasta import get_fasta
-from .._doc import *
+from ALLCools.motif.old.utilities import split_meme_motif_file
+from ALLCools.dmr.old.get_fasta import get_fasta
+from ALLCools._doc import *
 
 
 def _single_ame_runner(fasta_path, motif_paths, ame_kws_str=''):
