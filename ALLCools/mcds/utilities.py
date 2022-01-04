@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 import warnings
+
 log = logging.getLogger()
 
 
@@ -254,8 +255,8 @@ def highly_variable_methylation_feature(
         max_disp = np.inf if max_disp is None else max_disp
         dispersion_norm[np.isnan(dispersion_norm)] = 0  # similar to Seurat
         feature_subset = np.logical_and.reduce((mean > min_mean, mean < max_mean,
-                                             dispersion_norm > min_disp,
-                                             dispersion_norm < max_disp))
+                                                dispersion_norm > min_disp,
+                                                dispersion_norm < max_disp))
     df['feature_select'] = feature_subset
     log.info('    finished')
     return df
@@ -281,8 +282,8 @@ def determine_engine(dataset_paths):
             engine = engine[0]
         return engine
 
-    if isinstance(dataset_paths, str):
-        if '*' in dataset_paths:
+    if isinstance(dataset_paths, (str, pathlib.PosixPath)):
+        if '*' in str(dataset_paths):
             engine = _multi_paths(list(glob.glob(dataset_paths)))
         else:
             # single mcds path
@@ -290,3 +291,47 @@ def determine_engine(dataset_paths):
     else:
         engine = _multi_paths(dataset_paths)
     return engine
+
+
+def obj_to_str(ds, coord_dtypes=None):
+    if coord_dtypes is None:
+        coord_dtypes = {}
+
+    for k, v in ds.coords.items():
+        if np.issubdtype(v, np.object) or np.issubdtype(v, np.unicode):
+            if k in coord_dtypes:
+                ds.coords[k] = v.load().astype(coord_dtypes[k])
+            else:
+                ds.coords[k] = v.load().astype(str)
+    return
+
+
+def write_ordered_chunks(chunks_to_write, final_path, append_dim,
+                         engine='zarr', coord_dtypes=None, dtype=None):
+    # some function may return None if the chunk is empty
+    chunks_to_write = {k: v for k, v in chunks_to_write.items() if v is not None}
+
+    # open all chunks to determine string coords dtype lengths
+    total_ds = xr.open_mfdataset(list(chunks_to_write.values()),
+                                 concat_dim=append_dim, combine='nested', engine=engine)
+    obj_to_str(total_ds, coord_dtypes)
+    # string dtype is set to coord maximum length, so need to load all coords to determine
+    # otherwise the chunk writing will truncate string coords if the dtype length is wrong
+    coord_dtypes = {k: v.dtype for k, v in total_ds.coords.items()}
+    del total_ds
+
+    # write chunks
+    wrote = False
+    for chunk_i, output_path in sorted(chunks_to_write.items(), key=lambda _i: _i[0]):
+        # save chunk into the zarr
+        chunk_ds = xr.open_dataset(output_path, engine=engine).load()
+        obj_to_str(chunk_ds, coord_dtypes)
+        if dtype is not None:
+            chunk_ds = chunk_ds.astype(dtype)
+        if not wrote:
+            wrote = True
+            # create the new da
+            chunk_ds.to_zarr(final_path, mode='w')
+        else:
+            chunk_ds.to_zarr(final_path, append_dim=append_dim)
+    return

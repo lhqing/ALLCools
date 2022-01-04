@@ -6,11 +6,15 @@ import xarray as xr
 import subprocess
 import yaml
 from ALLCools.utilities import genome_region_chunks
+from ALLCools.mcds.utilities import write_ordered_chunks
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from .rms_test import permute_root_mean_square_test, calculate_residual, downsample_table
 
 
 def _read_single_allc(path, region):
+    grange = region.split(':')[1]
+    start, _ = grange.split('-')
+
     rows = []
     with pysam.TabixFile(path) as allc:
         for row in allc.fetch(region):
@@ -25,6 +29,12 @@ def _read_single_allc(path, region):
     data['cov'] = data['cov'].astype(np.float64)
     # important, turn the second column from cov to uc
     data['c'] = data['cov'] - data['mc']
+
+    # boarder case: if the pos equal to region start,
+    # it might be included twice in adjacent regions
+    # because both end and start are the same for single C
+    data = data[data.index > int(start)]
+
     counts = data[['mc', 'c']].astype(np.float64)
     contexts = data['context']
     return counts, contexts
@@ -55,7 +65,7 @@ def _perform_rms_batch(output_dir, allc_paths, samples, region, max_row_count, n
     p_values = {}
 
     if total_counts.shape[0] == 0:
-        return None, None
+        return None
     print(f'RMS tests for {total_counts.shape[0]} sites.')
 
     for pos, row in total_counts.iterrows():
@@ -123,8 +133,9 @@ def _perform_rms_batch(output_dir, allc_paths, samples, region, max_row_count, n
     ds = ds.rename({k: f'dms_{k}' for k in ds.coords.keys() if k not in ds.dims})
 
     # save total dms results
-    ds.to_zarr(f'{output_dir}/{region}.zarr')
-    return
+    output_path = f'{output_dir}/{region}.zarr'
+    ds.to_zarr(output_path, mode='w')
+    return output_path
 
 
 def call_dms(output_dir, allc_paths, samples, chrom_size_path, cpu=1,
@@ -152,9 +163,9 @@ def call_dms(output_dir, allc_paths, samples, chrom_size_path, cpu=1,
             cpu = 1
 
     # temp dir
-    subprocess.run(f'rm -rf {output_dir}/dms', shell=True)
-    dms_dir = pathlib.Path(f'{output_dir}/dms')
-    dms_dir.mkdir(exist_ok=True, parents=True)
+    dms_chunk_dir = pathlib.Path(f'{output_dir}/.dms_chunks')
+    dms_chunk_dir.mkdir(exist_ok=True, parents=True)
+    dms_dir = f'{output_dir}/dms'
 
     # trigger the numba JIT compilation before multiprocessing
     table = np.array([[0, 1], [0, 1]])
@@ -165,19 +176,28 @@ def call_dms(output_dir, allc_paths, samples, chrom_size_path, cpu=1,
     # parallel each chunk
     with ProcessPoolExecutor(cpu) as exe:
         futures = {}
-        for region in regions:
+        for chunk_id, region in enumerate(regions):
             future = exe.submit(_perform_rms_batch,
-                                output_dir=dms_dir,
+                                output_dir=dms_chunk_dir,
                                 allc_paths=allc_paths,
                                 samples=samples,
                                 region=region,
                                 max_row_count=max_row_count,
                                 n_permute=n_permute,
                                 min_pvalue=min_pvalue)
-            futures[future] = region
+            futures[future] = chunk_id
 
+        chunks_to_write = {}
         for future in as_completed(futures):
-            region = futures[future]
-            print(f'{region} returned.')
-            future.result()
+            chunk_i = futures[future]
+            output_path = future.result()
+            chunks_to_write[chunk_i] = output_path
+
+    write_ordered_chunks(chunks_to_write,
+                         final_path=dms_dir,
+                         append_dim='dms',
+                         engine='zarr',
+                         coord_dtypes=None)
+
+    subprocess.run(f'rm -rf {dms_chunk_dir}', shell=True)
     return

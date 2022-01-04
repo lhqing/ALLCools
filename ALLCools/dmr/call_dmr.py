@@ -3,18 +3,20 @@ import numpy as np
 import pandas as pd
 from ..mcds import RegionDS
 from ..mcds.region_ds_utilities import update_region_ds_config
+from ..mcds.utilities import write_ordered_chunks
 import subprocess
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
-def call_dmr_single_chrom(output_dir,
+def call_dmr_single_chrom(dms_dir,
+                          output_dir,
                           chrom,
                           p_value_cutoff=0.001,
                           frac_delta_cutoff=0.2,
                           max_dist=250,
                           residual_quantile=0.6,
                           corr_cutoff=0.3):
-    ds = RegionDS.open(f'{output_dir}/dms/*.zarr', region_dim='dms')
+    ds = RegionDS.open(dms_dir, region_dim='dms')
 
     # open DMS dataset and select single chromosome, significant, large delta DMS
     p_value_judge = ds.coords['dms_p-values'] < p_value_cutoff
@@ -92,8 +94,8 @@ def call_dmr_single_chrom(output_dir,
     dmr_frac = dmr_da.sel(count_type='mc') / dmr_da.sel(count_type='cov')
     dmr_ds = xr.Dataset({
         'dmr_da': dmr_da.astype(np.uint32),
-        'dmr_state': dmr_states.astype(np.float32),
-        'dmr_da_frac': dmr_frac.astype(np.int8)
+        'dmr_state': dmr_states.astype(np.int8),
+        'dmr_da_frac': dmr_frac.astype(np.float32)
     })
 
     # add n dms counts
@@ -111,8 +113,9 @@ def call_dmr_single_chrom(output_dir,
     # rename none dimensional coords to prevent collision when merge with other ds
     dmr_ds = dmr_ds.rename({k: f'dmr_{k}' for k in dmr_ds.coords.keys() if k not in dmr_ds.dims})
 
-    dmr_ds.to_zarr(f'{output_dir}/dmr/{chrom}.zarr')
-    return
+    output_path = f'{output_dir}/{chrom}.zarr'
+    dmr_ds.to_zarr(output_path)
+    return output_path
 
 
 def call_dmr(output_dir,
@@ -123,11 +126,6 @@ def call_dmr(output_dir,
              corr_cutoff=0.3,
              cpu=1,
              chrom=None):
-    subprocess.run(f'rm -rf {output_dir}/dmr*', shell=True)
-    update_region_ds_config(output_dir=output_dir,
-                            new_dataset_dim={'dmr': 'dmr'},
-                            change_region_dim='dmr')
-
     if chrom is None:
         chrom_size_path = f'{output_dir}/chrom_sizes.txt'
         from ..utilities import parse_chrom_size
@@ -138,21 +136,69 @@ def call_dmr(output_dir,
         else:
             chroms = [chrom]
 
+    chunk_dir = f'{output_dir}/.dmr_chunk'
+    dmr_dir = f'{output_dir}/dmr'
+
     with ProcessPoolExecutor(cpu) as exe:
         futures = {}
-        for chrom in chroms:
+        for chunk_i, chrom in enumerate(chroms):
             future = exe.submit(call_dmr_single_chrom,
-                                output_dir=output_dir,
+                                dms_dir=f'{output_dir}/dms',
+                                output_dir=chunk_dir,
                                 chrom=chrom,
                                 p_value_cutoff=p_value_cutoff,
                                 frac_delta_cutoff=frac_delta_cutoff,
                                 max_dist=max_dist,
                                 residual_quantile=residual_quantile,
                                 corr_cutoff=corr_cutoff)
-            futures[future] = chrom
+            futures[future] = chunk_i
 
+        chunks_to_write = {}
         for future in as_completed(futures):
-            chrom = futures[future]
-            print(f'{chrom} returned.')
-            future.result()
+            chunk_i = futures[future]
+            output_path = future.result()
+            chunks_to_write[chunk_i] = output_path
+
+    write_ordered_chunks(chunks_to_write,
+                         final_path=dmr_dir,
+                         append_dim='dmr',
+                         engine='zarr',
+                         coord_dtypes=None)
+    subprocess.run(f'rm -rf {chunk_dir}', shell=True)
+
+    update_region_ds_config(output_dir=output_dir,
+                            new_dataset_dim={'dmr': 'dmr'},
+                            change_region_dim='dmr')
+    return
+
+
+def collapse_replicates(region_ds, replicate_label, state_da='dmr_state'):
+    if not isinstance(replicate_label, str):
+        # assume the replicate label is provided as a series or dataarray that can be added into coords
+        region_ds.coords['replicate_label'] = replicate_label
+        replicate_label_name = 'replicate_label'
+    else:
+        replicate_label_name = replicate_label
+
+    # check if label exist and complete
+    assert replicate_label_name in region_ds.coords
+    assert region_ds.coords[replicate_label_name].to_pandas().isna().sum() == 0
+    sample_dim, *_ = region_ds.coords[replicate_label_name].dims
+
+    collapsed = {}
+    for rep, sub_da in region_ds[state_da].groupby(replicate_label_name):
+        std = sub_da.std(dim=sample_dim)
+        # std == 0 means all replicates having same state
+        reduced_da = xr.where(std == 0,
+                              sub_da.sel({sample_dim: sub_da[sample_dim][0]}),
+                              0).to_pandas()
+        collapsed[rep] = reduced_da
+    collapsed = pd.DataFrame(collapsed)
+    collapsed.columns.name = f'{sample_dim}_collapsed'
+    collapsed.index.name = region_ds.region_dim
+
+    region_ds['dmr_state_collapsed'] = collapsed
+    if region_ds.location is not None:
+        region_ds[['dmr_state_collapsed']].to_zarr(f'{region_ds.location}/dmr/', mode='a')
+        print(f'Collapsed sample state added in exist RegionDS at {region_ds.location}')
     return

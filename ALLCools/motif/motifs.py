@@ -5,7 +5,7 @@ import numpy as np
 import xarray as xr
 import pathlib
 import subprocess
-from ..mcds.region_ds_utilities import calculate_chunk_regions
+from ..mcds.utilities import write_ordered_chunks
 from ..mcds import RegionDS
 
 
@@ -99,33 +99,34 @@ class MotifSet:
         max_value = np.iinfo(dtype).max
         seq_scores[seq_scores > max_value] = max_value
 
-        da = xr.DataArray(np.array(seq_scores).astype(dtype),
+        _data = np.array(seq_scores).astype(dtype)
+        da = xr.DataArray(_data,
                           coords=[seq_names, self.motif_name_list,
                                   ['n_motifs', 'max_score', 'total_score']],
                           dims=[region_dim, motif_dim, 'motif_value'])
         motif_score_matrix = xr.Dataset({f'{region_dim}_{motif_dim}_da': da})
         motif_score_matrix.to_zarr(save_path)
-        return
+        return save_path
 
-    def _run_motif_scan_chunks(self, fasta_path, output_dir, region_dim, motif_dim, dtype, chunk_size, cpu=1):
+    def _run_motif_scan_chunks(self, fasta_path, output_dir, region_dim, motif_dim,
+                               dtype, chunk_size=10000, cpu=1):
         with open(fasta_path) as fasta:
             seqs = []
             for seq in SeqIO.parse(fasta, 'fasta'):
                 seqs.append(seq)
         print(f'Scan {self.n_motifs} motif in {len(seqs)} sequences.')
 
-        _output_dir = pathlib.Path(output_dir) / f'{region_dim}_{motif_dim}'
-        if _output_dir.exists():
-            subprocess.run(f'rm -rf {_output_dir}', shell=True)
-        _output_dir.mkdir(exist_ok=True)
-
-        if chunk_size is None:
-            chunk_size = calculate_chunk_regions(n_features=self.n_motifs, chunk_size_gbs=2, dtype=dtype)
+        output_dir = pathlib.Path(output_dir).absolute()
+        final_dir = f'{output_dir}/{region_dim}_{motif_dim}'
+        chunk_dir = f'{output_dir}/.{region_dim}_{motif_dim}_chunk'
+        if pathlib.Path(chunk_dir).exists():
+            subprocess.run(f'rm -rf {chunk_dir}', shell=True)
+        pathlib.Path(chunk_dir).mkdir(parents=True)
 
         with ProcessPoolExecutor(cpu) as exe:
-            futures = []
-            for i, chunk_start in enumerate(range(0, len(seqs), chunk_size)):
-                save_path = _output_dir / f'motif_{i}.zarr'
+            futures = {}
+            for chunk_i, chunk_start in enumerate(range(0, len(seqs), chunk_size)):
+                save_path = f'{chunk_dir}/motif_{chunk_i}.zarr'
                 _seqs = seqs[chunk_start:chunk_start + chunk_size]
                 future = exe.submit(self._multi_seq_motif_scores,
                                     seq_list=_seqs,
@@ -133,44 +134,48 @@ class MotifSet:
                                     region_dim=region_dim,
                                     motif_dim=motif_dim,
                                     dtype=dtype)
-                futures.append(future)
+                futures[future] = chunk_i
 
+            chunks_to_write = {}
             for i, future in enumerate(as_completed(futures)):
-                print(f'Job {i} returned.')
-                future.result()
+                print(f'Job {i} returned')
+                chunk_i = futures[future]
+                output_path = future.result()
+                chunks_to_write[chunk_i] = output_path
+
+        write_ordered_chunks(chunks_to_write,
+                             final_path=final_dir,
+                             append_dim=region_dim,
+                             engine='zarr',
+                             coord_dtypes=None)
+        subprocess.run(f'rm -rf {chunk_dir}', shell=True)
         return
 
-    def _aggregate_motif_clusters(self, output_dir, motif_dim, region_dim, dtype, chunk_size):
-        motif_ds = RegionDS.open(f'{output_dir}/{region_dim}_{motif_dim}/*.zarr/', region_dim=region_dim)
+    def _aggregate_motif_clusters(self, output_dir, motif_dim, region_dim, dtype, chunk_size=1000000):
+        motif_ds = RegionDS.open(f'{output_dir}/{region_dim}_{motif_dim}/', region_dim=region_dim)
         _motif_cluster = self.motif_cluster
         _motif_cluster.name = motif_dim
         motif_ds.coords[f'{motif_dim}-cluster'] = _motif_cluster
         motif_cluster_ds = motif_ds.groupby(f'{motif_dim}-cluster').apply(
-            lambda i: i.max(dim=motif_dim).astype(dtype))
-
-        cluster_output_dir = f'{output_dir}/{region_dim}_{motif_dim}-cluster'
-        _cluster_output_dir = pathlib.Path(cluster_output_dir)
-        if _cluster_output_dir.exists():
-            subprocess.run(f'rm -rf {_cluster_output_dir}', shell=True)
-        _cluster_output_dir.mkdir()
+            lambda _i: _i.max(dim=motif_dim).astype(dtype))
 
         # save motif cluster matrix by chunk
         motif_cluster_ds = RegionDS(motif_cluster_ds)
 
-        if chunk_size is None:
-            n_cluster = self.motif_cluster.unique().size
-            chunk_size = calculate_chunk_regions(n_features=n_cluster, dtype=dtype, chunk_size_gbs=3)
+        cluster_output_dir = f'{output_dir}/{region_dim}_{motif_dim}-cluster'
         for i, chunk in enumerate(motif_cluster_ds.iter_array(dim=region_dim,
                                                               chunk_size=chunk_size,
                                                               da='dmr_motif_da',
                                                               load=True)):
-            _ds = xr.Dataset({'dmr_motif-cluster_da': chunk})
-            output_path = f'{cluster_output_dir}/motif-cluster_{i}.zarr'
-            _ds.to_zarr(output_path)
+            _ds = xr.Dataset({'dmr_motif-cluster_da': chunk}).load()
+            if i == 0:
+                _ds.to_zarr(cluster_output_dir, mode='w')
+            else:
+                _ds.to_zarr(cluster_output_dir, append_dim=region_dim)
         return
 
     def scan_motifs(self, fasta_path, output_dir, cpu, region_dim, motif_dim='motif',
-                    combine_cluster=True, dtype='uint16', chunk_size=None):
+                    combine_cluster=True, dtype='uint16', chunk_size=10000):
         self._run_motif_scan_chunks(fasta_path=fasta_path,
                                     output_dir=output_dir,
                                     cpu=cpu,
@@ -178,7 +183,7 @@ class MotifSet:
                                     motif_dim=motif_dim,
                                     dtype=dtype,
                                     chunk_size=chunk_size)
-        motif_ds = RegionDS.open(f'{output_dir}/{region_dim}_{motif_dim}/*.zarr', region_dim=region_dim)
+        motif_ds = RegionDS.open(f'{output_dir}/{region_dim}_{motif_dim}', region_dim=region_dim)
 
         if combine_cluster:
             self._aggregate_motif_clusters(output_dir=output_dir,
@@ -186,7 +191,7 @@ class MotifSet:
                                            region_dim=region_dim,
                                            dtype=dtype,
                                            chunk_size=chunk_size)
-            motif_cluster_ds = RegionDS.open(f'{output_dir}/{region_dim}_{motif_dim}-cluster/*.zarr',
+            motif_cluster_ds = RegionDS.open(f'{output_dir}/{region_dim}_{motif_dim}-cluster',
                                              region_dim=region_dim)
             motif_ds.update(motif_cluster_ds)
         return motif_ds

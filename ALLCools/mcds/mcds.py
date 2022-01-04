@@ -497,8 +497,10 @@ class MCDS(xr.Dataset):
             if add_overall_mc:
                 for mc_type in cluster_mcds.get_index('mc_type'):
                     overall_mc_dim = overall_mc_da[:-3]
-                    mc = cluster_mcds[overall_mc_da].sel(mc_type=mc_type, count_type='mc').sum(dim=overall_mc_dim)
-                    cov = cluster_mcds[overall_mc_da].sel(mc_type=mc_type, count_type='cov').sum(dim=overall_mc_dim)
+                    mc = cluster_mcds[overall_mc_da].sel(
+                        mc_type=mc_type, count_type='mc').sum(dim=overall_mc_dim)
+                    cov = cluster_mcds[overall_mc_da].sel(
+                        mc_type=mc_type, count_type='cov').sum(dim=overall_mc_dim)
                     cluster_mcds.coords[f'{cluster_col}_{mc_type}'] = (mc / cov).to_pandas()
         return cluster_mcds
 
