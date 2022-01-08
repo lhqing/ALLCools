@@ -210,7 +210,7 @@ def region_correlation(data_a,
                        method='pearson',
                        max_dist=1000000,
                        cpu=1,
-                       null='region',
+                       null='sample',
                        null_n=100000,
                        chroms=None):
     data_a, region_dim_a = _verify_correlation_da(data_a, region_dim_a, pos_a)

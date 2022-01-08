@@ -12,6 +12,7 @@ import time
 import pyBigWig
 from pybedtools import BedTool
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from .region_ds_utilities import update_region_ds_config
 from .utilities import determine_engine, obj_to_str, write_ordered_chunks
 import os
 from ALLCools.utilities import parse_chrom_size
@@ -22,8 +23,13 @@ os.environ['NUMEXPR_MAX_THREADS'] = '16'
 def _bigwig_over_bed(bed: pd.DataFrame, path, value_type='mean', dtype='float32'):
     with pyBigWig.open(path, 'r') as bw:
         def _region_stat(row, t=value_type):
-            chrom, start, end = row
-            value = bw.stats(chrom, start, end, type=t)[0]
+            chrom, start, end, *_ = row
+            try:
+                value = bw.stats(chrom, start, end, type=t)[0]
+            except RuntimeError:
+                # happens when the region has error or chrom not exist in bw
+                # let user decide what happen, here just return nan
+                value = np.NaN
             return value
 
         values = bed.apply(_region_stat, t=value_type, axis=1)
@@ -205,13 +211,13 @@ class RegionDS(xr.Dataset):
             return
 
     @classmethod
-    def from_bed(cls, bed_path, location, chrom_size_path, region_dim='region'):
+    def from_bed(cls, bed, location, chrom_size_path, region_dim='region'):
         """
         Create empty RegionDS from a bed file.
 
         Parameters
         ----------
-        bed_path
+        bed
         location
         region_dim
         chrom_size_path
@@ -222,7 +228,10 @@ class RegionDS(xr.Dataset):
         """
 
         # sort bed based on chrom_size_path
-        bed = BedTool(bed_path).sort(g=chrom_size_path).to_dataframe()
+        if isinstance(bed, (str, pathlib.PosixPath)):
+            bed = BedTool(bed).sort(g=chrom_size_path).to_dataframe()
+        else:
+            bed = bed
 
         n_cols = bed.shape[1]
         if n_cols == 3:
@@ -246,8 +255,6 @@ class RegionDS(xr.Dataset):
         location = pathlib.Path(location).absolute()
         location.mkdir(exist_ok=True, parents=True)
         region_ds = cls(ds, region_dim=region_dim, location=location, chrom_size_path=chrom_size_path)
-
-        region_ds.save(f'{location}/{region_dim}')
         return region_ds
 
     @classmethod
@@ -257,8 +264,8 @@ class RegionDS(xr.Dataset):
              use_regions=None,
              split_large_chunks=True,
              chrom_size_path=None,
-             select_dir=None):
-        region_ds_config = None
+             select_dir=None,
+             engine='zarr'):
         if isinstance(path, (str, pathlib.PosixPath)):
             _path = pathlib.Path(path).absolute()
 
@@ -297,13 +304,14 @@ class RegionDS(xr.Dataset):
                                 # the dir do not have region_dim, skip
                                 continue
                             if not (sub_dir_path / '.zattrs').exists():
-                                print(f'{sub_dir_path} does not seem to be a zarr storage, skipped')
+                                # print(f'{sub_dir_path} does not seem to be a zarr storage, skipped')
                                 continue
                             try:
                                 datasets.append(
                                     cls._open_single_dataset(path=sub_dir_path,
                                                              region_dim=region_dim,
-                                                             split_large_chunks=split_large_chunks)
+                                                             split_large_chunks=split_large_chunks,
+                                                             engine=engine)
                                 )
                             except BaseException as e:
                                 print(f'An error raised when reading {sub_dir_path}.')
@@ -317,27 +325,34 @@ class RegionDS(xr.Dataset):
                     region_ds = cls._open_single_dataset(path=path,
                                                          region_dim=region_dim,
                                                          split_large_chunks=split_large_chunks,
-                                                         chrom_size_path=chrom_size_path)
+                                                         chrom_size_path=chrom_size_path,
+                                                         engine=engine)
             else:
                 # dataset stored in other format, such as netcdf4
                 region_ds = cls._open_single_dataset(path=path,
                                                      region_dim=region_dim,
                                                      split_large_chunks=split_large_chunks,
-                                                     chrom_size_path=chrom_size_path)
+                                                     chrom_size_path=chrom_size_path,
+                                                     engine=engine)
         else:
             # could be a list of paths, open it as a single dataset
             path = list(path)
             region_ds = cls._open_single_dataset(path=path,
                                                  region_dim=region_dim,
                                                  split_large_chunks=split_large_chunks,
-                                                 chrom_size_path=chrom_size_path)
+                                                 chrom_size_path=chrom_size_path,
+                                                 engine=engine)
 
         if use_regions is not None:
             region_ds = region_ds.sel({region_dim: use_regions})
         return region_ds
 
     @classmethod
-    def _open_single_dataset(cls, path, region_dim, split_large_chunks=True, chrom_size_path=None, location=None):
+    def _open_single_dataset(cls, path, region_dim,
+                             split_large_chunks=True,
+                             chrom_size_path=None,
+                             location=None,
+                             engine=None):
         """
         Take one or multiple RegionDS file paths and create single RegionDS concatenated on region_dim
 
@@ -357,27 +372,35 @@ class RegionDS(xr.Dataset):
         if region_dim is None:
             raise ValueError('Please specify a region_dim name when open a normal xr.Dataset with RegionDS.')
 
-        engine = determine_engine(path)
+        if engine is None:
+            engine = determine_engine(path)
         # if engine is None:
         #     print(f'Open RegionDS with netcdf4 engine.')
         # else:
         #     print(f'Open RegionDS with {engine} engine.')
-        if (isinstance(path, str) and '*' not in path) or isinstance(path, pathlib.PosixPath):
-            ds = xr.open_dataset(path, engine=engine)
-        else:
-            with dask.config.set(
-                    **{'array.slicing.split_large_chunks': split_large_chunks
-                       }):
-                if isinstance(path, str):
-                    import glob
-                    path = sorted([p for p in glob.glob(path)])
-                ds = xr.open_mfdataset(path,
-                                       parallel=False,
-                                       combine='nested',
-                                       concat_dim=region_dim,
-                                       engine=engine)
-
-        ds = cls(ds, region_dim=region_dim, location=location, chrom_size_path=chrom_size_path).squeeze()
+        try:
+            if (isinstance(path, str) and '*' not in path) or isinstance(path, pathlib.PosixPath):
+                ds = xr.open_dataset(path, engine=engine)
+            else:
+                with dask.config.set(
+                        **{'array.slicing.split_large_chunks': split_large_chunks
+                           }):
+                    if isinstance(path, str):
+                        import glob
+                        path = sorted([p for p in glob.glob(path)])
+                    ds = xr.open_mfdataset(path,
+                                           parallel=False,
+                                           combine='nested',
+                                           concat_dim=region_dim,
+                                           engine=engine)
+        except Exception as e:
+            print(f'Got error when opening {path}')
+            print(f'Engine parameter is {engine}')
+            raise e
+        ds = cls(ds,
+                 region_dim=region_dim,
+                 location=location,
+                 chrom_size_path=chrom_size_path).squeeze()
         return ds
 
     def iter_index(self, chunk_size=100000, dim=None):
@@ -467,7 +490,7 @@ class RegionDS(xr.Dataset):
             bed_df.index = self.get_index(self.region_dim)
             return bed_df
 
-    def _chunk_annotation_executor(self, annotation_function, cpu, **kwargs):
+    def _chunk_annotation_executor(self, annotation_function, cpu, save=True, **kwargs):
         chrom_size_path = kwargs['chrom_size_path']
         dim = kwargs['dim']
         chunk_size = kwargs['chunk_size']
@@ -492,7 +515,7 @@ class RegionDS(xr.Dataset):
 
         n_features = len(track_paths)
         if chunk_size == 'auto':
-            chunk_size = max(2, n_features // cpu // 2 + 1)
+            chunk_size = max(1, n_features // cpu // 2 + 1)
         print(f'Use chunk size {chunk_size}')
 
         other_kwargs = {
@@ -511,7 +534,7 @@ class RegionDS(xr.Dataset):
                 future = exe.submit(annotation_function,
                                     **kwargs)
                 futures[future] = i
-                time.sleep(1)
+                # time.sleep(1)
 
             chunks_to_write = {}
             for i, future in enumerate(as_completed(futures)):
@@ -519,15 +542,21 @@ class RegionDS(xr.Dataset):
                 output_path = future.result()
                 chunks_to_write[chunk_i] = output_path
 
-        write_ordered_chunks(chunks_to_write=chunks_to_write,
-                             final_path=final_dir_path,
-                             append_dim=dim,
-                             engine='zarr',
-                             dtype=kwargs['dtype'],
-                             coord_dtypes=None)
+        if save:
+            write_ordered_chunks(chunks_to_write=chunks_to_write,
+                                 final_path=final_dir_path,
+                                 append_dim=dim,
+                                 engine='zarr',
+                                 dtype=kwargs['dtype'],
+                                 coord_dtypes=None)
+            update_region_ds_config(self.location,
+                                    new_dataset_dim={f'{region_dim}_{dim}': region_dim})
 
-        # load the newly generated da only
-        _ds = xr.open_zarr(final_dir_path)
+            # load the newly generated da only
+            _ds = xr.open_zarr(final_dir_path)
+        else:
+            _ds = xr.open_mfdataset([chunks_to_write[k] for k in sorted(chunks_to_write.keys())],
+                                    concat_dim=dim, combine='nested', engine='zarr').load()
         self.update(_ds)
 
         subprocess.run(f'rm -rf {chunk_dir_path}', shell=True)
@@ -541,7 +570,8 @@ class RegionDS(xr.Dataset):
                             value_type='mean',
                             chunk_size='auto',
                             dtype='float32',
-                            cpu=1):
+                            cpu=1,
+                            save=True):
         if isinstance(bigwig_table, dict):
             track_paths = pd.Series(bigwig_table)
         elif isinstance(bigwig_table, pd.Series):
@@ -560,7 +590,7 @@ class RegionDS(xr.Dataset):
             chunk_size=chunk_size,
             dtype=dtype
         )
-        self._chunk_annotation_executor(_annotate_by_bigwigs_worker, cpu=cpu, **kwargs)
+        self._chunk_annotation_executor(_annotate_by_bigwigs_worker, cpu=cpu, save=save, **kwargs)
         return
 
     def annotate_by_bed(self,
@@ -571,7 +601,8 @@ class RegionDS(xr.Dataset):
                         chunk_size='auto',
                         dtype='bool',
                         bed_sorted=True,
-                        cpu=1):
+                        cpu=1,
+                        save=True):
         bed_tmp = pathlib.Path(f'./pybedtools_tmp_{np.random.randint(0, 100000)}').absolute()
         bed_tmp.mkdir(exist_ok=True)
         default_tmp = pybedtools.helpers.get_tempdir()
@@ -595,7 +626,7 @@ class RegionDS(xr.Dataset):
             dtype=dtype,
             bed_sorted=bed_sorted
         )
-        self._chunk_annotation_executor(_annotate_by_beds_worker, cpu=cpu, **kwargs)
+        self._chunk_annotation_executor(_annotate_by_beds_worker, cpu=cpu, save=save, **kwargs)
 
         subprocess.run(f'rm -rf {bed_tmp}', shell=True)
         # pybedtools actually changed tempfile.tempdir
@@ -603,7 +634,7 @@ class RegionDS(xr.Dataset):
         pybedtools.helpers.set_tempdir(default_tmp)
         return
 
-    def get_feature(self, feature_name, dim=None):
+    def get_feature(self, feature_name, dim=None, da_name=None):
         if dim is None:
             try:
                 data = self.coords[feature_name].to_pandas()
@@ -611,7 +642,9 @@ class RegionDS(xr.Dataset):
                 raise KeyError(f'{feature_name} does not exist in RegionDS.coords, '
                                f'if it belongs to a dataarray, please specify its dim name.')
         else:
-            data = self[f'{self.region_dim}_{dim}_da'].sel({dim: feature_name}).to_pandas()
+            if da_name is None:
+                da_name = f'{self.region_dim}_{dim}_da'
+            data = self[da_name].sel({dim: feature_name}).to_pandas()
         return data
 
     def scan_motifs(self,
@@ -810,10 +843,20 @@ class RegionDS(xr.Dataset):
         obj_to_str(self, dtypes)
         return
 
-    def save(self, output_path):
+    def save(self, output_path=None, mode='w', change_region_dim=True):
+        if self.location is None:
+            raise ValueError(f'RegionDS.location is None when trying to save.')
+        pathlib.Path(self.location).mkdir(parents=True, exist_ok=True)
+
+        if output_path is None:
+            output_path = f'{self.location}/{self.region_dim}'
+            update_region_ds_config(self.location,
+                                    change_region_dim=self.region_dim if change_region_dim else None,
+                                    new_dataset_dim={self.region_dim: self.region_dim})
+
         # turn object coords to fix length string dtype before saving to zarr
         self.object_coords_to_string()
-        self.to_zarr(output_path, mode='w')
+        self.to_zarr(output_path, mode=mode)
         return
 
     def get_coords(self, name):

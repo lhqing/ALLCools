@@ -267,7 +267,7 @@ def determine_engine(dataset_paths):
         if pathlib.Path(f'{path}/.zgroup').exists():
             e = 'zarr'
         else:
-            e = None  # default for None is netcdf4
+            e = None  # default for None is netcdf4 or xarray will guess
         return e
 
     def _multi_paths(paths):
@@ -333,5 +333,5 @@ def write_ordered_chunks(chunks_to_write, final_path, append_dim,
             # create the new da
             chunk_ds.to_zarr(final_path, mode='w')
         else:
-            chunk_ds.to_zarr(final_path, append_dim=append_dim)
+            chunk_ds.to_zarr(final_path, moda='a', append_dim=append_dim)
     return
