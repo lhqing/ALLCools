@@ -1,0 +1,2275 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALLCools.clustering.sccaf</title>
+    
+  <link href="../../../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../../../../_static/allcools_favicon.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="ALLCools.clustering.scrublet" href="../scrublet/index.html" />
+    <link rel="prev" title="ALLCools.clustering.scanorama" href="../scanorama/index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4F8CRF0GK9"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-4F8CRF0GK9');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../../_static/allcools_logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../intro.html">
+   ALLCools: ALL methyl-Cytosine tools
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GET STARTED
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../start/installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../start/input_files.html">
+   Input Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../start/analysis_steps.html">
+   Analysis Steps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../start/interactive.html">
+   Examples In This Document
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CELL LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../cell_level/basic/intro_basic_clustering.html">
+   Basic Clustering Walk-through
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/basic/mch_mcg_100k_basic.html">
+     Basic Cell Clustering Using 100Kb Bins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/basic/mcg_5kb_basic.html">
+     Basic Cell Clustering Using mCG-5Kb Bins
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../cell_level/step_by_step/intro_step_by_step_clustering.html">
+   Step-by-step Clustering Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../../cell_level/step_by_step/100kb/intro_100kb.html">
+     Step-by-step Clustering Using 100Kb bins
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../cell_level/step_by_step/100kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../cell_level/step_by_step/100kb/02-BasicFeatureFiltering.html">
+       Feature Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
+       Calculate Highly Variable Features And Get mC Fraction AnnData
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../cell_level/step_by_step/100kb/05-DecompositionAndEmbedding.html">
+       Decomposition And Embedding
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../cell_level/step_by_step/100kb/06-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../../cell_level/step_by_step/5kb/intro_5kb.html">
+     Step-by-step Clustering using mCG-5Kb Input
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
+       Decomposition Using mCG-5Kb Bins
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../cell_level/step_by_step/5kb/03-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../cell_level/dmg/intro_dmg.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/dmg/01-AddGenemCFractions.html">
+     Calculate Gene mC Fractions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/dmg/02-DifferentiallyMethylatedGenes.html">
+     Cluster Differentially Methylated Genes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/dmg/03-PlotClusterDMGs.html">
+     Plot Cluster DMGs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/dmg/04-PairwiseDMG.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../cell_level/integration/intro_integration.html">
+   Data Integration
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/integration/multi_modalities/Neurons/01-preprocess_10x.html">
+     Preprocess 10X snRNA-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/integration/multi_modalities/Neurons/02-preprocess_SMART.html">
+     Preprocess SMART-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/integration/multi_modalities/Neurons/03-preprocess_snATAC.html">
+     Preprocess snATAC-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/integration/multi_modalities/Neurons/04-integration.html">
+     Perform Cross-Modality Integration
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../cell_level/doublets/intro_doublets.html">
+   Doublets Identification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cell_level/doublets/doublet_score_chrom100k.html">
+     Calculate Cell Doublet Score
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CLUSTER LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../cluster_level/intro.html">
+   Cluster Level Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/RegionDS/01a.call_dmr.html">
+     DMR Calling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/RegionDS/01b.parse_methylpy.html">
+     Parse methylpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/RegionDS/02.annotation.html">
+     Annotate RegionDS
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/RegionDS/03.filter_dmr.html">
+     Filter DMR
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/RegionDS/04.motif_scan.html">
+     Motif Scan
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/RegionDS/05.motif_enrichment.html">
+     Motif Enrichment Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/RegionDS/06a.RNA_cluster_profile.html">
+     Prepare Cluster-by-Gene RNA Profile
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/RegionDS/06b.mc_cluster_profile.html">
+     Prepare Cluster-by-Gene mC Profile
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/RegionDS/07.dmr_gene_corr.html">
+     DMR-Gene Correlation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../cluster_level/REPTILE/intro_reptile.html">
+   REPTILE
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/REPTILE/01.prepare_input.html">
+     Prepare Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../cluster_level/REPTILE/02.run_reptile.html">
+     Predict Enhancer with REPTILE Algorithm
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  COMMAND LINE TOOLS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools.html">
+   Entry Point
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools_allc.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     allc
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools_standard.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     standard
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools_profile.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     profile
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools_tbi.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     tbi
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools_merge.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     merge
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools_extract.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     extract
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools_bw.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     bw
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools_region.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     region
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools_mcds.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcds
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../command_line/allcools_mcad.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcad
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  VISUALIZATION
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../visualization/intro.html">
+   Visualization
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  DISCUSSION
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../discuss/intro.html">
+   Discussion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../discuss/dmr_benchmark.html">
+   DMR Caller Benchmark
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  API
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../index.html">
+   <code class="xref py py-mod docutils literal notranslate">
+    <span class="pre">
+     ALLCools
+    </span>
+   </code>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.clustering
+      </span>
+     </code>
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../feature_selection/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.feature_selection
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+      <label for="toctree-checkbox-12">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../feature_selection/feature_enrichment/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.clustering.feature_selection.feature_enrichment
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../ConsensusClustering/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.ConsensusClustering
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../art_of_tsne/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.art_of_tsne
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../balanced_pca/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.balanced_pca
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../dmg/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.dmg
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../incremental_pca/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.incremental_pca
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../integration/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.integration
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../mcad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.mcad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../pvclust/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.pvclust
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../scrublet/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.scrublet
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../count_matrix/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.count_matrix
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../count_matrix/atac/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.atac
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../count_matrix/h5ad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.h5ad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../count_matrix/mcad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.mcad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../count_matrix/mcds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.mcds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../count_matrix/snap/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.snap
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../count_matrix/zarr/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.zarr
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../dmr/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.dmr
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../dmr/call_dmr/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.call_dmr
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../dmr/call_dms/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.call_dms
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../dmr/parse_methylpy/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.parse_methylpy
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../dmr/rms_test/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.rms_test
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../igv/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.igv
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../igv/BaseClass/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.BaseClass
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../igv/Session/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.Session
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../igv/Track/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.Track
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../igv/defaults/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.defaults
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../igv/make_session/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.make_session
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../integration/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.integration
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../integration/harmony/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.integration.harmony
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../mcds/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.mcds
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mcds/correlation/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.correlation
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mcds/mcds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.mcds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mcds/region_ds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.region_ds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mcds/region_ds_utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.region_ds_utilities
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../mcds/utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.utilities
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../motif/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.motif
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../motif/default_motif_set/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.default_motif_set
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../motif/motifs/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.motifs
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../motif/parse_meme/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.parse_meme
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../plot/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.plot
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/categorical_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.categorical_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/color/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.color
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/continuous_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.continuous_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/contour/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.contour
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/decomposition/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.decomposition
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/dendro/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.dendro
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/interactive_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.interactive_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/qc_plots/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.qc_plots
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/size/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.size
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/sunburst/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.sunburst
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/text_anno_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.text_anno_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../plot/utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.utilities
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../pseudo_cell/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.pseudo_cell
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../pseudo_cell/pseudo_cell_kmeans/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.pseudo_cell.pseudo_cell_kmeans
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../pseudo_cell/pseudo_cell_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.pseudo_cell.pseudo_cell_knn
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../reptile/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.reptile
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../reptile/reptile/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.reptile.reptile
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../schema/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.schema
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../schema/mcds_schema/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.schema.mcds_schema
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../__main__/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.__main__
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../_allc_to_bigwig/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_bigwig
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../_allc_to_bigwig_new/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_bigwig_new
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../_allc_to_region_count/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_region_count
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../_bam_to_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._bam_to_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../_doc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._doc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../_extract_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._extract_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../_merge_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._merge_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../_open/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._open
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../_version/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._version
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.api
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../utilities/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.utilities
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  PROJECT INFO
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../project_info/citation.html">
+   Citation And Reference
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/lhqing/ALLCools/releases">
+   Changelog
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../../_sources/api/ALLCools/clustering/sccaf/index.rst"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fapi/ALLCools/clustering/sccaf/index.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/api/ALLCools/clustering/sccaf/index.rst"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-contents">
+   Module Contents
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.color_long">
+     color_long
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.run_BayesianGaussianMixture">
+     run_BayesianGaussianMixture
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.bhattacharyya_distance">
+     bhattacharyya_distance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.bhattacharyya_matrix">
+     bhattacharyya_matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.binary_accuracy">
+     binary_accuracy
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.normalize_confmat1">
+     normalize_confmat1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.normalize_confmat2">
+     normalize_confmat2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.cluster_adjmat">
+     cluster_adjmat
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.msample">
+     msample
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.train_test_split_per_type">
+     train_test_split_per_type
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.SCCAF_assessment">
+     SCCAF_assessment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.self_projection">
+     self_projection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.make_unique">
+     make_unique
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.confusion_matrix">
+     confusion_matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.per_cluster_accuracy">
+     per_cluster_accuracy
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.per_cell_accuracy">
+     per_cell_accuracy
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.get_topmarkers">
+     get_topmarkers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.eu_distance">
+     eu_distance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.get_distance_matrix">
+     get_distance_matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.merge_cluster">
+     merge_cluster
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.find_high_resolution">
+     find_high_resolution
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.get_connection_matrix">
+     get_connection_matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.SCCAF_optimize_all">
+     SCCAF_optimize_all
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.SCCAF_optimize">
+     SCCAF_optimize
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>ALLCools.clustering.sccaf</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-contents">
+   Module Contents
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.color_long">
+     color_long
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.run_BayesianGaussianMixture">
+     run_BayesianGaussianMixture
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.bhattacharyya_distance">
+     bhattacharyya_distance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.bhattacharyya_matrix">
+     bhattacharyya_matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.binary_accuracy">
+     binary_accuracy
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.normalize_confmat1">
+     normalize_confmat1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.normalize_confmat2">
+     normalize_confmat2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.cluster_adjmat">
+     cluster_adjmat
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.msample">
+     msample
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.train_test_split_per_type">
+     train_test_split_per_type
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.SCCAF_assessment">
+     SCCAF_assessment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.self_projection">
+     self_projection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.make_unique">
+     make_unique
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.confusion_matrix">
+     confusion_matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.per_cluster_accuracy">
+     per_cluster_accuracy
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.per_cell_accuracy">
+     per_cell_accuracy
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.get_topmarkers">
+     get_topmarkers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.eu_distance">
+     eu_distance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.get_distance_matrix">
+     get_distance_matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.merge_cluster">
+     merge_cluster
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.find_high_resolution">
+     find_high_resolution
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.get_connection_matrix">
+     get_connection_matrix
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.SCCAF_optimize_all">
+     SCCAF_optimize_all
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.clustering.sccaf.SCCAF_optimize">
+     SCCAF_optimize
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="section" id="module-ALLCools.clustering.sccaf">
+<span id="allcools-clustering-sccaf"></span><h1><a class="reference internal" href="#module-ALLCools.clustering.sccaf" title="ALLCools.clustering.sccaf"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ALLCools.clustering.sccaf</span></code></a><a class="headerlink" href="#module-ALLCools.clustering.sccaf" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.color_long">
+<span class="sig-name descname"><span class="pre">color_long</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">['#e6194b',</span> <span class="pre">'#3cb44b',</span> <span class="pre">'#ffe119',</span> <span class="pre">'#0082c8',</span> <span class="pre">'#f58231',</span> <span class="pre">'#911eb4',</span> <span class="pre">'#46f0f0',</span> <span class="pre">'#f032e6',...</span></em><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#color_long"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.color_long" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.run_BayesianGaussianMixture">
+<span class="sig-name descname"><span class="pre">run_BayesianGaussianMixture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#run_BayesianGaussianMixture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.run_BayesianGaussianMixture" title="Permalink to this definition">¶</a></dt>
+<dd><p>For K-means clustering</p>
+<p>Y: the expression matrix
+K: number of clusters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>clusters assigned to each cell.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.bhattacharyya_distance">
+<span class="sig-name descname"><span class="pre">bhattacharyya_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repr1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repr2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#bhattacharyya_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.bhattacharyya_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates Bhattacharyya distance (<a class="reference external" href="https://en.wikipedia.org/wiki/Bhattacharyya_distance">https://en.wikipedia.org/wiki/Bhattacharyya_distance</a>).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.bhattacharyya_matrix">
+<span class="sig-name descname"><span class="pre">bhattacharyya_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#bhattacharyya_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.bhattacharyya_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.binary_accuracy">
+<span class="sig-name descname"><span class="pre">binary_accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#binary_accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.binary_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.normalize_confmat1">
+<span class="sig-name descname"><span class="pre">normalize_confmat1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#normalize_confmat1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.normalize_confmat1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize the confusion matrix based on the total number of cells in each class
+x(i,j) = max(cmat(i,j)/diagnol(i),cmat(j,i)/diagnol(j))
+confusion rate between i and j is defined by the maximum ratio i is confused as j or j is confused as i.</p>
+<p>Input
+cmat: the confusion matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>the normalized confusion matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.normalize_confmat2">
+<span class="sig-name descname"><span class="pre">normalize_confmat2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#normalize_confmat2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.normalize_confmat2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize the confusion matrix based on the total number of cells.
+x(i,j) = max(cmat(i,j)+cmat(j,i)/N)
+N is total number of cells analyzed.
+Confusion rate between i and j is defined by the sum of i confused as j or j confused as i.
+Then divide by total number of cells.</p>
+<p>Input
+cmat: the confusion matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>the normalized confusion matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.cluster_adjmat">
+<span class="sig-name descname"><span class="pre">cluster_adjmat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#cluster_adjmat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.cluster_adjmat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cluster the groups based on the adjacent matrix.
+Use the cutoff to discretize the matrix used to construct the adjacent graph.
+Then cluster the graph using the louvain clustering with a resolution value.
+As the adjacent matrix is binary, the default resolution value is set to 1.</p>
+<dl class="simple">
+<dt>xmat: <cite>numpy.array</cite> or sparse matrix</dt><dd><p>the reference matrix/normalized confusion matrix</p>
+</dd>
+<dt>cutoff: <cite>float</cite> optional (default: 0.1)</dt><dd><p>threshold used to binarize the reference matrix</p>
+</dd>
+<dt>resolution: <cite>float</cite> optional (default: 1.0)</dt><dd><p>resolution parameter for louvain clustering</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>new group names.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.msample">
+<span class="sig-name descname"><span class="pre">msample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frac</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#msample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.msample" title="Permalink to this definition">¶</a></dt>
+<dd><p>sample the matrix by number or by fraction.
+if the fraction is larger than the sample number, use number for sampling. Otherwise, use fraction.</p>
+<p>x: the matrix to be split
+n: number of vectors to be sampled
+frac: fraction of the total matrix to be sampled</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sampled selection.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.train_test_split_per_type">
+<span class="sig-name descname"><span class="pre">train_test_split_per_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#train_test_split_per_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.train_test_split_per_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is identical to train_test_split, but can split the data either based on number of cells or by fraction.</p>
+<dl class="simple">
+<dt>X: <cite>numpy.array</cite> or sparse matrix</dt><dd><p>the feature matrix</p>
+</dd>
+<dt>y: <cite>list of string/int</cite></dt><dd><p>the class assignments</p>
+</dd>
+<dt>n: <cite>int</cite> optional (default: 100)</dt><dd><p>maximum number sampled in each label</p>
+</dd>
+<dt>fraction: <cite>float</cite> optional (default: 0.8)</dt><dd><p>Fraction of data included in the training set. 0.5 means use half of the data for training,
+if half of the data is fewer than maximum number of cells (n).</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>X_train, X_test, y_train, y_test</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.SCCAF_assessment">
+<span class="sig-name descname"><span class="pre">SCCAF_assessment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#SCCAF_assessment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.SCCAF_assessment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assessment of clustering reliability using self-projection.
+It is the same as the self_projection function.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.self_projection">
+<span class="sig-name descname"><span class="pre">self_projection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'LR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penalty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'l1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparsity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'liblinear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whole</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#self_projection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.self_projection" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the core function for running self-projection.</p>
+<dl class="simple">
+<dt>X: <cite>numpy.array</cite> or sparse matrix</dt><dd><p>the expression matrix, e.g. ad.raw.X.</p>
+</dd>
+<dt>cell_types: <cite>list of String/int</cite></dt><dd><p>the cell clustering assignment</p>
+</dd>
+<dt>classifier: <cite>String</cite> optional (defatul: ‘LR’)</dt><dd><p>a machine learning model in “LR” (logistic regression),         “RF” (Random Forest), “GNB”(Gaussion Naive Bayes), “SVM” (Support Vector Machine) and “DT”(Decision Tree).</p>
+</dd>
+<dt>penalty: <cite>String</cite> optional (default: ‘l2’)</dt><dd><p>the standardization mode of logistic regression. Use ‘l1’ or ‘l2’.</p>
+</dd>
+<dt>sparsity: <cite>fload</cite> optional (default: 0.5)</dt><dd><p>The sparsity parameter (C in sklearn.linear_model.LogisticRegression) for the logistic regression model.</p>
+</dd>
+<dt>fraction: <cite>float</cite> optional (default: 0.5)</dt><dd><p>Fraction of data included in the training set. 0.5 means use half of the data for training,
+if half of the data is fewer than maximum number of cells (n).</p>
+</dd>
+<dt>n: <cite>int</cite> optional (default: 100)</dt><dd><p>Maximum number of cell included in the training set for each cluster of cells.
+only fraction is used to split the dataset if n is 0.</p>
+</dd>
+<dt>cv: <cite>int</cite> optional (default: 5)</dt><dd><p>fold for cross-validation on the training set.
+0 means no cross-validation.</p>
+</dd>
+<dt>whole: <cite>bool</cite> optional (default: False)</dt><dd><p>if measure the performance on the whole dataset (include training and test).</p>
+</dd>
+</dl>
+<p>n_jobs: <cite>int</cite> optional, number of threads to use with the different classifiers (default: None - unlimited).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>y_prob, y_pred, y_test, clf</em></p></li>
+<li><p><strong>y_prob</strong> (<cite>matrix of float</cite>) – prediction probability</p></li>
+<li><p><strong>y_pred</strong> (<cite>list of string/int</cite>) – predicted clustering of the test set</p></li>
+<li><p><strong>y_test</strong> (<cite>list of string/int</cite>) – real clustering of the test set</p></li>
+<li><p><strong>clf</strong> (<em>the classifier model.</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.make_unique">
+<span class="sig-name descname"><span class="pre">make_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dup_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#make_unique"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.make_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a name list unique by adding suffix “_%d”. This function is identical to the make.unique function in R.</p>
+<p>dup_list: a list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>a unique list with the same length as the input.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.confusion_matrix">
+<span class="sig-name descname"><span class="pre">confusion_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#confusion_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.confusion_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get confusion matrix based on the test set.</p>
+<p>y_test, y_pred, clf: same as in self_projection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>the confusion matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.per_cluster_accuracy">
+<span class="sig-name descname"><span class="pre">per_cluster_accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mtx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clstr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'louvain'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#per_cluster_accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.per_cluster_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Measure the accuracy of each cluster and put into a metadata slot.
+So the reliability of each cluster can be visualized.</p>
+<dl class="simple">
+<dt>mtx: <cite>pandas.dataframe</cite></dt><dd><p>the confusion matrix</p>
+</dd>
+<dt>ad: <cite>AnnData</cite></dt><dd><p>anndata object</p>
+</dd>
+<dt>clstr_name: <cite>String</cite></dt><dd><p>the name of the clustering</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.per_cell_accuracy">
+<span class="sig-name descname"><span class="pre">per_cell_accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#per_cell_accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.per_cell_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.get_topmarkers">
+<span class="sig-name descname"><span class="pre">get_topmarkers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#get_topmarkers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.get_topmarkers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the top weighted features from the logistic regressioin model.</p>
+<p>clf: the logistic regression classifier
+names: <cite>list of Strings</cite></p>
+<blockquote>
+<div><p>the names of the features (the gene names).</p>
+</div></blockquote>
+<dl class="simple">
+<dt>topn: <cite>int</cite></dt><dd><p>number of top weighted featured to be returned.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list of markers for each of the cluster.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.eu_distance">
+<span class="sig-name descname"><span class="pre">eu_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#eu_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.eu_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Measure the euclidean distance between two groups of cells and the third group.</p>
+<dl class="simple">
+<dt>X: <cite>np.array</cite> or <cite>sparse matrix</cite></dt><dd><p>the total expression matrix</p>
+</dd>
+<dt>gp1: <cite>bool list</cite></dt><dd><p>group1 of cells</p>
+</dd>
+<dt>gp2: <cite>bool list</cite></dt><dd><p>group2 of cells</p>
+</dd>
+<dt>cell: <cite>bool list</cite></dt><dd><p>group3 of cells, the group to be compared with gp1 and gp2.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><cite>float value</cite></p></li>
+<li><p><em>the average distance difference.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.get_distance_matrix">
+<span class="sig-name descname"><span class="pre">get_distance_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#get_distance_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.get_distance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the mean distance matrix between all clusters.</p>
+<dl class="simple">
+<dt>X: <cite>np.array</cite> or <cite>sparse matrix</cite></dt><dd><p>the total expression matrix</p>
+</dd>
+<dt>clusters: <cite>string list</cite></dt><dd><p>the assignment of the clusters</p>
+</dd>
+<dt>labels: <cite>string list</cite></dt><dd><p>the unique labels of the clusters</p>
+</dd>
+<dt>metric: <cite>string</cite> (optional, default: euclidean)</dt><dd><p>distance metrics, see (<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html">http://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html</a>)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the all-cluster to all-cluster distance matrix.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><cite>np.array</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.merge_cluster">
+<span class="sig-name descname"><span class="pre">merge_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#merge_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.merge_cluster" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.find_high_resolution">
+<span class="sig-name descname"><span class="pre">find_high_resolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#find_high_resolution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.find_high_resolution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.get_connection_matrix">
+<span class="sig-name descname"><span class="pre">get_connection_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ad_obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#get_connection_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.get_connection_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.SCCAF_optimize_all">
+<span class="sig-name descname"><span class="pre">SCCAF_optimize_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_acc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1_norm_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2_norm_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R1norm_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R2norm_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#SCCAF_optimize_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.SCCAF_optimize_all" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adata: <cite>AnnData</cite></dt><dd><p>The AnnData object of the expression profile.</p>
+</dd>
+<dt>min_acc: <cite>float</cite> optional (default: 0.9)</dt><dd><p>The minimum self-projection accuracy to be optimized for.
+e.g., 0.9 means the clustering optimization (merging process)
+will not stop until the self-projection accuracy is above 90%.</p>
+</dd>
+<dt>R1norm_cutoff: <cite>float</cite> optional (default: 0.5)</dt><dd><p>The start cutoff for R1norm of confusion matrix.
+e.g., 0.5 means use 0.5 as a cutoff to discretize the confusion matrix after R1norm.
+the discretized matrix is used to construct the connection graph for clustering optimization.</p>
+</dd>
+<dt>R2norm_cutoff: <cite>float</cite> optional (default: 0.05)</dt><dd><p>The start cutoff for R2norm of confusion matrix.</p>
+</dd>
+<dt>R1norm_step: <cite>float</cite> optional (default: 0.01)</dt><dd><p>The reduce step for minimum R1norm value.
+Each round of optimization calls the function <cite>SCCAF_optimize</cite>.
+The start of the next round of optimization is based on a new
+cutoff for the R1norm of the confusion matrix. This cutoff is
+determined by the minimum R1norm value in the previous round minus the R1norm_step value.</p>
+</dd>
+<dt>R2norm_step: <cite>float</cite> optional (default: 0.001)</dt><dd><p>The reduce step for minimum R2norm value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.clustering.sccaf.SCCAF_optimize">
+<span class="sig-name descname"><span class="pre">SCCAF_optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'L1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'raw'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_projection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R1norm_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R2norm_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_not</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_dist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_cmat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_res</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparsity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1_norm_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2_norm_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'LR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mplotlib_backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_acc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/sccaf.html#SCCAF_optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.sccaf.SCCAF_optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a self-projection confusion matrix directed cluster optimization function.</p>
+<dl class="simple">
+<dt>ad: <cite>AnnData</cite></dt><dd><p>The AnnData object of the expression profile.</p>
+</dd>
+<dt>prefix: <cite>String</cite>, optional (default: ‘L1’)</dt><dd><p>The name of the optimization, which set as a prefix.
+e.g., the prefix = ‘L1’, the start round of optimization clustering is based on
+‘L1_Round0’. So we need to assign an over-clustering state as a start point.
+e.g., ad.obs[‘L1_Round0’] = ad.obs[‘louvain’]</p>
+</dd>
+<dt>use: <cite>String</cite>, optional (default: ‘raw’)</dt><dd><p>Use what features to train the classifier. Three choices:
+‘raw’ uses all the features;
+‘hvg’ uses the highly variable genes in the anndata object ad.var_names slot;
+‘pca’ uses the PCA data in the anndata object ad.obsm[‘X_pca’] slot.</p>
+</dd>
+<dt>R1norm_only: <cite>bool</cite> optional (default: False)</dt><dd><p>If only use the confusion matrix(R1norm) for clustering optimization.</p>
+</dd>
+<dt>R2norm_only: <cite>bool</cite> optional (default: False)</dt><dd><p>If only use the confusion matrix(R2norm) for clustering optimization.</p>
+</dd>
+<dt>dist_only: <cite>bool</cite> optional (default: False)</dt><dd><p>If only use the distance matrix for clustering optimization.</p>
+</dd>
+<dt>dist_not: <cite>bool</cite> optional (default: True)</dt><dd><p>If not use the distance matrix for clustering optimization.</p>
+</dd>
+<dt>plot: <cite>bool</cite> optional (default: True)</dt><dd><p>If plot the self-projectioin results, ROC curves and confusion matrices,
+during the optimization.</p>
+</dd>
+<dt>plot_tsne: <cite>bool</cite> optional (default: False)</dt><dd><p>If plot the self-projectioin results as tSNE. If False, the results are plotted as UMAP.</p>
+</dd>
+<dt>plot_dist: <cite>bool</cite> optional (default: False)</dt><dd><p>If make a scatter plot of the distance compared with the confusion rate for each of the cluster.</p>
+</dd>
+<dt>plot_cmat: <cite>bool</cite> optional (default: False)</dt><dd><p>plot the confusion matrix or not.</p>
+</dd>
+<dt>mod: <cite>string</cite> optional (default: ‘1’)</dt><dd><p>two directions of normalization of confusion matrix for R1norm.</p>
+</dd>
+<dt>c_iter: <cite>int</cite> optional (default: 3)</dt><dd><p>Number of iterations of sampling for the confusion matrix.
+The minimum value of confusion rate in all the iterations is used as the confusion rate between two clusters.</p>
+</dd>
+<dt>n_iter： <cite>int</cite> optional (default: 10)</dt><dd><p>Maximum number of iterations(Rounds) for the clustering optimization.</p>
+</dd>
+<dt>start_iter： <cite>int</cite> optional (default: 0)</dt><dd><p>The start round of the optimization. e.g., start_iter = 3,
+the optimization will start from ad.obs[‘%s_3’%prefix].</p>
+</dd>
+<dt>sparsity: <cite>fload</cite> optional (default: 0.5)</dt><dd><p>The sparsity parameter (C in sklearn.linear_model.LogisticRegression) for the logistic regression model.</p>
+</dd>
+<dt>n: <cite>int</cite> optional (default: 100)</dt><dd><p>Maximum number of cell included in the training set for each cluster of cells.</p>
+</dd>
+</dl>
+<p>n_jobs: <cite>int</cite> number of jobs/threads to use (default: None - unlimited).
+fraction: <cite>float</cite> optional (default: 0.5)</p>
+<blockquote>
+<div><p>Fraction of data included in the training set. 0.5 means use half of the data for training,
+if half of the data is fewer than maximum number of cells (n).</p>
+</div></blockquote>
+<dl class="simple">
+<dt>R1norm_cutoff: <cite>float</cite> optional (default: 0.1)</dt><dd><p>The cutoff for the confusion rate (R1norm) between two clusters.
+0.1 means we allow maximum 10% of the one cluster confused as another cluster.</p>
+</dd>
+<dt>R2norm_cutoff: <cite>float</cite> optional (default: 1.0)</dt><dd><p>The cutoff for the confusion rate (R2norm) between two clusters.
+1.0 means the confusion between any two cluster should not exceed 1% of the total number of cells.</p>
+</dd>
+<dt>dist_cutoff: <cite>float</cite> optional (default: 8.0)</dt><dd><p>The cutoff for the euclidean distance between two clusters of cells.
+8.0 means the euclidean distance between two cell types should be greater than 8.0.</p>
+</dd>
+<dt>low_res: <cite>str</cite> optional</dt><dd><p>the clustering boundary for under-clustering. Set a low resolution in louvain/leiden clustering and give
+the key as the underclustering boundary.</p>
+</dd>
+<dt>classifier: <cite>String</cite> optional (default: ‘LR’)</dt><dd><p>a machine learning model in “LR” (logistic regression),         “RF” (Random Forest), “GNB”(Gaussion Naive Bayes), “SVM” (Support Vector Machine) and “DT”(Decision Tree).</p>
+</dd>
+<dt>mplotlib_backend: <cite>matplotlib.backends.backend_pdf</cite> optional</dt><dd><p>MatPlotLib multi-page backend object instance, previously initialised (currently the only type supported is
+PdfPages).</p>
+</dd>
+<dt>min_acc: <cite>float</cite></dt><dd><p>the minimum total accuracy to be achieved. Above this threshold, the optimization will stop.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>assigned as the clustering optimization results.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>The modified anndata object, with a slot “%s_result”%prefix</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./api/ALLCools/clustering/sccaf"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../scanorama/index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ALLCools.clustering.scanorama</span></code></p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../scrublet/index.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ALLCools.clustering.scrublet</span></code></p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Hanqing Liu<br/>
+    
+        &copy; Copyright 2019 - 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

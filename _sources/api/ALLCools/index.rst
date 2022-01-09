@@ -1,0 +1,53 @@
+:py:mod:`ALLCools`
+==================
+
+.. py:module:: ALLCools
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   clustering/index.rst
+   count_matrix/index.rst
+   dmr/index.rst
+   igv/index.rst
+   integration/index.rst
+   mcds/index.rst
+   motif/index.rst
+   plot/index.rst
+   pseudo_cell/index.rst
+   reptile/index.rst
+   schema/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   __main__/index.rst
+   _allc_to_bigwig/index.rst
+   _allc_to_bigwig_new/index.rst
+   _allc_to_region_count/index.rst
+   _bam_to_allc/index.rst
+   _doc/index.rst
+   _extract_allc/index.rst
+   _merge_allc/index.rst
+   _open/index.rst
+   _version/index.rst
+   api/index.rst
+   utilities/index.rst
+
+
+Package Contents
+----------------
+
+.. py:data:: __version__
+   :annotation: = 0.1.19.dev10+gb9ab647.d20220108
+
+   
+

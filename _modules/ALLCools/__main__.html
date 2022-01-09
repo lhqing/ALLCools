@@ -1,0 +1,2364 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALLCools.__main__</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../../_static/allcools_favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4F8CRF0GK9"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-4F8CRF0GK9');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/allcools_logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   ALLCools: ALL methyl-Cytosine tools
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GET STARTED
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../start/installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../start/input_files.html">
+   Input Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../start/analysis_steps.html">
+   Analysis Steps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../start/interactive.html">
+   Examples In This Document
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CELL LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cell_level/basic/intro_basic_clustering.html">
+   Basic Clustering Walk-through
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/basic/mch_mcg_100k_basic.html">
+     Basic Cell Clustering Using 100Kb Bins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/basic/mcg_5kb_basic.html">
+     Basic Cell Clustering Using mCG-5Kb Bins
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cell_level/step_by_step/intro_step_by_step_clustering.html">
+   Step-by-step Clustering Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../cell_level/step_by_step/100kb/intro_100kb.html">
+     Step-by-step Clustering Using 100Kb bins
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/02-BasicFeatureFiltering.html">
+       Feature Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
+       Calculate Highly Variable Features And Get mC Fraction AnnData
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/05-DecompositionAndEmbedding.html">
+       Decomposition And Embedding
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/06-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../cell_level/step_by_step/5kb/intro_5kb.html">
+     Step-by-step Clustering using mCG-5Kb Input
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
+       Decomposition Using mCG-5Kb Bins
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/5kb/03-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cell_level/dmg/intro_dmg.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/dmg/01-AddGenemCFractions.html">
+     Calculate Gene mC Fractions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/dmg/02-DifferentiallyMethylatedGenes.html">
+     Cluster Differentially Methylated Genes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/dmg/03-PlotClusterDMGs.html">
+     Plot Cluster DMGs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/dmg/04-PairwiseDMG.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cell_level/integration/intro_integration.html">
+   Data Integration
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/01-preprocess_10x.html">
+     Preprocess 10X snRNA-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/02-preprocess_SMART.html">
+     Preprocess SMART-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/03-preprocess_snATAC.html">
+     Preprocess snATAC-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/04-integration.html">
+     Perform Cross-Modality Integration
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cell_level/doublets/intro_doublets.html">
+   Doublets Identification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/doublets/doublet_score_chrom100k.html">
+     Calculate Cell Doublet Score
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CLUSTER LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cluster_level/intro.html">
+   Cluster Level Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/RegionDS/01a.call_dmr.html">
+     DMR Calling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/RegionDS/01b.parse_methylpy.html">
+     Parse methylpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/RegionDS/02.annotation.html">
+     Annotate RegionDS
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/RegionDS/03.filter_dmr.html">
+     Filter DMR
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/RegionDS/04.motif_scan.html">
+     Motif Scan
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/RegionDS/05.motif_enrichment.html">
+     Motif Enrichment Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/RegionDS/06a.RNA_cluster_profile.html">
+     Prepare Cluster-by-Gene RNA Profile
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/RegionDS/06b.mc_cluster_profile.html">
+     Prepare Cluster-by-Gene mC Profile
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/RegionDS/07.dmr_gene_corr.html">
+     DMR-Gene Correlation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cluster_level/REPTILE/intro_reptile.html">
+   REPTILE
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/REPTILE/01.prepare_input.html">
+     Prepare Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cluster_level/REPTILE/02.run_reptile.html">
+     Predict Enhancer with REPTILE Algorithm
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  COMMAND LINE TOOLS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools.html">
+   Entry Point
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_allc.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     allc
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_standard.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     standard
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_profile.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     profile
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_tbi.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     tbi
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_merge.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     merge
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_extract.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     extract
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_bw.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     bw
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_region.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     region
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_mcds.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcds
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_mcad.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcad
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  VISUALIZATION
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/intro.html">
+   Visualization
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  DISCUSSION
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../discuss/intro.html">
+   Discussion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../discuss/dmr_benchmark.html">
+   DMR Caller Benchmark
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  API
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../api/ALLCools/index.html">
+   <code class="xref py py-mod docutils literal notranslate">
+    <span class="pre">
+     ALLCools
+    </span>
+   </code>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/clustering/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.clustering
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../api/ALLCools/clustering/feature_selection/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.feature_selection
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+      <label for="toctree-checkbox-12">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/clustering/feature_selection/feature_enrichment/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.clustering.feature_selection.feature_enrichment
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/ConsensusClustering/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.ConsensusClustering
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/art_of_tsne/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.art_of_tsne
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/balanced_pca/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.balanced_pca
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/dmg/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.dmg
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/incremental_pca/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.incremental_pca
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/integration/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.integration
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/mcad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.mcad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/pvclust/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.pvclust
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/scrublet/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.scrublet
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/count_matrix/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.count_matrix
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/atac/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.atac
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/h5ad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.h5ad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/mcad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.mcad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/mcds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.mcds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/snap/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.snap
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/zarr/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.zarr
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/dmr/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.dmr
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/dmr/call_dmr/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.call_dmr
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/dmr/call_dms/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.call_dms
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/dmr/parse_methylpy/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.parse_methylpy
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/dmr/rms_test/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.rms_test
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/igv/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.igv
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/igv/BaseClass/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.BaseClass
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/igv/Session/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.Session
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/igv/Track/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.Track
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/igv/defaults/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.defaults
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/igv/make_session/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.make_session
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/integration/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.integration
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/integration/harmony/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.integration.harmony
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/mcds/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.mcds
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/mcds/correlation/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.correlation
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/mcds/mcds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.mcds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/mcds/region_ds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.region_ds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/mcds/region_ds_utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.region_ds_utilities
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/mcds/utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.utilities
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/motif/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.motif
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/motif/default_motif_set/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.default_motif_set
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/motif/motifs/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.motifs
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/motif/parse_meme/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.parse_meme
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/plot/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.plot
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/categorical_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.categorical_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/color/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.color
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/continuous_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.continuous_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/contour/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.contour
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/decomposition/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.decomposition
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/dendro/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.dendro
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/interactive_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.interactive_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/qc_plots/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.qc_plots
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/size/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.size
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/sunburst/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.sunburst
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/text_anno_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.text_anno_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.utilities
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/pseudo_cell/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.pseudo_cell
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/pseudo_cell/pseudo_cell_kmeans/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.pseudo_cell.pseudo_cell_kmeans
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/pseudo_cell/pseudo_cell_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.pseudo_cell.pseudo_cell_knn
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/reptile/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.reptile
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/reptile/reptile/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.reptile.reptile
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/schema/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.schema
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/schema/mcds_schema/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.schema.mcds_schema
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/__main__/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.__main__
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_allc_to_bigwig/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_bigwig
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_allc_to_bigwig_new/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_bigwig_new
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_allc_to_region_count/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_region_count
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_bam_to_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._bam_to_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_doc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._doc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_extract_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._extract_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_merge_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._merge_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_open/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._open
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_version/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._version
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/api/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.api
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/utilities/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.utilities
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  PROJECT INFO
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../project_info/citation.html">
+   Citation And Reference
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/lhqing/ALLCools/releases">
+   Changelog
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2F_modules/ALLCools/__main__.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <h1>Source code for ALLCools.__main__</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CLI defined here</span>
+
+<span class="sd">When adding new function:</span>
+<span class="sd">1. add a func_register_subparser function to register the subparser</span>
+<span class="sd">2. add a condition in main func about this new func name, import the real func as func in main</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">ALLCools</span>
+<span class="kn">from</span> <span class="nn">._doc</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="log"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.log">[docs]</a><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DESCRIPTION"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.DESCRIPTION">[docs]</a><span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span></div>
+<span class="s2">The ALLCools command line toolkit contains multiple functions to manipulate the ALLC format, </span>
+<span class="s2">a core file format that stores single base level methylation information.</span>
+<span class="s2">Throughout this toolkit, we use bgzip/tabix to compress and index the ALLC file to allow </span>
+<span class="s2">flexible data query from the ALLC file.</span>
+
+<span class="s2">Current Tool List in ALLCools:</span>
+
+<span class="s2">[Generate ALLC]</span>
+<span class="s2">bam-to-allc          - Generate 1 ALLC file from 1 position sorted BAM file via </span>
+<span class="s2">                       samtools mpileup.</span>
+
+<span class="s2">[Manipulate ALLC]</span>
+<span class="s2">standardize-allc     - Validate 1 ALLC file format, standardize the chromosome names, </span>
+<span class="s2">                       compression format (bgzip) and index (tabix).</span>
+<span class="s2">tabix-allc           - A simple wrapper of tabix command to index 1 ALLC file.</span>
+<span class="s2">profile-allc         - Generate some summary statistics of 1 ALLC</span>
+<span class="s2">merge-allc           - Merge N ALLC files into 1 ALLC file</span>
+<span class="s2">extract-allc         - Extract information (strand, context) from 1 ALLC file</span>
+
+<span class="s2">[Get Region Level]</span>
+<span class="s2">allc-to-bigwig       - Generate coverage (cov) and ratio (mc/cov) bigwig track files </span>
+<span class="s2">                       from 1 ALLC file</span>
+<span class="s2">allc-to-region-count - Count region level mc, cov by genome bins or provided BED files.</span>
+<span class="s2">generate-mcds        - Generate methylation dataset (MCDS) for a group of ALLC file and </span>
+<span class="s2">                       different region sets. This is a convenient wrapper function for </span>
+<span class="s2">                       a bunch of allc-to-region-count and xarray integration codes. </span>
+<span class="s2">                       MCDS is inherit from xarray.DataSet</span>
+<span class="s2">generate-mcad        - Generate mCG hypo-methylation score AnnData dataset (MCAD) for </span>
+<span class="s2">                       a group of ALLC file and one region set.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="EPILOG"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.EPILOG">[docs]</a><span class="n">EPILOG</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span></div>
+<span class="s2">Author: Hanqing Liu</span>
+
+<span class="s2">See ALLCools documentation here: https://lhqing.github.io/ALLCools/intro.html</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="NiceFormatter"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.NiceFormatter">[docs]</a><span class="k">class</span> <span class="nc">NiceFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    From Cutadapt https://github.com/marcelm/cutadapt</span>
+<span class="sd">    Do not prefix &quot;INFO:&quot; to info-level log messages (but do it for all other</span>
+<span class="sd">    levels).</span>
+<span class="sd">    Based on http://stackoverflow.com/a/9218261/715090 .</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="NiceFormatter.format"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.NiceFormatter.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">levelno</span> <span class="o">!=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelname</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="validate_environment"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.validate_environment">[docs]</a><span class="k">def</span> <span class="nf">validate_environment</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;tabix&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">],</span>
+                       <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                       <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                       <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
+                       <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;bgzip&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">],</span>
+                       <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                       <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                       <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
+                       <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;bedtools&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">],</span>
+                       <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                       <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                       <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
+                       <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">e</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="setup_logging"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.setup_logging">[docs]</a><span class="k">def</span> <span class="nf">setup_logging</span><span class="p">(</span><span class="n">stdout</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    From Cutadapt https://github.com/marcelm/cutadapt</span>
+<span class="sd">    Attach handler to the global logger object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Due to backwards compatibility, logging output is sent to standard output</span>
+    <span class="c1"># instead of standard error if the -o option is used.</span>
+    <span class="n">stream_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="k">if</span> <span class="n">stdout</span> <span class="k">else</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">stream_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">NiceFormatter</span><span class="p">())</span>
+    <span class="c1"># debug overrides quiet</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span>
+    <span class="k">elif</span> <span class="n">quiet</span><span class="p">:</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+    <span class="n">stream_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stream_handler</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_str_to_bool"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__._str_to_bool">[docs]</a><span class="k">def</span> <span class="nf">_str_to_bool</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;yeah&#39;</span><span class="p">,</span> <span class="s1">&#39;yup&#39;</span><span class="p">,</span> <span class="s1">&#39;certainly&#39;</span><span class="p">,</span> <span class="s1">&#39;uh-huh&#39;</span><span class="p">}:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="bam_to_allc_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.bam_to_allc_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">bam_to_allc_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;bam-to-allc&#39;</span><span class="p">,</span>
+                                  <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;allc&#39;</span><span class="p">,</span> <span class="s1">&#39;2allc&#39;</span><span class="p">],</span>
+                                  <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Take 1 position sorted BAM file, generate 1 ALLC file.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--bam_path&quot;</span><span class="p">,</span> <span class="s1">&#39;-bam&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;bam_path&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to 1 position sorted BAM file&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--reference_fasta&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">reference_fasta_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to output ALLC file&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cpu&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of processes to use in parallel. DO NOT use cpu &gt; 1 for single cell ALLC generation. &quot;</span>
+             <span class="s2">&quot;Parallel on cell level is better for single cell project.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--num_upstr_bases&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of upstream base(s) of the C base to include in ALLC context column, &quot;</span>
+             <span class="s2">&quot;usually use 0 for normal BS-seq, 1 for NOMe-seq.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--num_downstr_bases&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of downstream base(s) of the C base to include in ALLC context column, &quot;</span>
+             <span class="s2">&quot;usually use 2 for both BS-seq and NOMe-seq.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--min_mapq&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Minimum MAPQ for a read being considered, samtools mpileup parameter, see samtools documentation.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--min_base_quality&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Minimum base quality for a base being considered, samtools mpileup parameter, &quot;</span>
+             <span class="s2">&quot;see samtools documentation.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--compress_level&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">compress_level_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--save_count_df&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save_count_df&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If present, save an ALLC context count table next to ALLC file.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">save_count_df</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="standardize_allc_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.standardize_allc_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">standardize_allc_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;standardize-allc&#39;</span><span class="p">,</span>
+                                  <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;standard&#39;</span><span class="p">],</span>
+                                  <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Standardize 1 ALLC file by checking: &quot;</span>
+                                       <span class="s2">&quot;1. No header in the ALLC file; &quot;</span>
+                                       <span class="s2">&quot;2. Chromosome names in ALLC must be exactly same as those &quot;</span>
+                                       <span class="s2">&quot;in the chrom_size_path file; &quot;</span>
+                                       <span class="s2">&quot;3. Output file will be bgzipped with .tbi index; &quot;</span>
+                                       <span class="s2">&quot;4. Remove additional chromosome (remove_additional_chrom=True) or &quot;</span>
+                                       <span class="s2">&quot;raise KeyError if unknown chromosome found (default)&quot;</span><span class="p">)</span>
+    <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--allc_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">allc_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--chrom_size_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">chrom_size_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--compress_level&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">compress_level_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--remove_additional_chrom&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;remove_additional_chrom&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">remove_additional_chrom_doc</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">remove_additional_chrom</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="tabix_allc_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.tabix_allc_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">tabix_allc_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;tabix-allc&#39;</span><span class="p">,</span>
+                                  <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tbi&#39;</span><span class="p">],</span>
+                                  <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;a simple wrapper of tabix command to index 1 ALLC file&quot;</span><span class="p">)</span>
+    <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;allc_path&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">allc_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--reindex&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;reindex&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If present, will force regenerate the ALLC index.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">reindex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="profile_allc_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.profile_allc_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">profile_allc_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;profile-allc&#39;</span><span class="p">,</span>
+                                  <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;profile&#39;</span><span class="p">],</span>
+                                  <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate some summary statistics of 1 ALLC.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--allc_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">allc_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--keep_n&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;drop_n&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Whether to keep context that contain N, such as CCN. &quot;</span>
+             <span class="s2">&quot;This is usually very rare and need to be dropped.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">drop_n</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--n_rows&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of rows to calculate the profile from. &quot;</span>
+             <span class="s2">&quot;The default number is usually sufficient to get pretty precise assumption.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path of the output file. If None, will save the profile next to input ALLC file.&quot;</span></div>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="merge_allc_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.merge_allc_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">merge_allc_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="c1"># TODO add alias to arguments</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;merge-allc&#39;</span><span class="p">,</span>
+                                  <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;merge&#39;</span><span class="p">],</span>
+                                  <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Merge N ALLC files into 1 ALLC file&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--allc_paths&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">allc_paths_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the output merged ALLC file.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--chrom_size_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">chrom_size_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cpu&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cpu_basic_doc</span><span class="si">}</span><span class="s2"> The real CPU usage is ~1.5 times than this number, &quot;</span>
+             <span class="sa">f</span><span class="s2">&quot;due to the sub processes of handling ALLC files using tabix/bgzip. &quot;</span>
+             <span class="sa">f</span><span class="s2">&quot;Monitor the CPU and Memory usage when running this function.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--bin_length&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">10000000</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Length of the genome bin in each parallel job, large number means more memory usage.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--snp&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;snp&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">snp_doc</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">snp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="extract_context_allc_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.extract_context_allc_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">extract_context_allc_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;extract-allc&#39;</span><span class="p">,</span>
+                                  <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;extract&#39;</span><span class="p">],</span>
+                                  <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Extract information (strand, context) from 1 ALLC file. &quot;</span>
+                                       <span class="s2">&quot;Able to save to several different format.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--allc_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">allc_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output_prefix&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path prefix of the output ALLC file.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--mc_contexts&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">mc_contexts_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--chrom_size_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">chrom_size_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--strandness&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="s1">&#39;split&#39;</span><span class="p">,</span> <span class="s1">&#39;merge&#39;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;What to do with strand information, possible values are: &quot;</span>
+             <span class="s2">&quot;1. both: save +/- strand together in one file without any modification; &quot;</span>
+             <span class="s2">&quot;2. split: save +/- strand into two separate files, with suffix contain Watson (+) and Crick (-); &quot;</span>
+             <span class="s2">&quot;3. merge: This will only merge the count on adjacent CpG in +/- strands, only work for CpG like context. &quot;</span>
+             <span class="s2">&quot;For non-CG context, its the same as both.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output_format&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;allc&#39;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;allc&#39;</span><span class="p">,</span> <span class="s1">&#39;bed5&#39;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output format of extracted information, possible values are: &quot;</span>
+             <span class="s2">&quot;1. allc: keep the allc format; &quot;</span>
+             <span class="s2">&quot;2. bed5: 5-column bed format, chrom, pos, pos, mc, cov; &quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--region&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">region_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cov_cutoff&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">cov_cutoff_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cpu&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">cpu_basic_doc</span> <span class="o">+</span> <span class="s1">&#39; This function parallel on region level and &#39;</span>
+                             <span class="s1">&#39;will generate a bunch of small files if cpu &gt; 1. &#39;</span>
+                             <span class="s1">&#39;Do not use cpu &gt; 1 for single cell region count. &#39;</span>
+                             <span class="s1">&#39;For single cell data, parallel on cell level is better.&#39;</span>
+    <span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="allc_to_region_count_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.allc_to_region_count_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">allc_to_region_count_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;allc-to-region-count&#39;</span><span class="p">,</span>
+                                  <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;2region&#39;</span><span class="p">],</span>
+                                  <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Calculate mC and cov at regional level. Region can be provided in 2 forms: &quot;</span>
+                                       <span class="s2">&quot;1. BED file, provided by region_bed_paths, &quot;</span>
+                                       <span class="s2">&quot;containing arbitrary regions and use bedtools map to calculate; &quot;</span>
+                                       <span class="s2">&quot;2. Fix-size non-overlap genome bins, provided by bin_sizes, &quot;</span>
+                                       <span class="s2">&quot;Form 2 is much faster to calculate than form 1. &quot;</span>
+                                       <span class="s2">&quot;The output file is in 6-column bed-like format: &quot;</span>
+                                       <span class="s2">&quot;chrom start end region_uid mc cov&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--allc_path&quot;</span><span class="p">,</span> <span class="s2">&quot;-allc&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;allc_path&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">allc_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output_prefix&quot;</span><span class="p">,</span> <span class="s1">&#39;-out&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;output_prefix&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path prefix of the output region count file.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--chrom_size_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">chrom_size_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--mc_contexts&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">mc_contexts_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--split_strand&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;split_strand&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">split_strand_doc</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">split_strand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--region_bed_paths&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">region_bed_paths_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--region_bed_names&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">region_bed_names_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--bin_sizes&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">bin_sizes_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cov_cutoff&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">cov_cutoff_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--save_zero_cov&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save_zero_cov&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;If present, save the regions that have 0 cov in output, &#39;</span>
+             <span class="s1">&#39;only apply to region count but not the chromosome count.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">save_zero_cov</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cpu&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">cpu_basic_doc</span> <span class="o">+</span> <span class="s1">&#39; This function parallel on region level and &#39;</span>
+                             <span class="s1">&#39;will generate a bunch of small files if cpu &gt; 1. &#39;</span>
+                             <span class="s1">&#39;Do not use cpu &gt; 1 for single cell region count. &#39;</span>
+                             <span class="s1">&#39;For single cell data, parallel on cell level is better.&#39;</span>
+    <span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="allc_to_bigwig_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.allc_to_bigwig_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">allc_to_bigwig_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;allc-to-bigwig&#39;</span><span class="p">,</span>
+                                  <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bw&#39;</span><span class="p">,</span> <span class="s1">&#39;2bw&#39;</span><span class="p">],</span>
+                                  <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate bigwig file(s) from 1 ALLC file.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--allc_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">allc_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output_prefix&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path prefix of the output BigWig file.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--bin_size&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">bw_bin_sizes_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--mc_contexts&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">mc_contexts_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--chrom_size_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">chrom_size_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--strandness&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">strandness_doc</span>
+    <span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="generate_mcds_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.generate_mcds_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">generate_mcds_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;generate-mcds&#39;</span><span class="p">,</span>
+                                  <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mcds&#39;</span><span class="p">],</span>
+                                  <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate MCDS from ALLC files and region sets.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--allc_table&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">allc_table_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output_prefix&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Output prefix of the MCDS&#39;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--chrom_size_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">chrom_size_path_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--mc_contexts&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">mc_contexts_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--split_strand&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;split_strand&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">split_strand_doc</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">split_strand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--bin_sizes&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">bin_sizes_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--region_bed_paths&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">region_bed_paths_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--region_bed_names&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">region_bed_names_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cov_cutoff&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">cov_cutoff_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cpu&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">cpu_basic_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--max_per_mcds&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">3072</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Maximum number of ALLC files to aggregate into 1 MCDS, if number of ALLC provided &gt; max_per_mcds, &#39;</span>
+             <span class="s1">&#39;will generate MCDS in chunks, with same prefix provided.&#39;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cell_chunk_size&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Size of cell chunk in parallel aggregation. Do not have any effect on results. &#39;</span>
+             <span class="s1">&#39;Large chunksize needs large memory.&#39;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--dtype&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;uint32&#39;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;uint8&#39;</span><span class="p">,</span> <span class="s1">&#39;uint16&#39;</span><span class="p">,</span> <span class="s1">&#39;uint32&#39;</span><span class="p">,</span> <span class="s1">&#39;uint64&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;int8&#39;</span><span class="p">,</span> <span class="s1">&#39;int16&#39;</span><span class="p">,</span> <span class="s1">&#39;int32&#39;</span><span class="p">,</span> <span class="s1">&#39;int64&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;bool&#39;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Data type of MCDS count matrix. Default is np.uint32. &#39;</span>
+             <span class="s1">&#39;For single cell feature count, this can be set to np.uint16 [0, 65536] to decrease file size. &#39;</span>
+             <span class="s1">&#39;The values exceed min/max will be clipped while keep the mc/cov same, and a warning will be sent.&#39;</span>
+    <span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="generate_mcad_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.generate_mcad_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">generate_mcad_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;generate-mcad&#39;</span><span class="p">,</span>
+                                  <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mcad&#39;</span><span class="p">],</span>
+                                  <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate MCAD from ALLC files and one region set.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--allc_table&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">allc_table_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--bed_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">region_bed_path_mcad_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output_prefix&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Output prefix of the MCAD, a suffix &quot;.mcad&quot; will be added.&#39;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--mc_context&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">mc_context_mcad_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cpu&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">cpu_basic_doc</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--cutoff&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Values smaller than cutoff will be stored as 0, which reduces the file size.&#39;</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--reverse_value&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;reverse_value&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If present, use cdf instead of sf to make hyper-methylation events having higher values.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">reverse_value</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">DESCRIPTION</span><span class="p">,</span>
+                                     <span class="n">epilog</span><span class="o">=</span><span class="n">EPILOG</span><span class="p">,</span>
+                                     <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+                                     <span class="p">)</span>
+    <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;functions&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;command&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># add subparsers</span>
+    <span class="n">current_module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">]</span>
+    <span class="c1"># get all functions in parser</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">register_subparser_func</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">current_module</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isfunction</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;register_subparser&#39;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">register_subparser_func</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span>
+
+    <span class="c1"># initiate</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># print out version</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ALLCools</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># print out help</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s2">&quot;-h&quot;</span><span class="p">])</span>
+        <span class="n">exit</span><span class="p">()</span>
+
+    <span class="c1"># set up logging</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
+        <span class="n">setup_logging</span><span class="p">(</span><span class="n">stdout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># execute command</span>
+    <span class="n">args_vars</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">args_vars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">cur_command</span> <span class="o">=</span> <span class="n">args_vars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+    <span class="c1"># Do real import here:</span>
+    <span class="k">if</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;bam-to-allc&#39;</span><span class="p">,</span> <span class="s1">&#39;allc&#39;</span><span class="p">,</span> <span class="s1">&#39;2allc&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">._bam_to_allc</span> <span class="kn">import</span> <span class="n">bam_to_allc</span> <span class="k">as</span> <span class="n">func</span>
+    <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;standardize-allc&#39;</span><span class="p">,</span> <span class="s1">&#39;standard&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">.utilities</span> <span class="kn">import</span> <span class="n">standardize_allc</span> <span class="k">as</span> <span class="n">func</span>
+    <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;tabix-allc&#39;</span><span class="p">,</span> <span class="s1">&#39;tbi&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">.utilities</span> <span class="kn">import</span> <span class="n">tabix_allc</span> <span class="k">as</span> <span class="n">func</span>
+    <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;profile-allc&#39;</span><span class="p">,</span> <span class="s1">&#39;profile&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">.utilities</span> <span class="kn">import</span> <span class="n">profile_allc</span> <span class="k">as</span> <span class="n">func</span>
+    <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;merge-allc&#39;</span><span class="p">,</span> <span class="s1">&#39;merge&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">._merge_allc</span> <span class="kn">import</span> <span class="n">merge_allc_files</span> <span class="k">as</span> <span class="n">func</span>
+    <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;extract-allc&#39;</span><span class="p">,</span> <span class="s1">&#39;extract&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">._extract_allc</span> <span class="kn">import</span> <span class="n">extract_allc</span> <span class="k">as</span> <span class="n">func</span>
+    <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;allc-to-region-count&#39;</span><span class="p">,</span> <span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;2region&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">._allc_to_region_count</span> <span class="kn">import</span> <span class="n">allc_to_region_count</span> <span class="k">as</span> <span class="n">func</span>
+    <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;allc-to-bigwig&#39;</span><span class="p">,</span> <span class="s1">&#39;bw&#39;</span><span class="p">,</span> <span class="s1">&#39;2bw&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">._allc_to_bigwig_new</span> <span class="kn">import</span> <span class="n">allc_to_bigwig</span> <span class="k">as</span> <span class="n">func</span>
+        <span class="c1"># from ._allc_to_bigwig import allc_to_bigwig as func  # old version using ucsc tools</span>
+    <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;generate-mcds&#39;</span><span class="p">,</span> <span class="s1">&#39;mcds&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">.count_matrix.mcds</span> <span class="kn">import</span> <span class="n">generate_mcds</span> <span class="k">as</span> <span class="n">func</span>
+    <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;generate-mcad&#39;</span><span class="p">,</span> <span class="s1">&#39;mcad&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">.count_matrix.mcad</span> <span class="kn">import</span> <span class="n">generate_mcad</span> <span class="k">as</span> <span class="n">func</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cur_command</span><span class="si">}</span><span class="s1"> is not an valid sub-command&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s2">&quot;-h&quot;</span><span class="p">])</span>
+        <span class="k">return</span>
+
+    <span class="n">validate_environment</span><span class="p">()</span>
+
+    <span class="c1"># run the command</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Executing </span><span class="si">{</span><span class="n">cur_command</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">args_vars</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cur_command</span><span class="si">}</span><span class="s2"> finished.&quot;</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Hanqing Liu<br/>
+    
+        &copy; Copyright 2019 - 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

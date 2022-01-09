@@ -1,0 +1,2842 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DMR-Gene Correlation</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../../_static/allcools_favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="REPTILE" href="../REPTILE/intro_reptile.html" />
+    <link rel="prev" title="Prepare Cluster-by-Gene mC Profile" href="06b.mc_cluster_profile.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4F8CRF0GK9"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-4F8CRF0GK9');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/allcools_logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   ALLCools: ALL methyl-Cytosine tools
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GET STARTED
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../start/installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../start/input_files.html">
+   Input Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../start/analysis_steps.html">
+   Analysis Steps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../start/interactive.html">
+   Examples In This Document
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CELL LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cell_level/basic/intro_basic_clustering.html">
+   Basic Clustering Walk-through
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/basic/mch_mcg_100k_basic.html">
+     Basic Cell Clustering Using 100Kb Bins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/basic/mcg_5kb_basic.html">
+     Basic Cell Clustering Using mCG-5Kb Bins
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cell_level/step_by_step/intro_step_by_step_clustering.html">
+   Step-by-step Clustering Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../cell_level/step_by_step/100kb/intro_100kb.html">
+     Step-by-step Clustering Using 100Kb bins
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/02-BasicFeatureFiltering.html">
+       Feature Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
+       Calculate Highly Variable Features And Get mC Fraction AnnData
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/05-DecompositionAndEmbedding.html">
+       Decomposition And Embedding
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/100kb/06-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../cell_level/step_by_step/5kb/intro_5kb.html">
+     Step-by-step Clustering using mCG-5Kb Input
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
+       Decomposition Using mCG-5Kb Bins
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../cell_level/step_by_step/5kb/03-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cell_level/dmg/intro_dmg.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/dmg/01-AddGenemCFractions.html">
+     Calculate Gene mC Fractions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/dmg/02-DifferentiallyMethylatedGenes.html">
+     Cluster Differentially Methylated Genes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/dmg/03-PlotClusterDMGs.html">
+     Plot Cluster DMGs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/dmg/04-PairwiseDMG.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cell_level/integration/intro_integration.html">
+   Data Integration
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/01-preprocess_10x.html">
+     Preprocess 10X snRNA-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/02-preprocess_SMART.html">
+     Preprocess SMART-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/03-preprocess_snATAC.html">
+     Preprocess snATAC-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/04-integration.html">
+     Perform Cross-Modality Integration
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../cell_level/doublets/intro_doublets.html">
+   Doublets Identification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../cell_level/doublets/doublet_score_chrom100k.html">
+     Calculate Cell Doublet Score
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CLUSTER LEVEL ANALYSIS
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   Cluster Level Analysis
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01a.call_dmr.html">
+     DMR Calling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="01b.parse_methylpy.html">
+     Parse methylpy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02.annotation.html">
+     Annotate RegionDS
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03.filter_dmr.html">
+     Filter DMR
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04.motif_scan.html">
+     Motif Scan
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05.motif_enrichment.html">
+     Motif Enrichment Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06a.RNA_cluster_profile.html">
+     Prepare Cluster-by-Gene RNA Profile
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06b.mc_cluster_profile.html">
+     Prepare Cluster-by-Gene mC Profile
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     DMR-Gene Correlation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../REPTILE/intro_reptile.html">
+   REPTILE
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../REPTILE/01.prepare_input.html">
+     Prepare Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../REPTILE/02.run_reptile.html">
+     Predict Enhancer with REPTILE Algorithm
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  COMMAND LINE TOOLS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools.html">
+   Entry Point
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_allc.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     allc
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_standard.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     standard
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_profile.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     profile
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_tbi.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     tbi
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_merge.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     merge
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_extract.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     extract
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_bw.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     bw
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_region.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     region
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_mcds.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcds
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../command_line/allcools_mcad.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcad
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  VISUALIZATION
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/intro.html">
+   Visualization
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  DISCUSSION
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../discuss/intro.html">
+   Discussion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../discuss/dmr_benchmark.html">
+   DMR Caller Benchmark
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  API
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../api/ALLCools/index.html">
+   <code class="xref py py-mod docutils literal notranslate">
+    <span class="pre">
+     ALLCools
+    </span>
+   </code>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/clustering/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.clustering
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../api/ALLCools/clustering/feature_selection/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.feature_selection
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+      <label for="toctree-checkbox-12">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/clustering/feature_selection/feature_enrichment/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.clustering.feature_selection.feature_enrichment
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/ConsensusClustering/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.ConsensusClustering
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/art_of_tsne/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.art_of_tsne
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/balanced_pca/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.balanced_pca
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/dmg/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.dmg
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/incremental_pca/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.incremental_pca
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/integration/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.integration
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/mcad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.mcad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/pvclust/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.pvclust
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/scrublet/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.scrublet
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/count_matrix/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.count_matrix
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/atac/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.atac
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/h5ad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.h5ad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/mcad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.mcad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/mcds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.mcds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/snap/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.snap
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/count_matrix/zarr/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.zarr
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/dmr/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.dmr
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/dmr/call_dmr/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.call_dmr
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/dmr/call_dms/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.call_dms
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/dmr/parse_methylpy/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.parse_methylpy
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/dmr/rms_test/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.rms_test
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/igv/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.igv
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/igv/BaseClass/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.BaseClass
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/igv/Session/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.Session
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/igv/Track/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.Track
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/igv/defaults/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.defaults
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/igv/make_session/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.igv.make_session
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/integration/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.integration
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/integration/harmony/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.integration.harmony
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/mcds/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.mcds
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/mcds/correlation/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.correlation
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/mcds/mcds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.mcds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/mcds/region_ds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.region_ds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/mcds/region_ds_utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.region_ds_utilities
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/mcds/utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.utilities
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/motif/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.motif
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/motif/default_motif_set/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.default_motif_set
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/motif/motifs/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.motifs
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/motif/parse_meme/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.parse_meme
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/plot/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.plot
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/categorical_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.categorical_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/color/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.color
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/continuous_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.continuous_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/contour/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.contour
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/decomposition/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.decomposition
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/dendro/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.dendro
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/interactive_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.interactive_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/qc_plots/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.qc_plots
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/size/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.size
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/sunburst/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.sunburst
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/text_anno_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.text_anno_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/plot/utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.utilities
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/pseudo_cell/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.pseudo_cell
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/pseudo_cell/pseudo_cell_kmeans/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.pseudo_cell.pseudo_cell_kmeans
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/pseudo_cell/pseudo_cell_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.pseudo_cell.pseudo_cell_knn
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/reptile/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.reptile
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/reptile/reptile/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.reptile.reptile
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/schema/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.schema
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/schema/mcds_schema/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.schema.mcds_schema
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/__main__/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.__main__
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_allc_to_bigwig/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_bigwig
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_allc_to_bigwig_new/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_bigwig_new
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_allc_to_region_count/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_region_count
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_bam_to_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._bam_to_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_doc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._doc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_extract_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._extract_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_merge_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._merge_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_open/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._open
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/_version/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._version
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/api/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.api
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/ALLCools/utilities/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.utilities
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  PROJECT INFO
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../project_info/citation.html">
+   Citation And Reference
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/lhqing/ALLCools/releases">
+   Changelog
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/cluster_level/RegionDS/07.dmr_gene_corr.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fcluster_level/RegionDS/07.dmr_gene_corr.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/cluster_level/RegionDS/07.dmr_gene_corr.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import">
+   Import
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-data">
+   Load Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dmr-input">
+     DMR Input
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gene-input">
+     Gene Input
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#calculate-correlations-between-dmr-and-genes">
+   Calculate correlations between DMR and genes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-correlation-distribution">
+     Plot correlation distribution
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-significantly-correlated-pairs">
+   Get Significantly Correlated Pairs
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-distance-and-correlation-distribution">
+     Plot distance and correlation distribution
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>DMR-Gene Correlation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import">
+   Import
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-data">
+   Load Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dmr-input">
+     DMR Input
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gene-input">
+     Gene Input
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#calculate-correlations-between-dmr-and-genes">
+   Calculate correlations between DMR and genes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-correlation-distribution">
+     Plot correlation distribution
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-significantly-correlated-pairs">
+   Get Significantly Correlated Pairs
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-distance-and-correlation-distribution">
+     Plot distance and correlation distribution
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="dmr-gene-correlation">
+<h1>DMR-Gene Correlation<a class="headerlink" href="#dmr-gene-correlation" title="Permalink to this headline">¶</a></h1>
+<p>Calculate the partial correlation between DMR and Genes using clusters/samples as features.</p>
+<div class="section" id="import">
+<h2>Import<a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">ALLCools.mcds</span> <span class="kn">import</span> <span class="n">RegionDS</span>
+<span class="kn">from</span> <span class="nn">ALLCools.mcds.correlation</span> <span class="kn">import</span> <span class="n">region_correlation</span><span class="p">,</span> <span class="n">get_corr_table</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load-data">
+<h2>Load Data<a class="headerlink" href="#load-data" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DMR data</span>
+<span class="n">dmr</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;HIP_small&#39;</span><span class="p">)</span>
+
+<span class="c1"># gene data</span>
+<span class="n">gene</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;HIP_Cluster&#39;</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="s1">&#39;geneslop2k&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using dmr as region_dim
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># global mC fractions, calculated from cell level MCDS by sum up cluster and genome base calls</span>
+<span class="n">sample_mch</span> <span class="o">=</span> <span class="n">gene</span><span class="o">.</span><span class="n">get_coords</span><span class="p">(</span><span class="s1">&#39;sample_CHN&#39;</span><span class="p">)</span>
+<span class="n">sample_mcg</span> <span class="o">=</span> <span class="n">gene</span><span class="o">.</span><span class="n">get_coords</span><span class="p">(</span><span class="s1">&#39;sample_CGN&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dmr-input">
+<h3>DMR Input<a class="headerlink" href="#dmr-input" title="Permalink to this headline">¶</a></h3>
+<p>A 2-D sample-by-DMR DataArray, values are mCG fractions</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_a</span> <span class="o">=</span> <span class="n">dmr</span><span class="p">[</span><span class="s1">&#39;dmr_da_frac&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="s1">&#39;dmr&#39;</span><span class="p">)</span>
+<span class="n">data_a</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.DataArray &#x27;dmr_da_frac&#x27; (sample: 20, dmr: 131)&gt;
+array([[0.538462, 0.816129, 0.70068 , ..., 0.144186, 0.340136, 0.292444],
+       [0.717949, 0.97006 , 0.922078, ..., 0.03    , 0.142259, 0.249802],
+       [0.717949, 0.974227, 0.886179, ..., 0.011628, 0.085575, 0.196755],
+       ...,
+       [0.888889, 0.670588, 0.038462, ..., 0.55    , 0.25974 , 0.621951],
+       [0.857143, 0.727823, 0.666667, ..., 0.295455, 0.562387, 0.544554],
+       [0.777778, 0.780822, 0.5625  , ..., 0.0625  , 0.297297, 0.292553]],
+      dtype=float32)
+Coordinates:
+  * dmr         (dmr) &lt;U9 &#x27;chr1-0&#x27; &#x27;chr1-1&#x27; &#x27;chr1-2&#x27; ... &#x27;chr19-121&#x27; &#x27;chr19-122&#x27;
+    dmr_chrom   (dmr) &lt;U5 &#x27;chr1&#x27; &#x27;chr1&#x27; &#x27;chr1&#x27; ... &#x27;chr19&#x27; &#x27;chr19&#x27; &#x27;chr19&#x27;
+    dmr_end     (dmr) int64 10002172 10003542 10003967 ... 5099203 5099952
+    dmr_length  (dmr) int64 2 305 54 2 2 2 10 ... 589 924 632 842 195 399 335
+    dmr_ndms    (dmr) int64 1 7 2 1 1 1 2 13 3 2 1 ... 2 1 2 7 13 19 9 9 3 6 13
+    dmr_start   (dmr) int64 10002170 10003237 10003913 ... 5098804 5099617
+  * sample      (sample) &lt;U18 &#x27;snm3C_ASC&#x27; &#x27;snm3C_CA1&#x27; ... &#x27;snmC_ODC&#x27; &#x27;snmC_OPC&#x27;</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'>'dmr_da_frac'</div><ul class='xr-dim-list'><li><span class='xr-has-index'>sample</span>: 20</li><li><span class='xr-has-index'>dmr</span>: 131</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-bf4dc085-1e93-40af-9153-eb8e0730598d' class='xr-array-in' type='checkbox' checked><label for='section-bf4dc085-1e93-40af-9153-eb8e0730598d' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.5385 0.8161 0.7007 0.8 0.3846 ... 0.4412 0.5478 0.0625 0.2973 0.2926</span></div><div class='xr-array-data'><pre>array([[0.538462, 0.816129, 0.70068 , ..., 0.144186, 0.340136, 0.292444],
+       [0.717949, 0.97006 , 0.922078, ..., 0.03    , 0.142259, 0.249802],
+       [0.717949, 0.974227, 0.886179, ..., 0.011628, 0.085575, 0.196755],
+       ...,
+       [0.888889, 0.670588, 0.038462, ..., 0.55    , 0.25974 , 0.621951],
+       [0.857143, 0.727823, 0.666667, ..., 0.295455, 0.562387, 0.544554],
+       [0.777778, 0.780822, 0.5625  , ..., 0.0625  , 0.297297, 0.292553]],
+      dtype=float32)</pre></div></div></li><li class='xr-section-item'><input id='section-86cb1990-2e75-4f5a-893b-fc32b5313a00' class='xr-section-summary-in' type='checkbox'  checked><label for='section-86cb1990-2e75-4f5a-893b-fc32b5313a00' class='xr-section-summary' >Coordinates: <span>(7)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>dmr</span></div><div class='xr-var-dims'>(dmr)</div><div class='xr-var-dtype'>&lt;U9</div><div class='xr-var-preview xr-preview'>&#x27;chr1-0&#x27; &#x27;chr1-1&#x27; ... &#x27;chr19-122&#x27;</div><input id='attrs-6a0d1216-2c60-4f6f-ba12-39512424a211' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-6a0d1216-2c60-4f6f-ba12-39512424a211' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-83a9d2e7-c6f9-450c-b1e4-a270ad377848' class='xr-var-data-in' type='checkbox'><label for='data-83a9d2e7-c6f9-450c-b1e4-a270ad377848' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;chr1-0&#x27;, &#x27;chr1-1&#x27;, &#x27;chr1-2&#x27;, &#x27;chr1-3&#x27;, &#x27;chr1-4&#x27;, &#x27;chr1-5&#x27;, &#x27;chr1-6&#x27;,
+       &#x27;chr1-7&#x27;, &#x27;chr19-0&#x27;, &#x27;chr19-1&#x27;, &#x27;chr19-2&#x27;, &#x27;chr19-3&#x27;, &#x27;chr19-4&#x27;,
+       &#x27;chr19-5&#x27;, &#x27;chr19-6&#x27;, &#x27;chr19-7&#x27;, &#x27;chr19-8&#x27;, &#x27;chr19-9&#x27;, &#x27;chr19-10&#x27;,
+       &#x27;chr19-11&#x27;, &#x27;chr19-12&#x27;, &#x27;chr19-13&#x27;, &#x27;chr19-14&#x27;, &#x27;chr19-15&#x27;, &#x27;chr19-16&#x27;,
+       &#x27;chr19-17&#x27;, &#x27;chr19-18&#x27;, &#x27;chr19-19&#x27;, &#x27;chr19-20&#x27;, &#x27;chr19-21&#x27;, &#x27;chr19-22&#x27;,
+       &#x27;chr19-23&#x27;, &#x27;chr19-24&#x27;, &#x27;chr19-25&#x27;, &#x27;chr19-26&#x27;, &#x27;chr19-27&#x27;, &#x27;chr19-28&#x27;,
+       &#x27;chr19-29&#x27;, &#x27;chr19-30&#x27;, &#x27;chr19-31&#x27;, &#x27;chr19-32&#x27;, &#x27;chr19-33&#x27;, &#x27;chr19-34&#x27;,
+       &#x27;chr19-35&#x27;, &#x27;chr19-36&#x27;, &#x27;chr19-37&#x27;, &#x27;chr19-38&#x27;, &#x27;chr19-39&#x27;, &#x27;chr19-40&#x27;,
+       &#x27;chr19-41&#x27;, &#x27;chr19-42&#x27;, &#x27;chr19-43&#x27;, &#x27;chr19-44&#x27;, &#x27;chr19-45&#x27;, &#x27;chr19-46&#x27;,
+       &#x27;chr19-47&#x27;, &#x27;chr19-48&#x27;, &#x27;chr19-49&#x27;, &#x27;chr19-50&#x27;, &#x27;chr19-51&#x27;, &#x27;chr19-52&#x27;,
+       &#x27;chr19-53&#x27;, &#x27;chr19-54&#x27;, &#x27;chr19-55&#x27;, &#x27;chr19-56&#x27;, &#x27;chr19-57&#x27;, &#x27;chr19-58&#x27;,
+       &#x27;chr19-59&#x27;, &#x27;chr19-60&#x27;, &#x27;chr19-61&#x27;, &#x27;chr19-62&#x27;, &#x27;chr19-63&#x27;, &#x27;chr19-64&#x27;,
+       &#x27;chr19-65&#x27;, &#x27;chr19-66&#x27;, &#x27;chr19-67&#x27;, &#x27;chr19-68&#x27;, &#x27;chr19-69&#x27;, &#x27;chr19-70&#x27;,
+       &#x27;chr19-71&#x27;, &#x27;chr19-72&#x27;, &#x27;chr19-73&#x27;, &#x27;chr19-74&#x27;, &#x27;chr19-75&#x27;, &#x27;chr19-76&#x27;,
+       &#x27;chr19-77&#x27;, &#x27;chr19-78&#x27;, &#x27;chr19-79&#x27;, &#x27;chr19-80&#x27;, &#x27;chr19-81&#x27;, &#x27;chr19-82&#x27;,
+       &#x27;chr19-83&#x27;, &#x27;chr19-84&#x27;, &#x27;chr19-85&#x27;, &#x27;chr19-86&#x27;, &#x27;chr19-87&#x27;, &#x27;chr19-88&#x27;,
+       &#x27;chr19-89&#x27;, &#x27;chr19-90&#x27;, &#x27;chr19-91&#x27;, &#x27;chr19-92&#x27;, &#x27;chr19-93&#x27;, &#x27;chr19-94&#x27;,
+       &#x27;chr19-95&#x27;, &#x27;chr19-96&#x27;, &#x27;chr19-97&#x27;, &#x27;chr19-98&#x27;, &#x27;chr19-99&#x27;, &#x27;chr19-100&#x27;,
+       &#x27;chr19-101&#x27;, &#x27;chr19-102&#x27;, &#x27;chr19-103&#x27;, &#x27;chr19-104&#x27;, &#x27;chr19-105&#x27;,
+       &#x27;chr19-106&#x27;, &#x27;chr19-107&#x27;, &#x27;chr19-108&#x27;, &#x27;chr19-109&#x27;, &#x27;chr19-110&#x27;,
+       &#x27;chr19-111&#x27;, &#x27;chr19-112&#x27;, &#x27;chr19-113&#x27;, &#x27;chr19-114&#x27;, &#x27;chr19-115&#x27;,
+       &#x27;chr19-116&#x27;, &#x27;chr19-117&#x27;, &#x27;chr19-118&#x27;, &#x27;chr19-119&#x27;, &#x27;chr19-120&#x27;,
+       &#x27;chr19-121&#x27;, &#x27;chr19-122&#x27;], dtype=&#x27;&lt;U9&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>dmr_chrom</span></div><div class='xr-var-dims'>(dmr)</div><div class='xr-var-dtype'>&lt;U5</div><div class='xr-var-preview xr-preview'>&#x27;chr1&#x27; &#x27;chr1&#x27; ... &#x27;chr19&#x27; &#x27;chr19&#x27;</div><input id='attrs-d06d9f55-81e4-4091-930e-aa5ce6d3bb22' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d06d9f55-81e4-4091-930e-aa5ce6d3bb22' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f77428ff-f72c-4fe6-845c-463cd55a26d5' class='xr-var-data-in' type='checkbox'><label for='data-f77428ff-f72c-4fe6-845c-463cd55a26d5' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;chr1&#x27;, &#x27;chr1&#x27;, &#x27;chr1&#x27;, &#x27;chr1&#x27;, &#x27;chr1&#x27;, &#x27;chr1&#x27;, &#x27;chr1&#x27;, &#x27;chr1&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;,
+       &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;, &#x27;chr19&#x27;], dtype=&#x27;&lt;U5&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>dmr_end</span></div><div class='xr-var-dims'>(dmr)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>10002172 10003542 ... 5099952</div><input id='attrs-c8f6d915-0dcf-4138-a9bb-2819027f00b2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-c8f6d915-0dcf-4138-a9bb-2819027f00b2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-23e15983-03ea-4cfb-a99a-03d44c863eba' class='xr-var-data-in' type='checkbox'><label for='data-23e15983-03ea-4cfb-a99a-03d44c863eba' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([10002172, 10003542, 10003967, 10005479, 10007099, 10007758,
+       10008889, 10009927,  5000194,  5000343,  5000715,  5001506,
+        5001549,  5002858,  5003862,  5004785,  5005319,  5005816,
+        5006789,  5008015,  5008084,  5008130,  5008805,  5010091,
+        5011268,  5011724,  5011926,  5012429,  5012955,  5013312,
+        5013603,  5014250,  5014562,  5014921,  5015099,  5016145,
+        5016791,  5017181,  5017656,  5018340,  5019014,  5019656,
+        5020498,  5021894,  5022034,  5022299,  5023452,  5025645,
+        5026013,  5026581,  5028070,  5029223,  5029469,  5029930,
+        5031623,  5032343,  5033665,  5035273,  5036180,  5036656,
+        5037800,  5040294,  5040872,  5042216,  5042541,  5043207,
+        5043818,  5045206,  5046083,  5046469,  5047139,  5050164,
+        5051764,  5054110,  5056089,  5056189,  5056309,  5056642,
+        5057152,  5057233,  5059280,  5059541,  5060286,  5060636,
+        5061033,  5061586,  5061960,  5062181,  5062652,  5063270,
+        5064727,  5065461,  5065765,  5066074,  5066405,  5067916,
+        5069149,  5070132,  5071656,  5071800,  5073983,  5074921,
+        5076037,  5076379,  5077207,  5078490,  5078805,  5080040,
+        5080229,  5081032,  5081240,  5081796,  5082893,  5083285,
+        5083586,  5084274,  5084686,  5086323,  5087151,  5087539,
+        5089466,  5089734,  5090283,  5091820,  5092737,  5094022,
+        5095601,  5097380,  5097870,  5099203,  5099952])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>dmr_length</span></div><div class='xr-var-dims'>(dmr)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>2 305 54 2 2 ... 842 195 399 335</div><input id='attrs-7b258ec3-1709-43a8-8020-fe55169b072c' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7b258ec3-1709-43a8-8020-fe55169b072c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-daf6c870-32b0-47ca-bce1-6bc5675a620f' class='xr-var-data-in' type='checkbox'><label for='data-daf6c870-32b0-47ca-bce1-6bc5675a620f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   2,  305,   54,    2,    2,    2,   10,  440,  171,   12,    2,
+          2,   22,    2,  504,  128,  146,  201,    2,    2,    2,    2,
+        182,    2,  246,    2,    2,  101,  343,   49,  183,    2,   88,
+          2,    2,   89,  385,   55,    2,   48,  144,    2,    2,  821,
+          2,    2,  306,  913,    2,   71,   91,   22,   21,  149,    2,
+          2,    2,  104,   57,   76,    2,  532,  552,  211,    2,  243,
+          2,    2,  322,   63,    2, 2314, 1029, 2090,   58,    2,    2,
+          2,  253,    2, 1351,    2,  478,    2,  127,   42,    2,   43,
+          2,   46,    2,  482,   14,    2,    2,  773,  760,    2,  661,
+        126,  345,  687,  366,    2,  469,  866,    2,    2,   59,  315,
+          2,  368, 1053,  367,    2,  186,    2,  391,  158,  323,   31,
+          2,  138,  434,  589,  924,  632,  842,  195,  399,  335])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>dmr_ndms</span></div><div class='xr-var-dims'>(dmr)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 7 2 1 1 1 2 ... 13 19 9 9 3 6 13</div><input id='attrs-c9b94525-ce3b-44f0-b945-9d70de4984d2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-c9b94525-ce3b-44f0-b945-9d70de4984d2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-50e8ffed-4eb0-4999-937b-a2d312fc0f31' class='xr-var-data-in' type='checkbox'><label for='data-50e8ffed-4eb0-4999-937b-a2d312fc0f31' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 1,  7,  2,  1,  1,  1,  2, 13,  3,  2,  1,  1,  2,  1,  5,  2,  3,
+        2,  1,  1,  1,  1,  4,  1,  2,  1,  1,  3,  6,  4,  3,  1,  4,  1,
+        1,  3,  7,  4,  1,  2,  4,  1,  1,  8,  1,  1,  9, 14,  1,  5,  3,
+        2,  2,  2,  1,  1,  1,  2,  2,  2,  1, 17, 11,  3,  1,  5,  1,  1,
+        9,  4,  1, 33, 28, 56,  2,  1,  1,  1,  4,  1, 20,  1,  6,  1,  2,
+        2,  1,  2,  1,  2,  1,  7,  3,  1,  1, 14, 28,  1, 20,  4,  8, 13,
+        3,  1,  5, 15,  1,  1,  4,  6,  1, 10, 46,  9,  1,  2,  1,  3,  5,
+        8,  2,  1,  2,  7, 13, 19,  9,  9,  3,  6, 13])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>dmr_start</span></div><div class='xr-var-dims'>(dmr)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>10002170 10003237 ... 5099617</div><input id='attrs-a1eb3963-3ce8-4d80-b924-67049fd56dcc' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a1eb3963-3ce8-4d80-b924-67049fd56dcc' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4f99851a-a26c-4d8b-aea5-e59a4efd135f' class='xr-var-data-in' type='checkbox'><label for='data-4f99851a-a26c-4d8b-aea5-e59a4efd135f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([10002170, 10003237, 10003913, 10005477, 10007097, 10007756,
+       10008879, 10009487,  5000023,  5000331,  5000713,  5001504,
+        5001527,  5002856,  5003358,  5004657,  5005173,  5005615,
+        5006787,  5008013,  5008082,  5008128,  5008623,  5010089,
+        5011022,  5011722,  5011924,  5012328,  5012612,  5013263,
+        5013420,  5014248,  5014474,  5014919,  5015097,  5016056,
+        5016406,  5017126,  5017654,  5018292,  5018870,  5019654,
+        5020496,  5021073,  5022032,  5022297,  5023146,  5024732,
+        5026011,  5026510,  5027979,  5029201,  5029448,  5029781,
+        5031621,  5032341,  5033663,  5035169,  5036123,  5036580,
+        5037798,  5039762,  5040320,  5042005,  5042539,  5042964,
+        5043816,  5045204,  5045761,  5046406,  5047137,  5047850,
+        5050735,  5052020,  5056031,  5056187,  5056307,  5056640,
+        5056899,  5057231,  5057929,  5059539,  5059808,  5060634,
+        5060906,  5061544,  5061958,  5062138,  5062650,  5063224,
+        5064725,  5064979,  5065751,  5066072,  5066403,  5067143,
+        5068389,  5070130,  5070995,  5071674,  5073638,  5074234,
+        5075671,  5076377,  5076738,  5077624,  5078803,  5080038,
+        5080170,  5080717,  5081238,  5081428,  5081840,  5082918,
+        5083584,  5084088,  5084684,  5085932,  5086993,  5087216,
+        5089435,  5089732,  5090145,  5091386,  5092148,  5093098,
+        5094969,  5096538,  5097675,  5098804,  5099617])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>sample</span></div><div class='xr-var-dims'>(sample)</div><div class='xr-var-dtype'>&lt;U18</div><div class='xr-var-preview xr-preview'>&#x27;snm3C_ASC&#x27; ... &#x27;snmC_OPC&#x27;</div><input id='attrs-bbcf459b-9250-4dd4-a960-b1acd95c8413' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-bbcf459b-9250-4dd4-a960-b1acd95c8413' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-38d6e8f4-7d59-43fa-952f-89c47901366e' class='xr-var-data-in' type='checkbox'><label for='data-38d6e8f4-7d59-43fa-952f-89c47901366e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;snm3C_ASC&#x27;, &#x27;snm3C_CA1&#x27;, &#x27;snm3C_CA23&#x27;, &#x27;snm3C_CGE-VipLamp5&#x27;,
+       &#x27;snm3C_DG&#x27;, &#x27;snm3C_MGC&#x27;, &#x27;snm3C_MGE-PvSst&#x27;, &#x27;snm3C_NonN&#x27;, &#x27;snm3C_ODC&#x27;,
+       &#x27;snm3C_OPC&#x27;, &#x27;snmC_ASC&#x27;, &#x27;snmC_CA1&#x27;, &#x27;snmC_CA23&#x27;, &#x27;snmC_CGE-VipLamp5&#x27;,
+       &#x27;snmC_DG&#x27;, &#x27;snmC_MGC&#x27;, &#x27;snmC_MGE-PvSst&#x27;, &#x27;snmC_NonN&#x27;, &#x27;snmC_ODC&#x27;,
+       &#x27;snmC_OPC&#x27;], dtype=&#x27;&lt;U18&#x27;)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-1eb4e868-f7de-49f0-8606-8895da5fe5ac' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-1eb4e868-f7de-49f0-8606-8895da5fe5ac' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div></div>
+</div>
+</div>
+<div class="section" id="gene-input">
+<h3>Gene Input<a class="headerlink" href="#gene-input" title="Permalink to this headline">¶</a></h3>
+<p>A 2-D sample-by-gene DataArray, values are cluster-normalized mCH fractions</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_b</span> <span class="o">=</span> <span class="n">gene</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span>
+    <span class="n">mc_type</span><span class="o">=</span><span class="s1">&#39;CHN&#39;</span><span class="p">,</span>
+    <span class="n">sample</span><span class="o">=</span><span class="n">data_a</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">))[</span><span class="s1">&#39;geneslop2k_da_frac&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
+        <span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="s1">&#39;geneslop2k&#39;</span><span class="p">)</span>
+<span class="n">data_b</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.DataArray &#x27;geneslop2k_da_frac&#x27; (sample: 20, geneslop2k: 55487)&gt;
+[1109740 values with dtype=float64]
+Coordinates:
+    mc_type           &lt;U3 &#x27;CHN&#x27;
+  * sample            (sample) object &#x27;snm3C_ASC&#x27; &#x27;snm3C_CA1&#x27; ... &#x27;snmC_OPC&#x27;
+    sample_CGN        (sample) float64 0.7203 0.7387 0.7422 ... 0.7434 0.7196
+    sample_CHN        (sample) float64 0.007835 0.02362 ... 0.01121 0.005743
+    strand_type       &lt;U4 &#x27;both&#x27;
+  * geneslop2k        (geneslop2k) object &#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSMUSG...
+    geneslop2k_chrom  (geneslop2k) object &#x27;chr1&#x27; &#x27;chr1&#x27; &#x27;chr1&#x27; ... &#x27;chrM&#x27; &#x27;chrM&#x27;
+    geneslop2k_end    (geneslop2k) int64 3076321 3104124 3673497 ... 16299 16299
+    geneslop2k_start  (geneslop2k) int64 3071252 3100015 3203900 ... 13288 13355</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'>'geneslop2k_da_frac'</div><ul class='xr-dim-list'><li><span class='xr-has-index'>sample</span>: 20</li><li><span class='xr-has-index'>geneslop2k</span>: 55487</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-0c112c1c-7383-4d85-adfb-0d9167b593cd' class='xr-array-in' type='checkbox' checked><label for='section-0c112c1c-7383-4d85-adfb-0d9167b593cd' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>...</span></div><div class='xr-array-data'><pre>[1109740 values with dtype=float64]</pre></div></div></li><li class='xr-section-item'><input id='section-720d8d79-d3a9-440d-83ad-24a16bee52a7' class='xr-section-summary-in' type='checkbox'  checked><label for='section-720d8d79-d3a9-440d-83ad-24a16bee52a7' class='xr-section-summary' >Coordinates: <span>(9)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>mc_type</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>&lt;U3</div><div class='xr-var-preview xr-preview'>&#x27;CHN&#x27;</div><input id='attrs-40ddee3b-0c1d-48fb-a1da-64a3aa42eb86' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-40ddee3b-0c1d-48fb-a1da-64a3aa42eb86' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-5b601851-aa45-4c39-87c5-98ef198b1032' class='xr-var-data-in' type='checkbox'><label for='data-5b601851-aa45-4c39-87c5-98ef198b1032' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(&#x27;CHN&#x27;, dtype=&#x27;&lt;U3&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>sample</span></div><div class='xr-var-dims'>(sample)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;snm3C_ASC&#x27; ... &#x27;snmC_OPC&#x27;</div><input id='attrs-e3bf07c7-5c53-44a5-8a8e-48f5cb88e9c9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e3bf07c7-5c53-44a5-8a8e-48f5cb88e9c9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e4d82a84-457a-43b2-bdc9-233b0e894291' class='xr-var-data-in' type='checkbox'><label for='data-e4d82a84-457a-43b2-bdc9-233b0e894291' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;snm3C_ASC&#x27;, &#x27;snm3C_CA1&#x27;, &#x27;snm3C_CA23&#x27;, &#x27;snm3C_CGE-VipLamp5&#x27;,
+       &#x27;snm3C_DG&#x27;, &#x27;snm3C_MGC&#x27;, &#x27;snm3C_MGE-PvSst&#x27;, &#x27;snm3C_NonN&#x27;, &#x27;snm3C_ODC&#x27;,
+       &#x27;snm3C_OPC&#x27;, &#x27;snmC_ASC&#x27;, &#x27;snmC_CA1&#x27;, &#x27;snmC_CA23&#x27;, &#x27;snmC_CGE-VipLamp5&#x27;,
+       &#x27;snmC_DG&#x27;, &#x27;snmC_MGC&#x27;, &#x27;snmC_MGE-PvSst&#x27;, &#x27;snmC_NonN&#x27;, &#x27;snmC_ODC&#x27;,
+       &#x27;snmC_OPC&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>sample_CGN</span></div><div class='xr-var-dims'>(sample)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.7203 0.7387 ... 0.7434 0.7196</div><input id='attrs-376808b8-a974-44e6-b9e3-ce81cac7df9e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-376808b8-a974-44e6-b9e3-ce81cac7df9e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f6d0b26b-435c-4c18-9611-aa4f18eaad90' class='xr-var-data-in' type='checkbox'><label for='data-f6d0b26b-435c-4c18-9611-aa4f18eaad90' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0.72027702, 0.7386765 , 0.74223235, 0.78137746, 0.70998683,
+       0.69529767, 0.79745986, 0.6957201 , 0.72761756, 0.70625517,
+       0.73871943, 0.74009099, 0.75324386, 0.80065615, 0.72773628,
+       0.71349106, 0.8149437 , 0.70807914, 0.74336865, 0.71960449])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>sample_CHN</span></div><div class='xr-var-dims'>(sample)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.007835 0.02362 ... 0.005743</div><input id='attrs-60e16fc2-8a4b-445e-b57d-41fd38a7c3c7' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-60e16fc2-8a4b-445e-b57d-41fd38a7c3c7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f2dd52e3-cbf8-488a-a7de-46cb99221e8b' class='xr-var-data-in' type='checkbox'><label for='data-f2dd52e3-cbf8-488a-a7de-46cb99221e8b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0.00783526, 0.02362182, 0.02493468, 0.02857215, 0.0106706 ,
+       0.00696775, 0.03594073, 0.00793199, 0.01268308, 0.00754718,
+       0.00681991, 0.01997363, 0.02210814, 0.02925379, 0.00979016,
+       0.00561416, 0.03664812, 0.00748145, 0.01121077, 0.00574326])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>strand_type</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>&lt;U4</div><div class='xr-var-preview xr-preview'>&#x27;both&#x27;</div><input id='attrs-2593073a-c552-4398-ba0a-61f23c85fc89' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-2593073a-c552-4398-ba0a-61f23c85fc89' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b9d03b17-e127-4b50-9f13-fee4daf8e9a9' class='xr-var-data-in' type='checkbox'><label for='data-b9d03b17-e127-4b50-9f13-fee4daf8e9a9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(&#x27;both&#x27;, dtype=&#x27;&lt;U4&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>geneslop2k</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSM...</div><input id='attrs-57439ed0-69b5-4099-ae44-59c3b46d93f3' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-57439ed0-69b5-4099-ae44-59c3b46d93f3' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f451e0af-32e9-49ee-8d38-4894299e0a16' class='xr-var-data-in' type='checkbox'><label for='data-f451e0af-32e9-49ee-8d38-4894299e0a16' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;ENSMUSG00000102693.1&#x27;, &#x27;ENSMUSG00000064842.1&#x27;, &#x27;ENSMUSG00000051951.5&#x27;,
+       ..., &#x27;ENSMUSG00000064370.1&#x27;, &#x27;ENSMUSG00000064371.1&#x27;,
+       &#x27;ENSMUSG00000064372.1&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_chrom</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;chr1&#x27; &#x27;chr1&#x27; ... &#x27;chrM&#x27; &#x27;chrM&#x27;</div><input id='attrs-b7d5ccbb-4f33-4257-b279-cae80f554e56' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-b7d5ccbb-4f33-4257-b279-cae80f554e56' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-46dbfedf-3754-456b-a873-51c1dad2c639' class='xr-var-data-in' type='checkbox'><label for='data-46dbfedf-3754-456b-a873-51c1dad2c639' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;chr1&#x27;, &#x27;chr1&#x27;, &#x27;chr1&#x27;, ..., &#x27;chrM&#x27;, &#x27;chrM&#x27;, &#x27;chrM&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_end</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>3076321 3104124 ... 16299 16299</div><input id='attrs-63ca6f94-291d-4d9a-8096-86456e1b7a2f' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-63ca6f94-291d-4d9a-8096-86456e1b7a2f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-168a0da2-57ca-4fdf-a497-703419f57eab' class='xr-var-data-in' type='checkbox'><label for='data-168a0da2-57ca-4fdf-a497-703419f57eab' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([3076321, 3104124, 3673497, ...,   16299,   16299,   16299])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_start</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>3071252 3100015 ... 13288 13355</div><input id='attrs-4667558a-c99c-45e1-9df1-98dd526435fd' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4667558a-c99c-45e1-9df1-98dd526435fd' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6b50c296-e381-4171-9463-40d84f323451' class='xr-var-data-in' type='checkbox'><label for='data-6b50c296-e381-4171-9463-40d84f323451' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([3071252, 3100015, 3203900, ...,   12144,   13288,   13355])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-95ee8ba5-589d-43fe-81d2-e1ff95d9aeca' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-95ee8ba5-589d-43fe-81d2-e1ff95d9aeca' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="calculate-correlations-between-dmr-and-genes">
+<h2>Calculate correlations between DMR and genes<a class="headerlink" href="#calculate-correlations-between-dmr-and-genes" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_results</span><span class="p">,</span> <span class="n">null_results</span> <span class="o">=</span> <span class="n">region_correlation</span><span class="p">(</span><span class="n">data_a</span><span class="p">,</span>
+                                                <span class="n">data_b</span><span class="p">,</span>
+                                                <span class="n">sample_mch</span><span class="p">,</span>
+                                                <span class="n">sample_mcg</span><span class="p">,</span>
+                                                <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">,</span>
+                                                <span class="n">max_dist</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span>
+                                                <span class="n">cpu</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+                                                <span class="n">null</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span>
+                                                <span class="n">null_n</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using dmr as region_dim
+Using dmr_start and dmr_end to calculate pos
+Using geneslop2k as region_dim
+Using geneslop2k_start and geneslop2k_end to calculate pos
+Calculating chr1
+Calculating chr19
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">null_results</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(19107, 19107)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="plot-correlation-distribution">
+<h3>Plot correlation distribution<a class="headerlink" href="#plot-correlation-distribution" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+             <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">null_results</span><span class="p">,</span> <span class="mi">100000</span><span class="p">),</span>
+             <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Null&#39;</span><span class="p">,</span>
+             <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+             <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">true_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">100000</span><span class="p">),</span>
+             <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True&#39;</span><span class="p">,</span>
+             <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f1ec3563220&gt;
+</pre></div>
+</div>
+<img alt="../../_images/07.dmr_gene_corr_14_1.png" src="../../_images/07.dmr_gene_corr_14_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="get-significantly-correlated-pairs">
+<h2>Get Significantly Correlated Pairs<a class="headerlink" href="#get-significantly-correlated-pairs" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr_table</span> <span class="o">=</span> <span class="n">get_corr_table</span><span class="p">(</span><span class="n">true_results</span><span class="p">,</span>
+                            <span class="n">null_results</span><span class="p">,</span>
+                            <span class="n">region_dim_a</span><span class="o">=</span><span class="n">data_a</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                            <span class="n">region_dim_b</span><span class="o">=</span><span class="n">data_b</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                            <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+                            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.03</span><span class="p">)</span>
+
+<span class="n">corr_table</span><span class="p">[</span><span class="s1">&#39;pair_distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">corr_table</span><span class="p">[</span><span class="s1">&#39;dmr_pos&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">corr_table</span><span class="p">[</span><span class="s1">&#39;geneslop2k_pos&#39;</span><span class="p">]</span>
+
+<span class="n">corr_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Correlation cutoff corr &gt; 0.5499999999999998
+2819 correlation pairs selected.
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dmr</th>
+      <th>geneslop2k</th>
+      <th>corr</th>
+      <th>dmr_pos</th>
+      <th>geneslop2k_pos</th>
+      <th>pair_distance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>chr1-0</td>
+      <td>ENSMUSG00000025916.10</td>
+      <td>0.688226</td>
+      <td>10002171</td>
+      <td>9988879</td>
+      <td>13292</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>chr1-2</td>
+      <td>ENSMUSG00000102871.1</td>
+      <td>0.653428</td>
+      <td>10003940</td>
+      <td>9288550</td>
+      <td>715390</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>chr1-3</td>
+      <td>ENSMUSG00000067851.11</td>
+      <td>0.602079</td>
+      <td>10005478</td>
+      <td>10185119</td>
+      <td>-179641</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>chr1-3</td>
+      <td>ENSMUSG00000098234.7</td>
+      <td>0.560595</td>
+      <td>10005478</td>
+      <td>9943037</td>
+      <td>62441</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>chr1-3</td>
+      <td>ENSMUSG00000045210.8</td>
+      <td>0.701606</td>
+      <td>10005478</td>
+      <td>9733501</td>
+      <td>271977</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2814</th>
+      <td>chr19-122</td>
+      <td>ENSMUSG00000024835.15</td>
+      <td>0.678979</td>
+      <td>5099784</td>
+      <td>4151326</td>
+      <td>948458</td>
+    </tr>
+    <tr>
+      <th>2815</th>
+      <td>chr19-122</td>
+      <td>ENSMUSG00000044724.9</td>
+      <td>0.811770</td>
+      <td>5099784</td>
+      <td>4142762</td>
+      <td>957022</td>
+    </tr>
+    <tr>
+      <th>2816</th>
+      <td>chr19-122</td>
+      <td>ENSMUSG00000024842.8</td>
+      <td>0.749665</td>
+      <td>5099784</td>
+      <td>4139727</td>
+      <td>960057</td>
+    </tr>
+    <tr>
+      <th>2817</th>
+      <td>chr19-122</td>
+      <td>ENSMUSG00000024845.17</td>
+      <td>0.655735</td>
+      <td>5099784</td>
+      <td>4129119</td>
+      <td>970665</td>
+    </tr>
+    <tr>
+      <th>2818</th>
+      <td>chr19-122</td>
+      <td>ENSMUSG00000024851.14</td>
+      <td>0.652242</td>
+      <td>5099784</td>
+      <td>4106980</td>
+      <td>992804</td>
+    </tr>
+  </tbody>
+</table>
+<p>2819 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="section" id="plot-distance-and-correlation-distribution">
+<h3>Plot distance and correlation distribution<a class="headerlink" href="#plot-distance-and-correlation-distribution" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">corr_table</span><span class="p">,</span>
+                <span class="n">x</span><span class="o">=</span><span class="s1">&#39;pair_distance&#39;</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="s1">&#39;corr&#39;</span><span class="p">,</span>
+                <span class="n">s</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                <span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">corr_table</span><span class="p">[</span><span class="s1">&#39;pair_distance&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;pair_distance&#39;, ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/07.dmr_gene_corr_18_1.png" src="../../_images/07.dmr_gene_corr_18_1.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./cluster_level/RegionDS"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="06b.mc_cluster_profile.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Prepare Cluster-by-Gene mC Profile</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../REPTILE/intro_reptile.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">REPTILE</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Hanqing Liu<br/>
+    
+        &copy; Copyright 2019 - 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

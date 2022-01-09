@@ -1,5 +1,10 @@
 # Basic Clustering Walk-through
 
+## Section table of contents
+
+```{tableofcontents}
+```
+
 ## Input Files
 
 ### For 100Kb bins clustering
