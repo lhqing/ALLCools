@@ -2,7 +2,7 @@ docs/allcools/api/
 docs/allcools/_build/
 .idea/
 test/output/*
-
+*.icloud
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
