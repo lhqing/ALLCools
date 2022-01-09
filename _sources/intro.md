@@ -7,10 +7,10 @@ It includes functions to prepare input files, perform cellular analysis and geno
 ## Documentation Organization
 
 1. To install and get an overview, please read the **GET STARTED** part;
-2. To generate analysis files, please read the **COMMAND LINE TOOLS** part;
-3. The analysis steps in ALLCools are organized in two parts:
+2. The analysis steps in ALLCools are organized in two parts:
    1. The **CELLULAR ANALYSIS** part go through the clustering, cluster DMG, and integration analysis;
    2. The **GENOMIC ANALYSIS** part go through the DMR calling, genome annotation, DNA motif analysis, correlation analysis, and enhancer prediction.
+3. To generate analysis files from your own data, please read the **COMMAND LINE TOOLS** part;
 4. To customize visualization, please read the **VISUALIZATION** part;
 5. The **DISCUSSION** part provides more details on the analysis steps;
 6. The **API** part provides reference to each function.

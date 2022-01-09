@@ -31,7 +31,7 @@ MCAD|multiple|genome region<br/>(small size, large number)|hypo-methylation scor
 
 ### Relationships between these file formats
 
-The ALLC files are generated from sequencing data, the {class}`MCDS <ALLCools.mcds.MCDS>` and {class}`MCAD <ALLCools.mcds.MCAD>` files are then generated from a set of ALLC files 
+The ALLC files are generated from sequencing data, the {class}`MCDS <ALLCools.mcds.mcds.MCDS>` and MCAD files are then generated from a set of ALLC files 
 (usually, thousands of single-cell ALLC files coming from the same experiment). 
 The MCDS or MCAD files are the starting point of cell-level analysis.
 
