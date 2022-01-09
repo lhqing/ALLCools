@@ -22,7 +22,7 @@ setup(
     },
     include_package_data=True,
     install_requires=['imblearn', 'plotly', 'opentsne', 'xarray', 'pybedtools',
-                      'dask', 'numba', 'pynndescent'],
+                      'dask', 'numba', 'pynndescent', 'numpy', 'pandas'],
     entry_points={
         'console_scripts': ['allcools=ALLCools.__main__:main'],
     }

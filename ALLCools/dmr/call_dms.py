@@ -140,6 +140,25 @@ def _perform_rms_batch(output_dir, allc_paths, samples, region, max_row_count, n
 
 def call_dms(output_dir, allc_paths, samples, chrom_size_path, cpu=1,
              max_row_count=50, n_permute=3000, min_pvalue=0.01, region=None):
+    """
+    Call DMS from multiple ALLC files
+
+    Parameters
+    ----------
+    output_dir
+    allc_paths
+    samples
+    chrom_size_path
+    cpu
+    max_row_count
+    n_permute
+    min_pvalue
+    region
+
+    Returns
+    -------
+
+    """
     pathlib.Path(output_dir).mkdir(exist_ok=True)
 
     with open(f'{output_dir}/.ALLCools', 'w') as f:

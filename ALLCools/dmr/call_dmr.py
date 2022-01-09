@@ -8,14 +8,17 @@ import subprocess
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
-def call_dmr_single_chrom(dms_dir,
-                          output_dir,
-                          chrom,
-                          p_value_cutoff=0.001,
-                          frac_delta_cutoff=0.2,
-                          max_dist=250,
-                          residual_quantile=0.6,
-                          corr_cutoff=0.3):
+def _call_dmr_single_chrom(dms_dir,
+                           output_dir,
+                           chrom,
+                           p_value_cutoff=0.001,
+                           frac_delta_cutoff=0.2,
+                           max_dist=250,
+                           residual_quantile=0.6,
+                           corr_cutoff=0.3,
+                           dms_ratio=0.8):
+    """Call DMR for single chromosome, see call_dmr for doc"""
+
     ds = RegionDS.open(dms_dir, region_dim='dms')
 
     # open DMS dataset and select single chromosome, significant, large delta DMS
@@ -85,12 +88,20 @@ def call_dmr_single_chrom(dms_dir,
     # -1 means hypo methylation, 1 means hyper methylation, 0 mean no sig change
     dms_states = lower_residual.astype(int) * -1 + higher_residual.astype(int)
     # dmr state judge
-    dmr_states = dms_states.groupby('dmr').sum()
-    dmr_states = xr.where(dmr_states > 1, 1, dmr_states)
-    dmr_states = xr.where(dmr_states < -1, -1, dmr_states)
+    # use mean to calculate the overall DMR state from DMS
+    dmr_states = dms_states.groupby('dmr').mean()
+    # then mask inconsistent DMR states with the dms_ratio cutoff
+    dmr_states = xr.where(np.abs(dmr_states) < dms_ratio, 0, dmr_states)
+    # then "round" the dmr_states, so it only contains -1, 0, 1
+    dmr_states = xr.where(dmr_states > 0, 1, dmr_states)
+    dmr_states = xr.where(dmr_states < 0, -1, dmr_states)
 
     # step 5: prepare dmr counts and fractions
     dmr_da = ds['dms_da'].groupby('dmr').sum()
+    # prevent overflow, which should be very very rare
+    dmr_da = xr.where(dmr_da < np.iinfo(np.uint32),
+                      np.iinfo(np.uint32),
+                      dmr_states)
     dmr_frac = dmr_da.sel(count_type='mc') / dmr_da.sel(count_type='cov')
     dmr_ds = xr.Dataset({
         'dmr_da': dmr_da.astype(np.uint32),
@@ -119,13 +130,34 @@ def call_dmr_single_chrom(dms_dir,
 
 
 def call_dmr(output_dir,
+             replicate_label=None,
              p_value_cutoff=0.001,
              frac_delta_cutoff=0.2,
              max_dist=250,
              residual_quantile=0.6,
              corr_cutoff=0.3,
+             dms_ratio=0.8,
              cpu=1,
              chrom=None):
+    """
+    Call DMR from DMS results.
+
+    Parameters
+    ----------
+    output_dir
+    p_value_cutoff
+    frac_delta_cutoff
+    max_dist
+    residual_quantile
+    corr_cutoff
+    dms_ratio
+    cpu
+    chrom
+
+    Returns
+    -------
+
+    """
     if chrom is None:
         chrom_size_path = f'{output_dir}/chrom_sizes.txt'
         from ..utilities import parse_chrom_size
@@ -142,7 +174,7 @@ def call_dmr(output_dir,
     with ProcessPoolExecutor(cpu) as exe:
         futures = {}
         for chunk_i, chrom in enumerate(chroms):
-            future = exe.submit(call_dmr_single_chrom,
+            future = exe.submit(_call_dmr_single_chrom,
                                 dms_dir=f'{output_dir}/dms',
                                 output_dir=chunk_dir,
                                 chrom=chrom,
@@ -150,7 +182,8 @@ def call_dmr(output_dir,
                                 frac_delta_cutoff=frac_delta_cutoff,
                                 max_dist=max_dist,
                                 residual_quantile=residual_quantile,
-                                corr_cutoff=corr_cutoff)
+                                corr_cutoff=corr_cutoff,
+                                dms_ratio=dms_ratio)
             futures[future] = chunk_i
 
         chunks_to_write = {}
@@ -169,12 +202,16 @@ def call_dmr(output_dir,
     update_region_ds_config(output_dir=output_dir,
                             new_dataset_dim={'dmr': 'dmr'},
                             change_region_dim='dmr')
+
+    if replicate_label is not None:
+        collapse_replicates(output_dir, replicate_label)
     return
 
 
 def collapse_replicates(region_ds, replicate_label, state_da='dmr_state'):
     if not isinstance(replicate_label, str):
-        # assume the replicate label is provided as a series or dataarray that can be added into coords
+        # assume the replicate label is provided as a series or dataarray
+        # that can be added into coords
         region_ds.coords['replicate_label'] = replicate_label
         replicate_label_name = 'replicate_label'
     else:
@@ -197,8 +234,10 @@ def collapse_replicates(region_ds, replicate_label, state_da='dmr_state'):
     collapsed.columns.name = f'{sample_dim}_collapsed'
     collapsed.index.name = region_ds.region_dim
 
-    region_ds['dmr_state_collapsed'] = collapsed
+    region_ds[f'{state_da}_collapsed'] = collapsed
     if region_ds.location is not None:
-        region_ds[['dmr_state_collapsed']].to_zarr(f'{region_ds.location}/dmr/', mode='a')
+        region_ds[[f'{state_da}_collapsed']].to_zarr(
+            f'{region_ds.location}/{region_ds.region_dim}/',
+            mode='a')
         print(f'Collapsed sample state added in exist RegionDS at {region_ds.location}')
     return

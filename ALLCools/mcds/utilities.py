@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 import warnings
-
+from typing import Union
 log = logging.getLogger()
 
 
@@ -47,6 +47,7 @@ def calculate_posterior_mc_frac(mc_da,
     cell_b = cell_a * (1 / cell_rate_mean - 1)
 
     # cell specific posterior rate
+    post_frac: Union[np.ndarray, xr.DataArray]
     if ndarray:
         post_frac = (mc_da + cell_a[:, None]) / (cov_da + cell_a[:, None] + cell_b[:, None])
     else:
@@ -71,7 +72,7 @@ def calculate_posterior_mc_frac(mc_da,
                 post_frac[post_frac > clip_norm_value] = clip_norm_value
             else:
                 # xarray.DataArray
-                post_rate = post_frac.where(post_frac < clip_norm_value, clip_norm_value)
+                post_frac = post_frac.where(post_frac < clip_norm_value, clip_norm_value)
     return post_frac
 
 
@@ -275,12 +276,12 @@ def determine_engine(dataset_paths):
         for path in paths:
             e = _single_path(path)
             engines.append(e)
-        engine = list(set(engines))
-        if len(engine) > 1:
+        _engine = list(set(engines))
+        if len(_engine) > 1:
             raise ValueError(f'Can not open a mixture of netcdf4 and zarr files in "{dataset_paths}"')
         else:
-            engine = engine[0]
-        return engine
+            _engine = _engine[0]
+        return _engine
 
     if isinstance(dataset_paths, (str, pathlib.PosixPath)):
         if '*' in str(dataset_paths):
@@ -333,5 +334,5 @@ def write_ordered_chunks(chunks_to_write, final_path, append_dim,
             # create the new da
             chunk_ds.to_zarr(final_path, mode='w')
         else:
-            chunk_ds.to_zarr(final_path, moda='a', append_dim=append_dim)
+            chunk_ds.to_zarr(final_path, mode='a', append_dim=append_dim)
     return

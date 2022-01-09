@@ -211,7 +211,7 @@ class RegionDS(xr.Dataset):
             return
 
     @classmethod
-    def from_bed(cls, bed, location, chrom_size_path, region_dim='region'):
+    def from_bed(cls, bed, location, chrom_size_path, region_dim='region', sort_bed=True):
         """
         Create empty RegionDS from a bed file.
 
@@ -221,6 +221,7 @@ class RegionDS(xr.Dataset):
         location
         region_dim
         chrom_size_path
+        sort_bed
 
         Returns
         -------
@@ -229,7 +230,10 @@ class RegionDS(xr.Dataset):
 
         # sort bed based on chrom_size_path
         if isinstance(bed, (str, pathlib.PosixPath)):
-            bed = BedTool(bed).sort(g=chrom_size_path).to_dataframe()
+            if sort_bed:
+                bed = BedTool(bed).sort(g=chrom_size_path).to_dataframe()
+            else:
+                bed = BedTool(bed)
         else:
             bed = bed
 
@@ -255,6 +259,7 @@ class RegionDS(xr.Dataset):
         location = pathlib.Path(location).absolute()
         location.mkdir(exist_ok=True, parents=True)
         region_ds = cls(ds, region_dim=region_dim, location=location, chrom_size_path=chrom_size_path)
+        region_ds.save()
         return region_ds
 
     @classmethod
@@ -593,16 +598,16 @@ class RegionDS(xr.Dataset):
         self._chunk_annotation_executor(_annotate_by_bigwigs_worker, cpu=cpu, save=save, **kwargs)
         return
 
-    def annotate_by_bed(self,
-                        bed_table,
-                        dim,
-                        slop=100,
-                        chrom_size_path=None,
-                        chunk_size='auto',
-                        dtype='bool',
-                        bed_sorted=True,
-                        cpu=1,
-                        save=True):
+    def annotate_by_beds(self,
+                         bed_table,
+                         dim,
+                         slop=100,
+                         chrom_size_path=None,
+                         chunk_size='auto',
+                         dtype='bool',
+                         bed_sorted=True,
+                         cpu=1,
+                         save=True):
         bed_tmp = pathlib.Path(f'./pybedtools_tmp_{np.random.randint(0, 100000)}').absolute()
         bed_tmp.mkdir(exist_ok=True)
         default_tmp = pybedtools.helpers.get_tempdir()
