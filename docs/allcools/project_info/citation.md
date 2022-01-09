@@ -1,4 +1,4 @@
 # Citation And Reference
 ```{bibliography}
-:style: plain
+:style: unsrt
 ```

@@ -1,5 +1,8 @@
 # Cluster Level Analysis
 
+```{tableofcontents}
+```
+
 ## Prepare Cluster Level Analysis
 
 ### Merge Pseudo-bulk ALLC Files

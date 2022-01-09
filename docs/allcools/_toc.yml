@@ -57,14 +57,15 @@ parts:
       - file: cluster_level/intro
         sections:
           - file: cluster_level/RegionDS/01a.call_dmr
-          - file: cluster_level/RegionDS/01b.parse_methylpy
+          - file: cluster_level/RegionDS/01b.other_option_to_init_region_ds
           - file: cluster_level/RegionDS/02.annotation
           - file: cluster_level/RegionDS/03.filter_dmr
           - file: cluster_level/RegionDS/04.motif_scan
           - file: cluster_level/RegionDS/05.motif_enrichment
-          - file: cluster_level/RegionDS/06a.RNA_cluster_profile
-          - file: cluster_level/RegionDS/06b.mc_cluster_profile
-          - file: cluster_level/RegionDS/07.dmr_gene_corr
+      - file: cluster_level/Correlation/intro_corr
+        sections:
+          - file: cluster_level/Correlation/01.mc_cluster_profile
+          - file: cluster_level/Correlation/02.dmr_gene_corr
       - file: cluster_level/REPTILE/intro_reptile
         sections:
           - file: cluster_level/REPTILE/01.prepare_input
