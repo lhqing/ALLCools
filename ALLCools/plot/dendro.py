@@ -17,29 +17,30 @@ def straight_branch(ax, a, b, plot_kws):
 
 
 def plot_dendrogram(
-        linkage_df,
-        ax,
-        dendro=None,
-        labels=None,
-        dendro_kws=None,
-        plot_node_id=False,
-        plot_non_singleton=True,
-        plot_kws=None,
-        node_hue=None,
-        node_hue_norm=None,
-        node_hue_cbar=True,
-        node_hue_cbar_frac=0.1,
-        node_palette='viridis',  # shared by both line and node hue
-        node_size=None,
-        node_size_norm=None,
-        node_sizes=None,
-        line_hue=None,
-        line_hue_norm=None,
-        line_palette='gray_r',
-        linewidth=1.5,
-        edge_color='gray',
-        marker_size=60,
-        marker_color='lightblue'):
+    linkage_df,
+    ax,
+    dendro=None,
+    labels=None,
+    dendro_kws=None,
+    plot_node_id=False,
+    plot_non_singleton=True,
+    plot_kws=None,
+    node_hue=None,
+    node_hue_norm=None,
+    node_hue_cbar=True,
+    node_hue_cbar_frac=0.1,
+    node_palette="viridis",  # shared by both line and node hue
+    node_size=None,
+    node_size_norm=None,
+    node_sizes=None,
+    line_hue=None,
+    line_hue_norm=None,
+    line_palette="gray_r",
+    linewidth=1.5,
+    edge_color="gray",
+    marker_size=60,
+    marker_color="lightblue",
+):
     """
 
     Parameters
@@ -78,8 +79,9 @@ def plot_dendrogram(
     if dendro is None:
         if labels is None or linkage_df is None:
             raise ValueError(
-                'linkage_df and labels must be provided to calculate dendrogram.')
-        print('Computing dendrogram')
+                "linkage_df and labels must be provided to calculate dendrogram."
+            )
+        print("Computing dendrogram")
         _dendro_kws = dict(no_plot=True)
         if dendro_kws is not None:
             _dendro_kws.update(dendro_kws)
@@ -88,12 +90,12 @@ def plot_dendrogram(
         # so we can control each node
         dendro = _dendrogram(linkage_df, labels=labels, **_dendro_kws)
     else:
-        labels = dendro['ivl']
-    n_leaves = len(dendro['leaves'])
+        labels = dendro["ivl"]
+    n_leaves = len(dendro["leaves"])
 
     node_pos = {}  # all node including singleton and non-singleton
     direct_link_map = {}  # node linkage, keys only contain non-singleton
-    for leaf_x, leaf in enumerate(dendro['leaves']):
+    for leaf_x, leaf in enumerate(dendro["leaves"]):
         # add singleton positions first
         node_pos[int(leaf)] = (leaf_x, 0)
     for i, (idx, (left, right, height, _)) in enumerate(linkage_df.iterrows()):
@@ -106,10 +108,13 @@ def plot_dendrogram(
 
     # ------------------ Plot nodes ------------------
     # node colors
-    nan_color = '#D3D3D3' if marker_color is None else marker_color
+    nan_color = "#D3D3D3" if marker_color is None else marker_color
     if isinstance(node_palette, dict):
         # categorical node color
-        node_colors = {node: node_palette[node] if (node in node_palette) else nan_color for node in node_pos.keys()}
+        node_colors = {
+            node: node_palette[node] if (node in node_palette) else nan_color
+            for node in node_pos.keys()
+        }
     else:
         # continous node color
         if node_hue is not None:
@@ -117,19 +122,20 @@ def plot_dendrogram(
                 values = node_hue.values
                 _hue_norm = Normalize(vmin=min(values), vmax=max(values))
             else:
-                _hue_norm = Normalize(vmin=min(node_hue_norm),
-                                      vmax=max(node_hue_norm))
+                _hue_norm = Normalize(vmin=min(node_hue_norm), vmax=max(node_hue_norm))
             _cmap = get_cmap(node_palette)
 
             def node_cmap(v):
                 return (_cmap(_hue_norm(v)),)
 
             if node_hue_cbar:
-                ax.figure.colorbar(mpl.cm.ScalarMappable(norm=_hue_norm, cmap=_cmap),
-                                   ax=ax.figure.axes,
-                                   shrink=0.6,
-                                   fraction=node_hue_cbar_frac,
-                                   label='Node Color')
+                ax.figure.colorbar(
+                    mpl.cm.ScalarMappable(norm=_hue_norm, cmap=_cmap),
+                    ax=ax.figure.axes,
+                    shrink=0.6,
+                    fraction=node_hue_cbar_frac,
+                    label="Node Color",
+                )
         else:
             node_hue = {}
 
@@ -150,14 +156,14 @@ def plot_dendrogram(
             values = node_size.values
             _size_norm = Normalize(vmin=min(values), vmax=max(values))
         else:
-            _size_norm = Normalize(vmin=min(node_size_norm),
-                                   vmax=max(node_size_norm))
+            _size_norm = Normalize(vmin=min(node_size_norm), vmax=max(node_size_norm))
 
         def node_smap(v):
             v_norm = _size_norm(v)
             v_norm = min(1, max(0, v_norm))  # limit norm value to [0, 1]
             s = v_norm * (node_sizes[1] - node_sizes[0]) + node_sizes[0]
             return s
+
     else:
         node_size = {}
 
@@ -170,29 +176,31 @@ def plot_dendrogram(
     }
     # plot nodes
     for node_id, (node_x, node_y) in node_pos.items():
-        if (node_id > len(dendro['leaves']) - 1) and not plot_non_singleton:
+        if (node_id > len(dendro["leaves"]) - 1) and not plot_non_singleton:
             break
-        ax.scatter(node_x,
-                   node_y,
-                   s=node_sizes[node_id],
-                   c=node_colors[node_id],
-                   clip_on=False,
-                   zorder=3)
+        ax.scatter(
+            node_x,
+            node_y,
+            s=node_sizes[node_id],
+            c=node_colors[node_id],
+            clip_on=False,
+            zorder=3,
+        )
 
     # ------------------ Plot edges and node id ------------------
     # line color
-    nan_color = '#D3D3D3' if edge_color is None else edge_color
+    nan_color = "#D3D3D3" if edge_color is None else edge_color
     if line_hue is not None:
         if line_hue_norm is None:
             values = line_hue.values
             _hue_norm = Normalize(vmin=min(values), vmax=max(values))
         else:
-            _hue_norm = Normalize(vmin=min(line_hue_norm),
-                                  vmax=max(line_hue_norm))
+            _hue_norm = Normalize(vmin=min(line_hue_norm), vmax=max(line_hue_norm))
         _cmap = get_cmap(line_palette)
 
         def line_cmap(v):
             return _cmap(_hue_norm(v))
+
     else:
         line_hue = {}
 
@@ -210,23 +218,25 @@ def plot_dendrogram(
         # plot node id text
         if plot_node_id:
             if node_id >= n_leaves:
-                ax.text(node_x,
-                        node_y,
-                        node_id,
-                        fontsize=6 if 'fontsize' not in plot_kws else
-                        plot_kws['fontsize'],
-                        ha='center',
-                        va='center',
-                        c='k')
+                ax.text(
+                    node_x,
+                    node_y,
+                    node_id,
+                    fontsize=6 if "fontsize" not in plot_kws else plot_kws["fontsize"],
+                    ha="center",
+                    va="center",
+                    c="k",
+                )
             else:
-                ax.text(node_x,
-                        -0.01,
-                        node_id,
-                        fontsize=6 if 'fontsize' not in plot_kws else
-                        plot_kws['fontsize'],
-                        ha='center',
-                        va='center',
-                        c='k')
+                ax.text(
+                    node_x,
+                    -0.01,
+                    node_id,
+                    fontsize=6 if "fontsize" not in plot_kws else plot_kws["fontsize"],
+                    ha="center",
+                    va="center",
+                    c="k",
+                )
 
         # plot branch
         # only non-singleton node has branch:
@@ -234,21 +244,27 @@ def plot_dendrogram(
             # get child
             left_child, right_child = direct_link_map[node_id]
             # plot left branch
-            straight_branch(ax, (node_x, node_y),
-                            node_pos[left_child],
-                            plot_kws=dict(c=line_colors[left_child],
-                                          linewidth=linewidth,
-                                          clip_on=False))
+            straight_branch(
+                ax,
+                (node_x, node_y),
+                node_pos[left_child],
+                plot_kws=dict(
+                    c=line_colors[left_child], linewidth=linewidth, clip_on=False
+                ),
+            )
             # plot right branch
-            straight_branch(ax, (node_x, node_y),
-                            node_pos[right_child],
-                            plot_kws=dict(c=line_colors[right_child],
-                                          linewidth=linewidth,
-                                          clip_on=False))
+            straight_branch(
+                ax,
+                (node_x, node_y),
+                node_pos[right_child],
+                plot_kws=dict(
+                    c=line_colors[right_child], linewidth=linewidth, clip_on=False
+                ),
+            )
 
     ax.set_ylim(0, ymax)
     ax.set_xlim(-0.5, len(labels) - 0.5)
-    ax.set(xticks=range(len(labels)), xticklabels=dendro['ivl'])
+    ax.set(xticks=range(len(labels)), xticklabels=dendro["ivl"])
     ax.xaxis.set_tick_params(rotation=90)
     sns.despine(ax=ax, bottom=True, offset=15)
     return dendro, node_pos

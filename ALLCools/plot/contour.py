@@ -4,27 +4,38 @@ from sklearn.neighbors import LocalOutlierFactor
 from .utilities import zoom_min_max
 
 
-def density_contour(ax, data, x, y, groupby=None, c='lightgray',
-                    single_contour_pad=1, linewidth=1, palette=None):
+def density_contour(
+    ax,
+    data,
+    x,
+    y,
+    groupby=None,
+    c="lightgray",
+    single_contour_pad=1,
+    linewidth=1,
+    palette=None,
+):
     _data = data.copy()
 
     if groupby is not None:
         if isinstance(groupby, str):
-            _data['groupby'] = data[groupby]
+            _data["groupby"] = data[groupby]
         else:
-            _data['groupby'] = groupby
+            _data["groupby"] = groupby
     else:
-        _data['groupby'] = 'one group'
+        _data["groupby"] = "one group"
 
-    _contour_kws = dict(linewidths=linewidth, levels=(-single_contour_pad, ), linestyles='dashed')
-    _lof_kws = dict(n_neighbors=25, novelty=True, contamination='auto')
+    _contour_kws = dict(
+        linewidths=linewidth, levels=(-single_contour_pad,), linestyles="dashed"
+    )
+    _lof_kws = dict(n_neighbors=25, novelty=True, contamination="auto")
 
     xmin, ymin = _data[[x, y]].min()
     xmax, ymax = _data[[x, y]].max()
     xmin, xmax = zoom_min_max(xmin, xmax, 1.2)
     ymin, ymax = zoom_min_max(ymin, ymax, 1.2)
 
-    for group, sub_data in _data[[x, y, 'groupby']].groupby('groupby'):
+    for group, sub_data in _data[[x, y, "groupby"]].groupby("groupby"):
         xx, yy = np.meshgrid(np.linspace(xmin, xmax, 500), np.linspace(ymin, ymax, 500))
         clf = LocalOutlierFactor(**_lof_kws)
         clf.fit(sub_data.iloc[:, :2].values)

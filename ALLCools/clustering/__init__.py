@@ -1,6 +1,12 @@
 from .ConsensusClustering import ConsensusClustering, select_confusion_pairs
 from .art_of_tsne import tsne
-from .balanced_pca import balanced_pca, significant_pc_test, log_scale, get_pc_centers, ReproduciblePCA
+from .balanced_pca import (
+    balanced_pca,
+    significant_pc_test,
+    log_scale,
+    get_pc_centers,
+    ReproduciblePCA,
+)
 from .scrublet import MethylScrublet
 from .pvclust import Dendrogram
 from .dmg import PairwiseDMG, one_vs_rest_dmg

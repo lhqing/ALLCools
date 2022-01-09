@@ -23,11 +23,11 @@ import anndata
 import scanpy as sc
 
 # create logger
-logger = logging.getLogger('harmonypy')
+logger = logging.getLogger("harmonypy")
 logger.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -37,51 +37,51 @@ def leiden_centroids(pcs, n_pcs=None, n_neighbors=15, resolution=1.5):
     if n_pcs is None:
         n_pcs = pcs.shape[1]
     fake_adata = anndata.AnnData(X=np.zeros(pcs.shape))
-    fake_adata.obsm['X_pca'] = pcs
+    fake_adata.obsm["X_pca"] = pcs
     sc.pp.neighbors(fake_adata, n_pcs=n_pcs, n_neighbors=n_neighbors)
     sc.tl.leiden(fake_adata, resolution=resolution)
 
     # get centroid
-    pc_df = pd.DataFrame(fake_adata.obsm['X_pca'], index=fake_adata.obs_names)
-    centroids = pc_df.groupby(fake_adata.obs['leiden']).median().sort_index()
+    pc_df = pd.DataFrame(fake_adata.obsm["X_pca"], index=fake_adata.obs_names)
+    centroids = pc_df.groupby(fake_adata.obs["leiden"]).median().sort_index()
     return centroids, None
 
 
 def run_harmony(
-        data_mat: np.ndarray,
-        meta_data: pd.DataFrame,
-        vars_use,
-        theta=None,
-        lamb=None,
-        sigma=0.1,
-        nclust=None,
-        tau=0,
-        block_size=0.05,
-        max_iter_harmony=10,
-        max_iter_kmeans=20,
-        epsilon_cluster=1e-5,
-        epsilon_harmony=1e-4,
-        verbose=True,
-        random_state=0,
-        init_method='kmeans',
-        n_pcs=None,
-        n_neighbors=15,
-        resolution=1.5,
-        leiden_input='origin'
+    data_mat: np.ndarray,
+    meta_data: pd.DataFrame,
+    vars_use,
+    theta=None,
+    lamb=None,
+    sigma=0.1,
+    nclust=None,
+    tau=0,
+    block_size=0.05,
+    max_iter_harmony=10,
+    max_iter_kmeans=20,
+    epsilon_cluster=1e-5,
+    epsilon_harmony=1e-4,
+    verbose=True,
+    random_state=0,
+    init_method="kmeans",
+    n_pcs=None,
+    n_neighbors=15,
+    resolution=1.5,
+    leiden_input="origin",
 ):
-    """Run Harmony.
-    """
+    """Run Harmony."""
     N = meta_data.shape[0]
     if data_mat.shape[1] != N:
         data_mat = data_mat.T
 
-    assert data_mat.shape[1] == N, \
-        "data_mat and meta_data do not have the same number of cells"
+    assert (
+        data_mat.shape[1] == N
+    ), "data_mat and meta_data do not have the same number of cells"
 
     if nclust is None:
         nclust = np.min([np.round(N / 30.0), 100]).astype(int)
 
-    if init_method == 'kmeans':
+    if init_method == "kmeans":
         if type(sigma) is float and nclust > 1:
             sigma = np.repeat(sigma, nclust)
 
@@ -89,7 +89,7 @@ def run_harmony(
         vars_use = [vars_use]
 
     phi = pd.get_dummies(meta_data[vars_use]).to_numpy().T
-    phi_n = meta_data[vars_use].describe().loc['unique'].to_numpy().astype(int)
+    phi_n = meta_data[vars_use].describe().loc["unique"].to_numpy().astype(int)
 
     if theta is None:
         theta = np.repeat([1] * len(phi_n), phi_n)
@@ -98,8 +98,7 @@ def run_harmony(
     elif len(theta) == len(phi_n):
         theta = np.repeat([theta], phi_n)
 
-    assert len(theta) == np.sum(phi_n), \
-        "each batch variable must have a theta"
+    assert len(theta) == np.sum(phi_n), "each batch variable must have a theta"
 
     if lamb is None:
         lamb = np.repeat([1] * len(phi_n), phi_n)
@@ -108,17 +107,16 @@ def run_harmony(
     elif len(lamb) == len(phi_n):
         lamb = np.repeat([lamb], phi_n)
 
-    assert len(lamb) == np.sum(phi_n), \
-        "each batch variable must have a lambda"
+    assert len(lamb) == np.sum(phi_n), "each batch variable must have a lambda"
 
     # Number of items in each category.
     N_b = phi.sum(axis=1)
     # Proportion of items in each category.
     Pr_b = N_b / N
 
-    if (init_method == 'kmeans') and (tau > 0):
+    if (init_method == "kmeans") and (tau > 0):
         # tau = 0 by default
-        theta = theta * (1 - np.exp(-(N_b / (nclust * tau)) ** 2))
+        theta = theta * (1 - np.exp(-((N_b / (nclust * tau)) ** 2)))
 
     lamb_mat = np.diag(np.insert(lamb, 0, 0))
 
@@ -127,9 +125,25 @@ def run_harmony(
     np.random.seed(random_state)
 
     ho = Harmony(
-        data_mat, phi, phi_moe, Pr_b, sigma, theta, max_iter_harmony, max_iter_kmeans,
-        epsilon_cluster, epsilon_harmony, nclust, block_size, lamb_mat, verbose,
-        init_method, n_pcs, n_neighbors, resolution, leiden_input
+        data_mat,
+        phi,
+        phi_moe,
+        Pr_b,
+        sigma,
+        theta,
+        max_iter_harmony,
+        max_iter_kmeans,
+        epsilon_cluster,
+        epsilon_harmony,
+        nclust,
+        block_size,
+        lamb_mat,
+        verbose,
+        init_method,
+        n_pcs,
+        n_neighbors,
+        resolution,
+        leiden_input,
     )
 
     return ho
@@ -137,10 +151,26 @@ def run_harmony(
 
 class Harmony(object):
     def __init__(
-            self, Z, Phi, Phi_moe, Pr_b, sigma,
-            theta, max_iter_harmony, max_iter_kmeans,
-            epsilon_kmeans, epsilon_harmony, K, block_size,
-            lamb, verbose, init_method, n_pcs, n_neighbors, resolution, leiden_input
+        self,
+        Z,
+        Phi,
+        Phi_moe,
+        Pr_b,
+        sigma,
+        theta,
+        max_iter_harmony,
+        max_iter_kmeans,
+        epsilon_kmeans,
+        epsilon_harmony,
+        K,
+        block_size,
+        lamb,
+        verbose,
+        init_method,
+        n_pcs,
+        n_neighbors,
+        resolution,
+        leiden_input,
     ):
         self.Z_corr = np.array(Z)
         self.Z_orig = np.array(Z)
@@ -196,23 +226,23 @@ class Harmony(object):
 
     def init_cluster(self):
         # Start with cluster centroids
-        if self.init_method == 'kmeans':
+        if self.init_method == "kmeans":
             km = kmeans(self.Z_cos.T, self.K, iter=10)
         else:
-            _input = self.Z_orig.T if self.leiden_input == 'origin' else self.Z_cos.T
-            km = leiden_centroids(_input,
-                                  n_pcs=self.n_pcs,
-                                  n_neighbors=self.n_neighbors,
-                                  resolution=self.resolution)
+            _input = self.Z_orig.T if self.leiden_input == "origin" else self.Z_cos.T
+            km = leiden_centroids(
+                _input,
+                n_pcs=self.n_pcs,
+                n_neighbors=self.n_neighbors,
+                resolution=self.resolution,
+            )
             # update K
             self.K = km[0].shape[0]
-            print(f'Using leiden centroids as init, got {self.K} clusters')
+            print(f"Using leiden centroids as init, got {self.K} clusters")
 
             # need to reinit sigma and theta because K changed
             if type(self.sigma) is float and self.K > 1:
                 self.sigma = np.repeat(self.sigma, self.K)
-
-
 
         self.allocate_buffers()
 
@@ -238,7 +268,7 @@ class Harmony(object):
         # Entropy
         _entropy = np.sum(safe_entropy(self.R) * self.sigma[:, np.newaxis])
         # Cross Entropy
-        x = (self.R * self.sigma[:, np.newaxis])
+        x = self.R * self.sigma[:, np.newaxis]
         y = np.tile(self.theta[:, np.newaxis], self.K).T
         z = np.log((self.O + 1) / (self.E + 1))
         w = np.dot(y * z, self.Phi)
@@ -259,16 +289,22 @@ class Harmony(object):
             # STEP 2: Regress out covariates
             # self.moe_correct_ridge()
             self.Z_cos, self.Z_corr, self.W, self.Phi_Rk = moe_correct_ridge(
-                self.Z_orig, self.Z_cos, self.Z_corr, self.R, self.W, self.K,
-                self.Phi_Rk, self.Phi_moe, self.lamb
+                self.Z_orig,
+                self.Z_cos,
+                self.Z_corr,
+                self.R,
+                self.W,
+                self.K,
+                self.Phi_Rk,
+                self.Phi_moe,
+                self.lamb,
             )
             # STEP 3: Check for convergence
             converged = self.check_convergence(1)
             if converged:
                 if verbose:
                     logger.info(
-                        "Converged after {} iteration{}"
-                            .format(i, 's' if i > 1 else '')
+                        "Converged after {} iteration{}".format(i, "s" if i > 1 else "")
                     )
                 break
         if verbose and not converged:
@@ -318,9 +354,8 @@ class Harmony(object):
             self.R[:, b] = np.multiply(
                 self.R[:, b],
                 np.dot(
-                    np.power((self.E + 1) / (self.O + 1), self.theta),
-                    self.Phi[:, b]
-                )
+                    np.power((self.E + 1) / (self.O + 1), self.theta), self.Phi[:, b]
+                ),
             )
             self.R[:, b] = self.R[:, b] / np.linalg.norm(self.R[:, b], ord=1, axis=0)
             # STEP 3: Put cells back

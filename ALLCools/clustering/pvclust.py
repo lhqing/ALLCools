@@ -12,7 +12,7 @@ import joblib
 
 def install_r_package(name):
     if not isinstalled(name):
-        utils = importr('utils')
+        utils = importr("utils")
         utils.chooseCRANmirror(ind=1)
         utils.install_packages(StrVector([name]))
 
@@ -28,7 +28,7 @@ def _hclust_to_scipy_linkage(result, plot=True):
     # in hclust merge matrix, positive value is for non-singleton
     scipy_linkage = raw_linkage.copy()
     scipy_linkage[raw_linkage.iloc[:, :2] < 0] += nobs
-    scipy_linkage[raw_linkage.iloc[:, :2] > 0] += (nobs - 1)
+    scipy_linkage[raw_linkage.iloc[:, :2] > 0] += nobs - 1
     total_obs = nobs
     # add the 4th col: number of singleton
     cluster_dict = {}
@@ -36,38 +36,38 @@ def _hclust_to_scipy_linkage(result, plot=True):
     for cur_cluster_id, (left, right, distance) in scipy_linkage.iterrows():
         left = int(left)
         right = int(right)
-        cluster_dict[cur_cluster_id] = {'left': set(), 'right': set()}
+        cluster_dict[cur_cluster_id] = {"left": set(), "right": set()}
         if (left < total_obs) and (right < total_obs):
             left = labels[left]
             right = labels[right]
             # merge of 2 original observations
-            cluster_dict[cur_cluster_id]['left'].add(left)
-            cluster_dict[cur_cluster_id]['right'].add(right)
+            cluster_dict[cur_cluster_id]["left"].add(left)
+            cluster_dict[cur_cluster_id]["right"].add(right)
         else:
             # left and/or right are cluster
             if left < total_obs:
                 left = labels[left]
-                cluster_dict[cur_cluster_id]['left'].add(left)
+                cluster_dict[cur_cluster_id]["left"].add(left)
             else:
                 # node are cluster
-                cluster_dict[cur_cluster_id]['left'].update(
-                    cluster_dict[left]['left'])
-                cluster_dict[cur_cluster_id]['left'].update(
-                    cluster_dict[left]['right'])
+                cluster_dict[cur_cluster_id]["left"].update(cluster_dict[left]["left"])
+                cluster_dict[cur_cluster_id]["left"].update(cluster_dict[left]["right"])
             if right < total_obs:
                 right = labels[right]
-                cluster_dict[cur_cluster_id]['right'].add(right)
+                cluster_dict[cur_cluster_id]["right"].add(right)
             else:
                 # node are cluster
-                cluster_dict[cur_cluster_id]['right'].update(
-                    cluster_dict[right]['left'])
-                cluster_dict[cur_cluster_id]['right'].update(
-                    cluster_dict[right]['right'])
+                cluster_dict[cur_cluster_id]["right"].update(
+                    cluster_dict[right]["left"]
+                )
+                cluster_dict[cur_cluster_id]["right"].update(
+                    cluster_dict[right]["right"]
+                )
         cur_cluster_id += 1
 
     cluster_records = {}
     for cluster, _sub_dict in cluster_dict.items():
-        total_n = len(_sub_dict['left']) + len(_sub_dict['right'])
+        total_n = len(_sub_dict["left"]) + len(_sub_dict["right"])
         cluster_records[cluster] = total_n
     scipy_linkage[3] = pd.Series(cluster_records)
 
@@ -77,23 +77,29 @@ def _hclust_to_scipy_linkage(result, plot=True):
     # correct order of the final dendrogram
     r_order = [labels[i - 1] for i in orders]
     dendro = dendrogram(scipy_linkage.values, no_plot=True)
-    python_order = pd.Series({a: b for a, b in zip(dendro['leaves'], r_order)}).sort_index().tolist()
+    python_order = (
+        pd.Series({a: b for a, b in zip(dendro["leaves"], r_order)})
+        .sort_index()
+        .tolist()
+    )
     # python_order = [i[1:] for i in python_order]
     if plot:
         fig, ax = plt.subplots(dpi=300)
-        dendro = dendrogram(scipy_linkage.values, labels=tuple(python_order), no_plot=False, ax=ax)
+        dendro = dendrogram(
+            scipy_linkage.values, labels=tuple(python_order), no_plot=False, ax=ax
+        )
         ax.xaxis.set_tick_params(rotation=90)
     else:
-        dendro = dendrogram(scipy_linkage.values, labels=tuple(python_order), no_plot=True)
+        dendro = dendrogram(
+            scipy_linkage.values, labels=tuple(python_order), no_plot=True
+        )
     return scipy_linkage, python_order, dendro
 
 
 class Dendrogram:
-    def __init__(self,
-                 nboot=1000,
-                 method_dist='correlation',
-                 method_hclust='average',
-                 n_jobs=-1):
+    def __init__(
+        self, nboot=1000, method_dist="correlation", method_hclust="average", n_jobs=-1
+    ):
         self.nboot = nboot
         self.method_dist = method_dist
         self.method_hclust = method_hclust
@@ -123,11 +129,13 @@ class Dendrogram:
             r_df = ro.conversion.py2rpy(data.T)
         if self.n_jobs == -1:
             self.n_jobs = True
-        result = pvclust.pvclust(r_df,
-                                 nboot=self.nboot,
-                                 method_dist=self.method_dist,
-                                 method_hclust=self.method_hclust,
-                                 parallel=self.n_jobs)
+        result = pvclust.pvclust(
+            r_df,
+            nboot=self.nboot,
+            method_dist=self.method_dist,
+            method_hclust=self.method_hclust,
+            parallel=self.n_jobs,
+        )
         # dendrogram info
         hclust = result[0]
         linkage, label_order, dendro = _hclust_to_scipy_linkage(hclust, plot=False)

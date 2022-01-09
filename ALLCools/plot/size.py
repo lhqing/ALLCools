@@ -23,6 +23,5 @@ def plot_sizebar(size_norm, sizes, ax):
     ax.scatter(x, y, s=actual_sizes)
     sns.despine(left=True, bottom=True)
     ax.yaxis.tick_right()
-    ax.set(xticks=[], yticks=y,
-           yticklabels=[smart_number_format(i) for i in ticks])
+    ax.set(xticks=[], yticks=y, yticklabels=[smart_number_format(i) for i in ticks])
     return ax

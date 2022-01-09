@@ -20,19 +20,25 @@ def calculate_direct_confusion(left_part, right_part):
     """
     left_part = left_part.astype(str)
     original_left_name = left_part.columns[0]
-    left_part.columns = ['cluster', 'co_cluster']
+    left_part.columns = ["cluster", "co_cluster"]
 
     right_part = right_part.astype(str)
     original_right_name = right_part.columns[0]
     if original_right_name == original_left_name:
-        original_right_name += '_1'
-    right_part.columns = ['cluster', 'co_cluster']
+        original_right_name += "_1"
+    right_part.columns = ["cluster", "co_cluster"]
 
-    left_confusion = left_part.groupby('cluster')['co_cluster'].value_counts().unstack()
-    right_confusion = right_part.groupby('cluster')['co_cluster'].value_counts().unstack()
+    left_confusion = left_part.groupby("cluster")["co_cluster"].value_counts().unstack()
+    right_confusion = (
+        right_part.groupby("cluster")["co_cluster"].value_counts().unstack()
+    )
 
-    left_confusion_portion = left_confusion.divide(left_confusion.sum(axis=1), axis=0).fillna(0)
-    right_confusion_portion = right_confusion.divide(right_confusion.sum(axis=1), axis=0).fillna(0)
+    left_confusion_portion = left_confusion.divide(
+        left_confusion.sum(axis=1), axis=0
+    ).fillna(0)
+    right_confusion_portion = right_confusion.divide(
+        right_confusion.sum(axis=1), axis=0
+    ).fillna(0)
 
     records = []
     for left_cluster, left_row in left_confusion_portion.iterrows():
@@ -43,9 +49,12 @@ def calculate_direct_confusion(left_part, right_part):
             overlap_value = np.min([left_row.values, right_row.values], axis=0).sum()
             records.append([left_cluster, right_cluster, overlap_value])
 
-    flat_confusion_matrix = pd.DataFrame(records,
-                                         columns=[original_left_name,
-                                                  original_right_name,
-                                                  'overlap_value'])
-    confusion_matrix = flat_confusion_matrix.set_index([original_left_name, original_right_name]).squeeze().unstack()
+    flat_confusion_matrix = pd.DataFrame(
+        records, columns=[original_left_name, original_right_name, "overlap_value"]
+    )
+    confusion_matrix = (
+        flat_confusion_matrix.set_index([original_left_name, original_right_name])
+        .squeeze()
+        .unstack()
+    )
     return confusion_matrix
