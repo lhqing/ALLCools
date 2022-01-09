@@ -11,9 +11,19 @@ from ..plot.qc_plots import cutoff_vs_cell_remain, plot_dispersion
 
 
 class MCDS(xr.Dataset):
+    """
+    MCDS Class
+    """
     __slots__ = ()
 
     def __init__(self, dataset):
+        """
+        Init MCDS
+
+        Parameters
+        ----------
+        dataset
+        """
         super().__init__(data_vars=dataset.data_vars, coords=dataset.coords,
                          attrs=dataset.attrs)
         return

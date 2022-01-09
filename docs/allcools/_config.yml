@@ -5,10 +5,10 @@
 
 #######################################################################################
 # Book settings
-title                       : ALLCools  # The title of the book. Will be placed in the left navbar.
+title                       : ''  # The title of the book. Will be placed in the left navbar.
 author                      : Hanqing Liu  # The author of the book
-copyright                   : "2019 - 2021"  # Copyright year to be placed in the footer
-logo                        : ''  # A path to the book logo
+copyright                   : "2019 - 2022"  # Copyright year to be placed in the footer
+logo                        : 'img/allcools_logo.png'  # A path to the book logo
 # Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
 exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
 # Auto-exclude files not in the toc
@@ -29,7 +29,9 @@ execute:
 #######################################################################################
 # Parse and render settings
 parse:
-  myst_enable_extensions:  # default extensions to enable in the myst parser. See https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html
+  # default extensions to enable in the myst parser.
+  # See https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html
+  myst_enable_extensions:
     # - amsmath
     - colon_fence
     # - deflist
@@ -45,13 +47,14 @@ parse:
 #######################################################################################
 # HTML-specific settings
 html:
-  favicon                   : ""  # A path to a favicon image
+  favicon                   : "img/allcools_favicon.png"  # A path to a favicon image
   use_edit_page_button      : true  # Whether to add an "edit this page" button to pages. If `true`, repository information in repository: must be filled in
   use_repository_button     : true  # Whether to add a link to your repository button
   use_issues_button         : true  # Whether to add an "open an issue" button
+  use_multitoc_numbering    : true
   extra_navbar              : Powered by <a href="https://jupyterbook.org">Jupyter Book</a>  # Will be displayed underneath the left navbar.
   extra_footer              : ""  # Will be displayed underneath the footer.
-  google_analytics_id       : ""  # A GA id that can be used to track book views.
+  google_analytics_id       : "G-4F8CRF0GK9"  # A GA id that can be used to track book views.
   home_page_in_navbar       : true  # Whether to include your home page in the left Navigation Bar
   baseurl                   : ""  # The base URL where your book will be hosted. Used for creating image previews and social links. e.g.: https://mypage.com/mybook/
   comments:
@@ -86,8 +89,63 @@ bibtex_bibfiles:
 # Advanced and power-user settings
 sphinx:
   extra_extensions          :   # A list of extra extensions to load by Sphinx (added to those already used by JB).
+    - 'sphinx.ext.autodoc'
+    - 'sphinx.ext.napoleon'
+    - 'sphinx.ext.viewcode'
+    - 'sphinx.ext.intersphinx'
+    - 'autoapi.extension'
   local_extensions          :   # A list of local extensions to load by sphinx specified by "name: path" items
   config                    :   # key-value pairs to directly over-ride the Sphinx configuration
+    add_module_names: false
     html_js_files:
       - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
-
+    bibtex_reference_style: author_year
+    autoapi_dirs:
+      - '../../ALLCools'
+    autoapi_root: 'api'
+    autoapi_add_toctree_entry: false
+    autoapi_keep_files: false
+    autoapi_options:
+      - 'members'
+      - 'undoc-members'
+      - 'private-members'
+      - 'show-inheritance'
+      - 'special-members'
+      - 'imported-members'
+    intersphinx_mapping:
+      xarray:
+        - 'https://xarray.pydata.org/en/stable/'
+        - null
+      anndata:
+        - 'https://anndata.readthedocs.io/en/stable/'
+        - null
+      leidenalg:
+        - 'https://leidenalg.readthedocs.io/en/latest/'
+        - null
+      louvain:
+        - 'https://louvain-igraph.readthedocs.io/en/latest/'
+        - null
+      matplotlib:
+        - 'https://matplotlib.org/stable/'
+        - null
+      networkx:
+        - 'https://networkx.github.io/documentation/networkx-1.10/'
+        - null
+      numpy:
+        - 'https://docs.scipy.org/doc/numpy/'
+        - null
+      pandas:
+        - 'https://pandas.pydata.org/pandas-docs/stable/'
+        - null
+      python:
+        - 'https://docs.python.org/3'
+        - null
+      scipy:
+        - 'https://docs.scipy.org/doc/scipy/reference/'
+        - null
+      seaborn:
+        - 'https://seaborn.pydata.org/'
+        - null
+      sklearn:
+        - 'https://scikit-learn.org/stable/'
+        - null
