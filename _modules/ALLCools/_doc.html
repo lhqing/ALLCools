@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1475,77 +1492,109 @@
   <h1>Source code for ALLCools._doc</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">dedent</span>
 
-<div class="viewcode-block" id="idx_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.idx_doc">[docs]</a><span class="n">idx_doc</span> <span class="o">=</span> <span class="s2">&quot;If true, save an methylpy chromosome index for back compatibility. &quot;</span> \</div>
-          <span class="s2">&quot;If you only use methylpy to call DMR, this don&#39;t need to be True.&quot;</span>
+<div class="viewcode-block" id="idx_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.idx_doc">[docs]</a><span class="n">idx_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;If true, save an methylpy chromosome index for back compatibility. &quot;</span></div>
+    <span class="s2">&quot;If you only use methylpy to call DMR, this don&#39;t need to be True.&quot;</span>
+<span class="p">)</span>
 
 <div class="viewcode-block" id="allc_path_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.allc_path_doc">[docs]</a><span class="n">allc_path_doc</span> <span class="o">=</span> <span class="s2">&quot;Path to 1 ALLC file&quot;</span></div>
 
-<div class="viewcode-block" id="allc_paths_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.allc_paths_doc">[docs]</a><span class="n">allc_paths_doc</span> <span class="o">=</span> <span class="s2">&quot;Single ALLC path contain wildcard OR multiple space separated ALLC paths &quot;</span> \</div>
-                 <span class="s2">&quot;OR a file contains 1 ALLC path in each row.&quot;</span>
+<div class="viewcode-block" id="allc_paths_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.allc_paths_doc">[docs]</a><span class="n">allc_paths_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Single ALLC path contain wildcard OR multiple space separated ALLC paths &quot;</span></div>
+    <span class="s2">&quot;OR a file contains 1 ALLC path in each row.&quot;</span>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="allc_table_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.allc_table_doc">[docs]</a><span class="n">allc_table_doc</span> <span class="o">=</span> <span class="s2">&quot;Contain all the ALLC file information in two tab-separated columns: &quot;</span> \</div>
-                 <span class="s2">&quot;1. file_uid, 2. file_path. No header&quot;</span>
+<div class="viewcode-block" id="allc_table_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.allc_table_doc">[docs]</a><span class="n">allc_table_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Contain all the ALLC file information in two tab-separated columns: &quot;</span></div>
+    <span class="s2">&quot;1. file_uid, 2. file_path. No header&quot;</span>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="binarize_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.binarize_doc">[docs]</a><span class="n">binarize_doc</span> <span class="o">=</span> <span class="s1">&#39;If set, binarize each single site in each individual ALLC file. &#39;</span> \</div>
-               <span class="s1">&#39;This means each cytosine will only contribute at most 1 cov and 0/1 mc, &#39;</span> \
-               <span class="s1">&#39;this is suitable to account for single cell ALLC R1 R2 overlap issue, &#39;</span> \
-               <span class="s1">&#39;Only use this on single cell ALLC, not bulk ALLC.&#39;</span>
+<div class="viewcode-block" id="binarize_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.binarize_doc">[docs]</a><span class="n">binarize_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;If set, binarize each single site in each individual ALLC file. &quot;</span></div>
+    <span class="s2">&quot;This means each cytosine will only contribute at most 1 cov and 0/1 mc, &quot;</span>
+    <span class="s2">&quot;this is suitable to account for single cell ALLC R1 R2 overlap issue, &quot;</span>
+    <span class="s2">&quot;Only use this on single cell ALLC, not bulk ALLC.&quot;</span>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="bin_sizes_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.bin_sizes_doc">[docs]</a><span class="n">bin_sizes_doc</span> <span class="o">=</span> <span class="s2">&quot;Fix-size genomic bins can be defined by bin_sizes and chrom_size_path. &quot;</span> \</div>
-                <span class="s2">&quot;Space separated sizes of genome bins, each size will be count separately.&quot;</span>
+<div class="viewcode-block" id="bin_sizes_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.bin_sizes_doc">[docs]</a><span class="n">bin_sizes_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Fix-size genomic bins can be defined by bin_sizes and chrom_size_path. &quot;</span></div>
+    <span class="s2">&quot;Space separated sizes of genome bins, each size will be count separately.&quot;</span>
+<span class="p">)</span>
 
 <div class="viewcode-block" id="bw_bin_sizes_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.bw_bin_sizes_doc">[docs]</a><span class="n">bw_bin_sizes_doc</span> <span class="o">=</span> <span class="s2">&quot;Bin size of the BigWig files.&quot;</span></div>
 
-<div class="viewcode-block" id="chrom_size_path_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.chrom_size_path_doc">[docs]</a><span class="n">chrom_size_path_doc</span> <span class="o">=</span> <span class="s2">&quot;Path to UCSC chrom size file. &quot;</span> \</div>
-                      <span class="s2">&quot;This can be generated from the genome fasta or downloaded via UCSC fetchChromSizes tools. &quot;</span> \
-                      <span class="s2">&quot;All ALLCools functions will refer to this file whenever possible to check for &quot;</span> \
-                      <span class="s2">&quot;chromosome names and lengths, so it is crucial to use a chrom size file consistent &quot;</span> \
-                      <span class="s2">&quot;to the reference fasta file ever since mapping. &quot;</span> \
-                      <span class="s2">&quot;ALLCools functions will not change or infer chromosome names.&quot;</span>
+<div class="viewcode-block" id="chrom_size_path_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.chrom_size_path_doc">[docs]</a><span class="n">chrom_size_path_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Path to UCSC chrom size file. &quot;</span></div>
+    <span class="s2">&quot;This can be generated from the genome fasta or downloaded via UCSC fetchChromSizes tools. &quot;</span>
+    <span class="s2">&quot;All ALLCools functions will refer to this file whenever possible to check for &quot;</span>
+    <span class="s2">&quot;chromosome names and lengths, so it is crucial to use a chrom size file consistent &quot;</span>
+    <span class="s2">&quot;to the reference fasta file ever since mapping. &quot;</span>
+    <span class="s2">&quot;ALLCools functions will not change or infer chromosome names.&quot;</span>
+<span class="p">)</span>
 
 <div class="viewcode-block" id="compress_level_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.compress_level_doc">[docs]</a><span class="n">compress_level_doc</span> <span class="o">=</span> <span class="s2">&quot;Compression level for the output file&quot;</span></div>
 
 <div class="viewcode-block" id="cov_cutoff_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.cov_cutoff_doc">[docs]</a><span class="n">cov_cutoff_doc</span> <span class="o">=</span> <span class="s2">&quot;Max cov filter for a single site in ALLC. Sites with cov &gt; cov_cutoff will be skipped.&quot;</span></div>
 
-<div class="viewcode-block" id="cpu_basic_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.cpu_basic_doc">[docs]</a><span class="n">cpu_basic_doc</span> <span class="o">=</span> <span class="s1">&#39;Number of processes to use in parallel.&#39;</span></div>
+<div class="viewcode-block" id="cpu_basic_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.cpu_basic_doc">[docs]</a><span class="n">cpu_basic_doc</span> <span class="o">=</span> <span class="s2">&quot;Number of processes to use in parallel.&quot;</span></div>
 
-<div class="viewcode-block" id="mc_contexts_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.mc_contexts_doc">[docs]</a><span class="n">mc_contexts_doc</span> <span class="o">=</span> <span class="s2">&quot;Space separated mC context patterns to extract from ALLC. &quot;</span> \</div>
-                  <span class="s2">&quot;The context length should be the same as ALLC file context. &quot;</span> \
-                  <span class="s2">&quot;Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT.&quot;</span>
+<div class="viewcode-block" id="mc_contexts_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.mc_contexts_doc">[docs]</a><span class="n">mc_contexts_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Space separated mC context patterns to extract from ALLC. &quot;</span></div>
+    <span class="s2">&quot;The context length should be the same as ALLC file context. &quot;</span>
+    <span class="s2">&quot;Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT.&quot;</span>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="mc_context_mcad_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.mc_context_mcad_doc">[docs]</a><span class="n">mc_context_mcad_doc</span> <span class="o">=</span> <span class="s1">&#39;mC context pattern to extract from ALLC. &#39;</span> \</div>
-                      <span class="s1">&#39;Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT.&#39;</span> \
-                      <span class="s1">&#39;Note that generate_mcad only take one mC context&#39;</span>
+<div class="viewcode-block" id="mc_context_mcad_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.mc_context_mcad_doc">[docs]</a><span class="n">mc_context_mcad_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;mC context pattern to extract from ALLC. &quot;</span></div>
+    <span class="s2">&quot;Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT.&quot;</span>
+    <span class="s2">&quot;Note that generate_mcad only take one mC context&quot;</span>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="reference_fasta_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.reference_fasta_doc">[docs]</a><span class="n">reference_fasta_doc</span> <span class="o">=</span> <span class="s1">&#39;Path to 1 genome reference FASTA file (the one used for mapping), &#39;</span> \</div>
-                      <span class="s1">&#39;use samtools fadix to build .fai index first. Do not compress that file.&#39;</span>
+<div class="viewcode-block" id="reference_fasta_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.reference_fasta_doc">[docs]</a><span class="n">reference_fasta_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Path to 1 genome reference FASTA file (the one used for mapping), &quot;</span></div>
+    <span class="s2">&quot;use samtools fadix to build .fai index first. Do not compress that file.&quot;</span>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="region_bed_names_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_bed_names_doc">[docs]</a><span class="n">region_bed_names_doc</span> <span class="o">=</span> <span class="s1">&#39;Space separated names for each BED file provided in region_bed_paths.&#39;</span></div>
+<div class="viewcode-block" id="region_bed_names_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_bed_names_doc">[docs]</a><span class="n">region_bed_names_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Space separated names for each BED file provided in region_bed_paths.&quot;</span></div>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="region_bed_paths_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_bed_paths_doc">[docs]</a><span class="n">region_bed_paths_doc</span> <span class="o">=</span> <span class="s1">&#39;Arbitrary genomic regions can be defined in several BED files to count on. &#39;</span> \</div>
-                       <span class="s1">&#39;Space separated paths to each BED files, &#39;</span> \
-                       <span class="s1">&#39;The fourth column of the BED file should be unique id of the regions.&#39;</span>
+<div class="viewcode-block" id="region_bed_paths_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_bed_paths_doc">[docs]</a><span class="n">region_bed_paths_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Arbitrary genomic regions can be defined in several BED files to count on. &quot;</span></div>
+    <span class="s2">&quot;Space separated paths to each BED files, &quot;</span>
+    <span class="s2">&quot;The fourth column of the BED file should be unique id of the regions.&quot;</span>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="region_bed_path_mcad_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_bed_path_mcad_doc">[docs]</a><span class="n">region_bed_path_mcad_doc</span> <span class="o">=</span> <span class="s1">&#39;Arbitrary genomic regions can be defined in one BED file to count on. &#39;</span> \</div>
-                           <span class="s1">&#39;The fourth column of the BED file should be unique id of the regions.&#39;</span>
+<div class="viewcode-block" id="region_bed_path_mcad_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_bed_path_mcad_doc">[docs]</a><span class="n">region_bed_path_mcad_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Arbitrary genomic regions can be defined in one BED file to count on. &quot;</span></div>
+    <span class="s2">&quot;The fourth column of the BED file should be unique id of the regions.&quot;</span>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="region_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_doc">[docs]</a><span class="n">region_doc</span> <span class="o">=</span> <span class="s2">&quot;Only extract records from certain genome region(s) via tabix, &quot;</span> \</div>
-             <span class="s2">&quot;multiple region can be provided in tabix form. If region is not None, will not run in parallel&quot;</span>
+<div class="viewcode-block" id="region_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_doc">[docs]</a><span class="n">region_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Only extract records from certain genome region(s) via tabix, &quot;</span></div>
+    <span class="s2">&quot;multiple region can be provided in tabix form. If region is not None, will not run in parallel&quot;</span>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="remove_additional_chrom_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.remove_additional_chrom_doc">[docs]</a><span class="n">remove_additional_chrom_doc</span> <span class="o">=</span> <span class="s2">&quot;Whether to remove rows with unknown chromosome instead of raising KeyError&quot;</span></div>
+<div class="viewcode-block" id="remove_additional_chrom_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.remove_additional_chrom_doc">[docs]</a><span class="n">remove_additional_chrom_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Whether to remove rows with unknown chromosome instead of raising KeyError&quot;</span></div>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="rna_table_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.rna_table_doc">[docs]</a><span class="n">rna_table_doc</span> <span class="o">=</span> <span class="s2">&quot;This is only for mCT data when we have RNA BAM file for each single cell. &quot;</span> \</div>
-                <span class="s2">&quot;Contain all the RNA BAM file information in 2 columns: 1. file_uid, 2. file_path. No header.&quot;</span>
+<div class="viewcode-block" id="rna_table_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.rna_table_doc">[docs]</a><span class="n">rna_table_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;This is only for mCT data when we have RNA BAM file for each single cell. &quot;</span></div>
+    <span class="s2">&quot;Contain all the RNA BAM file information in 2 columns: 1. file_uid, 2. file_path. No header.&quot;</span>
+<span class="p">)</span>
 
-<div class="viewcode-block" id="snp_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.snp_doc">[docs]</a><span class="n">snp_doc</span> <span class="o">=</span> <span class="s1">&#39;If true, means the input allc contain snp information, and the allc processing will take care that.&#39;</span></div>
+<div class="viewcode-block" id="snp_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.snp_doc">[docs]</a><span class="n">snp_doc</span> <span class="o">=</span> <span class="s2">&quot;If true, means the input allc contain snp information, and the allc processing will take care that.&quot;</span></div>
 
-<div class="viewcode-block" id="split_strand_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.split_strand_doc">[docs]</a><span class="n">split_strand_doc</span> <span class="o">=</span> <span class="s1">&#39;If true, Watson (+) and Crick (-) strands will be count separately&#39;</span></div>
+<div class="viewcode-block" id="split_strand_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.split_strand_doc">[docs]</a><span class="n">split_strand_doc</span> <span class="o">=</span> <span class="s2">&quot;If true, Watson (+) and Crick (-) strands will be count separately&quot;</span></div>
 
-<div class="viewcode-block" id="strandness_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.strandness_doc">[docs]</a><span class="n">strandness_doc</span> <span class="o">=</span> <span class="s2">&quot;What to do with strand information, possible values are: &quot;</span> \</div>
-                 <span class="s2">&quot;1. both: save +/- strand together in one file; &quot;</span> \
-                 <span class="s2">&quot;2. split: save +/- strand into two separate files, with suffix contain Watson (+) and Crick (-); &quot;</span> \
-                 <span class="s2">&quot;3. merge: This will only merge the count on adjacent CpG in +/- strands, &quot;</span> \
-                 <span class="s2">&quot;only work for CpG like context. For non-CG context, its the same as both.&quot;</span>
+<div class="viewcode-block" id="strandness_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.strandness_doc">[docs]</a><span class="n">strandness_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;What to do with strand information, possible values are: &quot;</span></div>
+    <span class="s2">&quot;1. both: save +/- strand together in one file; &quot;</span>
+    <span class="s2">&quot;2. split: save +/- strand into two separate files, with suffix contain Watson (+) and Crick (-); &quot;</span>
+    <span class="s2">&quot;3. merge: This will only merge the count on adjacent CpG in +/- strands, &quot;</span>
+    <span class="s2">&quot;only work for CpG like context. For non-CG context, its the same as both.&quot;</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="doc_params"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.doc_params">[docs]</a><span class="k">def</span> <span class="nf">doc_params</span><span class="p">(</span><span class="o">**</span><span class="n">kwds</span><span class="p">):</span>

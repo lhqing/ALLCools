@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1479,27 +1496,38 @@
 <span class="kn">from</span> <span class="nn">.utilities</span> <span class="kn">import</span> <span class="n">zoom_min_max</span>
 
 
-<div class="viewcode-block" id="density_contour"><a class="viewcode-back" href="../../../api/ALLCools/plot/contour/index.html#ALLCools.plot.contour.density_contour">[docs]</a><span class="k">def</span> <span class="nf">density_contour</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span>
-                    <span class="n">single_contour_pad</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="density_contour"><a class="viewcode-back" href="../../../api/ALLCools/plot/contour/index.html#ALLCools.plot.contour.density_contour">[docs]</a><span class="k">def</span> <span class="nf">density_contour</span><span class="p">(</span>
+    <span class="n">ax</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">,</span>
+    <span class="n">groupby</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span>
+    <span class="n">single_contour_pad</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="n">_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">groupby</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">groupby</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">_data</span><span class="p">[</span><span class="s1">&#39;groupby&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">groupby</span><span class="p">]</span>
+            <span class="n">_data</span><span class="p">[</span><span class="s2">&quot;groupby&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">groupby</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">_data</span><span class="p">[</span><span class="s1">&#39;groupby&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">groupby</span>
+            <span class="n">_data</span><span class="p">[</span><span class="s2">&quot;groupby&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">groupby</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">_data</span><span class="p">[</span><span class="s1">&#39;groupby&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;one group&#39;</span>
+        <span class="n">_data</span><span class="p">[</span><span class="s2">&quot;groupby&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;one group&quot;</span>
 
-    <span class="n">_contour_kws</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidths</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">single_contour_pad</span><span class="p">,</span> <span class="p">),</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
-    <span class="n">_lof_kws</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">novelty</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">contamination</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+    <span class="n">_contour_kws</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">single_contour_pad</span><span class="p">,),</span> <span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span>
+    <span class="p">)</span>
+    <span class="n">_lof_kws</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">novelty</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">contamination</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
 
     <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
     <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
     <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">zoom_min_max</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
     <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">zoom_min_max</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">sub_data</span> <span class="ow">in</span> <span class="n">_data</span><span class="p">[[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;groupby&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;groupby&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">sub_data</span> <span class="ow">in</span> <span class="n">_data</span><span class="p">[[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;groupby&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;groupby&quot;</span><span class="p">):</span>
         <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
         <span class="n">clf</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="o">**</span><span class="n">_lof_kws</span><span class="p">)</span>
         <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">sub_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>

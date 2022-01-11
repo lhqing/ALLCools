@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1532,8 +1549,7 @@
             <span class="c1"># if any variable std == 0</span>
             <span class="n">out</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">out</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">mu_a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">@</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span>
-                                           <span class="n">mu_b</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">/</span> <span class="n">k</span> <span class="o">/</span> <span class="n">_sig_a</span> <span class="o">/</span> <span class="n">_sig_b</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">mu_a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">@</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">mu_b</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">/</span> <span class="n">k</span> <span class="o">/</span> <span class="n">_sig_a</span> <span class="o">/</span> <span class="n">_sig_b</span>
     <span class="k">return</span> <span class="n">out</span></div>
 
 
@@ -1543,18 +1559,20 @@
     <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
 
-    <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-                            <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
-                            <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+    <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+        <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
+        <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+    <span class="p">)</span>
 
-    <span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">da</span><span class="p">[</span><span class="s1">&#39;_pos&#39;</span><span class="p">]</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">da</span><span class="p">[</span><span class="s2">&quot;_pos&quot;</span><span class="p">]</span>
 
     <span class="c1"># standardize global</span>
     <span class="n">sample_mcg</span> <span class="o">=</span> <span class="p">(</span><span class="n">sample_mcg</span> <span class="o">-</span> <span class="n">sample_mcg</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">sample_mcg</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
     <span class="n">sample_mch</span> <span class="o">=</span> <span class="p">(</span><span class="n">sample_mch</span> <span class="o">-</span> <span class="n">sample_mch</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">sample_mch</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
     <span class="c1"># add global</span>
-    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;sample_mch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample_mch</span>
-    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;sample_mcg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample_mcg</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;sample_mch&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample_mch</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;sample_mcg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample_mcg</span>
 
     <span class="c1"># remove dmr that has 0 std</span>
     <span class="c1"># otherwise regress out will fail.</span>
@@ -1562,18 +1580,20 @@
 
     <span class="c1"># regress out global mCH and mCG</span>
     <span class="c1"># happens on each regions</span>
-    <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">regress_out</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sample_mch&#39;</span><span class="p">,</span> <span class="s1">&#39;sample_mcg&#39;</span><span class="p">],</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">regress_out</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sample_mch&quot;</span><span class="p">,</span> <span class="s2">&quot;sample_mcg&quot;</span><span class="p">],</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
     <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">adata</span></div>
 
 
-<div class="viewcode-block" id="corr"><a class="viewcode-back" href="../../../api/ALLCools/mcds/correlation/index.html#ALLCools.mcds.correlation.corr">[docs]</a><span class="k">def</span> <span class="nf">corr</span><span class="p">(</span><span class="n">adata_a</span><span class="p">,</span>
-         <span class="n">adata_b</span><span class="p">,</span>
-         <span class="n">max_dist</span><span class="p">,</span>
-         <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-         <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">,</span>
-         <span class="n">shuffle_sample</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-         <span class="n">calculate_n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="corr"><a class="viewcode-back" href="../../../api/ALLCools/mcds/correlation/index.html#ALLCools.mcds.correlation.corr">[docs]</a><span class="k">def</span> <span class="nf">corr</span><span class="p">(</span>
+    <span class="n">adata_a</span><span class="p">,</span>
+    <span class="n">adata_b</span><span class="p">,</span>
+    <span class="n">max_dist</span><span class="p">,</span>
+    <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span>
+    <span class="n">shuffle_sample</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">calculate_n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="n">_adata_a</span> <span class="o">=</span> <span class="n">adata_a</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">_adata_b</span> <span class="o">=</span> <span class="n">adata_b</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -1589,32 +1609,36 @@
 
     <span class="c1"># create mask</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="n">coo_matrix</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">_adata_a</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span>
-                <span class="n">_adata_b</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]))</span> <span class="o">&lt;</span> <span class="n">max_dist</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">_adata_a</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">_adata_b</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="p">)</span>
+        <span class="o">&lt;</span> <span class="n">max_dist</span>
+    <span class="p">)</span>
 
     <span class="c1"># this is used when calculating null, downsample corr call to save time</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">calculate_n</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">calculate_n</span> <span class="o">&lt;</span> <span class="n">mask</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
-        <span class="n">rand_loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
-                                    <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">calculate_n</span><span class="p">),</span>
-                                    <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">rand_loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+            <span class="nb">range</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">calculate_n</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
         <span class="n">rand_loc</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rand_loc</span><span class="p">)</span>
         <span class="n">mask</span> <span class="o">=</span> <span class="n">coo_matrix</span><span class="p">(</span>
             <span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">rand_loc</span><span class="p">],</span> <span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">row</span><span class="p">[</span><span class="n">rand_loc</span><span class="p">],</span> <span class="n">mask</span><span class="o">.</span><span class="n">col</span><span class="p">[</span><span class="n">rand_loc</span><span class="p">])),</span>
-            <span class="n">shape</span><span class="o">=</span><span class="n">mask</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">shape</span><span class="o">=</span><span class="n">mask</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="c1"># adata is sample by region</span>
     <span class="c1"># _corr input is region by sample</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">_adata_a</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">T</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">_adata_b</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">T</span>
 
-    <span class="k">if</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span>
         <span class="k">pass</span>
-    <span class="k">elif</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;s&quot;</span><span class="p">:</span>
         <span class="c1"># turn a, b in to rank matrix</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Method can only be pearson or spearman&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Method can only be pearson or spearman&quot;</span><span class="p">)</span>
 
     <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -1627,8 +1651,9 @@
                 <span class="n">_corr</span><span class="p">,</span>
                 <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span>
                 <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span>
-                <span class="n">row</span><span class="o">=</span><span class="n">mask</span><span class="o">.</span><span class="n">row</span><span class="p">[</span><span class="n">chunk_start</span><span class="p">:</span><span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">],</span>
-                <span class="n">col</span><span class="o">=</span><span class="n">mask</span><span class="o">.</span><span class="n">col</span><span class="p">[</span><span class="n">chunk_start</span><span class="p">:</span><span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">])</span>
+                <span class="n">row</span><span class="o">=</span><span class="n">mask</span><span class="o">.</span><span class="n">row</span><span class="p">[</span><span class="n">chunk_start</span> <span class="p">:</span> <span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">],</span>
+                <span class="n">col</span><span class="o">=</span><span class="n">mask</span><span class="o">.</span><span class="n">col</span><span class="p">[</span><span class="n">chunk_start</span> <span class="p">:</span> <span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">],</span>
+            <span class="p">)</span>
             <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
 
         <span class="n">total_data</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1636,58 +1661,57 @@
             <span class="n">chunk_id</span> <span class="o">=</span> <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span>
             <span class="n">total_data</span><span class="p">[</span><span class="n">chunk_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
 
-    <span class="n">mask</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">total_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">total_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())])</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">mask</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">tocsr</span><span class="p">(),</span>
-                             <span class="n">obs</span><span class="o">=</span><span class="n">_adata_a</span><span class="o">.</span><span class="n">var</span><span class="p">,</span>
-                             <span class="n">var</span><span class="o">=</span><span class="n">_adata_b</span><span class="o">.</span><span class="n">var</span><span class="p">)</span>
+    <span class="n">mask</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">total_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">total_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())])</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">mask</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">tocsr</span><span class="p">(),</span> <span class="n">obs</span><span class="o">=</span><span class="n">_adata_a</span><span class="o">.</span><span class="n">var</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="n">_adata_b</span><span class="o">.</span><span class="n">var</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span></div>
 
 
 <div class="viewcode-block" id="_verify_correlation_da"><a class="viewcode-back" href="../../../api/ALLCools/mcds/correlation/index.html#ALLCools.mcds.correlation._verify_correlation_da">[docs]</a><span class="k">def</span> <span class="nf">_verify_correlation_da</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;Only support 2D data array, got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span><span class="si">}</span><span class="s1"> dims&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Only support 2D data array, got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span><span class="si">}</span><span class="s2"> dims&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">region_dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">region_dim</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Using </span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1"> as region_dim&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using </span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2"> as region_dim&quot;</span><span class="p">)</span>
     <span class="n">data</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">dims</span> <span class="k">if</span> <span class="n">v</span> <span class="o">!=</span> <span class="n">region_dim</span><span class="p">),</span> <span class="n">region_dim</span><span class="p">)</span>
 
     <span class="c1"># test if {region_dim}_chrom exist</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_chrom&#39;</span><span class="p">]</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_chrom&quot;</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">e</span>
 
     <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;Using </span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_start and </span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_end to calculate pos&#39;</span><span class="p">)</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_start&#39;</span><span class="p">]</span>
-        <span class="n">end</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_end&#39;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using </span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_start and </span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_end to calculate pos&quot;</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_start&quot;</span><span class="p">]</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_end&quot;</span><span class="p">]</span>
         <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span> <span class="o">+</span> <span class="n">start</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;_pos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;_pos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;_pos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span>
 
     <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">region_dim</span></div>
 
 
-<div class="viewcode-block" id="region_correlation"><a class="viewcode-back" href="../../../api/ALLCools/mcds/correlation/index.html#ALLCools.mcds.correlation.region_correlation">[docs]</a><span class="k">def</span> <span class="nf">region_correlation</span><span class="p">(</span><span class="n">data_a</span><span class="p">,</span>
-                       <span class="n">data_b</span><span class="p">,</span>
-                       <span class="n">sample_mch</span><span class="p">,</span>
-                       <span class="n">sample_mcg</span><span class="p">,</span>
-                       <span class="n">region_dim_a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                       <span class="n">region_dim_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                       <span class="n">pos_a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                       <span class="n">pos_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                       <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">,</span>
-                       <span class="n">max_dist</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span>
-                       <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                       <span class="n">null</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span>
-                       <span class="n">null_n</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
-                       <span class="n">chroms</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="region_correlation"><a class="viewcode-back" href="../../../api/ALLCools/mcds/correlation/index.html#ALLCools.mcds.correlation.region_correlation">[docs]</a><span class="k">def</span> <span class="nf">region_correlation</span><span class="p">(</span>
+    <span class="n">data_a</span><span class="p">,</span>
+    <span class="n">data_b</span><span class="p">,</span>
+    <span class="n">sample_mch</span><span class="p">,</span>
+    <span class="n">sample_mcg</span><span class="p">,</span>
+    <span class="n">region_dim_a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">region_dim_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">pos_a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">pos_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">,</span>
+    <span class="n">max_dist</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span>
+    <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">null</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+    <span class="n">null_n</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
+    <span class="n">chroms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="n">data_a</span><span class="p">,</span> <span class="n">region_dim_a</span> <span class="o">=</span> <span class="n">_verify_correlation_da</span><span class="p">(</span><span class="n">data_a</span><span class="p">,</span> <span class="n">region_dim_a</span><span class="p">,</span> <span class="n">pos_a</span><span class="p">)</span>
     <span class="n">data_b</span><span class="p">,</span> <span class="n">region_dim_b</span> <span class="o">=</span> <span class="n">_verify_correlation_da</span><span class="p">(</span><span class="n">data_b</span><span class="p">,</span> <span class="n">region_dim_b</span><span class="p">,</span> <span class="n">pos_b</span><span class="p">)</span>
 
@@ -1698,78 +1722,82 @@
     <span class="k">for</span> <span class="n">chrom_a</span><span class="p">,</span> <span class="n">chrom_da_a</span> <span class="ow">in</span> <span class="n">data_a</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim_a</span><span class="si">}</span><span class="s2">_chrom&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">chroms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">chrom_a</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">chroms</span><span class="p">):</span>
             <span class="k">continue</span>
-        <span class="n">adata_a</span> <span class="o">=</span> <span class="n">_corr_preprocess</span><span class="p">(</span><span class="n">da</span><span class="o">=</span><span class="n">chrom_da_a</span><span class="p">,</span>
-                                   <span class="n">sample_mch</span><span class="o">=</span><span class="n">sample_mch</span><span class="p">,</span>
-                                   <span class="n">sample_mcg</span><span class="o">=</span><span class="n">sample_mcg</span><span class="p">,</span>
-                                   <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
+        <span class="n">adata_a</span> <span class="o">=</span> <span class="n">_corr_preprocess</span><span class="p">(</span>
+            <span class="n">da</span><span class="o">=</span><span class="n">chrom_da_a</span><span class="p">,</span> <span class="n">sample_mch</span><span class="o">=</span><span class="n">sample_mch</span><span class="p">,</span> <span class="n">sample_mcg</span><span class="o">=</span><span class="n">sample_mcg</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span>
+        <span class="p">)</span>
         <span class="k">for</span> <span class="n">chrom_b</span><span class="p">,</span> <span class="n">chrom_da_b</span> <span class="ow">in</span> <span class="n">data_b</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim_b</span><span class="si">}</span><span class="s2">_chrom&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">chroms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">chrom_b</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">chroms</span><span class="p">):</span>
                 <span class="k">continue</span>
-            <span class="n">adata_b</span> <span class="o">=</span> <span class="n">_corr_preprocess</span><span class="p">(</span><span class="n">da</span><span class="o">=</span><span class="n">chrom_da_b</span><span class="p">,</span>
-                                       <span class="n">sample_mch</span><span class="o">=</span><span class="n">sample_mch</span><span class="p">,</span>
-                                       <span class="n">sample_mcg</span><span class="o">=</span><span class="n">sample_mcg</span><span class="p">,</span>
-                                       <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
+            <span class="n">adata_b</span> <span class="o">=</span> <span class="n">_corr_preprocess</span><span class="p">(</span>
+                <span class="n">da</span><span class="o">=</span><span class="n">chrom_da_b</span><span class="p">,</span> <span class="n">sample_mch</span><span class="o">=</span><span class="n">sample_mch</span><span class="p">,</span> <span class="n">sample_mcg</span><span class="o">=</span><span class="n">sample_mcg</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span>
+            <span class="p">)</span>
 
             <span class="c1"># we use trans chroms to calculate region null</span>
             <span class="k">if</span> <span class="n">chrom_a</span> <span class="o">!=</span> <span class="n">chrom_b</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">null</span> <span class="o">==</span> <span class="s1">&#39;region&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">region_null_pairs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Calculating region null </span><span class="si">{</span><span class="n">chrom_a</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">chrom_b</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-                    <span class="n">null_corr_matrix</span> <span class="o">=</span> <span class="n">corr</span><span class="p">(</span><span class="n">adata_a</span><span class="p">,</span>
-                                            <span class="n">adata_b</span><span class="p">,</span>
-                                            <span class="n">max_dist</span><span class="o">=</span><span class="mi">999999999999</span><span class="p">,</span>
-                                            <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
-                                            <span class="n">shuffle_sample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                            <span class="n">calculate_n</span><span class="o">=</span><span class="n">null_n</span><span class="p">,</span>
-                                            <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">null</span> <span class="o">==</span> <span class="s2">&quot;region&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">region_null_pairs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating region null </span><span class="si">{</span><span class="n">chrom_a</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">chrom_b</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">null_corr_matrix</span> <span class="o">=</span> <span class="n">corr</span><span class="p">(</span>
+                        <span class="n">adata_a</span><span class="p">,</span>
+                        <span class="n">adata_b</span><span class="p">,</span>
+                        <span class="n">max_dist</span><span class="o">=</span><span class="mi">999999999999</span><span class="p">,</span>
+                        <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                        <span class="n">shuffle_sample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">calculate_n</span><span class="o">=</span><span class="n">null_n</span><span class="p">,</span>
+                        <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">,</span>
+                    <span class="p">)</span>
                     <span class="n">null_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">null_corr_matrix</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
                     <span class="n">region_null_pairs</span> <span class="o">-=</span> <span class="mi">1</span>
                 <span class="k">continue</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Calculating </span><span class="si">{</span><span class="n">chrom_a</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating </span><span class="si">{</span><span class="n">chrom_a</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="c1"># this is calculating real corr</span>
-                <span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">corr</span><span class="p">(</span><span class="n">adata_a</span><span class="p">,</span>
-                                   <span class="n">adata_b</span><span class="p">,</span>
-                                   <span class="n">max_dist</span><span class="o">=</span><span class="n">max_dist</span><span class="p">,</span>
-                                   <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
-                                   <span class="n">shuffle_sample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                   <span class="n">calculate_n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                   <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
+                <span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">corr</span><span class="p">(</span>
+                    <span class="n">adata_a</span><span class="p">,</span>
+                    <span class="n">adata_b</span><span class="p">,</span>
+                    <span class="n">max_dist</span><span class="o">=</span><span class="n">max_dist</span><span class="p">,</span>
+                    <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                    <span class="n">shuffle_sample</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">calculate_n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="n">total_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">corr_matrix</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="n">null</span> <span class="o">==</span> <span class="s1">&#39;sample&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">null</span> <span class="o">==</span> <span class="s2">&quot;sample&quot;</span><span class="p">:</span>
                     <span class="c1"># this is calculating null corr</span>
-                    <span class="n">null_corr_matrix</span> <span class="o">=</span> <span class="n">corr</span><span class="p">(</span><span class="n">adata_a</span><span class="p">,</span>
-                                            <span class="n">adata_b</span><span class="p">,</span>
-                                            <span class="n">max_dist</span><span class="o">=</span><span class="n">max_dist</span><span class="p">,</span>
-                                            <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
-                                            <span class="n">shuffle_sample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                            <span class="n">calculate_n</span><span class="o">=</span><span class="n">null_n</span><span class="p">,</span>
-                                            <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
+                    <span class="n">null_corr_matrix</span> <span class="o">=</span> <span class="n">corr</span><span class="p">(</span>
+                        <span class="n">adata_a</span><span class="p">,</span>
+                        <span class="n">adata_b</span><span class="p">,</span>
+                        <span class="n">max_dist</span><span class="o">=</span><span class="n">max_dist</span><span class="p">,</span>
+                        <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                        <span class="n">shuffle_sample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">calculate_n</span><span class="o">=</span><span class="n">null_n</span><span class="p">,</span>
+                        <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">,</span>
+                    <span class="p">)</span>
                     <span class="c1"># no need to save index for null, just use its value</span>
                     <span class="n">null_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">null_corr_matrix</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">true_results</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">total_results</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+    <span class="n">true_results</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">total_results</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">)</span>
     <span class="c1"># anndata somehow do not concat var and the var order is also changed</span>
-    <span class="n">true_results</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">adata</span><span class="o">.</span><span class="n">var</span> <span class="k">for</span> <span class="n">adata</span> <span class="ow">in</span> <span class="n">total_results</span>
-                                  <span class="p">])</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">true_results</span><span class="o">.</span><span class="n">var_names</span><span class="p">]</span>
+    <span class="n">true_results</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">adata</span><span class="o">.</span><span class="n">var</span> <span class="k">for</span> <span class="n">adata</span> <span class="ow">in</span> <span class="n">total_results</span><span class="p">])</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">true_results</span><span class="o">.</span><span class="n">var_names</span>
+    <span class="p">]</span>
     <span class="n">null_results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">null_results</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">true_results</span><span class="p">,</span> <span class="n">null_results</span></div>
 
 
-<div class="viewcode-block" id="_select_corr_cutoff"><a class="viewcode-back" href="../../../api/ALLCools/mcds/correlation/index.html#ALLCools.mcds.correlation._select_corr_cutoff">[docs]</a><span class="k">def</span> <span class="nf">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                        <span class="n">null</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-                        <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;both&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">),</span>
-                <span class="n">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="_select_corr_cutoff"><a class="viewcode-back" href="../../../api/ALLCools/mcds/correlation/index.html#ALLCools.mcds.correlation._select_corr_cutoff">[docs]</a><span class="k">def</span> <span class="nf">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">null</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;both&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">),</span>
+            <span class="n">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
         <span class="n">cur_corr</span> <span class="o">=</span> <span class="mf">0.8</span>
         <span class="n">corr_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">cur_corr</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.8</span>
         <span class="n">corr_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">corr_cutoff</span> <span class="ow">in</span> <span class="n">corr_range</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
             <span class="c1"># positive corr</span>
             <span class="c1"># p value of this corr based on null distribution</span>
             <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">null</span> <span class="o">&gt;</span> <span class="n">corr_cutoff</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">null</span><span class="o">.</span><span class="n">size</span>
@@ -1792,54 +1820,53 @@
     <span class="k">return</span> <span class="n">cur_corr</span></div>
 
 
-<div class="viewcode-block" id="get_corr_table"><a class="viewcode-back" href="../../../api/ALLCools/mcds/correlation/index.html#ALLCools.mcds.correlation.get_corr_table">[docs]</a><span class="k">def</span> <span class="nf">get_corr_table</span><span class="p">(</span><span class="n">total_results</span><span class="p">,</span>
-                   <span class="n">null_results</span><span class="p">,</span>
-                   <span class="n">region_dim_a</span><span class="p">,</span>
-                   <span class="n">region_dim_b</span><span class="p">,</span>
-                   <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span>
-                   <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<div class="viewcode-block" id="get_corr_table"><a class="viewcode-back" href="../../../api/ALLCools/mcds/correlation/index.html#ALLCools.mcds.correlation.get_corr_table">[docs]</a><span class="k">def</span> <span class="nf">get_corr_table</span><span class="p">(</span>
+    <span class="n">total_results</span><span class="p">,</span> <span class="n">null_results</span><span class="p">,</span> <span class="n">region_dim_a</span><span class="p">,</span> <span class="n">region_dim_b</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span>
+<span class="p">):</span>
     <span class="n">true</span> <span class="o">=</span> <span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span>
     <span class="n">null</span> <span class="o">=</span> <span class="n">null_results</span>
     <span class="n">total_results</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">tocoo</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
-        <span class="n">cutoff</span> <span class="o">=</span> <span class="n">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
+        <span class="n">cutoff</span> <span class="o">=</span> <span class="n">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
         <span class="n">selected</span> <span class="o">=</span> <span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span> <span class="o">&gt;</span> <span class="n">cutoff</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Correlation cutoff corr &gt; </span><span class="si">{</span><span class="n">cutoff</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
-        <span class="n">cutoff</span> <span class="o">=</span> <span class="n">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Correlation cutoff corr &gt; </span><span class="si">{</span><span class="n">cutoff</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
+        <span class="n">cutoff</span> <span class="o">=</span> <span class="n">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
         <span class="n">selected</span> <span class="o">=</span> <span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span> <span class="o">&lt;</span> <span class="n">cutoff</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Correlation cutoff corr &lt; </span><span class="si">{</span><span class="n">cutoff</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;both&#39;</span><span class="p">:</span>
-        <span class="n">pos_cutoff</span><span class="p">,</span> <span class="n">neg_cutoff</span> <span class="o">=</span> <span class="n">_select_corr_cutoff</span><span class="p">(</span><span class="n">true</span><span class="p">,</span>
-                                                     <span class="n">null</span><span class="p">,</span>
-                                                     <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span>
-                                                     <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
-        <span class="n">selected</span> <span class="o">=</span> <span class="p">(</span><span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span> <span class="o">&gt;</span> <span class="n">pos_cutoff</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span>
-                                                          <span class="o">&lt;</span> <span class="n">neg_cutoff</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;Correlation cutoff (corr &gt; </span><span class="si">{</span><span class="n">pos_cutoff</span><span class="si">}</span><span class="s1">) | (corr &lt; </span><span class="si">{</span><span class="n">neg_cutoff</span><span class="si">}</span><span class="s1">)&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Correlation cutoff corr &lt; </span><span class="si">{</span><span class="n">cutoff</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;both&quot;</span><span class="p">:</span>
+        <span class="n">pos_cutoff</span><span class="p">,</span> <span class="n">neg_cutoff</span> <span class="o">=</span> <span class="n">_select_corr_cutoff</span><span class="p">(</span>
+            <span class="n">true</span><span class="p">,</span> <span class="n">null</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;both&quot;</span>
         <span class="p">)</span>
+        <span class="n">selected</span> <span class="o">=</span> <span class="p">(</span><span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span> <span class="o">&gt;</span> <span class="n">pos_cutoff</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span>
+            <span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span> <span class="o">&lt;</span> <span class="n">neg_cutoff</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Correlation cutoff (corr &gt; </span><span class="si">{</span><span class="n">pos_cutoff</span><span class="si">}</span><span class="s2">) | (corr &lt; </span><span class="si">{</span><span class="n">neg_cutoff</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;direction need to be in [&quot;+&quot;, &quot;-&quot;, &quot;both&quot;], got </span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+            <span class="sa">f</span><span class="s1">&#39;direction need to be in [&quot;+&quot;, &quot;-&quot;, &quot;both&quot;], got </span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s1">.&#39;</span>
+        <span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span><span class="si">}</span><span class="s1"> correlation pairs selected.&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span><span class="si">}</span><span class="s2"> correlation pairs selected.&quot;</span><span class="p">)</span>
 
-    <span class="n">corr_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-        <span class="n">region_dim_a</span><span class="p">:</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">total_results</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
-            <span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">row</span><span class="p">[</span><span class="n">selected</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-        <span class="n">region_dim_b</span><span class="p">:</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">total_results</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
-            <span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">col</span><span class="p">[</span><span class="n">selected</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-        <span class="s1">&#39;corr&#39;</span><span class="p">:</span>
-        <span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-    <span class="p">})</span>
-    <span class="n">corr_table</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim_a</span><span class="si">}</span><span class="s1">_pos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">corr_table</span><span class="p">[</span><span class="n">region_dim_a</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
-        <span class="n">total_results</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">])</span>
-    <span class="n">corr_table</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim_b</span><span class="si">}</span><span class="s1">_pos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">corr_table</span><span class="p">[</span><span class="n">region_dim_b</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
-        <span class="n">total_results</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">])</span>
+    <span class="n">corr_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="n">region_dim_a</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">total_results</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">row</span><span class="p">[</span><span class="n">selected</span><span class="p">]]</span>
+            <span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="n">region_dim_b</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">total_results</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">col</span><span class="p">[</span><span class="n">selected</span><span class="p">]]</span>
+            <span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="s2">&quot;corr&quot;</span><span class="p">:</span> <span class="n">total_results</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">selected</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">corr_table</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim_a</span><span class="si">}</span><span class="s2">_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">corr_table</span><span class="p">[</span><span class="n">region_dim_a</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+        <span class="n">total_results</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">corr_table</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim_b</span><span class="si">}</span><span class="s2">_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">corr_table</span><span class="p">[</span><span class="n">region_dim_b</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+        <span class="n">total_results</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">corr_table</span></div>
 </pre></div>
 

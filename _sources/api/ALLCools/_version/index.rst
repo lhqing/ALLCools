@@ -8,12 +8,12 @@ Module Contents
 ---------------
 
 .. py:data:: version
-   :annotation: = 0.1.19.dev10+gb9ab647.d20220108
+   :annotation: = 0.1.19.dev13+g658250d.d20220109
 
    
 
 .. py:data:: version_tuple
-   :annotation: = [0, 1, 19, 'dev10', 'gb9ab647.d20220108']
+   :annotation: = [0, 1, 19, 'dev13', 'g658250d.d20220109']
 
    
 

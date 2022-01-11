@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1483,7 +1500,12 @@
 <span class="kn">from</span> <span class="nn">imblearn.ensemble</span> <span class="kn">import</span> <span class="n">BalancedRandomForestClassifier</span>
 <span class="kn">from</span> <span class="nn">natsort</span> <span class="kn">import</span> <span class="n">natsorted</span>
 <span class="kn">from</span> <span class="nn">scanpy.neighbors</span> <span class="kn">import</span> <span class="n">Neighbors</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">pairwise_distances</span><span class="p">,</span> <span class="n">balanced_accuracy_score</span><span class="p">,</span> <span class="n">adjusted_rand_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">confusion_matrix</span><span class="p">,</span>
+    <span class="n">pairwise_distances</span><span class="p">,</span>
+    <span class="n">balanced_accuracy_score</span><span class="p">,</span>
+    <span class="n">adjusted_rand_score</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -1507,14 +1529,12 @@
 <span class="sd">    the normalized confusion matrix</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dmat</span> <span class="o">=</span> <span class="n">cmat</span>
-    <span class="n">smat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span>
-        <span class="n">dmat</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># in case some label has no correct prediction (0 in diag)</span>
+    <span class="n">smat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">dmat</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># in case some label has no correct prediction (0 in diag)</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="n">cmat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">xmat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
-            <span class="n">xmat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">xmat</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dmat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">smat</span><span class="p">[</span><span class="n">j</span><span class="p">],</span>
-                                          <span class="n">dmat</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">smat</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">xmat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">xmat</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dmat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">smat</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">dmat</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">smat</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
     <span class="c1"># scale matrix to 0-1</span>
     <span class="n">xmat</span> <span class="o">=</span> <span class="n">xmat</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">xmat</span><span class="p">)</span>
@@ -1556,14 +1576,14 @@
 <span class="sd">    return all clusters as a pd.DataFrame&quot;&quot;&quot;</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="n">random_states</span><span class="p">:</span>
-        <span class="n">part</span> <span class="o">=</span> <span class="n">leidenalg</span><span class="o">.</span><span class="n">find_partition</span><span class="p">(</span><span class="n">g</span><span class="p">,</span>
-                                        <span class="n">partition_type</span><span class="p">,</span>
-                                        <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
-                                        <span class="o">**</span><span class="n">partition_kwargs</span><span class="p">)</span>
+        <span class="n">part</span> <span class="o">=</span> <span class="n">leidenalg</span><span class="o">.</span><span class="n">find_partition</span><span class="p">(</span>
+            <span class="n">g</span><span class="p">,</span> <span class="n">partition_type</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="o">**</span><span class="n">partition_kwargs</span>
+        <span class="p">)</span>
         <span class="n">groups</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">membership</span><span class="p">)</span>
-        <span class="n">groups</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">groups</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">),</span>
-                                <span class="n">categories</span><span class="o">=</span><span class="n">natsorted</span><span class="p">(</span>
-                                    <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">)))</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="n">groups</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">),</span>
+            <span class="n">categories</span><span class="o">=</span><span class="n">natsorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">)),</span>
+        <span class="p">)</span>
         <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
     <span class="n">result_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">random_states</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result_df</span></div>
@@ -1581,7 +1601,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">n_train</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_train</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">sub_series</span><span class="o">.</span><span class="n">size</span> <span class="o">*</span> <span class="n">frac</span><span class="p">)))</span>
             <span class="n">is_train</span> <span class="o">=</span> <span class="n">sub_series</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
-                <span class="n">sub_series</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_train</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+                <span class="n">sub_series</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n_train</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+            <span class="p">)</span>
             <span class="n">train_idx</span> <span class="o">+=</span> <span class="n">sub_series</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">is_train</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
             <span class="n">test_idx</span> <span class="o">+=</span> <span class="n">sub_series</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">~</span><span class="n">is_train</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
     <span class="n">x_train</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">train_idx</span><span class="p">]</span>
@@ -1591,20 +1612,15 @@
     <span class="k">return</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span></div>
 
 
-<div class="viewcode-block" id="single_supervise_evaluation"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.single_supervise_evaluation">[docs]</a><span class="k">def</span> <span class="nf">single_supervise_evaluation</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span>
-                                <span class="n">x_train</span><span class="p">,</span>
-                                <span class="n">y_train</span><span class="p">,</span>
-                                <span class="n">x_test</span><span class="p">,</span>
-                                <span class="n">y_test</span><span class="p">,</span>
-                                <span class="n">r1_norm_step</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-                                <span class="n">r2_norm_step</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<div class="viewcode-block" id="single_supervise_evaluation"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.single_supervise_evaluation">[docs]</a><span class="k">def</span> <span class="nf">single_supervise_evaluation</span><span class="p">(</span>
+    <span class="n">clf</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">r1_norm_step</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">r2_norm_step</span><span class="o">=</span><span class="mf">0.05</span>
+<span class="p">):</span>
     <span class="c1"># fit model</span>
     <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
     <span class="c1"># calc accuracy</span>
     <span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
-    <span class="n">accuracy_train</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
-                                             <span class="n">y_pred</span><span class="o">=</span><span class="n">y_train_pred</span><span class="p">)</span>
+    <span class="n">accuracy_train</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_train_pred</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Balanced accuracy on the training set: </span><span class="si">{</span><span class="n">accuracy_train</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
     <span class="n">accuracy_test</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_test_pred</span><span class="p">)</span>
@@ -1619,7 +1635,7 @@
     <span class="n">r2_cmat</span> <span class="o">=</span> <span class="n">_r2_normalize</span><span class="p">(</span><span class="n">cmat</span><span class="p">)</span>
     <span class="n">m1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">r1_cmat</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">m1</span><span class="p">):</span>
-        <span class="n">m1</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="n">m1</span> <span class="o">=</span> <span class="mf">1.0</span>
     <span class="n">m2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">r2_cmat</span><span class="p">)</span>
 
     <span class="n">cluster_map</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1642,20 +1658,22 @@
 
 
 <div class="viewcode-block" id="ConsensusClustering"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering">[docs]</a><span class="k">class</span> <span class="nc">ConsensusClustering</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
-                 <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">,</span>
-                 <span class="n">min_cluster_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-                 <span class="n">leiden_repeats</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-                 <span class="n">leiden_resolution</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                 <span class="n">target_accuracy</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
-                 <span class="n">consensus_rate</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
-                 <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                 <span class="n">train_frac</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                 <span class="n">train_max_n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-                 <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-                 <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+        <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+        <span class="n">min_cluster_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">leiden_repeats</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">leiden_resolution</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">target_accuracy</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+        <span class="n">consensus_rate</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">train_frac</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">train_max_n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform consensus clustering by multi-leiden clustering + supervised model</span>
 
@@ -1715,11 +1733,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="c1"># Construct KNN graph</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Computing nearest neighbor graph&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing nearest neighbor graph&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compute_neighbors</span><span class="p">()</span>
 
         <span class="c1"># repeat Leiden clustering with different random seeds</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Computing multiple clustering with different random seeds&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing multiple clustering with different random seeds&quot;</span><span class="p">)</span>
         <span class="n">kwds</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">leiden_kwds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">leiden_kwds</span> <span class="o">=</span> <span class="n">kwds</span>
@@ -1737,29 +1755,35 @@
         <span class="c1"># nearest neighbors graph</span>
         <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
             <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;obs</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_obs</span><span class="p">)]),</span>
-            <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;var</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_pcs</span><span class="p">)]))</span>
-        <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;X_pca&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span>
+            <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;obs</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_obs</span><span class="p">)]),</span>
+            <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;var</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_pcs</span><span class="p">)]),</span>
+        <span class="p">)</span>
+        <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s2">&quot;X_pca&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span>
         <span class="c1"># here neighbors should only use PCs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span> <span class="o">=</span> <span class="n">Neighbors</span><span class="p">(</span><span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span><span class="o">.</span><span class="n">compute_neighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
-                                          <span class="n">knn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                          <span class="n">n_pcs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_pcs</span><span class="p">,</span>
-                                          <span class="n">use_rep</span><span class="o">=</span><span class="s1">&#39;X_pca&#39;</span><span class="p">,</span>
-                                          <span class="n">method</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span>
-                                          <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">knn_metric</span><span class="p">,</span>
-                                          <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span><span class="o">.</span><span class="n">compute_neighbors</span><span class="p">(</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
+            <span class="n">knn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">n_pcs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_pcs</span><span class="p">,</span>
+            <span class="n">use_rep</span><span class="o">=</span><span class="s2">&quot;X_pca&quot;</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;umap&quot;</span><span class="p">,</span>
+            <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">knn_metric</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span></div>
 
-<div class="viewcode-block" id="ConsensusClustering.multi_leiden_clustering"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.multi_leiden_clustering">[docs]</a>    <span class="k">def</span> <span class="nf">multi_leiden_clustering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                <span class="n">partition_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">partition_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">use_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                <span class="n">n_iterations</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="ConsensusClustering.multi_leiden_clustering"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.multi_leiden_clustering">[docs]</a>    <span class="k">def</span> <span class="nf">multi_leiden_clustering</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">partition_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">partition_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">use_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">n_iterations</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Modified from scanpy&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;Run compute_neighbors first before multi_leiden_clustering&#39;</span><span class="p">)</span>
+                <span class="s2">&quot;Run compute_neighbors first before multi_leiden_clustering&quot;</span>
+            <span class="p">)</span>
 
         <span class="c1"># convert neighbors to igraph</span>
         <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span><span class="o">.</span><span class="n">to_igraph</span><span class="p">()</span>
@@ -1768,17 +1792,17 @@
         <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
         <span class="n">leiden_repeats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_repeats</span>
         <span class="n">n_jobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span>
-        <span class="n">random_states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">99999</span><span class="p">),</span>
-                                         <span class="n">size</span><span class="o">=</span><span class="n">leiden_repeats</span><span class="p">,</span>
-                                         <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">random_states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+            <span class="nb">range</span><span class="p">(</span><span class="mi">99999</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">leiden_repeats</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
         <span class="n">step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">leiden_repeats</span> <span class="o">/</span> <span class="n">n_jobs</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
         <span class="n">random_state_chunks</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">random_states</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">leiden_repeats</span><span class="p">)]</span>
+            <span class="n">random_states</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">leiden_repeats</span><span class="p">)]</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">leiden_repeats</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
         <span class="p">]</span>
 
         <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Repeating leiden clustering </span><span class="si">{</span><span class="n">leiden_repeats</span><span class="si">}</span><span class="s1"> times&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Repeating leiden clustering </span><span class="si">{</span><span class="n">leiden_repeats</span><span class="si">}</span><span class="s2"> times&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
             <span class="n">future_dict</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">random_state_chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">random_state_chunks</span><span class="p">):</span>
@@ -1791,23 +1815,25 @@
                 <span class="k">if</span> <span class="n">partition_kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">partition_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="s1">&#39;seed&#39;</span> <span class="ow">in</span> <span class="n">partition_kwargs</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="s2">&quot;seed&quot;</span> <span class="ow">in</span> <span class="n">partition_kwargs</span><span class="p">:</span>
                         <span class="nb">print</span><span class="p">(</span>
-                            <span class="s1">&#39;Warning: seed in the partition_kwargs will be ignored, use seed instead.&#39;</span>
+                            <span class="s2">&quot;Warning: seed in the partition_kwargs will be ignored, use seed instead.&quot;</span>
                         <span class="p">)</span>
-                        <span class="k">del</span> <span class="n">partition_kwargs</span><span class="p">[</span><span class="s1">&#39;seed&#39;</span><span class="p">]</span>
+                        <span class="k">del</span> <span class="n">partition_kwargs</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">use_weights</span><span class="p">:</span>
-                    <span class="n">partition_kwargs</span><span class="p">[</span><span class="s1">&#39;weights&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-                        <span class="n">g</span><span class="o">.</span><span class="n">es</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-                <span class="n">partition_kwargs</span><span class="p">[</span><span class="s1">&#39;n_iterations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_iterations</span>
-                <span class="n">partition_kwargs</span><span class="p">[</span>
-                    <span class="s1">&#39;resolution_parameter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_resolution</span>
+                    <span class="n">partition_kwargs</span><span class="p">[</span><span class="s2">&quot;weights&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">es</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
+                    <span class="p">)</span>
+                <span class="n">partition_kwargs</span><span class="p">[</span><span class="s2">&quot;n_iterations&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_iterations</span>
+                <span class="n">partition_kwargs</span><span class="p">[</span><span class="s2">&quot;resolution_parameter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_resolution</span>
                 <span class="c1"># clustering proper</span>
-                <span class="n">future</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_leiden_runner</span><span class="p">,</span>
-                                         <span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span>
-                                         <span class="n">random_states</span><span class="o">=</span><span class="n">random_state_chunk</span><span class="p">,</span>
-                                         <span class="n">partition_type</span><span class="o">=</span><span class="n">partition_type</span><span class="p">,</span>
-                                         <span class="o">**</span><span class="n">partition_kwargs</span><span class="p">)</span>
+                <span class="n">future</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                    <span class="n">_leiden_runner</span><span class="p">,</span>
+                    <span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span>
+                    <span class="n">random_states</span><span class="o">=</span><span class="n">random_state_chunk</span><span class="p">,</span>
+                    <span class="n">partition_type</span><span class="o">=</span><span class="n">partition_type</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">partition_kwargs</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="n">future_dict</span><span class="p">[</span><span class="n">future</span><span class="p">]</span> <span class="o">=</span> <span class="n">random_state_chunks</span>
 
             <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">future_dict</span><span class="p">):</span>
@@ -1816,16 +1842,17 @@
                     <span class="n">data</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
                     <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;_leiden_runner generated an exception: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;_leiden_runner generated an exception: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="k">raise</span> <span class="n">exc</span>
         <span class="n">total_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span> <span class="o">=</span> <span class="n">total_result</span>
         <span class="n">cluster_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;Found </span><span class="si">{</span><span class="n">cluster_count</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">cluster_count</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s1"> clusters, &#39;</span>
-            <span class="sa">f</span><span class="s1">&#39;mean </span><span class="si">{</span><span class="n">cluster_count</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">, std </span><span class="si">{</span><span class="n">cluster_count</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="n">cluster_count</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">cluster_count</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2"> clusters, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;mean </span><span class="si">{</span><span class="n">cluster_count</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">, std </span><span class="si">{</span><span class="n">cluster_count</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
         <span class="c1"># create a over-clustering version based on all the leiden runs</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summarizing multiple clustering results&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Summarizing multiple clustering results&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_summarize_multi_leiden</span><span class="p">()</span>
         <span class="k">return</span></div>
 
@@ -1837,13 +1864,12 @@
         <span class="n">clusters</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">while</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">seed_cell</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="n">distance</span> <span class="o">=</span> <span class="n">pairwise_distances</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                                          <span class="n">Y</span><span class="o">=</span><span class="n">seed_cell</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span>
-                                          <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;hamming&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="n">pairwise_distances</span><span class="p">(</span>
+                <span class="n">X</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="n">seed_cell</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;hamming&quot;</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
 
             <span class="n">judge</span> <span class="o">=</span> <span class="n">distance</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">consensus_rate</span><span class="p">)</span>
-            <span class="n">this_cluster_cells</span> <span class="o">=</span> <span class="p">[</span><span class="n">seed_cell</span><span class="o">.</span><span class="n">name</span>
-                                  <span class="p">]</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">judge</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+            <span class="n">this_cluster_cells</span> <span class="o">=</span> <span class="p">[</span><span class="n">seed_cell</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">judge</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">this_cluster_cells</span><span class="p">:</span>
                 <span class="n">clusters</span><span class="p">[</span><span class="n">cell</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_cluster_id</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="o">~</span><span class="n">judge</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1863,48 +1889,52 @@
         <span class="n">clusters</span><span class="p">[</span><span class="n">clusters</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">small_clusters</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
         <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="p">(</span><span class="n">clusters</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s1"> cells assigned to </span><span class="si">{</span><span class="n">clusters</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="si">}</span><span class="s1"> raw clusters&#39;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">clusters</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> cells assigned to </span><span class="si">{</span><span class="n">clusters</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> raw clusters&quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="p">(</span><span class="n">clusters</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s1"> cells are multi-leiden outliers&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">clusters</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> cells are multi-leiden outliers&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_multi_leiden_clusters</span> <span class="o">=</span> <span class="n">clusters</span><span class="o">.</span><span class="n">values</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering._create_model"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering._create_model">[docs]</a>    <span class="k">def</span> <span class="nf">_create_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
-        <span class="n">clf</span> <span class="o">=</span> <span class="n">BalancedRandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_estimators</span><span class="p">,</span>
-                                             <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span>
-                                             <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                             <span class="n">min_samples_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-                                             <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-                                             <span class="n">min_weight_fraction_leaf</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-                                             <span class="n">max_features</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
-                                             <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                             <span class="n">min_impurity_decrease</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-                                             <span class="n">bootstrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                             <span class="n">oob_score</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                             <span class="n">sampling_strategy</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
-                                             <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                             <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
-                                             <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
-                                             <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                                             <span class="n">warm_start</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                             <span class="n">class_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">clf</span> <span class="o">=</span> <span class="n">BalancedRandomForestClassifier</span><span class="p">(</span>
+            <span class="n">n_estimators</span><span class="o">=</span><span class="n">n_estimators</span><span class="p">,</span>
+            <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;gini&quot;</span><span class="p">,</span>
+            <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">min_samples_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">min_weight_fraction_leaf</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">max_features</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+            <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">min_impurity_decrease</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">bootstrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">oob_score</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">sampling_strategy</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+            <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">warm_start</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">class_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">clf</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.supervise_learning"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.supervise_learning">[docs]</a>    <span class="k">def</span> <span class="nf">supervise_learning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multi_leiden_clusters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;Run multi_leiden_clustering first to get a &#39;</span>
-                <span class="s1">&#39;clustering assignment before run supervise_learning.&#39;</span><span class="p">)</span>
+                <span class="s2">&quot;Run multi_leiden_clustering first to get a &quot;</span>
+                <span class="s2">&quot;clustering assignment before run supervise_learning.&quot;</span>
+            <span class="p">)</span>
 
-        <span class="n">n_cluster</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_multi_leiden_clusters</span><span class="p">[</span>
-                                  <span class="bp">self</span><span class="o">.</span><span class="n">_multi_leiden_clusters</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">n_cluster</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_multi_leiden_clusters</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_multi_leiden_clusters</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">size</span>
         <span class="k">if</span> <span class="n">n_cluster</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span>
-                <span class="s1">&#39;There is only one cluster except for outliers, can not train supervise model on that.&#39;</span>
+                <span class="s2">&quot;There is only one cluster except for outliers, can not train supervise model on that.&quot;</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_obs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">=== Start supervise model training and cluster merging ===&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== Start supervise model training and cluster merging ===&quot;</span><span class="p">)</span>
 
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span>
         <span class="n">cur_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multi_leiden_clusters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1917,12 +1947,11 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">clf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">supervise_model</span>
         <span class="k">for</span> <span class="n">cur_iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">=== iteration </span><span class="si">{</span><span class="n">cur_iter</span><span class="si">}</span><span class="s1"> ===&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== iteration </span><span class="si">{</span><span class="n">cur_iter</span><span class="si">}</span><span class="s2"> ===&quot;</span><span class="p">)</span>
             <span class="n">n_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">cur_y</span><span class="p">[</span><span class="n">cur_y</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">size</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">n_labels</span><span class="si">}</span><span class="s1"> non-outlier labels&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n_labels</span><span class="si">}</span><span class="s2"> non-outlier labels&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">n_labels</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s1">&#39;Stop iteration because only </span><span class="si">{</span><span class="n">n_labels</span><span class="si">}</span><span class="s1"> cluster remain.&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stop iteration because only </span><span class="si">{</span><span class="n">n_labels</span><span class="si">}</span><span class="s2"> cluster remain.&quot;</span><span class="p">)</span>
                 <span class="k">break</span>
 
             <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">_split_train_test_per_group</span><span class="p">(</span>
@@ -1930,47 +1959,65 @@
                 <span class="n">y</span><span class="o">=</span><span class="n">cur_y</span><span class="p">,</span>
                 <span class="n">frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_frac</span><span class="p">,</span>
                 <span class="n">max_train</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_max_n</span><span class="p">,</span>
-                <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">+</span>
-                             <span class="n">cur_iter</span>  <span class="c1"># every time train-test split got a different random state</span>
+                <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span>
+                <span class="o">+</span> <span class="n">cur_iter</span><span class="p">,</span>  <span class="c1"># every time train-test split got a different random state</span>
             <span class="p">)</span>
-            <span class="n">clf</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">cluster_map</span><span class="p">,</span> <span class="n">cmat</span><span class="p">,</span> <span class="n">r1_cmat</span><span class="p">,</span> <span class="n">r2_cmat</span> <span class="o">=</span> <span class="n">single_supervise_evaluation</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">clf</span><span class="p">,</span>
+                <span class="n">score</span><span class="p">,</span>
+                <span class="n">cluster_map</span><span class="p">,</span>
+                <span class="n">cmat</span><span class="p">,</span>
+                <span class="n">r1_cmat</span><span class="p">,</span>
+                <span class="n">r2_cmat</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">single_supervise_evaluation</span><span class="p">(</span>
                 <span class="n">clf</span><span class="p">,</span>
                 <span class="n">x_train</span><span class="p">,</span>
                 <span class="n">y_train</span><span class="p">,</span>
                 <span class="n">x_test</span><span class="p">,</span>
                 <span class="n">y_test</span><span class="p">,</span>
                 <span class="n">r1_norm_step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
-                <span class="n">r2_norm_step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+                <span class="n">r2_norm_step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">step</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_accuracy</span> <span class="o">-</span> <span class="n">score</span><span class="p">)))</span>
 
             <span class="c1"># save step data for plotting</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="p">[</span><span class="n">cur_iter</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">cur_y</span><span class="p">,</span> <span class="n">cmat</span><span class="p">,</span> <span class="n">r1_cmat</span><span class="p">,</span> <span class="n">r2_cmat</span><span class="p">,</span> <span class="n">cluster_map</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">step</span>
+                <span class="n">cur_y</span><span class="p">,</span>
+                <span class="n">cmat</span><span class="p">,</span>
+                <span class="n">r1_cmat</span><span class="p">,</span>
+                <span class="n">r2_cmat</span><span class="p">,</span>
+                <span class="n">cluster_map</span><span class="p">,</span>
+                <span class="n">score</span><span class="p">,</span>
+                <span class="n">step</span><span class="p">,</span>
             <span class="p">]</span>
 
             <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_accuracy</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Stop iteration because current accuracy </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span>
-                      <span class="sa">f</span><span class="s1">&#39; &gt; target accuracy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">target_accuracy</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Stop iteration because current accuracy </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot; &gt; target accuracy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">target_accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
                 <span class="k">break</span>
 
             <span class="c1"># judge results</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cluster_map</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Merging </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cluster_map</span><span class="p">)</span><span class="si">}</span><span class="s1"> clusters.&#39;</span><span class="p">)</span>
-                <span class="n">cur_y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cur_y</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">cluster_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cluster_map</span> <span class="k">else</span> <span class="n">i</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Merging </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cluster_map</span><span class="p">)</span><span class="si">}</span><span class="s2"> clusters.&quot;</span><span class="p">)</span>
+                <span class="n">cur_y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cur_y</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">cluster_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cluster_map</span> <span class="k">else</span> <span class="n">i</span>
+                <span class="p">)</span>
                 <span class="c1"># renumber labels from large to small</span>
                 <span class="n">ordered_map</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="n">c</span><span class="p">:</span> <span class="n">i</span>
-                    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cur_y</span><span class="p">[</span>
-                                              <span class="n">cur_y</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+                    <span class="n">c</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cur_y</span><span class="p">[</span><span class="n">cur_y</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
                 <span class="p">}</span>
-                <span class="n">cur_y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cur_y</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-                    <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">ordered_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ordered_map</span> <span class="k">else</span> <span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+                <span class="n">cur_y</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cur_y</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">ordered_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ordered_map</span> <span class="k">else</span> <span class="n">i</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">values</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Stop iteration because there is no cluster to merge&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stop iteration because there is no cluster to merge&quot;</span><span class="p">)</span>
                 <span class="k">break</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Stop iteration because reaching maximum iteration.&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stop iteration because reaching maximum iteration.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_label_with_leiden_outliers</span> <span class="o">=</span> <span class="n">cur_y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">cur_y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">supervise_model</span> <span class="o">=</span> <span class="n">clf</span>
@@ -1978,15 +2025,17 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.final_evaluation"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.final_evaluation">[docs]</a>    <span class="k">def</span> <span class="nf">final_evaluation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">=== Assign final labels ===&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== Assign final labels ===&quot;</span><span class="p">)</span>
 
         <span class="c1"># skip if there is only one cluster</span>
         <span class="n">n_cluster</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
         <span class="k">if</span> <span class="n">n_cluster</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Skip final evaluation because only </span><span class="si">{</span><span class="n">n_cluster</span><span class="si">}</span><span class="s1"> cluster label exist.&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Skip final evaluation because only </span><span class="si">{</span><span class="n">n_cluster</span><span class="si">}</span><span class="s2"> cluster label exist.&quot;</span>
+            <span class="p">)</span>
             <span class="c1"># name all cluster as c0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cv_predicted_label</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;c</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cv_predicted_label</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;c</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">label_proba</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">final_accuracy</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1995,51 +2044,55 @@
             <span class="n">outlier_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">outlier_idx</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">outlier_predict</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">supervise_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">outlier_x</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">outlier_idx</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">supervise_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">outlier_x</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">outlier_idx</span>
+                <span class="p">)</span>
                 <span class="k">for</span> <span class="n">cell</span><span class="p">,</span> <span class="n">pred_label</span> <span class="ow">in</span> <span class="n">outlier_predict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="n">cell</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_label</span>
             <span class="nb">print</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;Assigned all the multi-leiden clustering outliers into clusters &#39;</span>
-                <span class="sa">f</span><span class="s1">&#39;using the prediction model from final clustering version.&#39;</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s2">&quot;Assigned all the multi-leiden clustering outliers into clusters &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;using the prediction model from final clustering version.&quot;</span>
+            <span class="p">)</span>
 
             <span class="c1"># final evaluation of non-outliers using cross val predict</span>
-            <span class="n">final_predict_proba</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">supervise_model</span><span class="p">,</span>
-                                                    <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span>
-                                                    <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
-                                                    <span class="n">method</span><span class="o">=</span><span class="s1">&#39;predict_proba&#39;</span><span class="p">,</span>
-                                                    <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
-                                                    <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                                                    <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">final_predict_proba</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">supervise_model</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;predict_proba&quot;</span><span class="p">,</span>
+                <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">final_predict</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">final_predict_proba</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
             <span class="n">final_cell_proba</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">final_predict_proba</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
             <span class="n">final_acc</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">final_predict</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final ten-fold CV Accuracy on all the cells: </span><span class="si">{</span><span class="n">final_acc</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cv_predicted_label</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;c</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">final_predict</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final ten-fold CV Accuracy on all the cells: </span><span class="si">{</span><span class="n">final_acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cv_predicted_label</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;c</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">final_predict</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">label_proba</span> <span class="o">=</span> <span class="n">final_cell_proba</span><span class="o">.</span><span class="n">values</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">final_accuracy</span> <span class="o">=</span> <span class="n">final_acc</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;c</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;c</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">]</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.save"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">):</span>
         <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ConsensusClustering.plot_leiden_cases"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_leiden_cases">[docs]</a>    <span class="k">def</span> <span class="nf">plot_leiden_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                          <span class="n">coord_data</span><span class="p">,</span>
-                          <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span>
-                          <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-                          <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-                          <span class="n">plot_n_cases</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-                          <span class="n">s</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<div class="viewcode-block" id="ConsensusClustering.plot_leiden_cases"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_leiden_cases">[docs]</a>    <span class="k">def</span> <span class="nf">plot_leiden_cases</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">plot_n_cases</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">3</span>
+    <span class="p">):</span>
         <span class="c1"># choose some most different leiden runs by rand index</span>
         <span class="n">sample_cells</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">sample_runs</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">use_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_cells</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
-            <span class="n">sample_runs</span><span class="p">)</span>
-        <span class="n">rand_index_rank</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-            <span class="n">pairwise_distances</span><span class="p">(</span><span class="n">use_df</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">adjusted_rand_score</span><span class="p">),</span>
-            <span class="n">index</span><span class="o">=</span><span class="n">use_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
-            <span class="n">columns</span><span class="o">=</span><span class="n">use_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+        <span class="n">use_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_cells</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_runs</span><span class="p">)</span>
+        <span class="n">rand_index_rank</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="n">pairwise_distances</span><span class="p">(</span><span class="n">use_df</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">adjusted_rand_score</span><span class="p">),</span>
+                <span class="n">index</span><span class="o">=</span><span class="n">use_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                <span class="n">columns</span><span class="o">=</span><span class="n">use_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+        <span class="p">)</span>
         <span class="n">plot_cases</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">pairs</span> <span class="ow">in</span> <span class="n">rand_index_rank</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
             <span class="n">plot_cases</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pairs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -2050,126 +2103,146 @@
 
         <span class="c1"># plot</span>
         <span class="n">plot_data</span> <span class="o">=</span> <span class="n">coord_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">plot_n_cases</span> <span class="o">*</span> <span class="n">plot_size</span><span class="p">,</span> <span class="n">plot_size</span><span class="p">),</span>
-                                 <span class="n">ncols</span><span class="o">=</span><span class="n">plot_n_cases</span><span class="p">,</span>
-                                 <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">plot_n_cases</span> <span class="o">*</span> <span class="n">plot_size</span><span class="p">,</span> <span class="n">plot_size</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="n">plot_n_cases</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span>
+        <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">case</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">plot_cases</span><span class="p">,</span> <span class="n">axes</span><span class="p">):</span>
-            <span class="n">plot_data</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Leiden </span><span class="si">{</span><span class="n">case</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span><span class="p">[</span><span class="n">case</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-            <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
-                                <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span>
-                                <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span>
-                                <span class="n">hue</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Leiden </span><span class="si">{</span><span class="n">case</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-                                <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">plot_data</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Leiden </span><span class="si">{</span><span class="n">case</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span><span class="p">[</span><span class="n">case</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">categorical_scatter</span><span class="p">(</span>
+                <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Leiden </span><span class="si">{</span><span class="n">case</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span></div>
 
-<div class="viewcode-block" id="ConsensusClustering.plot_before_after"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_before_after">[docs]</a>    <span class="k">def</span> <span class="nf">plot_before_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
+<div class="viewcode-block" id="ConsensusClustering.plot_before_after"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_before_after">[docs]</a>    <span class="k">def</span> <span class="nf">plot_before_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No merge step to plot&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No merge step to plot&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="n">plot_data</span> <span class="o">=</span> <span class="n">coord_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="c1"># initial clusters</span>
         <span class="n">cur_y</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">plot_size</span><span class="p">,</span> <span class="n">plot_size</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">plot_data</span><span class="p">[</span><span class="s1">&#39;cur_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_y</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span>
-                                <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
-                                <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;cur_y&#39;</span><span class="p">,</span>
-                                <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span>
-                                <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">,</span>
-                                <span class="n">text_anno</span><span class="o">=</span><span class="s1">&#39;cur_y&#39;</span><span class="p">,</span>
-                                <span class="n">show_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Initial Labels From</span><span class="se">\n</span><span class="s1">Multi-leiden Clustering&#39;</span><span class="p">)</span>
+        <span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;cur_y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_y</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span>
+            <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;cur_y&quot;</span><span class="p">,</span>
+            <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span>
+            <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;tab20&quot;</span><span class="p">,</span>
+            <span class="n">text_anno</span><span class="o">=</span><span class="s2">&quot;cur_y&quot;</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Initial Labels From</span><span class="se">\n</span><span class="s2">Multi-leiden Clustering&quot;</span><span class="p">)</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">plot_data</span><span class="p">[</span><span class="s1">&#39;cur_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span>
-                                <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
-                                <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;cur_y&#39;</span><span class="p">,</span>
-                                <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span>
-                                <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab20&#39;</span><span class="p">,</span>
-                                <span class="n">text_anno</span><span class="o">=</span><span class="s1">&#39;cur_y&#39;</span><span class="p">,</span>
-                                <span class="n">show_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Final Labels After Merge&#39;</span><span class="p">)</span>
+        <span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;cur_y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">categorical_scatter</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span>
+            <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;cur_y&quot;</span><span class="p">,</span>
+            <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span>
+            <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;tab20&quot;</span><span class="p">,</span>
+            <span class="n">text_anno</span><span class="o">=</span><span class="s2">&quot;cur_y&quot;</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Final Labels After Merge&quot;</span><span class="p">)</span>
         <span class="k">return</span></div>
 
-<div class="viewcode-block" id="ConsensusClustering.plot_steps"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_steps">[docs]</a>    <span class="k">def</span> <span class="nf">plot_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
+<div class="viewcode-block" id="ConsensusClustering.plot_steps"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_steps">[docs]</a>    <span class="k">def</span> <span class="nf">plot_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No merge step to plot&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No merge step to plot&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="n">plot_data</span> <span class="o">=</span> <span class="n">coord_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot_before_after</span><span class="p">(</span><span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="n">plot_size</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_before_after</span><span class="p">(</span>
+            <span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="n">plot_size</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span>
+        <span class="p">)</span>
 
         <span class="c1"># initial clusters</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())):</span>
-            <span class="n">cur_y</span><span class="p">,</span> <span class="n">cmat</span><span class="p">,</span> <span class="n">r1_cmat</span><span class="p">,</span> <span class="n">r2_cmat</span><span class="p">,</span> <span class="n">cluster_map</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">step_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="p">[</span><span class="n">step</span><span class="p">]</span>
-            <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">plot_size</span><span class="p">,</span> <span class="n">plot_size</span><span class="p">),</span>
-                                     <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-                                     <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span>
+            <span class="p">(</span>
+                <span class="n">cur_y</span><span class="p">,</span>
+                <span class="n">cmat</span><span class="p">,</span>
+                <span class="n">r1_cmat</span><span class="p">,</span>
+                <span class="n">r2_cmat</span><span class="p">,</span>
+                <span class="n">cluster_map</span><span class="p">,</span>
+                <span class="n">score</span><span class="p">,</span>
+                <span class="n">step_size</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="p">[</span><span class="n">step</span><span class="p">]</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+                <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">plot_size</span><span class="p">,</span> <span class="n">plot_size</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span>
+            <span class="p">)</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">cmat</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Confusion Matrix&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">cmat</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Confusion Matrix&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">r1_cmat</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;R1 Norm.&#39;</span><span class="p">)</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">r1_cmat</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;R1 Norm.&quot;</span><span class="p">)</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">r2_cmat</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;R2 Norm.&#39;</span><span class="p">)</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">r2_cmat</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;R2 Norm.&quot;</span><span class="p">)</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cluster_map</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">involved_clusters</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
-                    <span class="nb">list</span><span class="p">(</span><span class="n">cluster_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">cluster_map</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+                    <span class="nb">list</span><span class="p">(</span><span class="n">cluster_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">cluster_map</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+                <span class="p">)</span>
                 <span class="n">cur_y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cur_y</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">plot_data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-                <span class="n">cur_y</span> <span class="o">=</span> <span class="n">cur_y</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">cluster_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cluster_map</span> <span class="k">else</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">cur_y</span> <span class="o">=</span> <span class="n">cur_y</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">cluster_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cluster_map</span> <span class="k">else</span> <span class="n">i</span><span class="p">)</span>
                 <span class="c1"># if not involved, mark as -1</span>
-                <span class="n">cur_y</span> <span class="o">=</span> <span class="n">cur_y</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span>
-                <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">involved_clusters</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">plot_data</span><span class="p">[</span><span class="s1">&#39;cur_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_y</span>
+                <span class="n">cur_y</span> <span class="o">=</span> <span class="n">cur_y</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">involved_clusters</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;cur_y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_y</span>
                 <span class="n">n_color</span> <span class="o">=</span> <span class="n">cur_y</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
-                <span class="n">colors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;tab10&#39;</span><span class="p">,</span> <span class="n">n_color</span><span class="p">))</span>
+                <span class="n">colors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;tab10&quot;</span><span class="p">,</span> <span class="n">n_color</span><span class="p">))</span>
                 <span class="n">cmap</span> <span class="o">=</span> <span class="p">{</span>
                     <span class="n">c</span><span class="p">:</span> <span class="n">colors</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
                     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cur_y</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
                 <span class="p">}</span>
-                <span class="n">categorical_scatter</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
-                                    <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span>
-                                    <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span>
-                                    <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;cur_y&#39;</span><span class="p">,</span>
-                                    <span class="n">palette</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
-                                    <span class="n">s</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s1"> Cells After Merge&#39;</span><span class="p">)</span>
+                <span class="n">categorical_scatter</span><span class="p">(</span>
+                    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                    <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span>
+                    <span class="n">coord_base</span><span class="o">=</span><span class="n">coord_base</span><span class="p">,</span>
+                    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;cur_y&quot;</span><span class="p">,</span>
+                    <span class="n">palette</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+                    <span class="n">s</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2"> Cells After Merge&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.plot_merge_process"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_merge_process">[docs]</a>    <span class="k">def</span> <span class="nf">plot_merge_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No merge step to plot&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No merge step to plot&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="n">plot_data</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="p">(</span><span class="n">cur_y</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">cur_n_cluster</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cur_y</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
-            <span class="n">plot_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                <span class="s1">&#39;Step&#39;</span><span class="p">:</span> <span class="n">step</span><span class="p">,</span>
-                <span class="s1">&#39;# of clusters&#39;</span><span class="p">:</span> <span class="n">cur_n_cluster</span><span class="p">,</span>
-                <span class="s1">&#39;Score&#39;</span><span class="p">:</span> <span class="n">score</span>
-            <span class="p">})</span>
+            <span class="n">plot_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;Step&quot;</span><span class="p">:</span> <span class="n">step</span><span class="p">,</span> <span class="s2">&quot;# of clusters&quot;</span><span class="p">:</span> <span class="n">cur_n_cluster</span><span class="p">,</span> <span class="s2">&quot;Score&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">}</span>
+            <span class="p">)</span>
         <span class="n">plot_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
 
-        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">plot_size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">plot_size</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">plot_size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">plot_size</span><span class="p">),</span>
+            <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+            <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Step&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;# of clusters&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Step&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;# of clusters&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Step&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_accuracy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="n">plot_data</span><span class="p">[</span><span class="s1">&#39;Score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.03</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_accuracy</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">)))</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Step&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Score&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_accuracy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+            <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="n">plot_data</span><span class="p">[</span><span class="s2">&quot;Score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.03</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_accuracy</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">))</span>
+        <span class="p">)</span>
         <span class="k">return</span></div></div>
 
 
 <div class="viewcode-block" id="select_confusion_pairs"><a class="viewcode-back" href="../../../api/ALLCools/clustering/index.html#ALLCools.clustering.ConsensusClustering.select_confusion_pairs">[docs]</a><span class="k">def</span> <span class="nf">select_confusion_pairs</span><span class="p">(</span><span class="n">true_label</span><span class="p">,</span> <span class="n">predicted_label</span><span class="p">,</span> <span class="n">ratio_cutoff</span><span class="o">=</span><span class="mf">0.001</span><span class="p">):</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;true&#39;</span><span class="p">:</span> <span class="n">true_label</span><span class="p">,</span> <span class="s1">&#39;pred&#39;</span><span class="p">:</span> <span class="n">predicted_label</span><span class="p">})</span>
-    <span class="n">confusion_matrix</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;true&#39;</span><span class="p">)[</span><span class="s1">&#39;pred&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;true&quot;</span><span class="p">:</span> <span class="n">true_label</span><span class="p">,</span> <span class="s2">&quot;pred&quot;</span><span class="p">:</span> <span class="n">predicted_label</span><span class="p">})</span>
+    <span class="n">confusion_matrix</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">labels</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;true&quot;</span><span class="p">)[</span><span class="s2">&quot;pred&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="p">)</span>
 
     <span class="n">row_sum</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">row_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">confusion_matrix</span> <span class="o">/</span> <span class="n">row_sum</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>

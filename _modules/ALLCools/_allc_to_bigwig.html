@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1492,26 +1509,27 @@
 <span class="n">log</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NullHandler</span><span class="p">())</span>
 
 
-<div class="viewcode-block" id="_allc_to_bedgraph"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig/index.html#ALLCools._allc_to_bigwig._allc_to_bedgraph">[docs]</a><span class="k">def</span> <span class="nf">_allc_to_bedgraph</span><span class="p">(</span><span class="n">allc_path</span><span class="p">,</span> <span class="n">out_prefix</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span>
-                      <span class="n">remove_additional_chrom</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<div class="viewcode-block" id="_allc_to_bedgraph"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig/index.html#ALLCools._allc_to_bigwig._allc_to_bedgraph">[docs]</a><span class="k">def</span> <span class="nf">_allc_to_bedgraph</span><span class="p">(</span>
+    <span class="n">allc_path</span><span class="p">,</span> <span class="n">out_prefix</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">remove_additional_chrom</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simply calculate cov and mc_rate for fixed genome bins. No mC context filter.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">chrom_dict</span> <span class="o">=</span> <span class="n">parse_chrom_size</span><span class="p">(</span><span class="n">chrom_size_path</span><span class="p">)</span>
-    <span class="n">cur_chrom</span> <span class="o">=</span> <span class="s1">&#39;TOTALLY_NOT_A_CHROM&#39;</span>
+    <span class="n">cur_chrom</span> <span class="o">=</span> <span class="s2">&quot;TOTALLY_NOT_A_CHROM&quot;</span>
     <span class="n">cur_chrom_end</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">bin_start</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">bin_end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cur_chrom_end</span><span class="p">,</span> <span class="n">bin_size</span><span class="p">)</span>
     <span class="n">temp_mc</span><span class="p">,</span> <span class="n">temp_cov</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 
-    <span class="n">out_prefix</span> <span class="o">=</span> <span class="n">out_prefix</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-    <span class="n">out_frac</span> <span class="o">=</span> <span class="n">out_prefix</span> <span class="o">+</span> <span class="s1">&#39;.frac.bg&#39;</span>
-    <span class="n">out_cov</span> <span class="o">=</span> <span class="n">out_prefix</span> <span class="o">+</span> <span class="s1">&#39;.cov.bg&#39;</span>
+    <span class="n">out_prefix</span> <span class="o">=</span> <span class="n">out_prefix</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">out_frac</span> <span class="o">=</span> <span class="n">out_prefix</span> <span class="o">+</span> <span class="s2">&quot;.frac.bg&quot;</span>
+    <span class="n">out_cov</span> <span class="o">=</span> <span class="n">out_prefix</span> <span class="o">+</span> <span class="s2">&quot;.cov.bg&quot;</span>
 
-    <span class="k">with</span> <span class="n">open_allc</span><span class="p">(</span><span class="n">allc_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">allc</span><span class="p">,</span> \
-            <span class="nb">open</span><span class="p">(</span><span class="n">out_frac</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">frac_handle</span><span class="p">,</span> \
-            <span class="nb">open</span><span class="p">(</span><span class="n">out_cov</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cov_handle</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">open_allc</span><span class="p">(</span><span class="n">allc_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">allc</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_frac</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">frac_handle</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span>
+        <span class="n">out_cov</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">cov_handle</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">allc</span><span class="p">:</span>
             <span class="n">chrom</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
@@ -1533,8 +1551,14 @@
                 <span class="c1"># write line after confirm the chrom</span>
                 <span class="k">if</span> <span class="n">temp_cov</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">mc_level</span> <span class="o">=</span> <span class="n">temp_mc</span> <span class="o">/</span> <span class="n">temp_cov</span>
-                    <span class="n">frac_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="n">cur_chrom</span><span class="p">,</span> <span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_end</span><span class="p">,</span> <span class="n">mc_level</span><span class="p">]))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="n">cov_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="n">cur_chrom</span><span class="p">,</span> <span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_end</span><span class="p">,</span> <span class="n">temp_cov</span><span class="p">]))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">frac_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                        <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="n">cur_chrom</span><span class="p">,</span> <span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_end</span><span class="p">,</span> <span class="n">mc_level</span><span class="p">]))</span>
+                        <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">cov_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                        <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="n">cur_chrom</span><span class="p">,</span> <span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_end</span><span class="p">,</span> <span class="n">temp_cov</span><span class="p">]))</span>
+                        <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
                 <span class="n">cur_chrom</span> <span class="o">=</span> <span class="n">chrom</span>  <span class="c1"># only update chrom after wrote the cur line, cause this may belong to last chrom</span>
 
                 <span class="c1"># reset bin</span>
@@ -1554,43 +1578,55 @@
         <span class="c1"># write last piece if there is anything</span>
         <span class="k">if</span> <span class="n">temp_cov</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">mc_level</span> <span class="o">=</span> <span class="n">temp_mc</span> <span class="o">/</span> <span class="n">temp_cov</span>
-            <span class="n">frac_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="n">cur_chrom</span><span class="p">,</span> <span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_end</span><span class="p">,</span> <span class="n">mc_level</span><span class="p">]))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">cov_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="n">cur_chrom</span><span class="p">,</span> <span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_end</span><span class="p">,</span> <span class="n">temp_cov</span><span class="p">]))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">frac_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="n">cur_chrom</span><span class="p">,</span> <span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_end</span><span class="p">,</span> <span class="n">mc_level</span><span class="p">]))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="n">cov_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="n">cur_chrom</span><span class="p">,</span> <span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_end</span><span class="p">,</span> <span class="n">temp_cov</span><span class="p">]))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finish generate bedgraph for </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finish generate bedgraph for </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out_frac</span><span class="p">,</span> <span class="n">out_cov</span></div>
 
 
-<div class="viewcode-block" id="_bedgraph_to_bigwig"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig/index.html#ALLCools._allc_to_bigwig._bedgraph_to_bigwig">[docs]</a><span class="k">def</span> <span class="nf">_bedgraph_to_bigwig</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">path_to_wigtobigwig</span><span class="p">,</span> <span class="n">remove_bedgraph</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="n">output_file</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;.bg&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.bw&#39;</span>
-    <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_to_wigtobigwig</span><span class="si">}</span><span class="s1">wigToBigWig </span><span class="si">{</span><span class="n">input_file</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">chrom_size_path</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s1">&#39;</span>
+<div class="viewcode-block" id="_bedgraph_to_bigwig"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig/index.html#ALLCools._allc_to_bigwig._bedgraph_to_bigwig">[docs]</a><span class="k">def</span> <span class="nf">_bedgraph_to_bigwig</span><span class="p">(</span>
+    <span class="n">input_file</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">path_to_wigtobigwig</span><span class="p">,</span> <span class="n">remove_bedgraph</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">):</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">input_file</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.bg&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.bw&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path_to_wigtobigwig</span><span class="si">}</span><span class="s2">wigToBigWig </span><span class="si">{</span><span class="n">input_file</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">chrom_size_path</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
 
     <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmd</span><span class="p">),</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">remove_bedgraph</span><span class="p">:</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rm -f </span><span class="si">{</span><span class="n">input_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">),</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finish generate bigwig for </span><span class="si">{</span><span class="n">input_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rm -f </span><span class="si">{</span><span class="n">input_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finish generate bigwig for </span><span class="si">{</span><span class="n">input_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output_file</span></div>
 
 
-<span class="nd">@doc_params</span><span class="p">(</span><span class="n">allc_path_doc</span><span class="o">=</span><span class="n">allc_path_doc</span><span class="p">,</span>
-            <span class="n">chrom_size_path_doc</span><span class="o">=</span><span class="n">chrom_size_path_doc</span><span class="p">,</span>
-            <span class="n">mc_contexts_doc</span><span class="o">=</span><span class="n">mc_contexts_doc</span><span class="p">,</span>
-            <span class="n">split_strand_doc</span><span class="o">=</span><span class="n">split_strand_doc</span><span class="p">,</span>
-            <span class="n">remove_additional_chrom_doc</span><span class="o">=</span><span class="n">remove_additional_chrom_doc</span><span class="p">,</span>
-            <span class="n">region_doc</span><span class="o">=</span><span class="n">region_doc</span><span class="p">,</span>
-            <span class="n">cov_cutoff_doc</span><span class="o">=</span><span class="n">cov_cutoff_doc</span><span class="p">)</span>
-<div class="viewcode-block" id="allc_to_bigwig"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig/index.html#ALLCools._allc_to_bigwig.allc_to_bigwig">[docs]</a><span class="k">def</span> <span class="nf">allc_to_bigwig</span><span class="p">(</span><span class="n">allc_path</span><span class="p">,</span>
-                   <span class="n">output_prefix</span><span class="p">,</span>
-                   <span class="n">chrom_size_path</span><span class="p">,</span>
-                   <span class="n">mc_contexts</span><span class="p">,</span>
-                   <span class="n">split_strand</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                   <span class="n">bin_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-                   <span class="n">remove_additional_chrom</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                   <span class="n">region</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                   <span class="n">cov_cutoff</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span>
-                   <span class="n">path_to_wigtobigwig</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-                   <span class="n">remove_temp</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                   <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="nd">@doc_params</span><span class="p">(</span>
+    <span class="n">allc_path_doc</span><span class="o">=</span><span class="n">allc_path_doc</span><span class="p">,</span>
+    <span class="n">chrom_size_path_doc</span><span class="o">=</span><span class="n">chrom_size_path_doc</span><span class="p">,</span>
+    <span class="n">mc_contexts_doc</span><span class="o">=</span><span class="n">mc_contexts_doc</span><span class="p">,</span>
+    <span class="n">split_strand_doc</span><span class="o">=</span><span class="n">split_strand_doc</span><span class="p">,</span>
+    <span class="n">remove_additional_chrom_doc</span><span class="o">=</span><span class="n">remove_additional_chrom_doc</span><span class="p">,</span>
+    <span class="n">region_doc</span><span class="o">=</span><span class="n">region_doc</span><span class="p">,</span>
+    <span class="n">cov_cutoff_doc</span><span class="o">=</span><span class="n">cov_cutoff_doc</span><span class="p">,</span>
+<div class="viewcode-block" id="allc_to_bigwig"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig/index.html#ALLCools._allc_to_bigwig.allc_to_bigwig">[docs]</a><span class="p">)</span>
+<span class="k">def</span> <span class="nf">allc_to_bigwig</span><span class="p">(</span>
+    <span class="n">allc_path</span><span class="p">,</span>
+    <span class="n">output_prefix</span><span class="p">,</span>
+    <span class="n">chrom_size_path</span><span class="p">,</span>
+    <span class="n">mc_contexts</span><span class="p">,</span>
+    <span class="n">split_strand</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">bin_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">remove_additional_chrom</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">region</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">cov_cutoff</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span>
+    <span class="n">path_to_wigtobigwig</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">remove_temp</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;\</span>
 <span class="sd">    Generate bigwig file(s) from 1 ALLC file.</span>
 
@@ -1630,48 +1666,58 @@
         <span class="n">bin_size</span> <span class="o">=</span> <span class="mi">50</span>
 
     <span class="c1"># test wigToBigWig</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path_to_wigtobigwig</span><span class="si">}</span><span class="s1">wigToBigWig&#39;</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path_to_wigtobigwig</span><span class="si">}</span><span class="s2">wigToBigWig&quot;</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span>
+    <span class="p">)</span>
     <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">255</span><span class="p">:</span>  <span class="c1"># somehow, the p.returncode is 255 when set correctly...</span>
-        <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Try </span><span class="si">{</span><span class="n">path_to_wigtobigwig</span><span class="si">}</span><span class="s1">wigToBigWig, got error </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Try </span><span class="si">{</span><span class="n">path_to_wigtobigwig</span><span class="si">}</span><span class="s2">wigToBigWig, got error </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="n">strandness</span> <span class="o">=</span> <span class="s1">&#39;split&#39;</span> <span class="k">if</span> <span class="n">split_strand</span> <span class="k">else</span> <span class="s1">&#39;both&#39;</span>
+    <span class="n">strandness</span> <span class="o">=</span> <span class="s2">&quot;split&quot;</span> <span class="k">if</span> <span class="n">split_strand</span> <span class="k">else</span> <span class="s2">&quot;both&quot;</span>
 
     <span class="c1"># prepare bedgraph</span>
-    <span class="n">extracted_allc_path_dict</span> <span class="o">=</span> <span class="n">extract_allc</span><span class="p">(</span><span class="n">allc_path</span><span class="o">=</span><span class="n">allc_path</span><span class="p">,</span>
-                                            <span class="n">output_prefix</span><span class="o">=</span><span class="n">output_prefix</span><span class="p">,</span>
-                                            <span class="n">mc_contexts</span><span class="o">=</span><span class="n">mc_contexts</span><span class="p">,</span>
-                                            <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                                            <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
-                                            <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;allc&#39;</span><span class="p">,</span>
-                                            <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span>
-                                            <span class="n">cov_cutoff</span><span class="o">=</span><span class="n">cov_cutoff</span><span class="p">,</span>
-                                            <span class="n">tabix</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                            <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
+    <span class="n">extracted_allc_path_dict</span> <span class="o">=</span> <span class="n">extract_allc</span><span class="p">(</span>
+        <span class="n">allc_path</span><span class="o">=</span><span class="n">allc_path</span><span class="p">,</span>
+        <span class="n">output_prefix</span><span class="o">=</span><span class="n">output_prefix</span><span class="p">,</span>
+        <span class="n">mc_contexts</span><span class="o">=</span><span class="n">mc_contexts</span><span class="p">,</span>
+        <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
+        <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
+        <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;allc&quot;</span><span class="p">,</span>
+        <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span>
+        <span class="n">cov_cutoff</span><span class="o">=</span><span class="n">cov_cutoff</span><span class="p">,</span>
+        <span class="n">tabix</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">extracted_allc_paths</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">extracted_allc_path_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
     <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">cpu</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
         <span class="c1"># generate bigwig file</span>
         <span class="n">allc_future_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">extracted_allc_paths</span><span class="p">:</span>
-            <span class="n">future</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_allc_to_bedgraph</span><span class="p">,</span>
-                                     <span class="n">allc_path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
-                                     <span class="n">out_prefix</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;.allc.tsv.gz&#39;</span><span class="p">),</span>  <span class="c1"># use extracted ALLC prefix</span>
-                                     <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                                     <span class="n">remove_additional_chrom</span><span class="o">=</span><span class="n">remove_additional_chrom</span><span class="p">,</span>
-                                     <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
+            <span class="n">future</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                <span class="n">_allc_to_bedgraph</span><span class="p">,</span>
+                <span class="n">allc_path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                <span class="n">out_prefix</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span>
+                    <span class="s2">&quot;.allc.tsv.gz&quot;</span>
+                <span class="p">),</span>  <span class="c1"># use extracted ALLC prefix</span>
+                <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
+                <span class="n">remove_additional_chrom</span><span class="o">=</span><span class="n">remove_additional_chrom</span><span class="p">,</span>
+                <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">allc_future_dict</span><span class="p">[</span><span class="n">future</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
 
         <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">allc_future_dict</span><span class="p">):</span>
             <span class="n">output_paths</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">output_paths</span><span class="p">:</span>
-                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_bedgraph_to_bigwig</span><span class="p">,</span>
-                                <span class="n">input_file</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
-                                <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                                <span class="n">path_to_wigtobigwig</span><span class="o">=</span><span class="n">path_to_wigtobigwig</span><span class="p">,</span>
-                                <span class="n">remove_bedgraph</span><span class="o">=</span><span class="n">remove_temp</span><span class="p">)</span>
+                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                    <span class="n">_bedgraph_to_bigwig</span><span class="p">,</span>
+                    <span class="n">input_file</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                    <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
+                    <span class="n">path_to_wigtobigwig</span><span class="o">=</span><span class="n">path_to_wigtobigwig</span><span class="p">,</span>
+                    <span class="n">remove_bedgraph</span><span class="o">=</span><span class="n">remove_temp</span><span class="p">,</span>
+                <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">remove_temp</span><span class="p">:</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;rm&#39;</span><span class="p">,</span> <span class="s1">&#39;-f&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">extracted_allc_paths</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">extracted_allc_paths</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span></div>
 </pre></div>
 

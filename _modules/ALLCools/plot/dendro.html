@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1492,29 +1509,30 @@
 
 
 <div class="viewcode-block" id="plot_dendrogram"><a class="viewcode-back" href="../../../api/ALLCools/plot/index.html#ALLCools.plot.dendro.plot_dendrogram">[docs]</a><span class="k">def</span> <span class="nf">plot_dendrogram</span><span class="p">(</span>
-        <span class="n">linkage_df</span><span class="p">,</span>
-        <span class="n">ax</span><span class="p">,</span>
-        <span class="n">dendro</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">dendro_kws</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">plot_node_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">plot_non_singleton</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">plot_kws</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">node_hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">node_hue_norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">node_hue_cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">node_hue_cbar_frac</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-        <span class="n">node_palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span>  <span class="c1"># shared by both line and node hue</span>
-        <span class="n">node_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">node_size_norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">node_sizes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">line_hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">line_hue_norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">line_palette</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">,</span>
-        <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
-        <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
-        <span class="n">marker_size</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
-        <span class="n">marker_color</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">):</span>
+    <span class="n">linkage_df</span><span class="p">,</span>
+    <span class="n">ax</span><span class="p">,</span>
+    <span class="n">dendro</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">dendro_kws</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">plot_node_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">plot_non_singleton</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">plot_kws</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">node_hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">node_hue_norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">node_hue_cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">node_hue_cbar_frac</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">node_palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span>  <span class="c1"># shared by both line and node hue</span>
+    <span class="n">node_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">node_size_norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">node_sizes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">line_hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">line_hue_norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">line_palette</span><span class="o">=</span><span class="s2">&quot;gray_r&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">edge_color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+    <span class="n">marker_size</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+    <span class="n">marker_color</span><span class="o">=</span><span class="s2">&quot;lightblue&quot;</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    Parameters</span>
@@ -1553,8 +1571,9 @@
     <span class="k">if</span> <span class="n">dendro</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">linkage_df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;linkage_df and labels must be provided to calculate dendrogram.&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Computing dendrogram&#39;</span><span class="p">)</span>
+                <span class="s2">&quot;linkage_df and labels must be provided to calculate dendrogram.&quot;</span>
+            <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing dendrogram&quot;</span><span class="p">)</span>
         <span class="n">_dendro_kws</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">no_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">dendro_kws</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">_dendro_kws</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dendro_kws</span><span class="p">)</span>
@@ -1563,12 +1582,12 @@
         <span class="c1"># so we can control each node</span>
         <span class="n">dendro</span> <span class="o">=</span> <span class="n">_dendrogram</span><span class="p">(</span><span class="n">linkage_df</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="o">**</span><span class="n">_dendro_kws</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">labels</span> <span class="o">=</span> <span class="n">dendro</span><span class="p">[</span><span class="s1">&#39;ivl&#39;</span><span class="p">]</span>
-    <span class="n">n_leaves</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dendro</span><span class="p">[</span><span class="s1">&#39;leaves&#39;</span><span class="p">])</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">dendro</span><span class="p">[</span><span class="s2">&quot;ivl&quot;</span><span class="p">]</span>
+    <span class="n">n_leaves</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dendro</span><span class="p">[</span><span class="s2">&quot;leaves&quot;</span><span class="p">])</span>
 
     <span class="n">node_pos</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># all node including singleton and non-singleton</span>
     <span class="n">direct_link_map</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># node linkage, keys only contain non-singleton</span>
-    <span class="k">for</span> <span class="n">leaf_x</span><span class="p">,</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dendro</span><span class="p">[</span><span class="s1">&#39;leaves&#39;</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">leaf_x</span><span class="p">,</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dendro</span><span class="p">[</span><span class="s2">&quot;leaves&quot;</span><span class="p">]):</span>
         <span class="c1"># add singleton positions first</span>
         <span class="n">node_pos</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">leaf</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">leaf_x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">_</span><span class="p">))</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">linkage_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()):</span>
@@ -1581,10 +1600,13 @@
 
     <span class="c1"># ------------------ Plot nodes ------------------</span>
     <span class="c1"># node colors</span>
-    <span class="n">nan_color</span> <span class="o">=</span> <span class="s1">&#39;#D3D3D3&#39;</span> <span class="k">if</span> <span class="n">marker_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">marker_color</span>
+    <span class="n">nan_color</span> <span class="o">=</span> <span class="s2">&quot;#D3D3D3&quot;</span> <span class="k">if</span> <span class="n">marker_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">marker_color</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node_palette</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="c1"># categorical node color</span>
-        <span class="n">node_colors</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">node_palette</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">node</span> <span class="ow">in</span> <span class="n">node_palette</span><span class="p">)</span> <span class="k">else</span> <span class="n">nan_color</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">node_pos</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+        <span class="n">node_colors</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">node</span><span class="p">:</span> <span class="n">node_palette</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">node</span> <span class="ow">in</span> <span class="n">node_palette</span><span class="p">)</span> <span class="k">else</span> <span class="n">nan_color</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">node_pos</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="p">}</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># continous node color</span>
         <span class="k">if</span> <span class="n">node_hue</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1592,19 +1614,20 @@
                 <span class="n">values</span> <span class="o">=</span> <span class="n">node_hue</span><span class="o">.</span><span class="n">values</span>
                 <span class="n">_hue_norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">_hue_norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">node_hue_norm</span><span class="p">),</span>
-                                      <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">node_hue_norm</span><span class="p">))</span>
+                <span class="n">_hue_norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">node_hue_norm</span><span class="p">),</span> <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">node_hue_norm</span><span class="p">))</span>
             <span class="n">_cmap</span> <span class="o">=</span> <span class="n">get_cmap</span><span class="p">(</span><span class="n">node_palette</span><span class="p">)</span>
 
             <span class="k">def</span> <span class="nf">node_cmap</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
                 <span class="k">return</span> <span class="p">(</span><span class="n">_cmap</span><span class="p">(</span><span class="n">_hue_norm</span><span class="p">(</span><span class="n">v</span><span class="p">)),)</span>
 
             <span class="k">if</span> <span class="n">node_hue_cbar</span><span class="p">:</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">_hue_norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">_cmap</span><span class="p">),</span>
-                                   <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span>
-                                   <span class="n">shrink</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
-                                   <span class="n">fraction</span><span class="o">=</span><span class="n">node_hue_cbar_frac</span><span class="p">,</span>
-                                   <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Node Color&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
+                    <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">_hue_norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">_cmap</span><span class="p">),</span>
+                    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span>
+                    <span class="n">shrink</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+                    <span class="n">fraction</span><span class="o">=</span><span class="n">node_hue_cbar_frac</span><span class="p">,</span>
+                    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Node Color&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">node_hue</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -1625,14 +1648,14 @@
             <span class="n">values</span> <span class="o">=</span> <span class="n">node_size</span><span class="o">.</span><span class="n">values</span>
             <span class="n">_size_norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">_size_norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">node_size_norm</span><span class="p">),</span>
-                                   <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">node_size_norm</span><span class="p">))</span>
+            <span class="n">_size_norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">node_size_norm</span><span class="p">),</span> <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">node_size_norm</span><span class="p">))</span>
 
         <span class="k">def</span> <span class="nf">node_smap</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
             <span class="n">v_norm</span> <span class="o">=</span> <span class="n">_size_norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
             <span class="n">v_norm</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">v_norm</span><span class="p">))</span>  <span class="c1"># limit norm value to [0, 1]</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">v_norm</span> <span class="o">*</span> <span class="p">(</span><span class="n">node_sizes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">node_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">node_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">return</span> <span class="n">s</span>
+
     <span class="k">else</span><span class="p">:</span>
         <span class="n">node_size</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -1645,29 +1668,31 @@
     <span class="p">}</span>
     <span class="c1"># plot nodes</span>
     <span class="k">for</span> <span class="n">node_id</span><span class="p">,</span> <span class="p">(</span><span class="n">node_x</span><span class="p">,</span> <span class="n">node_y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">node_pos</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">node_id</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">dendro</span><span class="p">[</span><span class="s1">&#39;leaves&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">plot_non_singleton</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">node_id</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">dendro</span><span class="p">[</span><span class="s2">&quot;leaves&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">plot_non_singleton</span><span class="p">:</span>
             <span class="k">break</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">node_x</span><span class="p">,</span>
-                   <span class="n">node_y</span><span class="p">,</span>
-                   <span class="n">s</span><span class="o">=</span><span class="n">node_sizes</span><span class="p">[</span><span class="n">node_id</span><span class="p">],</span>
-                   <span class="n">c</span><span class="o">=</span><span class="n">node_colors</span><span class="p">[</span><span class="n">node_id</span><span class="p">],</span>
-                   <span class="n">clip_on</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                   <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+            <span class="n">node_x</span><span class="p">,</span>
+            <span class="n">node_y</span><span class="p">,</span>
+            <span class="n">s</span><span class="o">=</span><span class="n">node_sizes</span><span class="p">[</span><span class="n">node_id</span><span class="p">],</span>
+            <span class="n">c</span><span class="o">=</span><span class="n">node_colors</span><span class="p">[</span><span class="n">node_id</span><span class="p">],</span>
+            <span class="n">clip_on</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="c1"># ------------------ Plot edges and node id ------------------</span>
     <span class="c1"># line color</span>
-    <span class="n">nan_color</span> <span class="o">=</span> <span class="s1">&#39;#D3D3D3&#39;</span> <span class="k">if</span> <span class="n">edge_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">edge_color</span>
+    <span class="n">nan_color</span> <span class="o">=</span> <span class="s2">&quot;#D3D3D3&quot;</span> <span class="k">if</span> <span class="n">edge_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">edge_color</span>
     <span class="k">if</span> <span class="n">line_hue</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">line_hue_norm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">values</span> <span class="o">=</span> <span class="n">line_hue</span><span class="o">.</span><span class="n">values</span>
             <span class="n">_hue_norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">_hue_norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">line_hue_norm</span><span class="p">),</span>
-                                  <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">line_hue_norm</span><span class="p">))</span>
+            <span class="n">_hue_norm</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">line_hue_norm</span><span class="p">),</span> <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">line_hue_norm</span><span class="p">))</span>
         <span class="n">_cmap</span> <span class="o">=</span> <span class="n">get_cmap</span><span class="p">(</span><span class="n">line_palette</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">line_cmap</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">_cmap</span><span class="p">(</span><span class="n">_hue_norm</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+
     <span class="k">else</span><span class="p">:</span>
         <span class="n">line_hue</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -1685,23 +1710,25 @@
         <span class="c1"># plot node id text</span>
         <span class="k">if</span> <span class="n">plot_node_id</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">node_id</span> <span class="o">&gt;=</span> <span class="n">n_leaves</span><span class="p">:</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">node_x</span><span class="p">,</span>
-                        <span class="n">node_y</span><span class="p">,</span>
-                        <span class="n">node_id</span><span class="p">,</span>
-                        <span class="n">fontsize</span><span class="o">=</span><span class="mi">6</span> <span class="k">if</span> <span class="s1">&#39;fontsize&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">plot_kws</span> <span class="k">else</span>
-                        <span class="n">plot_kws</span><span class="p">[</span><span class="s1">&#39;fontsize&#39;</span><span class="p">],</span>
-                        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
-                        <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
-                        <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+                    <span class="n">node_x</span><span class="p">,</span>
+                    <span class="n">node_y</span><span class="p">,</span>
+                    <span class="n">node_id</span><span class="p">,</span>
+                    <span class="n">fontsize</span><span class="o">=</span><span class="mi">6</span> <span class="k">if</span> <span class="s2">&quot;fontsize&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">plot_kws</span> <span class="k">else</span> <span class="n">plot_kws</span><span class="p">[</span><span class="s2">&quot;fontsize&quot;</span><span class="p">],</span>
+                    <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                    <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">node_x</span><span class="p">,</span>
-                        <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span>
-                        <span class="n">node_id</span><span class="p">,</span>
-                        <span class="n">fontsize</span><span class="o">=</span><span class="mi">6</span> <span class="k">if</span> <span class="s1">&#39;fontsize&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">plot_kws</span> <span class="k">else</span>
-                        <span class="n">plot_kws</span><span class="p">[</span><span class="s1">&#39;fontsize&#39;</span><span class="p">],</span>
-                        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
-                        <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
-                        <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+                    <span class="n">node_x</span><span class="p">,</span>
+                    <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span>
+                    <span class="n">node_id</span><span class="p">,</span>
+                    <span class="n">fontsize</span><span class="o">=</span><span class="mi">6</span> <span class="k">if</span> <span class="s2">&quot;fontsize&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">plot_kws</span> <span class="k">else</span> <span class="n">plot_kws</span><span class="p">[</span><span class="s2">&quot;fontsize&quot;</span><span class="p">],</span>
+                    <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                    <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
 
         <span class="c1"># plot branch</span>
         <span class="c1"># only non-singleton node has branch:</span>
@@ -1709,21 +1736,27 @@
             <span class="c1"># get child</span>
             <span class="n">left_child</span><span class="p">,</span> <span class="n">right_child</span> <span class="o">=</span> <span class="n">direct_link_map</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
             <span class="c1"># plot left branch</span>
-            <span class="n">straight_branch</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">node_x</span><span class="p">,</span> <span class="n">node_y</span><span class="p">),</span>
-                            <span class="n">node_pos</span><span class="p">[</span><span class="n">left_child</span><span class="p">],</span>
-                            <span class="n">plot_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="n">line_colors</span><span class="p">[</span><span class="n">left_child</span><span class="p">],</span>
-                                          <span class="n">linewidth</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span>
-                                          <span class="n">clip_on</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="n">straight_branch</span><span class="p">(</span>
+                <span class="n">ax</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">node_x</span><span class="p">,</span> <span class="n">node_y</span><span class="p">),</span>
+                <span class="n">node_pos</span><span class="p">[</span><span class="n">left_child</span><span class="p">],</span>
+                <span class="n">plot_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">c</span><span class="o">=</span><span class="n">line_colors</span><span class="p">[</span><span class="n">left_child</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span> <span class="n">clip_on</span><span class="o">=</span><span class="kc">False</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
             <span class="c1"># plot right branch</span>
-            <span class="n">straight_branch</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">node_x</span><span class="p">,</span> <span class="n">node_y</span><span class="p">),</span>
-                            <span class="n">node_pos</span><span class="p">[</span><span class="n">right_child</span><span class="p">],</span>
-                            <span class="n">plot_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="n">line_colors</span><span class="p">[</span><span class="n">right_child</span><span class="p">],</span>
-                                          <span class="n">linewidth</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span>
-                                          <span class="n">clip_on</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="n">straight_branch</span><span class="p">(</span>
+                <span class="n">ax</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">node_x</span><span class="p">,</span> <span class="n">node_y</span><span class="p">),</span>
+                <span class="n">node_pos</span><span class="p">[</span><span class="n">right_child</span><span class="p">],</span>
+                <span class="n">plot_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">c</span><span class="o">=</span><span class="n">line_colors</span><span class="p">[</span><span class="n">right_child</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span> <span class="n">clip_on</span><span class="o">=</span><span class="kc">False</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)),</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">dendro</span><span class="p">[</span><span class="s1">&#39;ivl&#39;</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)),</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">dendro</span><span class="p">[</span><span class="s2">&quot;ivl&quot;</span><span class="p">])</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">dendro</span><span class="p">,</span> <span class="n">node_pos</span></div>

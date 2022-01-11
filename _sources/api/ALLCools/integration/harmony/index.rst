@@ -32,7 +32,6 @@ Module Contents
    Run Harmony.
 
 
-
 .. py:class:: Harmony(Z, Phi, Phi_moe, Pr_b, sigma, theta, max_iter_harmony, max_iter_kmeans, epsilon_kmeans, epsilon_harmony, K, block_size, lamb, verbose, init_method, n_pcs, n_neighbors, resolution, leiden_input)
 
    Bases: :py:obj:`object`

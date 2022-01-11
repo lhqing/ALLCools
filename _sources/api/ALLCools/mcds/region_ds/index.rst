@@ -166,7 +166,7 @@ Module Contents
       :property:
 
 
-   .. py:method:: from_bed(cls, bed, location, chrom_size_path, region_dim='region')
+   .. py:method:: from_bed(cls, bed, location, chrom_size_path, region_dim='region', sort_bed=True)
       :classmethod:
 
       Create empty RegionDS from a bed file.
@@ -175,6 +175,7 @@ Module Contents
       :param location:
       :param region_dim:
       :param chrom_size_path:
+      :param sort_bed:
 
 
    .. py:method:: open(cls, path, region_dim=None, use_regions=None, split_large_chunks=True, chrom_size_path=None, select_dir=None, engine='zarr')
@@ -212,7 +213,7 @@ Module Contents
    .. py:method:: annotate_by_bigwigs(self, bigwig_table, dim, slop=100, chrom_size_path=None, value_type='mean', chunk_size='auto', dtype='float32', cpu=1, save=True)
 
 
-   .. py:method:: annotate_by_bed(self, bed_table, dim, slop=100, chrom_size_path=None, chunk_size='auto', dtype='bool', bed_sorted=True, cpu=1, save=True)
+   .. py:method:: annotate_by_beds(self, bed_table, dim, slop=100, chrom_size_path=None, chunk_size='auto', dtype='bool', bed_sorted=True, cpu=1, save=True)
 
 
    .. py:method:: get_feature(self, feature_name, dim=None, da_name=None)
@@ -239,7 +240,7 @@ Module Contents
    .. py:method:: object_coords_to_string(self, dtypes=None)
 
 
-   .. py:method:: save(self, output_path=None, mode='w', change_region_dim=True)
+   .. py:method:: save(self, da_name=None, output_path=None, mode='w', change_region_dim=True)
 
 
    .. py:method:: get_coords(self, name)

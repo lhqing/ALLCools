@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1481,15 +1498,20 @@
 <span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csr_matrix</span><span class="p">,</span> <span class="n">vstack</span>
 
 
-<div class="viewcode-block" id="open_zarr"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/zarr/index.html#ALLCools.count_matrix.zarr.open_zarr">[docs]</a><span class="k">def</span> <span class="nf">open_zarr</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">):</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="n">path</span><span class="p">,</span>
-                           <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;zarr&#39;</span><span class="p">,</span>
-                           <span class="n">concat_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
-                           <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="open_zarr"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/zarr/index.html#ALLCools.count_matrix.zarr.open_zarr">[docs]</a><span class="k">def</span> <span class="nf">open_zarr</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">):</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;zarr&quot;</span><span class="p">,</span> <span class="n">concat_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;nested&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ds</span></div>
 
 
-<div class="viewcode-block" id="dataset_to_array"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/zarr/index.html#ALLCools.count_matrix.zarr.dataset_to_array">[docs]</a><span class="k">def</span> <span class="nf">dataset_to_array</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">use_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_genes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="s1">&#39;gene&#39;</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="mi">100000</span><span class="p">):</span>
+<div class="viewcode-block" id="dataset_to_array"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/zarr/index.html#ALLCools.count_matrix.zarr.dataset_to_array">[docs]</a><span class="k">def</span> <span class="nf">dataset_to_array</span><span class="p">(</span>
+    <span class="n">ds</span><span class="p">,</span>
+    <span class="n">use_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_genes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span>
+    <span class="n">var_dim</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span>
+    <span class="n">chunk</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="n">cell_index</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">obs_dim</span><span class="p">)</span>
     <span class="n">gene_index</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">var_dim</span><span class="p">)</span>
 
@@ -1505,9 +1527,11 @@
     <span class="c1"># load data by chunk</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">chunk_start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">use_cells</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">chunk</span><span class="p">):</span>
-        <span class="n">_chunk_cells</span> <span class="o">=</span> <span class="n">use_cells</span><span class="p">[</span><span class="n">chunk_start</span><span class="p">:</span><span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk</span><span class="p">]</span>
-        <span class="k">with</span> <span class="n">dask</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;array.slicing.split_large_chunks&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}):</span>
-            <span class="n">_chunk_ds</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s1">_da&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span><span class="n">obs_dim</span><span class="p">:</span> <span class="n">_chunk_cells</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">:</span> <span class="n">use_genes</span><span class="p">})</span>
+        <span class="n">_chunk_cells</span> <span class="o">=</span> <span class="n">use_cells</span><span class="p">[</span><span class="n">chunk_start</span> <span class="p">:</span> <span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk</span><span class="p">]</span>
+        <span class="k">with</span> <span class="n">dask</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;array.slicing.split_large_chunks&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}):</span>
+            <span class="n">_chunk_ds</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s2">_da&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span>
+                <span class="p">{</span><span class="n">obs_dim</span><span class="p">:</span> <span class="n">_chunk_cells</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">:</span> <span class="n">use_genes</span><span class="p">}</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">sparse</span><span class="p">:</span>
             <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">_chunk_ds</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1519,18 +1543,30 @@
     <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">use_cells</span><span class="p">,</span> <span class="n">use_genes</span></div>
 
 
-<div class="viewcode-block" id="dataset_to_adata"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/zarr/index.html#ALLCools.count_matrix.zarr.dataset_to_adata">[docs]</a><span class="k">def</span> <span class="nf">dataset_to_adata</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">use_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_genes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="s1">&#39;gene&#39;</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="mi">100000</span><span class="p">):</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">use_cells</span><span class="p">,</span> <span class="n">use_genes</span> <span class="o">=</span> <span class="n">dataset_to_array</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span>
-                                                  <span class="n">use_cells</span><span class="o">=</span><span class="n">use_cells</span><span class="p">,</span>
-                                                  <span class="n">use_genes</span><span class="o">=</span><span class="n">use_genes</span><span class="p">,</span>
-                                                  <span class="n">sparse</span><span class="o">=</span><span class="n">sparse</span><span class="p">,</span>
-                                                  <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
-                                                  <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
-                                                  <span class="n">chunk</span><span class="o">=</span><span class="n">chunk</span><span class="p">)</span>
+<div class="viewcode-block" id="dataset_to_adata"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/zarr/index.html#ALLCools.count_matrix.zarr.dataset_to_adata">[docs]</a><span class="k">def</span> <span class="nf">dataset_to_adata</span><span class="p">(</span>
+    <span class="n">ds</span><span class="p">,</span>
+    <span class="n">use_cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_genes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span>
+    <span class="n">var_dim</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span>
+    <span class="n">chunk</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">use_cells</span><span class="p">,</span> <span class="n">use_genes</span> <span class="o">=</span> <span class="n">dataset_to_array</span><span class="p">(</span>
+        <span class="n">ds</span><span class="p">,</span>
+        <span class="n">use_cells</span><span class="o">=</span><span class="n">use_cells</span><span class="p">,</span>
+        <span class="n">use_genes</span><span class="o">=</span><span class="n">use_genes</span><span class="p">,</span>
+        <span class="n">sparse</span><span class="o">=</span><span class="n">sparse</span><span class="p">,</span>
+        <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
+        <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
+        <span class="n">chunk</span><span class="o">=</span><span class="n">chunk</span><span class="p">,</span>
+    <span class="p">)</span>
 
-    <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-                            <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">use_cells</span><span class="p">),</span>
-                            <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">use_genes</span><span class="p">))</span>
+    <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">use_cells</span><span class="p">),</span>
+        <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">use_genes</span><span class="p">),</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">adata</span></div>
 </pre></div>
 

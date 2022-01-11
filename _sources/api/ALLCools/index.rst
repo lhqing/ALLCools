@@ -13,13 +13,13 @@ Subpackages
    clustering/index.rst
    count_matrix/index.rst
    dmr/index.rst
-   igv/index.rst
    integration/index.rst
    mcds/index.rst
    motif/index.rst
    plot/index.rst
    pseudo_cell/index.rst
    reptile/index.rst
+   sandbox/index.rst
    schema/index.rst
 
 
@@ -47,7 +47,7 @@ Package Contents
 ----------------
 
 .. py:data:: __version__
-   :annotation: = 0.1.19.dev10+gb9ab647.d20220108
+   :annotation: = 0.1.19.dev13+g658250d.d20220109
 
    
 

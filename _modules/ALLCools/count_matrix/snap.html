@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1481,22 +1498,22 @@
 <span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">ss</span>
 
 <div class="viewcode-block" id="SNAP_BD_FIELDS"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/snap/index.html#ALLCools.count_matrix.snap.SNAP_BD_FIELDS">[docs]</a><span class="n">SNAP_BD_FIELDS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;TN&#39;</span><span class="p">:</span> <span class="s1">&#39;TotalFrag&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;UM&#39;</span><span class="p">:</span> <span class="s1">&#39;UniqueMapFrag&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;SE&#39;</span><span class="p">:</span> <span class="s1">&#39;SingleEndFrag&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;SA&#39;</span><span class="p">:</span> <span class="s1">&#39;SecondaryAlign&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;PE&#39;</span><span class="p">:</span> <span class="s1">&#39;PairEndFrag&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;PP&#39;</span><span class="p">:</span> <span class="s1">&#39;ProperlyPairedFrag&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;PL&#39;</span><span class="p">:</span> <span class="s1">&#39;ProperFragLength&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;US&#39;</span><span class="p">:</span> <span class="s1">&#39;UsableFrag&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;UQ&#39;</span><span class="p">:</span> <span class="s1">&#39;UniqFrag&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;CM&#39;</span><span class="p">:</span> <span class="s1">&#39;chrMFrag&#39;</span></div>
+    <span class="s2">&quot;TN&quot;</span><span class="p">:</span> <span class="s2">&quot;TotalFrag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;UM&quot;</span><span class="p">:</span> <span class="s2">&quot;UniqueMapFrag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SE&quot;</span><span class="p">:</span> <span class="s2">&quot;SingleEndFrag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SA&quot;</span><span class="p">:</span> <span class="s2">&quot;SecondaryAlign&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PE&quot;</span><span class="p">:</span> <span class="s2">&quot;PairEndFrag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PP&quot;</span><span class="p">:</span> <span class="s2">&quot;ProperlyPairedFrag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PL&quot;</span><span class="p">:</span> <span class="s2">&quot;ProperFragLength&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;US&quot;</span><span class="p">:</span> <span class="s2">&quot;UsableFrag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;UQ&quot;</span><span class="p">:</span> <span class="s2">&quot;UniqFrag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CM&quot;</span><span class="p">:</span> <span class="s2">&quot;chrMFrag&quot;</span><span class="p">,</span></div>
 <span class="p">}</span>
 
 
 <div class="viewcode-block" id="read_snap"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/snap/index.html#ALLCools.count_matrix.snap.read_snap">[docs]</a><span class="k">def</span> <span class="nf">read_snap</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">bin_kind</span><span class="o">=</span><span class="mi">5000</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Read snap hdf5 file into anndata.AnnData. &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">bin_kind</span> <span class="o">==</span> <span class="s1">&#39;gene&#39;</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Read snap hdf5 file into anndata.AnnData.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">bin_kind</span> <span class="o">==</span> <span class="s2">&quot;gene&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_read_snap_genes</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bin_kind</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">_read_snap_bins</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_kind</span><span class="p">)</span>
@@ -1505,16 +1522,16 @@
 
 
 <div class="viewcode-block" id="_read_snap_meta"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/snap/index.html#ALLCools.count_matrix.snap._read_snap_meta">[docs]</a><span class="k">def</span> <span class="nf">_read_snap_meta</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
-    <span class="n">cell_barcode</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="s1">&#39;/BD/name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">cell_barcode</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;/BD/name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
     <span class="n">cell_meta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">cell_barcode</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;/BD/&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;/BD/&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">SNAP_BD_FIELDS</span><span class="p">:</span>
             <span class="n">col_name</span> <span class="o">=</span> <span class="n">SNAP_BD_FIELDS</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">col_name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="n">cell_meta</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/BD/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span>
+        <span class="n">cell_meta</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/BD/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">cell_meta</span><span class="p">,</span> <span class="n">cell_barcode</span></div>
 
 
@@ -1522,58 +1539,55 @@
     <span class="sd">&quot;&quot;&quot;Read gene data from snap hdf5 file into anndata.AnnData&quot;&quot;&quot;</span>
 
     <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/GM/count&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/GM/idx&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># R is 1 based, python is 0 based</span>
-        <span class="n">idy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/GM/idy&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># R is 1 based, python is 0 based</span>
-        <span class="n">gene_id</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/GM/name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/GM/count&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/GM/idx&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># R is 1 based, python is 0 based</span>
+        <span class="n">idy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/GM/idy&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># R is 1 based, python is 0 based</span>
+        <span class="n">gene_id</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/GM/name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 
         <span class="n">cell_meta</span><span class="p">,</span> <span class="n">cell_barcode</span> <span class="o">=</span> <span class="n">_read_snap_meta</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">idy</span><span class="p">)),</span>
-                             <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">cell_barcode</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">gene_id</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
-                             <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">idy</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">cell_barcode</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">gene_id</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
 
     <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
-        <span class="n">X</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-        <span class="n">obs</span><span class="o">=</span><span class="n">cell_meta</span><span class="p">,</span>
-        <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">gene_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;gene&#39;</span><span class="p">)))</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">obs</span><span class="o">=</span><span class="n">cell_meta</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">gene_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">))</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">adata</span></div>
 
 
 <div class="viewcode-block" id="_read_snap_bins"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/snap/index.html#ALLCools.count_matrix.snap._read_snap_bins">[docs]</a><span class="k">def</span> <span class="nf">_read_snap_bins</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="mi">5000</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Read bin data from snap hdf5 file into anndata.AnnData&quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s1">/count&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s1">/idx&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># R is 1 based, python is 0 based</span>
-        <span class="n">idy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s1">/idy&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># R is 1 based, python is 0 based</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s2">/count&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s2">/idx&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># R is 1 based, python is 0 based</span>
+        <span class="n">idy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s2">/idy&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># R is 1 based, python is 0 based</span>
 
-        <span class="n">bin_chrom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s1">/binChrom&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-        <span class="n">bin_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s1">/binStart&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># 0 based bed format</span>
-        <span class="n">bin_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s1">/binStart&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">bin_size</span>  <span class="c1"># 0 based bed format</span>
+        <span class="n">bin_chrom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s2">/binChrom&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="n">bin_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s2">/binStart&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># 0 based bed format</span>
+        <span class="n">bin_end</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;/AM/</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s2">/binStart&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">bin_size</span>
+        <span class="p">)</span>  <span class="c1"># 0 based bed format</span>
         <span class="n">bin_id</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">defchararray</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">defchararray</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bin_chrom</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">),</span> <span class="n">bin_start</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">defchararray</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bin_chrom</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">),</span> <span class="n">bin_start</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="p">)</span>
 
         <span class="n">cell_meta</span><span class="p">,</span> <span class="n">cell_barcode</span> <span class="o">=</span> <span class="n">_read_snap_meta</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">idy</span><span class="p">)),</span>
-                             <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">cell_barcode</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">bin_id</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
-                             <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">idy</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">cell_barcode</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">bin_id</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
 
-    <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-                            <span class="n">obs</span><span class="o">=</span><span class="n">cell_meta</span><span class="p">,</span>
-                            <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-                                <span class="p">{</span>
-                                    <span class="s1">&#39;chrom&#39;</span><span class="p">:</span> <span class="n">bin_chrom</span><span class="p">,</span>
-                                    <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="n">bin_start</span><span class="p">,</span>
-                                    <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="n">bin_end</span>
-                                <span class="p">},</span>
-                                <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">bin_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;chrom5k&#39;</span><span class="p">)))</span>
+    <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">obs</span><span class="o">=</span><span class="n">cell_meta</span><span class="p">,</span>
+        <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;chrom&quot;</span><span class="p">:</span> <span class="n">bin_chrom</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">bin_start</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">bin_end</span><span class="p">},</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">bin_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;chrom5k&quot;</span><span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">adata</span></div>
 
 
-<div class="viewcode-block" id="adata_to_df"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/snap/index.html#ALLCools.count_matrix.snap.adata_to_df">[docs]</a><span class="k">def</span> <span class="nf">adata_to_df</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">):</span>
+<div class="viewcode-block" id="adata_to_df"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/snap/index.html#ALLCools.count_matrix.snap.adata_to_df">[docs]</a><span class="k">def</span> <span class="nf">adata_to_df</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">):</span>
     <span class="c1"># reduce dtype specifically for atac</span>
     <span class="n">max_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">max</span>  <span class="c1"># prevent overflow</span>
     <span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">adata</span><span class="o">.</span><span class="n">X</span> <span class="o">&gt;</span> <span class="n">max_value</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_value</span>
@@ -1585,40 +1599,35 @@
     <span class="k">return</span> <span class="n">df</span></div>
 
 
-<div class="viewcode-block" id="snap_to_xarray"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/snap/index.html#ALLCools.count_matrix.snap.snap_to_xarray">[docs]</a><span class="k">def</span> <span class="nf">snap_to_xarray</span><span class="p">(</span><span class="n">snap_path</span><span class="p">,</span> <span class="n">bin_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="p">),</span> <span class="n">gene</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">):</span>
+<div class="viewcode-block" id="snap_to_xarray"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/snap/index.html#ALLCools.count_matrix.snap.snap_to_xarray">[docs]</a><span class="k">def</span> <span class="nf">snap_to_xarray</span><span class="p">(</span><span class="n">snap_path</span><span class="p">,</span> <span class="n">bin_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">5000</span><span class="p">,),</span> <span class="n">gene</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">):</span>
     <span class="n">total_records</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">bin_size</span> <span class="ow">in</span> <span class="n">bin_sizes</span><span class="p">:</span>
         <span class="n">adata</span> <span class="o">=</span> <span class="n">read_snap</span><span class="p">(</span><span class="n">snap_path</span><span class="p">,</span> <span class="n">bin_kind</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
-        <span class="n">var_dim</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;chrom</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;000&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">adata_to_df</span><span class="p">(</span><span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">,</span>
-                           <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
-                           <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span>
-                           <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="n">total_records</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s1">_da&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">var_dim</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;chrom</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;000&quot;</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">adata_to_df</span><span class="p">(</span><span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">total_records</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s2">_da&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
     <span class="k">if</span> <span class="n">gene</span><span class="p">:</span>
-        <span class="n">adata</span> <span class="o">=</span> <span class="n">read_snap</span><span class="p">(</span><span class="n">snap_path</span><span class="p">,</span> <span class="n">bin_kind</span><span class="o">=</span><span class="s1">&#39;gene&#39;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">adata_to_df</span><span class="p">(</span><span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">,</span>
-                           <span class="n">var_dim</span><span class="o">=</span><span class="s1">&#39;gene&#39;</span><span class="p">,</span>
-                           <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span>
-                           <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="n">total_records</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;gene_da&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">adata</span> <span class="o">=</span> <span class="n">read_snap</span><span class="p">(</span><span class="n">snap_path</span><span class="p">,</span> <span class="n">bin_kind</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">adata_to_df</span><span class="p">(</span><span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">total_records</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;gene_da&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
     <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">total_records</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ds</span></div>
 
 
-<div class="viewcode-block" id="snap_to_zarr"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/snap/index.html#ALLCools.count_matrix.snap.snap_to_zarr">[docs]</a><span class="k">def</span> <span class="nf">snap_to_zarr</span><span class="p">(</span><span class="n">snap_path</span><span class="p">,</span>
-                 <span class="n">output_path</span><span class="p">,</span>
-                 <span class="n">bin_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="p">),</span>
-                 <span class="n">gene</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                 <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span>
-                 <span class="n">index_prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="snap_to_zarr"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/snap/index.html#ALLCools.count_matrix.snap.snap_to_zarr">[docs]</a><span class="k">def</span> <span class="nf">snap_to_zarr</span><span class="p">(</span>
+    <span class="n">snap_path</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="p">,</span>
+    <span class="n">bin_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">5000</span><span class="p">,),</span>
+    <span class="n">gene</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span>
+    <span class="n">index_prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="n">ds</span> <span class="o">=</span> <span class="n">snap_to_xarray</span><span class="p">(</span><span class="n">snap_path</span><span class="p">,</span> <span class="n">bin_sizes</span><span class="o">=</span><span class="n">bin_sizes</span><span class="p">,</span> <span class="n">gene</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">index_prefix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># add a prefix to the index to make it unique when concatenate across different datasets</span>
-        <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;cell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">index_prefix</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">ds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s1">&#39;cell&#39;</span><span class="p">)</span>
+        <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">index_prefix</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">ds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s2">&quot;cell&quot;</span><span class="p">)</span>
     <span class="n">ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
     <span class="k">return</span></div>
-
 </pre></div>
 
               </div>

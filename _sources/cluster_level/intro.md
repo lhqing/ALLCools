@@ -1,15 +1,14 @@
-# Cluster Level Analysis
+# Post-clustering Genomic Analysis
 
 ```{tableofcontents}
 ```
 
-## Prepare Cluster Level Analysis
+## Prepare Cluster Level Files
 
 ### Merge Pseudo-bulk ALLC Files
 
 After clustering analysis, we can merge single-cell ALLC files into pseudo-bulk ALLC files using 
-[`allcools merge`](../command_line/allcools_merge.ipynb). The merged ALLC files have the same format as single-cell
-ALLC files, except for the fifth column (mc) and sixth column (cov) are sum from single cells.
+[`allcools merge`](../command_line/allcools_merge.ipynb). The merged ALLC files have the same format as single-cell ALLC files, except for the fifth column (mc) and sixth column (cov) are sum from single cells.
 
 ### Extract Certain Methylation Context
 
@@ -18,9 +17,7 @@ to extract all the CpG sites from the ALLC file, you can use the
 [`allcools extract`](../command_line/allcools_extract.ipynb). 
 The resulting file is still in the ALLC format.
 
-Alternatively, if CpH sites are not of your interest, you can extract CpG sites from all the single-cell 
-ALLC files before doing the merge ALLC step, as this will greatly fasilitate the merging step 
-(CpG is ~20 times less than CpH in mm10).
+Alternatively, if CpH sites are not of your interest, you can extract CpG sites from all the single-cell ALLC files before doing the merge ALLC step, as this will greatly fasilitate the merging step (CpG is ~20 times less than CpH in mm10).
 
 #### Merge CpG strand
 

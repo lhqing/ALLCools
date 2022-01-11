@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1482,9 +1499,9 @@
 
 <div class="viewcode-block" id="_kmeans_division"><a class="viewcode-back" href="../../../api/ALLCools/pseudo_cell/pseudo_cell_kmeans/index.html#ALLCools.pseudo_cell.pseudo_cell_kmeans._kmeans_division">[docs]</a><span class="k">def</span> <span class="nf">_kmeans_division</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">cells</span><span class="p">,</span> <span class="n">max_pseudo_size</span><span class="p">,</span> <span class="n">max_k</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">max_pseudo_size</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;|&#39;</span><span class="o">+</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">cells</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">cells</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;|&quot;</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">cells</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">cells</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
     <span class="n">labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">cells</span><span class="p">)</span>
-    <span class="n">to_process</span> <span class="o">=</span> <span class="p">[(</span><span class="n">cells</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)]</span>
+    <span class="n">to_process</span> <span class="o">=</span> <span class="p">[(</span><span class="n">cells</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)]</span>
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">to_process</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">curr_cells</span><span class="p">,</span> <span class="n">curr_prefix</span> <span class="o">=</span> <span class="n">to_process</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="n">curr_matrix</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">cells</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">curr_cells</span><span class="p">)]</span>
@@ -1492,21 +1509,23 @@
         <span class="c1"># MiniBatchKMeans causes seg fault with huge k; bound with max_k</span>
         <span class="n">k</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">curr_cells</span><span class="p">)</span> <span class="o">//</span> <span class="n">max_pseudo_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_k</span><span class="p">)</span>
 
-        <span class="n">mbk</span> <span class="o">=</span> <span class="n">MiniBatchKMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
-                              <span class="n">init</span><span class="o">=</span><span class="s1">&#39;k-means++&#39;</span><span class="p">,</span>
-                              <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-                              <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-                              <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                              <span class="n">compute_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                              <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                              <span class="n">tol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-                              <span class="n">max_no_improvement</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-                              <span class="n">init_size</span><span class="o">=</span><span class="mi">3</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span>
-                              <span class="n">n_init</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-                              <span class="n">reassignment_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">mbk</span> <span class="o">=</span> <span class="n">MiniBatchKMeans</span><span class="p">(</span>
+            <span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
+            <span class="n">init</span><span class="o">=</span><span class="s2">&quot;k-means++&quot;</span><span class="p">,</span>
+            <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">compute_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">tol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">max_no_improvement</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">init_size</span><span class="o">=</span><span class="mi">3</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span>
+            <span class="n">n_init</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">reassignment_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="n">mbk</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">curr_matrix</span><span class="p">)</span>
-        <span class="n">curr_labels</span> <span class="o">=</span> <span class="n">curr_prefix</span> <span class="o">+</span> <span class="s1">&#39;|&#39;</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">mbk</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="n">curr_labels</span> <span class="o">=</span> <span class="n">curr_prefix</span> <span class="o">+</span> <span class="s2">&quot;|&quot;</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">mbk</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
         <span class="n">labels</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">curr_cells</span><span class="p">]</span> <span class="o">=</span> <span class="n">curr_labels</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="n">curr_labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">curr_cells</span><span class="p">]</span>
 
@@ -1518,7 +1537,9 @@
     <span class="k">return</span> <span class="n">labels</span></div>
 
 
-<div class="viewcode-block" id="_calculate_pseudo_group"><a class="viewcode-back" href="../../../api/ALLCools/pseudo_cell/pseudo_cell_kmeans/index.html#ALLCools.pseudo_cell.pseudo_cell_kmeans._calculate_pseudo_group">[docs]</a><span class="k">def</span> <span class="nf">_calculate_pseudo_group</span><span class="p">(</span><span class="n">clusters</span><span class="p">,</span> <span class="n">total_matrix</span><span class="p">,</span> <span class="n">cluster_size_cutoff</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">max_pseudo_size</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+<div class="viewcode-block" id="_calculate_pseudo_group"><a class="viewcode-back" href="../../../api/ALLCools/pseudo_cell/pseudo_cell_kmeans/index.html#ALLCools.pseudo_cell.pseudo_cell_kmeans._calculate_pseudo_group">[docs]</a><span class="k">def</span> <span class="nf">_calculate_pseudo_group</span><span class="p">(</span>
+    <span class="n">clusters</span><span class="p">,</span> <span class="n">total_matrix</span><span class="p">,</span> <span class="n">cluster_size_cutoff</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">max_pseudo_size</span><span class="o">=</span><span class="mi">25</span>
+<span class="p">):</span>
     <span class="n">cluster_cells</span> <span class="o">=</span> <span class="n">clusters</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
     <span class="n">max_pseudo_sizes</span> <span class="o">=</span> <span class="p">(</span><span class="n">cluster_cells</span> <span class="o">//</span> <span class="n">cluster_size_cutoff</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">max_pseudo_sizes</span><span class="p">[</span><span class="n">max_pseudo_sizes</span> <span class="o">&gt;</span> <span class="n">max_pseudo_size</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_pseudo_size</span>
@@ -1528,7 +1549,7 @@
         <span class="n">cells</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="n">clusters</span> <span class="o">==</span> <span class="n">cluster</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
         <span class="n">matrix</span> <span class="o">=</span> <span class="n">total_matrix</span><span class="p">[</span><span class="n">clusters</span> <span class="o">==</span> <span class="n">cluster</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">record</span> <span class="o">=</span> <span class="n">_kmeans_division</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">cells</span><span class="p">,</span> <span class="n">max_pseudo_size</span><span class="p">)</span>
-        <span class="n">record</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s1">::</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s2">::</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
     <span class="n">records</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">records</span></div>
@@ -1544,47 +1565,51 @@
         <span class="k">if</span> <span class="n">cells</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">group_data</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var_vector</span><span class="p">(</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">aggregate_func</span> <span class="o">==</span> <span class="s1">&#39;sum&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">aggregate_func</span> <span class="o">==</span> <span class="s2">&quot;sum&quot;</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">group_data</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">cells</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">A1</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                     <span class="n">group_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">adata</span><span class="p">[</span><span class="n">cells</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-            <span class="k">elif</span> <span class="n">aggregate_func</span> <span class="o">==</span> <span class="s1">&#39;mean&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">aggregate_func</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">group_data</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">cells</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">A1</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                     <span class="n">group_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">adata</span><span class="p">[</span><span class="n">cells</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-            <span class="k">elif</span> <span class="n">aggregate_func</span> <span class="o">==</span> <span class="s1">&#39;median&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">aggregate_func</span> <span class="o">==</span> <span class="s2">&quot;median&quot;</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">group_data</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">cells</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">A1</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                     <span class="n">group_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">adata</span><span class="p">[</span><span class="n">cells</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-            <span class="k">elif</span> <span class="n">aggregate_func</span> <span class="o">==</span> <span class="s1">&#39;downsample&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">aggregate_func</span> <span class="o">==</span> <span class="s2">&quot;downsample&quot;</span><span class="p">:</span>
                 <span class="n">cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">cells</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">group_data</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">cell</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">A1</span>  <span class="c1"># just to reduce dim</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                     <span class="n">group_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">adata</span><span class="p">[</span><span class="n">cell</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;aggregate_func can only be [&quot;sum&quot;, &quot;mean&quot;, &quot;median&quot;], got &quot;</span><span class="si">{</span><span class="n">aggregate_func</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;aggregate_func can only be [&quot;sum&quot;, &quot;mean&quot;, &quot;median&quot;], got &quot;</span><span class="si">{</span><span class="n">aggregate_func</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+                <span class="p">)</span>
         <span class="n">balanced_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">group_data</span><span class="p">))</span>
-        <span class="n">obs</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;n_cells&#39;</span><span class="p">:</span> <span class="n">n_cells</span><span class="p">}</span>
+        <span class="n">obs</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;n_cells&quot;</span><span class="p">:</span> <span class="n">n_cells</span><span class="p">}</span>
     <span class="n">balanced_matrix</span> <span class="o">=</span> <span class="n">vstack</span><span class="p">(</span><span class="n">balanced_matrix</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">is_sparse</span><span class="p">:</span>
         <span class="n">balanced_matrix</span> <span class="o">=</span> <span class="n">balanced_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
 
-    <span class="n">pseudo_cell_adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span><span class="n">balanced_matrix</span><span class="p">,</span>
-                                        <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                                        <span class="n">var</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">pseudo_cell_adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
+        <span class="n">balanced_matrix</span><span class="p">,</span> <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">pseudo_cell_adata</span></div>
 
 
-<div class="viewcode-block" id="generate_pseudo_cells"><a class="viewcode-back" href="../../../api/ALLCools/pseudo_cell/pseudo_cell_kmeans/index.html#ALLCools.pseudo_cell.pseudo_cell_kmeans.generate_pseudo_cells">[docs]</a><span class="k">def</span> <span class="nf">generate_pseudo_cells</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span>
-                          <span class="n">cluster_col</span><span class="o">=</span><span class="s1">&#39;leiden&#39;</span><span class="p">,</span>
-                          <span class="n">obsm</span><span class="o">=</span><span class="s1">&#39;X_pca&#39;</span><span class="p">,</span>
-                          <span class="n">cluster_size_cutoff</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-                          <span class="n">max_pseudo_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
-                          <span class="n">aggregate_func</span><span class="o">=</span><span class="s1">&#39;downsample&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_pseudo_cells"><a class="viewcode-back" href="../../../api/ALLCools/pseudo_cell/pseudo_cell_kmeans/index.html#ALLCools.pseudo_cell.pseudo_cell_kmeans.generate_pseudo_cells">[docs]</a><span class="k">def</span> <span class="nf">generate_pseudo_cells</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">,</span>
+    <span class="n">cluster_col</span><span class="o">=</span><span class="s2">&quot;leiden&quot;</span><span class="p">,</span>
+    <span class="n">obsm</span><span class="o">=</span><span class="s2">&quot;X_pca&quot;</span><span class="p">,</span>
+    <span class="n">cluster_size_cutoff</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">max_pseudo_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+    <span class="n">aggregate_func</span><span class="o">=</span><span class="s2">&quot;downsample&quot;</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Balance the clusters by merge or downsample cells within each cluster.</span>
 <span class="sd">    We first group the data by pre-defined clusters (cluster_col),</span>
@@ -1614,20 +1639,26 @@
 <span class="sd">    -------</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">pseudo_group_key</span> <span class="o">=</span> <span class="s1">&#39;pseudo_group&#39;</span>
+    <span class="n">pseudo_group_key</span> <span class="o">=</span> <span class="s2">&quot;pseudo_group&quot;</span>
 
     <span class="c1"># determine cell group</span>
     <span class="n">clusters</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">cluster_col</span><span class="p">]</span>
     <span class="n">total_matrix</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="n">obsm</span><span class="p">]</span>
-    <span class="n">pseudo_group</span> <span class="o">=</span> <span class="n">_calculate_pseudo_group</span><span class="p">(</span><span class="n">clusters</span><span class="o">=</span><span class="n">clusters</span><span class="p">,</span>
-                                           <span class="n">total_matrix</span><span class="o">=</span><span class="n">total_matrix</span><span class="p">,</span>
-                                           <span class="n">cluster_size_cutoff</span><span class="o">=</span><span class="n">cluster_size_cutoff</span><span class="p">,</span>
-                                           <span class="n">max_pseudo_size</span><span class="o">=</span><span class="n">max_pseudo_size</span><span class="p">)</span>
+    <span class="n">pseudo_group</span> <span class="o">=</span> <span class="n">_calculate_pseudo_group</span><span class="p">(</span>
+        <span class="n">clusters</span><span class="o">=</span><span class="n">clusters</span><span class="p">,</span>
+        <span class="n">total_matrix</span><span class="o">=</span><span class="n">total_matrix</span><span class="p">,</span>
+        <span class="n">cluster_size_cutoff</span><span class="o">=</span><span class="n">cluster_size_cutoff</span><span class="p">,</span>
+        <span class="n">max_pseudo_size</span><span class="o">=</span><span class="n">max_pseudo_size</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">pseudo_group_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">pseudo_group</span>
-    <span class="n">pseudo_cell_adata</span> <span class="o">=</span> <span class="n">_merge_pseudo_cell</span><span class="p">(</span><span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">,</span>
-                                           <span class="n">aggregate_func</span><span class="o">=</span><span class="n">aggregate_func</span><span class="p">,</span>
-                                           <span class="n">pseudo_group_key</span><span class="o">=</span><span class="n">pseudo_group_key</span><span class="p">,</span> <span class="p">)</span>
-    <span class="n">pseudo_cell_adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">cluster_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pseudo_cell_adata</span><span class="o">.</span><span class="n">obs_names</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)</span>
+    <span class="n">pseudo_cell_adata</span> <span class="o">=</span> <span class="n">_merge_pseudo_cell</span><span class="p">(</span>
+        <span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">,</span>
+        <span class="n">aggregate_func</span><span class="o">=</span><span class="n">aggregate_func</span><span class="p">,</span>
+        <span class="n">pseudo_group_key</span><span class="o">=</span><span class="n">pseudo_group_key</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">pseudo_cell_adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">cluster_col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pseudo_cell_adata</span><span class="o">.</span><span class="n">obs_names</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">pseudo_cell_adata</span></div>
 </pre></div>
 

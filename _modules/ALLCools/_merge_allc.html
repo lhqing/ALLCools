@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1534,12 +1551,18 @@
     <span class="n">resource</span><span class="o">.</span><span class="n">setrlimit</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">RLIMIT_NOFILE</span><span class="p">,</span> <span class="p">(</span><span class="n">HARD</span><span class="p">,</span> <span class="n">HARD</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="_batch_merge_allc_files_tabix"><a class="viewcode-back" href="../../api/ALLCools/_merge_allc/index.html#ALLCools._merge_allc._batch_merge_allc_files_tabix">[docs]</a><span class="k">def</span> <span class="nf">_batch_merge_allc_files_tabix</span><span class="p">(</span><span class="n">allc_files</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">chrom_size_file</span><span class="p">,</span> <span class="n">bin_length</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">binarize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">snp</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="n">regions</span> <span class="o">=</span> <span class="n">genome_region_chunks</span><span class="p">(</span><span class="n">chrom_size_file</span><span class="p">,</span> <span class="n">bin_length</span><span class="o">=</span><span class="n">bin_length</span><span class="p">,</span> <span class="n">combine_small</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Merge ALLC files with </span><span class="si">{</span><span class="n">cpu</span><span class="si">}</span><span class="s1"> processes&#39;</span><span class="p">)</span>
-    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Split genome into </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">regions</span><span class="p">)</span><span class="si">}</span><span class="s1"> regions, each is </span><span class="si">{</span><span class="n">bin_length</span><span class="si">}</span><span class="s1">bp&#39;</span><span class="p">)</span>
-    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> to merge, the default ALLC file handel in 1 run is </span><span class="si">{</span><span class="n">DEFAULT_MAX_ALLC</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Process FH soft limit </span><span class="si">{</span><span class="n">SOFT</span><span class="si">}</span><span class="s1">, hard limit </span><span class="si">{</span><span class="n">HARD</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="_batch_merge_allc_files_tabix"><a class="viewcode-back" href="../../api/ALLCools/_merge_allc/index.html#ALLCools._merge_allc._batch_merge_allc_files_tabix">[docs]</a><span class="k">def</span> <span class="nf">_batch_merge_allc_files_tabix</span><span class="p">(</span>
+    <span class="n">allc_files</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">chrom_size_file</span><span class="p">,</span> <span class="n">bin_length</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">binarize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">snp</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">):</span>
+    <span class="n">regions</span> <span class="o">=</span> <span class="n">genome_region_chunks</span><span class="p">(</span>
+        <span class="n">chrom_size_file</span><span class="p">,</span> <span class="n">bin_length</span><span class="o">=</span><span class="n">bin_length</span><span class="p">,</span> <span class="n">combine_small</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Merge ALLC files with </span><span class="si">{</span><span class="n">cpu</span><span class="si">}</span><span class="s2"> processes&quot;</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Split genome into </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">regions</span><span class="p">)</span><span class="si">}</span><span class="s2"> regions, each is </span><span class="si">{</span><span class="n">bin_length</span><span class="si">}</span><span class="s2">bp&quot;</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">)</span><span class="si">}</span><span class="s2"> to merge, the default ALLC file handel in 1 run is </span><span class="si">{</span><span class="n">DEFAULT_MAX_ALLC</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Process FH soft limit </span><span class="si">{</span><span class="n">SOFT</span><span class="si">}</span><span class="s2">, hard limit </span><span class="si">{</span><span class="n">HARD</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="n">_increase_soft_fd_limit</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">DEFAULT_MAX_ALLC</span><span class="p">:</span>
@@ -1551,8 +1574,8 @@
         <span class="n">allc_files_batches</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">out_paths</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">batch_id</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">),</span> <span class="n">batch_allc</span><span class="p">)):</span>
-            <span class="n">allc_files_batches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">allc_files</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_allc</span><span class="p">])</span>
-            <span class="n">out_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_file</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;batch_</span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s1">.tmp.tsv.gz&#39;</span><span class="p">)</span>
+            <span class="n">allc_files_batches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">allc_files</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">batch_allc</span><span class="p">])</span>
+            <span class="n">out_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_file</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;batch_</span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2">.tmp.tsv.gz&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">batch_id</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># merge last batch&#39;s merged allc into next batch</span>
                 <span class="n">allc_files_batches</span><span class="p">[</span><span class="n">batch_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_paths</span><span class="p">[</span><span class="n">batch_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
@@ -1561,33 +1584,41 @@
         <span class="n">allc_files_batches</span> <span class="o">=</span> <span class="p">[</span><span class="n">allc_files</span><span class="p">]</span>
         <span class="n">out_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">out_file</span><span class="p">]</span>
 
-    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Run merge in </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files_batches</span><span class="p">)</span><span class="si">}</span><span class="s1"> batches&#39;</span><span class="p">)</span>
-    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_paths</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run merge in </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files_batches</span><span class="p">)</span><span class="si">}</span><span class="s2"> batches&quot;</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_paths</span><span class="p">))</span>
 
     <span class="k">if</span> <span class="n">snp</span><span class="p">:</span>
         <span class="n">merge_func</span> <span class="o">=</span> <span class="n">_merge_allc_files_tabix_with_snp_info</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">merge_func</span> <span class="o">=</span> <span class="n">_merge_allc_files_tabix</span>
 
-    <span class="k">for</span> <span class="n">batch_num</span><span class="p">,</span> <span class="p">(</span><span class="n">allc_files</span><span class="p">,</span> <span class="n">out_file</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">allc_files_batches</span><span class="p">,</span> <span class="n">out_paths</span><span class="p">)):</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Run batch </span><span class="si">{</span><span class="n">batch_num</span><span class="si">}</span><span class="s1">, &#39;</span>
-                 <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">)</span><span class="si">}</span><span class="s1"> allc files, &#39;</span>
-                 <span class="sa">f</span><span class="s1">&#39;output to </span><span class="si">{</span><span class="n">out_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">open_allc</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="k">as</span> <span class="n">out_handle</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">batch_num</span><span class="p">,</span> <span class="p">(</span><span class="n">allc_files</span><span class="p">,</span> <span class="n">out_file</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+        <span class="nb">zip</span><span class="p">(</span><span class="n">allc_files_batches</span><span class="p">,</span> <span class="n">out_paths</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Run batch </span><span class="si">{</span><span class="n">batch_num</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">)</span><span class="si">}</span><span class="s2"> allc files, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;output to </span><span class="si">{</span><span class="n">out_file</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">with</span> <span class="n">open_allc</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="k">as</span> <span class="n">out_handle</span><span class="p">:</span>
             <span class="c1"># as_complete don&#39;t release, run total regions in sections to prevent too large memory</span>
             <span class="n">parallel_section</span> <span class="o">=</span> <span class="n">cpu</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">regions</span><span class="p">),</span> <span class="n">parallel_section</span><span class="p">):</span>
-                <span class="n">cur_regions</span> <span class="o">=</span> <span class="n">regions</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">parallel_section</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">regions</span><span class="p">))]</span>
-                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Running region from </span><span class="si">{</span><span class="n">cur_regions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">cur_regions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">cur_regions</span> <span class="o">=</span> <span class="n">regions</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">parallel_section</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">regions</span><span class="p">))]</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running region from </span><span class="si">{</span><span class="n">cur_regions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">cur_regions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
-                    <span class="n">future_merge_result</span> <span class="o">=</span> <span class="p">{</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">merge_func</span><span class="p">,</span>
-                                                           <span class="n">allc_files</span><span class="o">=</span><span class="n">allc_files</span><span class="p">,</span>
-                                                           <span class="n">out_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                                           <span class="n">chrom_size_file</span><span class="o">=</span><span class="n">chrom_size_file</span><span class="p">,</span>
-                                                           <span class="n">query_region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span>
-                                                           <span class="n">buffer_line_number</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
-                                                           <span class="n">binarize</span><span class="o">=</span><span class="n">binarize</span><span class="p">):</span> <span class="n">region_id</span>
-                                           <span class="k">for</span> <span class="n">region_id</span><span class="p">,</span> <span class="n">region</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cur_regions</span><span class="p">)}</span>
+                    <span class="n">future_merge_result</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                            <span class="n">merge_func</span><span class="p">,</span>
+                            <span class="n">allc_files</span><span class="o">=</span><span class="n">allc_files</span><span class="p">,</span>
+                            <span class="n">out_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">chrom_size_file</span><span class="o">=</span><span class="n">chrom_size_file</span><span class="p">,</span>
+                            <span class="n">query_region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span>
+                            <span class="n">buffer_line_number</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
+                            <span class="n">binarize</span><span class="o">=</span><span class="n">binarize</span><span class="p">,</span>
+                        <span class="p">):</span> <span class="n">region_id</span>
+                        <span class="k">for</span> <span class="n">region_id</span><span class="p">,</span> <span class="n">region</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cur_regions</span><span class="p">)</span>
+                    <span class="p">}</span>
                     <span class="n">cur_id</span> <span class="o">=</span> <span class="mi">0</span>
                     <span class="n">temp_dict</span> <span class="o">=</span> <span class="p">{}</span>
                     <span class="c1"># future may return in any order</span>
@@ -1599,14 +1630,16 @@
                         <span class="k">try</span><span class="p">:</span>
                             <span class="n">temp_dict</span><span class="p">[</span><span class="n">region_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
                         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-                            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%r</span><span class="s1"> generated an exception: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">region_id</span><span class="p">,</span> <span class="n">exc</span><span class="p">))</span>
+                            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%r</span><span class="s2"> generated an exception: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">region_id</span><span class="p">,</span> <span class="n">exc</span><span class="p">))</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="k">try</span><span class="p">:</span>
                                 <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_dict</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                                     <span class="n">data</span> <span class="o">=</span> <span class="n">temp_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">cur_id</span><span class="p">)</span>
                                     <span class="n">out_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-                                    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;write </span><span class="si">{</span><span class="n">cur_regions</span><span class="p">[</span><span class="n">cur_id</span><span class="p">]</span><span class="si">}</span><span class="s1"> Cached: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_dict</span><span class="p">)</span><span class="si">}</span><span class="s1">, &#39;</span>
-                                             <span class="sa">f</span><span class="s1">&#39;Current memory size: </span><span class="si">{</span><span class="n">PROCESS</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                                    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                                        <span class="sa">f</span><span class="s2">&quot;write </span><span class="si">{</span><span class="n">cur_regions</span><span class="p">[</span><span class="n">cur_id</span><span class="p">]</span><span class="si">}</span><span class="s2"> Cached: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_dict</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span>
+                                        <span class="sa">f</span><span class="s2">&quot;Current memory size: </span><span class="si">{</span><span class="n">PROCESS</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+                                    <span class="p">)</span>
                                     <span class="n">cur_id</span> <span class="o">+=</span> <span class="mi">1</span>
                             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                                 <span class="k">continue</span>
@@ -1615,29 +1648,32 @@
                         <span class="k">if</span> <span class="n">cur_id</span> <span class="ow">in</span> <span class="n">temp_dict</span><span class="p">:</span>
                             <span class="n">data</span> <span class="o">=</span> <span class="n">temp_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">cur_id</span><span class="p">)</span>
                             <span class="n">out_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-                            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;write </span><span class="si">{</span><span class="n">regions</span><span class="p">[</span><span class="n">cur_id</span><span class="p">]</span><span class="si">}</span><span class="s1"> Cached: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_dict</span><span class="p">)</span><span class="si">}</span><span class="s1">, &#39;</span>
-                                     <span class="sa">f</span><span class="s1">&#39;Current memory size: </span><span class="si">{</span><span class="n">PROCESS</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                                <span class="sa">f</span><span class="s2">&quot;write </span><span class="si">{</span><span class="n">regions</span><span class="p">[</span><span class="n">cur_id</span><span class="p">]</span><span class="si">}</span><span class="s2"> Cached: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_dict</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;Current memory size: </span><span class="si">{</span><span class="n">PROCESS</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+                            <span class="p">)</span>
                         <span class="n">cur_id</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
         <span class="c1"># after merge, tabix output</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Tabix output ALLC file&#39;</span><span class="p">)</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;tabix&#39;</span><span class="p">,</span> <span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;-e&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;-s&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">out_file</span><span class="p">],</span>
-                       <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Current memory size: </span><span class="si">{</span><span class="n">PROCESS</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Merge finished.&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Tabix output ALLC file&quot;</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;tabix&quot;</span><span class="p">,</span> <span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;-e&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="n">out_file</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current memory size: </span><span class="si">{</span><span class="n">PROCESS</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()</span><span class="o">.</span><span class="n">rss</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Merge finished.&quot;</span><span class="p">)</span>
 
     <span class="c1"># remove all batch allc but the last (final allc)</span>
     <span class="k">for</span> <span class="n">out_file</span> <span class="ow">in</span> <span class="n">out_paths</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># last file is the final merged allc</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rm -f </span><span class="si">{</span><span class="n">out_file</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">out_file</span><span class="si">}</span><span class="s1">.tbi&#39;</span><span class="p">))</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rm -f </span><span class="si">{</span><span class="n">out_file</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">out_file</span><span class="si">}</span><span class="s2">.tbi&quot;</span><span class="p">))</span>
     <span class="k">return</span></div>
 
 
-<div class="viewcode-block" id="_merge_allc_files_tabix"><a class="viewcode-back" href="../../api/ALLCools/_merge_allc/index.html#ALLCools._merge_allc._merge_allc_files_tabix">[docs]</a><span class="k">def</span> <span class="nf">_merge_allc_files_tabix</span><span class="p">(</span><span class="n">allc_files</span><span class="p">,</span>
-                            <span class="n">out_file</span><span class="p">,</span>
-                            <span class="n">chrom_size_file</span><span class="p">,</span>
-                            <span class="n">query_region</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                            <span class="n">buffer_line_number</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
-                            <span class="n">binarize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="_merge_allc_files_tabix"><a class="viewcode-back" href="../../api/ALLCools/_merge_allc/index.html#ALLCools._merge_allc._merge_allc_files_tabix">[docs]</a><span class="k">def</span> <span class="nf">_merge_allc_files_tabix</span><span class="p">(</span>
+    <span class="n">allc_files</span><span class="p">,</span>
+    <span class="n">out_file</span><span class="p">,</span>
+    <span class="n">chrom_size_file</span><span class="p">,</span>
+    <span class="n">query_region</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">buffer_line_number</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+    <span class="n">binarize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="c1"># only use bgzip and tabix</span>
     <span class="c1"># automatically take care the too many file open issue</span>
     <span class="c1"># do merge iteratively if file number exceed limit</span>
@@ -1651,23 +1687,23 @@
     <span class="k">if</span> <span class="n">query_region</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query_region</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">exit</span><span class="p">(</span><span class="s2">&quot;query_region must be str or None&quot;</span><span class="p">)</span>
-        <span class="n">region_chroms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">region</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">query_region</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)])</span>
+        <span class="n">region_chroms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">region</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">query_region</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)]</span>
+        <span class="p">)</span>
         <span class="n">all_chroms</span> <span class="o">=</span> <span class="p">[</span><span class="n">chrom</span> <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">all_chroms</span> <span class="k">if</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">region_chroms</span><span class="p">]</span>
     <span class="n">processing_chrom</span> <span class="o">=</span> <span class="n">all_chroms</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="c1"># scan allc file to set up a table for fast look-up of lines belong</span>
     <span class="c1"># to different chromosomes</span>
-    <span class="n">file_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">_ALLC</span><span class="p">(</span><span class="n">allc_file</span><span class="p">,</span>
-                          <span class="n">region</span><span class="o">=</span><span class="n">query_region</span><span class="p">)</span>
-                    <span class="k">for</span> <span class="n">allc_file</span> <span class="ow">in</span> <span class="n">allc_files</span><span class="p">]</span>
+    <span class="n">file_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">_ALLC</span><span class="p">(</span><span class="n">allc_file</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="n">query_region</span><span class="p">)</span> <span class="k">for</span> <span class="n">allc_file</span> <span class="ow">in</span> <span class="n">allc_files</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">out_handle</span> <span class="o">=</span> <span class="n">open_allc</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">out_handle</span> <span class="o">=</span> <span class="n">open_allc</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">out_handle</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">out_handle</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
     <span class="c1"># merge allc files</span>
     <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="n">cur_chrom</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NOT_A_CHROM&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">))]</span>
+    <span class="n">cur_chrom</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NOT_A_CHROM&quot;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">))]</span>
     <span class="n">cur_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">))])</span>
     <span class="n">cur_fields</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">))]</span>
     <span class="n">file_reading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">))])</span>
@@ -1684,8 +1720,9 @@
             <span class="c1"># file handle read nothing, the file is empty</span>
             <span class="n">file_reading</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="n">active_handle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span> <span class="k">if</span> <span class="n">chrom</span> <span class="o">==</span> <span class="n">processing_chrom</span> <span class="k">else</span> <span class="kc">False</span>
-                              <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">cur_chrom</span><span class="p">])</span>
+    <span class="n">active_handle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span><span class="kc">True</span> <span class="k">if</span> <span class="n">chrom</span> <span class="o">==</span> <span class="n">processing_chrom</span> <span class="k">else</span> <span class="kc">False</span> <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">cur_chrom</span><span class="p">]</span>
+    <span class="p">)</span>
 
     <span class="c1"># merge</span>
     <span class="n">line_count</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1693,8 +1730,9 @@
         <span class="n">mc</span><span class="p">,</span> <span class="n">cov</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
         <span class="n">genome_info</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># select index whose cur_pos is smallest among all active handle</span>
-        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">cur_pos</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">cur_pos</span><span class="p">[</span><span class="n">active_handle</span><span class="p">]))</span>
-                              <span class="o">&amp;</span> <span class="n">active_handle</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">cur_pos</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">cur_pos</span><span class="p">[</span><span class="n">active_handle</span><span class="p">]))</span> <span class="o">&amp;</span> <span class="n">active_handle</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
             <span class="n">mc</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cur_fields</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
             <span class="n">cov</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cur_fields</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>
             <span class="c1"># TODO fix binarize ALLC problem</span>
@@ -1714,7 +1752,7 @@
                 <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
                 <span class="c1"># read to the end of a file</span>
-                <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NOT_A_CHROM&#39;</span><span class="p">,</span> <span class="mi">9999999999</span><span class="p">]</span>
+                <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NOT_A_CHROM&quot;</span><span class="p">,</span> <span class="mi">9999999999</span><span class="p">]</span>
                 <span class="n">file_reading</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
             <span class="c1"># judge if chrom changed between two lines</span>
@@ -1737,11 +1775,15 @@
                         <span class="k">break</span>
                     <span class="n">processing_chrom</span> <span class="o">=</span> <span class="n">all_chroms</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                     <span class="c1"># and re-judge active handle</span>
-                    <span class="n">active_handle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span> <span class="k">if</span> <span class="n">chrom</span> <span class="o">==</span> <span class="n">processing_chrom</span> <span class="k">else</span> <span class="kc">False</span>
-                                              <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">cur_chrom</span><span class="p">])</span>
+                    <span class="n">active_handle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                        <span class="p">[</span>
+                            <span class="kc">True</span> <span class="k">if</span> <span class="n">chrom</span> <span class="o">==</span> <span class="n">processing_chrom</span> <span class="k">else</span> <span class="kc">False</span>
+                            <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">cur_chrom</span>
+                        <span class="p">]</span>
+                    <span class="p">)</span>
 
         <span class="c1"># output</span>
-        <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">genome_info</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">{</span><span class="n">mc</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">cov</span><span class="si">}</span><span class="se">\t</span><span class="s1">1</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">genome_info</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">{</span><span class="n">mc</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">cov</span><span class="si">}</span><span class="se">\t</span><span class="s2">1</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="n">line_count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">line_count</span> <span class="o">&gt;</span> <span class="n">buffer_line_number</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out_handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -1762,12 +1804,14 @@
         <span class="k">return</span></div>
 
 
-<div class="viewcode-block" id="_merge_allc_files_tabix_with_snp_info"><a class="viewcode-back" href="../../api/ALLCools/_merge_allc/index.html#ALLCools._merge_allc._merge_allc_files_tabix_with_snp_info">[docs]</a><span class="k">def</span> <span class="nf">_merge_allc_files_tabix_with_snp_info</span><span class="p">(</span><span class="n">allc_files</span><span class="p">,</span>
-                                          <span class="n">out_file</span><span class="p">,</span>
-                                          <span class="n">chrom_size_file</span><span class="p">,</span>
-                                          <span class="n">query_region</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                          <span class="n">buffer_line_number</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
-                                          <span class="n">binarize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="_merge_allc_files_tabix_with_snp_info"><a class="viewcode-back" href="../../api/ALLCools/_merge_allc/index.html#ALLCools._merge_allc._merge_allc_files_tabix_with_snp_info">[docs]</a><span class="k">def</span> <span class="nf">_merge_allc_files_tabix_with_snp_info</span><span class="p">(</span>
+    <span class="n">allc_files</span><span class="p">,</span>
+    <span class="n">out_file</span><span class="p">,</span>
+    <span class="n">chrom_size_file</span><span class="p">,</span>
+    <span class="n">query_region</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">buffer_line_number</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+    <span class="n">binarize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="c1"># only use bgzip and tabix</span>
     <span class="c1"># automatically take care the too many file open issue</span>
     <span class="c1"># do merge iteratively if file number exceed limit</span>
@@ -1781,23 +1825,23 @@
     <span class="k">if</span> <span class="n">query_region</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query_region</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">exit</span><span class="p">(</span><span class="s2">&quot;query_region must be str or None&quot;</span><span class="p">)</span>
-        <span class="n">region_chroms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">region</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">query_region</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)])</span>
+        <span class="n">region_chroms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">region</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">query_region</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)]</span>
+        <span class="p">)</span>
         <span class="n">all_chroms</span> <span class="o">=</span> <span class="p">[</span><span class="n">chrom</span> <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">all_chroms</span> <span class="k">if</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">region_chroms</span><span class="p">]</span>
     <span class="n">processing_chrom</span> <span class="o">=</span> <span class="n">all_chroms</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="c1"># scan allc file to set up a table for fast look-up of lines belong</span>
     <span class="c1"># to different chromosomes</span>
-    <span class="n">file_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">_ALLC</span><span class="p">(</span><span class="n">allc_file</span><span class="p">,</span>
-                          <span class="n">region</span><span class="o">=</span><span class="n">query_region</span><span class="p">)</span>
-                    <span class="k">for</span> <span class="n">allc_file</span> <span class="ow">in</span> <span class="n">allc_files</span><span class="p">]</span>
+    <span class="n">file_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">_ALLC</span><span class="p">(</span><span class="n">allc_file</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="n">query_region</span><span class="p">)</span> <span class="k">for</span> <span class="n">allc_file</span> <span class="ow">in</span> <span class="n">allc_files</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">out_handle</span> <span class="o">=</span> <span class="n">open_allc</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">out_handle</span> <span class="o">=</span> <span class="n">open_allc</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">out_handle</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">out_handle</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
     <span class="c1"># merge allc files</span>
     <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="n">cur_chrom</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NOT_A_CHROM&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">))]</span>
+    <span class="n">cur_chrom</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NOT_A_CHROM&quot;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">))]</span>
     <span class="n">cur_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">))])</span>
     <span class="n">cur_fields</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">))]</span>
     <span class="n">file_reading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">))])</span>
@@ -1814,8 +1858,9 @@
             <span class="c1"># file handle read nothing, the file is empty</span>
             <span class="n">file_reading</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="n">active_handle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span> <span class="k">if</span> <span class="n">chrom</span> <span class="o">==</span> <span class="n">processing_chrom</span> <span class="k">else</span> <span class="kc">False</span>
-                              <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">cur_chrom</span><span class="p">])</span>
+    <span class="n">active_handle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span><span class="kc">True</span> <span class="k">if</span> <span class="n">chrom</span> <span class="o">==</span> <span class="n">processing_chrom</span> <span class="k">else</span> <span class="kc">False</span> <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">cur_chrom</span><span class="p">]</span>
+    <span class="p">)</span>
 
     <span class="c1"># merge</span>
     <span class="n">line_count</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1825,15 +1870,20 @@
         <span class="n">snp_match</span><span class="p">,</span> <span class="n">snp_mismatch</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
         <span class="n">genome_info</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># select index whose cur_pos is smallest among all active handle</span>
-        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">cur_pos</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">cur_pos</span><span class="p">[</span><span class="n">active_handle</span><span class="p">]))</span>
-                              <span class="o">&amp;</span> <span class="n">active_handle</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">cur_pos</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">cur_pos</span><span class="p">[</span><span class="n">active_handle</span><span class="p">]))</span> <span class="o">&amp;</span> <span class="n">active_handle</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
             <span class="n">mc</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cur_fields</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
             <span class="n">cov</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cur_fields</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>
 
             <span class="c1"># snp specific</span>
             <span class="c1"># col 7 is match, col 8 is mismatch</span>
-            <span class="n">snp_match</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">snp_match</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">cur_fields</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)))))</span>
-            <span class="n">snp_mismatch</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">snp_mismatch</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">cur_fields</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)))))</span>
+            <span class="n">snp_match</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">map</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">snp_match</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">cur_fields</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">))))</span>
+            <span class="p">)</span>
+            <span class="n">snp_mismatch</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">map</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">snp_mismatch</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">cur_fields</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">))))</span>
+            <span class="p">)</span>
 
             <span class="c1"># TODO fix binarize ALLC problem</span>
             <span class="c1"># if binarize:</span>
@@ -1852,7 +1902,7 @@
                 <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
                 <span class="c1"># read to the end of a file</span>
-                <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NOT_A_CHROM&#39;</span><span class="p">,</span> <span class="mi">9999999999</span><span class="p">]</span>
+                <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NOT_A_CHROM&quot;</span><span class="p">,</span> <span class="mi">9999999999</span><span class="p">]</span>
                 <span class="n">file_reading</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
             <span class="c1"># judge if chrom changed between two lines</span>
@@ -1875,12 +1925,18 @@
                         <span class="k">break</span>
                     <span class="n">processing_chrom</span> <span class="o">=</span> <span class="n">all_chroms</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                     <span class="c1"># and re-judge active handle</span>
-                    <span class="n">active_handle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span> <span class="k">if</span> <span class="n">chrom</span> <span class="o">==</span> <span class="n">processing_chrom</span> <span class="k">else</span> <span class="kc">False</span>
-                                              <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">cur_chrom</span><span class="p">])</span>
+                    <span class="n">active_handle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                        <span class="p">[</span>
+                            <span class="kc">True</span> <span class="k">if</span> <span class="n">chrom</span> <span class="o">==</span> <span class="n">processing_chrom</span> <span class="k">else</span> <span class="kc">False</span>
+                            <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">cur_chrom</span>
+                        <span class="p">]</span>
+                    <span class="p">)</span>
 
         <span class="c1"># output</span>
-        <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="n">genome_info</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">{</span><span class="n">mc</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">cov</span><span class="si">}</span><span class="se">\t</span><span class="s1">1</span><span class="se">\t</span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">snp_match</span><span class="p">))</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">snp_mismatch</span><span class="p">))</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">out</span> <span class="o">+=</span> <span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">genome_info</span><span class="p">)</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">{</span><span class="n">mc</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">cov</span><span class="si">}</span><span class="se">\t</span><span class="s1">1</span><span class="se">\t</span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">snp_match</span><span class="p">))</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">snp_mismatch</span><span class="p">))</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="p">)</span>
         <span class="n">line_count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">line_count</span> <span class="o">&gt;</span> <span class="n">buffer_line_number</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out_handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -1901,12 +1957,22 @@
         <span class="k">return</span></div>
 
 
-<span class="nd">@doc_params</span><span class="p">(</span><span class="n">allc_paths_doc</span><span class="o">=</span><span class="n">allc_paths_doc</span><span class="p">,</span>
-            <span class="n">chrom_size_path_doc</span><span class="o">=</span><span class="n">chrom_size_path_doc</span><span class="p">,</span>
-            <span class="n">cpu_basic_doc</span><span class="o">=</span><span class="n">cpu_basic_doc</span><span class="p">,</span>
-            <span class="n">binarize_doc</span><span class="o">=</span><span class="n">binarize_doc</span><span class="p">,</span>
-            <span class="n">snp_doc</span><span class="o">=</span><span class="n">snp_doc</span><span class="p">)</span>
-<div class="viewcode-block" id="merge_allc_files"><a class="viewcode-back" href="../../api/ALLCools/_merge_allc/index.html#ALLCools._merge_allc.merge_allc_files">[docs]</a><span class="k">def</span> <span class="nf">merge_allc_files</span><span class="p">(</span><span class="n">allc_paths</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">bin_length</span><span class="o">=</span><span class="mi">10000000</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">binarize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">snp</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="nd">@doc_params</span><span class="p">(</span>
+    <span class="n">allc_paths_doc</span><span class="o">=</span><span class="n">allc_paths_doc</span><span class="p">,</span>
+    <span class="n">chrom_size_path_doc</span><span class="o">=</span><span class="n">chrom_size_path_doc</span><span class="p">,</span>
+    <span class="n">cpu_basic_doc</span><span class="o">=</span><span class="n">cpu_basic_doc</span><span class="p">,</span>
+    <span class="n">binarize_doc</span><span class="o">=</span><span class="n">binarize_doc</span><span class="p">,</span>
+    <span class="n">snp_doc</span><span class="o">=</span><span class="n">snp_doc</span><span class="p">,</span>
+<div class="viewcode-block" id="merge_allc_files"><a class="viewcode-back" href="../../api/ALLCools/_merge_allc/index.html#ALLCools._merge_allc.merge_allc_files">[docs]</a><span class="p">)</span>
+<span class="k">def</span> <span class="nf">merge_allc_files</span><span class="p">(</span>
+    <span class="n">allc_paths</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="p">,</span>
+    <span class="n">chrom_size_path</span><span class="p">,</span>
+    <span class="n">bin_length</span><span class="o">=</span><span class="mi">10000000</span><span class="p">,</span>
+    <span class="n">cpu</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">binarize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">snp</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Merge N ALLC files into 1 ALLC file.</span>
 
@@ -1935,36 +2001,44 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO binarize do not work because when merge batch allc, the previous batch merged allc is not single cell</span>
     <span class="c1"># can not treat that as binarize, need to reimplement merge ALLC to support binarize in merge allc</span>
-    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Right now binarize is not used, need fix this in merge ALLC fiction, set binarize=False&#39;</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;Right now binarize is not used, need fix this in merge ALLC fiction, set binarize=False&quot;</span>
+    <span class="p">)</span>
     <span class="n">binarize</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># TODO write test</span>
     <span class="c1"># a list of str, contain all absolute non-soft-link paths</span>
     <span class="n">allc_files</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">parse_file_paths</span><span class="p">(</span><span class="n">allc_paths</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">allc_files</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;There is less than 2 files after parsing the provided allc_paths.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;There is less than 2 files after parsing the provided allc_paths.&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">):</span>
             <span class="k">pass</span>
     <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Can&#39;t create output_path&quot;</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">allc_path</span> <span class="ow">in</span> <span class="n">allc_files</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">allc_path</span> <span class="o">+</span> <span class="s1">&#39;.tbi&#39;</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Tabix for </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s1"> not found&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">allc_path</span> <span class="o">+</span> <span class="s2">&quot;.tbi&quot;</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tabix for </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Some ALLC file do not have tabix, in order to use this function, &#39;</span>
-                 <span class="s1">&#39;you need to bgzip compress the ALLC file and use tabix to generate .tbi index. (ALLCools defaults)&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Some ALLC file do not have tabix, in order to use this function, &quot;</span>
+            <span class="s2">&quot;you need to bgzip compress the ALLC file and use tabix to generate .tbi index. (ALLCools defaults)&quot;</span>
+        <span class="p">)</span>
 
-    <span class="n">_batch_merge_allc_files_tabix</span><span class="p">(</span><span class="n">allc_files</span><span class="o">=</span><span class="n">allc_files</span><span class="p">,</span>
-                                  <span class="n">out_file</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span>
-                                  <span class="n">chrom_size_file</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                                  <span class="n">bin_length</span><span class="o">=</span><span class="n">bin_length</span><span class="p">,</span>
-                                  <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">,</span>
-                                  <span class="n">binarize</span><span class="o">=</span><span class="n">binarize</span><span class="p">,</span>
-                                  <span class="n">snp</span><span class="o">=</span><span class="n">snp</span><span class="p">)</span>
+    <span class="n">_batch_merge_allc_files_tabix</span><span class="p">(</span>
+        <span class="n">allc_files</span><span class="o">=</span><span class="n">allc_files</span><span class="p">,</span>
+        <span class="n">out_file</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span>
+        <span class="n">chrom_size_file</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
+        <span class="n">bin_length</span><span class="o">=</span><span class="n">bin_length</span><span class="p">,</span>
+        <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">,</span>
+        <span class="n">binarize</span><span class="o">=</span><span class="n">binarize</span><span class="p">,</span>
+        <span class="n">snp</span><span class="o">=</span><span class="n">snp</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="k">return</span></div>
 </pre></div>
 

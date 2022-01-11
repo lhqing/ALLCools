@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1482,10 +1499,8 @@
 
 <div class="viewcode-block" id="ContextCounter"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig_new/index.html#ALLCools._allc_to_bigwig_new.ContextCounter">[docs]</a><span class="k">class</span> <span class="nc">ContextCounter</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mc_contexts</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mc_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span>
-            <span class="nb">float</span><span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cov_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span>
-            <span class="nb">float</span><span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mc_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cov_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
         <span class="c1"># key is each single context like CCC, CGC, value is a list of context pattern this context belong to.</span>
         <span class="c1"># A single context may belong to multiple patterns</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context_map</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
@@ -1504,13 +1519,17 @@
 <div class="viewcode-block" id="StrandContextCounter"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig_new/index.html#ALLCools._allc_to_bigwig_new.StrandContextCounter">[docs]</a><span class="k">class</span> <span class="nc">StrandContextCounter</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mc_contexts</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mc_watson_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span>
-            <span class="nb">float</span><span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
+            <span class="nb">float</span>
+        <span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cov_watson_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span>
-            <span class="nb">float</span><span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
+            <span class="nb">float</span>
+        <span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mc_crick_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span>
-            <span class="nb">float</span><span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
+            <span class="nb">float</span>
+        <span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cov_crick_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span>
-            <span class="nb">float</span><span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
+            <span class="nb">float</span>
+        <span class="p">)</span>  <span class="c1"># key is context pattern like CHN, CGN</span>
         <span class="c1"># key is each single context like CCC, CGC, value is a list of context pattern this context belong to.</span>
         <span class="c1"># A single context may belong to multiple patterns</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context_map</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
@@ -1522,7 +1541,7 @@
 <div class="viewcode-block" id="StrandContextCounter.add"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig_new/index.html#ALLCools._allc_to_bigwig_new.StrandContextCounter.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">):</span>
         <span class="c1"># print(context, strand, mc, cov)</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">context_map</span><span class="p">[</span><span class="n">context</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="n">strand</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">strand</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mc_watson_counts</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">mc</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">cov_watson_counts</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">cov</span>
             <span class="k">else</span><span class="p">:</span>
@@ -1530,41 +1549,38 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">cov_crick_counts</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">cov</span></div></div>
 
 
-<div class="viewcode-block" id="write_entry"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig_new/index.html#ALLCools._allc_to_bigwig_new.write_entry">[docs]</a><span class="k">def</span> <span class="nf">write_entry</span><span class="p">(</span><span class="n">counter</span><span class="p">,</span> <span class="n">context_handle</span><span class="p">,</span> <span class="n">mc_contexts</span><span class="p">,</span> <span class="n">strandness</span><span class="p">,</span> <span class="n">chrom</span><span class="p">,</span>
-                <span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_size</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">strandness</span> <span class="o">==</span> <span class="s1">&#39;split&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="write_entry"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig_new/index.html#ALLCools._allc_to_bigwig_new.write_entry">[docs]</a><span class="k">def</span> <span class="nf">write_entry</span><span class="p">(</span>
+    <span class="n">counter</span><span class="p">,</span> <span class="n">context_handle</span><span class="p">,</span> <span class="n">mc_contexts</span><span class="p">,</span> <span class="n">strandness</span><span class="p">,</span> <span class="n">chrom</span><span class="p">,</span> <span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_size</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="n">strandness</span> <span class="o">==</span> <span class="s2">&quot;split&quot;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">context</span> <span class="ow">in</span> <span class="n">mc_contexts</span><span class="p">:</span>
             <span class="c1"># Watson strand</span>
             <span class="n">mc</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">mc_watson_counts</span><span class="p">[</span><span class="n">context</span><span class="p">]</span>
             <span class="n">cov</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">cov_watson_counts</span><span class="p">[</span><span class="n">context</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">cov</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">frac</span> <span class="o">=</span> <span class="n">mc</span> <span class="o">/</span> <span class="n">cov</span>
-                <span class="n">frac_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;frac&#39;</span><span class="p">]</span>
-                <span class="n">frac_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span>
-                                       <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span>
-                                       <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">frac</span><span class="p">],</span>
-                                       <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
-                <span class="n">cov_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;cov&#39;</span><span class="p">]</span>
-                <span class="n">cov_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span>
-                                      <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span>
-                                      <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">cov</span><span class="p">],</span>
-                                      <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
+                <span class="n">frac_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="s2">&quot;frac&quot;</span><span class="p">]</span>
+                <span class="n">frac_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span>
+                    <span class="n">chrom</span><span class="p">,</span> <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">frac</span><span class="p">],</span> <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span>
+                <span class="p">)</span>
+                <span class="n">cov_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="s2">&quot;cov&quot;</span><span class="p">]</span>
+                <span class="n">cov_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span>
+                    <span class="n">chrom</span><span class="p">,</span> <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">cov</span><span class="p">],</span> <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span>
+                <span class="p">)</span>
 
             <span class="c1"># Crick strand</span>
             <span class="n">mc</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">mc_crick_counts</span><span class="p">[</span><span class="n">context</span><span class="p">]</span>
             <span class="n">cov</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">cov_crick_counts</span><span class="p">[</span><span class="n">context</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">cov</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">frac</span> <span class="o">=</span> <span class="n">mc</span> <span class="o">/</span> <span class="n">cov</span>
-                <span class="n">frac_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;frac&#39;</span><span class="p">]</span>
-                <span class="n">frac_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span>
-                                       <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span>
-                                       <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">frac</span><span class="p">],</span>
-                                       <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
-                <span class="n">cov_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;cov&#39;</span><span class="p">]</span>
-                <span class="n">cov_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span>
-                                      <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span>
-                                      <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">cov</span><span class="p">],</span>
-                                      <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
+                <span class="n">frac_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;frac&quot;</span><span class="p">]</span>
+                <span class="n">frac_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span>
+                    <span class="n">chrom</span><span class="p">,</span> <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">frac</span><span class="p">],</span> <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span>
+                <span class="p">)</span>
+                <span class="n">cov_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;cov&quot;</span><span class="p">]</span>
+                <span class="n">cov_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span>
+                    <span class="n">chrom</span><span class="p">,</span> <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">cov</span><span class="p">],</span> <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span>
+                <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">context</span> <span class="ow">in</span> <span class="n">mc_contexts</span><span class="p">:</span>
             <span class="c1"># Both strand</span>
@@ -1572,30 +1588,27 @@
             <span class="n">cov</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">cov_counts</span><span class="p">[</span><span class="n">context</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">cov</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">frac</span> <span class="o">=</span> <span class="n">mc</span> <span class="o">/</span> <span class="n">cov</span>
-                <span class="n">frac_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s1">&#39;frac&#39;</span><span class="p">]</span>
-                <span class="n">frac_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span>
-                                       <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span>
-                                       <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">frac</span><span class="p">],</span>
-                                       <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
-                <span class="n">cov_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s1">&#39;cov&#39;</span><span class="p">]</span>
-                <span class="n">cov_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span>
-                                      <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span>
-                                      <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">cov</span><span class="p">],</span>
-                                      <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
+                <span class="n">frac_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s2">&quot;frac&quot;</span><span class="p">]</span>
+                <span class="n">frac_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span>
+                    <span class="n">chrom</span><span class="p">,</span> <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">frac</span><span class="p">],</span> <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span>
+                <span class="p">)</span>
+                <span class="n">cov_handle</span> <span class="o">=</span> <span class="n">context_handle</span><span class="p">[</span><span class="n">context</span><span class="p">,</span> <span class="s2">&quot;cov&quot;</span><span class="p">]</span>
+                <span class="n">cov_handle</span><span class="o">.</span><span class="n">addEntries</span><span class="p">(</span>
+                    <span class="n">chrom</span><span class="p">,</span> <span class="n">starts</span><span class="o">=</span><span class="p">[</span><span class="n">bin_start</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">cov</span><span class="p">],</span> <span class="n">span</span><span class="o">=</span><span class="n">bin_size</span>
+                <span class="p">)</span>
     <span class="k">return</span></div>
 
 
-<span class="nd">@doc_params</span><span class="p">(</span><span class="n">allc_path_doc</span><span class="o">=</span><span class="n">allc_path_doc</span><span class="p">,</span>
-            <span class="n">mc_contexts_doc</span><span class="o">=</span><span class="n">mc_contexts_doc</span><span class="p">,</span>
-            <span class="n">chrom_size_path_doc</span><span class="o">=</span><span class="n">chrom_size_path_doc</span><span class="p">,</span>
-            <span class="n">strandness_doc</span><span class="o">=</span><span class="n">strandness_doc</span><span class="p">,</span>
-            <span class="n">bw_bin_sizes_doc</span><span class="o">=</span><span class="n">bw_bin_sizes_doc</span><span class="p">)</span>
-<div class="viewcode-block" id="allc_to_bigwig"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig_new/index.html#ALLCools._allc_to_bigwig_new.allc_to_bigwig">[docs]</a><span class="k">def</span> <span class="nf">allc_to_bigwig</span><span class="p">(</span><span class="n">allc_path</span><span class="p">,</span>
-                   <span class="n">output_prefix</span><span class="p">,</span>
-                   <span class="n">bin_size</span><span class="p">,</span>
-                   <span class="n">mc_contexts</span><span class="p">,</span>
-                   <span class="n">chrom_size_path</span><span class="p">,</span>
-                   <span class="n">strandness</span><span class="p">):</span>
+<span class="nd">@doc_params</span><span class="p">(</span>
+    <span class="n">allc_path_doc</span><span class="o">=</span><span class="n">allc_path_doc</span><span class="p">,</span>
+    <span class="n">mc_contexts_doc</span><span class="o">=</span><span class="n">mc_contexts_doc</span><span class="p">,</span>
+    <span class="n">chrom_size_path_doc</span><span class="o">=</span><span class="n">chrom_size_path_doc</span><span class="p">,</span>
+    <span class="n">strandness_doc</span><span class="o">=</span><span class="n">strandness_doc</span><span class="p">,</span>
+    <span class="n">bw_bin_sizes_doc</span><span class="o">=</span><span class="n">bw_bin_sizes_doc</span><span class="p">,</span>
+<div class="viewcode-block" id="allc_to_bigwig"><a class="viewcode-back" href="../../api/ALLCools/_allc_to_bigwig_new/index.html#ALLCools._allc_to_bigwig_new.allc_to_bigwig">[docs]</a><span class="p">)</span>
+<span class="k">def</span> <span class="nf">allc_to_bigwig</span><span class="p">(</span>
+    <span class="n">allc_path</span><span class="p">,</span> <span class="n">output_prefix</span><span class="p">,</span> <span class="n">bin_size</span><span class="p">,</span> <span class="n">mc_contexts</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">strandness</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;\</span>
 <span class="sd">    Generate BigWig files from one ALLC file.</span>
 
@@ -1616,7 +1629,7 @@
 <span class="sd">        If chrom_size_path provided, will use it to extract ALLC with chrom order,</span>
 <span class="sd">        but if region provided, will ignore this.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">strandness</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;split&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">}:</span>
+    <span class="k">if</span> <span class="n">strandness</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;split&quot;</span><span class="p">,</span> <span class="s2">&quot;both&quot;</span><span class="p">}:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;strandness need to be &quot;split&quot; or &quot;both&quot;, got &quot;</span><span class="si">{</span><span class="n">strandness</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
 
     <span class="n">chrom_sizes</span> <span class="o">=</span> <span class="n">parse_chrom_size</span><span class="p">(</span><span class="n">chrom_size_path</span><span class="p">)</span>
@@ -1626,34 +1639,33 @@
     <span class="c1"># context_handle: key is mC context pattern like CHN, CAN, CGN, value is the output handle</span>
     <span class="n">context_handle</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">output_path_collect</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">bw_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;frac&#39;</span><span class="p">,</span> <span class="s1">&#39;cov&#39;</span><span class="p">]:</span>
-        <span class="n">out_suffix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">bw_type</span><span class="si">}</span><span class="s1">.bw&#39;</span>
+    <span class="k">for</span> <span class="n">bw_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;frac&quot;</span><span class="p">,</span> <span class="s2">&quot;cov&quot;</span><span class="p">]:</span>
+        <span class="n">out_suffix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bw_type</span><span class="si">}</span><span class="s2">.bw&quot;</span>
         <span class="k">for</span> <span class="n">mc_context</span> <span class="ow">in</span> <span class="n">mc_contexts</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">strandness</span> <span class="o">==</span> <span class="s1">&#39;split&#39;</span><span class="p">:</span>
-                <span class="n">file_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="n">mc_context</span><span class="si">}</span><span class="s1">-Watson.</span><span class="si">{</span><span class="n">out_suffix</span><span class="si">}</span><span class="s1">&#39;</span>
-                <span class="n">output_path_collect</span><span class="p">[(</span><span class="n">mc_context</span><span class="p">,</span> <span class="s1">&#39;Watson&#39;</span><span class="p">,</span> <span class="n">out_suffix</span><span class="p">)]</span> <span class="o">=</span> <span class="n">file_path</span>
+            <span class="k">if</span> <span class="n">strandness</span> <span class="o">==</span> <span class="s2">&quot;split&quot;</span><span class="p">:</span>
+                <span class="n">file_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;.</span><span class="si">{</span><span class="n">mc_context</span><span class="si">}</span><span class="s2">-Watson.</span><span class="si">{</span><span class="n">out_suffix</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">output_path_collect</span><span class="p">[(</span><span class="n">mc_context</span><span class="p">,</span> <span class="s2">&quot;Watson&quot;</span><span class="p">,</span> <span class="n">out_suffix</span><span class="p">)]</span> <span class="o">=</span> <span class="n">file_path</span>
                 <span class="c1"># handle for Watson/+ strand</span>
-                <span class="n">w_handle</span> <span class="o">=</span> <span class="n">pyBigWig</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+                <span class="n">w_handle</span> <span class="o">=</span> <span class="n">pyBigWig</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
                 <span class="n">w_handle</span><span class="o">.</span><span class="n">addHeader</span><span class="p">(</span><span class="n">chrom_sizes_list</span><span class="p">)</span>
-                <span class="n">context_handle</span><span class="p">[(</span><span class="n">mc_context</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">bw_type</span><span class="p">)]</span> <span class="o">=</span> <span class="n">w_handle</span>
+                <span class="n">context_handle</span><span class="p">[(</span><span class="n">mc_context</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">bw_type</span><span class="p">)]</span> <span class="o">=</span> <span class="n">w_handle</span>
 
-                <span class="n">file_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="n">mc_context</span><span class="si">}</span><span class="s1">-Crick.</span><span class="si">{</span><span class="n">out_suffix</span><span class="si">}</span><span class="s1">&#39;</span>
-                <span class="n">output_path_collect</span><span class="p">[(</span><span class="n">mc_context</span><span class="p">,</span> <span class="s1">&#39;Crick&#39;</span><span class="p">,</span> <span class="n">out_suffix</span><span class="p">)]</span> <span class="o">=</span> <span class="n">file_path</span>
+                <span class="n">file_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;.</span><span class="si">{</span><span class="n">mc_context</span><span class="si">}</span><span class="s2">-Crick.</span><span class="si">{</span><span class="n">out_suffix</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">output_path_collect</span><span class="p">[(</span><span class="n">mc_context</span><span class="p">,</span> <span class="s2">&quot;Crick&quot;</span><span class="p">,</span> <span class="n">out_suffix</span><span class="p">)]</span> <span class="o">=</span> <span class="n">file_path</span>
                 <span class="c1"># handle for Crick/- strand</span>
-                <span class="n">c_handle</span> <span class="o">=</span> <span class="n">pyBigWig</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+                <span class="n">c_handle</span> <span class="o">=</span> <span class="n">pyBigWig</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
                 <span class="n">c_handle</span><span class="o">.</span><span class="n">addHeader</span><span class="p">(</span><span class="n">chrom_sizes_list</span><span class="p">)</span>
-                <span class="n">context_handle</span><span class="p">[(</span><span class="n">mc_context</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">bw_type</span><span class="p">)]</span> <span class="o">=</span> <span class="n">c_handle</span>
+                <span class="n">context_handle</span><span class="p">[(</span><span class="n">mc_context</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">bw_type</span><span class="p">)]</span> <span class="o">=</span> <span class="n">c_handle</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># handle for both strand</span>
-                <span class="n">file_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="n">mc_context</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">strandness</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">out_suffix</span><span class="si">}</span><span class="s1">&#39;</span>
-                <span class="n">output_path_collect</span><span class="p">[(</span><span class="n">mc_context</span><span class="p">,</span> <span class="n">strandness</span><span class="p">,</span>
-                                     <span class="n">out_suffix</span><span class="p">)]</span> <span class="o">=</span> <span class="n">file_path</span>
-                <span class="n">_handle</span> <span class="o">=</span> <span class="n">pyBigWig</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+                <span class="n">file_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;.</span><span class="si">{</span><span class="n">mc_context</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">strandness</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">out_suffix</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">output_path_collect</span><span class="p">[(</span><span class="n">mc_context</span><span class="p">,</span> <span class="n">strandness</span><span class="p">,</span> <span class="n">out_suffix</span><span class="p">)]</span> <span class="o">=</span> <span class="n">file_path</span>
+                <span class="n">_handle</span> <span class="o">=</span> <span class="n">pyBigWig</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
                 <span class="n">_handle</span><span class="o">.</span><span class="n">addHeader</span><span class="p">(</span><span class="n">chrom_sizes_list</span><span class="p">)</span>
                 <span class="n">context_handle</span><span class="p">[</span><span class="n">mc_context</span><span class="p">,</span> <span class="n">bw_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">_handle</span>
 
     <span class="k">def</span> <span class="nf">_init_counter</span><span class="p">(</span><span class="n">_contexts</span><span class="p">,</span> <span class="n">_strandness</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">_strandness</span> <span class="o">==</span> <span class="s1">&#39;split&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">_strandness</span> <span class="o">==</span> <span class="s2">&quot;split&quot;</span><span class="p">:</span>
             <span class="c1"># a counter for +/- strand separately</span>
             <span class="n">_counter</span> <span class="o">=</span> <span class="n">StrandContextCounter</span><span class="p">(</span><span class="n">_contexts</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1669,7 +1681,7 @@
             <span class="n">counter</span> <span class="o">=</span> <span class="n">_init_counter</span><span class="p">(</span><span class="n">mc_contexts</span><span class="p">,</span> <span class="n">strandness</span><span class="p">)</span>
             <span class="n">cur_bin</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">allc</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">chrom</span><span class="p">):</span>
-                <span class="n">_</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="n">pos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
                 <span class="n">mc</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">mc</span><span class="p">)</span>
                 <span class="n">cov</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
@@ -1677,33 +1689,37 @@
                 <span class="k">if</span> <span class="n">this_bin</span> <span class="o">!=</span> <span class="n">cur_bin</span><span class="p">:</span>
                     <span class="c1"># dump cur_bin counts</span>
                     <span class="n">bin_start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cur_bin</span> <span class="o">*</span> <span class="n">bin_size</span><span class="p">)</span>
-                    <span class="n">write_entry</span><span class="p">(</span><span class="n">counter</span><span class="o">=</span><span class="n">counter</span><span class="p">,</span>
-                                <span class="n">context_handle</span><span class="o">=</span><span class="n">context_handle</span><span class="p">,</span>
-                                <span class="n">mc_contexts</span><span class="o">=</span><span class="n">mc_contexts</span><span class="p">,</span>
-                                <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
-                                <span class="n">chrom</span><span class="o">=</span><span class="n">chrom</span><span class="p">,</span>
-                                <span class="n">bin_start</span><span class="o">=</span><span class="n">bin_start</span><span class="p">,</span>
-                                <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
+                    <span class="n">write_entry</span><span class="p">(</span>
+                        <span class="n">counter</span><span class="o">=</span><span class="n">counter</span><span class="p">,</span>
+                        <span class="n">context_handle</span><span class="o">=</span><span class="n">context_handle</span><span class="p">,</span>
+                        <span class="n">mc_contexts</span><span class="o">=</span><span class="n">mc_contexts</span><span class="p">,</span>
+                        <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
+                        <span class="n">chrom</span><span class="o">=</span><span class="n">chrom</span><span class="p">,</span>
+                        <span class="n">bin_start</span><span class="o">=</span><span class="n">bin_start</span><span class="p">,</span>
+                        <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
+                    <span class="p">)</span>
                     <span class="c1"># initiate next bin</span>
                     <span class="n">cur_bin</span> <span class="o">=</span> <span class="n">this_bin</span>
                     <span class="n">counter</span> <span class="o">=</span> <span class="n">_init_counter</span><span class="p">(</span><span class="n">mc_contexts</span><span class="p">,</span> <span class="n">strandness</span><span class="p">)</span>
 
                 <span class="c1"># add counts</span>
-                <span class="k">if</span> <span class="n">strandness</span> <span class="o">==</span> <span class="s1">&#39;split&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">strandness</span> <span class="o">==</span> <span class="s2">&quot;split&quot;</span><span class="p">:</span>
                     <span class="n">counter</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">counter</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">)</span>
 
             <span class="c1"># final bin of the chrom</span>
             <span class="n">bin_start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cur_bin</span> <span class="o">*</span> <span class="n">bin_size</span><span class="p">)</span>
-            <span class="n">write_entry</span><span class="p">(</span><span class="n">counter</span><span class="o">=</span><span class="n">counter</span><span class="p">,</span>
-                        <span class="n">context_handle</span><span class="o">=</span><span class="n">context_handle</span><span class="p">,</span>
-                        <span class="n">mc_contexts</span><span class="o">=</span><span class="n">mc_contexts</span><span class="p">,</span>
-                        <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
-                        <span class="n">chrom</span><span class="o">=</span><span class="n">chrom</span><span class="p">,</span>
-                        <span class="n">bin_start</span><span class="o">=</span><span class="n">bin_start</span><span class="p">,</span>
-                        <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="s1">&#39;finished&#39;</span><span class="p">)</span>
+            <span class="n">write_entry</span><span class="p">(</span>
+                <span class="n">counter</span><span class="o">=</span><span class="n">counter</span><span class="p">,</span>
+                <span class="n">context_handle</span><span class="o">=</span><span class="n">context_handle</span><span class="p">,</span>
+                <span class="n">mc_contexts</span><span class="o">=</span><span class="n">mc_contexts</span><span class="p">,</span>
+                <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
+                <span class="n">chrom</span><span class="o">=</span><span class="n">chrom</span><span class="p">,</span>
+                <span class="n">bin_start</span><span class="o">=</span><span class="n">bin_start</span><span class="p">,</span>
+                <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="s2">&quot;finished&quot;</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">handle</span> <span class="ow">in</span> <span class="n">context_handle</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
         <span class="n">handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>

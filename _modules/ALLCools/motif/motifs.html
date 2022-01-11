@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1485,19 +1502,21 @@
 
 
 <div class="viewcode-block" id="_get_motif_threshold"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif._get_motif_threshold">[docs]</a><span class="k">def</span> <span class="nf">_get_motif_threshold</span><span class="p">(</span><span class="n">motif</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">threshold_value</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;patser&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;patser&quot;</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">motif</span><span class="o">.</span><span class="n">pssm</span><span class="o">.</span><span class="n">distribution</span><span class="p">()</span><span class="o">.</span><span class="n">threshold_patser</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;balanced&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;balanced&quot;</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">motif</span><span class="o">.</span><span class="n">pssm</span><span class="o">.</span><span class="n">distribution</span><span class="p">()</span><span class="o">.</span><span class="n">threshold_balanced</span><span class="p">(</span><span class="n">threshold_value</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;fpr&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;fpr&quot;</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">motif</span><span class="o">.</span><span class="n">pssm</span><span class="o">.</span><span class="n">distribution</span><span class="p">()</span><span class="o">.</span><span class="n">threshold_fpr</span><span class="p">(</span><span class="n">threshold_value</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;fnr&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;fnr&quot;</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">motif</span><span class="o">.</span><span class="n">pssm</span><span class="o">.</span><span class="n">distribution</span><span class="p">()</span><span class="o">.</span><span class="n">threshold_fnr</span><span class="p">(</span><span class="n">threshold_value</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Method needs to be [&quot;patser&quot;, &quot;balanced&quot;, &quot;fpr&quot;, &quot;fnr&quot;], got </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">. &#39;</span>
-                         <span class="sa">f</span><span class="s1">&#39;Check this page for more details: https://biopython-tutorial.readthedocs.io/en/latest/&#39;</span>
-                         <span class="sa">f</span><span class="s1">&#39;notebooks/14%20-%20Sequence%20motif%20analysis%20using%20Bio.motifs.html&#39;</span>
-                         <span class="sa">f</span><span class="s1">&#39;#Selecting-a-score-threshold&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;Method needs to be [&quot;patser&quot;, &quot;balanced&quot;, &quot;fpr&quot;, &quot;fnr&quot;], got </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">. &#39;</span>
+            <span class="sa">f</span><span class="s2">&quot;Check this page for more details: https://biopython-tutorial.readthedocs.io/en/latest/&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;notebooks/14%20-%20Sequence%20motif%20analysis%20using%20Bio.motifs.html&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;#Selecting-a-score-threshold&quot;</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">value</span></div>
 
 
@@ -1518,7 +1537,7 @@
 
 
 <div class="viewcode-block" id="MotifSet"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet">[docs]</a><span class="k">class</span> <span class="nc">MotifSet</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motifs</span><span class="p">,</span> <span class="n">meta_table</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">motif_cluster_col</span><span class="o">=</span><span class="s1">&#39;cluster_id&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motifs</span><span class="p">,</span> <span class="n">meta_table</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">motif_cluster_col</span><span class="o">=</span><span class="s2">&quot;cluster_id&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">motif_list</span> <span class="o">=</span> <span class="n">motifs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">motif_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">motif</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">motif</span> <span class="k">for</span> <span class="n">motif</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">motif_list</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">motif_name_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">motif</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">motif</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">motif_list</span><span class="p">]</span>
@@ -1531,41 +1550,45 @@
         <span class="c1"># add motif cluster and remove duplicates</span>
         <span class="k">if</span> <span class="n">meta_table</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">motif_cluster</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">meta_table</span><span class="p">[</span><span class="n">motif_cluster_col</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">motif_cluster</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;motif&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">motif_cluster</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;motif&quot;</span>
 
-<div class="viewcode-block" id="MotifSet.calculate_threshold"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet.calculate_threshold">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">threshold_value</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<div class="viewcode-block" id="MotifSet.calculate_threshold"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet.calculate_threshold">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;balanced&quot;</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">threshold_value</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
         <span class="c1"># execute in parallel</span>
         <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">cpu</span><span class="p">)</span> <span class="k">as</span> <span class="n">exe</span><span class="p">:</span>
             <span class="n">futures</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">motif</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">motif_list</span><span class="p">:</span>
-                <span class="n">f</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_get_motif_threshold</span><span class="p">,</span>
-                               <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
-                               <span class="n">motif</span><span class="o">=</span><span class="n">motif</span><span class="p">,</span>
-                               <span class="n">threshold_value</span><span class="o">=</span><span class="n">threshold_value</span><span class="p">)</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                    <span class="n">_get_motif_threshold</span><span class="p">,</span>
+                    <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                    <span class="n">motif</span><span class="o">=</span><span class="n">motif</span><span class="p">,</span>
+                    <span class="n">threshold_value</span><span class="o">=</span><span class="n">threshold_value</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="n">futures</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="n">motif</span><span class="o">.</span><span class="n">name</span>
 
             <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calculating motif threshold: &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Calculating motif threshold: &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">):</span>
                 <span class="n">threshold</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
                 <span class="n">name</span> <span class="o">=</span> <span class="n">futures</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">threshold</span>
                 <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">count</span> <span class="o">%</span> <span class="mi">250</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">()</span>
         <span class="k">return</span></div>
 
-<div class="viewcode-block" id="MotifSet._multi_seq_motif_scores"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet._multi_seq_motif_scores">[docs]</a>    <span class="k">def</span> <span class="nf">_multi_seq_motif_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq_list</span><span class="p">,</span> <span class="n">save_path</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">,</span> <span class="n">motif_dim</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
+<div class="viewcode-block" id="MotifSet._multi_seq_motif_scores"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet._multi_seq_motif_scores">[docs]</a>    <span class="k">def</span> <span class="nf">_multi_seq_motif_scores</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">seq_list</span><span class="p">,</span> <span class="n">save_path</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">,</span> <span class="n">motif_dim</span><span class="p">,</span> <span class="n">dtype</span>
+    <span class="p">):</span>
         <span class="n">seq_names</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">seq_scores</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">seq_list</span><span class="p">:</span>
             <span class="n">this_seq_scores</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">motif</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">motif_list</span><span class="p">:</span>
                 <span class="n">threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="p">[</span><span class="n">motif</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
-                <span class="n">n_max_total_score</span> <span class="o">=</span> <span class="n">_single_seq_single_motif_max_score</span><span class="p">(</span><span class="n">seq</span><span class="o">=</span><span class="n">seq</span><span class="p">,</span>
-                                                                       <span class="n">motif</span><span class="o">=</span><span class="n">motif</span><span class="p">,</span>
-                                                                       <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
+                <span class="n">n_max_total_score</span> <span class="o">=</span> <span class="n">_single_seq_single_motif_max_score</span><span class="p">(</span>
+                    <span class="n">seq</span><span class="o">=</span><span class="n">seq</span><span class="p">,</span> <span class="n">motif</span><span class="o">=</span><span class="n">motif</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span>
+                <span class="p">)</span>
                 <span class="n">this_seq_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_max_total_score</span><span class="p">)</span>
             <span class="n">seq_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_seq_scores</span><span class="p">)</span>
             <span class="n">seq_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -1575,99 +1598,141 @@
         <span class="n">seq_scores</span><span class="p">[</span><span class="n">seq_scores</span> <span class="o">&gt;</span> <span class="n">max_value</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_value</span>
 
         <span class="n">_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">seq_scores</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span>
-                          <span class="n">coords</span><span class="o">=</span><span class="p">[</span><span class="n">seq_names</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">motif_name_list</span><span class="p">,</span>
-                                  <span class="p">[</span><span class="s1">&#39;n_motifs&#39;</span><span class="p">,</span> <span class="s1">&#39;max_score&#39;</span><span class="p">,</span> <span class="s1">&#39;total_score&#39;</span><span class="p">]],</span>
-                          <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="n">region_dim</span><span class="p">,</span> <span class="n">motif_dim</span><span class="p">,</span> <span class="s1">&#39;motif_value&#39;</span><span class="p">])</span>
-        <span class="n">motif_score_matrix</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s1">_da&#39;</span><span class="p">:</span> <span class="n">da</span><span class="p">})</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+            <span class="n">_data</span><span class="p">,</span>
+            <span class="n">coords</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">seq_names</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">motif_name_list</span><span class="p">,</span>
+                <span class="p">[</span><span class="s2">&quot;n_motifs&quot;</span><span class="p">,</span> <span class="s2">&quot;max_score&quot;</span><span class="p">,</span> <span class="s2">&quot;total_score&quot;</span><span class="p">],</span>
+            <span class="p">],</span>
+            <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="n">region_dim</span><span class="p">,</span> <span class="n">motif_dim</span><span class="p">,</span> <span class="s2">&quot;motif_value&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">motif_score_matrix</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s2">_da&quot;</span><span class="p">:</span> <span class="n">da</span><span class="p">})</span>
         <span class="n">motif_score_matrix</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">save_path</span></div>
 
-<div class="viewcode-block" id="MotifSet._run_motif_scan_chunks"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet._run_motif_scan_chunks">[docs]</a>    <span class="k">def</span> <span class="nf">_run_motif_scan_chunks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fasta_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">,</span> <span class="n">motif_dim</span><span class="p">,</span>
-                               <span class="n">dtype</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="MotifSet._run_motif_scan_chunks"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet._run_motif_scan_chunks">[docs]</a>    <span class="k">def</span> <span class="nf">_run_motif_scan_chunks</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">fasta_path</span><span class="p">,</span>
+            <span class="n">output_dir</span><span class="p">,</span>
+            <span class="n">region_dim</span><span class="p">,</span>
+            <span class="n">motif_dim</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="p">,</span>
+            <span class="n">chunk_size</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+            <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fasta_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">fasta</span><span class="p">:</span>
             <span class="n">seqs</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fasta</span><span class="p">,</span> <span class="s1">&#39;fasta&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fasta</span><span class="p">,</span> <span class="s2">&quot;fasta&quot;</span><span class="p">):</span>
                 <span class="n">seqs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Scan </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_motifs</span><span class="si">}</span><span class="s1"> motif in </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">seqs</span><span class="p">)</span><span class="si">}</span><span class="s1"> sequences.&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scan </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_motifs</span><span class="si">}</span><span class="s2"> motif in </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">seqs</span><span class="p">)</span><span class="si">}</span><span class="s2"> sequences.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">chunk_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">chunk_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">seqs</span><span class="p">)</span> <span class="o">//</span> <span class="n">cpu</span><span class="p">))</span>
 
         <span class="n">output_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
-        <span class="n">final_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s1">&#39;</span>
-        <span class="n">chunk_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/.</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s1">_chunk&#39;</span>
+        <span class="n">final_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">chunk_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/.</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s2">_chunk&quot;</span>
         <span class="k">if</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">chunk_dir</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rm -rf </span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rm -rf </span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">chunk_dir</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">cpu</span><span class="p">)</span> <span class="k">as</span> <span class="n">exe</span><span class="p">:</span>
             <span class="n">futures</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">chunk_i</span><span class="p">,</span> <span class="n">chunk_start</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">seqs</span><span class="p">),</span> <span class="n">chunk_size</span><span class="p">)):</span>
-                <span class="n">save_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="s1">/motif_</span><span class="si">{</span><span class="n">chunk_i</span><span class="si">}</span><span class="s1">.zarr&#39;</span>
-                <span class="n">_seqs</span> <span class="o">=</span> <span class="n">seqs</span><span class="p">[</span><span class="n">chunk_start</span><span class="p">:</span><span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">]</span>
-                <span class="n">future</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_multi_seq_motif_scores</span><span class="p">,</span>
-                                    <span class="n">seq_list</span><span class="o">=</span><span class="n">_seqs</span><span class="p">,</span>
-                                    <span class="n">save_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">save_path</span><span class="p">),</span>
-                                    <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
-                                    <span class="n">motif_dim</span><span class="o">=</span><span class="n">motif_dim</span><span class="p">,</span>
-                                    <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+                <span class="n">save_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="s2">/motif_</span><span class="si">{</span><span class="n">chunk_i</span><span class="si">}</span><span class="s2">.zarr&quot;</span>
+                <span class="n">_seqs</span> <span class="o">=</span> <span class="n">seqs</span><span class="p">[</span><span class="n">chunk_start</span><span class="p">:</span> <span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">]</span>
+                <span class="n">future</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_multi_seq_motif_scores</span><span class="p">,</span>
+                    <span class="n">seq_list</span><span class="o">=</span><span class="n">_seqs</span><span class="p">,</span>
+                    <span class="n">save_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">save_path</span><span class="p">),</span>
+                    <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
+                    <span class="n">motif_dim</span><span class="o">=</span><span class="n">motif_dim</span><span class="p">,</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span> <span class="o">=</span> <span class="n">chunk_i</span>
 
             <span class="n">chunks_to_write</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">future</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">)):</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Job </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> returned&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Job </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> returned&quot;</span><span class="p">)</span>
                 <span class="n">chunk_i</span> <span class="o">=</span> <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span>
                 <span class="n">output_path</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
                 <span class="n">chunks_to_write</span><span class="p">[</span><span class="n">chunk_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_path</span>
 
-        <span class="n">write_ordered_chunks</span><span class="p">(</span><span class="n">chunks_to_write</span><span class="p">,</span>
-                             <span class="n">final_path</span><span class="o">=</span><span class="n">final_dir</span><span class="p">,</span>
-                             <span class="n">append_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
-                             <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;zarr&#39;</span><span class="p">,</span>
-                             <span class="n">coord_dtypes</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rm -rf </span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">write_ordered_chunks</span><span class="p">(</span>
+            <span class="n">chunks_to_write</span><span class="p">,</span>
+            <span class="n">final_path</span><span class="o">=</span><span class="n">final_dir</span><span class="p">,</span>
+            <span class="n">append_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
+            <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;zarr&quot;</span><span class="p">,</span>
+            <span class="n">coord_dtypes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rm -rf </span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span></div>
 
-<div class="viewcode-block" id="MotifSet._aggregate_motif_clusters"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet._aggregate_motif_clusters">[docs]</a>    <span class="k">def</span> <span class="nf">_aggregate_motif_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">motif_dim</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1000000</span><span class="p">):</span>
-        <span class="n">motif_ds</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s1">/&#39;</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">)</span>
+<div class="viewcode-block" id="MotifSet._aggregate_motif_clusters"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet._aggregate_motif_clusters">[docs]</a>    <span class="k">def</span> <span class="nf">_aggregate_motif_clusters</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">motif_dim</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">1000000</span>
+    <span class="p">):</span>
+        <span class="n">motif_ds</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span>
+        <span class="p">)</span>
         <span class="n">_motif_cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">motif_cluster</span>
         <span class="n">_motif_cluster</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">motif_dim</span>
-        <span class="n">motif_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s1">-cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_motif_cluster</span>
-        <span class="n">motif_cluster_ds</span> <span class="o">=</span> <span class="n">motif_ds</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s1">-cluster&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">_i</span><span class="p">:</span> <span class="n">_i</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">motif_dim</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
+        <span class="n">motif_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s2">-cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_motif_cluster</span>
+        <span class="n">motif_cluster_ds</span> <span class="o">=</span> <span class="n">motif_ds</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s2">-cluster&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">_i</span><span class="p">:</span> <span class="n">_i</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">motif_dim</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="p">)</span>
 
         <span class="c1"># save motif cluster matrix by chunk</span>
         <span class="n">motif_cluster_ds</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="p">(</span><span class="n">motif_cluster_ds</span><span class="p">)</span>
 
-        <span class="n">cluster_output_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s1">-cluster&#39;</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">motif_cluster_ds</span><span class="o">.</span><span class="n">iter_array</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
-                                                              <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span>
-                                                              <span class="n">da</span><span class="o">=</span><span class="s1">&#39;dmr_motif_da&#39;</span><span class="p">,</span>
-                                                              <span class="n">load</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
-            <span class="n">_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;dmr_motif-cluster_da&#39;</span><span class="p">:</span> <span class="n">chunk</span><span class="p">})</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="n">cluster_output_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s2">-cluster&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                <span class="n">motif_cluster_ds</span><span class="o">.</span><span class="n">iter_array</span><span class="p">(</span>
+                    <span class="n">dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">da</span><span class="o">=</span><span class="s2">&quot;dmr_motif_da&quot;</span><span class="p">,</span> <span class="n">load</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
+        <span class="p">):</span>
+            <span class="n">_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s2">&quot;dmr_motif-cluster_da&quot;</span><span class="p">:</span> <span class="n">chunk</span><span class="p">})</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">cluster_output_dir</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+                <span class="n">_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">cluster_output_dir</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">cluster_output_dir</span><span class="p">,</span> <span class="n">append_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">)</span>
         <span class="k">return</span></div>
 
-<div class="viewcode-block" id="MotifSet.scan_motifs"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet.scan_motifs">[docs]</a>    <span class="k">def</span> <span class="nf">scan_motifs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fasta_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">cpu</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">,</span> <span class="n">motif_dim</span><span class="o">=</span><span class="s1">&#39;motif&#39;</span><span class="p">,</span>
-                    <span class="n">combine_cluster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint16&#39;</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_run_motif_scan_chunks</span><span class="p">(</span><span class="n">fasta_path</span><span class="o">=</span><span class="n">fasta_path</span><span class="p">,</span>
-                                    <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-                                    <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">,</span>
-                                    <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
-                                    <span class="n">motif_dim</span><span class="o">=</span><span class="n">motif_dim</span><span class="p">,</span>
-                                    <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
-                                    <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">)</span>
-        <span class="n">motif_ds</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">)</span>
+<div class="viewcode-block" id="MotifSet.scan_motifs"><a class="viewcode-back" href="../../../api/ALLCools/motif/motifs/index.html#ALLCools.motif.MotifSet.scan_motifs">[docs]</a>    <span class="k">def</span> <span class="nf">scan_motifs</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">fasta_path</span><span class="p">,</span>
+            <span class="n">output_dir</span><span class="p">,</span>
+            <span class="n">cpu</span><span class="p">,</span>
+            <span class="n">region_dim</span><span class="p">,</span>
+            <span class="n">motif_dim</span><span class="o">=</span><span class="s2">&quot;motif&quot;</span><span class="p">,</span>
+            <span class="n">combine_cluster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;uint16&quot;</span><span class="p">,</span>
+            <span class="n">chunk_size</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_motif_scan_chunks</span><span class="p">(</span>
+            <span class="n">fasta_path</span><span class="o">=</span><span class="n">fasta_path</span><span class="p">,</span>
+            <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
+            <span class="n">cpu</span><span class="o">=</span><span class="n">cpu</span><span class="p">,</span>
+            <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
+            <span class="n">motif_dim</span><span class="o">=</span><span class="n">motif_dim</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+            <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">motif_ds</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span>
+        <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">combine_cluster</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate_motif_clusters</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-                                           <span class="n">motif_dim</span><span class="o">=</span><span class="n">motif_dim</span><span class="p">,</span>
-                                           <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
-                                           <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
-                                           <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">)</span>
-            <span class="n">motif_cluster_ds</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s1">-cluster&#39;</span><span class="p">,</span>
-                                             <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate_motif_clusters</span><span class="p">(</span>
+                <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
+                <span class="n">motif_dim</span><span class="o">=</span><span class="n">motif_dim</span><span class="p">,</span>
+                <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+                <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">motif_cluster_ds</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">motif_dim</span><span class="si">}</span><span class="s2">-cluster&quot;</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span>
+            <span class="p">)</span>
             <span class="n">motif_ds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">motif_cluster_ds</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">motif_ds</span></div></div>
 

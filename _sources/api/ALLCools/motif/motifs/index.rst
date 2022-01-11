@@ -35,4 +35,6 @@ Module Contents
 
    Bases: :py:obj:`Bio.motifs.Motif`
 
+   A class representing sequence motifs.
+
 

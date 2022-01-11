@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1481,15 +1498,14 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
 <div class="viewcode-block" id="log"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.log">[docs]</a><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="calculate_posterior_mc_frac"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.calculate_posterior_mc_frac">[docs]</a><span class="k">def</span> <span class="nf">calculate_posterior_mc_frac</span><span class="p">(</span><span class="n">mc_da</span><span class="p">,</span>
-                                <span class="n">cov_da</span><span class="p">,</span>
-                                <span class="n">var_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">normalize_per_cell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                <span class="n">clip_norm_value</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<div class="viewcode-block" id="calculate_posterior_mc_frac"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.calculate_posterior_mc_frac">[docs]</a><span class="k">def</span> <span class="nf">calculate_posterior_mc_frac</span><span class="p">(</span>
+    <span class="n">mc_da</span><span class="p">,</span> <span class="n">cov_da</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize_per_cell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clip_norm_value</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">):</span>
     <span class="c1"># so we can do post_frac only in a very small set of gene to prevent memory issue</span>
     <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
@@ -1518,12 +1534,17 @@
     <span class="c1"># a / (a + b) = cell_rate_mean</span>
     <span class="c1"># a * b / ((a + b) ^ 2 * (a + b + 1)) = cell_rate_var</span>
     <span class="c1"># calculate alpha beta value for each cell</span>
-    <span class="n">cell_a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">cell_rate_mean</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">cell_rate_mean</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">cell_rate_var</span> <span class="o">-</span> <span class="n">cell_rate_mean</span>
+    <span class="n">cell_a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">cell_rate_mean</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="n">cell_rate_mean</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">cell_rate_var</span> <span class="o">-</span> <span class="n">cell_rate_mean</span>
     <span class="n">cell_b</span> <span class="o">=</span> <span class="n">cell_a</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">cell_rate_mean</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># cell specific posterior rate</span>
+    <span class="n">post_frac</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">ndarray</span><span class="p">:</span>
-        <span class="n">post_frac</span> <span class="o">=</span> <span class="p">(</span><span class="n">mc_da</span> <span class="o">+</span> <span class="n">cell_a</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">cov_da</span> <span class="o">+</span> <span class="n">cell_a</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">cell_b</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span>
+        <span class="n">post_frac</span> <span class="o">=</span> <span class="p">(</span><span class="n">mc_da</span> <span class="o">+</span> <span class="n">cell_a</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="n">cov_da</span> <span class="o">+</span> <span class="n">cell_a</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">cell_b</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">post_frac</span> <span class="o">=</span> <span class="p">(</span><span class="n">mc_da</span> <span class="o">+</span> <span class="n">cell_a</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">cov_da</span> <span class="o">+</span> <span class="n">cell_a</span> <span class="o">+</span> <span class="n">cell_b</span><span class="p">)</span>
 
@@ -1546,13 +1567,22 @@
                 <span class="n">post_frac</span><span class="p">[</span><span class="n">post_frac</span> <span class="o">&gt;</span> <span class="n">clip_norm_value</span><span class="p">]</span> <span class="o">=</span> <span class="n">clip_norm_value</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># xarray.DataArray</span>
-                <span class="n">post_rate</span> <span class="o">=</span> <span class="n">post_frac</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">post_frac</span> <span class="o">&lt;</span> <span class="n">clip_norm_value</span><span class="p">,</span> <span class="n">clip_norm_value</span><span class="p">)</span>
+                <span class="n">post_frac</span> <span class="o">=</span> <span class="n">post_frac</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                    <span class="n">post_frac</span> <span class="o">&lt;</span> <span class="n">clip_norm_value</span><span class="p">,</span> <span class="n">clip_norm_value</span>
+                <span class="p">)</span>
     <span class="k">return</span> <span class="n">post_frac</span></div>
 
 
-<div class="viewcode-block" id="calculate_posterior_mc_frac_lazy"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.calculate_posterior_mc_frac_lazy">[docs]</a><span class="k">def</span> <span class="nf">calculate_posterior_mc_frac_lazy</span><span class="p">(</span><span class="n">mc_da</span><span class="p">,</span> <span class="n">cov_da</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">,</span> <span class="n">output_prefix</span><span class="p">,</span>
-                                     <span class="n">cell_chunk</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">dask_cell_chunk</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-                                     <span class="n">normalize_per_cell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clip_norm_value</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<div class="viewcode-block" id="calculate_posterior_mc_frac_lazy"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.calculate_posterior_mc_frac_lazy">[docs]</a><span class="k">def</span> <span class="nf">calculate_posterior_mc_frac_lazy</span><span class="p">(</span>
+    <span class="n">mc_da</span><span class="p">,</span>
+    <span class="n">cov_da</span><span class="p">,</span>
+    <span class="n">var_dim</span><span class="p">,</span>
+    <span class="n">output_prefix</span><span class="p">,</span>
+    <span class="n">cell_chunk</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span>
+    <span class="n">dask_cell_chunk</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">normalize_per_cell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">clip_norm_value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Running calculate_posterior_mc_rate with dask array and directly save to disk.</span>
 <span class="sd">    This is highly memory efficient. Use this for dataset larger then machine memory.</span>
@@ -1572,48 +1602,59 @@
 <span class="sd">    -------</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">cell_list</span> <span class="o">=</span> <span class="n">mc_da</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s1">&#39;cell&#39;</span><span class="p">)</span>
-    <span class="n">cell_chunks</span> <span class="o">=</span> <span class="p">[</span><span class="n">cell_list</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">cell_chunk</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cell_list</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">cell_chunk</span><span class="p">)]</span>
+    <span class="n">cell_list</span> <span class="o">=</span> <span class="n">mc_da</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s2">&quot;cell&quot;</span><span class="p">)</span>
+    <span class="n">cell_chunks</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">cell_list</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">cell_chunk</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cell_list</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">cell_chunk</span><span class="p">)</span>
+    <span class="p">]</span>
 
     <span class="n">output_paths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">chunk_id</span><span class="p">,</span> <span class="n">cell_list_chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cell_chunks</span><span class="p">):</span>
         <span class="n">_mc_da</span> <span class="o">=</span> <span class="n">mc_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">cell_list_chunk</span><span class="p">)</span>
         <span class="n">_cov_da</span> <span class="o">=</span> <span class="n">cov_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">cell_list_chunk</span><span class="p">)</span>
-        <span class="n">post_rate</span> <span class="o">=</span> <span class="n">calculate_posterior_mc_frac</span><span class="p">(</span><span class="n">mc_da</span><span class="o">=</span><span class="n">_mc_da</span><span class="p">,</span>
-                                                <span class="n">cov_da</span><span class="o">=</span><span class="n">_cov_da</span><span class="p">,</span>
-                                                <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
-                                                <span class="n">normalize_per_cell</span><span class="o">=</span><span class="n">normalize_per_cell</span><span class="p">,</span>
-                                                <span class="n">clip_norm_value</span><span class="o">=</span><span class="n">clip_norm_value</span><span class="p">)</span>
+        <span class="n">post_rate</span> <span class="o">=</span> <span class="n">calculate_posterior_mc_frac</span><span class="p">(</span>
+            <span class="n">mc_da</span><span class="o">=</span><span class="n">_mc_da</span><span class="p">,</span>
+            <span class="n">cov_da</span><span class="o">=</span><span class="n">_cov_da</span><span class="p">,</span>
+            <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
+            <span class="n">normalize_per_cell</span><span class="o">=</span><span class="n">normalize_per_cell</span><span class="p">,</span>
+            <span class="n">clip_norm_value</span><span class="o">=</span><span class="n">clip_norm_value</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cell_chunks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">chunk_id</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">chunk_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">chunk_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s1">&#39;</span>
-        <span class="n">output_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s1">_da_frac</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s1">.mcds&#39;</span>
+            <span class="n">chunk_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;.</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;.</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s2">_da_frac</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s2">.mcds&quot;</span>
 
         <span class="c1"># to_netcdf trigger the dask computation, and save output directly into disk, quite memory efficient</span>
         <span class="n">post_rate</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
         <span class="n">output_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
 
-    <span class="n">chunks</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cell&#39;</span><span class="p">:</span> <span class="n">dask_cell_chunk</span><span class="p">}</span>
-    <span class="n">total_post_rate</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">xr</span><span class="o">.</span><span class="n">open_dataarray</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="n">chunks</span><span class="p">)</span>
-                                 <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">output_paths</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">)</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;cell&quot;</span><span class="p">:</span> <span class="n">dask_cell_chunk</span><span class="p">}</span>
+    <span class="n">total_post_rate</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">open_dataarray</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="n">chunks</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">output_paths</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">total_post_rate</span></div>
 
 
-<div class="viewcode-block" id="calculate_gch_rate"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.calculate_gch_rate">[docs]</a><span class="k">def</span> <span class="nf">calculate_gch_rate</span><span class="p">(</span><span class="n">mcds</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="s1">&#39;chrom100k&#39;</span><span class="p">):</span>
-    <span class="n">rate_da</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GCHN&#39;</span><span class="p">,</span> <span class="s1">&#39;HCHN&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">add_mc_rate</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span> <span class="n">da</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s1">_da&#39;</span><span class="p">,</span>
-                                                             <span class="n">normalize_per_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="viewcode-block" id="calculate_gch_rate"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.calculate_gch_rate">[docs]</a><span class="k">def</span> <span class="nf">calculate_gch_rate</span><span class="p">(</span><span class="n">mcds</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="s2">&quot;chrom100k&quot;</span><span class="p">):</span>
+    <span class="n">rate_da</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GCHN&quot;</span><span class="p">,</span> <span class="s2">&quot;HCHN&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">add_mc_rate</span><span class="p">(</span>
+        <span class="n">dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span> <span class="n">da</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s2">_da&quot;</span><span class="p">,</span> <span class="n">normalize_per_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
     <span class="c1"># (PCG - PCH) / (1 - PCH)</span>
-    <span class="n">real_gc_rate</span> <span class="o">=</span> <span class="p">(</span><span class="n">rate_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s1">&#39;GCHN&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">rate_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s1">&#39;HCHN&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span>
-            <span class="mi">1</span> <span class="o">-</span> <span class="n">rate_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s1">&#39;HCHN&#39;</span><span class="p">))</span>
-    <span class="n">real_gc_rate</span> <span class="o">=</span> <span class="n">real_gc_rate</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">real_gc_rate</span> <span class="o">=</span> <span class="p">(</span><span class="n">rate_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s2">&quot;GCHN&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">rate_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s2">&quot;HCHN&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="mi">1</span> <span class="o">-</span> <span class="n">rate_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s2">&quot;HCHN&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">real_gc_rate</span> <span class="o">=</span> <span class="n">real_gc_rate</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
     <span class="n">real_gc_rate</span><span class="p">[</span><span class="n">real_gc_rate</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="c1"># norm per cell</span>
-    <span class="n">cell_overall_count</span> <span class="o">=</span> <span class="n">mcds</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s1">_da&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GCHN&#39;</span><span class="p">,</span> <span class="s1">&#39;HCHN&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">)</span>
-    <span class="n">cell_overall_rate</span> <span class="o">=</span> <span class="n">cell_overall_count</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">count_type</span><span class="o">=</span><span class="s1">&#39;mc&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="n">cell_overall_count</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">count_type</span><span class="o">=</span><span class="s1">&#39;cov&#39;</span><span class="p">)</span>
-    <span class="n">gchn</span> <span class="o">=</span> <span class="n">cell_overall_rate</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s1">&#39;GCHN&#39;</span><span class="p">)</span>
-    <span class="n">hchn</span> <span class="o">=</span> <span class="n">cell_overall_rate</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s1">&#39;HCHN&#39;</span><span class="p">)</span>
+    <span class="n">cell_overall_count</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">mcds</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s2">_da&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GCHN&quot;</span><span class="p">,</span> <span class="s2">&quot;HCHN&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">cell_overall_rate</span> <span class="o">=</span> <span class="n">cell_overall_count</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span>
+        <span class="n">count_type</span><span class="o">=</span><span class="s2">&quot;mc&quot;</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">cell_overall_count</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">count_type</span><span class="o">=</span><span class="s2">&quot;cov&quot;</span><span class="p">)</span>
+    <span class="n">gchn</span> <span class="o">=</span> <span class="n">cell_overall_rate</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s2">&quot;GCHN&quot;</span><span class="p">)</span>
+    <span class="n">hchn</span> <span class="o">=</span> <span class="n">cell_overall_rate</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s2">&quot;HCHN&quot;</span><span class="p">)</span>
     <span class="n">overall_gchn</span> <span class="o">=</span> <span class="p">(</span><span class="n">gchn</span> <span class="o">-</span> <span class="n">hchn</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">hchn</span><span class="p">)</span>
     <span class="n">real_gc_rate</span> <span class="o">=</span> <span class="n">real_gc_rate</span> <span class="o">/</span> <span class="n">overall_gchn</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">real_gc_rate</span></div>
@@ -1636,33 +1677,46 @@
 
 
 <div class="viewcode-block" id="highly_variable_methylation_feature"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.highly_variable_methylation_feature">[docs]</a><span class="k">def</span> <span class="nf">highly_variable_methylation_feature</span><span class="p">(</span>
-        <span class="n">cell_by_feature_matrix</span><span class="p">,</span> <span class="n">feature_mean_cov</span><span class="p">,</span>
-        <span class="n">obs_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">min_disp</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">max_disp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">min_mean</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_mean</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-        <span class="n">n_top_feature</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bin_min_features</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-        <span class="n">mean_binsize</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">cov_binsize</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">cell_by_feature_matrix</span><span class="p">,</span>
+    <span class="n">feature_mean_cov</span><span class="p">,</span>
+    <span class="n">obs_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">var_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">min_disp</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">max_disp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">min_mean</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">max_mean</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">n_top_feature</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">bin_min_features</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">mean_binsize</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">cov_binsize</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adapted from Scanpy, the main difference is that,</span>
 <span class="sd">    this function normalize dispersion based on both mean and cov bins.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># RNA is only scaled by mean, but methylation is scaled by both mean and cov</span>
-    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;extracting highly variable features&#39;</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;extracting highly variable features&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">n_top_feature</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;If you pass `n_top_feature`, all cutoffs are ignored. &#39;</span>
-                 <span class="s1">&#39;Features are ordered by normalized dispersion.&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;If you pass `n_top_feature`, all cutoffs are ignored. &quot;</span>
+            <span class="s2">&quot;Features are ordered by normalized dispersion.&quot;</span>
+        <span class="p">)</span>
 
     <span class="c1"># warning for extremely low cov</span>
     <span class="n">low_cov_portion</span> <span class="o">=</span> <span class="p">(</span><span class="n">feature_mean_cov</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">feature_mean_cov</span><span class="o">.</span><span class="n">size</span>
     <span class="k">if</span> <span class="n">low_cov_portion</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">:</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">low_cov_portion</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s1">% feature with &lt; 10 mean cov, &#39;</span>
-                    <span class="sa">f</span><span class="s1">&#39;consider filter by cov before find highly variable feature. &#39;</span>
-                    <span class="sa">f</span><span class="s1">&#39;Otherwise some low coverage feature may be elevated after normalization.&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">low_cov_portion</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s2">% feature with &lt; 10 mean cov, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;consider filter by cov before find highly variable feature. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Otherwise some low coverage feature may be elevated after normalization.&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cell_by_feature_matrix</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Input cell_by_feature_matrix is not 2-D matrix, &#39;</span>
-                         <span class="sa">f</span><span class="s1">&#39;got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cell_by_feature_matrix</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span><span class="si">}</span><span class="s1"> dim(s)&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Input cell_by_feature_matrix is not 2-D matrix, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cell_by_feature_matrix</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span><span class="si">}</span><span class="s2"> dim(s)&quot;</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">obs_dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">var_dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
             <span class="n">obs_dim</span><span class="p">,</span> <span class="n">var_dim</span> <span class="o">=</span> <span class="n">cell_by_feature_matrix</span><span class="o">.</span><span class="n">dims</span>
@@ -1676,23 +1730,27 @@
 
     <span class="c1"># all of the following quantities are &quot;per-feature&quot; here</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">cell_by_feature_matrix</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">var_dim</span><span class="p">))</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;dispersion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dispersion</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;cov&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;dispersion&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dispersion</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;cov&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="c1"># instead of n_bins, use bin_size, because cov and mc are in different scale</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;mean_bin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">mean_binsize</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;cov_bin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cov&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">cov_binsize</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;mean_bin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">mean_binsize</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;cov_bin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;cov&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">cov_binsize</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="c1"># save bin_count df, gather bins with more than bin_min_features features</span>
-    <span class="n">bin_count</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;mean_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;cov_bin&#39;</span><span class="p">])</span> \
-        <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> \
-        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> \
+    <span class="n">bin_count</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;mean_bin&quot;</span><span class="p">,</span> <span class="s2">&quot;cov_bin&quot;</span><span class="p">])</span>
+        <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
         <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">)</span>
     <span class="n">bin_count</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
     <span class="n">bin_more_than</span> <span class="o">=</span> <span class="n">bin_count</span><span class="p">[</span><span class="n">bin_count</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">bin_min_features</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">bin_more_than</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No bin have more than </span><span class="si">{</span><span class="n">bin_min_features</span><span class="si">}</span><span class="s1"> features, use larger bin size.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;No bin have more than </span><span class="si">{</span><span class="n">bin_min_features</span><span class="si">}</span><span class="s2"> features, use larger bin size.&quot;</span>
+        <span class="p">)</span>
 
     <span class="c1"># for those bin have too less features, merge them with closest bin in manhattan distance</span>
     <span class="c1"># this usually don&#39;t cause much difference (a few hundred features), but the scatter plot will look more nature</span>
@@ -1700,47 +1758,57 @@
     <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">mean_id</span><span class="p">,</span> <span class="n">cov_id</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="ow">in</span> <span class="n">bin_count</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">index_map</span><span class="p">[(</span><span class="n">mean_id</span><span class="p">,</span> <span class="n">cov_id</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">mean_id</span><span class="p">,</span> <span class="n">cov_id</span><span class="p">)</span>
-        <span class="n">manhattan_dist</span> <span class="o">=</span> <span class="p">(</span><span class="n">bin_more_than</span><span class="p">[</span><span class="s1">&#39;mean_bin&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">mean_id</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">bin_more_than</span><span class="p">[</span><span class="s1">&#39;cov_bin&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">cov_id</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+        <span class="n">manhattan_dist</span> <span class="o">=</span> <span class="p">(</span><span class="n">bin_more_than</span><span class="p">[</span><span class="s2">&quot;mean_bin&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">mean_id</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span>
+            <span class="n">bin_more_than</span><span class="p">[</span><span class="s2">&quot;cov_bin&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">cov_id</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
         <span class="n">closest_more_than</span> <span class="o">=</span> <span class="n">manhattan_dist</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">closest</span> <span class="o">=</span> <span class="n">bin_more_than</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">closest_more_than</span><span class="p">]</span>
         <span class="n">index_map</span><span class="p">[(</span><span class="n">mean_id</span><span class="p">,</span> <span class="n">cov_id</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">closest</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[:</span><span class="mi">2</span><span class="p">])</span>
     <span class="c1"># apply index_map to original df</span>
-    <span class="n">raw_bin</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;mean_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;cov_bin&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;mean_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;cov_bin&#39;</span><span class="p">])</span>
-    <span class="n">raw_bin</span><span class="p">[</span><span class="s1">&#39;use_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index_map</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">raw_bin</span><span class="p">[</span><span class="s1">&#39;use_cov&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index_map</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;mean_bin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_bin</span><span class="p">[</span><span class="s1">&#39;use_mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;cov_bin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_bin</span><span class="p">[</span><span class="s1">&#39;use_cov&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">raw_bin</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;mean_bin&quot;</span><span class="p">,</span> <span class="s2">&quot;cov_bin&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s2">&quot;mean_bin&quot;</span><span class="p">,</span> <span class="s2">&quot;cov_bin&quot;</span><span class="p">])</span>
+    <span class="n">raw_bin</span><span class="p">[</span><span class="s2">&quot;use_mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index_map</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">raw_bin</span><span class="p">[</span><span class="s2">&quot;use_cov&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index_map</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;mean_bin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_bin</span><span class="p">[</span><span class="s2">&quot;use_mean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;cov_bin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_bin</span><span class="p">[</span><span class="s2">&quot;use_cov&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
     <span class="c1"># calculate bin mean and std, now disp_std_bin shouldn&#39;t have NAs</span>
-    <span class="n">disp_grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;mean_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;cov_bin&#39;</span><span class="p">])[</span><span class="s1">&#39;dispersion&#39;</span><span class="p">]</span>
+    <span class="n">disp_grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;mean_bin&quot;</span><span class="p">,</span> <span class="s2">&quot;cov_bin&quot;</span><span class="p">])[</span><span class="s2">&quot;dispersion&quot;</span><span class="p">]</span>
     <span class="n">disp_mean_bin</span> <span class="o">=</span> <span class="n">disp_grouped</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
     <span class="n">disp_std_bin</span> <span class="o">=</span> <span class="n">disp_grouped</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># actually do the normalization</span>
-    <span class="n">_mean_norm</span> <span class="o">=</span> <span class="n">disp_mean_bin</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;mean_bin&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;cov_bin&#39;</span><span class="p">]))]</span>
-    <span class="n">_std_norm</span> <span class="o">=</span> <span class="n">disp_std_bin</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;mean_bin&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;cov_bin&#39;</span><span class="p">]))]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;dispersion_norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;dispersion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>  <span class="c1"># use values here as index differs</span>
-                             <span class="o">-</span> <span class="n">_mean_norm</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">/</span> <span class="n">_std_norm</span><span class="o">.</span><span class="n">values</span>
-    <span class="n">dispersion_norm</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;dispersion_norm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+    <span class="n">_mean_norm</span> <span class="o">=</span> <span class="n">disp_mean_bin</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;mean_bin&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;cov_bin&quot;</span><span class="p">]))]</span>
+    <span class="n">_std_norm</span> <span class="o">=</span> <span class="n">disp_std_bin</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;mean_bin&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;cov_bin&quot;</span><span class="p">]))]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;dispersion_norm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;dispersion&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">_mean_norm</span><span class="o">.</span><span class="n">values</span>  <span class="c1"># use values here as index differs</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">_std_norm</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">dispersion_norm</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;dispersion_norm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
 
     <span class="c1"># Select n_top_feature</span>
     <span class="k">if</span> <span class="n">n_top_feature</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">feature_subset</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;dispersion_norm&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span><span class="mi">5000</span><span class="p">])</span>
+        <span class="n">feature_subset</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;dispersion_norm&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span><span class="mi">5000</span><span class="p">]</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">max_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="k">if</span> <span class="n">max_disp</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">max_disp</span>
         <span class="n">dispersion_norm</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">dispersion_norm</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># similar to Seurat</span>
-        <span class="n">feature_subset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="o">.</span><span class="n">reduce</span><span class="p">((</span><span class="n">mean</span> <span class="o">&gt;</span> <span class="n">min_mean</span><span class="p">,</span> <span class="n">mean</span> <span class="o">&lt;</span> <span class="n">max_mean</span><span class="p">,</span>
-                                                <span class="n">dispersion_norm</span> <span class="o">&gt;</span> <span class="n">min_disp</span><span class="p">,</span>
-                                                <span class="n">dispersion_norm</span> <span class="o">&lt;</span> <span class="n">max_disp</span><span class="p">))</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;feature_select&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_subset</span>
-    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;    finished&#39;</span><span class="p">)</span>
+        <span class="n">feature_subset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">mean</span> <span class="o">&gt;</span> <span class="n">min_mean</span><span class="p">,</span>
+                <span class="n">mean</span> <span class="o">&lt;</span> <span class="n">max_mean</span><span class="p">,</span>
+                <span class="n">dispersion_norm</span> <span class="o">&gt;</span> <span class="n">min_disp</span><span class="p">,</span>
+                <span class="n">dispersion_norm</span> <span class="o">&lt;</span> <span class="n">max_disp</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;feature_select&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_subset</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    finished&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span></div>
 
 
 <div class="viewcode-block" id="determine_engine"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.determine_engine">[docs]</a><span class="k">def</span> <span class="nf">determine_engine</span><span class="p">(</span><span class="n">dataset_paths</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">_single_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">/.zgroup&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="n">e</span> <span class="o">=</span> <span class="s1">&#39;zarr&#39;</span>
+        <span class="k">if</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">/.zgroup&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="s2">&quot;zarr&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">e</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># default for None is netcdf4 or xarray will guess</span>
         <span class="k">return</span> <span class="n">e</span>
@@ -1750,15 +1818,17 @@
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
             <span class="n">e</span> <span class="o">=</span> <span class="n">_single_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
             <span class="n">engines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-        <span class="n">engine</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">engines</span><span class="p">))</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Can not open a mixture of netcdf4 and zarr files in &quot;</span><span class="si">{</span><span class="n">dataset_paths</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+        <span class="n">_engine</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">engines</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_engine</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Can not open a mixture of netcdf4 and zarr files in &quot;</span><span class="si">{</span><span class="n">dataset_paths</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">engine</span>
+            <span class="n">_engine</span> <span class="o">=</span> <span class="n">_engine</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">_engine</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_paths</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PosixPath</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset_paths</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;*&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset_paths</span><span class="p">):</span>
             <span class="n">engine</span> <span class="o">=</span> <span class="n">_multi_paths</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">dataset_paths</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># single mcds path</span>
@@ -1781,14 +1851,24 @@
     <span class="k">return</span></div>
 
 
-<div class="viewcode-block" id="write_ordered_chunks"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.write_ordered_chunks">[docs]</a><span class="k">def</span> <span class="nf">write_ordered_chunks</span><span class="p">(</span><span class="n">chunks_to_write</span><span class="p">,</span> <span class="n">final_path</span><span class="p">,</span> <span class="n">append_dim</span><span class="p">,</span>
-                         <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;zarr&#39;</span><span class="p">,</span> <span class="n">coord_dtypes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="write_ordered_chunks"><a class="viewcode-back" href="../../../api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.write_ordered_chunks">[docs]</a><span class="k">def</span> <span class="nf">write_ordered_chunks</span><span class="p">(</span>
+    <span class="n">chunks_to_write</span><span class="p">,</span>
+    <span class="n">final_path</span><span class="p">,</span>
+    <span class="n">append_dim</span><span class="p">,</span>
+    <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;zarr&quot;</span><span class="p">,</span>
+    <span class="n">coord_dtypes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="c1"># some function may return None if the chunk is empty</span>
     <span class="n">chunks_to_write</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">chunks_to_write</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
 
     <span class="c1"># open all chunks to determine string coords dtype lengths</span>
-    <span class="n">total_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">chunks_to_write</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
-                                 <span class="n">concat_dim</span><span class="o">=</span><span class="n">append_dim</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+    <span class="n">total_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span>
+        <span class="nb">list</span><span class="p">(</span><span class="n">chunks_to_write</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+        <span class="n">concat_dim</span><span class="o">=</span><span class="n">append_dim</span><span class="p">,</span>
+        <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;nested&quot;</span><span class="p">,</span>
+        <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">obj_to_str</span><span class="p">(</span><span class="n">total_ds</span><span class="p">,</span> <span class="n">coord_dtypes</span><span class="p">)</span>
     <span class="c1"># string dtype is set to coord maximum length, so need to load all coords to determine</span>
     <span class="c1"># otherwise the chunk writing will truncate string coords if the dtype length is wrong</span>
@@ -1806,9 +1886,9 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">wrote</span><span class="p">:</span>
             <span class="n">wrote</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="c1"># create the new da</span>
-            <span class="n">chunk_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">final_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">chunk_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">final_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">chunk_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">final_path</span><span class="p">,</span> <span class="n">moda</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">append_dim</span><span class="o">=</span><span class="n">append_dim</span><span class="p">)</span>
+            <span class="n">chunk_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">final_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">append_dim</span><span class="o">=</span><span class="n">append_dim</span><span class="p">)</span>
     <span class="k">return</span></div>
 </pre></div>
 

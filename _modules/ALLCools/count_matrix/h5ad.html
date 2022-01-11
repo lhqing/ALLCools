@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1483,21 +1500,21 @@
 <span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">ss</span>
 <span class="kn">from</span> <span class="nn">anndata</span> <span class="kn">import</span> <span class="n">AnnData</span>
 
-<span class="kn">from</span> <span class="nn">..utilities</span> <span class="kn">import</span> <span class="n">parse_file_paths</span><span class="p">,</span> \
-    <span class="n">parse_chrom_size</span><span class="p">,</span> \
-    <span class="n">chrom_dict_to_id_index</span><span class="p">,</span> \
-    <span class="n">get_bin_id</span><span class="p">,</span> \
-    <span class="n">generate_chrom_bin_bed_dataframe</span>
+<span class="kn">from</span> <span class="nn">..utilities</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">parse_file_paths</span><span class="p">,</span>
+    <span class="n">parse_chrom_size</span><span class="p">,</span>
+    <span class="n">chrom_dict_to_id_index</span><span class="p">,</span>
+    <span class="n">get_bin_id</span><span class="p">,</span>
+    <span class="n">generate_chrom_bin_bed_dataframe</span><span class="p">,</span>
+<span class="p">)</span>
 
 
-<div class="viewcode-block" id="_bin_count_table_to_csr_npz"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/h5ad/index.html#ALLCools.count_matrix.h5ad._bin_count_table_to_csr_npz">[docs]</a><span class="k">def</span> <span class="nf">_bin_count_table_to_csr_npz</span><span class="p">(</span><span class="n">bin_count_tables</span><span class="p">,</span>
-                                <span class="n">bin_size</span><span class="p">,</span>
-                                <span class="n">chrom_size_path</span><span class="p">,</span>
-                                <span class="n">output_prefix</span><span class="p">,</span>
-                                <span class="n">compression</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="n">output_prefix</span> <span class="o">=</span> <span class="n">output_prefix</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-    <span class="n">mc_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="s1">&#39;.mc.npz&#39;</span>
-    <span class="n">cov_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="s1">&#39;.cov.npz&#39;</span>
+<div class="viewcode-block" id="_bin_count_table_to_csr_npz"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/h5ad/index.html#ALLCools.count_matrix.h5ad._bin_count_table_to_csr_npz">[docs]</a><span class="k">def</span> <span class="nf">_bin_count_table_to_csr_npz</span><span class="p">(</span>
+    <span class="n">bin_count_tables</span><span class="p">,</span> <span class="n">bin_size</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">output_prefix</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">):</span>
+    <span class="n">output_prefix</span> <span class="o">=</span> <span class="n">output_prefix</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">mc_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="s2">&quot;.mc.npz&quot;</span>
+    <span class="n">cov_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="s2">&quot;.cov.npz&quot;</span>
     <span class="k">if</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">mc_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">cov_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">mc_path</span><span class="p">,</span> <span class="n">cov_path</span>
 
@@ -1507,10 +1524,12 @@
 
     <span class="c1"># determine matrix shape</span>
     <span class="n">n_obj</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">count_table_path_list</span><span class="p">)</span>
-    <span class="n">last_bin</span> <span class="o">=</span> <span class="n">get_bin_id</span><span class="p">(</span><span class="n">chrom</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">chrom_size_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-                          <span class="n">chrom_index_dict</span><span class="o">=</span><span class="n">chrom_bin_index_dict</span><span class="p">,</span>
-                          <span class="n">bin_start</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">chrom_size_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-                          <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">)</span>
+    <span class="n">last_bin</span> <span class="o">=</span> <span class="n">get_bin_id</span><span class="p">(</span>
+        <span class="n">chrom</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">chrom_size_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">chrom_index_dict</span><span class="o">=</span><span class="n">chrom_bin_index_dict</span><span class="p">,</span>
+        <span class="n">bin_start</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">chrom_size_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">n_feature</span> <span class="o">=</span> <span class="n">last_bin</span> <span class="o">+</span> <span class="mi">1</span>
 
     <span class="c1"># init matrix</span>
@@ -1520,17 +1539,17 @@
 
     <span class="c1"># read each count table and add to matrix</span>
     <span class="k">for</span> <span class="n">obj_idx</span><span class="p">,</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">count_table_path_list</span><span class="p">):</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span>
-                           <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-                           <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span>
-                           <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                           <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bin_id&#39;</span><span class="p">,</span> <span class="s1">&#39;mc&#39;</span><span class="p">,</span> <span class="s1">&#39;cov&#39;</span><span class="p">],</span>
-                           <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;bin_id&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">uint64</span><span class="p">,</span>
-                                  <span class="s1">&#39;mc&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">,</span>
-                                  <span class="s1">&#39;cov&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">},</span>
-                           <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">mc_matrix</span><span class="p">[</span><span class="n">obj_idx</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;mc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">cov_matrix</span><span class="p">[</span><span class="n">obj_idx</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;cov&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+            <span class="n">file_path</span><span class="p">,</span>
+            <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+            <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bin_id&quot;</span><span class="p">,</span> <span class="s2">&quot;mc&quot;</span><span class="p">,</span> <span class="s2">&quot;cov&quot;</span><span class="p">],</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;bin_id&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">uint64</span><span class="p">,</span> <span class="s2">&quot;mc&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">,</span> <span class="s2">&quot;cov&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">},</span>
+            <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">mc_matrix</span><span class="p">[</span><span class="n">obj_idx</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;mc&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">cov_matrix</span><span class="p">[</span><span class="n">obj_idx</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cov&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
     <span class="n">mc_matrix</span> <span class="o">=</span> <span class="n">mc_matrix</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span>
     <span class="n">ss</span><span class="o">.</span><span class="n">save_npz</span><span class="p">(</span><span class="n">mc_path</span><span class="p">,</span> <span class="n">mc_matrix</span><span class="p">,</span> <span class="n">compressed</span><span class="o">=</span><span class="n">compression</span><span class="p">)</span>
 
@@ -1539,49 +1558,73 @@
     <span class="k">return</span> <span class="n">mc_path</span><span class="p">,</span> <span class="n">cov_path</span></div>
 
 
-<div class="viewcode-block" id="_csr_matrix_to_anndata"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/h5ad/index.html#ALLCools.count_matrix.h5ad._csr_matrix_to_anndata">[docs]</a><span class="k">def</span> <span class="nf">_csr_matrix_to_anndata</span><span class="p">(</span><span class="n">matrix_paths</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">obs_names</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span>
-                           <span class="n">bin_size</span><span class="p">,</span> <span class="n">mc_type</span><span class="p">,</span> <span class="n">count_type</span><span class="p">,</span> <span class="n">step_size</span><span class="p">,</span> <span class="n">strandness</span><span class="p">,</span>
-                           <span class="n">compression</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">compression_opts</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="_csr_matrix_to_anndata"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/h5ad/index.html#ALLCools.count_matrix.h5ad._csr_matrix_to_anndata">[docs]</a><span class="k">def</span> <span class="nf">_csr_matrix_to_anndata</span><span class="p">(</span>
+    <span class="n">matrix_paths</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="p">,</span>
+    <span class="n">obs_names</span><span class="p">,</span>
+    <span class="n">chrom_size_path</span><span class="p">,</span>
+    <span class="n">bin_size</span><span class="p">,</span>
+    <span class="n">mc_type</span><span class="p">,</span>
+    <span class="n">count_type</span><span class="p">,</span>
+    <span class="n">step_size</span><span class="p">,</span>
+    <span class="n">strandness</span><span class="p">,</span>
+    <span class="n">compression</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">compression_opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="k">if</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">output_path</span>
 
     <span class="n">var_df</span> <span class="o">=</span> <span class="n">generate_chrom_bin_bed_dataframe</span><span class="p">(</span><span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">bin_size</span><span class="p">)</span>
     <span class="n">total_matrix</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">ss</span><span class="o">.</span><span class="n">load_npz</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">matrix_paths</span><span class="p">])</span>
 
-    <span class="n">adata</span> <span class="o">=</span> <span class="n">AnnData</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">total_matrix</span><span class="p">,</span>
-                    <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">obs_names</span><span class="p">),</span>
-                    <span class="n">var</span><span class="o">=</span><span class="n">var_df</span><span class="p">[[</span><span class="s1">&#39;chrom&#39;</span><span class="p">]],</span>
-                    <span class="n">uns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
-                             <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                             <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
-                             <span class="n">count_type</span><span class="o">=</span><span class="n">count_type</span><span class="p">,</span>
-                             <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
-                             <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">))</span>
-    <span class="n">adata</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span>
-                <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
-                <span class="n">compression_opts</span><span class="o">=</span><span class="n">compression_opts</span><span class="p">)</span>
+    <span class="n">adata</span> <span class="o">=</span> <span class="n">AnnData</span><span class="p">(</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">total_matrix</span><span class="p">,</span>
+        <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">obs_names</span><span class="p">),</span>
+        <span class="n">var</span><span class="o">=</span><span class="n">var_df</span><span class="p">[[</span><span class="s2">&quot;chrom&quot;</span><span class="p">]],</span>
+        <span class="n">uns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
+            <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
+            <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
+            <span class="n">count_type</span><span class="o">=</span><span class="n">count_type</span><span class="p">,</span>
+            <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
+            <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span> <span class="n">compression_opts</span><span class="o">=</span><span class="n">compression_opts</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output_path</span></div>
 
 
-<div class="viewcode-block" id="aggregate_region_count_to_paired_anndata"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/h5ad/index.html#ALLCools.count_matrix.h5ad.aggregate_region_count_to_paired_anndata">[docs]</a><span class="k">def</span> <span class="nf">aggregate_region_count_to_paired_anndata</span><span class="p">(</span><span class="n">count_tables</span><span class="p">,</span> <span class="n">output_prefix</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span>
-                                             <span class="n">bin_size</span><span class="p">,</span> <span class="n">mc_type</span><span class="p">,</span> <span class="n">count_type</span><span class="p">,</span> <span class="n">strandness</span><span class="p">,</span>
-                                             <span class="n">compression</span><span class="o">=</span><span class="s1">&#39;gzip&#39;</span><span class="p">,</span> <span class="n">file_uids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_obj</span><span class="o">=</span><span class="mi">3072</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<div class="viewcode-block" id="aggregate_region_count_to_paired_anndata"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/h5ad/index.html#ALLCools.count_matrix.h5ad.aggregate_region_count_to_paired_anndata">[docs]</a><span class="k">def</span> <span class="nf">aggregate_region_count_to_paired_anndata</span><span class="p">(</span>
+    <span class="n">count_tables</span><span class="p">,</span>
+    <span class="n">output_prefix</span><span class="p">,</span>
+    <span class="n">chrom_size_path</span><span class="p">,</span>
+    <span class="n">bin_size</span><span class="p">,</span>
+    <span class="n">mc_type</span><span class="p">,</span>
+    <span class="n">count_type</span><span class="p">,</span>
+    <span class="n">strandness</span><span class="p">,</span>
+    <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;gzip&quot;</span><span class="p">,</span>
+    <span class="n">file_uids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_obj</span><span class="o">=</span><span class="mi">3072</span><span class="p">,</span>
+    <span class="n">cpu</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="c1"># TODO write test</span>
     <span class="c1"># this should only deal with a simple case, aggregate 2 sample*feature 2-D matrix, one for mc, one for cov,</span>
     <span class="c1"># output to full or sparse format</span>
     <span class="n">step_size</span> <span class="o">=</span> <span class="n">bin_size</span>  <span class="c1"># which means the region is non-overlap</span>
 
     <span class="n">mini_batches</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_obj</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
-    <span class="n">output_prefix</span> <span class="o">=</span> <span class="n">output_prefix</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">output_prefix</span> <span class="o">=</span> <span class="n">output_prefix</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 
     <span class="c1"># merge bin count table in mini-batches, save each set into npz file</span>
     <span class="n">count_tables</span> <span class="o">=</span> <span class="n">parse_file_paths</span><span class="p">(</span><span class="n">count_tables</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">file_uids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">file_uids</span> <span class="o">=</span> <span class="n">parse_file_paths</span><span class="p">(</span><span class="n">file_uids</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">file_uids</span> <span class="o">=</span> <span class="p">[</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;.sparse.bed.gz&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">count_tables</span><span class="p">]</span>
+        <span class="n">file_uids</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.sparse.bed.gz&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">count_tables</span>
+        <span class="p">]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_uids</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">count_tables</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Length of file_uids do not match length of count_tables.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Length of file_uids do not match length of count_tables.&quot;</span><span class="p">)</span>
 
     <span class="n">mc_path_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">cov_path_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1590,14 +1633,16 @@
     <span class="n">worker</span> <span class="o">=</span> <span class="n">cpu</span> <span class="o">//</span> <span class="mi">3</span>
     <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">worker</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">chunk_id</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">count_tables</span><span class="p">),</span> <span class="n">mini_batches</span><span class="p">)):</span>
-            <span class="n">path_chunk</span> <span class="o">=</span> <span class="n">count_tables</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">mini_batches</span><span class="p">]</span>
-            <span class="n">cur_id_chunk</span> <span class="o">=</span> <span class="n">file_uids</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">mini_batches</span><span class="p">]</span>
-            <span class="n">future</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_bin_count_table_to_csr_npz</span><span class="p">,</span>
-                                     <span class="n">bin_count_tables</span><span class="o">=</span><span class="n">path_chunk</span><span class="p">,</span>
-                                     <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
-                                     <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                                     <span class="n">output_prefix</span><span class="o">=</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-                                     <span class="n">compression</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">path_chunk</span> <span class="o">=</span> <span class="n">count_tables</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">mini_batches</span><span class="p">]</span>
+            <span class="n">cur_id_chunk</span> <span class="o">=</span> <span class="n">file_uids</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">mini_batches</span><span class="p">]</span>
+            <span class="n">future</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                <span class="n">_bin_count_table_to_csr_npz</span><span class="p">,</span>
+                <span class="n">bin_count_tables</span><span class="o">=</span><span class="n">path_chunk</span><span class="p">,</span>
+                <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
+                <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
+                <span class="n">output_prefix</span><span class="o">=</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;.</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">compression</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">future_dict</span><span class="p">[</span><span class="n">future</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_id_chunk</span>
 
         <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">future_dict</span><span class="p">):</span>
@@ -1608,7 +1653,7 @@
                 <span class="n">cov_path_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cov_path</span><span class="p">)</span>
                 <span class="n">id_chunk_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_id_chunk</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Got error when running chunk id list: </span><span class="si">{</span><span class="n">cur_id_chunk</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got error when running chunk id list: </span><span class="si">{</span><span class="n">cur_id_chunk</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">raise</span> <span class="n">e</span>
 
     <span class="c1"># merge all npz file into AnnData</span>
@@ -1616,119 +1661,141 @@
     <span class="n">cur_mc_paths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">cur_cov_paths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">count_tables</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_obj</span><span class="p">:</span>
-        <span class="n">adata_chunk_id</span> <span class="o">=</span> <span class="s1">&#39;.chunk-0&#39;</span>
+        <span class="n">adata_chunk_id</span> <span class="o">=</span> <span class="s2">&quot;.chunk-0&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">adata_chunk_id</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">adata_chunk_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="n">worker</span> <span class="o">=</span> <span class="p">(</span><span class="n">cpu</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">6</span>
     <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">worker</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">chunk_id</span><span class="p">,</span> <span class="n">cur_id_chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">id_chunk_list</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cur_ids</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">cur_id_chunk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_obj</span><span class="p">:</span>
                 <span class="c1"># mc</span>
-                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_csr_matrix_to_anndata</span><span class="p">,</span>
-                                <span class="n">matrix_paths</span><span class="o">=</span><span class="n">cur_mc_paths</span><span class="p">,</span>
-                                <span class="n">obs_names</span><span class="o">=</span><span class="n">cur_ids</span><span class="p">,</span>
-                                <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                                <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
-                                <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
-                                <span class="n">count_type</span><span class="o">=</span><span class="n">count_type</span><span class="p">,</span>
-                                <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
-                                <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
-                                <span class="n">output_path</span><span class="o">=</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">adata_chunk_id</span><span class="si">}</span><span class="s1">.mc.h5ad&#39;</span><span class="p">,</span>
-                                <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
-                                <span class="n">compression_opts</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                    <span class="n">_csr_matrix_to_anndata</span><span class="p">,</span>
+                    <span class="n">matrix_paths</span><span class="o">=</span><span class="n">cur_mc_paths</span><span class="p">,</span>
+                    <span class="n">obs_names</span><span class="o">=</span><span class="n">cur_ids</span><span class="p">,</span>
+                    <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
+                    <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
+                    <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
+                    <span class="n">count_type</span><span class="o">=</span><span class="n">count_type</span><span class="p">,</span>
+                    <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
+                    <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
+                    <span class="n">output_path</span><span class="o">=</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adata_chunk_id</span><span class="si">}</span><span class="s2">.mc.h5ad&quot;</span><span class="p">,</span>
+                    <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
+                    <span class="n">compression_opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="c1"># cov</span>
-                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_csr_matrix_to_anndata</span><span class="p">,</span>
-                                <span class="n">matrix_paths</span><span class="o">=</span><span class="n">cur_cov_paths</span><span class="p">,</span>
-                                <span class="n">obs_names</span><span class="o">=</span><span class="n">cur_ids</span><span class="p">,</span>
-                                <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                                <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
-                                <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
-                                <span class="n">count_type</span><span class="o">=</span><span class="n">count_type</span><span class="p">,</span>
-                                <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
-                                <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
-                                <span class="n">output_path</span><span class="o">=</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">adata_chunk_id</span><span class="si">}</span><span class="s1">.cov.h5ad&#39;</span><span class="p">,</span>
-                                <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
-                                <span class="n">compression_opts</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                    <span class="n">_csr_matrix_to_anndata</span><span class="p">,</span>
+                    <span class="n">matrix_paths</span><span class="o">=</span><span class="n">cur_cov_paths</span><span class="p">,</span>
+                    <span class="n">obs_names</span><span class="o">=</span><span class="n">cur_ids</span><span class="p">,</span>
+                    <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
+                    <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
+                    <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
+                    <span class="n">count_type</span><span class="o">=</span><span class="n">count_type</span><span class="p">,</span>
+                    <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
+                    <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
+                    <span class="n">output_path</span><span class="o">=</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adata_chunk_id</span><span class="si">}</span><span class="s2">.cov.h5ad&quot;</span><span class="p">,</span>
+                    <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
+                    <span class="n">compression_opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="n">cur_ids</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="n">cur_mc_paths</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="n">cur_cov_paths</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">if</span> <span class="n">adata_chunk_id</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-                    <span class="n">adata_chunk_id</span> <span class="o">=</span> <span class="s1">&#39;.chunk-&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">adata_chunk_id</span><span class="p">[</span><span class="mi">7</span><span class="p">:])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">adata_chunk_id</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="n">adata_chunk_id</span> <span class="o">=</span> <span class="s2">&quot;.chunk-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">adata_chunk_id</span><span class="p">[</span><span class="mi">7</span><span class="p">:])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">cur_ids</span> <span class="o">+=</span> <span class="n">cur_id_chunk</span>
                 <span class="n">cur_mc_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mc_path_list</span><span class="p">[</span><span class="n">chunk_id</span><span class="p">])</span>
                 <span class="n">cur_cov_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cov_path_list</span><span class="p">[</span><span class="n">chunk_id</span><span class="p">])</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cur_ids</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c1"># mc</span>
-            <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_csr_matrix_to_anndata</span><span class="p">,</span>
-                            <span class="n">matrix_paths</span><span class="o">=</span><span class="n">cur_mc_paths</span><span class="p">,</span>
-                            <span class="n">obs_names</span><span class="o">=</span><span class="n">cur_ids</span><span class="p">,</span>
-                            <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                            <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
-                            <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
-                            <span class="n">count_type</span><span class="o">=</span><span class="n">count_type</span><span class="p">,</span>
-                            <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
-                            <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
-                            <span class="n">output_path</span><span class="o">=</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">adata_chunk_id</span><span class="si">}</span><span class="s1">.mc.h5ad&#39;</span><span class="p">,</span>
-                            <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
-                            <span class="n">compression_opts</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                <span class="n">_csr_matrix_to_anndata</span><span class="p">,</span>
+                <span class="n">matrix_paths</span><span class="o">=</span><span class="n">cur_mc_paths</span><span class="p">,</span>
+                <span class="n">obs_names</span><span class="o">=</span><span class="n">cur_ids</span><span class="p">,</span>
+                <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
+                <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
+                <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
+                <span class="n">count_type</span><span class="o">=</span><span class="n">count_type</span><span class="p">,</span>
+                <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
+                <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
+                <span class="n">output_path</span><span class="o">=</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adata_chunk_id</span><span class="si">}</span><span class="s2">.mc.h5ad&quot;</span><span class="p">,</span>
+                <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
+                <span class="n">compression_opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="c1"># cov</span>
-            <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_csr_matrix_to_anndata</span><span class="p">,</span>
-                            <span class="n">matrix_paths</span><span class="o">=</span><span class="n">cur_cov_paths</span><span class="p">,</span>
-                            <span class="n">obs_names</span><span class="o">=</span><span class="n">cur_ids</span><span class="p">,</span>
-                            <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                            <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
-                            <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
-                            <span class="n">count_type</span><span class="o">=</span><span class="n">count_type</span><span class="p">,</span>
-                            <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
-                            <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
-                            <span class="n">output_path</span><span class="o">=</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">adata_chunk_id</span><span class="si">}</span><span class="s1">.cov.h5ad&#39;</span><span class="p">,</span>
-                            <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
-                            <span class="n">compression_opts</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                <span class="n">_csr_matrix_to_anndata</span><span class="p">,</span>
+                <span class="n">matrix_paths</span><span class="o">=</span><span class="n">cur_cov_paths</span><span class="p">,</span>
+                <span class="n">obs_names</span><span class="o">=</span><span class="n">cur_ids</span><span class="p">,</span>
+                <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span>
+                <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span>
+                <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
+                <span class="n">count_type</span><span class="o">=</span><span class="n">count_type</span><span class="p">,</span>
+                <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
+                <span class="n">strandness</span><span class="o">=</span><span class="n">strandness</span><span class="p">,</span>
+                <span class="n">output_path</span><span class="o">=</span><span class="n">output_prefix</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adata_chunk_id</span><span class="si">}</span><span class="s2">.cov.h5ad&quot;</span><span class="p">,</span>
+                <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
+                <span class="n">compression_opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span>
 
     <span class="c1"># remove temp file until everything finished</span>
-    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;rm&#39;</span><span class="p">,</span> <span class="s1">&#39;-f&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">mc_path_list</span> <span class="o">+</span> <span class="n">cov_path_list</span><span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">mc_path_list</span> <span class="o">+</span> <span class="n">cov_path_list</span><span class="p">)</span>
     <span class="k">return</span></div>
 
 
-<div class="viewcode-block" id="_transform_single_h5ad"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/h5ad/index.html#ALLCools.count_matrix.h5ad._transform_single_h5ad">[docs]</a><span class="k">def</span> <span class="nf">_transform_single_h5ad</span><span class="p">(</span><span class="n">adata_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span>
-                           <span class="n">bin_size</span><span class="p">,</span> <span class="n">step_size</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">compression</span><span class="p">):</span>
+<div class="viewcode-block" id="_transform_single_h5ad"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/h5ad/index.html#ALLCools.count_matrix.h5ad._transform_single_h5ad">[docs]</a><span class="k">def</span> <span class="nf">_transform_single_h5ad</span><span class="p">(</span>
+    <span class="n">adata_path</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="p">,</span>
+    <span class="n">chrom_size_path</span><span class="p">,</span>
+    <span class="n">bin_size</span><span class="p">,</span>
+    <span class="n">step_size</span><span class="p">,</span>
+    <span class="n">window_size</span><span class="p">,</span>
+    <span class="n">compression</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Resize non-overlap chrom bin count adata</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">step_size</span> <span class="o">%</span> <span class="n">bin_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">window_size</span> <span class="o">%</span> <span class="n">bin_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;step_size and window_size need to be integral multiple of bin_size&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;step_size and window_size need to be integral multiple of bin_size&quot;</span>
+        <span class="p">)</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">step_size</span> <span class="o">//</span> <span class="n">bin_size</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">window_size</span> <span class="o">//</span> <span class="n">bin_size</span>
 
     <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="n">adata_path</span><span class="p">)</span>
 
     <span class="c1"># somehow, I need to copy this out otherwise its super slow</span>
-    <span class="n">chrom_idx</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;chrom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">chrom_idx</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s2">&quot;chrom&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">csc_data</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
     <span class="n">chrom_dict</span> <span class="o">=</span> <span class="n">parse_chrom_size</span><span class="p">(</span><span class="n">chrom_size_path</span><span class="p">)</span>
 
     <span class="n">chrom_data_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">chrom_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="n">chrom_csc_data</span> <span class="o">=</span> <span class="n">csc_data</span><span class="p">[:,</span> <span class="n">chrom_idx</span> <span class="o">==</span> <span class="n">chrom</span><span class="p">]</span>
-        <span class="n">chunk_generator</span> <span class="o">=</span> <span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">csc_matrix</span><span class="p">(</span><span class="n">chrom_csc_data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-                           <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">chrom_csc_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">n</span><span class="p">))</span>
+        <span class="n">chunk_generator</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">ss</span><span class="o">.</span><span class="n">csc_matrix</span><span class="p">(</span><span class="n">chrom_csc_data</span><span class="p">[:,</span> <span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">chrom_csc_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="n">chrom_data</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">chunk_generator</span><span class="p">))</span>
         <span class="n">chrom_data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chrom_data</span><span class="p">)</span>
     <span class="n">total_data</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">chrom_data_list</span><span class="p">)</span>
 
     <span class="c1"># TODO add all necessary info in adata.uns</span>
-    <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">total_data</span><span class="p">,</span>
-                            <span class="n">obs</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span>
-                            <span class="n">var</span><span class="o">=</span><span class="n">generate_chrom_bin_bed_dataframe</span><span class="p">(</span><span class="n">chrom_size_path</span><span class="p">,</span>
-                                                                 <span class="n">window_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span>
-                                                                 <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">),</span>
-                            <span class="n">uns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">bin_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span>
-                                     <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
-                                     <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">))</span>
+    <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">total_data</span><span class="p">,</span>
+        <span class="n">obs</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span>
+        <span class="n">var</span><span class="o">=</span><span class="n">generate_chrom_bin_bed_dataframe</span><span class="p">(</span>
+            <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span>
+        <span class="p">),</span>
+        <span class="n">uns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">bin_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="o">=</span><span class="n">chrom_size_path</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
 
     <span class="n">adata</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output_path</span></div>
+
 
 <span class="c1"># TODO add parallel version to transform all adata chunks and mc and covs</span>
 </pre></div>

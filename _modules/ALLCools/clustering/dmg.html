@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1488,22 +1505,22 @@
 <span class="kn">from</span> <span class="nn">..mcds</span> <span class="kn">import</span> <span class="n">MCDS</span>
 
 
-<div class="viewcode-block" id="single_pairwise_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.single_pairwise_dmg">[docs]</a><span class="k">def</span> <span class="nf">single_pairwise_dmg</span><span class="p">(</span><span class="n">cluster_l</span><span class="p">,</span> <span class="n">cluster_r</span><span class="p">,</span>
-                        <span class="n">top_n</span><span class="p">,</span> <span class="n">adj_p_cutoff</span><span class="p">,</span>
-                        <span class="n">delta_rate_cutoff</span><span class="p">,</span>
-                        <span class="n">auroc_cutoff</span><span class="p">,</span>
-                        <span class="n">adata_dir</span><span class="p">,</span>
-                        <span class="n">dmg_dir</span><span class="p">):</span>
+<div class="viewcode-block" id="single_pairwise_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.single_pairwise_dmg">[docs]</a><span class="k">def</span> <span class="nf">single_pairwise_dmg</span><span class="p">(</span>
+    <span class="n">cluster_l</span><span class="p">,</span>
+    <span class="n">cluster_r</span><span class="p">,</span>
+    <span class="n">top_n</span><span class="p">,</span>
+    <span class="n">adj_p_cutoff</span><span class="p">,</span>
+    <span class="n">delta_rate_cutoff</span><span class="p">,</span>
+    <span class="n">auroc_cutoff</span><span class="p">,</span>
+    <span class="n">adata_dir</span><span class="p">,</span>
+    <span class="n">dmg_dir</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="c1"># load data</span>
-    <span class="n">adata_l</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">adata_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">cluster_l</span><span class="si">}</span><span class="s1">.h5ad&#39;</span><span class="p">)</span>
-    <span class="n">adata_r</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">adata_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">cluster_r</span><span class="si">}</span><span class="s1">.h5ad&#39;</span><span class="p">)</span>
+    <span class="n">adata_l</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adata_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">cluster_l</span><span class="si">}</span><span class="s2">.h5ad&quot;</span><span class="p">)</span>
+    <span class="n">adata_r</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adata_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">cluster_r</span><span class="si">}</span><span class="s2">.h5ad&quot;</span><span class="p">)</span>
 
     <span class="c1"># generate single adata for DMG</span>
-    <span class="n">adata</span> <span class="o">=</span> <span class="n">adata_l</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">adata_r</span><span class="p">,</span>
-                                <span class="n">batch_key</span><span class="o">=</span><span class="s1">&#39;groups&#39;</span><span class="p">,</span>
-                                <span class="n">index_unique</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">adata</span> <span class="o">=</span> <span class="n">adata_l</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">adata_r</span><span class="p">,</span> <span class="n">batch_key</span><span class="o">=</span><span class="s2">&quot;groups&quot;</span><span class="p">,</span> <span class="n">index_unique</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">adata</span><span class="o">.</span><span class="n">obs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">adata_l</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="n">adata_r</span><span class="o">.</span><span class="n">obs</span><span class="p">])</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">assert</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
@@ -1517,63 +1534,71 @@
     <span class="c1"># calc DMG</span>
     <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-        <span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">rank_genes_groups</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span>
-                                <span class="n">groupby</span><span class="o">=</span><span class="s1">&#39;groups&#39;</span><span class="p">,</span>
-                                <span class="n">n_genes</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span>
-                                <span class="n">method</span><span class="o">=</span><span class="s1">&#39;wilcoxon&#39;</span><span class="p">)</span>
-    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-        <span class="n">data_key</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">&#39;rank_genes_groups&#39;</span><span class="p">][</span><span class="n">data_key</span><span class="p">],</span>
-                               <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">cluster_r</span><span class="p">,</span> <span class="n">cluster_l</span><span class="p">])</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">data_key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">,</span> <span class="s1">&#39;pvals_adj&#39;</span><span class="p">]</span>
-    <span class="p">})</span>
+        <span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">rank_genes_groups</span><span class="p">(</span>
+            <span class="n">adata</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="s2">&quot;groups&quot;</span><span class="p">,</span> <span class="n">n_genes</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;wilcoxon&quot;</span>
+        <span class="p">)</span>
+    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="n">data_key</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s2">&quot;rank_genes_groups&quot;</span><span class="p">][</span><span class="n">data_key</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">cluster_r</span><span class="p">,</span> <span class="n">cluster_l</span><span class="p">]</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">data_key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="s2">&quot;pvals_adj&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
     <span class="n">dmg_result</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># annotate cluster_delta</span>
-    <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;left-right&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cluster_l</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">cluster_r</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;left-right&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cluster_l</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">cluster_r</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">l_mean</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">adata_l</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">adata_l</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
-    <span class="n">left_mean</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">l_mean</span><span class="p">)</span>
+    <span class="n">left_mean</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;names&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">l_mean</span><span class="p">)</span>
     <span class="n">r_mean</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">adata_r</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">adata_l</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
-    <span class="n">right_mean</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">r_mean</span><span class="p">)</span>
-    <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;delta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">left_mean</span> <span class="o">-</span> <span class="n">right_mean</span>
+    <span class="n">right_mean</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;names&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">r_mean</span><span class="p">)</span>
+    <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;delta&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">left_mean</span> <span class="o">-</span> <span class="n">right_mean</span>
 
     <span class="c1"># filter</span>
-    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;pvals_adj&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">adj_p_cutoff</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
-            <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;delta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">delta_rate_cutoff</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;hypo_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;delta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">cluster_l</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">cluster_r</span><span class="p">)</span>
-    <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;hyper_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;delta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">cluster_r</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">cluster_l</span><span class="p">)</span>
-    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;names&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span>
+        <span class="p">(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;pvals_adj&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">adj_p_cutoff</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;delta&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">delta_rate_cutoff</span><span class="p">)</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;hypo_in&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;delta&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">cluster_l</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">cluster_r</span>
+    <span class="p">)</span>
+    <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;hyper_in&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;delta&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">cluster_r</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">cluster_l</span>
+    <span class="p">)</span>
+    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
 
     <span class="c1"># add AUROC and filter again</span>
     <span class="n">auroc</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">gene</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">dmg_result</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
         <span class="n">yscore</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs_vector</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span>
-        <span class="n">ylabel</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;groups&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;hypo_in&#39;</span><span class="p">]</span>
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;groups&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;hypo_in&quot;</span><span class="p">]</span>
         <span class="n">score</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">ylabel</span><span class="p">,</span> <span class="n">yscore</span><span class="p">)</span>
         <span class="n">score</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">score</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span>
         <span class="n">auroc</span><span class="p">[</span><span class="n">gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
-    <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;AUROC&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">auroc</span><span class="p">)</span>
-    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;AUROC&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">auroc_cutoff</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;AUROC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">auroc</span><span class="p">)</span>
+    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;AUROC&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">auroc_cutoff</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="c1"># save</span>
-    <span class="n">dmg_result</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">dmg_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">cluster_l</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">cluster_r</span><span class="si">}</span><span class="s1">.hdf&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+    <span class="n">dmg_result</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dmg_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">cluster_l</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">cluster_r</span><span class="si">}</span><span class="s2">.hdf&quot;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
     <span class="k">return</span></div>
 
 
 <div class="viewcode-block" id="PairwiseDMG"><a class="viewcode-back" href="../../../api/ALLCools/clustering/index.html#ALLCools.clustering.dmg.PairwiseDMG">[docs]</a><span class="k">class</span> <span class="nc">PairwiseDMG</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">max_cell_per_group</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-                 <span class="n">top_n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
-                 <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
-                 <span class="n">delta_rate_cutoff</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
-                 <span class="n">auroc_cutoff</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
-                 <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                 <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">max_cell_per_group</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">top_n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+        <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+        <span class="n">delta_rate_cutoff</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">auroc_cutoff</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_obs_dim</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_var_dim</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obs_dim</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_var_dim</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_outlier_label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected_pairs</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1588,28 +1613,38 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
 
         <span class="c1"># internal</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_adata_dir</span> <span class="o">=</span> <span class="s1">&#39;_adata_for_dmg&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dmg_dir</span> <span class="o">=</span> <span class="s1">&#39;_dmg_results&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_adata_dir</span> <span class="o">=</span> <span class="s2">&quot;_adata_for_dmg&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dmg_dir</span> <span class="o">=</span> <span class="s2">&quot;_dmg_results&quot;</span>
 
-<div class="viewcode-block" id="PairwiseDMG.fit_predict"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.PairwiseDMG.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">groups</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="s1">&#39;gene&#39;</span><span class="p">,</span> <span class="n">outlier</span><span class="o">=</span><span class="s1">&#39;Outlier&#39;</span><span class="p">,</span> <span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                    <span class="n">selected_pairs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="PairwiseDMG.fit_predict"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.PairwiseDMG.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">groups</span><span class="p">,</span>
+        <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span>
+        <span class="n">var_dim</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span>
+        <span class="n">outlier</span><span class="o">=</span><span class="s2">&quot;Outlier&quot;</span><span class="p">,</span>
+        <span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">selected_pairs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Expect an cell-by-feature 2D xr.DataArray as input matrix.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Expect an cell-by-feature 2D xr.DataArray as input matrix.&quot;</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_obs_dim</span> <span class="o">=</span> <span class="n">obs_dim</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_var_dim</span> <span class="o">=</span> <span class="n">var_dim</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_outlier_label</span> <span class="o">=</span> <span class="n">outlier</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">x</span>
         <span class="n">use_order</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">obs_dim</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">use_order</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">use_order</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected_pairs</span> <span class="o">=</span> <span class="n">selected_pairs</span>
 
         <span class="c1"># save adata for each group to dict</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Generating cluster AnnData files&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generating cluster AnnData files&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_save_cluster_adata</span><span class="p">()</span>
 
         <span class="c1"># run pairwise DMG</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Computing pairwise DMG&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing pairwise DMG&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pairwise_dmg</span><span class="p">()</span>
 
         <span class="c1"># cleanup</span>
@@ -1635,17 +1670,21 @@
             <span class="k">if</span> <span class="n">cluster</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_outlier_label</span><span class="p">:</span>
                 <span class="c1"># skip outlier</span>
                 <span class="k">continue</span>
-            <span class="n">output_path</span> <span class="o">=</span> <span class="n">adata_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s1">.h5ad&#39;</span>
+            <span class="n">output_path</span> <span class="o">=</span> <span class="n">adata_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s2">.h5ad&quot;</span>
             <span class="k">if</span> <span class="n">output_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
                 <span class="k">continue</span>
             <span class="n">sub_series</span> <span class="o">=</span> <span class="n">sub_series</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">remove_unused_categories</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">sub_series</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_cell_per_group</span><span class="p">:</span>
-                <span class="n">sub_series</span> <span class="o">=</span> <span class="n">sub_series</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_cell_per_group</span><span class="p">,</span>
-                                               <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
-            <span class="n">cluster_adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span>
-                <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_obs_dim</span><span class="p">:</span> <span class="n">total_cells</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">sub_series</span><span class="o">.</span><span class="n">index</span><span class="p">)})</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-                                            <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;groups&#39;</span><span class="p">:</span> <span class="n">sub_series</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)}),</span>
-                                            <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_var_dim</span><span class="p">)))</span>
+                <span class="n">sub_series</span> <span class="o">=</span> <span class="n">sub_series</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">max_cell_per_group</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span>
+                <span class="p">)</span>
+            <span class="n">cluster_adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
+                <span class="n">X</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span>
+                    <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_obs_dim</span><span class="p">:</span> <span class="n">total_cells</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">sub_series</span><span class="o">.</span><span class="n">index</span><span class="p">)}</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="n">obs</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;groups&quot;</span><span class="p">:</span> <span class="n">sub_series</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)}),</span>
+                <span class="n">var</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_var_dim</span><span class="p">)),</span>
+            <span class="p">)</span>
             <span class="n">cluster_adata</span><span class="o">.</span><span class="n">write_h5ad</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
         <span class="k">return</span></div>
 
@@ -1655,107 +1694,156 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_pairs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">pairs</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">unique</span><span class="p">()),</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">i</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">unique</span><span class="p">()),</span> <span class="mi">2</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_outlier_label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i</span>
             <span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Using user provided gene pairs&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using user provided gene pairs&quot;</span><span class="p">)</span>
             <span class="n">pairs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_pairs</span>
-        <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">),</span> <span class="s1">&#39;pairwise DMGs&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">),</span> <span class="s2">&quot;pairwise DMGs&quot;</span><span class="p">)</span>
         <span class="n">n_pairs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">n_pairs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">))</span> <span class="k">as</span> <span class="n">exe</span><span class="p">:</span>
             <span class="n">step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_pairs</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span>
             <span class="n">futures</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">cluster_l</span><span class="p">,</span> <span class="n">cluster_r</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
-                <span class="n">f</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">single_pairwise_dmg</span><span class="p">,</span>
-                               <span class="n">cluster_l</span><span class="o">=</span><span class="n">cluster_l</span><span class="p">,</span>
-                               <span class="n">cluster_r</span><span class="o">=</span><span class="n">cluster_r</span><span class="p">,</span>
-                               <span class="n">top_n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">top_n</span><span class="p">,</span>
-                               <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">adj_p_cutoff</span><span class="p">,</span>
-                               <span class="n">delta_rate_cutoff</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delta_rate_cutoff</span><span class="p">,</span>
-                               <span class="n">auroc_cutoff</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auroc_cutoff</span><span class="p">,</span>
-                               <span class="n">adata_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_adata_dir</span><span class="p">,</span>
-                               <span class="n">dmg_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dmg_dir</span><span class="p">)</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                    <span class="n">single_pairwise_dmg</span><span class="p">,</span>
+                    <span class="n">cluster_l</span><span class="o">=</span><span class="n">cluster_l</span><span class="p">,</span>
+                    <span class="n">cluster_r</span><span class="o">=</span><span class="n">cluster_r</span><span class="p">,</span>
+                    <span class="n">top_n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">top_n</span><span class="p">,</span>
+                    <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">adj_p_cutoff</span><span class="p">,</span>
+                    <span class="n">delta_rate_cutoff</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delta_rate_cutoff</span><span class="p">,</span>
+                    <span class="n">auroc_cutoff</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auroc_cutoff</span><span class="p">,</span>
+                    <span class="n">adata_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_adata_dir</span><span class="p">,</span>
+                    <span class="n">dmg_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dmg_dir</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="n">futures</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">cluster_l</span><span class="p">,</span> <span class="n">cluster_r</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">)):</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">n_pairs</span><span class="si">}</span><span class="s1"> finished&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">n_pairs</span><span class="si">}</span><span class="s2"> finished&quot;</span><span class="p">)</span>
 
         <span class="c1"># summarize</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">pd</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">dmg_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.hdf&#39;</span><span class="p">)))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">pd</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">dmg_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.hdf&quot;</span><span class="p">)))</span></div>
 
 <div class="viewcode-block" id="PairwiseDMG._cleanup"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.PairwiseDMG._cleanup">[docs]</a>    <span class="k">def</span> <span class="nf">_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;rm&#39;</span><span class="p">,</span> <span class="s1">&#39;-rf&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_adata_dir</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dmg_dir</span><span class="p">)],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-rf&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_adata_dir</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dmg_dir</span><span class="p">)],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span></div>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="PairwiseDMG.aggregate_pairwise_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.PairwiseDMG.aggregate_pairwise_dmg">[docs]</a>    <span class="k">def</span> <span class="nf">aggregate_pairwise_dmg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adata</span><span class="p">,</span> <span class="n">groupby</span><span class="p">,</span> <span class="n">obsm</span><span class="o">=</span><span class="s1">&#39;X_pca&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PairwiseDMG.aggregate_pairwise_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.PairwiseDMG.aggregate_pairwise_dmg">[docs]</a>    <span class="k">def</span> <span class="nf">aggregate_pairwise_dmg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adata</span><span class="p">,</span> <span class="n">groupby</span><span class="p">,</span> <span class="n">obsm</span><span class="o">=</span><span class="s2">&quot;X_pca&quot;</span><span class="p">):</span>
         <span class="c1"># using the cluster centroids in PC space to calculate dendrogram</span>
         <span class="n">pc_matrix</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="n">obsm</span><span class="p">]</span>
-        <span class="n">pc_center</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pc_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">groupby</span><span class="p">])</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+        <span class="n">pc_center</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pc_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">groupby</span><span class="p">])</span>
+            <span class="o">.</span><span class="n">median</span><span class="p">()</span>
+        <span class="p">)</span>
         <span class="c1"># calculate cluster pairwise similarity</span>
         <span class="n">cluster_dist</span> <span class="o">=</span> <span class="n">pairwise_distances</span><span class="p">(</span><span class="n">pc_center</span><span class="p">)</span>
-        <span class="n">cluster_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cluster_dist</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">pc_center</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">pc_center</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">cluster_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="n">cluster_dist</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">pc_center</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">pc_center</span><span class="o">.</span><span class="n">index</span>
+        <span class="p">)</span>
         <span class="n">cluster_dist_norm</span> <span class="o">=</span> <span class="n">cluster_dist</span> <span class="o">/</span> <span class="n">cluster_dist</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
         <span class="n">cluster_sim</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cluster_dist_norm</span>
-        <span class="n">cluster_pair_sim_dict</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">cluster_sim</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span><span class="p">[</span><span class="s1">&#39;similarity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span><span class="p">[</span><span class="s1">&#39;left-right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">cluster_pair_sim_dict</span><span class="p">)</span>
+        <span class="n">cluster_pair_sim_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">cluster_sim</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span><span class="p">[</span><span class="s2">&quot;similarity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span><span class="p">[</span><span class="s2">&quot;left-right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+            <span class="n">cluster_pair_sim_dict</span>
+        <span class="p">)</span>
 
         <span class="c1"># aggregate pairwise DMG to get the cluster level DMG, use the similarity to normalize AUROC</span>
         <span class="n">cluster_dmgs</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">sub_df</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;hypo_in&#39;</span><span class="p">):</span>
-            <span class="n">values</span> <span class="o">=</span> <span class="n">sub_df</span><span class="p">[</span><span class="s1">&#39;AUROC&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">sub_df</span><span class="p">[</span><span class="s1">&#39;similarity&#39;</span><span class="p">]</span>
-            <span class="n">cluster_dmg_order</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">sub_df</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;hypo_in&quot;</span><span class="p">):</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">sub_df</span><span class="p">[</span><span class="s2">&quot;AUROC&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">sub_df</span><span class="p">[</span><span class="s2">&quot;similarity&quot;</span><span class="p">]</span>
+            <span class="n">cluster_dmg_order</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">cluster_dmgs</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_dmg_order</span>
         <span class="k">return</span> <span class="n">cluster_dmgs</span></div></div>
 
 
-<div class="viewcode-block" id="single_ovr_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.single_ovr_dmg">[docs]</a><span class="k">def</span> <span class="nf">single_ovr_dmg</span><span class="p">(</span><span class="n">cell_label</span><span class="p">,</span> <span class="n">mcds</span><span class="p">,</span> <span class="n">obs_dim</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">,</span> <span class="n">mc_type</span><span class="p">,</span> <span class="n">top_n</span><span class="p">,</span> <span class="n">adj_p_cutoff</span><span class="p">,</span> <span class="n">fc_cutoff</span><span class="p">,</span> <span class="n">auroc_cutoff</span><span class="p">):</span>
+<div class="viewcode-block" id="single_ovr_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.single_ovr_dmg">[docs]</a><span class="k">def</span> <span class="nf">single_ovr_dmg</span><span class="p">(</span>
+    <span class="n">cell_label</span><span class="p">,</span>
+    <span class="n">mcds</span><span class="p">,</span>
+    <span class="n">obs_dim</span><span class="p">,</span>
+    <span class="n">var_dim</span><span class="p">,</span>
+    <span class="n">mc_type</span><span class="p">,</span>
+    <span class="n">top_n</span><span class="p">,</span>
+    <span class="n">adj_p_cutoff</span><span class="p">,</span>
+    <span class="n">fc_cutoff</span><span class="p">,</span>
+    <span class="n">auroc_cutoff</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="c1"># get adata</span>
     <span class="n">cell_judge</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">obs_dim</span><span class="p">)</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">cell_label</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-    <span class="n">adata</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span><span class="n">obs_dim</span><span class="p">:</span> <span class="n">cell_judge</span><span class="p">})</span><span class="o">.</span><span class="n">get_adata</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span> <span class="n">select_hvf</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">adata</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span><span class="n">obs_dim</span><span class="p">:</span> <span class="n">cell_judge</span><span class="p">})</span><span class="o">.</span><span class="n">get_adata</span><span class="p">(</span>
+        <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span> <span class="n">select_hvf</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
     <span class="n">adata</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">index</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
-    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;groups&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell_label</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;groups&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell_label</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
 
     <span class="c1"># calc DMG</span>
     <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-        <span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">rank_genes_groups</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span>
-                                <span class="n">groupby</span><span class="o">=</span><span class="s1">&#39;groups&#39;</span><span class="p">,</span>
-                                <span class="n">n_genes</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span>
-                                <span class="n">method</span><span class="o">=</span><span class="s1">&#39;wilcoxon&#39;</span><span class="p">)</span>
-    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-        <span class="n">data_key</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">&#39;rank_genes_groups&#39;</span><span class="p">][</span><span class="n">data_key</span><span class="p">])</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">data_key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">,</span> <span class="s1">&#39;pvals_adj&#39;</span><span class="p">]</span>
-    <span class="p">})</span>
-    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="n">dmg_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">rank_genes_groups</span><span class="p">(</span>
+            <span class="n">adata</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="s2">&quot;groups&quot;</span><span class="p">,</span> <span class="n">n_genes</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;wilcoxon&quot;</span>
+        <span class="p">)</span>
+    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="n">data_key</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s2">&quot;rank_genes_groups&quot;</span><span class="p">][</span><span class="n">data_key</span><span class="p">])</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">data_key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="s2">&quot;pvals_adj&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span>
+        <span class="n">dmg_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1"># add fold change</span>
-    <span class="n">in_cells_mean</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;groups&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">),]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">out_cells_mean</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="o">~</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;groups&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">),]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">in_cells_mean</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="p">[</span>
+        <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;groups&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">),</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">out_cells_mean</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="p">[</span>
+        <span class="o">~</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;groups&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">),</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">fc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">in_cells_mean</span> <span class="o">/</span> <span class="n">out_cells_mean</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
-    <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;fc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+    <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;fc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;names&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
     <span class="c1"># filter</span>
-    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;pvals_adj&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">adj_p_cutoff</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
-            <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;fc&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">fc_cutoff</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;names&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span>
+        <span class="p">(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;pvals_adj&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">adj_p_cutoff</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;fc&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">fc_cutoff</span><span class="p">)</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
 
     <span class="c1"># add AUROC and filter again</span>
     <span class="n">auroc</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">gene</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">dmg_result</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
         <span class="n">yscore</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs_vector</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span>
-        <span class="n">ylabel</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;groups&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span>
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;groups&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span>
         <span class="n">score</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">ylabel</span><span class="p">,</span> <span class="n">yscore</span><span class="p">)</span>
         <span class="n">score</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">score</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span>
         <span class="n">auroc</span><span class="p">[</span><span class="n">gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
-    <span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;AUROC&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">auroc</span><span class="p">)</span>
-    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s1">&#39;AUROC&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">auroc_cutoff</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;AUROC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">auroc</span><span class="p">)</span>
+    <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;AUROC&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">auroc_cutoff</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">dmg_result</span></div>
 
 
-<div class="viewcode-block" id="one_vs_rest_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/index.html#ALLCools.clustering.dmg.one_vs_rest_dmg">[docs]</a><span class="k">def</span> <span class="nf">one_vs_rest_dmg</span><span class="p">(</span><span class="n">cell_meta</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">mcds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mcds_paths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                    <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="n">var_dim</span><span class="o">=</span><span class="s1">&#39;gene&#39;</span><span class="p">,</span> <span class="n">mc_type</span><span class="o">=</span><span class="s1">&#39;CHN&#39;</span><span class="p">,</span>
-                    <span class="n">top_n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">fc_cutoff</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">auroc_cutoff</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-                    <span class="n">max_cluster_cells</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">max_other_fold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="one_vs_rest_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/index.html#ALLCools.clustering.dmg.one_vs_rest_dmg">[docs]</a><span class="k">def</span> <span class="nf">one_vs_rest_dmg</span><span class="p">(</span>
+    <span class="n">cell_meta</span><span class="p">,</span>
+    <span class="n">group</span><span class="p">,</span>
+    <span class="n">mcds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">mcds_paths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span>
+    <span class="n">var_dim</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span>
+    <span class="n">mc_type</span><span class="o">=</span><span class="s2">&quot;CHN&quot;</span><span class="p">,</span>
+    <span class="n">top_n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">fc_cutoff</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">auroc_cutoff</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">max_cluster_cells</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">max_other_fold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculating cluster marker genes using one-vs-rest strategy.</span>
 
@@ -1785,7 +1873,8 @@
     <span class="k">elif</span> <span class="n">mcds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">tempfile</span>
         <span class="kn">import</span> <span class="nn">os</span>
-        <span class="n">tmpf</span><span class="p">,</span> <span class="n">tmpfn</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.tmp&#39;</span><span class="p">)</span>
+
+        <span class="n">tmpf</span><span class="p">,</span> <span class="n">tmpfn</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.tmp&quot;</span><span class="p">)</span>
         <span class="n">mcds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">tmpfn</span><span class="p">)</span>
         <span class="n">mcds_paths</span> <span class="o">=</span> <span class="n">tmpfn</span>
         <span class="n">tmp_created</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1797,27 +1886,29 @@
     <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">cpu</span><span class="p">)</span> <span class="k">as</span> <span class="n">exe</span><span class="p">:</span>
         <span class="n">futures</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">clusters</span><span class="p">):</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">_one_vs_rest_dmr_runner</span><span class="p">,</span>
-                           <span class="n">cell_meta</span><span class="o">=</span><span class="n">cell_meta</span><span class="p">,</span>
-                           <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">,</span>
-                           <span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span>
-                           <span class="n">max_cluster_cells</span><span class="o">=</span><span class="n">max_cluster_cells</span><span class="p">,</span>
-                           <span class="n">max_other_fold</span><span class="o">=</span><span class="n">max_other_fold</span><span class="p">,</span>
-                           <span class="n">mcds_paths</span><span class="o">=</span><span class="n">mcds_paths</span><span class="p">,</span>
-                           <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
-                           <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
-                           <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
-                           <span class="n">top_n</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span>
-                           <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="n">adj_p_cutoff</span><span class="p">,</span>
-                           <span class="n">fc_cutoff</span><span class="o">=</span><span class="n">fc_cutoff</span><span class="p">,</span>
-                           <span class="n">auroc_cutoff</span><span class="o">=</span><span class="n">auroc_cutoff</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                <span class="n">_one_vs_rest_dmr_runner</span><span class="p">,</span>
+                <span class="n">cell_meta</span><span class="o">=</span><span class="n">cell_meta</span><span class="p">,</span>
+                <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">,</span>
+                <span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span>
+                <span class="n">max_cluster_cells</span><span class="o">=</span><span class="n">max_cluster_cells</span><span class="p">,</span>
+                <span class="n">max_other_fold</span><span class="o">=</span><span class="n">max_other_fold</span><span class="p">,</span>
+                <span class="n">mcds_paths</span><span class="o">=</span><span class="n">mcds_paths</span><span class="p">,</span>
+                <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
+                <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
+                <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
+                <span class="n">top_n</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span>
+                <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="n">adj_p_cutoff</span><span class="p">,</span>
+                <span class="n">fc_cutoff</span><span class="o">=</span><span class="n">fc_cutoff</span><span class="p">,</span>
+                <span class="n">auroc_cutoff</span><span class="o">=</span><span class="n">auroc_cutoff</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">futures</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span>
 
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">):</span>
             <span class="n">cluster</span> <span class="o">=</span> <span class="n">futures</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s1"> Finished.&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s2"> Finished.&quot;</span><span class="p">)</span>
             <span class="n">dmg_df</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-            <span class="n">dmg_df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span>
+            <span class="n">dmg_df</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span>
             <span class="n">dmg_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dmg_df</span><span class="p">)</span>
     <span class="n">dmg_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dmg_table</span><span class="p">)</span>
 
@@ -1827,20 +1918,22 @@
     <span class="k">return</span> <span class="n">dmg_table</span></div>
 
 
-<div class="viewcode-block" id="_one_vs_rest_dmr_runner"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg._one_vs_rest_dmr_runner">[docs]</a><span class="k">def</span> <span class="nf">_one_vs_rest_dmr_runner</span><span class="p">(</span><span class="n">cell_meta</span><span class="p">,</span>
-                            <span class="n">group</span><span class="p">,</span>
-                            <span class="n">cluster</span><span class="p">,</span>
-                            <span class="n">max_cluster_cells</span><span class="p">,</span>
-                            <span class="n">max_other_fold</span><span class="p">,</span>
-                            <span class="n">mcds_paths</span><span class="p">,</span>
-                            <span class="n">obs_dim</span><span class="p">,</span>
-                            <span class="n">var_dim</span><span class="p">,</span>
-                            <span class="n">mc_type</span><span class="p">,</span>
-                            <span class="n">top_n</span><span class="p">,</span>
-                            <span class="n">adj_p_cutoff</span><span class="p">,</span>
-                            <span class="n">fc_cutoff</span><span class="p">,</span>
-                            <span class="n">auroc_cutoff</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Calculating cluster </span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s1"> DMGs.&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="_one_vs_rest_dmr_runner"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg._one_vs_rest_dmr_runner">[docs]</a><span class="k">def</span> <span class="nf">_one_vs_rest_dmr_runner</span><span class="p">(</span>
+    <span class="n">cell_meta</span><span class="p">,</span>
+    <span class="n">group</span><span class="p">,</span>
+    <span class="n">cluster</span><span class="p">,</span>
+    <span class="n">max_cluster_cells</span><span class="p">,</span>
+    <span class="n">max_other_fold</span><span class="p">,</span>
+    <span class="n">mcds_paths</span><span class="p">,</span>
+    <span class="n">obs_dim</span><span class="p">,</span>
+    <span class="n">var_dim</span><span class="p">,</span>
+    <span class="n">mc_type</span><span class="p">,</span>
+    <span class="n">top_n</span><span class="p">,</span>
+    <span class="n">adj_p_cutoff</span><span class="p">,</span>
+    <span class="n">fc_cutoff</span><span class="p">,</span>
+    <span class="n">auroc_cutoff</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating cluster </span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s2"> DMGs.&quot;</span><span class="p">)</span>
 
     <span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mcds_paths</span><span class="p">)</span>
     <span class="c1"># determine cells to use</span>
@@ -1855,15 +1948,17 @@
         <span class="n">out_cells</span> <span class="o">=</span> <span class="n">out_cells</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">max_other_cells</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="n">cell_label</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">in_cells</span><span class="p">,</span> <span class="n">out_cells</span><span class="p">])</span>
-    <span class="n">dmg_df</span> <span class="o">=</span> <span class="n">single_ovr_dmg</span><span class="p">(</span><span class="n">cell_label</span><span class="o">=</span><span class="n">cell_label</span><span class="p">,</span>
-                            <span class="n">mcds</span><span class="o">=</span><span class="n">mcds</span><span class="p">,</span>
-                            <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
-                            <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
-                            <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
-                            <span class="n">top_n</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span>
-                            <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="n">adj_p_cutoff</span><span class="p">,</span>
-                            <span class="n">fc_cutoff</span><span class="o">=</span><span class="n">fc_cutoff</span><span class="p">,</span>
-                            <span class="n">auroc_cutoff</span><span class="o">=</span><span class="n">auroc_cutoff</span><span class="p">)</span>
+    <span class="n">dmg_df</span> <span class="o">=</span> <span class="n">single_ovr_dmg</span><span class="p">(</span>
+        <span class="n">cell_label</span><span class="o">=</span><span class="n">cell_label</span><span class="p">,</span>
+        <span class="n">mcds</span><span class="o">=</span><span class="n">mcds</span><span class="p">,</span>
+        <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
+        <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
+        <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
+        <span class="n">top_n</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span>
+        <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="n">adj_p_cutoff</span><span class="p">,</span>
+        <span class="n">fc_cutoff</span><span class="o">=</span><span class="n">fc_cutoff</span><span class="p">,</span>
+        <span class="n">auroc_cutoff</span><span class="o">=</span><span class="n">auroc_cutoff</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">dmg_df</span></div>
 </pre></div>
 

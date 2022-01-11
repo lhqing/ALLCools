@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1483,32 +1500,43 @@
 <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
 
 
-<div class="viewcode-block" id="call_dmr_single_chrom"><a class="viewcode-back" href="../../../api/ALLCools/dmr/call_dmr/index.html#ALLCools.dmr.call_dmr.call_dmr_single_chrom">[docs]</a><span class="k">def</span> <span class="nf">call_dmr_single_chrom</span><span class="p">(</span><span class="n">dms_dir</span><span class="p">,</span>
-                          <span class="n">output_dir</span><span class="p">,</span>
-                          <span class="n">chrom</span><span class="p">,</span>
-                          <span class="n">p_value_cutoff</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
-                          <span class="n">frac_delta_cutoff</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
-                          <span class="n">max_dist</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
-                          <span class="n">residual_quantile</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
-                          <span class="n">corr_cutoff</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dms_dir</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="s1">&#39;dms&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="_call_dmr_single_chrom"><a class="viewcode-back" href="../../../api/ALLCools/dmr/call_dmr/index.html#ALLCools.dmr.call_dmr._call_dmr_single_chrom">[docs]</a><span class="k">def</span> <span class="nf">_call_dmr_single_chrom</span><span class="p">(</span>
+    <span class="n">dms_dir</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="p">,</span>
+    <span class="n">chrom</span><span class="p">,</span>
+    <span class="n">p_value_cutoff</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">frac_delta_cutoff</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">max_dist</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
+    <span class="n">residual_quantile</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+    <span class="n">corr_cutoff</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+    <span class="n">dms_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Call DMR for single chromosome, see call_dmr for doc&quot;&quot;&quot;</span>
+
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">RegionDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dms_dir</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="s2">&quot;dms&quot;</span><span class="p">)</span>
 
     <span class="c1"># open DMS dataset and select single chromosome, significant, large delta DMS</span>
-    <span class="n">p_value_judge</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;dms_p-values&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p_value_cutoff</span>
-    <span class="n">frac_delta</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_da_frac&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_da_frac&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+    <span class="n">p_value_judge</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;dms_p-values&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p_value_cutoff</span>
+    <span class="n">frac_delta</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_da_frac&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_da_frac&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span>
+        <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span>
+    <span class="p">)</span>
     <span class="n">frac_delta_judge</span> <span class="o">=</span> <span class="n">frac_delta</span> <span class="o">&gt;</span> <span class="n">frac_delta_cutoff</span>
-    <span class="n">chrom_judge</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_chrom&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">chrom</span>
+    <span class="n">chrom_judge</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_chrom&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">chrom</span>
     <span class="c1"># has to use load(scheduler=&#39;sync&#39;) when this function is called from multiprocess</span>
-    <span class="n">final_judge</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_value_judge</span> <span class="o">&amp;</span> <span class="n">frac_delta_judge</span> <span class="o">&amp;</span> <span class="n">chrom_judge</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">scheduler</span><span class="o">=</span><span class="s1">&#39;sync&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+    <span class="n">final_judge</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">p_value_judge</span> <span class="o">&amp;</span> <span class="n">frac_delta_judge</span> <span class="o">&amp;</span> <span class="n">chrom_judge</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">scheduler</span><span class="o">=</span><span class="s2">&quot;sync&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+    <span class="p">)</span>
     <span class="k">if</span> <span class="n">final_judge</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="c1"># No DMS remain</span>
         <span class="k">return</span>
 
     <span class="n">use_dms</span> <span class="o">=</span> <span class="n">final_judge</span><span class="p">[</span><span class="n">final_judge</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">dms</span><span class="o">=</span><span class="n">use_dms</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">scheduler</span><span class="o">=</span><span class="s1">&#39;sync&#39;</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">dms</span><span class="o">=</span><span class="n">use_dms</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">scheduler</span><span class="o">=</span><span class="s2">&quot;sync&quot;</span><span class="p">)</span>
 
     <span class="c1"># step 1: combine raw DMR windows based on distance</span>
-    <span class="n">dms_dist</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_pos&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_pos&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">dms_dist</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_pos&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_pos&quot;</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
     <span class="n">dist_judge</span> <span class="o">=</span> <span class="n">dms_dist</span> <span class="o">&lt;</span> <span class="n">max_dist</span>
     <span class="n">cur_dmr</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">dmr_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1516,26 +1544,26 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span><span class="p">:</span>
             <span class="n">cur_dmr</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">dmr_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_dmr</span><span class="p">)</span>
-    <span class="n">dmr_ids</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dmr_ids</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s1">&#39;dms&#39;</span><span class="p">))</span>
+    <span class="n">dmr_ids</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dmr_ids</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s2">&quot;dms&quot;</span><span class="p">))</span>
 
     <span class="c1"># step 2: determine correlation between adjacent DMS</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_da_frac&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s1">&#39;dms&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_da_frac&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s2">&quot;dms&quot;</span><span class="p">,</span> <span class="s2">&quot;sample&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1"># index of corr means the correlation of that DMS with the previous DMS</span>
     <span class="c1"># regardless of the genome distance</span>
     <span class="c1"># fill na value with 1, tend to not to split DMR due to nan</span>
-    <span class="n">corrs</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">corrwith</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">)</span>
+    <span class="n">corrs</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">corrwith</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pearson&quot;</span><span class="p">)</span>
     <span class="n">corrs</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="c1"># step 3: recalculate DMR windows based on both distance and correlation</span>
-    <span class="n">raw_dmr_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;dmr&#39;</span><span class="p">:</span> <span class="n">dmr_ids</span><span class="p">,</span> <span class="s1">&#39;corr&#39;</span><span class="p">:</span> <span class="n">corrs</span><span class="p">})</span>
+    <span class="n">raw_dmr_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;dmr&quot;</span><span class="p">:</span> <span class="n">dmr_ids</span><span class="p">,</span> <span class="s2">&quot;corr&quot;</span><span class="p">:</span> <span class="n">corrs</span><span class="p">})</span>
     <span class="n">dmr_dict</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">cur_dmr_id</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">dmr_id</span><span class="p">,</span> <span class="n">sub_df</span> <span class="ow">in</span> <span class="n">raw_dmr_table</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;dmr&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">dmr_id</span><span class="p">,</span> <span class="n">sub_df</span> <span class="ow">in</span> <span class="n">raw_dmr_table</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;dmr&quot;</span><span class="p">):</span>
         <span class="n">dmr_dict</span><span class="p">[</span><span class="n">sub_df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">cur_dmr_id</span>
         <span class="k">if</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">dms_id</span><span class="p">,</span> <span class="n">corr</span> <span class="ow">in</span> <span class="n">sub_df</span><span class="p">[</span><span class="s1">&#39;corr&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">dms_id</span><span class="p">,</span> <span class="n">corr</span> <span class="ow">in</span> <span class="n">sub_df</span><span class="p">[</span><span class="s2">&quot;corr&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">corr</span> <span class="o">&gt;</span> <span class="n">corr_cutoff</span><span class="p">:</span>
                     <span class="n">dmr_dict</span><span class="p">[</span><span class="n">dms_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_dmr_id</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1543,67 +1571,108 @@
                     <span class="n">dmr_dict</span><span class="p">[</span><span class="n">dms_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_dmr_id</span>
         <span class="n">cur_dmr_id</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">dmr_ids</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dmr_dict</span><span class="p">)</span>
-    <span class="n">dmr_ids</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;dms&#39;</span>
-    <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;dmr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmr_ids</span>
+    <span class="n">dmr_ids</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;dms&quot;</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;dmr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmr_ids</span>
 
     <span class="c1"># step 4: determine sample hypo or hyper in each DMS and DMR based on residual</span>
     <span class="k">if</span> <span class="n">residual_quantile</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
         <span class="n">residual_quantile</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">residual_quantile</span>
 
     <span class="n">residual_low_cutoff</span><span class="p">,</span> <span class="n">residual_high_cutoff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanquantile</span><span class="p">(</span>
-        <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_residual&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">residual_quantile</span><span class="p">,</span> <span class="n">residual_quantile</span><span class="p">]</span>
+        <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_residual&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">residual_quantile</span><span class="p">,</span> <span class="n">residual_quantile</span><span class="p">]</span>
     <span class="p">)</span>
 
-    <span class="n">lower_residual</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_residual&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">residual_low_cutoff</span>
-    <span class="n">higher_residual</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_residual&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">residual_high_cutoff</span>
+    <span class="n">lower_residual</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_residual&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">residual_low_cutoff</span>
+    <span class="n">higher_residual</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_residual&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">residual_high_cutoff</span>
     <span class="c1"># for each sample in each DMS</span>
     <span class="c1"># -1 means hypo methylation, 1 means hyper methylation, 0 mean no sig change</span>
     <span class="n">dms_states</span> <span class="o">=</span> <span class="n">lower_residual</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span> <span class="o">+</span> <span class="n">higher_residual</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
     <span class="c1"># dmr state judge</span>
-    <span class="n">dmr_states</span> <span class="o">=</span> <span class="n">dms_states</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;dmr&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="n">dmr_states</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dmr_states</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dmr_states</span><span class="p">)</span>
-    <span class="n">dmr_states</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dmr_states</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dmr_states</span><span class="p">)</span>
+    <span class="c1"># use mean to calculate the overall DMR state from DMS</span>
+    <span class="n">dmr_states</span> <span class="o">=</span> <span class="n">dms_states</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;dmr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="c1"># then mask inconsistent DMR states with the dms_ratio cutoff</span>
+    <span class="n">dmr_states</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dmr_states</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">dms_ratio</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dmr_states</span><span class="p">)</span>
+    <span class="c1"># then &quot;round&quot; the dmr_states, so it only contains -1, 0, 1</span>
+    <span class="n">dmr_states</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dmr_states</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dmr_states</span><span class="p">)</span>
+    <span class="n">dmr_states</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dmr_states</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dmr_states</span><span class="p">)</span>
 
     <span class="c1"># step 5: prepare dmr counts and fractions</span>
-    <span class="n">dmr_da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_da&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;dmr&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="n">dmr_frac</span> <span class="o">=</span> <span class="n">dmr_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">count_type</span><span class="o">=</span><span class="s1">&#39;mc&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="n">dmr_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">count_type</span><span class="o">=</span><span class="s1">&#39;cov&#39;</span><span class="p">)</span>
-    <span class="n">dmr_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span>
-        <span class="s1">&#39;dmr_da&#39;</span><span class="p">:</span> <span class="n">dmr_da</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span>
-        <span class="s1">&#39;dmr_state&#39;</span><span class="p">:</span> <span class="n">dmr_states</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">),</span>
-        <span class="s1">&#39;dmr_da_frac&#39;</span><span class="p">:</span> <span class="n">dmr_frac</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="p">})</span>
+    <span class="n">dmr_da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_da&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;dmr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="c1"># prevent overflow, which should be very very rare</span>
+    <span class="n">dmr_da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dmr_da</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">dmr_states</span><span class="p">)</span>
+    <span class="n">dmr_frac</span> <span class="o">=</span> <span class="n">dmr_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">count_type</span><span class="o">=</span><span class="s2">&quot;mc&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">dmr_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">count_type</span><span class="o">=</span><span class="s2">&quot;cov&quot;</span><span class="p">)</span>
+    <span class="n">dmr_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;dmr_da&quot;</span><span class="p">:</span> <span class="n">dmr_da</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span>
+            <span class="s2">&quot;dmr_state&quot;</span><span class="p">:</span> <span class="n">dmr_states</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">),</span>
+            <span class="s2">&quot;dmr_da_frac&quot;</span><span class="p">:</span> <span class="n">dmr_frac</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
 
     <span class="c1"># add n dms counts</span>
     <span class="n">n_dms</span> <span class="o">=</span> <span class="n">dmr_ids</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
-    <span class="n">n_dms</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;dmr&#39;</span>
-    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;ndms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_dms</span>
+    <span class="n">n_dms</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;dmr&quot;</span>
+    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;ndms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_dms</span>
     <span class="c1"># add genome coords</span>
-    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;chrom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">chrom</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dmr_ds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s1">&#39;dmr&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">)],</span>
-                                       <span class="n">index</span><span class="o">=</span><span class="n">dmr_ds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s1">&#39;dmr&#39;</span><span class="p">))</span>
-    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_pos&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dmr&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dms_pos&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;dmr&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span>
-    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;dmr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmr_ds</span><span class="p">[</span><span class="s1">&#39;chrom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">dmr_ds</span><span class="p">[</span><span class="s1">&#39;dmr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;chrom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">chrom</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dmr_ds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s2">&quot;dmr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">)],</span>
+        <span class="n">index</span><span class="o">=</span><span class="n">dmr_ds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="s2">&quot;dmr&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dmr&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dmr&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span>
+    <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;dmr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">dmr_ds</span><span class="p">[</span><span class="s2">&quot;chrom&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;-&quot;</span>
+        <span class="o">+</span> <span class="n">dmr_ds</span><span class="p">[</span><span class="s2">&quot;dmr&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="p">)</span>
 
     <span class="c1"># rename none dimensional coords to prevent collision when merge with other ds</span>
-    <span class="n">dmr_ds</span> <span class="o">=</span> <span class="n">dmr_ds</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;dmr_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dmr_ds</span><span class="o">.</span><span class="n">dims</span><span class="p">})</span>
+    <span class="n">dmr_ds</span> <span class="o">=</span> <span class="n">dmr_ds</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;dmr_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">dmr_ds</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dmr_ds</span><span class="o">.</span><span class="n">dims</span><span class="p">}</span>
+    <span class="p">)</span>
 
-    <span class="n">output_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">chrom</span><span class="si">}</span><span class="s1">.zarr&#39;</span>
+    <span class="n">output_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">chrom</span><span class="si">}</span><span class="s2">.zarr&quot;</span>
     <span class="n">dmr_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output_path</span></div>
 
 
-<div class="viewcode-block" id="call_dmr"><a class="viewcode-back" href="../../../api/ALLCools/dmr/index.html#ALLCools.dmr.call_dmr.call_dmr">[docs]</a><span class="k">def</span> <span class="nf">call_dmr</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span>
-             <span class="n">p_value_cutoff</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
-             <span class="n">frac_delta_cutoff</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
-             <span class="n">max_dist</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
-             <span class="n">residual_quantile</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
-             <span class="n">corr_cutoff</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
-             <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-             <span class="n">chrom</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="call_dmr"><a class="viewcode-back" href="../../../api/ALLCools/dmr/index.html#ALLCools.dmr.call_dmr.call_dmr">[docs]</a><span class="k">def</span> <span class="nf">call_dmr</span><span class="p">(</span>
+    <span class="n">output_dir</span><span class="p">,</span>
+    <span class="n">replicate_label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">p_value_cutoff</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">frac_delta_cutoff</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">max_dist</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
+    <span class="n">residual_quantile</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+    <span class="n">corr_cutoff</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+    <span class="n">dms_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">chrom</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Call DMR from DMS results.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    output_dir</span>
+<span class="sd">    replicate_label</span>
+<span class="sd">    p_value_cutoff</span>
+<span class="sd">    frac_delta_cutoff</span>
+<span class="sd">    max_dist</span>
+<span class="sd">    residual_quantile</span>
+<span class="sd">    corr_cutoff</span>
+<span class="sd">    dms_ratio</span>
+<span class="sd">    cpu</span>
+<span class="sd">    chrom</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">chrom</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">chrom_size_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/chrom_sizes.txt&#39;</span>
+        <span class="n">chrom_size_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/chrom_sizes.txt&quot;</span>
         <span class="kn">from</span> <span class="nn">..utilities</span> <span class="kn">import</span> <span class="n">parse_chrom_size</span>
+
         <span class="n">chroms</span> <span class="o">=</span> <span class="n">parse_chrom_size</span><span class="p">(</span><span class="n">chrom_size_path</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -1611,21 +1680,24 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">chroms</span> <span class="o">=</span> <span class="p">[</span><span class="n">chrom</span><span class="p">]</span>
 
-    <span class="n">chunk_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/.dmr_chunk&#39;</span>
-    <span class="n">dmr_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/dmr&#39;</span>
+    <span class="n">chunk_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/.dmr_chunk&quot;</span>
+    <span class="n">dmr_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/dmr&quot;</span>
 
     <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">cpu</span><span class="p">)</span> <span class="k">as</span> <span class="n">exe</span><span class="p">:</span>
         <span class="n">futures</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">chunk_i</span><span class="p">,</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chroms</span><span class="p">):</span>
-            <span class="n">future</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">call_dmr_single_chrom</span><span class="p">,</span>
-                                <span class="n">dms_dir</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/dms&#39;</span><span class="p">,</span>
-                                <span class="n">output_dir</span><span class="o">=</span><span class="n">chunk_dir</span><span class="p">,</span>
-                                <span class="n">chrom</span><span class="o">=</span><span class="n">chrom</span><span class="p">,</span>
-                                <span class="n">p_value_cutoff</span><span class="o">=</span><span class="n">p_value_cutoff</span><span class="p">,</span>
-                                <span class="n">frac_delta_cutoff</span><span class="o">=</span><span class="n">frac_delta_cutoff</span><span class="p">,</span>
-                                <span class="n">max_dist</span><span class="o">=</span><span class="n">max_dist</span><span class="p">,</span>
-                                <span class="n">residual_quantile</span><span class="o">=</span><span class="n">residual_quantile</span><span class="p">,</span>
-                                <span class="n">corr_cutoff</span><span class="o">=</span><span class="n">corr_cutoff</span><span class="p">)</span>
+            <span class="n">future</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                <span class="n">_call_dmr_single_chrom</span><span class="p">,</span>
+                <span class="n">dms_dir</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">/dms&quot;</span><span class="p">,</span>
+                <span class="n">output_dir</span><span class="o">=</span><span class="n">chunk_dir</span><span class="p">,</span>
+                <span class="n">chrom</span><span class="o">=</span><span class="n">chrom</span><span class="p">,</span>
+                <span class="n">p_value_cutoff</span><span class="o">=</span><span class="n">p_value_cutoff</span><span class="p">,</span>
+                <span class="n">frac_delta_cutoff</span><span class="o">=</span><span class="n">frac_delta_cutoff</span><span class="p">,</span>
+                <span class="n">max_dist</span><span class="o">=</span><span class="n">max_dist</span><span class="p">,</span>
+                <span class="n">residual_quantile</span><span class="o">=</span><span class="n">residual_quantile</span><span class="p">,</span>
+                <span class="n">corr_cutoff</span><span class="o">=</span><span class="n">corr_cutoff</span><span class="p">,</span>
+                <span class="n">dms_ratio</span><span class="o">=</span><span class="n">dms_ratio</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span> <span class="o">=</span> <span class="n">chunk_i</span>
 
         <span class="n">chunks_to_write</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1634,24 +1706,30 @@
             <span class="n">output_path</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
             <span class="n">chunks_to_write</span><span class="p">[</span><span class="n">chunk_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_path</span>
 
-    <span class="n">write_ordered_chunks</span><span class="p">(</span><span class="n">chunks_to_write</span><span class="p">,</span>
-                         <span class="n">final_path</span><span class="o">=</span><span class="n">dmr_dir</span><span class="p">,</span>
-                         <span class="n">append_dim</span><span class="o">=</span><span class="s1">&#39;dmr&#39;</span><span class="p">,</span>
-                         <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;zarr&#39;</span><span class="p">,</span>
-                         <span class="n">coord_dtypes</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rm -rf </span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">write_ordered_chunks</span><span class="p">(</span>
+        <span class="n">chunks_to_write</span><span class="p">,</span>
+        <span class="n">final_path</span><span class="o">=</span><span class="n">dmr_dir</span><span class="p">,</span>
+        <span class="n">append_dim</span><span class="o">=</span><span class="s2">&quot;dmr&quot;</span><span class="p">,</span>
+        <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;zarr&quot;</span><span class="p">,</span>
+        <span class="n">coord_dtypes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rm -rf </span><span class="si">{</span><span class="n">chunk_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">update_region_ds_config</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-                            <span class="n">new_dataset_dim</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;dmr&#39;</span><span class="p">:</span> <span class="s1">&#39;dmr&#39;</span><span class="p">},</span>
-                            <span class="n">change_region_dim</span><span class="o">=</span><span class="s1">&#39;dmr&#39;</span><span class="p">)</span>
+    <span class="n">update_region_ds_config</span><span class="p">(</span>
+        <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">new_dataset_dim</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dmr&quot;</span><span class="p">:</span> <span class="s2">&quot;dmr&quot;</span><span class="p">},</span> <span class="n">change_region_dim</span><span class="o">=</span><span class="s2">&quot;dmr&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">replicate_label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">collapse_replicates</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">replicate_label</span><span class="p">)</span>
     <span class="k">return</span></div>
 
 
-<div class="viewcode-block" id="collapse_replicates"><a class="viewcode-back" href="../../../api/ALLCools/dmr/index.html#ALLCools.dmr.call_dmr.collapse_replicates">[docs]</a><span class="k">def</span> <span class="nf">collapse_replicates</span><span class="p">(</span><span class="n">region_ds</span><span class="p">,</span> <span class="n">replicate_label</span><span class="p">,</span> <span class="n">state_da</span><span class="o">=</span><span class="s1">&#39;dmr_state&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="collapse_replicates"><a class="viewcode-back" href="../../../api/ALLCools/dmr/index.html#ALLCools.dmr.call_dmr.collapse_replicates">[docs]</a><span class="k">def</span> <span class="nf">collapse_replicates</span><span class="p">(</span><span class="n">region_ds</span><span class="p">,</span> <span class="n">replicate_label</span><span class="p">,</span> <span class="n">state_da</span><span class="o">=</span><span class="s2">&quot;dmr_state&quot;</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">replicate_label</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="c1"># assume the replicate label is provided as a series or dataarray that can be added into coords</span>
-        <span class="n">region_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;replicate_label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">replicate_label</span>
-        <span class="n">replicate_label_name</span> <span class="o">=</span> <span class="s1">&#39;replicate_label&#39;</span>
+        <span class="c1"># assume the replicate label is provided as a series or dataarray</span>
+        <span class="c1"># that can be added into coords</span>
+        <span class="n">region_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;replicate_label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">replicate_label</span>
+        <span class="n">replicate_label_name</span> <span class="o">=</span> <span class="s2">&quot;replicate_label&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">replicate_label_name</span> <span class="o">=</span> <span class="n">replicate_label</span>
 
@@ -1664,18 +1742,20 @@
     <span class="k">for</span> <span class="n">rep</span><span class="p">,</span> <span class="n">sub_da</span> <span class="ow">in</span> <span class="n">region_ds</span><span class="p">[</span><span class="n">state_da</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">replicate_label_name</span><span class="p">):</span>
         <span class="n">std</span> <span class="o">=</span> <span class="n">sub_da</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">sample_dim</span><span class="p">)</span>
         <span class="c1"># std == 0 means all replicates having same state</span>
-        <span class="n">reduced_da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">std</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
-                              <span class="n">sub_da</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span><span class="n">sample_dim</span><span class="p">:</span> <span class="n">sub_da</span><span class="p">[</span><span class="n">sample_dim</span><span class="p">][</span><span class="mi">0</span><span class="p">]}),</span>
-                              <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+        <span class="n">reduced_da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">std</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sub_da</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span><span class="n">sample_dim</span><span class="p">:</span> <span class="n">sub_da</span><span class="p">[</span><span class="n">sample_dim</span><span class="p">][</span><span class="mi">0</span><span class="p">]}),</span> <span class="mi">0</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
         <span class="n">collapsed</span><span class="p">[</span><span class="n">rep</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduced_da</span>
     <span class="n">collapsed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">collapsed</span><span class="p">)</span>
-    <span class="n">collapsed</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">sample_dim</span><span class="si">}</span><span class="s1">_collapsed&#39;</span>
+    <span class="n">collapsed</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sample_dim</span><span class="si">}</span><span class="s2">_collapsed&quot;</span>
     <span class="n">collapsed</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">region_ds</span><span class="o">.</span><span class="n">region_dim</span>
 
-    <span class="n">region_ds</span><span class="p">[</span><span class="s1">&#39;dmr_state_collapsed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">collapsed</span>
+    <span class="n">region_ds</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">state_da</span><span class="si">}</span><span class="s2">_collapsed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">collapsed</span>
     <span class="k">if</span> <span class="n">region_ds</span><span class="o">.</span><span class="n">location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">region_ds</span><span class="p">[[</span><span class="s1">&#39;dmr_state_collapsed&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_ds</span><span class="o">.</span><span class="n">location</span><span class="si">}</span><span class="s1">/dmr/&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Collapsed sample state added in exist RegionDS at </span><span class="si">{</span><span class="n">region_ds</span><span class="o">.</span><span class="n">location</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">region_ds</span><span class="p">[[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">state_da</span><span class="si">}</span><span class="s2">_collapsed&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_ds</span><span class="o">.</span><span class="n">location</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">region_ds</span><span class="o">.</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Collapsed sample state added in exist RegionDS at </span><span class="si">{</span><span class="n">region_ds</span><span class="o">.</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span></div>
 </pre></div>
 

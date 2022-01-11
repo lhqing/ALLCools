@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -134,7 +135,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -330,13 +331,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -351,7 +352,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -660,15 +661,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -718,24 +710,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -874,67 +848,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -942,8 +855,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -967,8 +880,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1028,8 +941,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1071,8 +984,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1195,8 +1108,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1229,8 +1142,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1247,6 +1160,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1254,8 +1271,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1493,13 +1510,13 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ALLCools.clustering.feature_selection.feature_enrichment.calculate_enrichment_score">
-     calculate_enrichment_score
+    <a class="reference internal nav-link" href="#ALLCools.clustering.feature_selection.feature_enrichment._calculate_enrichment_score">
+     _calculate_enrichment_score
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ALLCools.clustering.feature_selection.feature_enrichment.calculate_enrichment_score_cytograph">
-     calculate_enrichment_score_cytograph
+    <a class="reference internal nav-link" href="#ALLCools.clustering.feature_selection.feature_enrichment._calculate_enrichment_score_cytograph">
+     _calculate_enrichment_score_cytograph
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -1545,13 +1562,13 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ALLCools.clustering.feature_selection.feature_enrichment.calculate_enrichment_score">
-     calculate_enrichment_score
+    <a class="reference internal nav-link" href="#ALLCools.clustering.feature_selection.feature_enrichment._calculate_enrichment_score">
+     _calculate_enrichment_score
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ALLCools.clustering.feature_selection.feature_enrichment.calculate_enrichment_score_cytograph">
-     calculate_enrichment_score_cytograph
+    <a class="reference internal nav-link" href="#ALLCools.clustering.feature_selection.feature_enrichment._calculate_enrichment_score_cytograph">
+     _calculate_enrichment_score_cytograph
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -1585,41 +1602,63 @@
 <div class="section" id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="ALLCools.clustering.feature_selection.feature_enrichment.calculate_enrichment_score">
-<span class="sig-name descname"><span class="pre">calculate_enrichment_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/clustering/feature_selection/feature_enrichment.html#calculate_enrichment_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.feature_selection.feature_enrichment.calculate_enrichment_score" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enrichment score modified from Zeisel et al. 2018 Cell for normalized methylation fractions</p>
+<dt class="sig sig-object py" id="ALLCools.clustering.feature_selection.feature_enrichment._calculate_enrichment_score">
+<span class="sig-name descname"><span class="pre">_calculate_enrichment_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/clustering/feature_selection/feature_enrichment.html#_calculate_enrichment_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.feature_selection.feature_enrichment._calculate_enrichment_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enrichment score modified from <span id="id1">[<a class="reference internal" href="../../../../../project_info/citation.html#id10">Zeisel <em>et al.</em>, 2018</a>]</span> for normalized methylation fractions</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ALLCools.clustering.feature_selection.feature_enrichment.calculate_enrichment_score_cytograph">
-<span class="sig-name descname"><span class="pre">calculate_enrichment_score_cytograph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/clustering/feature_selection/feature_enrichment.html#calculate_enrichment_score_cytograph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.feature_selection.feature_enrichment.calculate_enrichment_score_cytograph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enrichment score algorithm from Zeisel et al. 2018 Cell</p>
+<dt class="sig sig-object py" id="ALLCools.clustering.feature_selection.feature_enrichment._calculate_enrichment_score_cytograph">
+<span class="sig-name descname"><span class="pre">_calculate_enrichment_score_cytograph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/clustering/feature_selection/feature_enrichment.html#_calculate_enrichment_score_cytograph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.feature_selection.feature_enrichment._calculate_enrichment_score_cytograph" title="Permalink to this definition">¶</a></dt>
+<dd><p>The original CEF algorithm from <span id="id2">[<a class="reference internal" href="../../../../../project_info/citation.html#id10">Zeisel <em>et al.</em>, 2018</a>]</span> for count based data (RNA, ATAC)</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ALLCools.clustering.feature_selection.feature_enrichment._plot_enrichment_result">
 <span class="sig-name descname"><span class="pre">_plot_enrichment_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qvals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enrichment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">null_enrichment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/clustering/feature_selection/feature_enrichment.html#_plot_enrichment_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.feature_selection.feature_enrichment._plot_enrichment_result" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Make some plots for the p-value, q-value and # of CEFs distribution</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ALLCools.clustering.feature_selection.feature_enrichment._aggregate_enrichment">
 <span class="sig-name descname"><span class="pre">_aggregate_enrichment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enrichment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qvals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_col</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/clustering/feature_selection/feature_enrichment.html#_aggregate_enrichment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.feature_selection.feature_enrichment._aggregate_enrichment" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Aggregate enrichment results, calculate q values</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ALLCools.clustering.feature_selection.feature_enrichment.cluster_enriched_features">
-<span class="sig-name descname"><span class="pre">cluster_enriched_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stat_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mc'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/clustering/feature_selection/feature_enrichment.html#cluster_enriched_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.feature_selection.feature_enrichment.cluster_enriched_features" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<span class="sig-name descname"><span class="pre">cluster_enriched_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://anndata.readthedocs.io/en/stable/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.7.7.dev1+g33006dc)"><span class="pre">anndata.AnnData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stat_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mc'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/clustering/feature_selection/feature_enrichment.html#cluster_enriched_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.feature_selection.feature_enrichment.cluster_enriched_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate top Cluster Enriched Features (CEF) from per-cell normalized dataset.
+An post-clustering feature selection step adapted from <span id="id3">[<a class="reference internal" href="../../../../../project_info/citation.html#id10">Zeisel <em>et al.</em>, 2018</a>, <a class="reference internal" href="../../../../../project_info/citation.html#id9">La Manno <em>et al.</em>, 2021</a>]</span>
+and their great [cytograph2](<a class="reference external" href="https://github.com/linnarsson-lab/cytograph2">https://github.com/linnarsson-lab/cytograph2</a>) package.
+For details about CEF calculation, read the methods of <span id="id4">[<a class="reference internal" href="../../../../../project_info/citation.html#id10">Zeisel <em>et al.</em>, 2018</a>]</span>. Note that
+in original paper, they look for cluster-specific highly expressed genes as CEFs;
+for methylation, we are looking for hypo-methylation as CEFs, so the score and test is reversed.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>adata</strong> – </p></li>
-<li><p><strong>cluster_col</strong> – </p></li>
-<li><p><strong>top_n</strong> – </p></li>
-<li><p><strong>alpha</strong> – </p></li>
-<li><p><strong>stat_plot</strong> – </p></li>
-<li><p><strong>method</strong> – “mc” for methylation fraction,
-“rna” and “atac” for the original algorithm for the RNA</p></li>
+<li><p><strong>adata</strong> – adata containing per-cell normalized values.
+For methylation fraction, the value need to be 1-centered
+(1 means cell’s average methylation), like those produced by
+<a class="reference internal" href="../../../mcds/mcds/index.html#ALLCools.mcds.mcds.MCDS.add_mc_frac" title="ALLCools.mcds.mcds.MCDS.add_mc_frac"><code class="xref py py-func docutils literal notranslate"><span class="pre">ALLCools.mcds.mcds.MCDS.add_mc_frac()</span></code></a> with <cite>normalize_per_cell=True</cite>.
+For RNA and ATAC, you can use per cell normalized counts.
+Do not log transform the data before running this function</p></li>
+<li><p><strong>cluster_col</strong> – The name of categorical variable in adata.obs</p></li>
+<li><p><strong>top_n</strong> – Select top N CEFs for each cluster</p></li>
+<li><p><strong>alpha</strong> – FDR corrected q-value cutoff</p></li>
+<li><p><strong>stat_plot</strong> – Whether making some summary plots for the CEF calculation</p></li>
+<li><p><strong>method</strong> – “mc” for methylation CEF (look for hypo-methylation),
+“rna” and “atac” for the RNA and ATAC or any count based data
+(use the original cytograph algorithm, look for higher value)</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Modify adata inplace, adding a dictionary in adata.uns called f”{cluster_col}_feature_enrichment”</em></p></li>
+<li><p><em>The dictionary contains “qvals” (np.ndarray cluster-by-feature enrichment score q-value) and</em></p></li>
+<li><p><em>”cluster_order” (cluster order of the “qvals”)</em></p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

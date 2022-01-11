@@ -18,4 +18,16 @@ Module Contents
 
 .. py:function:: call_dms(output_dir, allc_paths, samples, chrom_size_path, cpu=1, max_row_count=50, n_permute=3000, min_pvalue=0.01, region=None)
 
+   Call DMS from multiple ALLC files
+
+   :param output_dir:
+   :param allc_paths:
+   :param samples:
+   :param chrom_size_path:
+   :param cpu:
+   :param max_row_count:
+   :param n_permute:
+   :param min_pvalue:
+   :param region:
+
 

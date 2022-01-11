@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1486,15 +1503,27 @@
 <span class="kn">from</span> <span class="nn">.utilities</span> <span class="kn">import</span> <span class="n">tight_hue_range</span>
 
 
-<div class="viewcode-block" id="sunbrust"><a class="viewcode-back" href="../../../api/ALLCools/plot/sunburst/index.html#ALLCools.plot.sunbrust">[docs]</a><span class="k">def</span> <span class="nf">sunbrust</span><span class="p">(</span><span class="n">pie_data</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span>
-             <span class="n">hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hue_portion</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-             <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-             <span class="n">colorbar_kws</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">inner_radius</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">outer_radius</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-             <span class="n">anno_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text_anno</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">anno_layer_size</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-             <span class="n">col_color_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">startangle</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">anno_ang_min</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-             <span class="n">anno_border</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">text_expend</span><span class="o">=</span><span class="mf">1.05</span><span class="p">,</span>
-             <span class="n">uniform_section</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="sunbrust"><a class="viewcode-back" href="../../../api/ALLCools/plot/sunburst/index.html#ALLCools.plot.sunbrust">[docs]</a><span class="k">def</span> <span class="nf">sunbrust</span><span class="p">(</span>
+    <span class="n">pie_data</span><span class="p">,</span>
+    <span class="n">ax</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">hue_portion</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span>
+    <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">colorbar_kws</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">inner_radius</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">outer_radius</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">anno_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">text_anno</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">,</span>
+    <span class="n">anno_layer_size</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">col_color_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">startangle</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">anno_ang_min</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">anno_border</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
+    <span class="n">text_expend</span><span class="o">=</span><span class="mf">1.05</span><span class="p">,</span>
+    <span class="n">uniform_section</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">order_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1537,7 +1566,7 @@
             <span class="n">hue_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hue</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">pie_data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="n">colors</span><span class="o">.</span><span class="n">Colormap</span><span class="p">):</span>
             <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap</span><span class="p">)</span>
-        <span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+        <span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
 
         <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">tight_hue_range</span><span class="p">(</span><span class="n">hue_data</span><span class="p">,</span> <span class="n">hue_portion</span><span class="p">)</span>
         <span class="n">norm</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1545,29 +1574,47 @@
         <span class="n">col_color_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">pie_data</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">reduce_col_data</span> <span class="o">=</span> <span class="n">hue_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-            <span class="n">col_color_dict</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">mapper</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-                                        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">reduce_col_data</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span>
+            <span class="n">col_color_dict</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="n">mapper</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">reduce_col_data</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span>
+            <span class="p">}</span>
 
         <span class="c1"># make colorbar</span>
         <span class="k">if</span> <span class="n">colorbar</span><span class="p">:</span>
-            <span class="n">_colorbar_kws</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;labelsize&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-                             <span class="s1">&#39;linewidth&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-                             <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="s1">&#39;vertical&#39;</span><span class="p">}</span>
+            <span class="n">_colorbar_kws</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;labelsize&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="s2">&quot;linewidth&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+                <span class="s2">&quot;orientation&quot;</span><span class="p">:</span> <span class="s2">&quot;vertical&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
             <span class="k">if</span> <span class="n">colorbar_kws</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">colorbar_kws</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">_colorbar_kws</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">colorbar_kws</span><span class="p">)</span>
-            <span class="n">bbox_to_anchor</span> <span class="o">=</span> <span class="n">_colorbar_kws</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;bbox_to_anchor&#39;</span><span class="p">)</span>
+            <span class="n">bbox_to_anchor</span> <span class="o">=</span> <span class="n">_colorbar_kws</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;bbox_to_anchor&quot;</span><span class="p">)</span>
 
-            <span class="n">cax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;3%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;25%&quot;</span><span class="p">,</span>
-                             <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">,</span> <span class="n">borderpad</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                             <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="n">bbox_to_anchor</span><span class="p">)</span>
-            <span class="n">cax</span> <span class="o">=</span> <span class="n">plot_colorbar</span><span class="p">(</span><span class="n">cax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">cnorm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">hue_norm</span><span class="o">=</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">),</span>
-                                <span class="n">label</span><span class="o">=</span><span class="n">hue_data</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">_colorbar_kws</span><span class="p">)</span>
+            <span class="n">cax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
+                <span class="n">ax</span><span class="p">,</span>
+                <span class="n">width</span><span class="o">=</span><span class="s2">&quot;3%&quot;</span><span class="p">,</span>
+                <span class="n">height</span><span class="o">=</span><span class="s2">&quot;25%&quot;</span><span class="p">,</span>
+                <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
+                <span class="n">borderpad</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="n">bbox_to_anchor</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">cax</span> <span class="o">=</span> <span class="n">plot_colorbar</span><span class="p">(</span>
+                <span class="n">cax</span><span class="p">,</span>
+                <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+                <span class="n">cnorm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+                <span class="n">hue_norm</span><span class="o">=</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">),</span>
+                <span class="n">label</span><span class="o">=</span><span class="n">hue_data</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">_colorbar_kws</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">return_axes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cax</span><span class="p">)</span>
 
     <span class="c1"># prepare data</span>
     <span class="k">if</span> <span class="n">uniform_section</span><span class="p">:</span>
-        <span class="n">dedup_groups</span> <span class="o">=</span> <span class="n">pie_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">pie_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+        <span class="n">dedup_groups</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">pie_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">pie_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+        <span class="p">)</span>
         <span class="n">dedup_groups</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dedup_groups</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">pie_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
         <span class="n">pie_data</span> <span class="o">=</span> <span class="n">dedup_groups</span>
 
@@ -1602,8 +1649,14 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">previous_order</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-                    <span class="n">section_subs</span> <span class="o">=</span> <span class="n">pie_data</span><span class="p">[</span><span class="n">pie_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">section</span><span class="p">][</span><span class="n">col_name</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-                    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col_pie_data</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">section_subs</span><span class="p">))</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+                    <span class="n">section_subs</span> <span class="o">=</span> <span class="n">pie_data</span><span class="p">[</span><span class="n">pie_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">section</span><span class="p">][</span>
+                        <span class="n">col_name</span>
+                    <span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+                    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">col_pie_data</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">section_subs</span><span class="p">))</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+                            <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
                 <span class="n">_ordered_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
                 <span class="n">previous_order</span> <span class="o">=</span> <span class="n">_ordered_data</span>
 
@@ -1611,15 +1664,23 @@
         <span class="n">pie_color</span> <span class="o">=</span> <span class="n">_col_color_dict</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pie_color</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">pie_color</span> <span class="o">=</span> <span class="p">[</span><span class="n">pie_color</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">_ordered_data</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">_ordered_data</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">cur_radius</span><span class="p">,</span>
-               <span class="n">colors</span><span class="o">=</span><span class="n">pie_color</span><span class="p">,</span> <span class="n">startangle</span><span class="o">=</span><span class="n">startangle</span><span class="p">,</span>
-               <span class="n">wedgeprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="n">layer_size</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span>
+            <span class="n">_ordered_data</span><span class="p">,</span>
+            <span class="n">radius</span><span class="o">=</span><span class="n">cur_radius</span><span class="p">,</span>
+            <span class="n">colors</span><span class="o">=</span><span class="n">pie_color</span><span class="p">,</span>
+            <span class="n">startangle</span><span class="o">=</span><span class="n">startangle</span><span class="p">,</span>
+            <span class="n">wedgeprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="n">layer_size</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
 
         <span class="c1"># plot an additional thin layer to anchor anno label</span>
         <span class="k">if</span> <span class="n">anno_col</span> <span class="o">==</span> <span class="n">col</span><span class="p">:</span>
-            <span class="n">wedges</span><span class="p">,</span> <span class="n">texts</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">_ordered_data</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">outer_radius</span> <span class="o">+</span> <span class="n">anno_layer_size</span><span class="p">,</span>
-                                   <span class="n">colors</span><span class="o">=</span><span class="n">pie_color</span><span class="p">,</span> <span class="n">startangle</span><span class="o">=</span><span class="n">startangle</span><span class="p">,</span>
-                                   <span class="n">wedgeprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="n">anno_layer_size</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">))</span>
+            <span class="n">wedges</span><span class="p">,</span> <span class="n">texts</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span>
+                <span class="n">_ordered_data</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">outer_radius</span> <span class="o">+</span> <span class="n">anno_layer_size</span><span class="p">,</span>
+                <span class="n">colors</span><span class="o">=</span><span class="n">pie_color</span><span class="p">,</span>
+                <span class="n">startangle</span><span class="o">=</span><span class="n">startangle</span><span class="p">,</span>
+                <span class="n">wedgeprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="n">anno_layer_size</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
             <span class="k">if</span> <span class="n">text_anno</span><span class="p">:</span>
                 <span class="n">anno_wedges</span> <span class="o">=</span> <span class="n">wedges</span>
                 <span class="n">anno_names</span> <span class="o">=</span> <span class="n">_ordered_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -1629,15 +1690,23 @@
         <span class="n">delta_ang</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">theta2</span> <span class="o">-</span> <span class="n">p</span><span class="o">.</span><span class="n">theta1</span>
         <span class="k">if</span> <span class="n">delta_ang</span> <span class="o">&lt;</span> <span class="n">anno_ang_min</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="n">ang</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">theta2</span> <span class="o">-</span> <span class="n">p</span><span class="o">.</span><span class="n">theta1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">theta1</span>
+        <span class="n">ang</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">theta2</span> <span class="o">-</span> <span class="n">p</span><span class="o">.</span><span class="n">theta1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">theta1</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">ang</span><span class="p">))</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">ang</span><span class="p">))</span>
 
-        <span class="k">if</span> <span class="n">text_anno</span> <span class="o">==</span> <span class="s1">&#39;anno_box&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">text_anno</span> <span class="o">==</span> <span class="s2">&quot;anno_box&quot;</span><span class="p">:</span>
             <span class="c1"># wedges annotation</span>
-            <span class="n">bbox_props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round,pad=0.2&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;#FFFFFF88&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;#00000022&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.72</span><span class="p">)</span>
-            <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xycoords</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#00000055&#39;</span><span class="p">),</span>
-                      <span class="n">bbox</span><span class="o">=</span><span class="n">bbox_props</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+            <span class="n">bbox_props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round,pad=0.2&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;#FFFFFF88&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;#00000022&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.72</span>
+            <span class="p">)</span>
+            <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">xycoords</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span>
+                <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span>
+                <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#00000055&quot;</span><span class="p">),</span>
+                <span class="n">bbox</span><span class="o">=</span><span class="n">bbox_props</span><span class="p">,</span>
+                <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="c1"># separate all y</span>
             <span class="n">y_niche</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">anno_border</span><span class="p">,</span> <span class="n">anno_border</span><span class="p">,</span> <span class="n">anno_border</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span>
             <span class="n">allow_y_niche</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">y_niche</span><span class="p">))</span>
@@ -1646,28 +1715,44 @@
             <span class="n">connectionstyle</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;angle,angleA=0,angleB=</span><span class="si">{</span><span class="n">ang</span><span class="si">}</span><span class="s2">,rad=5&quot;</span>
             <span class="n">kw</span><span class="p">[</span><span class="s2">&quot;arrowprops&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;connectionstyle&quot;</span><span class="p">:</span> <span class="n">connectionstyle</span><span class="p">})</span>
 
-            <span class="n">suitable_niche</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">allow_y_niche</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="o">-</span> <span class="n">anno_border</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
+            <span class="n">suitable_niche</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">allow_y_niche</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="o">-</span> <span class="n">anno_border</span> <span class="o">*</span> <span class="n">y</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
             <span class="n">suitable_niche</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">allow_y_niche</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="n">suitable_niche</span><span class="p">]</span>
             <span class="n">y_niche</span> <span class="o">=</span> <span class="n">allow_y_niche</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">suitable_niche</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">anno_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">anno_border</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y_niche</span><span class="p">),</span>
-                        <span class="n">horizontalalignment</span><span class="o">=</span><span class="n">horizontalalignment</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">text_anno</span> <span class="o">==</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span>
-            <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+                <span class="n">anno_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+                <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">anno_border</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y_niche</span><span class="p">),</span>
+                <span class="n">horizontalalignment</span><span class="o">=</span><span class="n">horizontalalignment</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kw</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">text_anno</span> <span class="o">==</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span>
+            <span class="n">ha</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span>
             <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># left side label</span>
                 <span class="n">ang</span> <span class="o">+=</span> <span class="mi">180</span>
-                <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;right&#39;</span>
+                <span class="n">ha</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span>
             <span class="k">if</span> <span class="n">ang</span> <span class="o">&gt;</span> <span class="mi">180</span><span class="p">:</span>
                 <span class="c1"># so label will not be up-side-down</span>
                 <span class="n">ang</span> <span class="o">=</span> <span class="n">ang</span> <span class="o">-</span> <span class="mi">360</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">text_expend</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="n">text_expend</span><span class="p">,</span> <span class="n">anno_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-                    <span class="n">fontdict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">withdash</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                    <span class="n">rotation</span><span class="o">=</span><span class="n">ang</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="n">ha</span><span class="p">,</span>
-                    <span class="n">rotation_mode</span><span class="o">=</span><span class="s1">&#39;anchor&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+                <span class="n">x</span> <span class="o">*</span> <span class="n">text_expend</span><span class="p">,</span>
+                <span class="n">y</span> <span class="o">*</span> <span class="n">text_expend</span><span class="p">,</span>
+                <span class="n">anno_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="n">fontdict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">withdash</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">rotation</span><span class="o">=</span><span class="n">ang</span><span class="p">,</span>
+                <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                <span class="n">ha</span><span class="o">=</span><span class="n">ha</span><span class="p">,</span>
+                <span class="n">rotation_mode</span><span class="o">=</span><span class="s2">&quot;anchor&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">elif</span> <span class="n">text_anno</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;text_anno can only be &quot;text&quot;, &quot;anno_box&quot; or None, got </span><span class="si">{</span><span class="n">text_anno</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;text_anno can only be &quot;text&quot;, &quot;anno_box&quot; or None, got </span><span class="si">{</span><span class="n">text_anno</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">return_axes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">ax</span>

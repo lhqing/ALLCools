@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1498,11 +1515,11 @@
 <span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
 
 <span class="c1"># create logger</span>
-<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;harmonypy&#39;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../../api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;harmonypy&quot;</span><span class="p">)</span></div>
 <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
 <div class="viewcode-block" id="ch"><a class="viewcode-back" href="../../../api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.ch">[docs]</a><span class="n">ch</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span></div>
 <span class="n">ch</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-<div class="viewcode-block" id="formatter"><a class="viewcode-back" href="../../../api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.formatter">[docs]</a><span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="formatter"><a class="viewcode-back" href="../../../api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.formatter">[docs]</a><span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span></div>
 <span class="n">ch</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
 <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
 
@@ -1512,51 +1529,51 @@
     <span class="k">if</span> <span class="n">n_pcs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">n_pcs</span> <span class="o">=</span> <span class="n">pcs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">fake_adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">pcs</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-    <span class="n">fake_adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;X_pca&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pcs</span>
+    <span class="n">fake_adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s2">&quot;X_pca&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pcs</span>
     <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">fake_adata</span><span class="p">,</span> <span class="n">n_pcs</span><span class="o">=</span><span class="n">n_pcs</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">)</span>
     <span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">leiden</span><span class="p">(</span><span class="n">fake_adata</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="n">resolution</span><span class="p">)</span>
 
     <span class="c1"># get centroid</span>
-    <span class="n">pc_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">fake_adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;X_pca&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">fake_adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
-    <span class="n">centroids</span> <span class="o">=</span> <span class="n">pc_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">fake_adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;leiden&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="n">pc_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">fake_adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s2">&quot;X_pca&quot;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">fake_adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
+    <span class="n">centroids</span> <span class="o">=</span> <span class="n">pc_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">fake_adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;leiden&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">centroids</span><span class="p">,</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="run_harmony"><a class="viewcode-back" href="../../../api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.run_harmony">[docs]</a><span class="k">def</span> <span class="nf">run_harmony</span><span class="p">(</span>
-        <span class="n">data_mat</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-        <span class="n">meta_data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
-        <span class="n">vars_use</span><span class="p">,</span>
-        <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">lamb</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-        <span class="n">nclust</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">tau</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">block_size</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-        <span class="n">max_iter_harmony</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-        <span class="n">max_iter_kmeans</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-        <span class="n">epsilon_cluster</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
-        <span class="n">epsilon_harmony</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
-        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">init_method</span><span class="o">=</span><span class="s1">&#39;kmeans&#39;</span><span class="p">,</span>
-        <span class="n">n_pcs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
-        <span class="n">resolution</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
-        <span class="n">leiden_input</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span>
+    <span class="n">data_mat</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">meta_data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">vars_use</span><span class="p">,</span>
+    <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">lamb</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">nclust</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">tau</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">block_size</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">max_iter_harmony</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">max_iter_kmeans</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">epsilon_cluster</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+    <span class="n">epsilon_harmony</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">init_method</span><span class="o">=</span><span class="s2">&quot;kmeans&quot;</span><span class="p">,</span>
+    <span class="n">n_pcs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">leiden_input</span><span class="o">=</span><span class="s2">&quot;origin&quot;</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Run Harmony.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Run Harmony.&quot;&quot;&quot;</span>
     <span class="n">N</span> <span class="o">=</span> <span class="n">meta_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">data_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">N</span><span class="p">:</span>
         <span class="n">data_mat</span> <span class="o">=</span> <span class="n">data_mat</span><span class="o">.</span><span class="n">T</span>
 
-    <span class="k">assert</span> <span class="n">data_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">N</span><span class="p">,</span> \
-        <span class="s2">&quot;data_mat and meta_data do not have the same number of cells&quot;</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">data_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">N</span>
+    <span class="p">),</span> <span class="s2">&quot;data_mat and meta_data do not have the same number of cells&quot;</span>
 
     <span class="k">if</span> <span class="n">nclust</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">nclust</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">N</span> <span class="o">/</span> <span class="mf">30.0</span><span class="p">),</span> <span class="mi">100</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">init_method</span> <span class="o">==</span> <span class="s1">&#39;kmeans&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">init_method</span> <span class="o">==</span> <span class="s2">&quot;kmeans&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">float</span> <span class="ow">and</span> <span class="n">nclust</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">nclust</span><span class="p">)</span>
 
@@ -1564,7 +1581,7 @@
         <span class="n">vars_use</span> <span class="o">=</span> <span class="p">[</span><span class="n">vars_use</span><span class="p">]</span>
 
     <span class="n">phi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">meta_data</span><span class="p">[</span><span class="n">vars_use</span><span class="p">])</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
-    <span class="n">phi_n</span> <span class="o">=</span> <span class="n">meta_data</span><span class="p">[</span><span class="n">vars_use</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;unique&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">phi_n</span> <span class="o">=</span> <span class="n">meta_data</span><span class="p">[</span><span class="n">vars_use</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;unique&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">theta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">phi_n</span><span class="p">),</span> <span class="n">phi_n</span><span class="p">)</span>
@@ -1573,8 +1590,7 @@
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">phi_n</span><span class="p">):</span>
         <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="n">theta</span><span class="p">],</span> <span class="n">phi_n</span><span class="p">)</span>
 
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">phi_n</span><span class="p">),</span> \
-        <span class="s2">&quot;each batch variable must have a theta&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">phi_n</span><span class="p">),</span> <span class="s2">&quot;each batch variable must have a theta&quot;</span>
 
     <span class="k">if</span> <span class="n">lamb</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">lamb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">phi_n</span><span class="p">),</span> <span class="n">phi_n</span><span class="p">)</span>
@@ -1583,17 +1599,16 @@
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">lamb</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">phi_n</span><span class="p">):</span>
         <span class="n">lamb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="n">lamb</span><span class="p">],</span> <span class="n">phi_n</span><span class="p">)</span>
 
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">lamb</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">phi_n</span><span class="p">),</span> \
-        <span class="s2">&quot;each batch variable must have a lambda&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">lamb</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">phi_n</span><span class="p">),</span> <span class="s2">&quot;each batch variable must have a lambda&quot;</span>
 
     <span class="c1"># Number of items in each category.</span>
     <span class="n">N_b</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="c1"># Proportion of items in each category.</span>
     <span class="n">Pr_b</span> <span class="o">=</span> <span class="n">N_b</span> <span class="o">/</span> <span class="n">N</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">init_method</span> <span class="o">==</span> <span class="s1">&#39;kmeans&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">tau</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">init_method</span> <span class="o">==</span> <span class="s2">&quot;kmeans&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">tau</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
         <span class="c1"># tau = 0 by default</span>
-        <span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">N_b</span> <span class="o">/</span> <span class="p">(</span><span class="n">nclust</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">N_b</span> <span class="o">/</span> <span class="p">(</span><span class="n">nclust</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
 
     <span class="n">lamb_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">lamb</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 
@@ -1602,9 +1617,25 @@
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
 
     <span class="n">ho</span> <span class="o">=</span> <span class="n">Harmony</span><span class="p">(</span>
-        <span class="n">data_mat</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi_moe</span><span class="p">,</span> <span class="n">Pr_b</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">max_iter_harmony</span><span class="p">,</span> <span class="n">max_iter_kmeans</span><span class="p">,</span>
-        <span class="n">epsilon_cluster</span><span class="p">,</span> <span class="n">epsilon_harmony</span><span class="p">,</span> <span class="n">nclust</span><span class="p">,</span> <span class="n">block_size</span><span class="p">,</span> <span class="n">lamb_mat</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span>
-        <span class="n">init_method</span><span class="p">,</span> <span class="n">n_pcs</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="p">,</span> <span class="n">resolution</span><span class="p">,</span> <span class="n">leiden_input</span>
+        <span class="n">data_mat</span><span class="p">,</span>
+        <span class="n">phi</span><span class="p">,</span>
+        <span class="n">phi_moe</span><span class="p">,</span>
+        <span class="n">Pr_b</span><span class="p">,</span>
+        <span class="n">sigma</span><span class="p">,</span>
+        <span class="n">theta</span><span class="p">,</span>
+        <span class="n">max_iter_harmony</span><span class="p">,</span>
+        <span class="n">max_iter_kmeans</span><span class="p">,</span>
+        <span class="n">epsilon_cluster</span><span class="p">,</span>
+        <span class="n">epsilon_harmony</span><span class="p">,</span>
+        <span class="n">nclust</span><span class="p">,</span>
+        <span class="n">block_size</span><span class="p">,</span>
+        <span class="n">lamb_mat</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">,</span>
+        <span class="n">init_method</span><span class="p">,</span>
+        <span class="n">n_pcs</span><span class="p">,</span>
+        <span class="n">n_neighbors</span><span class="p">,</span>
+        <span class="n">resolution</span><span class="p">,</span>
+        <span class="n">leiden_input</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">ho</span></div>
@@ -1612,10 +1643,26 @@
 
 <div class="viewcode-block" id="Harmony"><a class="viewcode-back" href="../../../api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.Harmony">[docs]</a><span class="k">class</span> <span class="nc">Harmony</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Phi</span><span class="p">,</span> <span class="n">Phi_moe</span><span class="p">,</span> <span class="n">Pr_b</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span>
-            <span class="n">theta</span><span class="p">,</span> <span class="n">max_iter_harmony</span><span class="p">,</span> <span class="n">max_iter_kmeans</span><span class="p">,</span>
-            <span class="n">epsilon_kmeans</span><span class="p">,</span> <span class="n">epsilon_harmony</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">block_size</span><span class="p">,</span>
-            <span class="n">lamb</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">init_method</span><span class="p">,</span> <span class="n">n_pcs</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="p">,</span> <span class="n">resolution</span><span class="p">,</span> <span class="n">leiden_input</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">Z</span><span class="p">,</span>
+        <span class="n">Phi</span><span class="p">,</span>
+        <span class="n">Phi_moe</span><span class="p">,</span>
+        <span class="n">Pr_b</span><span class="p">,</span>
+        <span class="n">sigma</span><span class="p">,</span>
+        <span class="n">theta</span><span class="p">,</span>
+        <span class="n">max_iter_harmony</span><span class="p">,</span>
+        <span class="n">max_iter_kmeans</span><span class="p">,</span>
+        <span class="n">epsilon_kmeans</span><span class="p">,</span>
+        <span class="n">epsilon_harmony</span><span class="p">,</span>
+        <span class="n">K</span><span class="p">,</span>
+        <span class="n">block_size</span><span class="p">,</span>
+        <span class="n">lamb</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">,</span>
+        <span class="n">init_method</span><span class="p">,</span>
+        <span class="n">n_pcs</span><span class="p">,</span>
+        <span class="n">n_neighbors</span><span class="p">,</span>
+        <span class="n">resolution</span><span class="p">,</span>
+        <span class="n">leiden_input</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Z_corr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Z_orig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
@@ -1671,23 +1718,23 @@
 
 <div class="viewcode-block" id="Harmony.init_cluster"><a class="viewcode-back" href="../../../api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.Harmony.init_cluster">[docs]</a>    <span class="k">def</span> <span class="nf">init_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Start with cluster centroids</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_method</span> <span class="o">==</span> <span class="s1">&#39;kmeans&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_method</span> <span class="o">==</span> <span class="s2">&quot;kmeans&quot;</span><span class="p">:</span>
             <span class="n">km</span> <span class="o">=</span> <span class="n">kmeans</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Z_cos</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">,</span> <span class="nb">iter</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z_orig</span><span class="o">.</span><span class="n">T</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_input</span> <span class="o">==</span> <span class="s1">&#39;origin&#39;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z_cos</span><span class="o">.</span><span class="n">T</span>
-            <span class="n">km</span> <span class="o">=</span> <span class="n">leiden_centroids</span><span class="p">(</span><span class="n">_input</span><span class="p">,</span>
-                                  <span class="n">n_pcs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_pcs</span><span class="p">,</span>
-                                  <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
-                                  <span class="n">resolution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
+            <span class="n">_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z_orig</span><span class="o">.</span><span class="n">T</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_input</span> <span class="o">==</span> <span class="s2">&quot;origin&quot;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z_cos</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">km</span> <span class="o">=</span> <span class="n">leiden_centroids</span><span class="p">(</span>
+                <span class="n">_input</span><span class="p">,</span>
+                <span class="n">n_pcs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_pcs</span><span class="p">,</span>
+                <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
+                <span class="n">resolution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="c1"># update K</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">=</span> <span class="n">km</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Using leiden centroids as init, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="si">}</span><span class="s1"> clusters&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using leiden centroids as init, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="si">}</span><span class="s2"> clusters&quot;</span><span class="p">)</span>
 
             <span class="c1"># need to reinit sigma and theta because K changed</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">float</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
-
-
 
         <span class="bp">self</span><span class="o">.</span><span class="n">allocate_buffers</span><span class="p">()</span>
 
@@ -1713,7 +1760,7 @@
         <span class="c1"># Entropy</span>
         <span class="n">_entropy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">safe_entropy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span>
         <span class="c1"># Cross Entropy</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
         <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">O</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
         <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Phi</span><span class="p">)</span>
@@ -1734,16 +1781,22 @@
             <span class="c1"># STEP 2: Regress out covariates</span>
             <span class="c1"># self.moe_correct_ridge()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">Z_cos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z_corr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Phi_Rk</span> <span class="o">=</span> <span class="n">moe_correct_ridge</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">Z_orig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z_cos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z_corr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">Phi_Rk</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Phi_moe</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lamb</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Z_orig</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Z_cos</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Z_corr</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Phi_Rk</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Phi_moe</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lamb</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="c1"># STEP 3: Check for convergence</span>
             <span class="n">converged</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_convergence</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">converged</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                        <span class="s2">&quot;Converged after </span><span class="si">{}</span><span class="s2"> iteration</span><span class="si">{}</span><span class="s2">&quot;</span>
-                            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                        <span class="s2">&quot;Converged after </span><span class="si">{}</span><span class="s2"> iteration</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
                     <span class="p">)</span>
                 <span class="k">break</span>
         <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">converged</span><span class="p">:</span>
@@ -1793,9 +1846,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">[:,</span> <span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">[:,</span> <span class="n">b</span><span class="p">],</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">O</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">),</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">Phi</span><span class="p">[:,</span> <span class="n">b</span><span class="p">]</span>
-                <span class="p">)</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">O</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">Phi</span><span class="p">[:,</span> <span class="n">b</span><span class="p">]</span>
+                <span class="p">),</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">[:,</span> <span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">[:,</span> <span class="n">b</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">[:,</span> <span class="n">b</span><span class="p">],</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="c1"># STEP 3: Put cells back</span>

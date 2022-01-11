@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1508,19 +1525,19 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/ALLCools/api/index.html#ALLCools.api._">_ (in module ALLCools.api)</a>, <a href="api/ALLCools/api/index.html#id0">[1]</a>, <a href="api/ALLCools/api/index.html#id1">[2]</a>, <a href="api/ALLCools/api/index.html#id2">[3]</a>, <a href="api/ALLCools/api/index.html#id3">[4]</a>, <a href="api/ALLCools/api/index.html#id4">[5]</a>, <a href="api/ALLCools/api/index.html#id5">[6]</a>, <a href="api/ALLCools/api/index.html#id6">[7]</a>, <a href="api/ALLCools/api/index.html#id7">[8]</a>, <a href="api/ALLCools/api/index.html#id8">[9]</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.Session.__add_data_panel">__add_data_panel() (Session method)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.Session.__add_data_panel">__add_data_panel() (Session method)</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.Session.__add_feature_panel">__add_feature_panel() (Session method)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.Session.__add_feature_panel">__add_feature_panel() (Session method)</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.Session.__add_other_routine">__add_other_routine() (Session method)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.Session.__add_other_routine">__add_other_routine() (Session method)</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.Session.__add_refseq_gene">__add_refseq_gene() (Session method)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.Session.__add_refseq_gene">__add_refseq_gene() (Session method)</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.Session.__add_resource">__add_resource() (Session method)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.Session.__add_resource">__add_resource() (Session method)</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.Session.__add_resources">__add_resources() (Session method)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.Session.__add_resources">__add_resources() (Session method)</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.Session.__add_sequence_track">__add_sequence_track() (Session method)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.Session.__add_sequence_track">__add_sequence_track() (Session method)</a>
 </li>
       <li><a href="api/ALLCools/_open/index.html#ALLCools._open.Closing.__del__">__del__() (Closing method)</a>
 </li>
@@ -1572,9 +1589,15 @@
 </li>
       <li><a href="api/ALLCools/count_matrix/h5ad/index.html#ALLCools.count_matrix.h5ad._bin_count_table_to_csr_npz">_bin_count_table_to_csr_npz() (in module ALLCools.count_matrix.h5ad)</a>
 </li>
+      <li><a href="api/ALLCools/clustering/feature_selection/feature_enrichment/index.html#ALLCools.clustering.feature_selection.feature_enrichment._calculate_enrichment_score">_calculate_enrichment_score() (in module ALLCools.clustering.feature_selection.feature_enrichment)</a>
+</li>
+      <li><a href="api/ALLCools/clustering/feature_selection/feature_enrichment/index.html#ALLCools.clustering.feature_selection.feature_enrichment._calculate_enrichment_score_cytograph">_calculate_enrichment_score_cytograph() (in module ALLCools.clustering.feature_selection.feature_enrichment)</a>
+</li>
       <li><a href="api/ALLCools/dmr/rms_test/index.html#ALLCools.dmr.rms_test._calculate_goodness_of_fit">_calculate_goodness_of_fit() (in module ALLCools.dmr.rms_test)</a>
 </li>
       <li><a href="api/ALLCools/pseudo_cell/pseudo_cell_kmeans/index.html#ALLCools.pseudo_cell.pseudo_cell_kmeans._calculate_pseudo_group">_calculate_pseudo_group() (in module ALLCools.pseudo_cell.pseudo_cell_kmeans)</a>
+</li>
+      <li><a href="api/ALLCools/dmr/call_dmr/index.html#ALLCools.dmr.call_dmr._call_dmr_single_chrom">_call_dmr_single_chrom() (in module ALLCools.dmr.call_dmr)</a>
 </li>
       <li><a href="api/ALLCools/_extract_allc/index.html#ALLCools._extract_allc._check_out_format_parameter">_check_out_format_parameter() (in module ALLCools._extract_allc)</a>
 </li>
@@ -1622,10 +1645,10 @@
 </li>
       <li><a href="api/ALLCools/_bam_to_allc/index.html#ALLCools._bam_to_allc._get_bam_chrom_index">_get_bam_chrom_index() (in module ALLCools._bam_to_allc)</a>
 </li>
-      <li><a href="api/ALLCools/_bam_to_allc/index.html#ALLCools._bam_to_allc._get_chromosome_sequence_upper">_get_chromosome_sequence_upper() (in module ALLCools._bam_to_allc)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/ALLCools/_bam_to_allc/index.html#ALLCools._bam_to_allc._get_chromosome_sequence_upper">_get_chromosome_sequence_upper() (in module ALLCools._bam_to_allc)</a>
+</li>
       <li><a href="api/ALLCools/reptile/reptile/index.html#ALLCools.reptile.reptile._get_data_and_label">_get_data_and_label() (in module ALLCools.reptile.reptile)</a>
 </li>
       <li><a href="api/ALLCools/dmr/rms_test/index.html#ALLCools.dmr.rms_test._get_e">_get_e() (in module ALLCools.dmr.rms_test)</a>
@@ -1768,13 +1791,13 @@
 </li>
       <li><a href="api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.add_data">add_data() (ConsensusClustering method)</a>, <a href="api/ALLCools/clustering/index.html#ALLCools.clustering.ConsensusClustering.add_data">[1]</a>
 </li>
-      <li><a href="api/ALLCools/igv/Track/index.html#ALLCools.igv.Track.DataTrack.add_data_range">add_data_range() (DataTrack method)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Track/index.html#ALLCools.sandbox.igv.Track.DataTrack.add_data_range">add_data_range() (DataTrack method)</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.Session.add_data_track">add_data_track() (Session method)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.Session.add_data_track">add_data_track() (Session method)</a>
 </li>
       <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.MCDS.add_feature_cov_mean">add_feature_cov_mean() (MCDS method)</a>, <a href="api/ALLCools/mcds/mcds/index.html#ALLCools.mcds.mcds.MCDS.add_feature_cov_mean">[1]</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.Session.add_feature_track">add_feature_track() (Session method)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.Session.add_feature_track">add_feature_track() (Session method)</a>
 </li>
       <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.MCDS.add_mc_frac">add_mc_frac() (MCDS method)</a>, <a href="api/ALLCools/mcds/mcds/index.html#ALLCools.mcds.mcds.MCDS.add_mc_frac">[1]</a>
 </li>
@@ -1901,13 +1924,6 @@
 </li>
       </ul></li>
       <li>
-    ALLCools.clustering.balanced_knn
-
-      <ul>
-        <li><a href="api/ALLCools/clustering/balanced_knn/index.html#module-ALLCools.clustering.balanced_knn">module</a>
-</li>
-      </ul></li>
-      <li>
     ALLCools.clustering.balanced_pca
 
       <ul>
@@ -1968,20 +1984,6 @@
 
       <ul>
         <li><a href="api/ALLCools/clustering/pvclust/index.html#module-ALLCools.clustering.pvclust">module</a>
-</li>
-      </ul></li>
-      <li>
-    ALLCools.clustering.scanorama
-
-      <ul>
-        <li><a href="api/ALLCools/clustering/scanorama/index.html#module-ALLCools.clustering.scanorama">module</a>
-</li>
-      </ul></li>
-      <li>
-    ALLCools.clustering.sccaf
-
-      <ul>
-        <li><a href="api/ALLCools/clustering/sccaf/index.html#module-ALLCools.clustering.sccaf">module</a>
 </li>
       </ul></li>
       <li>
@@ -2054,8 +2056,6 @@
         <li><a href="api/ALLCools/dmr/call_dmr/index.html#module-ALLCools.dmr.call_dmr">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     ALLCools.dmr.call_dms
 
@@ -2077,48 +2077,8 @@
         <li><a href="api/ALLCools/dmr/rms_test/index.html#module-ALLCools.dmr.rms_test">module</a>
 </li>
       </ul></li>
-      <li>
-    ALLCools.igv
-
-      <ul>
-        <li><a href="api/ALLCools/igv/index.html#module-ALLCools.igv">module</a>
-</li>
-      </ul></li>
-      <li>
-    ALLCools.igv.BaseClass
-
-      <ul>
-        <li><a href="api/ALLCools/igv/BaseClass/index.html#module-ALLCools.igv.BaseClass">module</a>
-</li>
-      </ul></li>
-      <li>
-    ALLCools.igv.defaults
-
-      <ul>
-        <li><a href="api/ALLCools/igv/defaults/index.html#module-ALLCools.igv.defaults">module</a>
-</li>
-      </ul></li>
-      <li>
-    ALLCools.igv.make_session
-
-      <ul>
-        <li><a href="api/ALLCools/igv/make_session/index.html#module-ALLCools.igv.make_session">module</a>
-</li>
-      </ul></li>
-      <li>
-    ALLCools.igv.Session
-
-      <ul>
-        <li><a href="api/ALLCools/igv/Session/index.html#module-ALLCools.igv.Session">module</a>
-</li>
-      </ul></li>
-      <li>
-    ALLCools.igv.Track
-
-      <ul>
-        <li><a href="api/ALLCools/igv/Track/index.html#module-ALLCools.igv.Track">module</a>
-</li>
-      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     ALLCools.integration
 
@@ -2330,6 +2290,76 @@
 </li>
       </ul></li>
       <li>
+    ALLCools.sandbox
+
+      <ul>
+        <li><a href="api/ALLCools/sandbox/index.html#module-ALLCools.sandbox">module</a>
+</li>
+      </ul></li>
+      <li>
+    ALLCools.sandbox.balanced_knn
+
+      <ul>
+        <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#module-ALLCools.sandbox.balanced_knn">module</a>
+</li>
+      </ul></li>
+      <li>
+    ALLCools.sandbox.igv
+
+      <ul>
+        <li><a href="api/ALLCools/sandbox/igv/index.html#module-ALLCools.sandbox.igv">module</a>
+</li>
+      </ul></li>
+      <li>
+    ALLCools.sandbox.igv.BaseClass
+
+      <ul>
+        <li><a href="api/ALLCools/sandbox/igv/BaseClass/index.html#module-ALLCools.sandbox.igv.BaseClass">module</a>
+</li>
+      </ul></li>
+      <li>
+    ALLCools.sandbox.igv.defaults
+
+      <ul>
+        <li><a href="api/ALLCools/sandbox/igv/defaults/index.html#module-ALLCools.sandbox.igv.defaults">module</a>
+</li>
+      </ul></li>
+      <li>
+    ALLCools.sandbox.igv.make_session
+
+      <ul>
+        <li><a href="api/ALLCools/sandbox/igv/make_session/index.html#module-ALLCools.sandbox.igv.make_session">module</a>
+</li>
+      </ul></li>
+      <li>
+    ALLCools.sandbox.igv.Session
+
+      <ul>
+        <li><a href="api/ALLCools/sandbox/igv/Session/index.html#module-ALLCools.sandbox.igv.Session">module</a>
+</li>
+      </ul></li>
+      <li>
+    ALLCools.sandbox.igv.Track
+
+      <ul>
+        <li><a href="api/ALLCools/sandbox/igv/Track/index.html#module-ALLCools.sandbox.igv.Track">module</a>
+</li>
+      </ul></li>
+      <li>
+    ALLCools.sandbox.scanorama
+
+      <ul>
+        <li><a href="api/ALLCools/sandbox/scanorama/index.html#module-ALLCools.sandbox.scanorama">module</a>
+</li>
+      </ul></li>
+      <li>
+    ALLCools.sandbox.sccaf
+
+      <ul>
+        <li><a href="api/ALLCools/sandbox/sccaf/index.html#module-ALLCools.sandbox.sccaf">module</a>
+</li>
+      </ul></li>
+      <li>
     ALLCools.schema
 
       <ul>
@@ -2352,9 +2382,9 @@
       </ul></li>
       <li><a href="api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.Harmony.allocate_buffers">allocate_buffers() (Harmony method)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.ALPHA">ALPHA (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.ALPHA">ALPHA (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.RegionDS.annotate_by_bed">annotate_by_bed() (RegionDS method)</a>, <a href="api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.region_ds.RegionDS.annotate_by_bed">[1]</a>
+      <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.RegionDS.annotate_by_beds">annotate_by_beds() (RegionDS method)</a>, <a href="api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.region_ds.RegionDS.annotate_by_beds">[1]</a>
 </li>
       <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.RegionDS.annotate_by_bigwigs">annotate_by_bigwigs() (RegionDS method)</a>, <a href="api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.region_ds.RegionDS.annotate_by_bigwigs">[1]</a>
 
@@ -2362,11 +2392,11 @@
         <li><a href="api/ALLCools/reptile/index.html#ALLCools.reptile.REPTILE.annotate_by_bigwigs">(REPTILE method)</a>, <a href="api/ALLCools/reptile/reptile/index.html#ALLCools.reptile.reptile.REPTILE.annotate_by_bigwigs">[1]</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.APPROX">APPROX (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.APPROX">APPROX (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/clustering/art_of_tsne/index.html#ALLCools.clustering.art_of_tsne.art_of_tsne">art_of_tsne() (in module ALLCools.clustering.art_of_tsne)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.assemble">assemble() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.assemble">assemble() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/reptile/index.html#ALLCools.reptile.REPTILE.auto_ml">auto_ml() (REPTILE static method)</a>, <a href="api/ALLCools/reptile/reptile/index.html#ALLCools.reptile.reptile.REPTILE.auto_ml">[1]</a>
 </li>
@@ -2376,7 +2406,7 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.balance_knn_loop">balance_knn_loop() (in module ALLCools.clustering.balanced_knn)</a>
+      <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.balance_knn_loop">balance_knn_loop() (in module ALLCools.sandbox.balanced_knn)</a>
 </li>
       <li><a href="api/ALLCools/clustering/index.html#ALLCools.clustering.balanced_pca">balanced_pca() (in module ALLCools.clustering)</a>
 
@@ -2390,19 +2420,19 @@
 </li>
       <li><a href="api/ALLCools/_allc_to_region_count/index.html#ALLCools._allc_to_region_count.batch_allc_to_region_count">batch_allc_to_region_count() (in module ALLCools._allc_to_region_count)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.batch_bias">batch_bias() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.batch_bias">batch_bias() (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.batch_correct_pc">batch_correct_pc() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.batch_correct_pc">batch_correct_pc() (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.BATCH_SIZE">BATCH_SIZE (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.BATCH_SIZE">BATCH_SIZE (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/_open/index.html#ALLCools._open.BGZIP">BGZIP (in module ALLCools._open)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.bhattacharyya_distance">bhattacharyya_distance() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.bhattacharyya_distance">bhattacharyya_distance() (in module ALLCools.sandbox.sccaf)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.bhattacharyya_matrix">bhattacharyya_matrix() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.bhattacharyya_matrix">bhattacharyya_matrix() (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/count_matrix/mcad/index.html#ALLCools.count_matrix.mcad.bin_sf">bin_sf() (in module ALLCools.count_matrix.mcad)</a>
 </li>
@@ -2416,7 +2446,7 @@
         <li><a href="api/ALLCools/clustering/mcad/index.html#ALLCools.clustering.mcad.binarize_matrix">(in module ALLCools.clustering.mcad)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.binary_accuracy">binary_accuracy() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.binary_accuracy">binary_accuracy() (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/utilities/index.html#ALLCools.utilities.binary_count">binary_count() (in module ALLCools.utilities)</a>
 </li>
@@ -2435,10 +2465,6 @@
 </li>
       </ul></li>
       <li><a href="api/ALLCools/clustering/index.html#ALLCools.clustering.MethylScrublet.calculate_doublet_scores">calculate_doublet_scores() (MethylScrublet method)</a>, <a href="api/ALLCools/clustering/scrublet/index.html#ALLCools.clustering.scrublet.MethylScrublet.calculate_doublet_scores">[1]</a>
-</li>
-      <li><a href="api/ALLCools/clustering/feature_selection/feature_enrichment/index.html#ALLCools.clustering.feature_selection.feature_enrichment.calculate_enrichment_score">calculate_enrichment_score() (in module ALLCools.clustering.feature_selection.feature_enrichment)</a>
-</li>
-      <li><a href="api/ALLCools/clustering/feature_selection/feature_enrichment/index.html#ALLCools.clustering.feature_selection.feature_enrichment.calculate_enrichment_score_cytograph">calculate_enrichment_score_cytograph() (in module ALLCools.clustering.feature_selection.feature_enrichment)</a>
 </li>
       <li><a href="api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.calculate_gch_rate">calculate_gch_rate() (in module ALLCools.mcds.utilities)</a>
 </li>
@@ -2460,8 +2486,6 @@
         <li><a href="api/ALLCools/dmr/call_dmr/index.html#ALLCools.dmr.call_dmr.call_dmr">(in module ALLCools.dmr.call_dmr)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/dmr/call_dmr/index.html#ALLCools.dmr.call_dmr.call_dmr_single_chrom">call_dmr_single_chrom() (in module ALLCools.dmr.call_dmr)</a>
-</li>
       <li><a href="api/ALLCools/dmr/index.html#ALLCools.dmr.call_dms">call_dms() (in module ALLCools.dmr)</a>
 
       <ul>
@@ -2482,7 +2506,7 @@
 </li>
       <li><a href="api/ALLCools/schema/mcds_schema/index.html#ALLCools.schema.mcds_schema.check_custom_dim_name_and_return">check_custom_dim_name_and_return() (in module ALLCools.schema.mcds_schema)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.check_datasets">check_datasets() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.check_datasets">check_datasets() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/utilities/index.html#ALLCools.utilities.check_tbi_chroms">check_tbi_chroms() (in module ALLCools.utilities)</a>
 </li>
@@ -2514,7 +2538,7 @@
 </li>
       <li><a href="api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.Harmony.cluster">cluster() (Harmony method)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.cluster_adjmat">cluster_adjmat() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.cluster_adjmat">cluster_adjmat() (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/clustering/index.html#ALLCools.clustering.cluster_enriched_features">cluster_enriched_features() (in module ALLCools.clustering)</a>
 
@@ -2528,7 +2552,7 @@
         <li><a href="api/ALLCools/dmr/call_dmr/index.html#ALLCools.dmr.call_dmr.collapse_replicates">(in module ALLCools.dmr.call_dmr)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.color_long">color_long (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.color_long">color_long (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/utilities/index.html#ALLCools.utilities.COMPLIMENT_BASE">COMPLIMENT_BASE (in module ALLCools.utilities)</a>
 </li>
@@ -2538,9 +2562,9 @@
 </li>
       <li><a href="api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.Harmony.compute_objective">compute_objective() (Harmony method)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.confusion_matrix">confusion_matrix() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.confusion_matrix">confusion_matrix() (in module ALLCools.sandbox.sccaf)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.connect">connect() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.connect">connect() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/clustering/index.html#ALLCools.clustering.ConsensusClustering">ConsensusClustering (class in ALLCools.clustering)</a>
 
@@ -2562,9 +2586,9 @@
 </li>
       <li><a href="api/ALLCools/mcds/correlation/index.html#ALLCools.mcds.correlation.corr">corr() (in module ALLCools.mcds.correlation)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.correct">correct() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.correct">correct() (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.correct_scanpy">correct_scanpy() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.correct_scanpy">correct_scanpy() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/_doc/index.html#ALLCools._doc.cov_cutoff_doc">cov_cutoff_doc (in module ALLCools._doc)</a>
 </li>
@@ -2578,17 +2602,17 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ALLCools/igv/defaults/index.html#ALLCools.igv.defaults.DATA_TRACK_DEFAULT">DATA_TRACK_DEFAULT (in module ALLCools.igv.defaults)</a>
+      <li><a href="api/ALLCools/sandbox/igv/defaults/index.html#ALLCools.sandbox.igv.defaults.DATA_TRACK_DEFAULT">DATA_TRACK_DEFAULT (in module ALLCools.sandbox.igv.defaults)</a>
 </li>
-      <li><a href="api/ALLCools/igv/BaseClass/index.html#ALLCools.igv.BaseClass.DataRange">DataRange (class in ALLCools.igv.BaseClass)</a>
+      <li><a href="api/ALLCools/sandbox/igv/BaseClass/index.html#ALLCools.sandbox.igv.BaseClass.DataRange">DataRange (class in ALLCools.sandbox.igv.BaseClass)</a>
 </li>
-      <li><a href="api/ALLCools/igv/defaults/index.html#ALLCools.igv.defaults.DATARANGE_DEFAULT">DATARANGE_DEFAULT (in module ALLCools.igv.defaults)</a>
+      <li><a href="api/ALLCools/sandbox/igv/defaults/index.html#ALLCools.sandbox.igv.defaults.DATARANGE_DEFAULT">DATARANGE_DEFAULT (in module ALLCools.sandbox.igv.defaults)</a>
 </li>
       <li><a href="api/ALLCools/count_matrix/zarr/index.html#ALLCools.count_matrix.zarr.dataset_to_adata">dataset_to_adata() (in module ALLCools.count_matrix.zarr)</a>
 </li>
       <li><a href="api/ALLCools/count_matrix/zarr/index.html#ALLCools.count_matrix.zarr.dataset_to_array">dataset_to_array() (in module ALLCools.count_matrix.zarr)</a>
 </li>
-      <li><a href="api/ALLCools/igv/Track/index.html#ALLCools.igv.Track.DataTrack">DataTrack (class in ALLCools.igv.Track)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Track/index.html#ALLCools.sandbox.igv.Track.DataTrack">DataTrack (class in ALLCools.sandbox.igv.Track)</a>
 </li>
       <li><a href="api/ALLCools/_merge_allc/index.html#ALLCools._merge_allc.DEFAULT_MAX_ALLC">DEFAULT_MAX_ALLC (in module ALLCools._merge_allc)</a>
 </li>
@@ -2610,11 +2634,11 @@
 </li>
       <li><a href="api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.determine_engine">determine_engine() (in module ALLCools.mcds.utilities)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.dimensionality_reduce">dimensionality_reduce() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.dimensionality_reduce">dimensionality_reduce() (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.DIMRED">DIMRED (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.DIMRED">DIMRED (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.dispersion">dispersion() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.dispersion">dispersion() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/reptile/index.html#ALLCools.reptile.REPTILE.dmr_model">dmr_model (REPTILE property)</a>, <a href="api/ALLCools/reptile/reptile/index.html#ALLCools.reptile.reptile.REPTILE.dmr_model">[1]</a>
 </li>
@@ -2634,7 +2658,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/ALLCools/__main__/index.html#ALLCools.__main__.EPILOG">EPILOG (in module ALLCools.__main__)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.eu_distance">eu_distance() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.eu_distance">eu_distance() (in module ALLCools.sandbox.sccaf)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -2648,13 +2672,13 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ALLCools/igv/defaults/index.html#ALLCools.igv.defaults.FEATURE_TRACK_DEFAULT">FEATURE_TRACK_DEFAULT (in module ALLCools.igv.defaults)</a>
+      <li><a href="api/ALLCools/sandbox/igv/defaults/index.html#ALLCools.sandbox.igv.defaults.FEATURE_TRACK_DEFAULT">FEATURE_TRACK_DEFAULT (in module ALLCools.sandbox.igv.defaults)</a>
 </li>
-      <li><a href="api/ALLCools/igv/defaults/index.html#ALLCools.igv.defaults.FEATURE_TRACK_FORMATS">FEATURE_TRACK_FORMATS (in module ALLCools.igv.defaults)</a>
+      <li><a href="api/ALLCools/sandbox/igv/defaults/index.html#ALLCools.sandbox.igv.defaults.FEATURE_TRACK_FORMATS">FEATURE_TRACK_FORMATS (in module ALLCools.sandbox.igv.defaults)</a>
 </li>
-      <li><a href="api/ALLCools/igv/Track/index.html#ALLCools.igv.Track.FeatureTrack">FeatureTrack (class in ALLCools.igv.Track)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Track/index.html#ALLCools.sandbox.igv.Track.FeatureTrack">FeatureTrack (class in ALLCools.sandbox.igv.Track)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.fill_table">fill_table() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.fill_table">fill_table() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.MCDS.filter_feature_by_cov_mean">filter_feature_by_cov_mean() (MCDS method)</a>, <a href="api/ALLCools/mcds/mcds/index.html#ALLCools.mcds.mcds.MCDS.filter_feature_by_cov_mean">[1]</a>
 </li>
@@ -2666,11 +2690,11 @@
       </ul></li>
       <li><a href="api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.final_evaluation">final_evaluation() (ConsensusClustering method)</a>, <a href="api/ALLCools/clustering/index.html#ALLCools.clustering.ConsensusClustering.final_evaluation">[1]</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.find_alignments">find_alignments() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.find_alignments">find_alignments() (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.find_alignments_table">find_alignments_table() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.find_alignments_table">find_alignments_table() (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.find_high_resolution">find_high_resolution() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.find_high_resolution">find_high_resolution() (in module ALLCools.sandbox.sccaf)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -2681,7 +2705,7 @@
 </li>
         <li><a href="api/ALLCools/clustering/index.html#ALLCools.clustering.MethylScrublet.fit">(MethylScrublet method)</a>, <a href="api/ALLCools/clustering/scrublet/index.html#ALLCools.clustering.scrublet.MethylScrublet.fit">[1]</a>
 </li>
-        <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.NearestNeighbors.fit">(NearestNeighbors method)</a>
+        <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.NearestNeighbors.fit">(NearestNeighbors method)</a>
 </li>
         <li><a href="api/ALLCools/reptile/index.html#ALLCools.reptile.REPTILE.fit">(REPTILE method)</a>, <a href="api/ALLCools/reptile/reptile/index.html#ALLCools.reptile.reptile.REPTILE.fit">[1]</a>
 </li>
@@ -2738,7 +2762,7 @@
 </li>
       <li><a href="api/ALLCools/utilities/index.html#ALLCools.utilities.get_bin_id">get_bin_id() (in module ALLCools.utilities)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.get_connection_matrix">get_connection_matrix() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.get_connection_matrix">get_connection_matrix() (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.RegionDS.get_coords">get_coords() (RegionDS method)</a>, <a href="api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.region_ds.RegionDS.get_coords">[1]</a>
 </li>
@@ -2752,7 +2776,7 @@
         <li><a href="api/ALLCools/motif/parse_meme/index.html#ALLCools.motif.parse_meme.get_default_motif_set">(in module ALLCools.motif.parse_meme)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.get_distance_matrix">get_distance_matrix() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.get_distance_matrix">get_distance_matrix() (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.RegionDS.get_fasta">get_fasta() (RegionDS method)</a>, <a href="api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.region_ds.RegionDS.get_fasta">[1]</a>
 </li>
@@ -2772,7 +2796,7 @@
 </li>
       <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.RegionDS.get_pairwise_differential_index">get_pairwise_differential_index() (RegionDS method)</a>, <a href="api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.region_ds.RegionDS.get_pairwise_differential_index">[1]</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.get_panel_int">get_panel_int() (in module ALLCools.igv.Session)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.get_panel_int">get_panel_int() (in module ALLCools.sandbox.igv.Session)</a>
 </li>
       <li><a href="api/ALLCools/clustering/index.html#ALLCools.clustering.get_pc_centers">get_pc_centers() (in module ALLCools.clustering)</a>
 
@@ -2780,9 +2804,9 @@
         <li><a href="api/ALLCools/clustering/balanced_pca/index.html#ALLCools.clustering.balanced_pca.get_pc_centers">(in module ALLCools.clustering.balanced_pca)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.get_topmarkers">get_topmarkers() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.get_topmarkers">get_topmarkers() (in module ALLCools.sandbox.sccaf)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.gs_idxs">gs_idxs (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.gs_idxs">gs_idxs (in module ALLCools.sandbox.scanorama)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -2790,7 +2814,7 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.handle_zeros_in_scale">handle_zeros_in_scale() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.handle_zeros_in_scale">handle_zeros_in_scale() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.Harmony.harmonize">harmonize() (Harmony method)</a>
 </li>
@@ -2802,13 +2826,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/ALLCools/_open/index.html#ALLCools._open.has_tabix">has_tabix() (in module ALLCools._open)</a>
 </li>
-      <li><a href="api/ALLCools/igv/make_session/index.html#ALLCools.igv.make_session.hex_to_rgb_text">hex_to_rgb_text() (in module ALLCools.igv.make_session)</a>
+      <li><a href="api/ALLCools/sandbox/igv/make_session/index.html#ALLCools.sandbox.igv.make_session.hex_to_rgb_text">hex_to_rgb_text() (in module ALLCools.sandbox.igv.make_session)</a>
 </li>
-      <li><a href="api/ALLCools/igv/BaseClass/index.html#ALLCools.igv.BaseClass.HiddenAttributes">HiddenAttributes (class in ALLCools.igv.BaseClass)</a>
+      <li><a href="api/ALLCools/sandbox/igv/BaseClass/index.html#ALLCools.sandbox.igv.BaseClass.HiddenAttributes">HiddenAttributes (class in ALLCools.sandbox.igv.BaseClass)</a>
 </li>
       <li><a href="api/ALLCools/mcds/utilities/index.html#ALLCools.mcds.utilities.highly_variable_methylation_feature">highly_variable_methylation_feature() (in module ALLCools.mcds.utilities)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.HVG">HVG (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.HVG">HVG (in module ALLCools.sandbox.scanorama)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -2824,9 +2848,9 @@
 </li>
       <li><a href="api/ALLCools/clustering/pvclust/index.html#ALLCools.clustering.pvclust.install_r_package">install_r_package() (in module ALLCools.clustering.pvclust)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.integrate">integrate() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.integrate">integrate() (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.integrate_scanpy">integrate_scanpy() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.integrate_scanpy">integrate_scanpy() (in module ALLCools.sandbox.scanorama)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -2836,7 +2860,7 @@
         <li><a href="api/ALLCools/plot/interactive_scatter/index.html#ALLCools.plot.interactive_scatter.interactive_scatter">(in module ALLCools.plot.interactive_scatter)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.interpret_alignments">interpret_alignments() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.interpret_alignments">interpret_alignments() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.RegionDS.iter_array">iter_array() (RegionDS method)</a>, <a href="api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.region_ds.RegionDS.iter_array">[1]</a>
 </li>
@@ -2850,11 +2874,11 @@
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.jensen_shannon_distance">jensen_shannon_distance() (in module ALLCools.clustering.balanced_knn)</a>
+      <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.jensen_shannon_distance">jensen_shannon_distance() (in module ALLCools.sandbox.balanced_knn)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.jensen_shannon_divergence">jensen_shannon_divergence() (in module ALLCools.clustering.balanced_knn)</a>
+      <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.jensen_shannon_divergence">jensen_shannon_divergence() (in module ALLCools.sandbox.balanced_knn)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -2862,15 +2886,15 @@
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.NearestNeighbors.kneighbors">kneighbors() (NearestNeighbors method)</a>
+      <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.NearestNeighbors.kneighbors">kneighbors() (NearestNeighbors method)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.NearestNeighbors.kneighbors_graph">kneighbors_graph() (NearestNeighbors method)</a>
+      <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.NearestNeighbors.kneighbors_graph">kneighbors_graph() (NearestNeighbors method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.KNN">KNN (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.KNN">KNN (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.knn_balance">knn_balance() (in module ALLCools.clustering.balanced_knn)</a>
+      <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.knn_balance">knn_balance() (in module ALLCools.sandbox.balanced_knn)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -2922,9 +2946,9 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/ALLCools/__main__/index.html#ALLCools.__main__.main">main() (in module ALLCools.__main__)</a>
 </li>
-      <li><a href="api/ALLCools/igv/make_session/index.html#ALLCools.igv.make_session.make_session">make_session() (in module ALLCools.igv.make_session)</a>
+      <li><a href="api/ALLCools/sandbox/igv/make_session/index.html#ALLCools.sandbox.igv.make_session.make_session">make_session() (in module ALLCools.sandbox.igv.make_session)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.make_unique">make_unique() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.make_unique">make_unique() (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/_doc/index.html#ALLCools._doc.mc_context_mcad_doc">mc_context_mcad_doc (in module ALLCools._doc)</a>
 </li>
@@ -2944,13 +2968,13 @@
 </li>
       <li><a href="api/ALLCools/__main__/index.html#ALLCools.__main__.merge_allc_register_subparser">merge_allc_register_subparser() (in module ALLCools.__main__)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.merge_cluster">merge_cluster() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.merge_cluster">merge_cluster() (in module ALLCools.sandbox.sccaf)</a>
 
       <ul>
         <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.MCDS.merge_cluster">(MCDS method)</a>, <a href="api/ALLCools/mcds/mcds/index.html#ALLCools.mcds.mcds.MCDS.merge_cluster">[1]</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.merge_datasets">merge_datasets() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.merge_datasets">merge_datasets() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/dmr/index.html#ALLCools.dmr.methylpy_to_region_ds">methylpy_to_region_ds() (in module ALLCools.dmr)</a>
 
@@ -2964,7 +2988,7 @@
         <li><a href="api/ALLCools/clustering/scrublet/index.html#ALLCools.clustering.scrublet.MethylScrublet">(class in ALLCools.clustering.scrublet)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.NearestNeighbors.mnn_graph">mnn_graph() (NearestNeighbors method)</a>
+      <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.NearestNeighbors.mnn_graph">mnn_graph() (NearestNeighbors method)</a>
 </li>
       <li>
     module
@@ -2998,8 +3022,6 @@
 </li>
         <li><a href="api/ALLCools/clustering/art_of_tsne/index.html#module-ALLCools.clustering.art_of_tsne">ALLCools.clustering.art_of_tsne</a>
 </li>
-        <li><a href="api/ALLCools/clustering/balanced_knn/index.html#module-ALLCools.clustering.balanced_knn">ALLCools.clustering.balanced_knn</a>
-</li>
         <li><a href="api/ALLCools/clustering/balanced_pca/index.html#module-ALLCools.clustering.balanced_pca">ALLCools.clustering.balanced_pca</a>
 </li>
         <li><a href="api/ALLCools/clustering/ConsensusClustering/index.html#module-ALLCools.clustering.ConsensusClustering">ALLCools.clustering.ConsensusClustering</a>
@@ -3017,10 +3039,6 @@
         <li><a href="api/ALLCools/clustering/mcad/index.html#module-ALLCools.clustering.mcad">ALLCools.clustering.mcad</a>
 </li>
         <li><a href="api/ALLCools/clustering/pvclust/index.html#module-ALLCools.clustering.pvclust">ALLCools.clustering.pvclust</a>
-</li>
-        <li><a href="api/ALLCools/clustering/scanorama/index.html#module-ALLCools.clustering.scanorama">ALLCools.clustering.scanorama</a>
-</li>
-        <li><a href="api/ALLCools/clustering/sccaf/index.html#module-ALLCools.clustering.sccaf">ALLCools.clustering.sccaf</a>
 </li>
         <li><a href="api/ALLCools/clustering/scrublet/index.html#module-ALLCools.clustering.scrublet">ALLCools.clustering.scrublet</a>
 </li>
@@ -3047,18 +3065,6 @@
         <li><a href="api/ALLCools/dmr/parse_methylpy/index.html#module-ALLCools.dmr.parse_methylpy">ALLCools.dmr.parse_methylpy</a>
 </li>
         <li><a href="api/ALLCools/dmr/rms_test/index.html#module-ALLCools.dmr.rms_test">ALLCools.dmr.rms_test</a>
-</li>
-        <li><a href="api/ALLCools/igv/index.html#module-ALLCools.igv">ALLCools.igv</a>
-</li>
-        <li><a href="api/ALLCools/igv/BaseClass/index.html#module-ALLCools.igv.BaseClass">ALLCools.igv.BaseClass</a>
-</li>
-        <li><a href="api/ALLCools/igv/defaults/index.html#module-ALLCools.igv.defaults">ALLCools.igv.defaults</a>
-</li>
-        <li><a href="api/ALLCools/igv/make_session/index.html#module-ALLCools.igv.make_session">ALLCools.igv.make_session</a>
-</li>
-        <li><a href="api/ALLCools/igv/Session/index.html#module-ALLCools.igv.Session">ALLCools.igv.Session</a>
-</li>
-        <li><a href="api/ALLCools/igv/Track/index.html#module-ALLCools.igv.Track">ALLCools.igv.Track</a>
 </li>
         <li><a href="api/ALLCools/integration/index.html#module-ALLCools.integration">ALLCools.integration</a>
 </li>
@@ -3120,6 +3126,26 @@
 </li>
         <li><a href="api/ALLCools/reptile/reptile/index.html#module-ALLCools.reptile.reptile">ALLCools.reptile.reptile</a>
 </li>
+        <li><a href="api/ALLCools/sandbox/index.html#module-ALLCools.sandbox">ALLCools.sandbox</a>
+</li>
+        <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#module-ALLCools.sandbox.balanced_knn">ALLCools.sandbox.balanced_knn</a>
+</li>
+        <li><a href="api/ALLCools/sandbox/igv/index.html#module-ALLCools.sandbox.igv">ALLCools.sandbox.igv</a>
+</li>
+        <li><a href="api/ALLCools/sandbox/igv/BaseClass/index.html#module-ALLCools.sandbox.igv.BaseClass">ALLCools.sandbox.igv.BaseClass</a>
+</li>
+        <li><a href="api/ALLCools/sandbox/igv/defaults/index.html#module-ALLCools.sandbox.igv.defaults">ALLCools.sandbox.igv.defaults</a>
+</li>
+        <li><a href="api/ALLCools/sandbox/igv/make_session/index.html#module-ALLCools.sandbox.igv.make_session">ALLCools.sandbox.igv.make_session</a>
+</li>
+        <li><a href="api/ALLCools/sandbox/igv/Session/index.html#module-ALLCools.sandbox.igv.Session">ALLCools.sandbox.igv.Session</a>
+</li>
+        <li><a href="api/ALLCools/sandbox/igv/Track/index.html#module-ALLCools.sandbox.igv.Track">ALLCools.sandbox.igv.Track</a>
+</li>
+        <li><a href="api/ALLCools/sandbox/scanorama/index.html#module-ALLCools.sandbox.scanorama">ALLCools.sandbox.scanorama</a>
+</li>
+        <li><a href="api/ALLCools/sandbox/sccaf/index.html#module-ALLCools.sandbox.sccaf">ALLCools.sandbox.sccaf</a>
+</li>
         <li><a href="api/ALLCools/schema/index.html#module-ALLCools.schema">ALLCools.schema</a>
 </li>
         <li><a href="api/ALLCools/schema/mcds_schema/index.html#module-ALLCools.schema.mcds_schema">ALLCools.schema.mcds_schema</a>
@@ -3141,7 +3167,7 @@
         <li><a href="api/ALLCools/motif/motifs/index.html#ALLCools.motif.motifs.MotifSet">(class in ALLCools.motif.motifs)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.msample">msample() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.msample">msample() (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.multi_leiden_clustering">multi_leiden_clustering() (ConsensusClustering method)</a>, <a href="api/ALLCools/clustering/index.html#ALLCools.clustering.ConsensusClustering.multi_leiden_clustering">[1]</a>
 </li>
@@ -3151,25 +3177,25 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.N_ITER">N_ITER (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.N_ITER">N_ITER (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.NearestNeighbors.n_samples">n_samples (NearestNeighbors property)</a>
+      <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.NearestNeighbors.n_samples">n_samples (NearestNeighbors property)</a>
 </li>
       <li><a href="api/ALLCools/motif/parse_meme/index.html#ALLCools.motif.parse_meme.N_SITES_PATTERN">N_SITES_PATTERN (in module ALLCools.motif.parse_meme)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.NearestNeighbors">NearestNeighbors (class in ALLCools.clustering.balanced_knn)</a>
+      <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.NearestNeighbors">NearestNeighbors (class in ALLCools.sandbox.balanced_knn)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/ALLCools/__main__/index.html#ALLCools.__main__.NiceFormatter">NiceFormatter (class in ALLCools.__main__)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.nn">nn() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.nn">nn() (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.nn_approx">nn_approx() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.nn_approx">nn_approx() (in module ALLCools.sandbox.scanorama)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.normalize_confmat1">normalize_confmat1() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.normalize_confmat1">normalize_confmat1() (in module ALLCools.sandbox.sccaf)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.normalize_confmat2">normalize_confmat2() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.normalize_confmat2">normalize_confmat2() (in module ALLCools.sandbox.sccaf)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -3221,9 +3247,9 @@
       </ul></li>
       <li><a href="api/ALLCools/plot/color/index.html#ALLCools.plot.color.palplot">palplot() (in module ALLCools.plot.color)</a>
 </li>
-      <li><a href="api/ALLCools/igv/BaseClass/index.html#ALLCools.igv.BaseClass.Panel">Panel (class in ALLCools.igv.BaseClass)</a>
+      <li><a href="api/ALLCools/sandbox/igv/BaseClass/index.html#ALLCools.sandbox.igv.BaseClass.Panel">Panel (class in ALLCools.sandbox.igv.BaseClass)</a>
 </li>
-      <li><a href="api/ALLCools/igv/BaseClass/index.html#ALLCools.igv.BaseClass.PanelLayout">PanelLayout (class in ALLCools.igv.BaseClass)</a>
+      <li><a href="api/ALLCools/sandbox/igv/BaseClass/index.html#ALLCools.sandbox.igv.BaseClass.PanelLayout">PanelLayout (class in ALLCools.sandbox.igv.BaseClass)</a>
 </li>
       <li><a href="api/ALLCools/utilities/index.html#ALLCools.utilities.parse_chrom_size">parse_chrom_size() (in module ALLCools.utilities)</a>
 </li>
@@ -3243,13 +3269,13 @@
 </li>
       <li><a href="api/ALLCools/clustering/index.html#ALLCools.clustering.MethylScrublet.pca">pca() (MethylScrublet method)</a>, <a href="api/ALLCools/clustering/scrublet/index.html#ALLCools.clustering.scrublet.MethylScrublet.pca">[1]</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.per_cell_accuracy">per_cell_accuracy() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.per_cell_accuracy">per_cell_accuracy() (in module ALLCools.sandbox.sccaf)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.per_cluster_accuracy">per_cluster_accuracy() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.per_cluster_accuracy">per_cluster_accuracy() (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/dmr/rms_test/index.html#ALLCools.dmr.rms_test.permute_root_mean_square_test">permute_root_mean_square_test() (in module ALLCools.dmr.rms_test)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.PERPLEXITY">PERPLEXITY (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.PERPLEXITY">PERPLEXITY (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/_open/index.html#ALLCools._open.PIGZ">PIGZ (in module ALLCools._open)</a>
 </li>
@@ -3305,7 +3331,7 @@
 </li>
       <li><a href="api/ALLCools/_merge_allc/index.html#ALLCools._merge_allc.PROCESS">PROCESS (in module ALLCools._merge_allc)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.process_data">process_data() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.process_data">process_data() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/utilities/index.html#ALLCools.utilities.profile_allc">profile_allc() (in module ALLCools.utilities)</a>
 </li>
@@ -3345,7 +3371,7 @@
         <li><a href="api/ALLCools/_open/index.html#ALLCools._open.PipedGzipReader.readline">(PipedGzipReader method)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.reduce_dimensionality">reduce_dimensionality() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.reduce_dimensionality">reduce_dimensionality() (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/_doc/index.html#ALLCools._doc.reference_fasta_doc">reference_fasta_doc (in module ALLCools._doc)</a>
 </li>
@@ -3395,9 +3421,9 @@
         <li><a href="api/ALLCools/reptile/reptile/index.html#ALLCools.reptile.reptile.REPTILE">(class in ALLCools.reptile.reptile)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/igv/BaseClass/index.html#ALLCools.igv.BaseClass.Resource">Resource (class in ALLCools.igv.BaseClass)</a>
+      <li><a href="api/ALLCools/sandbox/igv/BaseClass/index.html#ALLCools.sandbox.igv.BaseClass.Resource">Resource (class in ALLCools.sandbox.igv.BaseClass)</a>
 </li>
-      <li><a href="api/ALLCools/igv/BaseClass/index.html#ALLCools.igv.BaseClass.Resources">Resources (class in ALLCools.igv.BaseClass)</a>
+      <li><a href="api/ALLCools/sandbox/igv/BaseClass/index.html#ALLCools.sandbox.igv.BaseClass.Resources">Resources (class in ALLCools.sandbox.igv.BaseClass)</a>
 </li>
       <li><a href="api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.Harmony.result">result() (Harmony method)</a>
 </li>
@@ -3405,9 +3431,9 @@
 </li>
       <li><a href="api/ALLCools/_doc/index.html#ALLCools._doc.rna_table_doc">rna_table_doc (in module ALLCools._doc)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/balanced_knn/index.html#ALLCools.clustering.balanced_knn.NearestNeighbors.rnn_graph">rnn_graph() (NearestNeighbors method)</a>
+      <li><a href="api/ALLCools/sandbox/balanced_knn/index.html#ALLCools.sandbox.balanced_knn.NearestNeighbors.rnn_graph">rnn_graph() (NearestNeighbors method)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.run_BayesianGaussianMixture">run_BayesianGaussianMixture() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.run_BayesianGaussianMixture">run_BayesianGaussianMixture() (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/integration/harmony/index.html#ALLCools.integration.harmony.run_harmony">run_harmony() (in module ALLCools.integration.harmony)</a>
 </li>
@@ -3441,11 +3467,11 @@
         <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.RegionDS.scan_motifs">(RegionDS method)</a>, <a href="api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.region_ds.RegionDS.scan_motifs">[1]</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.SCCAF_assessment">SCCAF_assessment() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.SCCAF_assessment">SCCAF_assessment() (in module ALLCools.sandbox.sccaf)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.SCCAF_optimize">SCCAF_optimize() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.SCCAF_optimize">SCCAF_optimize() (in module ALLCools.sandbox.sccaf)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.SCCAF_optimize_all">SCCAF_optimize_all() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.SCCAF_optimize_all">SCCAF_optimize_all() (in module ALLCools.sandbox.sccaf)</a>
 </li>
       <li><a href="api/ALLCools/clustering/index.html#ALLCools.clustering.select_confusion_pairs">select_confusion_pairs() (in module ALLCools.clustering)</a>
 
@@ -3453,13 +3479,13 @@
         <li><a href="api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.select_confusion_pairs">(in module ALLCools.clustering.ConsensusClustering)</a>
 </li>
       </ul></li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.self_projection">self_projection() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.self_projection">self_projection() (in module ALLCools.sandbox.sccaf)</a>
 </li>
-      <li><a href="api/ALLCools/igv/Session/index.html#ALLCools.igv.Session.Session">Session (class in ALLCools.igv.Session)</a>
+      <li><a href="api/ALLCools/sandbox/igv/Session/index.html#ALLCools.sandbox.igv.Session.Session">Session (class in ALLCools.sandbox.igv.Session)</a>
 </li>
       <li><a href="api/ALLCools/__main__/index.html#ALLCools.__main__.setup_logging">setup_logging() (in module ALLCools.__main__)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.SIGMA">SIGMA (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.SIGMA">SIGMA (in module ALLCools.sandbox.scanorama)</a>
 </li>
       <li><a href="api/ALLCools/clustering/index.html#ALLCools.clustering.significant_pc_test">significant_pc_test() (in module ALLCools.clustering)</a>
 
@@ -3489,7 +3515,7 @@
 </li>
       <li><a href="api/ALLCools/_doc/index.html#ALLCools._doc.snp_doc">snp_doc (in module ALLCools._doc)</a>
 </li>
-      <li><a href="api/ALLCools/igv/make_session/index.html#ALLCools.igv.make_session.sort_df_by_order_dict">sort_df_by_order_dict() (in module ALLCools.igv.make_session)</a>
+      <li><a href="api/ALLCools/sandbox/igv/make_session/index.html#ALLCools.sandbox.igv.make_session.sort_df_by_order_dict">sort_df_by_order_dict() (in module ALLCools.sandbox.igv.make_session)</a>
 </li>
       <li><a href="api/ALLCools/motif/parse_meme/index.html#ALLCools.motif.parse_meme.SPACE_PATTERN">SPACE_PATTERN (in module ALLCools.motif.parse_meme)</a>
 </li>
@@ -3525,7 +3551,7 @@
 </li>
       <li><a href="api/ALLCools/__main__/index.html#ALLCools.__main__.tabix_allc_register_subparser">tabix_allc_register_subparser() (in module ALLCools.__main__)</a>
 </li>
-      <li><a href="api/ALLCools/igv/defaults/index.html#ALLCools.igv.defaults.TABLE_REQUIRED_FIELDS">TABLE_REQUIRED_FIELDS (in module ALLCools.igv.defaults)</a>
+      <li><a href="api/ALLCools/sandbox/igv/defaults/index.html#ALLCools.sandbox.igv.defaults.TABLE_REQUIRED_FIELDS">TABLE_REQUIRED_FIELDS (in module ALLCools.sandbox.igv.defaults)</a>
 </li>
       <li><a href="api/ALLCools/clustering/mcad/index.html#ALLCools.clustering.mcad.tf_idf">tf_idf() (in module ALLCools.clustering.mcad)</a>
 </li>
@@ -3537,9 +3563,9 @@
       </ul></li>
       <li><a href="api/ALLCools/mcds/index.html#ALLCools.mcds.MCDS.to_region_ds">to_region_ds() (MCDS method)</a>, <a href="api/ALLCools/mcds/mcds/index.html#ALLCools.mcds.mcds.MCDS.to_region_ds">[1]</a>
 </li>
-      <li><a href="api/ALLCools/igv/BaseClass/index.html#ALLCools.igv.BaseClass.Track">Track (class in ALLCools.igv.BaseClass)</a>
+      <li><a href="api/ALLCools/sandbox/igv/BaseClass/index.html#ALLCools.sandbox.igv.BaseClass.Track">Track (class in ALLCools.sandbox.igv.BaseClass)</a>
 </li>
-      <li><a href="api/ALLCools/igv/defaults/index.html#ALLCools.igv.defaults.TRACK_REQUIRED_KEYS">TRACK_REQUIRED_KEYS (in module ALLCools.igv.defaults)</a>
+      <li><a href="api/ALLCools/sandbox/igv/defaults/index.html#ALLCools.sandbox.igv.defaults.TRACK_REQUIRED_KEYS">TRACK_REQUIRED_KEYS (in module ALLCools.sandbox.igv.defaults)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -3551,9 +3577,9 @@
 </li>
       <li><a href="api/ALLCools/reptile/index.html#ALLCools.reptile.REPTILE.train_region_model">train_region_model() (REPTILE method)</a>, <a href="api/ALLCools/reptile/reptile/index.html#ALLCools.reptile.reptile.REPTILE.train_region_model">[1]</a>
 </li>
-      <li><a href="api/ALLCools/clustering/sccaf/index.html#ALLCools.clustering.sccaf.train_test_split_per_type">train_test_split_per_type() (in module ALLCools.clustering.sccaf)</a>
+      <li><a href="api/ALLCools/sandbox/sccaf/index.html#ALLCools.sandbox.sccaf.train_test_split_per_type">train_test_split_per_type() (in module ALLCools.sandbox.sccaf)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.transform">transform() (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.transform">transform() (in module ALLCools.sandbox.scanorama)</a>
 
       <ul>
         <li><a href="api/ALLCools/clustering/incremental_pca/index.html#ALLCools.clustering.incremental_pca.IncrementalPCA.transform">(IncrementalPCA method)</a>
@@ -3585,7 +3611,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/ALLCools/__main__/index.html#ALLCools.__main__.validate_environment">validate_environment() (in module ALLCools.__main__)</a>
 </li>
-      <li><a href="api/ALLCools/clustering/scanorama/index.html#ALLCools.clustering.scanorama.VERBOSE">VERBOSE (in module ALLCools.clustering.scanorama)</a>
+      <li><a href="api/ALLCools/sandbox/scanorama/index.html#ALLCools.sandbox.scanorama.VERBOSE">VERBOSE (in module ALLCools.sandbox.scanorama)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>

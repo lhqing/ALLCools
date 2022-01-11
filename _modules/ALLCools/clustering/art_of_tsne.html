@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1473,30 +1490,50 @@
               <div>
                 
   <h1>Source code for ALLCools.clustering.art_of_tsne</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The function art_of_tsne is from cytograph2 package</span>
+<span class="sd">https://github.com/linnarsson-lab/cytograph2/blob/master/cytograph/embedding/art_of_tsne.py</span>
+
+<span class="sd">The idea behind that is based on :cite:p:`Kobak2019` with T-SNE algorithm implemented in</span>
+<span class="sd">[openTSNE](https://opentsne.readthedocs.io/en/latest/) :cite:p:`Policar2019`.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">openTSNE</span> <span class="kn">import</span> <span class="n">TSNEEmbedding</span><span class="p">,</span> <span class="n">affinity</span><span class="p">,</span> <span class="n">initialization</span>
 
 
-<div class="viewcode-block" id="art_of_tsne"><a class="viewcode-back" href="../../../api/ALLCools/clustering/art_of_tsne/index.html#ALLCools.clustering.art_of_tsne.art_of_tsne">[docs]</a><span class="k">def</span> <span class="nf">art_of_tsne</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                <span class="n">metric</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
-                <span class="n">exaggeration</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-                <span class="n">perplexity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
-                <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TSNEEmbedding</span><span class="p">:</span>
+<div class="viewcode-block" id="art_of_tsne"><a class="viewcode-back" href="../../../api/ALLCools/clustering/art_of_tsne/index.html#ALLCools.clustering.art_of_tsne.art_of_tsne">[docs]</a><span class="k">def</span> <span class="nf">art_of_tsne</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+    <span class="n">exaggeration</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">perplexity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TSNEEmbedding</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of Dmitry Kobak and Philipp Berens</span>
 <span class="sd">    &quot;The art of using t-SNE for single-cell transcriptomics&quot; based on openTSNE.</span>
 <span class="sd">    See https://doi.org/10.1038/s41467-019-13056-x | www.nature.com/naturecommunications</span>
-<span class="sd">    Args:</span>
-<span class="sd">        X				The data matrix of shape (n_cells, n_genes) i.e. (n_samples, n_features)</span>
-<span class="sd">        metric			Any metric allowed by PyNNDescent (default: &#39;euclidean&#39;)</span>
-<span class="sd">        exaggeration	The exaggeration to use for the embedding</span>
-<span class="sd">        perplexity		The perplexity to use for the embedding</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        The embedding as an opentsne.TSNEEmbedding object (which can be cast to an np.ndarray)</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X</span>
+<span class="sd">        The data matrix of shape (n_cells, n_genes) i.e. (n_samples, n_features)</span>
+<span class="sd">    metric</span>
+<span class="sd">        Any metric allowed by PyNNDescent (default: &#39;euclidean&#39;)</span>
+<span class="sd">    exaggeration</span>
+<span class="sd">        The exaggeration to use for the embedding</span>
+<span class="sd">    perplexity</span>
+<span class="sd">        The perplexity to use for the embedding</span>
+<span class="sd">    n_jobs</span>
+<span class="sd">        Number of CPUs to use</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    The embedding as an opentsne.TSNEEmbedding object (which can be cast to an np.ndarray)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">100_000</span><span class="p">:</span>
@@ -1508,17 +1545,17 @@
         <span class="c1"># Subsample and run a regular art_of_tsne on the subset</span>
         <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         <span class="n">reverse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
-        <span class="n">X_sample</span><span class="p">,</span> <span class="n">X_rest</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">indices</span><span class="p">[:</span><span class="n">n</span> <span class="o">//</span> <span class="mi">40</span><span class="p">]],</span> <span class="n">X</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">40</span><span class="p">:]]</span>
+        <span class="n">X_sample</span><span class="p">,</span> <span class="n">X_rest</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">indices</span><span class="p">[:</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">40</span><span class="p">]],</span> <span class="n">X</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">40</span> <span class="p">:]]</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Embedding subset&quot;</span><span class="p">)</span>
-        <span class="n">Z_sample</span> <span class="o">=</span> <span class="n">art_of_tsne</span><span class="p">(</span><span class="n">X_sample</span><span class="p">)</span>
+        <span class="n">Z_sample</span> <span class="o">=</span> <span class="n">art_of_tsne</span><span class="p">(</span><span class="n">X_sample</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Preparing partial initial embedding of the </span><span class="si">{</span><span class="n">n</span> <span class="o">-</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">40</span><span class="si">}</span><span class="s2"> remaining elements&quot;</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Z_sample</span><span class="o">.</span><span class="n">affinities</span><span class="p">,</span> <span class="n">affinity</span><span class="o">.</span><span class="n">Multiscale</span><span class="p">):</span>
-            <span class="n">rest_init</span> <span class="o">=</span> <span class="n">Z_sample</span><span class="o">.</span><span class="n">prepare_partial</span><span class="p">(</span><span class="n">X_rest</span><span class="p">,</span>
-                                                 <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                                                 <span class="n">perplexities</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">])</span>
+            <span class="n">rest_init</span> <span class="o">=</span> <span class="n">Z_sample</span><span class="o">.</span><span class="n">prepare_partial</span><span class="p">(</span>
+                <span class="n">X_rest</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">perplexities</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">rest_init</span> <span class="o">=</span> <span class="n">Z_sample</span><span class="o">.</span><span class="n">prepare_partial</span><span class="p">(</span><span class="n">X_rest</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Combining the initial embeddings, and standardizing&quot;</span><span class="p">)</span>
@@ -1526,30 +1563,31 @@
         <span class="n">init_full</span> <span class="o">=</span> <span class="n">init_full</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">init_full</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="mi">10000</span><span class="p">)</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Creating multiscale affinities&quot;</span><span class="p">)</span>
-        <span class="n">affinities</span> <span class="o">=</span> <span class="n">affinity</span><span class="o">.</span><span class="n">PerplexityBasedNN</span><span class="p">(</span><span class="n">X</span><span class="p">,</span>
-                                                <span class="n">perplexity</span><span class="o">=</span><span class="n">perplexity</span><span class="p">,</span>
-                                                <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
-                                                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;approx&quot;</span><span class="p">,</span>
-                                                <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">affinities</span> <span class="o">=</span> <span class="n">affinity</span><span class="o">.</span><span class="n">PerplexityBasedNN</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="n">perplexity</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;approx&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span>
+        <span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Creating TSNE embedding&quot;</span><span class="p">)</span>
-        <span class="n">Z</span> <span class="o">=</span> <span class="n">TSNEEmbedding</span><span class="p">(</span><span class="n">init_full</span><span class="p">,</span>
-                          <span class="n">affinities</span><span class="p">,</span>
-                          <span class="n">negative_gradient_method</span><span class="o">=</span><span class="s2">&quot;fft&quot;</span><span class="p">,</span>
-                          <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">TSNEEmbedding</span><span class="p">(</span>
+            <span class="n">init_full</span><span class="p">,</span> <span class="n">affinities</span><span class="p">,</span> <span class="n">negative_gradient_method</span><span class="o">=</span><span class="s2">&quot;fft&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span>
+        <span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimizing, stage 1&quot;</span><span class="p">)</span>
-        <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
-                   <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                   <span class="n">exaggeration</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
-                   <span class="n">momentum</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                   <span class="n">learning_rate</span><span class="o">=</span><span class="n">n</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span>
-                   <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+            <span class="n">n_iter</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
+            <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">exaggeration</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+            <span class="n">momentum</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">learning_rate</span><span class="o">=</span><span class="n">n</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimizing, stage 2&quot;</span><span class="p">)</span>
-        <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">750</span><span class="p">,</span>
-                   <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                   <span class="n">exaggeration</span><span class="o">=</span><span class="n">exaggeration</span><span class="p">,</span>
-                   <span class="n">momentum</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-                   <span class="n">learning_rate</span><span class="o">=</span><span class="n">n</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span>
-                   <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+            <span class="n">n_iter</span><span class="o">=</span><span class="mi">750</span><span class="p">,</span>
+            <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">exaggeration</span><span class="o">=</span><span class="n">exaggeration</span><span class="p">,</span>
+            <span class="n">momentum</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+            <span class="n">learning_rate</span><span class="o">=</span><span class="n">n</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="k">elif</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3_000</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">exaggeration</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">exaggeration</span> <span class="o">=</span> <span class="mi">1</span>
@@ -1559,57 +1597,90 @@
             <span class="n">perplexities</span><span class="o">=</span><span class="p">[</span><span class="n">perplexity</span><span class="p">,</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">100</span><span class="p">],</span>
             <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
             <span class="n">method</span><span class="o">=</span><span class="s2">&quot;approx&quot;</span><span class="p">,</span>
-            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">init</span> <span class="o">=</span> <span class="n">initialization</span><span class="o">.</span><span class="n">pca</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">Z</span> <span class="o">=</span> <span class="n">TSNEEmbedding</span><span class="p">(</span><span class="n">init</span><span class="p">,</span>
-                          <span class="n">affinities_multiscale_mixture</span><span class="p">,</span>
-                          <span class="n">negative_gradient_method</span><span class="o">=</span><span class="s2">&quot;fft&quot;</span><span class="p">,</span>
-                          <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
-        <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
-                   <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                   <span class="n">exaggeration</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
-                   <span class="n">momentum</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                   <span class="n">learning_rate</span><span class="o">=</span><span class="n">n</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span>
-                   <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
-        <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">750</span><span class="p">,</span>
-                   <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                   <span class="n">exaggeration</span><span class="o">=</span><span class="n">exaggeration</span><span class="p">,</span>
-                   <span class="n">momentum</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-                   <span class="n">learning_rate</span><span class="o">=</span><span class="n">n</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span>
-                   <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">TSNEEmbedding</span><span class="p">(</span>
+            <span class="n">init</span><span class="p">,</span>
+            <span class="n">affinities_multiscale_mixture</span><span class="p">,</span>
+            <span class="n">negative_gradient_method</span><span class="o">=</span><span class="s2">&quot;fft&quot;</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+            <span class="n">n_iter</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
+            <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">exaggeration</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+            <span class="n">momentum</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">learning_rate</span><span class="o">=</span><span class="n">n</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+            <span class="n">n_iter</span><span class="o">=</span><span class="mi">750</span><span class="p">,</span>
+            <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">exaggeration</span><span class="o">=</span><span class="n">exaggeration</span><span class="p">,</span>
+            <span class="n">momentum</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+            <span class="n">learning_rate</span><span class="o">=</span><span class="n">n</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">exaggeration</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">exaggeration</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="c1"># Just a plain TSNE with high learning rate</span>
         <span class="n">lr</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span>
-        <span class="n">aff</span> <span class="o">=</span> <span class="n">affinity</span><span class="o">.</span><span class="n">PerplexityBasedNN</span><span class="p">(</span><span class="n">X</span><span class="p">,</span>
-                                         <span class="n">perplexity</span><span class="o">=</span><span class="n">perplexity</span><span class="p">,</span>
-                                         <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
-                                         <span class="n">method</span><span class="o">=</span><span class="s2">&quot;approx&quot;</span><span class="p">,</span>
-                                         <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">aff</span> <span class="o">=</span> <span class="n">affinity</span><span class="o">.</span><span class="n">PerplexityBasedNN</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="n">perplexity</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;approx&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span>
+        <span class="p">)</span>
         <span class="n">init</span> <span class="o">=</span> <span class="n">initialization</span><span class="o">.</span><span class="n">pca</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">Z</span> <span class="o">=</span> <span class="n">TSNEEmbedding</span><span class="p">(</span><span class="n">init</span><span class="p">,</span>
-                          <span class="n">aff</span><span class="p">,</span>
-                          <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
-                          <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
-                          <span class="n">negative_gradient_method</span><span class="o">=</span><span class="s2">&quot;fft&quot;</span><span class="p">)</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">TSNEEmbedding</span><span class="p">(</span>
+            <span class="n">init</span><span class="p">,</span> <span class="n">aff</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">negative_gradient_method</span><span class="o">=</span><span class="s2">&quot;fft&quot;</span>
+        <span class="p">)</span>
         <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="n">exaggeration</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
-        <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="mi">750</span><span class="p">,</span>
-                   <span class="n">exaggeration</span><span class="o">=</span><span class="n">exaggeration</span><span class="p">,</span>
-                   <span class="n">momentum</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-                   <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                   <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">Z</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+            <span class="mi">750</span><span class="p">,</span> <span class="n">exaggeration</span><span class="o">=</span><span class="n">exaggeration</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">Z</span></div>
 
 
-<div class="viewcode-block" id="tsne"><a class="viewcode-back" href="../../../api/ALLCools/clustering/index.html#ALLCools.clustering.art_of_tsne.tsne">[docs]</a><span class="k">def</span> <span class="nf">tsne</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">obsm</span><span class="o">=</span><span class="s1">&#39;X_pca&#39;</span><span class="p">,</span>
-         <span class="n">metric</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
-         <span class="n">exaggeration</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-         <span class="n">perplexity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
-         <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="tsne"><a class="viewcode-back" href="../../../api/ALLCools/clustering/index.html#ALLCools.clustering.art_of_tsne.tsne">[docs]</a><span class="k">def</span> <span class="nf">tsne</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">,</span>
+    <span class="n">obsm</span><span class="o">=</span><span class="s2">&quot;X_pca&quot;</span><span class="p">,</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+    <span class="n">exaggeration</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">perplexity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculating T-SNE embedding with the openTSNE package :cite:p:`Policar2019` and</span>
+<span class="sd">    parameter optimization strategy described in :cite:p:`Kobak2019`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    adata</span>
+<span class="sd">        adata object with principle components or equivalent matrix stored in .obsm</span>
+<span class="sd">    obsm</span>
+<span class="sd">        name of the matrix in .obsm that can be used as T-SNE input</span>
+<span class="sd">    metric</span>
+<span class="sd">        Any metric allowed by PyNNDescent (default: &#39;euclidean&#39;)</span>
+<span class="sd">    exaggeration</span>
+<span class="sd">        The exaggeration to use for the embedding</span>
+<span class="sd">    perplexity</span>
+<span class="sd">        The perplexity to use for the embedding</span>
+<span class="sd">    n_jobs</span>
+<span class="sd">        Number of CPUs to use</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    T-SNE embedding will be stored at adata.obsm[&quot;X_tsne&quot;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="n">obsm</span><span class="p">]</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">art_of_tsne</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">exaggeration</span><span class="o">=</span><span class="n">exaggeration</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="n">perplexity</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
-    <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;X_tsne&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Z</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">art_of_tsne</span><span class="p">(</span>
+        <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+        <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+        <span class="n">exaggeration</span><span class="o">=</span><span class="n">exaggeration</span><span class="p">,</span>
+        <span class="n">perplexity</span><span class="o">=</span><span class="n">perplexity</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s2">&quot;X_tsne&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Z</span>
     <span class="k">return</span></div>
 </pre></div>
 

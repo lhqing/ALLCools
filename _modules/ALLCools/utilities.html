@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-codeautolink.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -125,7 +126,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CELL LEVEL ANALYSIS
+  CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -321,13 +322,13 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  CLUSTER LEVEL ANALYSIS
+  GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../../cluster_level/intro.html">
-   Cluster Level Analysis
+   Post-clustering Genomic Analysis
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
@@ -342,7 +343,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
-     Parse methylpy
+     Alternative Way to Create RegionDS
     </a>
    </li>
    <li class="toctree-l2">
@@ -651,15 +652,6 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="../../api/ALLCools/clustering/balanced_pca/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -709,24 +701,6 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.clustering.sccaf
         </span>
        </code>
       </a>
@@ -865,67 +839,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/igv/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.igv
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/BaseClass/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.BaseClass
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/Session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Session
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/Track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.Track
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/defaults/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.defaults
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/igv/make_session/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.igv.make_session
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/integration/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -933,8 +846,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -958,8 +871,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1019,8 +932,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1062,8 +975,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1186,8 +1099,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1220,8 +1133,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1238,6 +1151,110 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1245,8 +1262,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1492,36 +1509,50 @@
 <span class="kn">from</span> <span class="nn">._open</span> <span class="kn">import</span> <span class="n">open_allc</span>
 
 <div class="viewcode-block" id="IUPAC_TABLE"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.IUPAC_TABLE">[docs]</a><span class="n">IUPAC_TABLE</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;R&#39;</span><span class="p">:</span> <span class="s1">&#39;AG&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="s1">&#39;CT&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="s1">&#39;GC&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;W&#39;</span><span class="p">:</span> <span class="s1">&#39;AT&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;K&#39;</span><span class="p">:</span> <span class="s1">&#39;GT&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="s1">&#39;AC&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="s1">&#39;CGT&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="s1">&#39;AGT&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="s1">&#39;ATC&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;V&#39;</span><span class="p">:</span> <span class="s1">&#39;ACG&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;N&#39;</span><span class="p">:</span> <span class="s1">&#39;ATCGN&#39;</span></div>
+    <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;R&quot;</span><span class="p">:</span> <span class="s2">&quot;AG&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="s2">&quot;CT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="s2">&quot;GC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;W&quot;</span><span class="p">:</span> <span class="s2">&quot;AT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;K&quot;</span><span class="p">:</span> <span class="s2">&quot;GT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="s2">&quot;AC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="s2">&quot;CGT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="s2">&quot;AGT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;H&quot;</span><span class="p">:</span> <span class="s2">&quot;ATC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="s2">&quot;ACG&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;N&quot;</span><span class="p">:</span> <span class="s2">&quot;ATCGN&quot;</span><span class="p">,</span></div>
 <span class="p">}</span>
 
-<div class="viewcode-block" id="COMPLIMENT_BASE"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.COMPLIMENT_BASE">[docs]</a><span class="n">COMPLIMENT_BASE</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">:</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;N&#39;</span><span class="p">:</span> <span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="s1">&#39;n&#39;</span><span class="p">}</span></div>
+<div class="viewcode-block" id="COMPLIMENT_BASE"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.COMPLIMENT_BASE">[docs]</a><span class="n">COMPLIMENT_BASE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="s2">&quot;t&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;g&quot;</span><span class="p">:</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;N&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span></div>
+<span class="p">}</span>
 
 
 <div class="viewcode-block" id="reverse_compliment"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.reverse_compliment">[docs]</a><span class="k">def</span> <span class="nf">reverse_compliment</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">COMPLIMENT_BASE</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">seq</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span></div>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">COMPLIMENT_BASE</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">seq</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span></div>
 
 
 <div class="viewcode-block" id="get_allc_chroms"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.get_allc_chroms">[docs]</a><span class="k">def</span> <span class="nf">get_allc_chroms</span><span class="p">(</span><span class="n">allc_path</span><span class="p">):</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s1">&#39;tabix&#39;</span><span class="p">,</span> <span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="n">allc_path</span><span class="p">],</span>
-            <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span>
+        <span class="p">[</span><span class="s2">&quot;tabix&quot;</span><span class="p">,</span> <span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="n">allc_path</span><span class="p">],</span>
+        <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -1536,8 +1567,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">all_pos_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">IUPAC_TABLE</span><span class="p">[</span><span class="n">base</span><span class="p">])</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Base </span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s1"> is not in IUPAC table.&#39;</span><span class="p">)</span>
-    <span class="n">context_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">all_pos_list</span><span class="p">)])</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Base </span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2"> is not in IUPAC table.&quot;</span><span class="p">)</span>
+    <span class="n">context_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">all_pos_list</span><span class="p">)])</span>
     <span class="k">return</span> <span class="n">context_set</span></div>
 
 
@@ -1555,7 +1586,7 @@
         <span class="n">chrom_dict</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
             <span class="c1"># *_ for other format like fadix file</span>
-            <span class="n">chrom</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">chrom</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">chrom</span> <span class="ow">in</span> <span class="n">remove_chr_list</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">chrom_dict</span><span class="p">[</span><span class="n">chrom</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
@@ -1577,9 +1608,9 @@
     <span class="k">return</span> <span class="n">chrom_index_start</span> <span class="o">+</span> <span class="n">n_bin</span></div>
 
 
-<div class="viewcode-block" id="genome_region_chunks"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.genome_region_chunks">[docs]</a><span class="k">def</span> <span class="nf">genome_region_chunks</span><span class="p">(</span><span class="n">chrom_size_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                         <span class="n">bin_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000000</span><span class="p">,</span>
-                         <span class="n">combine_small</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="genome_region_chunks"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.genome_region_chunks">[docs]</a><span class="k">def</span> <span class="nf">genome_region_chunks</span><span class="p">(</span>
+    <span class="n">chrom_size_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">bin_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000000</span><span class="p">,</span> <span class="n">combine_small</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Split the whole genome into bins, where each bin is {bin_length} bp. Used for tabix region query</span>
 
@@ -1604,11 +1635,11 @@
     <span class="k">for</span> <span class="n">chrom</span><span class="p">,</span> <span class="n">chrom_length</span> <span class="ow">in</span> <span class="n">chrom_size_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">while</span> <span class="n">cur_chrom_pos</span> <span class="o">+</span> <span class="n">bin_length</span> <span class="o">&lt;=</span> <span class="n">chrom_length</span><span class="p">:</span>
             <span class="c1"># tabix region is 1 based and inclusive</span>
-            <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">chrom</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">cur_chrom_pos</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">cur_chrom_pos</span> <span class="o">+</span> <span class="n">bin_length</span> <span class="o">-</span> <span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chrom</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">cur_chrom_pos</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">cur_chrom_pos</span> <span class="o">+</span> <span class="n">bin_length</span> <span class="o">-</span> <span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">cur_chrom_pos</span> <span class="o">+=</span> <span class="n">bin_length</span>
             <span class="n">record_lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bin_length</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">chrom</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">cur_chrom_pos</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">chrom_length</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chrom</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">cur_chrom_pos</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chrom_length</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">cur_chrom_pos</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">record_lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chrom_length</span> <span class="o">-</span> <span class="n">cur_chrom_pos</span><span class="p">)</span>
 
@@ -1621,11 +1652,11 @@
             <span class="n">temp_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
             <span class="n">cum_length</span> <span class="o">+=</span> <span class="n">record_length</span>
             <span class="k">if</span> <span class="n">cum_length</span> <span class="o">&gt;=</span> <span class="n">bin_length</span><span class="p">:</span>
-                <span class="n">final_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_records</span><span class="p">))</span>
+                <span class="n">final_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_records</span><span class="p">))</span>
                 <span class="n">temp_records</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="n">cum_length</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_records</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">final_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_records</span><span class="p">))</span>
+            <span class="n">final_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_records</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
             <span class="n">final_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
@@ -1637,39 +1668,42 @@
         <span class="n">input_file_paths</span> <span class="o">=</span> <span class="n">input_file_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_file_paths</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">input_file_paths</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;*&quot;</span> <span class="ow">in</span> <span class="n">input_file_paths</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">glob</span>
+
             <span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">input_file_paths</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">file_list</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_file_paths</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-                    <span class="n">file_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
+                    <span class="n">file_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
         <span class="n">_file_list</span> <span class="o">=</span> <span class="n">file_list</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_file_paths</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">_file_list</span> <span class="o">=</span> <span class="n">input_file_paths</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;File paths input is neither str nor list.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;File paths input is neither str nor list.&quot;</span><span class="p">)</span>
 
     <span class="n">final_file_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">_file_list</span><span class="p">:</span>
         <span class="n">real_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">real_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1"> provided do not exist.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2"> provided do not exist.&quot;</span><span class="p">)</span>
         <span class="n">final_file_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">real_path</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">_file_list</span></div>
 
 
 <div class="viewcode-block" id="get_md5"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.get_md5">[docs]</a><span class="k">def</span> <span class="nf">get_md5</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
-    <span class="n">file_md5</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;md5sum </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">),</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span>
-    <span class="n">file_md5</span> <span class="o">=</span> <span class="n">file_md5</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">file_md5</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span>
+        <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;md5sum </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">stdout</span>
+    <span class="n">file_md5</span> <span class="o">=</span> <span class="n">file_md5</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">file_md5</span></div>
 
 
 <div class="viewcode-block" id="check_tbi_chroms"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.check_tbi_chroms">[docs]</a><span class="k">def</span> <span class="nf">check_tbi_chroms</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">genome_dict</span><span class="p">,</span> <span class="n">same_order</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="n">file_tabix_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.tbi&#39;</span><span class="p">)</span>
+    <span class="n">file_tabix_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.tbi&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">file_tabix_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s1"> do not have .tbi index. Use tabix to index it.&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2"> do not have .tbi index. Use tabix to index it.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="n">tbi_time</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">file_tabix_path</span><span class="p">)</span>
@@ -1679,10 +1713,11 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">chroms</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s1">&#39;tabix&#39;</span><span class="p">,</span> <span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">],</span>
-                     <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span>
-                     <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
-                     <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">chroms</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">run</span><span class="p">([</span><span class="s2">&quot;tabix&quot;</span><span class="p">,</span> <span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">chroms</span><span class="p">)</span> <span class="o">-</span> <span class="n">genome_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
@@ -1700,9 +1735,9 @@
     <span class="k">return</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="generate_chrom_bin_bed_dataframe"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.generate_chrom_bin_bed_dataframe">[docs]</a><span class="k">def</span> <span class="nf">generate_chrom_bin_bed_dataframe</span><span class="p">(</span><span class="n">chrom_size_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                                     <span class="n">window_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                                     <span class="n">step_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="generate_chrom_bin_bed_dataframe"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.generate_chrom_bin_bed_dataframe">[docs]</a><span class="k">def</span> <span class="nf">generate_chrom_bin_bed_dataframe</span><span class="p">(</span>
+    <span class="n">chrom_size_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">window_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">step_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate BED format dataframe based on UCSC chrom size file and window_size</span>
 <span class="sd">    return dataframe contain 3 columns: chrom, start, end. The index is 0 based continue bin index.</span>
@@ -1716,9 +1751,11 @@
         <span class="n">bin_end</span> <span class="o">=</span> <span class="n">bin_start</span> <span class="o">+</span> <span class="n">window_size</span>
         <span class="n">bin_end</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">bin_end</span> <span class="o">&gt;</span> <span class="n">chrom_length</span><span class="p">)]</span> <span class="o">=</span> <span class="n">chrom_length</span>
         <span class="n">chrom_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">bin_start</span><span class="o">=</span><span class="n">bin_start</span><span class="p">,</span> <span class="n">bin_end</span><span class="o">=</span><span class="n">bin_end</span><span class="p">))</span>
-        <span class="n">chrom_df</span><span class="p">[</span><span class="s1">&#39;chrom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chrom</span>
+        <span class="n">chrom_df</span><span class="p">[</span><span class="s2">&quot;chrom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chrom</span>
         <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chrom_df</span><span class="p">)</span>
-    <span class="n">total_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">records</span><span class="p">)[[</span><span class="s1">&#39;chrom&#39;</span><span class="p">,</span> <span class="s1">&#39;bin_start&#39;</span><span class="p">,</span> <span class="s1">&#39;bin_end&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">total_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">records</span><span class="p">)[[</span><span class="s2">&quot;chrom&quot;</span><span class="p">,</span> <span class="s2">&quot;bin_start&quot;</span><span class="p">,</span> <span class="s2">&quot;bin_end&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span>
+        <span class="n">drop</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">total_df</span></div>
 
 
@@ -1746,10 +1783,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO write test</span>
     <span class="c1"># Find best default value</span>
-    <span class="k">if</span> <span class="s1">&#39;gz&#39;</span> <span class="ow">in</span> <span class="n">allc_path</span><span class="p">:</span>
-        <span class="n">opener</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;gz&quot;</span> <span class="ow">in</span> <span class="n">allc_path</span><span class="p">:</span>
+        <span class="n">opener</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rt&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">opener</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="nb">open</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">opener</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="nb">open</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
 
     <span class="c1"># initialize count dict</span>
     <span class="n">mc_sum_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -1761,8 +1798,8 @@
     <span class="k">with</span> <span class="n">opener</span><span class="p">(</span><span class="n">allc_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">chrom</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">drop_n</span> <span class="ow">and</span> <span class="s1">&#39;N&#39;</span> <span class="ow">in</span> <span class="n">context</span><span class="p">:</span>
+            <span class="n">chrom</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">drop_n</span> <span class="ow">and</span> <span class="s2">&quot;N&quot;</span> <span class="ow">in</span> <span class="n">context</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="c1"># mc and cov</span>
             <span class="n">mc_sum_dict</span><span class="p">[</span><span class="n">context</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mc</span><span class="p">)</span>
@@ -1779,18 +1816,18 @@
                 <span class="k">break</span>
 
     <span class="c1"># overall count</span>
-    <span class="n">profile_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;partial_mc&#39;</span><span class="p">:</span> <span class="n">mc_sum_dict</span><span class="p">,</span>
-                               <span class="s1">&#39;partial_cov&#39;</span><span class="p">:</span> <span class="n">cov_sum_dict</span><span class="p">})</span>
-    <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">context_count_dict</span><span class="p">)</span>
-    <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;overall_mc_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;partial_mc&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;partial_cov&#39;</span><span class="p">]</span>
+    <span class="n">profile_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;partial_mc&quot;</span><span class="p">:</span> <span class="n">mc_sum_dict</span><span class="p">,</span> <span class="s2">&quot;partial_cov&quot;</span><span class="p">:</span> <span class="n">cov_sum_dict</span><span class="p">})</span>
+    <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">context_count_dict</span><span class="p">)</span>
+    <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;overall_mc_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;partial_mc&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;partial_cov&quot;</span><span class="p">]</span>
 
     <span class="c1"># cov base mean and base std.</span>
     <span class="c1"># assume that base cov follows normal distribution</span>
     <span class="n">cov_sum_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cov_sum_dict</span><span class="p">)</span>
     <span class="n">cov_sum2_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cov_sum2_dict</span><span class="p">)</span>
-    <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_cov_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cov_sum_series</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_count&#39;</span><span class="p">]</span>
-    <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_cov_std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
-        <span class="p">(</span><span class="n">cov_sum2_series</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_count&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_cov_mean&#39;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_cov_mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cov_sum_series</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_count&quot;</span><span class="p">]</span>
+    <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_cov_std&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">cov_sum2_series</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_count&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_cov_mean&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span>
 
     <span class="c1"># assume that base rate follow beta distribution</span>
     <span class="c1"># so that observed rate actually follow joint distribution of beta (rate) and normal (cov) distribution</span>
@@ -1798,21 +1835,24 @@
     <span class="c1"># approximate alpha and beta value for the base rate beta distribution</span>
     <span class="n">rate_sum_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">rate_sum_dict</span><span class="p">)</span>
     <span class="n">rate_sum2_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">rate_sum2_dict</span><span class="p">)</span>
-    <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_rate_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rate_sum_series</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_count&#39;</span><span class="p">]</span>
-    <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_rate_var&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rate_sum2_series</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_count&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_rate_mean&#39;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_rate_mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rate_sum_series</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_count&quot;</span><span class="p">]</span>
+    <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_rate_var&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">rate_sum2_series</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_count&quot;</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_rate_mean&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
 
     <span class="c1"># based on beta distribution mean, var</span>
     <span class="c1"># a / (a + b) = base_rate_mean</span>
     <span class="c1"># a * b / ((a + b) ^ 2 * (a + b + 1)) = base_rate_var</span>
     <span class="c1"># we have:</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_rate_mean&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_rate_mean&#39;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_rate_var&#39;</span><span class="p">]</span> <span class="o">-</span> \
-        <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_rate_mean&#39;</span><span class="p">]</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_rate_mean&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_beta_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
-    <span class="n">profile_df</span><span class="p">[</span><span class="s1">&#39;base_beta_b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_rate_mean&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_rate_mean&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_rate_var&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_rate_mean&quot;</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_rate_mean&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_beta_a&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+    <span class="n">profile_df</span><span class="p">[</span><span class="s2">&quot;base_beta_b&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
 
     <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">profile_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">profile_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">profile_df</span></div>
@@ -1820,7 +1860,7 @@
 
 <span class="nd">@doc_params</span><span class="p">(</span><span class="n">allc_path_doc</span><span class="o">=</span><span class="n">allc_path_doc</span><span class="p">)</span>
 <div class="viewcode-block" id="tabix_allc"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.tabix_allc">[docs]</a><span class="k">def</span> <span class="nf">tabix_allc</span><span class="p">(</span><span class="n">allc_path</span><span class="p">,</span> <span class="n">reindex</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;\</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    a simple wrapper of tabix command to index 1 ALLC file</span>
 
 <span class="sd">    Parameters</span>
@@ -1833,19 +1873,21 @@
 <span class="sd">    -------</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s1">.tbi&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">reindex</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s2">.tbi&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">reindex</span><span class="p">:</span>
         <span class="k">return</span>
-    <span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tabix -f -b 2 -e 2 -s 1 </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">),</span>
-        <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;tabix -f -b 2 -e 2 -s 1 </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span></div>
 
 
-<span class="nd">@doc_params</span><span class="p">(</span><span class="n">allc_path_doc</span><span class="o">=</span><span class="n">allc_path_doc</span><span class="p">,</span>
-            <span class="n">chrom_size_path_doc</span><span class="o">=</span><span class="n">chrom_size_path_doc</span><span class="p">,</span>
-            <span class="n">compress_level_doc</span><span class="o">=</span><span class="n">compress_level_doc</span><span class="p">,</span>
-            <span class="n">remove_additional_chrom_doc</span><span class="o">=</span><span class="n">remove_additional_chrom_doc</span><span class="p">)</span>
-<div class="viewcode-block" id="standardize_allc"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.standardize_allc">[docs]</a><span class="k">def</span> <span class="nf">standardize_allc</span><span class="p">(</span><span class="n">allc_path</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">compress_level</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-                     <span class="n">remove_additional_chrom</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="nd">@doc_params</span><span class="p">(</span>
+    <span class="n">allc_path_doc</span><span class="o">=</span><span class="n">allc_path_doc</span><span class="p">,</span>
+    <span class="n">chrom_size_path_doc</span><span class="o">=</span><span class="n">chrom_size_path_doc</span><span class="p">,</span>
+    <span class="n">compress_level_doc</span><span class="o">=</span><span class="n">compress_level_doc</span><span class="p">,</span>
+    <span class="n">remove_additional_chrom_doc</span><span class="o">=</span><span class="n">remove_additional_chrom_doc</span><span class="p">,</span>
+<div class="viewcode-block" id="standardize_allc"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.standardize_allc">[docs]</a><span class="p">)</span>
+<span class="k">def</span> <span class="nf">standardize_allc</span><span class="p">(</span>
+    <span class="n">allc_path</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">compress_level</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">remove_additional_chrom</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;\</span>
 <span class="sd">    Standardize 1 ALLC file by checking:</span>
 <span class="sd">        1. No header in the ALLC file;</span>
@@ -1873,24 +1915,24 @@
         <span class="c1"># means ALLC is already standard</span>
         <span class="k">return</span>
 
-    <span class="k">if</span> <span class="s1">&#39;chr1&#39;</span> <span class="ow">in</span> <span class="n">genome_dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;chr1&quot;</span> <span class="ow">in</span> <span class="n">genome_dict</span><span class="p">:</span>
         <span class="n">raw_add_chr</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">raw_add_chr</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">with</span> <span class="n">open_allc</span><span class="p">(</span><span class="n">allc_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">,</span> \
-            <span class="n">open_allc</span><span class="p">(</span><span class="n">allc_path</span> <span class="o">+</span> <span class="s1">&#39;.tmp.gz&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
-                      <span class="n">compresslevel</span><span class="o">=</span><span class="n">compress_level</span><span class="p">)</span> <span class="k">as</span> <span class="n">wf</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">open_allc</span><span class="p">(</span><span class="n">allc_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">,</span> <span class="n">open_allc</span><span class="p">(</span>
+        <span class="n">allc_path</span> <span class="o">+</span> <span class="s2">&quot;.tmp.gz&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">compresslevel</span><span class="o">=</span><span class="n">compress_level</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">wf</span><span class="p">:</span>
         <span class="n">cur_chrom</span> <span class="o">=</span> <span class="s2">&quot;TOTALLY_NOT_A_CHROM&quot;</span>
-        <span class="n">cur_start</span> <span class="o">=</span> <span class="n">cur_chrom</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
+        <span class="n">cur_start</span> <span class="o">=</span> <span class="n">cur_chrom</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
         <span class="n">cur_pointer</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">index_lines</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">buffer_lines</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">buffer_lines</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="n">line_count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">add_chr</span> <span class="o">=</span> <span class="n">raw_add_chr</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">line_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># for very old allc files, which contain header line</span>
-                <span class="n">ll</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">ll</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="nb">int</span><span class="p">(</span><span class="n">ll</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># pos</span>
                     <span class="nb">int</span><span class="p">(</span><span class="n">ll</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>  <span class="c1"># mc</span>
@@ -1901,33 +1943,35 @@
             <span class="k">if</span> <span class="n">line_count</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="c1"># 1st line could be header that startswith chr</span>
                 <span class="c1"># so check 1st and 2nd row</span>
-                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;chr&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;chr&quot;</span><span class="p">):</span>
                     <span class="n">add_chr</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">if</span> <span class="n">add_chr</span><span class="p">:</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;chr&#39;</span> <span class="o">+</span> <span class="n">line</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;chr&quot;</span> <span class="o">+</span> <span class="n">line</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">cur_start</span><span class="p">):</span>
                 <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="n">cur_chrom</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">cur_chrom</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">genome_dict</span><span class="p">:</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">remove_additional_chrom</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cur_chrom</span><span class="si">}</span><span class="s1"> not exist in genome size file, &#39;</span>
-                                       <span class="sa">f</span><span class="s1">&#39;set remove_additional_chrom=True if want to remove additional chroms&#39;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cur_chrom</span><span class="si">}</span><span class="s2"> not exist in genome size file, &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;set remove_additional_chrom=True if want to remove additional chroms&quot;</span>
+                        <span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="c1"># skip unknown chromosome</span>
                         <span class="k">continue</span>
                 <span class="n">index_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_chrom</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cur_pointer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">cur_start</span> <span class="o">=</span> <span class="n">cur_chrom</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
+                <span class="n">cur_start</span> <span class="o">=</span> <span class="n">cur_chrom</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
             <span class="n">cur_pointer</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
             <span class="n">buffer_lines</span> <span class="o">+=</span> <span class="n">line</span>
             <span class="n">line_count</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">line_count</span> <span class="o">%</span> <span class="mi">50000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">wf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">buffer_lines</span><span class="p">)</span>
-                <span class="n">buffer_lines</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="n">buffer_lines</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="n">wf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">buffer_lines</span><span class="p">)</span>
 
-    <span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;mv </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s1">.bp&#39;</span><span class="p">),</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;mv </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s1">.tmp.gz </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">),</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rm -f </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s1">.bp&#39;</span><span class="p">),</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mv </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s2">.bp&quot;</span><span class="p">),</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mv </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s2">.tmp.gz </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rm -f </span><span class="si">{</span><span class="n">allc_path</span><span class="si">}</span><span class="s2">.bp&quot;</span><span class="p">),</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">tabix_allc</span><span class="p">(</span><span class="n">allc_path</span><span class="p">,</span> <span class="n">reindex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span></div>
 
@@ -1936,39 +1980,43 @@
     <span class="sd">&quot;&quot;&quot;Get proper str for a large bin_size&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">bin_size</span> <span class="o">&gt;</span> <span class="mi">1000000</span><span class="p">:</span>
         <span class="n">bin_size_mode</span> <span class="o">=</span> <span class="n">bin_size</span> <span class="o">%</span> <span class="mi">1000000</span>
-        <span class="n">bin_size_mode</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">bin_size_mode</span> <span class="o">/</span> <span class="mi">1000000</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">bin_size_mode</span> <span class="o">&gt;=</span> <span class="mi">100000</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
-        <span class="n">bin_size_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">bin_size</span> <span class="o">//</span> <span class="mi">1000000</span><span class="si">}{</span><span class="n">bin_size_mode</span><span class="si">}</span><span class="s1">m&#39;</span>
+        <span class="n">bin_size_mode</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bin_size_mode</span> <span class="o">/</span> <span class="mi">1000000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">bin_size_mode</span> <span class="o">&gt;=</span> <span class="mi">100000</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">)</span>
+        <span class="n">bin_size_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bin_size</span> <span class="o">//</span> <span class="mi">1000000</span><span class="si">}{</span><span class="n">bin_size_mode</span><span class="si">}</span><span class="s2">m&quot;</span>
     <span class="k">elif</span> <span class="n">bin_size</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
         <span class="n">bin_size_mode</span> <span class="o">=</span> <span class="n">bin_size</span> <span class="o">%</span> <span class="mi">1000</span>
-        <span class="n">bin_size_mode</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">bin_size_mode</span> <span class="o">/</span> <span class="mi">1000</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">bin_size_mode</span> <span class="o">&gt;=</span> <span class="mi">100</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
-        <span class="n">bin_size_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">bin_size</span> <span class="o">//</span> <span class="mi">1000</span><span class="si">}{</span><span class="n">bin_size_mode</span><span class="si">}</span><span class="s1">k&#39;</span>
+        <span class="n">bin_size_mode</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bin_size_mode</span> <span class="o">/</span> <span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">bin_size_mode</span> <span class="o">&gt;=</span> <span class="mi">100</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">)</span>
+        <span class="n">bin_size_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bin_size</span> <span class="o">//</span> <span class="mi">1000</span><span class="si">}{</span><span class="n">bin_size_mode</span><span class="si">}</span><span class="s2">k&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">bin_size_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">bin_size_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bin_size</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">return</span> <span class="n">bin_size_str</span></div>
 
 
 <div class="viewcode-block" id="parse_dtype"><a class="viewcode-back" href="../../api/ALLCools/utilities/index.html#ALLCools.utilities.parse_dtype">[docs]</a><span class="k">def</span> <span class="nf">parse_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;uint8&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;uint8&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">uint16</span>
-        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;uint16&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;uint16&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">uint16</span>
-        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;uint32&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;uint32&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span>
-        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;uint64&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;uint64&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">uint64</span>
-        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;int8&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;int8&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">int8</span>
-        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;int16&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;int16&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span>
-        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;int32&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;int32&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span>
-        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;int64&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;int64&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span>
-        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;bool&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">bool</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unknown dtype </span><span class="si">{</span><span class="n">dtype</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown dtype </span><span class="si">{</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">dtype</span></div>
 

@@ -23,12 +23,12 @@ The high-coverage pseudo-bulk methylomes allow us to analyze methylation diversi
 ## Cell Level Analysis
 
 ### Sections
-
 - [Basic walk-through of the clustering analysis](../cell_level/basic/intro_basic_clustering.md).
 - [Step-by-step description of the clustering analysis](../cell_level/step_by_step/intro_step_by_step_clustering.md).
 - [Identification of cluster Differentially Methylated Genes](../cell_level/dmg/intro_dmg.md).
 - [Cell-level data integration](../cell_level/integration/intro_integration.md).
 - [Potential cell doublets identification](../cell_level/doublets/intro_doublets.md).
+
 
 ### Input
 

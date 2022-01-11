@@ -3,6 +3,11 @@
 
 .. py:module:: ALLCools.clustering
 
+.. autoapi-nested-parse::
+
+   Basic Cellular Analysis Functions
+
+
 
 Subpackages
 -----------
@@ -21,15 +26,12 @@ Submodules
 
    ConsensusClustering/index.rst
    art_of_tsne/index.rst
-   balanced_knn/index.rst
    balanced_pca/index.rst
    dmg/index.rst
    incremental_pca/index.rst
    integration/index.rst
    mcad/index.rst
    pvclust/index.rst
-   scanorama/index.rst
-   sccaf/index.rst
    scrublet/index.rst
 
 
@@ -85,23 +87,75 @@ Package Contents
 
 .. py:function:: tsne(adata, obsm='X_pca', metric: Union[str, Callable] = 'euclidean', exaggeration: float = -1, perplexity: int = 30, n_jobs: int = -1)
 
+   Calculating T-SNE embedding with the openTSNE package :cite:p:`Policar2019` and
+   parameter optimization strategy described in :cite:p:`Kobak2019`.
 
-.. py:function:: balanced_pca(adata, groups='pre_clusters', max_cell_prop=0.1, n_comps=200, scale=False)
+   :param adata: adata object with principle components or equivalent matrix stored in .obsm
+   :param obsm: name of the matrix in .obsm that can be used as T-SNE input
+   :param metric: Any metric allowed by PyNNDescent (default: 'euclidean')
+   :param exaggeration: The exaggeration to use for the embedding
+   :param perplexity: The perplexity to use for the embedding
+   :param n_jobs: Number of CPUs to use
+
+   :returns:
+   :rtype: T-SNE embedding will be stored at adata.obsm["X_tsne"]
 
 
-.. py:function:: significant_pc_test(adata, p_cutoff=0.1, update=True, obsm='X_pca', downsample=50000)
+.. py:function:: balanced_pca(adata: anndata.AnnData, groups: str = 'pre_clusters', max_cell_prop=0.1, n_comps=200, scale=False)
 
-   :param adata:
-   :param p_cutoff:
-   :param update:
-   :param obsm:
-   :param downsample:
+   Given a categorical variable (e.g., a pre-clustering label), perform balanced PCA by downsample
+   cells in the large categories to make the overall population more balanced, so the PCs are expected
+   to represent more variance among small categories.
+
+   :param adata: adata after preprocessing and feature selection steps
+   :param groups: the name of the categorical variable in adata.obsm
+   :param max_cell_prop: any single category with cells > `n_cell * max_cell_prop` will be downsampled to this number.
+   :param n_comps: Number of components in PCA
+   :param scale: whether to scale the input matrix before PCA
+
+   :returns:
+   :rtype: adata with PC information stored in obsm, varm and uns like the :func:`scanpy.tl.pca` do.
+
+
+.. py:function:: significant_pc_test(adata: anndata.AnnData, p_cutoff=0.1, update=True, obsm='X_pca', downsample=50000)
+
+   Perform two-sample Kolmogorov-Smirnov test for goodness of fit on two adjacent PCs,
+   select top PCs based on the `p_cutoff`. Top PCs have significantly different distributions, while
+   later PCs only capturing random noise will have larger p-values. An idea from :cite:p:`Zeisel2018`.
+
+   :param adata: adata with PC matrix calculated and stored in adata.obsm
+   :param p_cutoff: the p-value cutoff to select top PCs
+   :param update: Whether modify adata.obsm and only keep significant PCs
+   :param obsm: name of the PC matrix in adata.obsm
+   :param downsample: If the dataset is too large, downsample the cells before testing.
+
+   :returns: number of PCs selected
+   :rtype: n_components
 
 
 .. py:function:: log_scale(adata, method='standard', with_mean=False, with_std=True, max_value=10, scaler=None)
 
+   Perform log transform and then scale the cell-by-feature matrix
 
-.. py:function:: get_pc_centers(adata, group, outlier_label=None, obsm='X_pca')
+   :param adata: adata with normalized, unscaled cell-by-feature matrix
+   :param method: the type of scaler to use:
+                  'standard' for :class:`sklearn.preprocessing.StandardScaler`;
+                  'robust' for :class:`sklearn.preprocessing.RobustScaler`.
+   :param with_mean: Whether scale with mean center
+   :param with_std: Whether scale the std
+   :param max_value: Whether clip large values after scale
+   :param scaler: A fitted sklearn scaler, if provided, will only use it to transform the adata.
+
+   :returns:
+   :rtype: adata.X is scaled in place, the fitted scaler object will be return if the `scaler` parameter is None.
+
+
+.. py:function:: get_pc_centers(adata: anndata.AnnData, group: str, outlier_label=None, obsm='X_pca')
+
+   :param adata:
+   :param group:
+   :param outlier_label:
+   :param obsm:
 
 
 .. py:class:: ReproduciblePCA(scaler, mc_type, adata=None, pca_obj=None, pc_loading=None, var_names=None, max_value=10)
@@ -199,15 +253,32 @@ Package Contents
    :param max_other_fold:
 
 
-.. py:function:: cluster_enriched_features(adata, cluster_col, top_n=200, alpha=0.05, stat_plot=True, method='mc')
+.. py:function:: cluster_enriched_features(adata: anndata.AnnData, cluster_col: str, top_n=200, alpha=0.05, stat_plot=True, method='mc')
 
-   :param adata:
-   :param cluster_col:
-   :param top_n:
-   :param alpha:
-   :param stat_plot:
-   :param method: "mc" for methylation fraction,
-                  "rna" and "atac" for the original algorithm for the RNA
+   Calculate top Cluster Enriched Features (CEF) from per-cell normalized dataset.
+   An post-clustering feature selection step adapted from :cite:p:`Zeisel2018,La_Manno2021`
+   and their great [cytograph2](https://github.com/linnarsson-lab/cytograph2) package.
+   For details about CEF calculation, read the methods of :cite:p:`Zeisel2018`. Note that
+   in original paper, they look for cluster-specific highly expressed genes as CEFs;
+   for methylation, we are looking for hypo-methylation as CEFs, so the score and test is reversed.
+
+   :param adata: adata containing per-cell normalized values.
+                 For methylation fraction, the value need to be 1-centered
+                 (1 means cell's average methylation), like those produced by
+                 :func:`ALLCools.mcds.mcds.MCDS.add_mc_frac` with `normalize_per_cell=True`.
+                 For RNA and ATAC, you can use per cell normalized counts.
+                 Do not log transform the data before running this function
+   :param cluster_col: The name of categorical variable in adata.obs
+   :param top_n: Select top N CEFs for each cluster
+   :param alpha: FDR corrected q-value cutoff
+   :param stat_plot: Whether making some summary plots for the CEF calculation
+   :param method: "mc" for methylation CEF (look for hypo-methylation),
+                  "rna" and "atac" for the RNA and ATAC or any count based data
+                  (use the original cytograph algorithm, look for higher value)
+
+   :returns: * *Modify adata inplace, adding a dictionary in adata.uns called f"{cluster_col}_feature_enrichment"*
+             * *The dictionary contains "qvals" (np.ndarray cluster-by-feature enrichment score q-value) and*
+             * *"cluster_order" (cluster order of the "qvals")*
 
 
 .. py:function:: filter_regions(adata, hypo_cutoff=None)
