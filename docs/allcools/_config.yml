@@ -43,6 +43,9 @@ parse:
     # - smartquotes
     - substitution
   myst_url_schemes          : [mailto, http, https]  # URI schemes that will be recognised as external URLs in Markdown links
+  myst_substitutions:
+    RegionDS: "{class}`RegionDS <ALLCools.mcds.region_ds.RegionDS>`"
+    MCDS: "{class}`MCDS <ALLCools.mcds.mcds.MCDS>`"
 
 #######################################################################################
 # HTML-specific settings
@@ -94,6 +97,8 @@ sphinx:
     - 'sphinx.ext.viewcode'
     - 'sphinx.ext.intersphinx'
     - 'autoapi.extension'
+    - 'myst_nb'
+    - 'sphinx_codeautolink'
   local_extensions          :   # A list of local extensions to load by sphinx specified by "name: path" items
   config                    :   # key-value pairs to directly over-ride the Sphinx configuration
     add_module_names: false
@@ -118,6 +123,9 @@ sphinx:
         - null
       anndata:
         - 'https://anndata.readthedocs.io/en/stable/'
+        - null
+      scanpy:
+        - 'https://scanpy.readthedocs.io/en/stable/'
         - null
       leidenalg:
         - 'https://leidenalg.readthedocs.io/en/latest/'
@@ -148,4 +156,7 @@ sphinx:
         - null
       sklearn:
         - 'https://scikit-learn.org/stable/'
+        - null
+      openTSNE:
+        - 'https://opentsne.readthedocs.io/en/latest/'
         - null

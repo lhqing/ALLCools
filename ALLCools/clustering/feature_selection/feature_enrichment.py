@@ -1,3 +1,4 @@
+import anndata
 import numpy as np
 from statsmodels.stats.multitest import multipletests
 import seaborn as sns
@@ -5,9 +6,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def calculate_enrichment_score(raw_adata, labels):
+def _calculate_enrichment_score(raw_adata, labels):
     """
-    Enrichment score modified from Zeisel et al. 2018 Cell for normalized methylation fractions
+    Enrichment score modified from :cite:p:`Zeisel2018` for normalized methylation fractions
     """
     n_cells = raw_adata.shape[0]
     sizes = labels.value_counts()
@@ -53,9 +54,9 @@ def calculate_enrichment_score(raw_adata, labels):
     return enrichment
 
 
-def calculate_enrichment_score_cytograph(adata, labels):
+def _calculate_enrichment_score_cytograph(adata, labels):
     """
-    Enrichment score algorithm from Zeisel et al. 2018 Cell
+    The original CEF algorithm from :cite:p:`Zeisel2018` for count based data (RNA, ATAC)
     """
     n_cells = adata.shape[0]
 
@@ -98,6 +99,7 @@ def calculate_enrichment_score_cytograph(adata, labels):
 
 
 def _plot_enrichment_result(qvals, enrichment, null_enrichment, alpha):
+    """Make some plots for the p-value, q-value and # of CEFs distribution"""
     fig, (f_ax, q_ax, e_ax) = plt.subplots(ncols=3, figsize=(15, 5))
 
     # plot feature with q_value pass cutoff
@@ -139,6 +141,7 @@ def _plot_enrichment_result(qvals, enrichment, null_enrichment, alpha):
 
 
 def _aggregate_enrichment(adata, enrichment, top_n, alpha, qvals, cluster_col):
+    """Aggregate enrichment results, calculate q values"""
     # calculate use_features without qvals
     use_features_no_q = []
     for _, row in enrichment.iterrows():
@@ -167,36 +170,56 @@ def _aggregate_enrichment(adata, enrichment, top_n, alpha, qvals, cluster_col):
 
 
 def cluster_enriched_features(
-    adata, cluster_col, top_n=200, alpha=0.05, stat_plot=True, method="mc"
+    adata: anndata.AnnData, cluster_col: str,
+    top_n=200, alpha=0.05, stat_plot=True, method="mc"
 ):
     """
+    Calculate top Cluster Enriched Features (CEF) from per-cell normalized dataset.
+    An post-clustering feature selection step adapted from :cite:p:`Zeisel2018,La_Manno2021`
+    and their great [cytograph2](https://github.com/linnarsson-lab/cytograph2) package.
+    For details about CEF calculation, read the methods of :cite:p:`Zeisel2018`. Note that
+    in original paper, they look for cluster-specific highly expressed genes as CEFs;
+    for methylation, we are looking for hypo-methylation as CEFs, so the score and test is reversed.
 
     Parameters
     ----------
     adata
+        adata containing per-cell normalized values.
+        For methylation fraction, the value need to be 1-centered
+        (1 means cell's average methylation), like those produced by
+        :func:`ALLCools.mcds.mcds.MCDS.add_mc_frac` with `normalize_per_cell=True`.
+        For RNA and ATAC, you can use per cell normalized counts.
+        Do not log transform the data before running this function
     cluster_col
+        The name of categorical variable in adata.obs
     top_n
+        Select top N CEFs for each cluster
     alpha
+        FDR corrected q-value cutoff
     stat_plot
+        Whether making some summary plots for the CEF calculation
     method
-        "mc" for methylation fraction,
-        "rna" and "atac" for the original algorithm for the RNA
+        "mc" for methylation CEF (look for hypo-methylation),
+        "rna" and "atac" for the RNA and ATAC or any count based data
+        (use the original cytograph algorithm, look for higher value)
 
     Returns
     -------
-
+    Modify adata inplace, adding a dictionary in adata.uns called f"{cluster_col}_feature_enrichment"
+    The dictionary contains "qvals" (np.ndarray cluster-by-feature enrichment score q-value) and
+    "cluster_order" (cluster order of the "qvals")
     """
     n_labels = adata.obs[cluster_col].unique().size
     print(f"Found {n_labels} clusters to compute feature enrichment score")
 
     if method == "mc":
-        use_func = calculate_enrichment_score
+        use_func = _calculate_enrichment_score
     elif method == "rna":
-        use_func = calculate_enrichment_score_cytograph
+        use_func = _calculate_enrichment_score_cytograph
     elif method == "atac":
-        use_func = calculate_enrichment_score_cytograph
+        use_func = _calculate_enrichment_score_cytograph
     else:
-        use_func = calculate_enrichment_score_cytograph
+        use_func = _calculate_enrichment_score_cytograph
         print(
             f'method needs to be in ["mc", "rna", "atac"], got {method}. Using the algorithm for RNA.'
         )
@@ -236,6 +259,7 @@ def cluster_enriched_features(
             qvals=qvals,
             cluster_col=cluster_col,
         )
+
     # save the calculated results in the input adata
     adata.var[f"{cluster_col}_enriched_features"] = adata.var_names.isin(use_features)
     return

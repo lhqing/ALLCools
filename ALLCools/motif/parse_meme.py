@@ -131,4 +131,5 @@ def get_default_motif_set(database="three_databases"):
         ).to_dict()
         return motif_set
     else:
+        # TODO: allow user create motif set by providing meme and metadata (optional)
         raise NotImplementedError

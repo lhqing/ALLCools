@@ -368,7 +368,7 @@ def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
 
 @doc_params(allc_path_doc=allc_path_doc)
 def tabix_allc(allc_path, reindex=False):
-    """\
+    """
     a simple wrapper of tabix command to index 1 ALLC file
 
     Parameters

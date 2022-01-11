@@ -1,3 +1,12 @@
+"""
+The function art_of_tsne is from cytograph2 package
+https://github.com/linnarsson-lab/cytograph2/blob/master/cytograph/embedding/art_of_tsne.py
+
+The idea behind that is based on :cite:p:`Kobak2019` with T-SNE algorithm implemented in
+[openTSNE](https://opentsne.readthedocs.io/en/latest/) :cite:p:`Policar2019`.
+
+"""
+
 import logging
 from typing import Callable, Union
 
@@ -16,14 +25,23 @@ def art_of_tsne(
     Implementation of Dmitry Kobak and Philipp Berens
     "The art of using t-SNE for single-cell transcriptomics" based on openTSNE.
     See https://doi.org/10.1038/s41467-019-13056-x | www.nature.com/naturecommunications
-    Args:
-        X				The data matrix of shape (n_cells, n_genes) i.e. (n_samples, n_features)
-        metric			Any metric allowed by PyNNDescent (default: 'euclidean')
-        exaggeration	The exaggeration to use for the embedding
-        perplexity		The perplexity to use for the embedding
 
-    Returns:
-        The embedding as an opentsne.TSNEEmbedding object (which can be cast to an np.ndarray)
+    Parameters
+    ----------
+    X
+        The data matrix of shape (n_cells, n_genes) i.e. (n_samples, n_features)
+    metric
+        Any metric allowed by PyNNDescent (default: 'euclidean')
+    exaggeration
+        The exaggeration to use for the embedding
+    perplexity
+        The perplexity to use for the embedding
+    n_jobs
+        Number of CPUs to use
+
+    Returns
+    -------
+    The embedding as an opentsne.TSNEEmbedding object (which can be cast to an np.ndarray)
     """
     n = X.shape[0]
     if n > 100_000:
@@ -37,7 +55,7 @@ def art_of_tsne(
         reverse = np.argsort(indices)
         X_sample, X_rest = X[indices[: n // 40]], X[indices[n // 40 :]]
         logging.info(f"Embedding subset")
-        Z_sample = art_of_tsne(X_sample)
+        Z_sample = art_of_tsne(X_sample, metric=metric)
 
         logging.info(
             f"Preparing partial initial embedding of the {n - n // 40} remaining elements"
@@ -139,6 +157,29 @@ def tsne(
     perplexity: int = 30,
     n_jobs: int = -1,
 ):
+    """
+    Calculating T-SNE embedding with the openTSNE package :cite:p:`Policar2019` and
+    parameter optimization strategy described in :cite:p:`Kobak2019`.
+
+    Parameters
+    ----------
+    adata
+        adata object with principle components or equivalent matrix stored in .obsm
+    obsm
+        name of the matrix in .obsm that can be used as T-SNE input
+    metric
+        Any metric allowed by PyNNDescent (default: 'euclidean')
+    exaggeration
+        The exaggeration to use for the embedding
+    perplexity
+        The perplexity to use for the embedding
+    n_jobs
+        Number of CPUs to use
+
+    Returns
+    -------
+    T-SNE embedding will be stored at adata.obsm["X_tsne"]
+    """
     X = adata.obsm[obsm]
     Z = art_of_tsne(
         X=X,

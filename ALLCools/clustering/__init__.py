@@ -1,3 +1,7 @@
+"""
+Basic Cellular Analysis Functions
+"""
+
 from .ConsensusClustering import ConsensusClustering, select_confusion_pairs
 from .art_of_tsne import tsne
 from .balanced_pca import (

@@ -971,7 +971,7 @@ class RegionDS(xr.Dataset):
         obj_to_str(self, dtypes)
         return
 
-    def save(self, output_path=None, mode="w", change_region_dim=True):
+    def save(self, da_name=None, output_path=None, mode="w", change_region_dim=True):
         if self.location is None:
             raise ValueError(f"RegionDS.location is None when trying to save.")
         pathlib.Path(self.location).mkdir(parents=True, exist_ok=True)
@@ -985,8 +985,12 @@ class RegionDS(xr.Dataset):
             )
 
         # turn object coords to fix length string dtype before saving to zarr
-        self.object_coords_to_string()
-        self.to_zarr(output_path, mode=mode)
+        if da_name is None:
+            ds_to_save = self
+        else:
+            ds_to_save = self[[da_name]]
+        ds_to_save.object_coords_to_string()
+        ds_to_save.to_zarr(output_path, mode=mode)
         return
 
     def get_coords(self, name):

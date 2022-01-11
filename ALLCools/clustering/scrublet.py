@@ -4,7 +4,6 @@ from ..mcds.utilities import calculate_posterior_mc_frac
 from scipy.stats import ks_2samp
 from pynndescent import NNDescent
 from sklearn.metrics import roc_curve
-from random import choices
 import pandas as pd
 import xarray as xr
 import matplotlib.pyplot as plt

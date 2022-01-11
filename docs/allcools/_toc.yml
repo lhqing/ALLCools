@@ -9,7 +9,7 @@ parts:
       - file: start/analysis_steps
       - file: start/interactive
 
-  - caption: CELL LEVEL ANALYSIS
+  - caption: CELLULAR ANALYSIS
     chapters:
       - file: cell_level/basic/intro_basic_clustering
         sections:
@@ -52,7 +52,7 @@ parts:
           - file: cell_level/doublets/doublet_score_chrom100k
 
 
-  - caption: CLUSTER LEVEL ANALYSIS
+  - caption: GENOMIC ANALYSIS
     chapters:
       - file: cluster_level/intro
         sections:

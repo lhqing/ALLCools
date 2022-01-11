@@ -7,7 +7,6 @@ import dask
 import subprocess
 from collections import defaultdict
 from ALLCools.mcds import RegionDS
-from tpot import TPOTClassifier
 import pyBigWig
 import warnings
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -15,6 +14,7 @@ from sklearn.model_selection import train_test_split
 from ALLCools.mcds.utilities import write_ordered_chunks
 from ALLCools.mcds.region_ds_utilities import update_region_ds_config
 import joblib
+
 
 
 def _create_train_region_ds(reptile):
@@ -75,9 +75,9 @@ def _create_train_dmr_ds(reptile, train_regions_bed, train_label):
 
     train_dmr_regions_bed_df = (
         dmr_regions_bed_df.set_index("name")
-        .loc[dmr_label.index]
-        .reset_index()
-        .iloc[:, [1, 2, 3, 0]]
+            .loc[dmr_label.index]
+            .reset_index()
+            .iloc[:, [1, 2, 3, 0]]
     )
 
     # train DMR RegionDS
@@ -150,14 +150,14 @@ def _get_data_and_label(region_ds, modalities, sample, fillna_by_zero_list):
 
 
 def _predict_sample(
-    region_ds_path,
-    region_dim,
-    modalities,
-    fillna_by_zero,
-    sample,
-    output_path,
-    mask_cutoff=0.3,
-    chunk_size=100000,
+        region_ds_path,
+        region_dim,
+        modalities,
+        fillna_by_zero,
+        sample,
+        output_path,
+        mask_cutoff=0.3,
+        chunk_size=100000,
 ):
     # set dask scheduler to allow multiprocessing
     with dask.config.set(scheduler="sync"):
@@ -176,7 +176,7 @@ def _predict_sample(
 
         total_proba = []
         for chunk_start in range(0, region_ids.size, chunk_size):
-            use_regions = region_ids[chunk_start : chunk_start + chunk_size]
+            use_regions = region_ids[chunk_start: chunk_start + chunk_size]
             _region_ds = region_ds.sel({region_dim: use_regions})
             data, _ = _get_data_and_label(
                 region_ds=_region_ds,
@@ -212,19 +212,25 @@ def _predict_sample(
 
 class REPTILE:
     def __init__(
-        self,
-        output_path,
-        train_regions,
-        dmr_regions,
-        train_region_labels,
-        train_sample,
-        bigwig_table,
-        chrom_size_path,
-        window_size=2000,
-        step_size=200,
-        dmr_slop=150,
-        fillna_by_zero=None,
+            self,
+            output_path,
+            train_regions,
+            dmr_regions,
+            train_region_labels,
+            train_sample,
+            bigwig_table,
+            chrom_size_path,
+            window_size=2000,
+            step_size=200,
+            dmr_slop=150,
+            fillna_by_zero=None,
     ):
+        try:
+            from tpot import TPOTClassifier
+        except ImportError:
+            raise ImportError('Got tpot import error, install the tpot package: \n'
+                              'conda install -c conda-forge tpot xgboost dask dask-ml scikit-mdr skrebate \n'
+                              'See also https://epistasislab.github.io/tpot/')
         self.output_path = output_path
         pathlib.Path(self.output_path).mkdir(exist_ok=True)
         # for reptile model
@@ -395,20 +401,20 @@ class REPTILE:
                 warnings.simplefilter("ignore")
                 region_ds.coords[f"{modality}_mean"] = (
                     region_ds[da_name]
-                    .sel({modality: self.samples})
-                    .mean(dim=modality, skipna=True)
-                    .load()
+                        .sel({modality: self.samples})
+                        .mean(dim=modality, skipna=True)
+                        .load()
                 )
                 region_ds.coords[f"{modality}_std"] = (
                     region_ds[da_name]
-                    .sel({modality: self.samples})
-                    .std(dim=modality, skipna=True)
-                    .load()
+                        .sel({modality: self.samples})
+                        .std(dim=modality, skipna=True)
+                        .load()
                 )
                 region_ds.coords[f"{modality}_nan_count"] = (
                     np.isnan(region_ds[da_name].sel({modality: self.samples}))
-                    .sum(dim=modality)
-                    .load()
+                        .sum(dim=modality)
+                        .load()
                 )
         # save the annotated region_ds to self.{output_dir}/{region_dim}
         region_ds.attrs["reptile_annotate"] = True
@@ -477,15 +483,15 @@ class REPTILE:
 
     @staticmethod
     def auto_ml(
-        data,
-        label,
-        output_path,
-        train_size=0.75,
-        random_state=42,
-        cpu=1,
-        tpot_generations=5,
-        tpot_max_time_mins=20,
-        **tpot_kwargs,
+            data,
+            label,
+            output_path,
+            train_size=0.75,
+            random_state=42,
+            cpu=1,
+            tpot_generations=5,
+            tpot_max_time_mins=20,
+            **tpot_kwargs,
     ):
         print("Training model with these parameters:")
         print(f"cpu={cpu}")
@@ -504,7 +510,8 @@ class REPTILE:
             random_state=random_state,
         )
 
-        tpot = TPOTClassifier(
+        from tpot import TPOTClassifier
+        _tpot = TPOTClassifier(
             generations=tpot_generations,
             max_time_mins=tpot_max_time_mins,
             verbosity=2,
@@ -512,14 +519,14 @@ class REPTILE:
             random_state=random_state,
             **tpot_kwargs,
         )
-        tpot.fit(x_train, y_train)
-        final_score = tpot.score(x_test, y_test)
+        _tpot.fit(x_train, y_train)
+        final_score = _tpot.score(x_test, y_test)
         print(f"Final hold-out testing data accuracy: {final_score:.4f}")
         print("Final pipeline:")
-        print(tpot.fitted_pipeline_)
+        print(_tpot.fitted_pipeline_)
 
         # save the model for prediction
-        joblib.dump(tpot.fitted_pipeline_, output_path)
+        joblib.dump(_tpot.fitted_pipeline_, output_path)
         return
 
     def _train(self, region_dim, slop, cpu, **kwargs):

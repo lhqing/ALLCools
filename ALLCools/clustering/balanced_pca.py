@@ -1,3 +1,4 @@
+import anndata
 import joblib
 from sklearn.preprocessing import StandardScaler, RobustScaler
 import scanpy as sc
@@ -7,8 +8,32 @@ import pandas as pd
 
 
 def log_scale(
-    adata, method="standard", with_mean=False, with_std=True, max_value=10, scaler=None
+        adata, method="standard", with_mean=False, with_std=True, max_value=10, scaler=None
 ):
+    """
+    Perform log transform and then scale the cell-by-feature matrix
+
+    Parameters
+    ----------
+    adata
+        adata with normalized, unscaled cell-by-feature matrix
+    method
+        the type of scaler to use:
+        'standard' for :class:`sklearn.preprocessing.StandardScaler`;
+        'robust' for :class:`sklearn.preprocessing.RobustScaler`.
+    with_mean
+        Whether scale with mean center
+    with_std
+        Whether scale the std
+    max_value
+        Whether clip large values after scale
+    scaler
+        A fitted sklearn scaler, if provided, will only use it to transform the adata.
+
+    Returns
+    -------
+    adata.X is scaled in place, the fitted scaler object will be return if the `scaler` parameter is None.
+    """
     # log transform
     if "log" in adata.uns and adata.uns["log"]:
         # already log transformed
@@ -50,21 +75,31 @@ def log_scale(
 
 
 def significant_pc_test(
-    adata, p_cutoff=0.1, update=True, obsm="X_pca", downsample=50000
+        adata: anndata.AnnData,
+        p_cutoff=0.1, update=True, obsm="X_pca", downsample=50000
 ):
     """
+    Perform two-sample Kolmogorov-Smirnov test for goodness of fit on two adjacent PCs,
+    select top PCs based on the `p_cutoff`. Top PCs have significantly different distributions, while
+    later PCs only capturing random noise will have larger p-values. An idea from :cite:p:`Zeisel2018`.
 
     Parameters
     ----------
     adata
+        adata with PC matrix calculated and stored in adata.obsm
     p_cutoff
+        the p-value cutoff to select top PCs
     update
+        Whether modify adata.obsm and only keep significant PCs
     obsm
+        name of the PC matrix in adata.obsm
     downsample
+        If the dataset is too large, downsample the cells before testing.
 
     Returns
     -------
-
+    n_components
+        number of PCs selected
     """
     pcs = adata.obsm[obsm]
     if pcs.shape[0] > downsample:
@@ -78,7 +113,7 @@ def significant_pc_test(
     for i in range(use_pcs.shape[1] - 1):
         cur_pc = use_pcs[:, i]
         next_pc = use_pcs[:, i + 1]
-        p = ks_2samp(cur_pc, next_pc).pvalue
+        _, p = ks_2samp(cur_pc, next_pc)
         if p > p_cutoff:
             break
     n_components = min(i + 1, use_pcs.shape[1])
@@ -92,8 +127,30 @@ def significant_pc_test(
 
 
 def balanced_pca(
-    adata, groups="pre_clusters", max_cell_prop=0.1, n_comps=200, scale=False
+        adata: anndata.AnnData, groups: str = "pre_clusters", max_cell_prop=0.1, n_comps=200, scale=False
 ):
+    """
+    Given a categorical variable (e.g., a pre-clustering label), perform balanced PCA by downsample
+    cells in the large categories to make the overall population more balanced, so the PCs are expected
+    to represent more variance among small categories.
+
+    Parameters
+    ----------
+    adata
+        adata after preprocessing and feature selection steps
+    groups
+        the name of the categorical variable in adata.obsm
+    max_cell_prop
+        any single category with cells > `n_cell * max_cell_prop` will be downsampled to this number.
+    n_comps
+        Number of components in PCA
+    scale
+        whether to scale the input matrix before PCA
+
+    Returns
+    -------
+    adata with PC information stored in obsm, varm and uns like the :func:`scanpy.tl.pca` do.
+    """
     # downsample large clusters
     use_cells = []
     size_to_downsample = max(int(adata.shape[0] * max_cell_prop), 50)
@@ -148,12 +205,28 @@ def balanced_pca(
     return adata
 
 
-def get_pc_centers(adata, group, outlier_label=None, obsm="X_pca"):
+def get_pc_centers(adata: anndata.AnnData,
+                   group: str,
+                   outlier_label=None,
+                   obsm="X_pca"):
+    """
+
+    Parameters
+    ----------
+    adata
+    group
+    outlier_label
+    obsm
+
+    Returns
+    -------
+
+    """
     pc_matrix = adata.obsm[obsm]
     pc_center = (
         pd.DataFrame(pc_matrix, index=adata.obs_names)
-        .groupby(adata.obs[group])
-        .median()
+            .groupby(adata.obs[group])
+            .median()
     )
     if outlier_label is not None:
         pc_center = pc_center[pc_center.index != outlier_label]
@@ -162,14 +235,14 @@ def get_pc_centers(adata, group, outlier_label=None, obsm="X_pca"):
 
 class ReproduciblePCA:
     def __init__(
-        self,
-        scaler,
-        mc_type,
-        adata=None,
-        pca_obj=None,
-        pc_loading=None,
-        var_names=None,
-        max_value=10,
+            self,
+            scaler,
+            mc_type,
+            adata=None,
+            pca_obj=None,
+            pc_loading=None,
+            var_names=None,
+            max_value=10,
     ):
         if adata is not None:
             self.pc_loading = adata.varm["PCs"]

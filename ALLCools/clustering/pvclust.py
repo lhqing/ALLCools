@@ -1,8 +1,3 @@
-import rpy2.robjects as ro
-from rpy2.robjects import pandas2ri
-from rpy2.robjects.conversion import localconverter
-from rpy2.robjects.vectors import StrVector
-from rpy2.robjects.packages import importr, isinstalled
 import pandas as pd
 import numpy as np
 from scipy.cluster.hierarchy import dendrogram
@@ -11,6 +6,9 @@ import joblib
 
 
 def install_r_package(name):
+    from rpy2.robjects.vectors import StrVector
+    from rpy2.robjects.packages import importr, isinstalled
+
     if not isinstalled(name):
         utils = importr("utils")
         utils.chooseCRANmirror(ind=1)
@@ -122,7 +120,16 @@ class Dendrogram:
         -------
 
         """
+        try:
+            import rpy2.robjects as ro
+            from rpy2.robjects import pandas2ri
+            from rpy2.robjects.conversion import localconverter
+            from rpy2.robjects.packages import importr
+        except ImportError:
+            raise ImportError('Got rpy2 import error, please make sure R, rpy2 and their dependencies are installed. '
+                              'If not, use conda or mamba to install rpy2')
         importr("base")
+        install_r_package("pvclust")
         pvclust = importr("pvclust")
         with localconverter(ro.default_converter + pandas2ri.converter):
             # The data is in obs-by-var form, row is obs. Transpose for R.
