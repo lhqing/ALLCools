@@ -54,12 +54,14 @@ parts:
 
   - caption: GENOMIC ANALYSIS
     chapters:
-      - file: cluster_level/intro
+      - file: cluster_level/RegionDS/intro
         sections:
           - file: cluster_level/RegionDS/01a.call_dmr
           - file: cluster_level/RegionDS/01b.other_option_to_init_region_ds
           - file: cluster_level/RegionDS/02.annotation
           - file: cluster_level/RegionDS/03.filter_dmr
+      - file: cluster_level/RegionDS/intro_motif
+        sections:
           - file: cluster_level/RegionDS/04.motif_scan
           - file: cluster_level/RegionDS/05.motif_enrichment
       - file: cluster_level/Correlation/intro_corr
