@@ -1,16 +1,19 @@
 # Installation
 
-## Setup Conda and Analysis Environment
+## Setup Analysis Environment
 
-### Install conda from miniconda or anaconda.
+### Install conda from miniconda or anaconda
 
-- IMPORTANT: select python 3
-- [miniconda](https://docs.conda.io/en/latest/miniconda.html) (recommended)
-- [anaconda](https://www.anaconda.com/products/individual) (larger)
+To avoid potential conflicts with other packages, we strongly recommend you to use a [conda environment](https://www.anaconda.com/products/individual). If you do not have a working installation or Python 3.6 (or later), consider installing [Miniconda](https://docs.conda.io/en/latest/miniconda.html) (see [Installing Miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html)).
+
+Using such an isolated environment makes it possible to install a specific version of ALLCools with pip or conda and its dependencies independently of any previously installed Python packages. 
+
+Note that you should always remember to activate the environment of your choice prior to running any Python command whenever you start a new terminal session.
+
 
 ### Conda init
 
-After installed conda, use conda init on your favorite shell
+After installing conda, use conda init on your favorite shell
 
 ```shell
 # e.g., bash or zsh
@@ -20,36 +23,25 @@ conda init bash
 
 ### Add channels
 
+Run the following commands in their exact order to add bioconda into your conda channel.
+
 ```shell
-# run these command to add bioconda into your conda channel, 
-# the order of these 3 line matters
 conda config --add channels defaults
 conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
 
-### Create Environment With Required Packages
+### Create environment with required packages
 
-This command will create a conda environment called "allcools" and install all required packages for you. 
-The `allcools_env.yaml` contains the detail about the environment, you can copy the content of that file below and create one by yourself.
+ALLCools can be installed in the following two ways. 
+
+First, you can pull ALLCools from [PyPI](https://pypi.org/project/allcools/) in your conda environment (consider using <code>pip3</code> to access Python 3)
 
 ```shell
-# first, install a package manager called mamba in base environment
-conda install mamba -n base -c conda-forge
-# enter base env
-conda activate base
-# second, create a new environment and install all packages in the yaml file (content below)
-mamba env create -f allcools_env.yaml
+pip install allcools
 ```
 
-````{tip}
-conda is very slow when solving a large number of packages, [mamba](https://mamba.readthedocs.io/en/latest/installation.html) is a lightening fast replacement of conda. I highly recommend you use mamba to install packages. If you don't want to use mamba, here is the conda command that achieves the same goal:
-```shell
-conda env create -f allcools_env.yaml
-```
-````
-
-### Content of `allcools_env.yaml`
+Alternatively, you can create a `allcools_env.yaml` file as follows that contains the detail about the environment.
 
 ```yaml
 name: allcools
@@ -86,11 +78,32 @@ dependencies:
     - imblearn
     - allcools
 ```
+Then, you can use the following command to create a conda environment called "allcools" and install all the required packages for you. 
+
+````{note}
+[mamba](https://mamba.readthedocs.io/en/latest/installation.html) is a CLI tool to manage conda environments. mamba can be installed alongside <code>conda</code> and it can provide faster sovles for big environments.  
+````
+
+```shell
+# first, install a package manager called mamba in base environment
+conda install mamba -n base -c conda-forge
+# enter base env
+conda activate base
+# second, create a new environment and install all packages in the yaml file (content below)
+mamba env create -f allcools_env.yaml
+```
+
+````{tip}
+We highly recommend you to use mamba for installing packages. If you don't want to use mamba, here is the conda command that achieves the same goal:
+```shell
+conda env create -f allcools_env.yaml
+```
+````
 
 ## Activate Environment
 ````{margin}
 ```{caution}
-Remember to enter the environment every time before you start any analysis.
+Remember to activate the "allcools" environment every time before you start any analysis.
 ```
 ````
 
@@ -102,22 +115,29 @@ conda activate allcools
 conda deactivate
 ```
 
-
 ### Install optional packages
-Here are some additional packages which might be hard to install for some old systems and are optional.
+
+Here are some optional packages which might be hard to install on some old systems.
+- <code>rpy2</code> (R and the R package pvclust) is used for the cluster dendrogram.
+- <code>tpot</code> is used in REPTILE model. 
+
 ```shell
-# rpy2 (R and the R package pvclust) is used for the cluster dendrogram, 
-# if you can't install, will just calculate a normal dendrogram with scipy function
 mamba install -n allcools rpy2
-# tpot is used in REPTILE model, but if not found, REPTILE will turn to use normal sklearn model
 mamba install -n allcools tpot xgboost dask-ml scikit-mdr skrebate
-# note that conda install also works, just change mamba to conda. But its usually slower.
 ```
+
+````{note}
+If you cannot install rpy2, you can instead calculate a normal dendrogram with scipy function. In addition, if you cannot install tpot, REPTILE will automatically resort to the sklearn model. Note that <code>conda install</code> also works, but much slower than mamba. 
+````
 
 ## Update
 
+For updating the ALLCools package, you can enter the following commands by first activating your conda environment. 
+
 ```shell
-# enter env first
+# enter env
 conda activate allcools
+
+# update package
 pip install --upgrade allcools
 ```
