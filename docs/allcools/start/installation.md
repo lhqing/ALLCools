@@ -2,7 +2,7 @@
 
 ## Setup Analysis Environment
 
-### Install conda from miniconda or anaconda.
+### Install conda from miniconda or anaconda
 
 To avoid potential conflicts with other packages, we strongly recommend you to use a [conda environment](https://www.anaconda.com/products/individual). If you do not have a working installation or Python 3.6 (or later), consider installing [Miniconda](https://docs.conda.io/en/latest/miniconda.html) (see [Installing Miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html)).
 
@@ -31,7 +31,7 @@ conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
 
-### Create Environment With Required Packages
+### Create environment with required packages
 
 ALLCools can be installed in the following two ways. 
 
