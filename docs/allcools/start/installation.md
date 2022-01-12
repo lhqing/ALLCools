@@ -85,7 +85,7 @@ Then, you can use the following command to create a conda environment called "al
 ````
 
 ```shell
-# first, install a package manager called mamba in base environment
+# first, install a package manager called mamba in base environment.
 conda install mamba -n base -c conda-forge
 # enter base env
 conda activate base
