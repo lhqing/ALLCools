@@ -21,6 +21,5 @@ Submodules
 
    balanced_knn/index.rst
    scanorama/index.rst
-   sccaf/index.rst
 
 
