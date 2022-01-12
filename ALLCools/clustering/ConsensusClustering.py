@@ -98,6 +98,7 @@ def _leiden_runner(g, random_states, partition_type, **partition_kwargs):
 
 
 def _split_train_test_per_group(x, y, frac, max_train, random_state):
+    """Split train test for each cluster and make sure there are enough cells for train"""
     y_series = pd.Series(y)
     # split train test per group
     train_idx = []
@@ -123,6 +124,7 @@ def _split_train_test_per_group(x, y, frac, max_train, random_state):
 def single_supervise_evaluation(
     clf, x_train, y_train, x_test, y_test, r1_norm_step=0.05, r2_norm_step=0.05
 ):
+    """A single fit and merge cluster step"""
     # fit model
     clf.fit(x_train, y_train)
 
