@@ -1528,18 +1528,16 @@
     <a class="reference internal nav-link" href="#create-environment-with-required-packages">
      Create Environment With Required Packages
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#content-of-allcools-env-yaml">
-       Content of
-       <code class="docutils literal notranslate">
-        <span class="pre">
-         allcools_env.yaml
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#content-of-allcools-env-yaml">
+     Content of
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       allcools_env.yaml
+      </span>
+     </code>
+    </a>
    </li>
   </ul>
  </li>
@@ -1547,23 +1545,18 @@
   <a class="reference internal nav-link" href="#activate-environment">
    Activate Environment
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#install-allcools">
-   Install ALLCools
-  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#install">
-     Install
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#update">
-     Update
+    <a class="reference internal nav-link" href="#install-optional-packages">
+     Install optional packages
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#update">
+   Update
+  </a>
  </li>
 </ul>
 
@@ -1609,18 +1602,16 @@
     <a class="reference internal nav-link" href="#create-environment-with-required-packages">
      Create Environment With Required Packages
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#content-of-allcools-env-yaml">
-       Content of
-       <code class="docutils literal notranslate">
-        <span class="pre">
-         allcools_env.yaml
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#content-of-allcools-env-yaml">
+     Content of
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       allcools_env.yaml
+      </span>
+     </code>
+    </a>
    </li>
   </ul>
  </li>
@@ -1628,23 +1619,18 @@
   <a class="reference internal nav-link" href="#activate-environment">
    Activate Environment
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#install-allcools">
-   Install ALLCools
-  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#install">
-     Install
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#update">
-     Update
+    <a class="reference internal nav-link" href="#install-optional-packages">
+     Install optional packages
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#update">
+   Update
+  </a>
  </li>
 </ul>
 
@@ -1689,32 +1675,59 @@ conda config --add channels conda-forge
 <div class="section" id="create-environment-with-required-packages">
 <h3>Create Environment With Required Packages<a class="headerlink" href="#create-environment-with-required-packages" title="Permalink to this headline">¶</a></h3>
 <p>This command will create a conda environment called “allcools” and install all required packages for you.
-The <code class="docutils literal notranslate"><span class="pre">allcools_env.yaml</span></code> contains the detail about the environment, you can copy the content of that file below.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># conda is a bit slow, this step will take ~30 min in my server, </span>
-<span class="c1"># but you only need to do this once.</span>
-conda env create -f allcools_env.yaml
+The <code class="docutils literal notranslate"><span class="pre">allcools_env.yaml</span></code> contains the detail about the environment, you can copy the content of that file below and create one by yourself.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># first, install a package manager called mamba in base environment</span>
+conda install mamba -n base -c conda-forge
+<span class="c1"># enter base env</span>
+conda activate base
+<span class="c1"># second, create a new environment and install all packages in the yaml file (content below)</span>
+mamba env create -f allcools_env.yaml
 </pre></div>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>conda is very slow when solving a large number of packages, <a class="reference external" href="https://mamba.readthedocs.io/en/latest/installation.html">mamba</a> is a lightening fast replacement of conda. I highly recommend you use mamba to install packages. If you don’t want to use mamba, here is the conda command that achieves the same goal:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda env create -f allcools_env.yaml
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="content-of-allcools-env-yaml">
-<h4>Content of <code class="docutils literal notranslate"><span class="pre">allcools_env.yaml</span></code><a class="headerlink" href="#content-of-allcools-env-yaml" title="Permalink to this headline">¶</a></h4>
+<h3>Content of <code class="docutils literal notranslate"><span class="pre">allcools_env.yaml</span></code><a class="headerlink" href="#content-of-allcools-env-yaml" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">allcools</span>
 <span class="nt">channels</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">bioconda</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">defaults</span>
 <span class="nt">dependencies</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">python=3.7</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">python=3.8</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">anndata</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">biopython</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">dask</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">numba</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">jupyter</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">jupyter_contrib_nbextensions</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pandas</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">leidenalg</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">natsort</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">networkx</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">opentsne</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">plotly</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pybedtools</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pyBigWig</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pynndescent</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pysam</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">scanpy</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">scikit-learn</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">seaborn</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">matplotlib</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">statsmodels</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">xarray</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">yaml</span>
   <span class="p p-Indicator">-</span> <span class="nt">pip</span><span class="p">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">papermill</span>
-<span class="c1"># TODO this list is not completed yet</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">imblearn</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">allcools</span>
 </pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -1727,30 +1740,32 @@ conda env create -f allcools_env.yaml
 <p>Remember to enter the environment every time before you start any analysis.</p>
 </div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```shell
-# enter env
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter env</span>
 conda activate allcools
 
-# exit env
+<span class="c1"># exit env</span>
 conda deactivate
 </pre></div>
 </div>
-</div>
-<div class="section" id="install-allcools">
-<h2>Install ALLCools<a class="headerlink" href="#install-allcools" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="install">
-<h3>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter env first</span>
-pip install allcools
+<div class="section" id="install-optional-packages">
+<h3>Install optional packages<a class="headerlink" href="#install-optional-packages" title="Permalink to this headline">¶</a></h3>
+<p>Here are some additional packages which might be hard to install for some old systems and are optional.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># rpy2 (R and the R package pvclust) is used for the cluster dendrogram, </span>
+<span class="c1"># if you can&#39;t install, will just calculate a normal dendrogram with scipy function</span>
+mamba install -n allcools rpy2
+<span class="c1"># tpot is used in REPTILE model, but if not found, REPTILE will turn to use normal sklearn model</span>
+mamba install -n allcools tpot xgboost dask-ml scikit-mdr skrebate
+<span class="c1"># note that conda install also works, just change mamba to conda. But its usually slower.</span>
 </pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="update">
-<h3>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h3>
+<h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter env first</span>
+conda activate allcools
 pip install --upgrade allcools
 </pre></div>
-</div>
 </div>
 </div>
 </div>
