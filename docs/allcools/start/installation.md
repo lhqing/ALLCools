@@ -13,7 +13,7 @@ Note that you should always remember to activate the environment of your choice 
 
 ### Conda init
 
-After installing conda, use conda init on your favorite shell
+After installing conda, use conda init on your favorite shell.
 
 ```shell
 # e.g., bash or zsh
