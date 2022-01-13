@@ -2,6 +2,8 @@
 
 ## Data files used in this documentation
 
+Data files will be posted publicly once we finished the v1.0 development. Estimated time is March 2022.
+
 ## Download Analysis `.ipynb` files
 
 The ALLCools documentation is organized by description pages (like the current page) and analysis pages 

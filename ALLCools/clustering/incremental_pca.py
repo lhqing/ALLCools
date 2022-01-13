@@ -6,6 +6,7 @@ from ..count_matrix.zarr import dataset_to_array
 
 
 def _normalize_per_cell(matrix, cell_sum):
+    """Normalize matrix row sum to to cell_sum"""
     print("normalize per cell to CPM")
     if cell_sum is None:
         norm_vec = (matrix.sum(axis=1) + 1) / 1000000
@@ -27,6 +28,26 @@ class IncrementalPCA:
         scale=True,
         **kwargs,
     ):
+        """
+        Perform PCA for huge dataset that exceeds physical memory. Start from the raw count matrix stored in
+
+        Parameters
+        ----------
+        n_components
+            number of PCs to calculate
+        sparse
+            Whether treat the matrix as sparse matrix. If true, will
+            1) load data as sparse matrix;
+            2) do not perform mean center when scaling, only scale the std
+        normalize_per_cell
+            Normalize the matrix per cell
+        log1p
+            whether perform log1p transform
+        scale
+            whether scale the features
+        kwargs
+            parameters of sklearn.decomposition.IncrementalPCA
+        """
         self.pca = _IncrementalPCA(n_components=n_components, **kwargs)
         self.sparse = sparse
         self.normalize_per_cell = normalize_per_cell

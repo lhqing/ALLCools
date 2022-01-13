@@ -169,7 +169,7 @@ def bam_to_allc_register_subparser(subparser):
         type=int,
         default=1,
         help="Number of processes to use in parallel. DO NOT use cpu > 1 for single cell ALLC generation. "
-        "Parallel on cell level is better for single cell project.",
+             "Parallel on cell level is better for single cell project.",
     )
 
     parser.add_argument(
@@ -177,7 +177,7 @@ def bam_to_allc_register_subparser(subparser):
         type=int,
         default=0,
         help="Number of upstream base(s) of the C base to include in ALLC context column, "
-        "usually use 0 for normal BS-seq, 1 for NOMe-seq.",
+             "usually use 0 for normal BS-seq, 1 for NOMe-seq.",
     )
 
     parser.add_argument(
@@ -185,7 +185,7 @@ def bam_to_allc_register_subparser(subparser):
         type=int,
         default=2,
         help="Number of downstream base(s) of the C base to include in ALLC context column, "
-        "usually use 2 for both BS-seq and NOMe-seq.",
+             "usually use 2 for both BS-seq and NOMe-seq.",
     )
 
     parser.add_argument(
@@ -200,7 +200,7 @@ def bam_to_allc_register_subparser(subparser):
         type=int,
         default=20,
         help="Minimum base quality for a base being considered, samtools mpileup parameter, "
-        "see samtools documentation.",
+             "see samtools documentation.",
     )
 
     parser.add_argument(
@@ -222,12 +222,12 @@ def standardize_allc_register_subparser(subparser):
         aliases=["standard"],
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
         help="Standardize 1 ALLC file by checking: "
-        "1. No header in the ALLC file; "
-        "2. Chromosome names in ALLC must be exactly same as those "
-        "in the chrom_size_path file; "
-        "3. Output file will be bgzipped with .tbi index; "
-        "4. Remove additional chromosome (remove_additional_chrom=True) or "
-        "raise KeyError if unknown chromosome found (default)",
+             "1. No header in the ALLC file; "
+             "2. Chromosome names in ALLC must be exactly same as those "
+             "in the chrom_size_path file; "
+             "3. Output file will be bgzipped with .tbi index; "
+             "4. Remove additional chromosome (remove_additional_chrom=True) or "
+             "raise KeyError if unknown chromosome found (default)",
     )
     parser_req = parser.add_argument_group("required arguments")
     parser_req.add_argument("--allc_path", type=str, required=True, help=allc_path_doc)
@@ -284,7 +284,7 @@ def profile_allc_register_subparser(subparser):
         dest="drop_n",
         action="store_false",
         help="Whether to keep context that contain N, such as CCN. "
-        "This is usually very rare and need to be dropped.",
+             "This is usually very rare and need to be dropped.",
     )
     parser.set_defaults(drop_n=True)
 
@@ -293,7 +293,7 @@ def profile_allc_register_subparser(subparser):
         type=int,
         default=1000000,
         help="Number of rows to calculate the profile from. "
-        "The default number is usually sufficient to get pretty precise assumption.",
+             "The default number is usually sufficient to get pretty precise assumption.",
     )
 
     parser.add_argument(
@@ -335,8 +335,8 @@ def merge_allc_register_subparser(subparser):
         type=int,
         default=10,
         help=f"{cpu_basic_doc} The real CPU usage is ~1.5 times than this number, "
-        f"due to the sub processes of handling ALLC files using tabix/bgzip. "
-        f"Monitor the CPU and Memory usage when running this function.",
+             f"due to the sub processes of handling ALLC files using tabix/bgzip. "
+             f"Monitor the CPU and Memory usage when running this function.",
     )
 
     parser.add_argument(
@@ -356,7 +356,7 @@ def extract_context_allc_register_subparser(subparser):
         aliases=["extract"],
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
         help="Extract information (strand, context) from 1 ALLC file. "
-        "Able to save to several different format.",
+             "Able to save to several different format.",
     )
 
     parser_req = parser.add_argument_group("required arguments")
@@ -384,10 +384,10 @@ def extract_context_allc_register_subparser(subparser):
         default="both",
         choices=["both", "split", "merge"],
         help="What to do with strand information, possible values are: "
-        "1. both: save +/- strand together in one file without any modification; "
-        "2. split: save +/- strand into two separate files, with suffix contain Watson (+) and Crick (-); "
-        "3. merge: This will only merge the count on adjacent CpG in +/- strands, only work for CpG like context. "
-        "For non-CG context, its the same as both.",
+             "1. both: save +/- strand together in one file without any modification; "
+             "2. split: save +/- strand into two separate files, with suffix contain Watson (+) and Crick (-); "
+             "3. merge: This will only merge the count on adjacent CpG in +/- strands, only work for CpG like context. "
+             "For non-CG context, its the same as both.",
     )
 
     parser.add_argument(
@@ -396,8 +396,8 @@ def extract_context_allc_register_subparser(subparser):
         default="allc",
         choices=["allc", "bed5"],
         help="Output format of extracted information, possible values are: "
-        "1. allc: keep the allc format; "
-        "2. bed5: 5-column bed format, chrom, pos, pos, mc, cov; ",
+             "1. allc: keep the allc format; "
+             "2. bed5: 5-column bed format, chrom, pos, pos, mc, cov; ",
     )
 
     parser.add_argument("--region", type=str, default=None, help=region_doc)
@@ -409,9 +409,9 @@ def extract_context_allc_register_subparser(subparser):
         type=int,
         default=1,
         help=cpu_basic_doc + " This function parallel on region level and "
-        "will generate a bunch of small files if cpu > 1. "
-        "Do not use cpu > 1 for single cell region count. "
-        "For single cell data, parallel on cell level is better.",
+                             "will generate a bunch of small files if cpu > 1. "
+                             "Do not use cpu > 1 for single cell region count. "
+                             "For single cell data, parallel on cell level is better.",
     )
     return
 
@@ -422,12 +422,12 @@ def allc_to_region_count_register_subparser(subparser):
         aliases=["region", "2region"],
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
         help="Calculate mC and cov at regional level. Region can be provided in 2 forms: "
-        "1. BED file, provided by region_bed_paths, "
-        "containing arbitrary regions and use bedtools map to calculate; "
-        "2. Fix-size non-overlap genome bins, provided by bin_sizes, "
-        "Form 2 is much faster to calculate than form 1. "
-        "The output file is in 6-column bed-like format: "
-        "chrom start end region_uid mc cov",
+             "1. BED file, provided by region_bed_paths, "
+             "containing arbitrary regions and use bedtools map to calculate; "
+             "2. Fix-size non-overlap genome bins, provided by bin_sizes, "
+             "Form 2 is much faster to calculate than form 1. "
+             "The output file is in 6-column bed-like format: "
+             "chrom start end region_uid mc cov",
     )
 
     parser_req = parser.add_argument_group("required arguments")
@@ -493,7 +493,7 @@ def allc_to_region_count_register_subparser(subparser):
         dest="save_zero_cov",
         action="store_true",
         help="If present, save the regions that have 0 cov in output, "
-        "only apply to region count but not the chromosome count.",
+             "only apply to region count but not the chromosome count.",
     )
     parser.set_defaults(save_zero_cov=False)
 
@@ -502,9 +502,9 @@ def allc_to_region_count_register_subparser(subparser):
         type=int,
         default=1,
         help=cpu_basic_doc + " This function parallel on region level and "
-        "will generate a bunch of small files if cpu > 1. "
-        "Do not use cpu > 1 for single cell region count. "
-        "For single cell data, parallel on cell level is better.",
+                             "will generate a bunch of small files if cpu > 1. "
+                             "Do not use cpu > 1 for single cell region count. "
+                             "For single cell data, parallel on cell level is better.",
     )
     return
 
@@ -611,7 +611,7 @@ def generate_mcds_register_subparser(subparser):
         type=int,
         default=3072,
         help="Maximum number of ALLC files to aggregate into 1 MCDS, if number of ALLC provided > max_per_mcds, "
-        "will generate MCDS in chunks, with same prefix provided.",
+             "will generate MCDS in chunks, with same prefix provided.",
     )
 
     parser.add_argument(
@@ -619,7 +619,7 @@ def generate_mcds_register_subparser(subparser):
         type=int,
         default=100,
         help="Size of cell chunk in parallel aggregation. Do not have any effect on results. "
-        "Large chunksize needs large memory.",
+             "Large chunksize needs large memory.",
     )
 
     parser.add_argument(
@@ -638,8 +638,16 @@ def generate_mcds_register_subparser(subparser):
             "bool",
         ],
         help="Data type of MCDS count matrix. Default is np.uint32. "
-        "For single cell feature count, this can be set to np.uint16 [0, 65536] to decrease file size. "
-        "The values exceed min/max will be clipped while keep the mc/cov same, and a warning will be sent.",
+             "For single cell feature count, this can be set to np.uint16 [0, 65536] to decrease file size. "
+             "The values exceed min/max will be clipped while keep the mc/cov same, and a warning will be sent.",
+    )
+
+    parser.add_argument(
+        "--engine",
+        type=str,
+        default="zarr",
+        choices=["zarr", "netcdf"],
+        help="use zarr or netcdf to store dataset, default is zarr"
     )
     return
 
@@ -692,6 +700,21 @@ def generate_mcad_register_subparser(subparser):
     return
 
 
+def convert_mcds_to_zarr_register_subparser(subparser):
+    parser = subparser.add_parser(
+        "convert-mcds-to-zarr",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        help="Convert xarray.Dataset stored in other backends into zarr backend.",
+    )
+
+    parser.add_argument(
+        "paths",
+        type=str,
+        nargs='+',
+        help='provide one or multiple MCDS paths, wildcards supported'
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=DESCRIPTION,
@@ -704,7 +727,7 @@ def main():
     current_module = sys.modules[__name__]
     # get all functions in parser
     for name, register_subparser_func in inspect.getmembers(
-        current_module, inspect.isfunction
+            current_module, inspect.isfunction
     ):
         if "register_subparser" in name:
             register_subparser_func(subparsers)
@@ -750,10 +773,11 @@ def main():
         from ._allc_to_region_count import allc_to_region_count as func
     elif cur_command in ["allc-to-bigwig", "bw", "2bw"]:
         from ._allc_to_bigwig_new import allc_to_bigwig as func
-
         # from ._allc_to_bigwig import allc_to_bigwig as func  # old version using ucsc tools
     elif cur_command in ["generate-mcds", "mcds"]:
         from .count_matrix.mcds import generate_mcds as func
+    elif cur_command in ['convert-mcds-to-zarr']:
+        from .mcds.utilities import convert_to_zarr as func
     elif cur_command in ["generate-mcad", "mcad"]:
         from .count_matrix.mcad import generate_mcad as func
     else:

@@ -42,7 +42,7 @@ setup(
         'seaborn',
         "statsmodels",
         "xarray",
-        "yaml",
+        "pyyaml",
         # "rpy2",
         # "tpot" and its dependencies,
     ],

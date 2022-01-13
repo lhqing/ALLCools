@@ -2,25 +2,21 @@
 
 ALLCools covers two parts of analysis:
 
-1. Cell-level analysis, including
-   - Clustering analysis
-   - Differentially Methylated Gene (DMG) analysis
-   - Data integration
-   - Identify potential doublets
-2. Cluster-level analysis, including
-   - Differentially Methylated Region (DMR) analysis
-   - DMR annotation
-   - DMR motif analysis (upstream regulators of DMRs)
-   - DMR - Gene correlation analysis (downstream targets of DMRs)
+1. Cellular analysis, including
+   - [Clustering analysis](../cell_level/basic/intro_basic_clustering)
+   - [Differentially Methylated Gene (DMG) analysis](../cell_level/dmg/intro_dmg)
+   - [Data integration](../cell_level/integration/intro_integration)
+   - [Identify potential doublets](../cell_level/doublets/intro_doublets)
+2. Genomic analysis, including
+   - [Differentially Methylated Region (DMR) analysis](../cluster_level/RegionDS/intro)
+   - [DMR annotation](../cluster_level/RegionDS/02.annotation)
+   - [DMR motif analysis (upstream regulators of DMRs)](../cluster_level/RegionDS/intro_motif)
+   - [DMR - Gene correlation analysis (downstream targets of DMRs)](../cluster_level/Correlation/intro_corr)
+   - [Enhancer prediction](../cluster_level/REPTILE/intro_reptile)
 
-In general, the **cell-level analysis** is focused on individual cells' overall diversity 
-using relatively large features (kilobase-level regions or whole gene body). 
-One of the key results from **cell-level analysis** is the identification of **cell clusters**.
-The **cluster-level analysis** will use these cell cluster labels to merge the cells into pseudo-bulk methylomes. 
-The high-coverage pseudo-bulk methylomes allow us to analyze methylation diversity at higher genome resolution 
-(hundred bps or even single base).
+In general, the **cellular analysis** is focused on individual cells' overall diversity using relatively large features (kilobase-level regions or whole gene body). One of the key results from **cellular analysis** is the identification of **cell clusters**. We will then merge the single-cell methylome and other profiles to pseudo-bulk level based on the cluster labels, which gives us enough coverage to perform **genomic analysis** at hundred-bp or even single-base resolution.
 
-## Cell Level Analysis
+## Cellular Analysis
 
 ### Sections
 - [Basic walk-through of the clustering analysis](../cell_level/basic/intro_basic_clustering.md).
@@ -38,7 +34,7 @@ The high-coverage pseudo-bulk methylomes allow us to analyze methylation diversi
 3. (AND/OR) Cell-by-feature hypo-methylation score matrix (MCAD files) generated from single-cell ALLC files via 
    [`allcools mcad`](../command_line/allcools_mcad.ipynb).
 
-### Two Clustering Strategies for different tissue type
+### Two Clustering Strategies for different tissue types
 
 #### Clustering using raw counts from 100Kb genomic bins
 
@@ -68,15 +64,16 @@ Specifically, this strategy starts from a cell-by-5kb-bin hypo-methylation score
 analysis. [Here](../cell_level/basic/mcg_5kb_basic.ipynb) is a quick demo and its step-by-step descriptions can be found
 [here](../cell_level/step_by_step/5kb/intro_5kb.md).
 
-## Cluster Level Analysis
+## Genomic Analysis
 
 ### Sections
 
-- Prepare pseudo-bulk ALLC files
-- Call Differentially Methylated Region (DMR)
-- DMR annotation
-- DMR motif analysis (finding upstream regulators of DMRs)
-- DMR - Gene correlation analysis (finding downstream targets of DMRs)
+- [Prepare pseudo-bulk ALLC files](../cluster_level/RegionDS/intro)
+- [Call Differentially Methylated Region (DMR)](../cluster_level/RegionDS/01a.call_dmr)
+- [DMR annotation](../cluster_level/RegionDS/02.annotation.ipynb)
+- [DMR motif analysis (finding upstream regulators of DMRs)](../cluster_level/RegionDS/intro_motif.md)
+- [DMR - Gene correlation analysis (finding downstream targets of DMRs)](../cluster_level/Correlation/intro_corr)
+- [Enhancer prediction with REPTILE algorithm](../cluster_level/REPTILE/intro_reptile.md)
 
 ### Pseudo-bulk Files
 

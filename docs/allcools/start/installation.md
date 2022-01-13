@@ -13,7 +13,7 @@ Note that you should always remember to activate the environment of your choice 
 
 ### Conda init
 
-After installing conda, use conda init on your favorite shell
+After installing conda, use conda init on your favorite shell.
 
 ```shell
 # e.g., bash or zsh
@@ -60,6 +60,7 @@ dependencies:
   - jupyter_contrib_nbextensions
   - leidenalg
   - natsort
+  - netCDF4
   - networkx
   - opentsne
   - plotly
@@ -73,6 +74,7 @@ dependencies:
   - statsmodels
   - xarray
   - yaml
+  - zarr
   - pip:
     - papermill
     - imblearn
@@ -85,7 +87,7 @@ Then, you can use the following command to create a conda environment called "al
 ````
 
 ```shell
-# first, install a package manager called mamba in base environment
+# first, install a package manager called mamba in base environment.
 conda install mamba -n base -c conda-forge
 # enter base env
 conda activate base

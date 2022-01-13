@@ -1,0 +1,35 @@
+name: allcools
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - anndata
+  - biopython
+  - dask
+  - numba
+  - jupyter
+  - jupyter_contrib_nbextensions
+  - leidenalg
+  - natsort
+  - netCDF4
+  - networkx
+  - opentsne
+  - plotly
+  - pybedtools
+  - pyBigWig
+  - pynndescent
+  - pysam
+  - scanpy
+  - scikit-learn
+  - seaborn
+  - statsmodels
+  - xarray
+  - yaml
+  - zarr
+  - pip:
+    - papermill
+    - imblearn
+    - allcools

@@ -1,4 +1,5 @@
 import pathlib
+
 import anndata
 import pandas as pd
 import xarray as xr
@@ -9,20 +10,22 @@ from sklearn.metrics import roc_auc_score
 from itertools import combinations
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import subprocess
+from typing import List
 from sklearn.metrics import pairwise_distances
 from ..mcds import MCDS
 
 
-def single_pairwise_dmg(
-    cluster_l,
-    cluster_r,
-    top_n,
-    adj_p_cutoff,
-    delta_rate_cutoff,
-    auroc_cutoff,
-    adata_dir,
-    dmg_dir,
+def _single_pairwise_dmg(
+        cluster_l,
+        cluster_r,
+        top_n,
+        adj_p_cutoff,
+        delta_rate_cutoff,
+        auroc_cutoff,
+        adata_dir,
+        dmg_dir,
 ):
+    """Calculate DMG between a pair of adata file"""
     # load data
     adata_l = anndata.read_h5ad(f"{adata_dir}/{cluster_l}.h5ad")
     adata_r = anndata.read_h5ad(f"{adata_dir}/{cluster_r}.h5ad")
@@ -67,7 +70,7 @@ def single_pairwise_dmg(
     dmg_result = dmg_result[
         (dmg_result["pvals_adj"] < adj_p_cutoff)
         & (dmg_result["delta"].abs() > delta_rate_cutoff)
-    ].copy()
+        ].copy()
     dmg_result["hypo_in"] = dmg_result["delta"].apply(
         lambda i: cluster_l if i < 0 else cluster_r
     )
@@ -94,15 +97,35 @@ def single_pairwise_dmg(
 
 class PairwiseDMG:
     def __init__(
-        self,
-        max_cell_per_group=1000,
-        top_n=10000,
-        adj_p_cutoff=0.001,
-        delta_rate_cutoff=0.3,
-        auroc_cutoff=0.9,
-        random_state=0,
-        n_jobs=1,
+            self,
+            max_cell_per_group=1000,
+            top_n=10000,
+            adj_p_cutoff=0.001,
+            delta_rate_cutoff=0.3,
+            auroc_cutoff=0.9,
+            random_state=0,
+            n_jobs=1,
     ):
+        """
+        Calculate pairwise DMGs. After calculation, results saved in self.dmg_table
+
+        Parameters
+        ----------
+        max_cell_per_group :
+            maximum number of cells to use for each group, downsample larger groups to this size
+        top_n :
+            top N DMGs to report in the final result, if
+        adj_p_cutoff :
+            adjusted P value cutoff to report significant DMG
+        delta_rate_cutoff :
+            mC fraction delta cutoff to report significant DMG
+        auroc_cutoff :
+            AUROC cutoff to report significant DMG
+        random_state :
+            overall random state to make sure reproducibility
+        n_jobs :
+            number of cpus
+        """
         self.X = None
         self.groups = None
         self._obs_dim = ""
@@ -125,15 +148,40 @@ class PairwiseDMG:
         self._dmg_dir = "_dmg_results"
 
     def fit_predict(
-        self,
-        x,
-        groups,
-        obs_dim="cell",
-        var_dim="gene",
-        outlier="Outlier",
-        cleanup=True,
-        selected_pairs=None,
+            self,
+            x,
+            groups,
+            obs_dim="cell",
+            var_dim="gene",
+            outlier="Outlier",
+            cleanup=True,
+            selected_pairs: List[tuple] = None,
     ):
+        """
+        provide data and perform the pairwise DMG
+
+        Parameters
+        ----------
+        x :
+            2D cell-by-feature xarray.DataArray
+        groups :
+            cluster labels
+        obs_dim :
+            name of the cell dim
+        var_dim :
+            name of the feature dim
+        outlier :
+            name of the outlier group, if provided, will ignore this label
+        cleanup :
+            Whether to delete the group adata file
+        selected_pairs :
+            By default, pairwise DMG will calculate all possible pairs between all the groups, which might be very
+            time consuming if the group number is large. With this parameter, you may provide a list of cluster pairs
+
+        Returns
+        -------
+
+        """
         if (len(x.shape) != 2) or not isinstance(x, xr.DataArray):
             raise ValueError(
                 "Expect an cell-by-feature 2D xr.DataArray as input matrix."
@@ -160,6 +208,7 @@ class PairwiseDMG:
             self._cleanup()
 
     def _save_cluster_adata(self):
+        """Save each group into separate adata, this way reduce the memory during parallel"""
         if self.selected_pairs is not None:
             use_label = set()
             for a, b in self.selected_pairs:
@@ -197,6 +246,7 @@ class PairwiseDMG:
         return
 
     def _pairwise_dmg(self):
+        """pairwise DMG runner, result save to self.dmg_table"""
         dmg_dir = pathlib.Path(self._dmg_dir)
         dmg_dir.mkdir(exist_ok=True)
 
@@ -217,7 +267,7 @@ class PairwiseDMG:
             futures = {}
             for (cluster_l, cluster_r) in pairs:
                 f = exe.submit(
-                    single_pairwise_dmg,
+                    _single_pairwise_dmg,
                     cluster_l=cluster_l,
                     cluster_r=cluster_r,
                     top_n=self.top_n,
@@ -235,19 +285,36 @@ class PairwiseDMG:
 
         # summarize
         self.dmg_table = pd.concat((pd.read_hdf(p) for p in dmg_dir.glob("*.hdf")))
+        return
 
     def _cleanup(self):
+        """Delete group adata files"""
         subprocess.run(
             ["rm", "-rf", str(self._adata_dir), str(self._dmg_dir)], check=True
         )
 
     def aggregate_pairwise_dmg(self, adata, groupby, obsm="X_pca"):
+        """
+        Aggregate pairwise DMG results for each cluster, rank DMG for the cluster by the sum of
+        AUROC * cluster_pair_similarity
+        This way, the DMGs having large AUROC between similar clusters get more weights
+
+        Parameters
+        ----------
+        adata :
+        groupby :
+        obsm :
+
+        Returns
+        -------
+
+        """
         # using the cluster centroids in PC space to calculate dendrogram
         pc_matrix = adata.obsm[obsm]
         pc_center = (
             pd.DataFrame(pc_matrix, index=adata.obs_names)
-            .groupby(adata.obs[groupby])
-            .median()
+                .groupby(adata.obs[groupby])
+                .median()
         )
         # calculate cluster pairwise similarity
         cluster_dist = pairwise_distances(pc_center)
@@ -274,17 +341,18 @@ class PairwiseDMG:
         return cluster_dmgs
 
 
-def single_ovr_dmg(
-    cell_label,
-    mcds,
-    obs_dim,
-    var_dim,
-    mc_type,
-    top_n,
-    adj_p_cutoff,
-    fc_cutoff,
-    auroc_cutoff,
+def _single_ovr_dmg(
+        cell_label,
+        mcds,
+        obs_dim,
+        var_dim,
+        mc_type,
+        top_n,
+        adj_p_cutoff,
+        fc_cutoff,
+        auroc_cutoff,
 ):
+    """single one vs rest DMG runner"""
     # get adata
     cell_judge = mcds.get_index(obs_dim).isin(cell_label.index)
     adata = mcds.sel({obs_dim: cell_judge}).get_adata(
@@ -320,7 +388,7 @@ def single_ovr_dmg(
     # filter
     dmg_result = dmg_result[
         (dmg_result["pvals_adj"] < adj_p_cutoff) & (dmg_result["fc"] < fc_cutoff)
-    ].copy()
+        ].copy()
     dmg_result = dmg_result.set_index("names").drop_duplicates()
 
     # add AUROC and filter again
@@ -336,21 +404,66 @@ def single_ovr_dmg(
     return dmg_result
 
 
+def _one_vs_rest_dmr_runner(
+        cell_meta,
+        group,
+        cluster,
+        max_cluster_cells,
+        max_other_fold,
+        mcds_paths,
+        obs_dim,
+        var_dim,
+        mc_type,
+        top_n,
+        adj_p_cutoff,
+        fc_cutoff,
+        auroc_cutoff,
+):
+    """one vs rest DMG runner"""
+    print(f"Calculating cluster {cluster} DMGs.")
+
+    mcds = MCDS.open(mcds_paths)
+    # determine cells to use
+    cluster_judge = cell_meta[group] == cluster
+    in_cells = cluster_judge[cluster_judge]
+    out_cells = cluster_judge[~cluster_judge]
+    if in_cells.size > max_cluster_cells:
+        in_cells = in_cells.sample(max_cluster_cells, random_state=0)
+
+    max_other_cells = in_cells.size * max_other_fold
+    if out_cells.size > max_other_cells:
+        out_cells = out_cells.sample(max_other_cells, random_state=0)
+
+    cell_label = pd.concat([in_cells, out_cells])
+    dmg_df = _single_ovr_dmg(
+        cell_label=cell_label,
+        mcds=mcds,
+        obs_dim=obs_dim,
+        var_dim=var_dim,
+        mc_type=mc_type,
+        top_n=top_n,
+        adj_p_cutoff=adj_p_cutoff,
+        fc_cutoff=fc_cutoff,
+        auroc_cutoff=auroc_cutoff,
+    )
+    return dmg_df
+
+
 def one_vs_rest_dmg(
-    cell_meta,
-    group,
-    mcds=None,
-    mcds_paths=None,
-    obs_dim="cell",
-    var_dim="gene",
-    mc_type="CHN",
-    top_n=1000,
-    adj_p_cutoff=0.01,
-    fc_cutoff=0.8,
-    auroc_cutoff=0.8,
-    max_cluster_cells=2000,
-    max_other_fold=5,
-    cpu=1,
+        cell_meta,
+        group,
+        mcds=None,
+        mcds_paths=None,
+        obs_dim="cell",
+        var_dim="gene",
+        mc_type="CHN",
+        top_n=1000,
+        adj_p_cutoff=0.01,
+        fc_cutoff=0.8,
+        auroc_cutoff=0.8,
+        max_cluster_cells=2000,
+        max_other_fold=5,
+        cpu=1,
 ):
     """
     Calculating cluster marker genes using one-vs-rest strategy.
@@ -358,33 +471,45 @@ def one_vs_rest_dmg(
     Parameters
     ----------
     cell_meta
+        cell metadata containing cluster labels
     group
+        the name of the cluster label column
     mcds
+        cell-by-gene MCDS object for calculating DMG. Provide either mcds_paths or mcds.
     mcds_paths
+        cell-by-gene MCDS paths for calculating DMG. Provide either mcds_paths or mcds.
     obs_dim
+        dimension name of the cells
     var_dim
+        dimension name of the features
     mc_type
+        value to select methylation type in the mc_type dimension
     top_n
+        report top N DMGs
     adj_p_cutoff
+        adjusted P value cutoff to report significant DMG
     fc_cutoff
+        mC fraction fold change cutoff to report significant DMG
     auroc_cutoff
+        AUROC cutoff to report significant DMG
     max_cluster_cells
+        The maximum number of cells from a group, downsample large group to this number
     max_other_fold
-
+        The fold of other cell numbers comparing
+    cpu :
+            number of cpus
     Returns
     -------
-
+    dmg_table
+        pandas Dataframe of the one-vs-rest DMGs
     """
-    tmpfn = None
+    tmp = None
     if mcds_paths is not None:
         tmp_created = False
     elif mcds is not None:
-        import tempfile
-        import os
-
-        tmpf, tmpfn = tempfile.mkstemp(suffix=".tmp")
-        mcds.to_netcdf(tmpfn)
-        mcds_paths = tmpfn
+        tmp = 'tmp_one_vs_rest.mcds'
+        mcds.to_zarr(tmp)
+        mcds_paths = tmp
         tmp_created = True
     else:
         raise ValueError(f'Need to provide either "mcds_path" or "mcds".')
@@ -421,50 +546,7 @@ def one_vs_rest_dmg(
     dmg_table = pd.concat(dmg_table)
 
     if tmp_created:
-        os.unlink(tmpfn)
+        import os
+        os.unlink(tmp)
 
     return dmg_table
-
-
-def _one_vs_rest_dmr_runner(
-    cell_meta,
-    group,
-    cluster,
-    max_cluster_cells,
-    max_other_fold,
-    mcds_paths,
-    obs_dim,
-    var_dim,
-    mc_type,
-    top_n,
-    adj_p_cutoff,
-    fc_cutoff,
-    auroc_cutoff,
-):
-    print(f"Calculating cluster {cluster} DMGs.")
-
-    mcds = MCDS.open(mcds_paths)
-    # determine cells to use
-    cluster_judge = cell_meta[group] == cluster
-    in_cells = cluster_judge[cluster_judge]
-    out_cells = cluster_judge[~cluster_judge]
-    if in_cells.size > max_cluster_cells:
-        in_cells = in_cells.sample(max_cluster_cells, random_state=0)
-
-    max_other_cells = in_cells.size * max_other_fold
-    if out_cells.size > max_other_cells:
-        out_cells = out_cells.sample(max_other_cells, random_state=0)
-
-    cell_label = pd.concat([in_cells, out_cells])
-    dmg_df = single_ovr_dmg(
-        cell_label=cell_label,
-        mcds=mcds,
-        obs_dim=obs_dim,
-        var_dim=var_dim,
-        mc_type=mc_type,
-        top_n=top_n,
-        adj_p_cutoff=adj_p_cutoff,
-        fc_cutoff=fc_cutoff,
-        auroc_cutoff=auroc_cutoff,
-    )
-    return dmg_df

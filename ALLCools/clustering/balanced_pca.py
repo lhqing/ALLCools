@@ -1,3 +1,7 @@
+"""
+Perform Balanced PCA as well as
+Reproducible PCA (A class allow user provide fitted model and just transform MCDS to adata with PCs)
+"""
 import anndata
 import joblib
 from sklearn.preprocessing import StandardScaler, RobustScaler
@@ -210,17 +214,23 @@ def get_pc_centers(adata: anndata.AnnData,
                    outlier_label=None,
                    obsm="X_pca"):
     """
+    Get the cluster centroids of the PC matrix
 
     Parameters
     ----------
     adata
+        adata with cluster labels in obs and PC in obsm
     group
+        the name of cluster labels in adata.obs
     outlier_label
+        if there are outlier labels in obs, will exclude outliers before calculating centroids.
     obsm
+        the key of PC matrix in obsm
 
     Returns
     -------
-
+    pc_center
+        a dataframe for cluster centroids by PC
     """
     pc_matrix = adata.obsm[obsm]
     pc_center = (
@@ -244,6 +254,27 @@ class ReproduciblePCA:
             var_names=None,
             max_value=10,
     ):
+        """
+        Perform preprocessing, feature selection and PCA using fitted scaler and PC transform
+
+        Parameters
+        ----------
+        scaler :
+            fitted sklearn scaler, can be the one return from
+            {func}`log_scale <ALLCools.clustering.balanced_pca.log_scale>`
+        mc_type :
+            value to select mc_type dim in MCDS
+        adata :
+            If anndata is provided, will take the PC loading from adata, otherwise, pca_obj or pc_loading is needed
+        pca_obj :
+            fitted sklearn PCA model, will take the pc_loading from the pca_obj.components_
+        pc_loading :
+            or you can directly provide the pc_loading matrix
+        var_names :
+            the var_names of the pc_loading matrix, will use these index to select features
+        max_value :
+            the maximum to clip after scaling
+        """
         if adata is not None:
             self.pc_loading = adata.varm["PCs"]
             self.pc_vars = adata.var_names
@@ -264,6 +295,18 @@ class ReproduciblePCA:
         self.max_value = max_value
 
     def mcds_to_adata(self, mcds):
+        """
+        Get adata from MCDS with only selected features
+
+        Parameters
+        ----------
+        mcds : Input raw count MCDS object
+
+        Returns
+        -------
+        adata:
+            Adata with per-cell normalized mC fraction and selected features
+        """
         if f"{self.var_dim}_da_frac" not in mcds:
             # adding mC frac and normalize per cell should be done separately for every cell/dataset
             mcds.add_mc_frac(
@@ -274,6 +317,7 @@ class ReproduciblePCA:
         hvf_judge = mcds.get_index(self.var_dim).isin(self.pc_vars)
         mcds.coords[f"{self.var_dim}_{self.mc_type}_feature_select"] = hvf_judge
 
+        # adata only contains self.pc_vars
         adata = mcds.get_adata(
             mc_type=self.mc_type,
             var_dim=self.var_dim,
@@ -285,6 +329,18 @@ class ReproduciblePCA:
         return adata
 
     def scale(self, adata):
+        """
+        Perform {func}`log_scale <ALLCools.clustering.balanced_pca.log_scale>` with fitted scaler
+
+        Parameters
+        ----------
+        adata :
+            Adata with per-cell normalized mC fraction and selected features
+
+        Returns
+        -------
+        adata.X is transformed in place
+        """
         log_scale(
             adata,
             method="standard",
@@ -295,15 +351,46 @@ class ReproduciblePCA:
         )
 
     def pc_transform(self, adata):
+        """
+        calculate the PC from adata.X and PC loading, store PCs in adata.obsm["X_pca"] and
+        loadings in adata.varm["PCs"]
+
+        Parameters
+        ----------
+        adata :
+            Adata with log_scale transformed mC fraction and selected features
+        Returns
+        -------
+        PC information stored in adata.obsm and varm
+        """
         pc = np.dot(adata.X, self.pc_loading)
         adata.obsm["X_pca"] = pc
         adata.varm["PCs"] = self.pc_loading
 
     def mcds_to_adata_with_pc(self, mcds):
+        """
+        From raw count MCDS to adata object with PCs using fitted scaler and PC loadings.
+        Steps include select features, calculate per-cell normalized mC fractions,
+        log_scale transform the data with fitted scaler, and finally add PC matrix.
+
+        Parameters
+        ----------
+        mcds :
+            Raw count MCDS
+
+        Returns
+        -------
+        adata :
+            anndata object with per-cell normalized, log scale transformed matrix in .X and PCs in
+            adata.obsm["X_pca"] and PC loadings in adata.varm["PCs"]. The scale and PC are done with fitted model.
+        """
         adata = self.mcds_to_adata(mcds)
         self.scale(adata)
         self.pc_transform(adata)
         return adata
 
     def dump(self, path):
+        """
+        Save the ReproduciblePCA to path
+        """
         joblib.dump(self, path)

@@ -1,3 +1,5 @@
+import subprocess
+import shlex
 import glob
 import logging
 import pathlib
@@ -12,7 +14,7 @@ log = logging.getLogger()
 
 
 def calculate_posterior_mc_frac(
-    mc_da, cov_da, var_dim=None, normalize_per_cell=True, clip_norm_value=10
+        mc_da, cov_da, var_dim=None, normalize_per_cell=True, clip_norm_value=10
 ):
     # so we can do post_frac only in a very small set of gene to prevent memory issue
     with warnings.catch_warnings():
@@ -43,7 +45,7 @@ def calculate_posterior_mc_frac(
     # a * b / ((a + b) ^ 2 * (a + b + 1)) = cell_rate_var
     # calculate alpha beta value for each cell
     cell_a = (1 - cell_rate_mean) * (
-        cell_rate_mean ** 2
+            cell_rate_mean ** 2
     ) / cell_rate_var - cell_rate_mean
     cell_b = cell_a * (1 / cell_rate_mean - 1)
 
@@ -51,7 +53,7 @@ def calculate_posterior_mc_frac(
     post_frac: Union[np.ndarray, xr.DataArray]
     if ndarray:
         post_frac = (mc_da + cell_a[:, None]) / (
-            cov_da + cell_a[:, None] + cell_b[:, None]
+                cov_da + cell_a[:, None] + cell_b[:, None]
         )
     else:
         post_frac = (mc_da + cell_a) / (cov_da + cell_a + cell_b)
@@ -82,14 +84,14 @@ def calculate_posterior_mc_frac(
 
 
 def calculate_posterior_mc_frac_lazy(
-    mc_da,
-    cov_da,
-    var_dim,
-    output_prefix,
-    cell_chunk=20000,
-    dask_cell_chunk=500,
-    normalize_per_cell=True,
-    clip_norm_value=10,
+        mc_da,
+        cov_da,
+        var_dim,
+        output_prefix,
+        cell_chunk=20000,
+        dask_cell_chunk=500,
+        normalize_per_cell=True,
+        clip_norm_value=10,
 ):
     """
     Running calculate_posterior_mc_rate with dask array and directly save to disk.
@@ -112,7 +114,7 @@ def calculate_posterior_mc_frac_lazy(
     """
     cell_list = mc_da.get_index("cell")
     cell_chunks = [
-        cell_list[i : i + cell_chunk] for i in range(0, cell_list.size, cell_chunk)
+        cell_list[i: i + cell_chunk] for i in range(0, cell_list.size, cell_chunk)
     ]
 
     output_paths = []
@@ -149,7 +151,7 @@ def calculate_gch_rate(mcds, var_dim="chrom100k"):
     )
     # (PCG - PCH) / (1 - PCH)
     real_gc_rate = (rate_da.sel(mc_type="GCHN") - rate_da.sel(mc_type="HCHN")) / (
-        1 - rate_da.sel(mc_type="HCHN")
+            1 - rate_da.sel(mc_type="HCHN")
     )
     real_gc_rate = real_gc_rate.transpose("cell", var_dim).values
     real_gc_rate[real_gc_rate < 0] = 0
@@ -185,18 +187,18 @@ def get_mean_dispersion(x, obs_dim):
 
 
 def highly_variable_methylation_feature(
-    cell_by_feature_matrix,
-    feature_mean_cov,
-    obs_dim=None,
-    var_dim=None,
-    min_disp=0.5,
-    max_disp=None,
-    min_mean=0,
-    max_mean=5,
-    n_top_feature=None,
-    bin_min_features=5,
-    mean_binsize=0.05,
-    cov_binsize=100,
+        cell_by_feature_matrix,
+        feature_mean_cov,
+        obs_dim=None,
+        var_dim=None,
+        min_disp=0.5,
+        max_disp=None,
+        min_mean=0,
+        max_mean=5,
+        n_top_feature=None,
+        bin_min_features=5,
+        mean_binsize=0.05,
+        cov_binsize=100,
 ):
     """
     Adapted from Scanpy, the main difference is that,
@@ -249,9 +251,9 @@ def highly_variable_methylation_feature(
     # save bin_count df, gather bins with more than bin_min_features features
     bin_count = (
         df.groupby(["mean_bin", "cov_bin"])
-        .apply(lambda i: i.shape[0])
-        .reset_index()
-        .sort_values(0, ascending=False)
+            .apply(lambda i: i.shape[0])
+            .reset_index()
+            .sort_values(0, ascending=False)
     )
     bin_count.head()
     bin_more_than = bin_count[bin_count[0] > bin_min_features]
@@ -267,7 +269,7 @@ def highly_variable_methylation_feature(
         if count > 1:
             index_map[(mean_id, cov_id)] = (mean_id, cov_id)
         manhattan_dist = (bin_more_than["mean_bin"] - mean_id).abs() + (
-            bin_more_than["cov_bin"] - cov_id
+                bin_more_than["cov_bin"] - cov_id
         ).abs()
         closest_more_than = manhattan_dist.sort_values().index[0]
         closest = bin_more_than.loc[closest_more_than]
@@ -288,8 +290,8 @@ def highly_variable_methylation_feature(
     _mean_norm = disp_mean_bin.loc[list(zip(df["mean_bin"], df["cov_bin"]))]
     _std_norm = disp_std_bin.loc[list(zip(df["mean_bin"], df["cov_bin"]))]
     df["dispersion_norm"] = (
-        df["dispersion"].values - _mean_norm.values  # use values here as index differs
-    ) / _std_norm.values
+                                    df["dispersion"].values - _mean_norm.values  # use values here as index differs
+                            ) / _std_norm.values
     dispersion_norm = df["dispersion_norm"].values.astype("float32")
 
     # Select n_top_feature
@@ -329,7 +331,10 @@ def determine_engine(dataset_paths):
         _engine = list(set(engines))
         if len(_engine) > 1:
             raise ValueError(
-                f'Can not open a mixture of netcdf4 and zarr files in "{dataset_paths}"'
+                f'Can not open a mixture of netcdf4 and zarr files in "{dataset_paths}", please use '
+                f'`allcools convert-mcds-to-zarr {{dataset_paths}}` to convert the storage of all MCDS files '
+                f'to zarr or netcdf. We recommend you use the zarr format, which gives better IO '
+                f'performance according to our experience.'
             )
         else:
             _engine = _engine[0]
@@ -360,12 +365,12 @@ def obj_to_str(ds, coord_dtypes=None):
 
 
 def write_ordered_chunks(
-    chunks_to_write,
-    final_path,
-    append_dim,
-    engine="zarr",
-    coord_dtypes=None,
-    dtype=None,
+        chunks_to_write,
+        final_path,
+        append_dim,
+        engine="zarr",
+        coord_dtypes=None,
+        dtype=None,
 ):
     # some function may return None if the chunk is empty
     chunks_to_write = {k: v for k, v in chunks_to_write.items() if v is not None}
@@ -397,4 +402,47 @@ def write_ordered_chunks(
             chunk_ds.to_zarr(final_path, mode="w")
         else:
             chunk_ds.to_zarr(final_path, mode="a", append_dim=append_dim)
+    return
+
+
+def convert_to_zarr(paths):
+    """Convert xarray.Dataset stored in other backends into zarr backend."""
+
+    def _convert_single_path(p):
+        if not pathlib.Path(p).exists():
+            raise FileNotFoundError(f'{p} not exist.')
+
+        tmp_p = f'{p}_convert_tmp'
+        if determine_engine(tmp_p) != 'zarr':
+            ds = xr.open_dataset(p)
+            # this will load the whole dataset
+            ds.to_zarr(tmp_p)
+            try:
+                subprocess.run(['mv', p, f'{p}_to_delete'],
+                               check=True,
+                               stderr=subprocess.PIPE,
+                               encoding='utf8')
+                subprocess.run(['mv', tmp_p, p],
+                               check=True,
+                               stderr=subprocess.PIPE,
+                               encoding='utf8')
+                subprocess.run(['rm', '-rf', f'{p}_to_delete'],
+                               check=True,
+                               stderr=subprocess.PIPE,
+                               encoding='utf8')
+            except subprocess.CalledProcessError as e:
+                print(e.stderr)
+                raise e
+        return
+
+    if isinstance(paths, (str, pathlib.PosixPath)):
+        paths = str(paths)
+        if '*' in paths:
+            for path in glob.glob(paths):
+                _convert_single_path(path)
+        else:
+            _convert_single_path(paths)
+    else:
+        for path in paths:
+            convert_to_zarr(path)
     return
