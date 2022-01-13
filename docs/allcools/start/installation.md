@@ -60,6 +60,7 @@ dependencies:
   - jupyter_contrib_nbextensions
   - leidenalg
   - natsort
+  - netCDF4
   - networkx
   - opentsne
   - plotly
@@ -73,6 +74,7 @@ dependencies:
   - statsmodels
   - xarray
   - yaml
+  - zarr
   - pip:
     - papermill
     - imblearn
