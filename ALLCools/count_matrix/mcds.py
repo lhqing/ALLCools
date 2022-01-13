@@ -299,6 +299,7 @@ def generate_mcds(
     cell_chunk_size=100,
     dtype=DEFAULT_MCDS_DTYPE,
     binarize=False,
+    engine='zarr'
 ):
     """\
     Generate MCDS from a list of ALLC file provided with file id.
@@ -341,11 +342,15 @@ def generate_mcds(
         The values exceed max will be clipped.
     binarize
         {binarize_doc}
+    engine
+        use zarr or netcdf to store dataset, default is zarr
 
     Returns
     -------
 
     """
+    if engine not in ['zarr', 'netcdf']:
+        raise ValueError(f'engine need to be "zarr" or "netcdf", got {engine}')
     # TODO region bed should have unique id, check before generate mcds
     dtype = parse_dtype(dtype)
 
@@ -441,6 +446,7 @@ def generate_mcds(
                 cell_chunk_size=cell_chunk_size,
                 dtype=dtype,
                 binarize=binarize,
+                engine=engine
             )
         return
 
@@ -486,7 +492,13 @@ def generate_mcds(
         output_path = output_prefix + ".mcds"
     else:
         output_path = output_prefix
-    total_ds.to_netcdf(output_path)
+
+    if engine == 'zarr':
+        total_ds.to_zarr(output_path)
+    elif engine == 'netcdf':
+        total_ds.to_netcdf(output_path)
+    else:
+        raise ValueError
 
     # sanity check mC <= cov
     for da_name, da in total_ds.data_vars.items():
