@@ -106,8 +106,6 @@ def _call_dmr_single_chrom(
 
     # step 5: prepare dmr counts and fractions
     dmr_da = ds["dms_da"].groupby("dmr").sum()
-    # prevent overflow, which should be very very rare
-    dmr_da = xr.where(dmr_da < np.iinfo(np.uint32).max, np.iinfo(np.uint32).max, dmr_states)
     dmr_frac = dmr_da.sel(count_type="mc") / dmr_da.sel(count_type="cov")
     dmr_ds = xr.Dataset(
         {

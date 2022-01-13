@@ -73,16 +73,16 @@ def _bed_intersection(bed: pybedtools.BedTool, path, g, region_index, bed_sorted
 
 
 def _annotate_by_bigwigs_worker(
-    dataset_path,
-    region_dim,
-    chrom_size_path,
-    track_paths,
-    output_path,
-    dim,
-    slop,
-    value_type,
-    dtype,
-    **kwargs,
+        dataset_path,
+        region_dim,
+        chrom_size_path,
+        track_paths,
+        output_path,
+        dim,
+        slop,
+        value_type,
+        dtype,
+        **kwargs,
 ):
     len(kwargs)
     # set dask scheduler to allow multiprocessing
@@ -113,16 +113,16 @@ def _annotate_by_bigwigs_worker(
 
 
 def _annotate_by_beds_worker(
-    dataset_path,
-    region_dim,
-    chrom_size_path,
-    slop,
-    track_paths,
-    dtype,
-    dim,
-    output_path,
-    bed_sorted,
-    **kwargs,
+        dataset_path,
+        region_dim,
+        chrom_size_path,
+        slop,
+        track_paths,
+        dtype,
+        dim,
+        output_path,
+        bed_sorted,
+        **kwargs,
 ):
     len(kwargs)
 
@@ -222,7 +222,7 @@ class RegionDS(xr.Dataset):
 
     @classmethod
     def from_bed(
-        cls, bed, location, chrom_size_path, region_dim="region", sort_bed=True
+            cls, bed, location, chrom_size_path, region_dim="region", sort_bed=True
     ):
         """
         Create empty RegionDS from a bed file.
@@ -283,14 +283,14 @@ class RegionDS(xr.Dataset):
 
     @classmethod
     def open(
-        cls,
-        path,
-        region_dim=None,
-        use_regions=None,
-        split_large_chunks=True,
-        chrom_size_path=None,
-        select_dir=None,
-        engine="zarr",
+            cls,
+            path,
+            region_dim=None,
+            use_regions=None,
+            split_large_chunks=True,
+            chrom_size_path=None,
+            select_dir=None,
+            engine="zarr",
     ):
         if isinstance(path, (str, pathlib.PosixPath)):
             _path = pathlib.Path(path).absolute()
@@ -388,13 +388,13 @@ class RegionDS(xr.Dataset):
 
     @classmethod
     def _open_single_dataset(
-        cls,
-        path,
-        region_dim,
-        split_large_chunks=True,
-        chrom_size_path=None,
-        location=None,
-        engine=None,
+            cls,
+            path,
+            region_dim,
+            split_large_chunks=True,
+            chrom_size_path=None,
+            location=None,
+            engine=None,
     ):
         """
         Take one or multiple RegionDS file paths and create single RegionDS concatenated on region_dim
@@ -425,12 +425,12 @@ class RegionDS(xr.Dataset):
         #     print(f'Open RegionDS with {engine} engine.')
         try:
             if (isinstance(path, str) and "*" not in path) or isinstance(
-                path, pathlib.PosixPath
+                    path, pathlib.PosixPath
             ):
                 ds = xr.open_dataset(path, engine=engine)
             else:
                 with dask.config.set(
-                    **{"array.slicing.split_large_chunks": split_large_chunks}
+                        **{"array.slicing.split_large_chunks": split_large_chunks}
                 ):
                     if isinstance(path, str):
                         import glob
@@ -461,7 +461,7 @@ class RegionDS(xr.Dataset):
 
         index = self.get_index(dim)
         for chunk_start in range(0, index.size, chunk_size):
-            use_index = index[chunk_start : chunk_start + chunk_size]
+            use_index = index[chunk_start: chunk_start + chunk_size]
             yield use_index
 
     def iter_array(self, chunk_size=100000, dim=None, da=None, load=False):
@@ -481,12 +481,12 @@ class RegionDS(xr.Dataset):
             yield use_da
 
     def get_fasta(
-        self,
-        genome_fasta,
-        output_path,
-        slop=None,
-        chrom_size_path=None,
-        standardize_length=None,
+            self,
+            genome_fasta,
+            output_path,
+            slop=None,
+            chrom_size_path=None,
+            standardize_length=None,
     ):
         bed = self.get_bed(
             with_id=True,
@@ -499,12 +499,12 @@ class RegionDS(xr.Dataset):
         return
 
     def get_bed(
-        self,
-        with_id=True,
-        bedtools=False,
-        slop=None,
-        chrom_size_path=None,
-        standardize_length=None,
+            self,
+            with_id=True,
+            bedtools=False,
+            slop=None,
+            chrom_size_path=None,
+            standardize_length=None,
     ):
         if chrom_size_path is None:
             chrom_size_path = self.chrom_size_path  # will be none if not exist
@@ -526,7 +526,7 @@ class RegionDS(xr.Dataset):
             bed_df["start"] = region_center - 1
             bed_df["end"] = region_center
             slop = (
-                standardize_length // 2
+                    standardize_length // 2
             )  # use the bedtools slop to extend the center to standard length
 
         if with_id:
@@ -591,8 +591,8 @@ class RegionDS(xr.Dataset):
                 output_path = f"{chunk_dir_path}/chunk_{i}.zarr"
                 kwargs["output_path"] = output_path
                 kwargs["track_paths"] = track_paths[
-                    chunk_start : chunk_start + chunk_size
-                ]
+                                        chunk_start: chunk_start + chunk_size
+                                        ]
                 future = exe.submit(annotation_function, **kwargs)
                 futures[future] = i
                 # time.sleep(1)
@@ -631,16 +631,16 @@ class RegionDS(xr.Dataset):
         return
 
     def annotate_by_bigwigs(
-        self,
-        bigwig_table,
-        dim,
-        slop=100,
-        chrom_size_path=None,
-        value_type="mean",
-        chunk_size="auto",
-        dtype="float32",
-        cpu=1,
-        save=True,
+            self,
+            bigwig_table,
+            dim,
+            slop=100,
+            chrom_size_path=None,
+            value_type="mean",
+            chunk_size="auto",
+            dtype="float32",
+            cpu=1,
+            save=True,
     ):
         if isinstance(bigwig_table, dict):
             track_paths = pd.Series(bigwig_table)
@@ -670,16 +670,16 @@ class RegionDS(xr.Dataset):
         return
 
     def annotate_by_beds(
-        self,
-        bed_table,
-        dim,
-        slop=100,
-        chrom_size_path=None,
-        chunk_size="auto",
-        dtype="bool",
-        bed_sorted=True,
-        cpu=1,
-        save=True,
+            self,
+            bed_table,
+            dim,
+            slop=100,
+            chrom_size_path=None,
+            chunk_size="auto",
+            dtype="bool",
+            bed_sorted=True,
+            cpu=1,
+            save=True,
     ):
         bed_tmp = pathlib.Path(
             f"./pybedtools_tmp_{np.random.randint(0, 100000)}"
@@ -734,16 +734,16 @@ class RegionDS(xr.Dataset):
         return data
 
     def scan_motifs(
-        self,
-        genome_fasta,
-        cpu=1,
-        standardize_length=500,
-        motif_set_path=None,
-        chrom_size_path=None,
-        combine_cluster=True,
-        fnr_fpr_fold=1000,
-        chunk_size=None,
-        dim="motif",
+            self,
+            genome_fasta,
+            cpu=1,
+            standardize_length=500,
+            motif_set_path=None,
+            chrom_size_path=None,
+            combine_cluster=True,
+            fnr_fpr_fold=1000,
+            chunk_size=None,
+            dim="motif",
     ):
         region_ds_path = self.location
         if region_ds_path is None:
@@ -786,17 +786,21 @@ class RegionDS(xr.Dataset):
             motif_dim=dim,
             chunk_size=chunk_size,
         )
-
+        new_dataset_dim = {f'{region_dim}_{dim}': region_dim}
+        if combine_cluster:
+            new_dataset_dim[f'{region_dim}_{dim}-cluster'] = region_dim
+        update_region_ds_config(self.location,
+                                new_dataset_dim=new_dataset_dim)
         self.update(motif_ds)
         return
 
     def get_hypo_hyper_index(
-        self,
-        a,
-        region_dim=None,
-        region_state_da=None,
-        sample_dim="sample",
-        use_collapsed=True,
+            self,
+            a,
+            region_dim=None,
+            region_state_da=None,
+            sample_dim="sample",
+            use_collapsed=True,
     ):
         if region_state_da is None:
             if region_dim is None:
@@ -825,14 +829,14 @@ class RegionDS(xr.Dataset):
         return hypo_dmr, hyper_dmr
 
     def get_pairwise_differential_index(
-        self,
-        a,
-        b,
-        dmr_type="hypo",
-        region_dim=None,
-        region_state_da=None,
-        sample_dim="sample",
-        use_collapsed=True,
+            self,
+            a,
+            b,
+            dmr_type="hypo",
+            region_dim=None,
+            region_state_da=None,
+            sample_dim="sample",
+            use_collapsed=True,
     ):
         a_hypo, a_hyper = self.get_hypo_hyper_index(
             a,
@@ -865,13 +869,13 @@ class RegionDS(xr.Dataset):
         return a_not_b, a_and_b, b_not_a
 
     def motif_enrichment(
-        self,
-        true_regions,
-        background_regions,
-        region_dim=None,
-        motif_dim="motif-cluster",
-        motif_da=None,
-        alternative="two-sided",
+            self,
+            true_regions,
+            background_regions,
+            region_dim=None,
+            motif_dim="motif-cluster",
+            motif_da=None,
+            alternative="two-sided",
     ):
         if region_dim is None:
             region_dim = self.region_dim
@@ -910,15 +914,15 @@ class RegionDS(xr.Dataset):
         return test_results
 
     def sample_dmr_motif_enrichment(
-        self,
-        sample,
-        region_dim=None,
-        sample_dim="sample",
-        motif_dim="motif-cluster",
-        region_state_da=None,
-        motif_da=None,
-        alternative="two-sided",
-        use_collapsed=True,
+            self,
+            sample,
+            region_dim=None,
+            sample_dim="sample",
+            motif_dim="motif-cluster",
+            region_state_da=None,
+            motif_da=None,
+            alternative="two-sided",
+            use_collapsed=True,
     ):
         hypo_region, hyper_region = self.get_hypo_hyper_index(
             sample,
@@ -938,16 +942,16 @@ class RegionDS(xr.Dataset):
         return test_results
 
     def pairwise_dmr_motif_enrichment(
-        self,
-        a,
-        b,
-        dmr_type="hypo",
-        region_dim=None,
-        region_state_da=None,
-        sample_dim="sample",
-        motif_dim="motif-cluster",
-        motif_da=None,
-        alternative="two-sided",
+            self,
+            a,
+            b,
+            dmr_type="hypo",
+            region_dim=None,
+            region_state_da=None,
+            sample_dim="sample",
+            motif_dim="motif-cluster",
+            motif_da=None,
+            alternative="two-sided",
     ):
         a_not_b, _, b_not_a = self.get_pairwise_differential_index(
             a,

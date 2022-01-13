@@ -86,10 +86,13 @@ def _corr_preprocess(da, sample_mch, sample_mcg, cpu=1):
     # otherwise regress out will fail.
     adata = adata[:, adata.X.std(axis=0) > 0].copy()
 
-    # regress out global mCH and mCG
-    # happens on each regions
-    sc.pp.regress_out(adata, keys=["sample_mch", "sample_mcg"], n_jobs=cpu)
-    sc.pp.scale(adata)
+    if adata.shape[1] > 0:
+        # regress out global mCH and mCG
+        # happens on each regions
+        sc.pp.regress_out(adata, keys=["sample_mch", "sample_mcg"], n_jobs=cpu)
+        sc.pp.scale(adata)
+    else:
+        print('All features are removed due to 0 std')
     return adata
 
 
@@ -169,7 +172,8 @@ def corr(
             chunk_id = futures[future]
             total_data[chunk_id] = future.result()
 
-    mask.data = np.concatenate([total_data[k] for k in sorted(total_data.keys())])
+    if len(total_data) != 0:
+        mask.data = np.concatenate([total_data[k] for k in sorted(total_data.keys())])
     result = anndata.AnnData(
         X=mask.astype(np.float32).tocsr(), obs=_adata_a.var, var=_adata_b.var
     )
