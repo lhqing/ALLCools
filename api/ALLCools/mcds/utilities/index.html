@@ -1264,6 +1264,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1557,6 +1566,11 @@
      write_ordered_chunks
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.mcds.utilities.convert_to_zarr">
+     convert_to_zarr
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -1627,6 +1641,11 @@
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#ALLCools.mcds.utilities.write_ordered_chunks">
      write_ordered_chunks
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.mcds.utilities.convert_to_zarr">
+     convert_to_zarr
     </a>
    </li>
   </ul>
@@ -1706,6 +1725,12 @@ this function normalize dispersion based on both mean and cov bins.</p>
 <dt class="sig sig-object py" id="ALLCools.mcds.utilities.write_ordered_chunks">
 <span class="sig-name descname"><span class="pre">write_ordered_chunks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chunks_to_write</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zarr'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_dtypes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/mcds/utilities.html#write_ordered_chunks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.mcds.utilities.write_ordered_chunks" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ALLCools.mcds.utilities.convert_to_zarr">
+<span class="sig-name descname"><span class="pre">convert_to_zarr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/mcds/utilities.html#convert_to_zarr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.mcds.utilities.convert_to_zarr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert xarray.Dataset stored in other backends into zarr backend.</p>
+</dd></dl>
 
 </div>
 </div>

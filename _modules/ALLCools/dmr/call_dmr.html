@@ -1255,6 +1255,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1601,8 +1610,6 @@
 
     <span class="c1"># step 5: prepare dmr counts and fractions</span>
     <span class="n">dmr_da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;dms_da&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;dmr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="c1"># prevent overflow, which should be very very rare</span>
-    <span class="n">dmr_da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dmr_da</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">dmr_states</span><span class="p">)</span>
     <span class="n">dmr_frac</span> <span class="o">=</span> <span class="n">dmr_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">count_type</span><span class="o">=</span><span class="s2">&quot;mc&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">dmr_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">count_type</span><span class="o">=</span><span class="s2">&quot;cov&quot;</span><span class="p">)</span>
     <span class="n">dmr_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span>
         <span class="p">{</span>

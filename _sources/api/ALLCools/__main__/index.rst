@@ -157,6 +157,9 @@ Module Contents
 .. py:function:: generate_mcad_register_subparser(subparser)
 
 
+.. py:function:: convert_mcds_to_zarr_register_subparser(subparser)
+
+
 .. py:function:: main()
 
 

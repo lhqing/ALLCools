@@ -1255,6 +1255,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1512,6 +1521,7 @@
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_predict</span>
 <span class="kn">from</span> <span class="nn">..plot</span> <span class="kn">import</span> <span class="n">categorical_scatter</span>
 
@@ -1588,11 +1598,14 @@
             <span class="n">categories</span><span class="o">=</span><span class="n">natsorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">)),</span>
         <span class="p">)</span>
         <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
-    <span class="n">result_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">random_states</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+        <span class="n">result_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">random_states</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result_df</span></div>
 
 
 <div class="viewcode-block" id="_split_train_test_per_group"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering._split_train_test_per_group">[docs]</a><span class="k">def</span> <span class="nf">_split_train_test_per_group</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">frac</span><span class="p">,</span> <span class="n">max_train</span><span class="p">,</span> <span class="n">random_state</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Split train test for each cluster and make sure there are enough cells for train&quot;&quot;&quot;</span>
     <span class="n">y_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
     <span class="c1"># split train test per group</span>
     <span class="n">train_idx</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1616,8 +1629,9 @@
 
 
 <div class="viewcode-block" id="single_supervise_evaluation"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.single_supervise_evaluation">[docs]</a><span class="k">def</span> <span class="nf">single_supervise_evaluation</span><span class="p">(</span>
-    <span class="n">clf</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">r1_norm_step</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">r2_norm_step</span><span class="o">=</span><span class="mf">0.05</span>
+        <span class="n">clf</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">r1_norm_step</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">r2_norm_step</span><span class="o">=</span><span class="mf">0.05</span>
 <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A single fit and merge cluster step&quot;&quot;&quot;</span>
     <span class="c1"># fit model</span>
     <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
@@ -1662,39 +1676,54 @@
 
 <div class="viewcode-block" id="ConsensusClustering"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering">[docs]</a><span class="k">class</span> <span class="nc">ConsensusClustering</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
-        <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
-        <span class="n">min_cluster_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-        <span class="n">leiden_repeats</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-        <span class="n">leiden_resolution</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">target_accuracy</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
-        <span class="n">consensus_rate</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
-        <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">train_frac</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">train_max_n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-        <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-        <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+            <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+            <span class="n">min_cluster_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">leiden_repeats</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+            <span class="n">leiden_resolution</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">target_accuracy</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+            <span class="n">consensus_rate</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">train_frac</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">train_max_n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+            <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform consensus clustering by multi-leiden clustering + supervised model</span>
+<span class="sd">        Perform consensus clustering by multi-leiden clustering + supervised model evaluation.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        model</span>
+<span class="sd">            A supervised ML model, if not provided, will use the BalancedRandomForestClassifier from imblearn</span>
 <span class="sd">        n_neighbors</span>
+<span class="sd">            K of the KNN graph</span>
 <span class="sd">        metric</span>
+<span class="sd">            metric of the KNN graph</span>
 <span class="sd">        min_cluster_size</span>
+<span class="sd">            Minimum final cluster size to report</span>
 <span class="sd">        consensus_rate</span>
+<span class="sd">            Cutoff for the initial cluster separation from multi-leiden run</span>
 <span class="sd">        leiden_repeats</span>
+<span class="sd">            Repeat leiden clustering with different random states this number of times</span>
 <span class="sd">        leiden_resolution</span>
+<span class="sd">            Resolution parameter of leiden clustering</span>
 <span class="sd">        random_state</span>
+<span class="sd">            Overall random state to assure reproducibility</span>
 <span class="sd">        train_frac</span>
+<span class="sd">            fraction of cells per cluster used in training supervised model</span>
 <span class="sd">        train_max_n</span>
+<span class="sd">            maximum number of cells per cluster used in training supervised model, this is to prevent some</span>
+<span class="sd">            large cluster dominant the training dataset. The actual cells used in training is the smaller one</span>
+<span class="sd">            of `train_max_n` and `train_frac * cluster_size`</span>
 <span class="sd">        max_iter</span>
+<span class="sd">            maximum iteration of the cluster merge process</span>
 <span class="sd">        n_jobs</span>
+<span class="sd">            number of cpus</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c1"># input metrics</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_cluster_size</span> <span class="o">=</span> <span class="n">min_cluster_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">consensus_rate</span> <span class="o">=</span> <span class="n">consensus_rate</span>  <span class="c1"># this prevents merging gradient clusters</span>
@@ -1740,6 +1769,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">compute_neighbors</span><span class="p">()</span>
 
         <span class="c1"># repeat Leiden clustering with different random seeds</span>
+        <span class="c1"># summarize the results and determine initial clusters by hamming distance between leiden runs</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing multiple clustering with different random seeds&quot;</span><span class="p">)</span>
         <span class="n">kwds</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">leiden_kwds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1755,6 +1785,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">final_evaluation</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.compute_neighbors"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.compute_neighbors">[docs]</a>    <span class="k">def</span> <span class="nf">compute_neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate KNN graph&quot;&quot;&quot;</span>
         <span class="c1"># nearest neighbors graph</span>
         <span class="n">adata</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
             <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1776,13 +1807,13 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.multi_leiden_clustering"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.multi_leiden_clustering">[docs]</a>    <span class="k">def</span> <span class="nf">multi_leiden_clustering</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">partition_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">partition_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">use_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">n_iterations</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">partition_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">partition_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">use_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">n_iterations</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Modified from scanpy&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Modified from scanpy, perform Leiden clustering multiple times with different random states&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_neighbors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Run compute_neighbors first before multi_leiden_clustering&quot;</span>
@@ -1800,7 +1831,7 @@
         <span class="p">)</span>
         <span class="n">step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">leiden_repeats</span> <span class="o">/</span> <span class="n">n_jobs</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
         <span class="n">random_state_chunks</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">random_states</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">leiden_repeats</span><span class="p">)]</span>
+            <span class="n">random_states</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">leiden_repeats</span><span class="p">)]</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">leiden_repeats</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
         <span class="p">]</span>
 
@@ -1860,9 +1891,13 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering._summarize_multi_leiden"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering._summarize_multi_leiden">[docs]</a>    <span class="k">def</span> <span class="nf">_summarize_multi_leiden</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Summarize the multi_leiden results,</span>
+<span class="sd">        generate a raw cluster version simply based on the hamming distance</span>
+<span class="sd">        between cells and split cluster with cutoff (consensus_rate)&quot;&quot;&quot;</span>
         <span class="c1"># data: row is leiden run, column is cell</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span><span class="o">.</span><span class="n">T</span>
 
+        <span class="c1"># group cell into raw clusters if their hamming distance &lt; 1 - consensus_rate</span>
         <span class="n">cur_cluster_id</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">clusters</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">while</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -1899,6 +1934,7 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering._create_model"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering._create_model">[docs]</a>    <span class="k">def</span> <span class="nf">_create_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Init default model&quot;&quot;&quot;</span>
         <span class="n">clf</span> <span class="o">=</span> <span class="n">BalancedRandomForestClassifier</span><span class="p">(</span>
             <span class="n">n_estimators</span><span class="o">=</span><span class="n">n_estimators</span><span class="p">,</span>
             <span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;gini&quot;</span><span class="p">,</span>
@@ -1922,6 +1958,7 @@
         <span class="k">return</span> <span class="n">clf</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.supervise_learning"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.supervise_learning">[docs]</a>    <span class="k">def</span> <span class="nf">supervise_learning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform supervised learning and cluster merge process&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multi_leiden_clusters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Run multi_leiden_clustering first to get a &quot;</span>
@@ -1963,7 +2000,7 @@
                 <span class="n">frac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_frac</span><span class="p">,</span>
                 <span class="n">max_train</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_max_n</span><span class="p">,</span>
                 <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span>
-                <span class="o">+</span> <span class="n">cur_iter</span><span class="p">,</span>  <span class="c1"># every time train-test split got a different random state</span>
+                             <span class="o">+</span> <span class="n">cur_iter</span><span class="p">,</span>  <span class="c1"># every time train-test split got a different random state</span>
             <span class="p">)</span>
             <span class="p">(</span>
                 <span class="n">clf</span><span class="p">,</span>
@@ -2013,8 +2050,8 @@
                 <span class="p">}</span>
                 <span class="n">cur_y</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cur_y</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">ordered_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ordered_map</span> <span class="k">else</span> <span class="n">i</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">values</span>
+                        <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">ordered_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ordered_map</span> <span class="k">else</span> <span class="n">i</span><span class="p">)</span>
+                        <span class="o">.</span><span class="n">values</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stop iteration because there is no cluster to merge&quot;</span><span class="p">)</span>
@@ -2028,6 +2065,7 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.final_evaluation"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.final_evaluation">[docs]</a>    <span class="k">def</span> <span class="nf">final_evaluation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Final evaluation of the model and assign outliers&quot;&quot;&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== Assign final labels ===&quot;</span><span class="p">)</span>
 
         <span class="c1"># skip if there is only one cluster</span>
@@ -2078,11 +2116,13 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.save"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save the model&quot;&quot;&quot;</span>
         <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.plot_leiden_cases"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_leiden_cases">[docs]</a>    <span class="k">def</span> <span class="nf">plot_leiden_cases</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">plot_n_cases</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">3</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">plot_n_cases</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">3</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Show some leiden runs with biggest different as measured by ARI&quot;&quot;&quot;</span>
         <span class="c1"># choose some most different leiden runs by rand index</span>
         <span class="n">sample_cells</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">sample_runs</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">leiden_result_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -2093,8 +2133,8 @@
                 <span class="n">index</span><span class="o">=</span><span class="n">use_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
                 <span class="n">columns</span><span class="o">=</span><span class="n">use_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
-            <span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
         <span class="p">)</span>
         <span class="n">plot_cases</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">pairs</span> <span class="ow">in</span> <span class="n">rand_index_rank</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
@@ -2118,6 +2158,7 @@
         <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.plot_before_after"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_before_after">[docs]</a>    <span class="k">def</span> <span class="nf">plot_before_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the raw clusters from multi-leiden and final clusters after merge&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No merge step to plot&quot;</span><span class="p">)</span>
             <span class="k">return</span>
@@ -2152,6 +2193,7 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.plot_steps"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_steps">[docs]</a>    <span class="k">def</span> <span class="nf">plot_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord_data</span><span class="p">,</span> <span class="n">coord_base</span><span class="o">=</span><span class="s2">&quot;umap&quot;</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the supervised learning and merge steps&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No merge step to plot&quot;</span><span class="p">)</span>
             <span class="k">return</span>
@@ -2213,6 +2255,7 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="ConsensusClustering.plot_merge_process"><a class="viewcode-back" href="../../../api/ALLCools/clustering/ConsensusClustering/index.html#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_merge_process">[docs]</a>    <span class="k">def</span> <span class="nf">plot_merge_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the change of accuracy during merge&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No merge step to plot&quot;</span><span class="p">)</span>
             <span class="k">return</span>
@@ -2242,6 +2285,20 @@
 
 
 <div class="viewcode-block" id="select_confusion_pairs"><a class="viewcode-back" href="../../../api/ALLCools/clustering/index.html#ALLCools.clustering.ConsensusClustering.select_confusion_pairs">[docs]</a><span class="k">def</span> <span class="nf">select_confusion_pairs</span><span class="p">(</span><span class="n">true_label</span><span class="p">,</span> <span class="n">predicted_label</span><span class="p">,</span> <span class="n">ratio_cutoff</span><span class="o">=</span><span class="mf">0.001</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Select cluster pairs that are confusing (ratio_cutoff) between true and predicted labels</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    true_label : true cell labels</span>
+<span class="sd">    predicted_label : predicted cell labels</span>
+<span class="sd">    ratio_cutoff : ratio of clusters cutoff to define confusion</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    confused_pairs :</span>
+<span class="sd">        list of cluster pair tuples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;true&quot;</span><span class="p">:</span> <span class="n">true_label</span><span class="p">,</span> <span class="s2">&quot;pred&quot;</span><span class="p">:</span> <span class="n">predicted_label</span><span class="p">})</span>
     <span class="n">confusion_matrix</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">labels</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;true&quot;</span><span class="p">)[</span><span class="s2">&quot;pred&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>

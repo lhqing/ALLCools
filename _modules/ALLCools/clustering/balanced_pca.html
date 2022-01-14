@@ -1255,6 +1255,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1493,7 +1502,11 @@
               <div>
                 
   <h1>Source code for ALLCools.clustering.balanced_pca</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">anndata</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Perform Balanced PCA as well as</span>
+<span class="sd">Reproducible PCA (A class allow user provide fitted model and just transform MCDS to adata with PCs)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">anndata</span>
 <span class="kn">import</span> <span class="nn">joblib</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">RobustScaler</span>
 <span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
@@ -1705,17 +1718,23 @@
                    <span class="n">outlier_label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                    <span class="n">obsm</span><span class="o">=</span><span class="s2">&quot;X_pca&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the cluster centroids of the PC matrix</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    adata</span>
+<span class="sd">        adata with cluster labels in obs and PC in obsm</span>
 <span class="sd">    group</span>
+<span class="sd">        the name of cluster labels in adata.obs</span>
 <span class="sd">    outlier_label</span>
+<span class="sd">        if there are outlier labels in obs, will exclude outliers before calculating centroids.</span>
 <span class="sd">    obsm</span>
+<span class="sd">        the key of PC matrix in obsm</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-
+<span class="sd">    pc_center</span>
+<span class="sd">        a dataframe for cluster centroids by PC</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pc_matrix</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="n">obsm</span><span class="p">]</span>
     <span class="n">pc_center</span> <span class="o">=</span> <span class="p">(</span>
@@ -1739,6 +1758,27 @@
             <span class="n">var_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">max_value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform preprocessing, feature selection and PCA using fitted scaler and PC transform</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        scaler :</span>
+<span class="sd">            fitted sklearn scaler, can be the one return from</span>
+<span class="sd">            {func}`log_scale &lt;ALLCools.clustering.balanced_pca.log_scale&gt;`</span>
+<span class="sd">        mc_type :</span>
+<span class="sd">            value to select mc_type dim in MCDS</span>
+<span class="sd">        adata :</span>
+<span class="sd">            If anndata is provided, will take the PC loading from adata, otherwise, pca_obj or pc_loading is needed</span>
+<span class="sd">        pca_obj :</span>
+<span class="sd">            fitted sklearn PCA model, will take the pc_loading from the pca_obj.components_</span>
+<span class="sd">        pc_loading :</span>
+<span class="sd">            or you can directly provide the pc_loading matrix</span>
+<span class="sd">        var_names :</span>
+<span class="sd">            the var_names of the pc_loading matrix, will use these index to select features</span>
+<span class="sd">        max_value :</span>
+<span class="sd">            the maximum to clip after scaling</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">adata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pc_loading</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">varm</span><span class="p">[</span><span class="s2">&quot;PCs&quot;</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pc_vars</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var_names</span>
@@ -1759,6 +1799,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">max_value</span> <span class="o">=</span> <span class="n">max_value</span>
 
 <div class="viewcode-block" id="ReproduciblePCA.mcds_to_adata"><a class="viewcode-back" href="../../../api/ALLCools/clustering/balanced_pca/index.html#ALLCools.clustering.balanced_pca.ReproduciblePCA.mcds_to_adata">[docs]</a>    <span class="k">def</span> <span class="nf">mcds_to_adata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mcds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get adata from MCDS with only selected features</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mcds : Input raw count MCDS object</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        adata:</span>
+<span class="sd">            Adata with per-cell normalized mC fraction and selected features</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">var_dim</span><span class="si">}</span><span class="s2">_da_frac&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mcds</span><span class="p">:</span>
             <span class="c1"># adding mC frac and normalize per cell should be done separately for every cell/dataset</span>
             <span class="n">mcds</span><span class="o">.</span><span class="n">add_mc_frac</span><span class="p">(</span>
@@ -1769,6 +1821,7 @@
         <span class="n">hvf_judge</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_dim</span><span class="p">)</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pc_vars</span><span class="p">)</span>
         <span class="n">mcds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">var_dim</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mc_type</span><span class="si">}</span><span class="s2">_feature_select&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hvf_judge</span>
 
+        <span class="c1"># adata only contains self.pc_vars</span>
         <span class="n">adata</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">get_adata</span><span class="p">(</span>
             <span class="n">mc_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mc_type</span><span class="p">,</span>
             <span class="n">var_dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">var_dim</span><span class="p">,</span>
@@ -1780,6 +1833,18 @@
         <span class="k">return</span> <span class="n">adata</span></div>
 
 <div class="viewcode-block" id="ReproduciblePCA.scale"><a class="viewcode-back" href="../../../api/ALLCools/clustering/balanced_pca/index.html#ALLCools.clustering.balanced_pca.ReproduciblePCA.scale">[docs]</a>    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adata</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform {func}`log_scale &lt;ALLCools.clustering.balanced_pca.log_scale&gt;` with fitted scaler</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        adata :</span>
+<span class="sd">            Adata with per-cell normalized mC fraction and selected features</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        adata.X is transformed in place</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">log_scale</span><span class="p">(</span>
             <span class="n">adata</span><span class="p">,</span>
             <span class="n">method</span><span class="o">=</span><span class="s2">&quot;standard&quot;</span><span class="p">,</span>
@@ -1790,17 +1855,48 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="ReproduciblePCA.pc_transform"><a class="viewcode-back" href="../../../api/ALLCools/clustering/balanced_pca/index.html#ALLCools.clustering.balanced_pca.ReproduciblePCA.pc_transform">[docs]</a>    <span class="k">def</span> <span class="nf">pc_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adata</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate the PC from adata.X and PC loading, store PCs in adata.obsm[&quot;X_pca&quot;] and</span>
+<span class="sd">        loadings in adata.varm[&quot;PCs&quot;]</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        adata :</span>
+<span class="sd">            Adata with log_scale transformed mC fraction and selected features</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        PC information stored in adata.obsm and varm</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pc_loading</span><span class="p">)</span>
         <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s2">&quot;X_pca&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pc</span>
         <span class="n">adata</span><span class="o">.</span><span class="n">varm</span><span class="p">[</span><span class="s2">&quot;PCs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pc_loading</span></div>
 
 <div class="viewcode-block" id="ReproduciblePCA.mcds_to_adata_with_pc"><a class="viewcode-back" href="../../../api/ALLCools/clustering/balanced_pca/index.html#ALLCools.clustering.balanced_pca.ReproduciblePCA.mcds_to_adata_with_pc">[docs]</a>    <span class="k">def</span> <span class="nf">mcds_to_adata_with_pc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mcds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        From raw count MCDS to adata object with PCs using fitted scaler and PC loadings.</span>
+<span class="sd">        Steps include select features, calculate per-cell normalized mC fractions,</span>
+<span class="sd">        log_scale transform the data with fitted scaler, and finally add PC matrix.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mcds :</span>
+<span class="sd">            Raw count MCDS</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        adata :</span>
+<span class="sd">            anndata object with per-cell normalized, log scale transformed matrix in .X and PCs in</span>
+<span class="sd">            adata.obsm[&quot;X_pca&quot;] and PC loadings in adata.varm[&quot;PCs&quot;]. The scale and PC are done with fitted model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">adata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mcds_to_adata</span><span class="p">(</span><span class="n">mcds</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pc_transform</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">adata</span></div>
 
 <div class="viewcode-block" id="ReproduciblePCA.dump"><a class="viewcode-back" href="../../../api/ALLCools/clustering/balanced_pca/index.html#ALLCools.clustering.balanced_pca.ReproduciblePCA.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the ReproduciblePCA to path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div></div>
 </pre></div>
 

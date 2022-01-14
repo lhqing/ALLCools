@@ -1255,6 +1255,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1581,10 +1590,13 @@
     <span class="c1"># otherwise regress out will fail.</span>
     <span class="n">adata</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[:,</span> <span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-    <span class="c1"># regress out global mCH and mCG</span>
-    <span class="c1"># happens on each regions</span>
-    <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">regress_out</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sample_mch&quot;</span><span class="p">,</span> <span class="s2">&quot;sample_mcg&quot;</span><span class="p">],</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
-    <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">adata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># regress out global mCH and mCG</span>
+        <span class="c1"># happens on each regions</span>
+        <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">regress_out</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sample_mch&quot;</span><span class="p">,</span> <span class="s2">&quot;sample_mcg&quot;</span><span class="p">],</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">cpu</span><span class="p">)</span>
+        <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All features are removed due to 0 std&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">adata</span></div>
 
 
@@ -1664,7 +1676,8 @@
             <span class="n">chunk_id</span> <span class="o">=</span> <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span>
             <span class="n">total_data</span><span class="p">[</span><span class="n">chunk_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
 
-    <span class="n">mask</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">total_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">total_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())])</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">total_data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">mask</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">total_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">total_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())])</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span>
         <span class="n">X</span><span class="o">=</span><span class="n">mask</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">tocsr</span><span class="p">(),</span> <span class="n">obs</span><span class="o">=</span><span class="n">_adata_a</span><span class="o">.</span><span class="n">var</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="n">_adata_b</span><span class="o">.</span><span class="n">var</span>
     <span class="p">)</span>

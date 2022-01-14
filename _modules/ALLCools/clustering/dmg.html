@@ -1255,6 +1255,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1494,6 +1503,7 @@
                 
   <h1>Source code for ALLCools.clustering.dmg</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
 <span class="kn">import</span> <span class="nn">anndata</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
@@ -1504,20 +1514,22 @@
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
 <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">pairwise_distances</span>
 <span class="kn">from</span> <span class="nn">..mcds</span> <span class="kn">import</span> <span class="n">MCDS</span>
 
 
-<div class="viewcode-block" id="single_pairwise_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.single_pairwise_dmg">[docs]</a><span class="k">def</span> <span class="nf">single_pairwise_dmg</span><span class="p">(</span>
-    <span class="n">cluster_l</span><span class="p">,</span>
-    <span class="n">cluster_r</span><span class="p">,</span>
-    <span class="n">top_n</span><span class="p">,</span>
-    <span class="n">adj_p_cutoff</span><span class="p">,</span>
-    <span class="n">delta_rate_cutoff</span><span class="p">,</span>
-    <span class="n">auroc_cutoff</span><span class="p">,</span>
-    <span class="n">adata_dir</span><span class="p">,</span>
-    <span class="n">dmg_dir</span><span class="p">,</span>
+<div class="viewcode-block" id="_single_pairwise_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg._single_pairwise_dmg">[docs]</a><span class="k">def</span> <span class="nf">_single_pairwise_dmg</span><span class="p">(</span>
+        <span class="n">cluster_l</span><span class="p">,</span>
+        <span class="n">cluster_r</span><span class="p">,</span>
+        <span class="n">top_n</span><span class="p">,</span>
+        <span class="n">adj_p_cutoff</span><span class="p">,</span>
+        <span class="n">delta_rate_cutoff</span><span class="p">,</span>
+        <span class="n">auroc_cutoff</span><span class="p">,</span>
+        <span class="n">adata_dir</span><span class="p">,</span>
+        <span class="n">dmg_dir</span><span class="p">,</span>
 <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate DMG between a pair of adata file&quot;&quot;&quot;</span>
     <span class="c1"># load data</span>
     <span class="n">adata_l</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adata_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">cluster_l</span><span class="si">}</span><span class="s2">.h5ad&quot;</span><span class="p">)</span>
     <span class="n">adata_r</span> <span class="o">=</span> <span class="n">anndata</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adata_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">cluster_r</span><span class="si">}</span><span class="s2">.h5ad&quot;</span><span class="p">)</span>
@@ -1562,7 +1574,7 @@
     <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span>
         <span class="p">(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;pvals_adj&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">adj_p_cutoff</span><span class="p">)</span>
         <span class="o">&amp;</span> <span class="p">(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;delta&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">delta_rate_cutoff</span><span class="p">)</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;hypo_in&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;delta&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">cluster_l</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">cluster_r</span>
     <span class="p">)</span>
@@ -1589,15 +1601,35 @@
 
 <div class="viewcode-block" id="PairwiseDMG"><a class="viewcode-back" href="../../../api/ALLCools/clustering/index.html#ALLCools.clustering.dmg.PairwiseDMG">[docs]</a><span class="k">class</span> <span class="nc">PairwiseDMG</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">max_cell_per_group</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-        <span class="n">top_n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
-        <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
-        <span class="n">delta_rate_cutoff</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
-        <span class="n">auroc_cutoff</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
-        <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">max_cell_per_group</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+            <span class="n">top_n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+            <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+            <span class="n">delta_rate_cutoff</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+            <span class="n">auroc_cutoff</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate pairwise DMGs. After calculation, results saved in self.dmg_table</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        max_cell_per_group :</span>
+<span class="sd">            maximum number of cells to use for each group, downsample larger groups to this size</span>
+<span class="sd">        top_n :</span>
+<span class="sd">            top N DMGs to report in the final result, if</span>
+<span class="sd">        adj_p_cutoff :</span>
+<span class="sd">            adjusted P value cutoff to report significant DMG</span>
+<span class="sd">        delta_rate_cutoff :</span>
+<span class="sd">            mC fraction delta cutoff to report significant DMG</span>
+<span class="sd">        auroc_cutoff :</span>
+<span class="sd">            AUROC cutoff to report significant DMG</span>
+<span class="sd">        random_state :</span>
+<span class="sd">            overall random state to make sure reproducibility</span>
+<span class="sd">        n_jobs :</span>
+<span class="sd">            number of cpus</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_obs_dim</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -1620,15 +1652,40 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dmg_dir</span> <span class="o">=</span> <span class="s2">&quot;_dmg_results&quot;</span>
 
 <div class="viewcode-block" id="PairwiseDMG.fit_predict"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.PairwiseDMG.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">x</span><span class="p">,</span>
-        <span class="n">groups</span><span class="p">,</span>
-        <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span>
-        <span class="n">var_dim</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span>
-        <span class="n">outlier</span><span class="o">=</span><span class="s2">&quot;Outlier&quot;</span><span class="p">,</span>
-        <span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">selected_pairs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">x</span><span class="p">,</span>
+            <span class="n">groups</span><span class="p">,</span>
+            <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span>
+            <span class="n">var_dim</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span>
+            <span class="n">outlier</span><span class="o">=</span><span class="s2">&quot;Outlier&quot;</span><span class="p">,</span>
+            <span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">selected_pairs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        provide data and perform the pairwise DMG</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x :</span>
+<span class="sd">            2D cell-by-feature xarray.DataArray</span>
+<span class="sd">        groups :</span>
+<span class="sd">            cluster labels</span>
+<span class="sd">        obs_dim :</span>
+<span class="sd">            name of the cell dim</span>
+<span class="sd">        var_dim :</span>
+<span class="sd">            name of the feature dim</span>
+<span class="sd">        outlier :</span>
+<span class="sd">            name of the outlier group, if provided, will ignore this label</span>
+<span class="sd">        cleanup :</span>
+<span class="sd">            Whether to delete the group adata file</span>
+<span class="sd">        selected_pairs :</span>
+<span class="sd">            By default, pairwise DMG will calculate all possible pairs between all the groups, which might be very</span>
+<span class="sd">            time consuming if the group number is large. With this parameter, you may provide a list of cluster pairs</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Expect an cell-by-feature 2D xr.DataArray as input matrix.&quot;</span>
@@ -1655,6 +1712,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PairwiseDMG._save_cluster_adata"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.PairwiseDMG._save_cluster_adata">[docs]</a>    <span class="k">def</span> <span class="nf">_save_cluster_adata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save each group into separate adata, this way reduce the memory during parallel&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_pairs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">use_label</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_pairs</span><span class="p">:</span>
@@ -1692,6 +1750,7 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="PairwiseDMG._pairwise_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.PairwiseDMG._pairwise_dmg">[docs]</a>    <span class="k">def</span> <span class="nf">_pairwise_dmg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;pairwise DMG runner, result save to self.dmg_table&quot;&quot;&quot;</span>
         <span class="n">dmg_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dmg_dir</span><span class="p">)</span>
         <span class="n">dmg_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -1712,7 +1771,7 @@
             <span class="n">futures</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">cluster_l</span><span class="p">,</span> <span class="n">cluster_r</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
                 <span class="n">f</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
-                    <span class="n">single_pairwise_dmg</span><span class="p">,</span>
+                    <span class="n">_single_pairwise_dmg</span><span class="p">,</span>
                     <span class="n">cluster_l</span><span class="o">=</span><span class="n">cluster_l</span><span class="p">,</span>
                     <span class="n">cluster_r</span><span class="o">=</span><span class="n">cluster_r</span><span class="p">,</span>
                     <span class="n">top_n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">top_n</span><span class="p">,</span>
@@ -1729,20 +1788,37 @@
                     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">n_pairs</span><span class="si">}</span><span class="s2"> finished&quot;</span><span class="p">)</span>
 
         <span class="c1"># summarize</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">pd</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">dmg_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.hdf&quot;</span><span class="p">)))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dmg_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">pd</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">dmg_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.hdf&quot;</span><span class="p">)))</span>
+        <span class="k">return</span></div>
 
 <div class="viewcode-block" id="PairwiseDMG._cleanup"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.PairwiseDMG._cleanup">[docs]</a>    <span class="k">def</span> <span class="nf">_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete group adata files&quot;&quot;&quot;</span>
         <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
             <span class="p">[</span><span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-rf&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_adata_dir</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dmg_dir</span><span class="p">)],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span></div>
         <span class="p">)</span>
 
 <div class="viewcode-block" id="PairwiseDMG.aggregate_pairwise_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.PairwiseDMG.aggregate_pairwise_dmg">[docs]</a>    <span class="k">def</span> <span class="nf">aggregate_pairwise_dmg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adata</span><span class="p">,</span> <span class="n">groupby</span><span class="p">,</span> <span class="n">obsm</span><span class="o">=</span><span class="s2">&quot;X_pca&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Aggregate pairwise DMG results for each cluster, rank DMG for the cluster by the sum of</span>
+<span class="sd">        AUROC * cluster_pair_similarity</span>
+<span class="sd">        This way, the DMGs having large AUROC between similar clusters get more weights</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        adata :</span>
+<span class="sd">        groupby :</span>
+<span class="sd">        obsm :</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># using the cluster centroids in PC space to calculate dendrogram</span>
         <span class="n">pc_matrix</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="n">obsm</span><span class="p">]</span>
         <span class="n">pc_center</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pc_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">groupby</span><span class="p">])</span>
-            <span class="o">.</span><span class="n">median</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">groupby</span><span class="p">])</span>
+                <span class="o">.</span><span class="n">median</span><span class="p">()</span>
         <span class="p">)</span>
         <span class="c1"># calculate cluster pairwise similarity</span>
         <span class="n">cluster_dist</span> <span class="o">=</span> <span class="n">pairwise_distances</span><span class="p">(</span><span class="n">pc_center</span><span class="p">)</span>
@@ -1769,17 +1845,18 @@
         <span class="k">return</span> <span class="n">cluster_dmgs</span></div></div>
 
 
-<div class="viewcode-block" id="single_ovr_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg.single_ovr_dmg">[docs]</a><span class="k">def</span> <span class="nf">single_ovr_dmg</span><span class="p">(</span>
-    <span class="n">cell_label</span><span class="p">,</span>
-    <span class="n">mcds</span><span class="p">,</span>
-    <span class="n">obs_dim</span><span class="p">,</span>
-    <span class="n">var_dim</span><span class="p">,</span>
-    <span class="n">mc_type</span><span class="p">,</span>
-    <span class="n">top_n</span><span class="p">,</span>
-    <span class="n">adj_p_cutoff</span><span class="p">,</span>
-    <span class="n">fc_cutoff</span><span class="p">,</span>
-    <span class="n">auroc_cutoff</span><span class="p">,</span>
+<div class="viewcode-block" id="_single_ovr_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg._single_ovr_dmg">[docs]</a><span class="k">def</span> <span class="nf">_single_ovr_dmg</span><span class="p">(</span>
+        <span class="n">cell_label</span><span class="p">,</span>
+        <span class="n">mcds</span><span class="p">,</span>
+        <span class="n">obs_dim</span><span class="p">,</span>
+        <span class="n">var_dim</span><span class="p">,</span>
+        <span class="n">mc_type</span><span class="p">,</span>
+        <span class="n">top_n</span><span class="p">,</span>
+        <span class="n">adj_p_cutoff</span><span class="p">,</span>
+        <span class="n">fc_cutoff</span><span class="p">,</span>
+        <span class="n">auroc_cutoff</span><span class="p">,</span>
 <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;single one vs rest DMG runner&quot;&quot;&quot;</span>
     <span class="c1"># get adata</span>
     <span class="n">cell_judge</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">obs_dim</span><span class="p">)</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">cell_label</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
     <span class="n">adata</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span><span class="n">obs_dim</span><span class="p">:</span> <span class="n">cell_judge</span><span class="p">})</span><span class="o">.</span><span class="n">get_adata</span><span class="p">(</span>
@@ -1815,7 +1892,7 @@
     <span class="c1"># filter</span>
     <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="p">[</span>
         <span class="p">(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;pvals_adj&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">adj_p_cutoff</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dmg_result</span><span class="p">[</span><span class="s2">&quot;fc&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">fc_cutoff</span><span class="p">)</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">dmg_result</span> <span class="o">=</span> <span class="n">dmg_result</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
 
     <span class="c1"># add AUROC and filter again</span>
@@ -1831,21 +1908,66 @@
     <span class="k">return</span> <span class="n">dmg_result</span></div>
 
 
+<div class="viewcode-block" id="_one_vs_rest_dmr_runner"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg._one_vs_rest_dmr_runner">[docs]</a><span class="k">def</span> <span class="nf">_one_vs_rest_dmr_runner</span><span class="p">(</span>
+        <span class="n">cell_meta</span><span class="p">,</span>
+        <span class="n">group</span><span class="p">,</span>
+        <span class="n">cluster</span><span class="p">,</span>
+        <span class="n">max_cluster_cells</span><span class="p">,</span>
+        <span class="n">max_other_fold</span><span class="p">,</span>
+        <span class="n">mcds_paths</span><span class="p">,</span>
+        <span class="n">obs_dim</span><span class="p">,</span>
+        <span class="n">var_dim</span><span class="p">,</span>
+        <span class="n">mc_type</span><span class="p">,</span>
+        <span class="n">top_n</span><span class="p">,</span>
+        <span class="n">adj_p_cutoff</span><span class="p">,</span>
+        <span class="n">fc_cutoff</span><span class="p">,</span>
+        <span class="n">auroc_cutoff</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;one vs rest DMG runner&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating cluster </span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s2"> DMGs.&quot;</span><span class="p">)</span>
+
+    <span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mcds_paths</span><span class="p">)</span>
+    <span class="c1"># determine cells to use</span>
+    <span class="n">cluster_judge</span> <span class="o">=</span> <span class="n">cell_meta</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">==</span> <span class="n">cluster</span>
+    <span class="n">in_cells</span> <span class="o">=</span> <span class="n">cluster_judge</span><span class="p">[</span><span class="n">cluster_judge</span><span class="p">]</span>
+    <span class="n">out_cells</span> <span class="o">=</span> <span class="n">cluster_judge</span><span class="p">[</span><span class="o">~</span><span class="n">cluster_judge</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">in_cells</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="n">max_cluster_cells</span><span class="p">:</span>
+        <span class="n">in_cells</span> <span class="o">=</span> <span class="n">in_cells</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">max_cluster_cells</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">max_other_cells</span> <span class="o">=</span> <span class="n">in_cells</span><span class="o">.</span><span class="n">size</span> <span class="o">*</span> <span class="n">max_other_fold</span>
+    <span class="k">if</span> <span class="n">out_cells</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="n">max_other_cells</span><span class="p">:</span>
+        <span class="n">out_cells</span> <span class="o">=</span> <span class="n">out_cells</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">max_other_cells</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">cell_label</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">in_cells</span><span class="p">,</span> <span class="n">out_cells</span><span class="p">])</span>
+    <span class="n">dmg_df</span> <span class="o">=</span> <span class="n">_single_ovr_dmg</span><span class="p">(</span>
+        <span class="n">cell_label</span><span class="o">=</span><span class="n">cell_label</span><span class="p">,</span>
+        <span class="n">mcds</span><span class="o">=</span><span class="n">mcds</span><span class="p">,</span>
+        <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
+        <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
+        <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
+        <span class="n">top_n</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span>
+        <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="n">adj_p_cutoff</span><span class="p">,</span>
+        <span class="n">fc_cutoff</span><span class="o">=</span><span class="n">fc_cutoff</span><span class="p">,</span>
+        <span class="n">auroc_cutoff</span><span class="o">=</span><span class="n">auroc_cutoff</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">dmg_df</span></div>
+
+
 <div class="viewcode-block" id="one_vs_rest_dmg"><a class="viewcode-back" href="../../../api/ALLCools/clustering/index.html#ALLCools.clustering.dmg.one_vs_rest_dmg">[docs]</a><span class="k">def</span> <span class="nf">one_vs_rest_dmg</span><span class="p">(</span>
-    <span class="n">cell_meta</span><span class="p">,</span>
-    <span class="n">group</span><span class="p">,</span>
-    <span class="n">mcds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">mcds_paths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span>
-    <span class="n">var_dim</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span>
-    <span class="n">mc_type</span><span class="o">=</span><span class="s2">&quot;CHN&quot;</span><span class="p">,</span>
-    <span class="n">top_n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-    <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
-    <span class="n">fc_cutoff</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-    <span class="n">auroc_cutoff</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-    <span class="n">max_cluster_cells</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-    <span class="n">max_other_fold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-    <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">cell_meta</span><span class="p">,</span>
+        <span class="n">group</span><span class="p">,</span>
+        <span class="n">mcds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mcds_paths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span>
+        <span class="n">var_dim</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span>
+        <span class="n">mc_type</span><span class="o">=</span><span class="s2">&quot;CHN&quot;</span><span class="p">,</span>
+        <span class="n">top_n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">fc_cutoff</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">auroc_cutoff</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">max_cluster_cells</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+        <span class="n">max_other_fold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculating cluster marker genes using one-vs-rest strategy.</span>
@@ -1853,33 +1975,45 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    cell_meta</span>
+<span class="sd">        cell metadata containing cluster labels</span>
 <span class="sd">    group</span>
+<span class="sd">        the name of the cluster label column</span>
 <span class="sd">    mcds</span>
+<span class="sd">        cell-by-gene MCDS object for calculating DMG. Provide either mcds_paths or mcds.</span>
 <span class="sd">    mcds_paths</span>
+<span class="sd">        cell-by-gene MCDS paths for calculating DMG. Provide either mcds_paths or mcds.</span>
 <span class="sd">    obs_dim</span>
+<span class="sd">        dimension name of the cells</span>
 <span class="sd">    var_dim</span>
+<span class="sd">        dimension name of the features</span>
 <span class="sd">    mc_type</span>
+<span class="sd">        value to select methylation type in the mc_type dimension</span>
 <span class="sd">    top_n</span>
+<span class="sd">        report top N DMGs</span>
 <span class="sd">    adj_p_cutoff</span>
+<span class="sd">        adjusted P value cutoff to report significant DMG</span>
 <span class="sd">    fc_cutoff</span>
+<span class="sd">        mC fraction fold change cutoff to report significant DMG</span>
 <span class="sd">    auroc_cutoff</span>
+<span class="sd">        AUROC cutoff to report significant DMG</span>
 <span class="sd">    max_cluster_cells</span>
+<span class="sd">        The maximum number of cells from a group, downsample large group to this number</span>
 <span class="sd">    max_other_fold</span>
-
+<span class="sd">        The fold of other cell numbers comparing</span>
+<span class="sd">    cpu :</span>
+<span class="sd">            number of cpus</span>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-
+<span class="sd">    dmg_table</span>
+<span class="sd">        pandas Dataframe of the one-vs-rest DMGs</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">tmpfn</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">mcds_paths</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">tmp_created</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">elif</span> <span class="n">mcds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">tempfile</span>
-        <span class="kn">import</span> <span class="nn">os</span>
-
-        <span class="n">tmpf</span><span class="p">,</span> <span class="n">tmpfn</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.tmp&quot;</span><span class="p">)</span>
-        <span class="n">mcds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">tmpfn</span><span class="p">)</span>
-        <span class="n">mcds_paths</span> <span class="o">=</span> <span class="n">tmpfn</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="s1">&#39;tmp_one_vs_rest.mcds&#39;</span>
+        <span class="n">mcds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+        <span class="n">mcds_paths</span> <span class="o">=</span> <span class="n">tmp</span>
         <span class="n">tmp_created</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Need to provide either &quot;mcds_path&quot; or &quot;mcds&quot;.&#39;</span><span class="p">)</span>
@@ -1916,53 +2050,10 @@
     <span class="n">dmg_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dmg_table</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">tmp_created</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">tmpfn</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">os</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">dmg_table</span></div>
-
-
-<div class="viewcode-block" id="_one_vs_rest_dmr_runner"><a class="viewcode-back" href="../../../api/ALLCools/clustering/dmg/index.html#ALLCools.clustering.dmg._one_vs_rest_dmr_runner">[docs]</a><span class="k">def</span> <span class="nf">_one_vs_rest_dmr_runner</span><span class="p">(</span>
-    <span class="n">cell_meta</span><span class="p">,</span>
-    <span class="n">group</span><span class="p">,</span>
-    <span class="n">cluster</span><span class="p">,</span>
-    <span class="n">max_cluster_cells</span><span class="p">,</span>
-    <span class="n">max_other_fold</span><span class="p">,</span>
-    <span class="n">mcds_paths</span><span class="p">,</span>
-    <span class="n">obs_dim</span><span class="p">,</span>
-    <span class="n">var_dim</span><span class="p">,</span>
-    <span class="n">mc_type</span><span class="p">,</span>
-    <span class="n">top_n</span><span class="p">,</span>
-    <span class="n">adj_p_cutoff</span><span class="p">,</span>
-    <span class="n">fc_cutoff</span><span class="p">,</span>
-    <span class="n">auroc_cutoff</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating cluster </span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s2"> DMGs.&quot;</span><span class="p">)</span>
-
-    <span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mcds_paths</span><span class="p">)</span>
-    <span class="c1"># determine cells to use</span>
-    <span class="n">cluster_judge</span> <span class="o">=</span> <span class="n">cell_meta</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">==</span> <span class="n">cluster</span>
-    <span class="n">in_cells</span> <span class="o">=</span> <span class="n">cluster_judge</span><span class="p">[</span><span class="n">cluster_judge</span><span class="p">]</span>
-    <span class="n">out_cells</span> <span class="o">=</span> <span class="n">cluster_judge</span><span class="p">[</span><span class="o">~</span><span class="n">cluster_judge</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">in_cells</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="n">max_cluster_cells</span><span class="p">:</span>
-        <span class="n">in_cells</span> <span class="o">=</span> <span class="n">in_cells</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">max_cluster_cells</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-    <span class="n">max_other_cells</span> <span class="o">=</span> <span class="n">in_cells</span><span class="o">.</span><span class="n">size</span> <span class="o">*</span> <span class="n">max_other_fold</span>
-    <span class="k">if</span> <span class="n">out_cells</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="n">max_other_cells</span><span class="p">:</span>
-        <span class="n">out_cells</span> <span class="o">=</span> <span class="n">out_cells</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">max_other_cells</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-    <span class="n">cell_label</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">in_cells</span><span class="p">,</span> <span class="n">out_cells</span><span class="p">])</span>
-    <span class="n">dmg_df</span> <span class="o">=</span> <span class="n">single_ovr_dmg</span><span class="p">(</span>
-        <span class="n">cell_label</span><span class="o">=</span><span class="n">cell_label</span><span class="p">,</span>
-        <span class="n">mcds</span><span class="o">=</span><span class="n">mcds</span><span class="p">,</span>
-        <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
-        <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
-        <span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">,</span>
-        <span class="n">top_n</span><span class="o">=</span><span class="n">top_n</span><span class="p">,</span>
-        <span class="n">adj_p_cutoff</span><span class="o">=</span><span class="n">adj_p_cutoff</span><span class="p">,</span>
-        <span class="n">fc_cutoff</span><span class="o">=</span><span class="n">fc_cutoff</span><span class="p">,</span>
-        <span class="n">auroc_cutoff</span><span class="o">=</span><span class="n">auroc_cutoff</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">dmg_df</span></div>
 </pre></div>
 
               </div>

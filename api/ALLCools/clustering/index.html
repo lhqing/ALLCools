@@ -1264,6 +1264,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -2148,65 +2157,93 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.compute_neighbors">
 <span class="sig-name descname"><span class="pre">compute_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.compute_neighbors" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Calculate KNN graph</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.multi_leiden_clustering">
 <span class="sig-name descname"><span class="pre">multi_leiden_clustering</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.multi_leiden_clustering" title="Permalink to this definition">¶</a></dt>
-<dd><p>Modified from scanpy</p>
+<dd><p>Modified from scanpy, perform Leiden clustering multiple times with different random states</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering._summarize_multi_leiden">
 <span class="sig-name descname"><span class="pre">_summarize_multi_leiden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering._summarize_multi_leiden" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Summarize the multi_leiden results,
+generate a raw cluster version simply based on the hamming distance
+between cells and split cluster with cutoff (consensus_rate)</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering._create_model">
 <span class="sig-name descname"><span class="pre">_create_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering._create_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Init default model</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.supervise_learning">
 <span class="sig-name descname"><span class="pre">supervise_learning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.supervise_learning" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Perform supervised learning and cluster merge process</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.final_evaluation">
 <span class="sig-name descname"><span class="pre">final_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.final_evaluation" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Final evaluation of the model and assign outliers</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.save">
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.save" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Save the model</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.plot_leiden_cases">
 <span class="sig-name descname"><span class="pre">plot_leiden_cases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_n_cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.plot_leiden_cases" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Show some leiden runs with biggest different as measured by ARI</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.plot_before_after">
 <span class="sig-name descname"><span class="pre">plot_before_after</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.plot_before_after" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Plot the raw clusters from multi-leiden and final clusters after merge</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.plot_steps">
 <span class="sig-name descname"><span class="pre">plot_steps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.plot_steps" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Plot the supervised learning and merge steps</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.plot_merge_process">
 <span class="sig-name descname"><span class="pre">plot_merge_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.plot_merge_process" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Plot the change of accuracy during merge</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ALLCools.clustering.select_confusion_pairs">
 <span class="sig-name descname"><span class="pre">select_confusion_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">true_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratio_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/ALLCools/clustering/ConsensusClustering.html#select_confusion_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.select_confusion_pairs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Select cluster pairs that are confusing (ratio_cutoff) between true and predicted labels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>true_label</strong> (<em>true cell labels</em>) – </p></li>
+<li><p><strong>predicted_label</strong> (<em>predicted cell labels</em>) – </p></li>
+<li><p><strong>ratio_cutoff</strong> (<em>ratio of clusters cutoff to define confusion</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of cluster pair tuples</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>confused_pairs</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ALLCools.clustering.tsne">
@@ -2312,14 +2349,21 @@ later PCs only capturing random noise will have larger p-values. An idea from <s
 <dl class="py function">
 <dt class="sig sig-object py" id="ALLCools.clustering.get_pc_centers">
 <span class="sig-name descname"><span class="pre">get_pc_centers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://anndata.readthedocs.io/en/stable/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.7.7.dev1+g33006dc)"><span class="pre">anndata.AnnData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlier_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obsm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X_pca'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/ALLCools/clustering/balanced_pca.html#get_pc_centers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.get_pc_centers" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Get the cluster centroids of the PC matrix</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>adata</strong> – </p></li>
-<li><p><strong>group</strong> – </p></li>
-<li><p><strong>outlier_label</strong> – </p></li>
-<li><p><strong>obsm</strong> – </p></li>
+<li><p><strong>adata</strong> – adata with cluster labels in obs and PC in obsm</p></li>
+<li><p><strong>group</strong> – the name of cluster labels in adata.obs</p></li>
+<li><p><strong>outlier_label</strong> – if there are outlier labels in obs, will exclude outliers before calculating centroids.</p></li>
+<li><p><strong>obsm</strong> – the key of PC matrix in obsm</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dataframe for cluster centroids by PC</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pc_center</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2330,27 +2374,80 @@ later PCs only capturing random noise will have larger p-values. An idea from <s
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ReproduciblePCA.mcds_to_adata">
 <span class="sig-name descname"><span class="pre">mcds_to_adata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mcds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ReproduciblePCA.mcds_to_adata" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get adata from MCDS with only selected features</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mcds</strong> (<em>Input raw count MCDS object</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Adata with per-cell normalized mC fraction and selected features</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adata</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ReproduciblePCA.scale">
 <span class="sig-name descname"><span class="pre">scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ReproduciblePCA.scale" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Perform {func}`log_scale &lt;ALLCools.clustering.balanced_pca.log_scale&gt;` with fitted scaler</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>adata</strong> – Adata with per-cell normalized mC fraction and selected features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adata.X is transformed in place</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ReproduciblePCA.pc_transform">
 <span class="sig-name descname"><span class="pre">pc_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ReproduciblePCA.pc_transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>calculate the PC from adata.X and PC loading, store PCs in adata.obsm[“X_pca”] and
+loadings in adata.varm[“PCs”]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>adata</strong> – Adata with log_scale transformed mC fraction and selected features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>PC information stored in adata.obsm and varm</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ReproduciblePCA.mcds_to_adata_with_pc">
 <span class="sig-name descname"><span class="pre">mcds_to_adata_with_pc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mcds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ReproduciblePCA.mcds_to_adata_with_pc" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>From raw count MCDS to adata object with PCs using fitted scaler and PC loadings.
+Steps include select features, calculate per-cell normalized mC fractions,
+log_scale transform the data with fitted scaler, and finally add PC matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mcds</strong> – Raw count MCDS</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>anndata object with per-cell normalized, log scale transformed matrix in .X and PCs in
+adata.obsm[“X_pca”] and PC loadings in adata.varm[“PCs”]. The scale and PC are done with fitted model.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adata</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ReproduciblePCA.dump">
 <span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.ReproduciblePCA.dump" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Save the ReproduciblePCA to path</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -2425,28 +2522,58 @@ later PCs only capturing random noise will have larger p-values. An idea from <s
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PairwiseDMG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_cell_per_group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adj_p_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_rate_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auroc_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/ALLCools/clustering/dmg.html#PairwiseDMG"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.PairwiseDMG" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.PairwiseDMG.fit_predict">
-<span class="sig-name descname"><span class="pre">fit_predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cell'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gene'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cleanup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_pairs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.PairwiseDMG.fit_predict" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">fit_predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cell'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gene'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cleanup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><span class="pre">tuple</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.PairwiseDMG.fit_predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>provide data and perform the pairwise DMG</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – 2D cell-by-feature xarray.DataArray</p></li>
+<li><p><strong>groups</strong> – cluster labels</p></li>
+<li><p><strong>obs_dim</strong> – name of the cell dim</p></li>
+<li><p><strong>var_dim</strong> – name of the feature dim</p></li>
+<li><p><strong>outlier</strong> – name of the outlier group, if provided, will ignore this label</p></li>
+<li><p><strong>cleanup</strong> – Whether to delete the group adata file</p></li>
+<li><p><strong>selected_pairs</strong> – By default, pairwise DMG will calculate all possible pairs between all the groups, which might be very
+time consuming if the group number is large. With this parameter, you may provide a list of cluster pairs</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.PairwiseDMG._save_cluster_adata">
 <span class="sig-name descname"><span class="pre">_save_cluster_adata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.PairwiseDMG._save_cluster_adata" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Save each group into separate adata, this way reduce the memory during parallel</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.PairwiseDMG._pairwise_dmg">
 <span class="sig-name descname"><span class="pre">_pairwise_dmg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.PairwiseDMG._pairwise_dmg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>pairwise DMG runner, result save to self.dmg_table</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.PairwiseDMG._cleanup">
 <span class="sig-name descname"><span class="pre">_cleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.PairwiseDMG._cleanup" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Delete group adata files</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.PairwiseDMG.aggregate_pairwise_dmg">
 <span class="sig-name descname"><span class="pre">aggregate_pairwise_dmg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupby</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obsm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X_pca'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ALLCools.clustering.PairwiseDMG.aggregate_pairwise_dmg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Aggregate pairwise DMG results for each cluster, rank DMG for the cluster by the sum of
+AUROC * cluster_pair_similarity
+This way, the DMGs having large AUROC between similar clusters get more weights</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – </p></li>
+<li><p><strong>groupby</strong> – </p></li>
+<li><p><strong>obsm</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -2457,20 +2584,27 @@ later PCs only capturing random noise will have larger p-values. An idea from <s
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cell_meta</strong> – </p></li>
-<li><p><strong>group</strong> – </p></li>
-<li><p><strong>mcds</strong> – </p></li>
-<li><p><strong>mcds_paths</strong> – </p></li>
-<li><p><strong>obs_dim</strong> – </p></li>
-<li><p><strong>var_dim</strong> – </p></li>
-<li><p><strong>mc_type</strong> – </p></li>
-<li><p><strong>top_n</strong> – </p></li>
-<li><p><strong>adj_p_cutoff</strong> – </p></li>
-<li><p><strong>fc_cutoff</strong> – </p></li>
-<li><p><strong>auroc_cutoff</strong> – </p></li>
-<li><p><strong>max_cluster_cells</strong> – </p></li>
-<li><p><strong>max_other_fold</strong> – </p></li>
+<li><p><strong>cell_meta</strong> – cell metadata containing cluster labels</p></li>
+<li><p><strong>group</strong> – the name of the cluster label column</p></li>
+<li><p><strong>mcds</strong> – cell-by-gene MCDS object for calculating DMG. Provide either mcds_paths or mcds.</p></li>
+<li><p><strong>mcds_paths</strong> – cell-by-gene MCDS paths for calculating DMG. Provide either mcds_paths or mcds.</p></li>
+<li><p><strong>obs_dim</strong> – dimension name of the cells</p></li>
+<li><p><strong>var_dim</strong> – dimension name of the features</p></li>
+<li><p><strong>mc_type</strong> – value to select methylation type in the mc_type dimension</p></li>
+<li><p><strong>top_n</strong> – report top N DMGs</p></li>
+<li><p><strong>adj_p_cutoff</strong> – adjusted P value cutoff to report significant DMG</p></li>
+<li><p><strong>fc_cutoff</strong> – mC fraction fold change cutoff to report significant DMG</p></li>
+<li><p><strong>auroc_cutoff</strong> – AUROC cutoff to report significant DMG</p></li>
+<li><p><strong>max_cluster_cells</strong> – The maximum number of cells from a group, downsample large group to this number</p></li>
+<li><p><strong>max_other_fold</strong> – The fold of other cell numbers comparing</p></li>
+<li><p><strong>cpu</strong> – number of cpus</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>pandas Dataframe of the one-vs-rest DMGs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dmg_table</p>
 </dd>
 </dl>
 </dd></dl>

@@ -1264,6 +1264,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1640,7 +1649,7 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="analysis-steps">
 <h1>Analysis Steps<a class="headerlink" href="#analysis-steps" title="Permalink to this headline">¶</a></h1>
-<p>ALLCools separates the analysis into two parts:</p>
+<p>ALLCools covers two parts of analysis:</p>
 <ol class="simple">
 <li><p>Cellular analysis, including</p>
 <ul class="simple">
@@ -1668,7 +1677,7 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="../cell_level/basic/intro_basic_clustering.html"><span class="doc std std-doc">Basic walk-through of the clustering analysis</span></a>.</p></li>
 <li><p><a class="reference internal" href="../cell_level/step_by_step/intro_step_by_step_clustering.html"><span class="doc std std-doc">Step-by-step description of the clustering analysis</span></a>.</p></li>
-<li><p><a class="reference internal" href="../cell_level/dmg/intro_dmg.html"><span class="doc std std-doc">Identification of cluster Differentially Methylated Genes</span></a>.</p></li>
+<li><p><a class="reference internal" href="../cell_level/dmg/intro_dmg.html"><span class="doc std std-doc">Identification of  Differentially Methylated Genes clusters</span></a>.</p></li>
 <li><p><a class="reference internal" href="../cell_level/integration/intro_integration.html"><span class="doc std std-doc">Cell-level data integration</span></a>.</p></li>
 <li><p><a class="reference internal" href="../cell_level/doublets/intro_doublets.html"><span class="doc std std-doc">Potential cell doublets identification</span></a>.</p></li>
 </ul>
@@ -1676,10 +1685,10 @@
 <div class="section" id="input">
 <h3>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h3>
 <ol class="simple">
-<li><p>Cell metadata contains quality metrics (Defined by user, used in basic cell filtering).</p></li>
+<li><p>Cell metadata contains quality metrics (defined by user; used in basic cell filtering).</p></li>
 <li><p>Cell-by-feature raw count matrix (MCDS files) generated from single-cell ALLC files via <a class="reference internal" href="../command_line/allcools_mcds.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">mcds</span></code></span></a> for large genomic regions (e.g., 100Kb bin) and gene body counts.</p></li>
 <li><p>(AND/OR) Cell-by-feature hypo-methylation score matrix (MCAD files) generated from single-cell ALLC files via
-<a class="reference internal" href="../command_line/allcools_mcad.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">mcad</span></code></span></a></p></li>
+<a class="reference internal" href="../command_line/allcools_mcad.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">mcad</span></code></span></a>.</p></li>
 </ol>
 </div>
 <div class="section" id="two-clustering-strategies-for-different-tissue-types">
@@ -1687,14 +1696,28 @@
 <div class="section" id="clustering-using-raw-counts-from-100kb-genomic-bins">
 <h4>Clustering using raw counts from 100Kb genomic bins<a class="headerlink" href="#clustering-using-raw-counts-from-100kb-genomic-bins" title="Permalink to this headline">¶</a></h4>
 <p>In this strategy, we start from the cell-by-100kb-bin raw count matrix (<a class="reference internal" href="input_files.html#mcds-fig"><span class="std std-ref">MCDS</span></a>) for clustering analysis.
-A quick demo is <a class="reference internal" href="../cell_level/basic/mch_mcg_100k_basic.html"><span class="doc std std-doc">here</span></a>, the step-by-step descriptions can be found
+<a class="reference internal" href="../cell_level/basic/mch_mcg_100k_basic.html"><span class="doc std std-doc">Here</span></a> is a quick demo and its step-by-step descriptions can be found
 <a class="reference internal" href="../cell_level/step_by_step/100kb/intro_100kb.html"><span class="doc std std-doc">here</span></a>.</p>
-<p>In mouse brain datasets, we found using 100Kb genomic bins provides good clustering ability and is also computationally efficient due to the relatively small number of features (27K features in mm10, v.s. 540K features using 5Kb bins) <span id="id1">[<a class="reference internal" href="../project_info/citation.html#id2">Liu <em>et al.</em>, 2021</a>]</span>. We also tested the effect of different feature sizes in clustering adult mouse brain single-cell methylomes, and found the size of features do not have major impact on the clustering results  <span id="id2">[<a class="reference internal" href="../project_info/citation.html#id2">Liu <em>et al.</em>, 2021</a>]</span>. However, this conclusion may not apply to all tissues, as the scale of methylation diversity might be different in different tissue or cell types. We suggest using the 100Kb bin size as a start point, and test other bin sizes when necessary. The <a class="reference internal" href="../command_line/allcools_mcds.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">mcds</span></code></span></a> does provide the flexibility to generate feature matrix at any bin size or through user-defined region sets.</p>
+<p>We found <span id="id1">[<a class="reference internal" href="../project_info/citation.html#id2">Liu <em>et al.</em>, 2021</a>]</span> using 100Kb genomic bins provides good clustering ability and is also computationally
+efficient due to the relatively small number of features (27K features in mm10, v.s. 540K features using 5Kb bins).
+We also tested the effect of different feature sizes when clustering adult mouse brain single-cell methylomes and found that feature sizes do not have a major impact on the clustering results  <span id="id2">[<a class="reference internal" href="../project_info/citation.html#id2">Liu <em>et al.</em>, 2021</a>]</span>.
+However, this conclusion may not apply to all tissues, as the scale of methylation diversity might be different in
+different tissues or cell types. We suggest using the 100Kb bin size as a starting point and testing other bin sizes when
+necessary. That being said, the <a class="reference internal" href="../command_line/allcools_mcds.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">mcds</span></code></span></a> does provide the flexibility to
+generate feature matrix at any bin size or through user-defined region sets.</p>
 </div>
 <div class="section" id="clustering-using-hypo-methylation-score-from-5kb-genomic-bins">
 <h4>Clustering using hypo-methylation score from 5Kb genomic bins<a class="headerlink" href="#clustering-using-hypo-methylation-score-from-5kb-genomic-bins" title="Permalink to this headline">¶</a></h4>
-<p>We also noticed that for some non-brain tissues (pituitary, PBMC etc.), the 100Kb bin clustering strategy had a hard time identifying some known cell types. One possible explanation is that the methylation diversity of these cell types mainly occur at small discontinuous regulatory regions (DMRs) while the large 100Kb bins can only capture DMV or large-hypo DMR level diversities. To solve this problem, we developed another strategy by using <a class="reference internal" href="../cell_level/step_by_step/5kb/intro_5kb.html"><span class="doc std std-doc">algorithms adapted from snATAC-seq</span></a> on small genomic bins (5Kb by default).</p>
-<p>Specifically, this strategy start from cell-by-5kb-bin hypo-methylation score matrix (<a class="reference internal" href="input_files.html#mcad-fig"><span class="std std-ref">MCAD</span></a>) for clustering analysis. A quick demo is <a class="reference internal" href="../cell_level/basic/mcg_5kb_basic.html"><span class="doc std std-doc">here</span></a>, the step-by-step descriptions can be found <a class="reference internal" href="../cell_level/step_by_step/5kb/intro_5kb.html"><span class="doc std std-doc">here</span></a>.</p>
+<p>We also noticed that for some non-brain tissues (pituitary, PBMC etc.), the
+100Kb bin clustering strategy had a hard time identifying some known cell types. One possible explanation is that the
+methylation diversity of these cell types mainly occur at small discontinuous regulatory regions (DMRs) while the large
+100Kb bins can only capture DMG or large-hypo DMR level diversities.
+To solve this problem, we developed another strategy by using
+<a class="reference internal" href="../cell_level/step_by_step/5kb/intro_5kb.html"><span class="doc std std-doc">algorithms adapted from snATAC-seq</span></a>
+on small genomic bins (5Kb by default).</p>
+<p>Specifically, this strategy starts from a cell-by-5kb-bin hypo-methylation score matrix (<a class="reference internal" href="input_files.html#mcad-fig"><span class="std std-ref">MCAD</span></a>) for clustering
+analysis. <a class="reference internal" href="../cell_level/basic/mcg_5kb_basic.html"><span class="doc std std-doc">Here</span></a> is a quick demo and its step-by-step descriptions can be found
+<a class="reference internal" href="../cell_level/step_by_step/5kb/intro_5kb.html"><span class="doc std std-doc">here</span></a>.</p>
 </div>
 </div>
 </div>
@@ -1713,12 +1736,15 @@ A quick demo is <a class="reference internal" href="../cell_level/basic/mch_mcg_
 </div>
 <div class="section" id="pseudo-bulk-files">
 <h3>Pseudo-bulk Files<a class="headerlink" href="#pseudo-bulk-files" title="Permalink to this headline">¶</a></h3>
-<p>Starting from <strong>single-cell ALLC files</strong> and <strong>cluster labels</strong> from the cell-level analysis, there are three steps to prepare cluster-level data files.</p>
+<p>Starting from <strong>single-cell ALLC files</strong> and <strong>cluster labels</strong> from the cell-level analysis, there are three steps for preparing cluster-level data files.</p>
 <ol class="simple">
-<li><p>We create pseudo-bulk ALLC files by merging from single-cell ALLC files via <a class="reference internal" href="../command_line/allcools_merge.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">merge</span></code></span></a>, see <a class="reference internal" href="../cluster_level/RegionDS/intro.html"><span class="doc std std-doc">Post-clustering Genomic Analysis</span></a> for details.</p></li>
-<li><p>We then perform <a class="reference internal" href="../cluster_level/RegionDS/01a.call_dmr.html"><span class="doc std std-doc">DMR calling to identify DMRs</span></a> or use existing region sets (such as DMRs called by other programs) as our regions of interests. These regions will be the focus of genomic analysis.</p></li>
-<li><p>Using the pseudo-bulk methylomes and other datasets (genome features, other epigenomic and transcriptomic datasets), we can annotate DMRs with multiple kinds of information, and store the region-by-feature information in
-<a class="reference internal" href="../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.region_ds.RegionDS" title="ALLCools.mcds.region_ds.RegionDS"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegionDS</span></code></a>, which is the data structure for genomic analysis (<a class="reference internal" href="input_files.html#design-principle"><span class="std std-ref">RegionDS</span></a>).</p></li>
+<li><p>We create pseudo-bulk ALLC files by merging from single-cell ALLC files via
+<a class="reference internal" href="../command_line/allcools_merge.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">allcools</span> <span class="pre">merge</span></code></span></a>.</p></li>
+<li><p>We then use proper algorithms (<a class="reference internal" href="../discuss/dmr_benchmark.html"><span class="doc std std-doc">see discussion</span></a>) to identify DMRs.
+The expected results of this step are a DMR region list and associated statistics.</p></li>
+<li><p>Using the DMR regions and additional datasets, we can annotate DMRs with multiple kinds of information and store the
+DMR-by-feature information in anndata.AnnData format, where the <code class="docutils literal notranslate"><span class="pre">obs</span></code> dimension are the DMRs, the <code class="docutils literal notranslate"><span class="pre">var</span></code> dimension are
+all kinds of features.</p></li>
 </ol>
 <p>The data model is illustrated in the following figure:</p>
 <div class="figure align-default" id="cluster-level-analysis-fig">

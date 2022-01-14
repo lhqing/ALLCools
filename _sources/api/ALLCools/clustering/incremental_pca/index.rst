@@ -9,6 +9,8 @@ Module Contents
 
 .. py:function:: _normalize_per_cell(matrix, cell_sum)
 
+   Normalize matrix row sum to to cell_sum
+
 
 .. py:class:: IncrementalPCA(n_components=100, sparse=False, normalize_per_cell=True, log1p=True, scale=True, **kwargs)
 

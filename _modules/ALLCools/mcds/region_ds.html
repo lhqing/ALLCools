@@ -1255,6 +1255,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1568,16 +1577,16 @@
 
 
 <div class="viewcode-block" id="_annotate_by_bigwigs_worker"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds._annotate_by_bigwigs_worker">[docs]</a><span class="k">def</span> <span class="nf">_annotate_by_bigwigs_worker</span><span class="p">(</span>
-    <span class="n">dataset_path</span><span class="p">,</span>
-    <span class="n">region_dim</span><span class="p">,</span>
-    <span class="n">chrom_size_path</span><span class="p">,</span>
-    <span class="n">track_paths</span><span class="p">,</span>
-    <span class="n">output_path</span><span class="p">,</span>
-    <span class="n">dim</span><span class="p">,</span>
-    <span class="n">slop</span><span class="p">,</span>
-    <span class="n">value_type</span><span class="p">,</span>
-    <span class="n">dtype</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="n">dataset_path</span><span class="p">,</span>
+        <span class="n">region_dim</span><span class="p">,</span>
+        <span class="n">chrom_size_path</span><span class="p">,</span>
+        <span class="n">track_paths</span><span class="p">,</span>
+        <span class="n">output_path</span><span class="p">,</span>
+        <span class="n">dim</span><span class="p">,</span>
+        <span class="n">slop</span><span class="p">,</span>
+        <span class="n">value_type</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="c1"># set dask scheduler to allow multiprocessing</span>
@@ -1608,16 +1617,16 @@
 
 
 <div class="viewcode-block" id="_annotate_by_beds_worker"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds._annotate_by_beds_worker">[docs]</a><span class="k">def</span> <span class="nf">_annotate_by_beds_worker</span><span class="p">(</span>
-    <span class="n">dataset_path</span><span class="p">,</span>
-    <span class="n">region_dim</span><span class="p">,</span>
-    <span class="n">chrom_size_path</span><span class="p">,</span>
-    <span class="n">slop</span><span class="p">,</span>
-    <span class="n">track_paths</span><span class="p">,</span>
-    <span class="n">dtype</span><span class="p">,</span>
-    <span class="n">dim</span><span class="p">,</span>
-    <span class="n">output_path</span><span class="p">,</span>
-    <span class="n">bed_sorted</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="n">dataset_path</span><span class="p">,</span>
+        <span class="n">region_dim</span><span class="p">,</span>
+        <span class="n">chrom_size_path</span><span class="p">,</span>
+        <span class="n">slop</span><span class="p">,</span>
+        <span class="n">track_paths</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="p">,</span>
+        <span class="n">dim</span><span class="p">,</span>
+        <span class="n">output_path</span><span class="p">,</span>
+        <span class="n">bed_sorted</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -1717,7 +1726,7 @@
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="RegionDS.from_bed"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.from_bed">[docs]</a>    <span class="k">def</span> <span class="nf">from_bed</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">bed</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="s2">&quot;region&quot;</span><span class="p">,</span> <span class="n">sort_bed</span><span class="o">=</span><span class="kc">True</span>
+            <span class="bp">cls</span><span class="p">,</span> <span class="n">bed</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="s2">&quot;region&quot;</span><span class="p">,</span> <span class="n">sort_bed</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create empty RegionDS from a bed file.</span>
@@ -1778,14 +1787,14 @@
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="RegionDS.open"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span>
-        <span class="n">path</span><span class="p">,</span>
-        <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">use_regions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">split_large_chunks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">select_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;zarr&quot;</span><span class="p">,</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="n">path</span><span class="p">,</span>
+            <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">use_regions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">split_large_chunks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">select_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;zarr&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PosixPath</span><span class="p">)):</span>
             <span class="n">_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
@@ -1883,13 +1892,13 @@
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="RegionDS._open_single_dataset"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS._open_single_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">_open_single_dataset</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span>
-        <span class="n">path</span><span class="p">,</span>
-        <span class="n">region_dim</span><span class="p">,</span>
-        <span class="n">split_large_chunks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">engine</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="n">path</span><span class="p">,</span>
+            <span class="n">region_dim</span><span class="p">,</span>
+            <span class="n">split_large_chunks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">engine</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Take one or multiple RegionDS file paths and create single RegionDS concatenated on region_dim</span>
@@ -1920,12 +1929,12 @@
         <span class="c1">#     print(f&#39;Open RegionDS with {engine} engine.&#39;)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;*&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span>
-                <span class="n">path</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PosixPath</span>
+                    <span class="n">path</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PosixPath</span>
             <span class="p">):</span>
                 <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">with</span> <span class="n">dask</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-                    <span class="o">**</span><span class="p">{</span><span class="s2">&quot;array.slicing.split_large_chunks&quot;</span><span class="p">:</span> <span class="n">split_large_chunks</span><span class="p">}</span>
+                        <span class="o">**</span><span class="p">{</span><span class="s2">&quot;array.slicing.split_large_chunks&quot;</span><span class="p">:</span> <span class="n">split_large_chunks</span><span class="p">}</span>
                 <span class="p">):</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                         <span class="kn">import</span> <span class="nn">glob</span>
@@ -1956,7 +1965,7 @@
 
         <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">chunk_start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">):</span>
-            <span class="n">use_index</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">chunk_start</span> <span class="p">:</span> <span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">]</span>
+            <span class="n">use_index</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">chunk_start</span><span class="p">:</span> <span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">]</span>
             <span class="k">yield</span> <span class="n">use_index</span></div>
 
 <div class="viewcode-block" id="RegionDS.iter_array"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.iter_array">[docs]</a>    <span class="k">def</span> <span class="nf">iter_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">load</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -1976,12 +1985,12 @@
             <span class="k">yield</span> <span class="n">use_da</span></div>
 
 <div class="viewcode-block" id="RegionDS.get_fasta"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.get_fasta">[docs]</a>    <span class="k">def</span> <span class="nf">get_fasta</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">genome_fasta</span><span class="p">,</span>
-        <span class="n">output_path</span><span class="p">,</span>
-        <span class="n">slop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">standardize_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">genome_fasta</span><span class="p">,</span>
+            <span class="n">output_path</span><span class="p">,</span>
+            <span class="n">slop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">standardize_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">bed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bed</span><span class="p">(</span>
             <span class="n">with_id</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -1994,12 +2003,12 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="RegionDS.get_bed"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.get_bed">[docs]</a>    <span class="k">def</span> <span class="nf">get_bed</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">with_id</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">bedtools</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">slop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">standardize_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">with_id</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">bedtools</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">slop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">standardize_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="n">chrom_size_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">chrom_size_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chrom_size_path</span>  <span class="c1"># will be none if not exist</span>
@@ -2021,7 +2030,7 @@
             <span class="n">bed_df</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">region_center</span> <span class="o">-</span> <span class="mi">1</span>
             <span class="n">bed_df</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">region_center</span>
             <span class="n">slop</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">standardize_length</span> <span class="o">//</span> <span class="mi">2</span>
+                    <span class="n">standardize_length</span> <span class="o">//</span> <span class="mi">2</span>
             <span class="p">)</span>  <span class="c1"># use the bedtools slop to extend the center to standard length</span>
 
         <span class="k">if</span> <span class="n">with_id</span><span class="p">:</span>
@@ -2086,8 +2095,8 @@
                 <span class="n">output_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chunk_dir_path</span><span class="si">}</span><span class="s2">/chunk_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.zarr&quot;</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;output_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_path</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;track_paths&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">track_paths</span><span class="p">[</span>
-                    <span class="n">chunk_start</span> <span class="p">:</span> <span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span>
-                <span class="p">]</span>
+                                        <span class="n">chunk_start</span><span class="p">:</span> <span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span>
+                                        <span class="p">]</span>
                 <span class="n">future</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">annotation_function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
                 <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
                 <span class="c1"># time.sleep(1)</span>
@@ -2126,16 +2135,16 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="RegionDS.annotate_by_bigwigs"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.annotate_by_bigwigs">[docs]</a>    <span class="k">def</span> <span class="nf">annotate_by_bigwigs</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">bigwig_table</span><span class="p">,</span>
-        <span class="n">dim</span><span class="p">,</span>
-        <span class="n">slop</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-        <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">value_type</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span>
-        <span class="n">chunk_size</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span>
-        <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">bigwig_table</span><span class="p">,</span>
+            <span class="n">dim</span><span class="p">,</span>
+            <span class="n">slop</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">value_type</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+            <span class="n">chunk_size</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span>
+            <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bigwig_table</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">track_paths</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">bigwig_table</span><span class="p">)</span>
@@ -2165,16 +2174,16 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="RegionDS.annotate_by_beds"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.annotate_by_beds">[docs]</a>    <span class="k">def</span> <span class="nf">annotate_by_beds</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">bed_table</span><span class="p">,</span>
-        <span class="n">dim</span><span class="p">,</span>
-        <span class="n">slop</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-        <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">chunk_size</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
-        <span class="n">bed_sorted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">bed_table</span><span class="p">,</span>
+            <span class="n">dim</span><span class="p">,</span>
+            <span class="n">slop</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">chunk_size</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+            <span class="n">bed_sorted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">bed_tmp</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;./pybedtools_tmp_</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100000</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -2229,16 +2238,16 @@
         <span class="k">return</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="RegionDS.scan_motifs"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.scan_motifs">[docs]</a>    <span class="k">def</span> <span class="nf">scan_motifs</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">genome_fasta</span><span class="p">,</span>
-        <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">standardize_length</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-        <span class="n">motif_set_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">combine_cluster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">fnr_fpr_fold</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-        <span class="n">chunk_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;motif&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">genome_fasta</span><span class="p">,</span>
+            <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">standardize_length</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+            <span class="n">motif_set_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">chrom_size_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">combine_cluster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fnr_fpr_fold</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+            <span class="n">chunk_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;motif&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">region_ds_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">location</span>
         <span class="k">if</span> <span class="n">region_ds_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -2281,17 +2290,21 @@
             <span class="n">motif_dim</span><span class="o">=</span><span class="n">dim</span><span class="p">,</span>
             <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span>
         <span class="p">)</span>
-
+        <span class="n">new_dataset_dim</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">:</span> <span class="n">region_dim</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">combine_cluster</span><span class="p">:</span>
+            <span class="n">new_dataset_dim</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s1">-cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">region_dim</span>
+        <span class="n">update_region_ds_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">,</span>
+                                <span class="n">new_dataset_dim</span><span class="o">=</span><span class="n">new_dataset_dim</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">motif_ds</span><span class="p">)</span>
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="RegionDS.get_hypo_hyper_index"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.get_hypo_hyper_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_hypo_hyper_index</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">a</span><span class="p">,</span>
-        <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">region_state_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">sample_dim</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
-        <span class="n">use_collapsed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">a</span><span class="p">,</span>
+            <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">region_state_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">sample_dim</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+            <span class="n">use_collapsed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="n">region_state_da</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">region_dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -2320,14 +2333,14 @@
         <span class="k">return</span> <span class="n">hypo_dmr</span><span class="p">,</span> <span class="n">hyper_dmr</span></div>
 
 <div class="viewcode-block" id="RegionDS.get_pairwise_differential_index"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.get_pairwise_differential_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_pairwise_differential_index</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">a</span><span class="p">,</span>
-        <span class="n">b</span><span class="p">,</span>
-        <span class="n">dmr_type</span><span class="o">=</span><span class="s2">&quot;hypo&quot;</span><span class="p">,</span>
-        <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">region_state_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">sample_dim</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
-        <span class="n">use_collapsed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">a</span><span class="p">,</span>
+            <span class="n">b</span><span class="p">,</span>
+            <span class="n">dmr_type</span><span class="o">=</span><span class="s2">&quot;hypo&quot;</span><span class="p">,</span>
+            <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">region_state_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">sample_dim</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+            <span class="n">use_collapsed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">a_hypo</span><span class="p">,</span> <span class="n">a_hyper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hypo_hyper_index</span><span class="p">(</span>
             <span class="n">a</span><span class="p">,</span>
@@ -2360,13 +2373,13 @@
         <span class="k">return</span> <span class="n">a_not_b</span><span class="p">,</span> <span class="n">a_and_b</span><span class="p">,</span> <span class="n">b_not_a</span></div>
 
 <div class="viewcode-block" id="RegionDS.motif_enrichment"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.motif_enrichment">[docs]</a>    <span class="k">def</span> <span class="nf">motif_enrichment</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">true_regions</span><span class="p">,</span>
-        <span class="n">background_regions</span><span class="p">,</span>
-        <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">motif_dim</span><span class="o">=</span><span class="s2">&quot;motif-cluster&quot;</span><span class="p">,</span>
-        <span class="n">motif_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">true_regions</span><span class="p">,</span>
+            <span class="n">background_regions</span><span class="p">,</span>
+            <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">motif_dim</span><span class="o">=</span><span class="s2">&quot;motif-cluster&quot;</span><span class="p">,</span>
+            <span class="n">motif_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="n">region_dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">region_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">region_dim</span>
@@ -2405,15 +2418,15 @@
         <span class="k">return</span> <span class="n">test_results</span></div>
 
 <div class="viewcode-block" id="RegionDS.sample_dmr_motif_enrichment"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.sample_dmr_motif_enrichment">[docs]</a>    <span class="k">def</span> <span class="nf">sample_dmr_motif_enrichment</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">sample</span><span class="p">,</span>
-        <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">sample_dim</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
-        <span class="n">motif_dim</span><span class="o">=</span><span class="s2">&quot;motif-cluster&quot;</span><span class="p">,</span>
-        <span class="n">region_state_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">motif_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span>
-        <span class="n">use_collapsed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">sample</span><span class="p">,</span>
+            <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">sample_dim</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+            <span class="n">motif_dim</span><span class="o">=</span><span class="s2">&quot;motif-cluster&quot;</span><span class="p">,</span>
+            <span class="n">region_state_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">motif_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span>
+            <span class="n">use_collapsed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">hypo_region</span><span class="p">,</span> <span class="n">hyper_region</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hypo_hyper_index</span><span class="p">(</span>
             <span class="n">sample</span><span class="p">,</span>
@@ -2433,16 +2446,16 @@
         <span class="k">return</span> <span class="n">test_results</span></div>
 
 <div class="viewcode-block" id="RegionDS.pairwise_dmr_motif_enrichment"><a class="viewcode-back" href="../../../api/ALLCools/mcds/region_ds/index.html#ALLCools.mcds.RegionDS.pairwise_dmr_motif_enrichment">[docs]</a>    <span class="k">def</span> <span class="nf">pairwise_dmr_motif_enrichment</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">a</span><span class="p">,</span>
-        <span class="n">b</span><span class="p">,</span>
-        <span class="n">dmr_type</span><span class="o">=</span><span class="s2">&quot;hypo&quot;</span><span class="p">,</span>
-        <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">region_state_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">sample_dim</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
-        <span class="n">motif_dim</span><span class="o">=</span><span class="s2">&quot;motif-cluster&quot;</span><span class="p">,</span>
-        <span class="n">motif_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">a</span><span class="p">,</span>
+            <span class="n">b</span><span class="p">,</span>
+            <span class="n">dmr_type</span><span class="o">=</span><span class="s2">&quot;hypo&quot;</span><span class="p">,</span>
+            <span class="n">region_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">region_state_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">sample_dim</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+            <span class="n">motif_dim</span><span class="o">=</span><span class="s2">&quot;motif-cluster&quot;</span><span class="p">,</span>
+            <span class="n">motif_da</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">a_not_b</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">b_not_a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pairwise_differential_index</span><span class="p">(</span>
             <span class="n">a</span><span class="p">,</span>

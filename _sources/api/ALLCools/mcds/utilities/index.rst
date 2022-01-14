@@ -51,3 +51,8 @@ Module Contents
 .. py:function:: write_ordered_chunks(chunks_to_write, final_path, append_dim, engine='zarr', coord_dtypes=None, dtype=None)
 
 
+.. py:function:: convert_to_zarr(paths)
+
+   Convert xarray.Dataset stored in other backends into zarr backend.
+
+

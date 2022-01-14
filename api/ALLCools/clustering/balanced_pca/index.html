@@ -1264,6 +1264,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1656,6 +1665,8 @@
                 
   <div class="section" id="module-ALLCools.clustering.balanced_pca">
 <span id="allcools-clustering-balanced-pca"></span><h1><a class="reference internal" href="../index.html#ALLCools.clustering.balanced_pca" title="ALLCools.clustering.balanced_pca"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ALLCools.clustering.balanced_pca</span></code></a><a class="headerlink" href="#module-ALLCools.clustering.balanced_pca" title="Permalink to this headline">¶</a></h1>
+<p>Perform Balanced PCA as well as
+Reproducible PCA (A class allow user provide fitted model and just transform MCDS to adata with PCs)</p>
 <div class="section" id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
@@ -1737,14 +1748,21 @@ to represent more variance among small categories.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ALLCools.clustering.balanced_pca.get_pc_centers">
 <span class="sig-name descname"><span class="pre">get_pc_centers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://anndata.readthedocs.io/en/stable/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.7.7.dev1+g33006dc)"><span class="pre">anndata.AnnData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlier_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obsm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X_pca'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/balanced_pca.html#get_pc_centers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.balanced_pca.get_pc_centers" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Get the cluster centroids of the PC matrix</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>adata</strong> – </p></li>
-<li><p><strong>group</strong> – </p></li>
-<li><p><strong>outlier_label</strong> – </p></li>
-<li><p><strong>obsm</strong> – </p></li>
+<li><p><strong>adata</strong> – adata with cluster labels in obs and PC in obsm</p></li>
+<li><p><strong>group</strong> – the name of cluster labels in adata.obs</p></li>
+<li><p><strong>outlier_label</strong> – if there are outlier labels in obs, will exclude outliers before calculating centroids.</p></li>
+<li><p><strong>obsm</strong> – the key of PC matrix in obsm</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dataframe for cluster centroids by PC</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pc_center</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1755,27 +1773,80 @@ to represent more variance among small categories.</p>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.balanced_pca.ReproduciblePCA.mcds_to_adata">
 <span class="sig-name descname"><span class="pre">mcds_to_adata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mcds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/balanced_pca.html#ReproduciblePCA.mcds_to_adata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.balanced_pca.ReproduciblePCA.mcds_to_adata" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get adata from MCDS with only selected features</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mcds</strong> (<em>Input raw count MCDS object</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Adata with per-cell normalized mC fraction and selected features</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adata</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.balanced_pca.ReproduciblePCA.scale">
 <span class="sig-name descname"><span class="pre">scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/balanced_pca.html#ReproduciblePCA.scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.balanced_pca.ReproduciblePCA.scale" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Perform {func}`log_scale &lt;ALLCools.clustering.balanced_pca.log_scale&gt;` with fitted scaler</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>adata</strong> – Adata with per-cell normalized mC fraction and selected features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adata.X is transformed in place</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.balanced_pca.ReproduciblePCA.pc_transform">
 <span class="sig-name descname"><span class="pre">pc_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/balanced_pca.html#ReproduciblePCA.pc_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.balanced_pca.ReproduciblePCA.pc_transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>calculate the PC from adata.X and PC loading, store PCs in adata.obsm[“X_pca”] and
+loadings in adata.varm[“PCs”]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>adata</strong> – Adata with log_scale transformed mC fraction and selected features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>PC information stored in adata.obsm and varm</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.balanced_pca.ReproduciblePCA.mcds_to_adata_with_pc">
 <span class="sig-name descname"><span class="pre">mcds_to_adata_with_pc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mcds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/balanced_pca.html#ReproduciblePCA.mcds_to_adata_with_pc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.balanced_pca.ReproduciblePCA.mcds_to_adata_with_pc" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>From raw count MCDS to adata object with PCs using fitted scaler and PC loadings.
+Steps include select features, calculate per-cell normalized mC fractions,
+log_scale transform the data with fitted scaler, and finally add PC matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mcds</strong> – Raw count MCDS</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>anndata object with per-cell normalized, log scale transformed matrix in .X and PCs in
+adata.obsm[“X_pca”] and PC loadings in adata.varm[“PCs”]. The scale and PC are done with fitted model.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adata</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.balanced_pca.ReproduciblePCA.dump">
 <span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/balanced_pca.html#ReproduciblePCA.dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.balanced_pca.ReproduciblePCA.dump" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Save the ReproduciblePCA to path</p>
+</dd></dl>
 
 </dd></dl>
 

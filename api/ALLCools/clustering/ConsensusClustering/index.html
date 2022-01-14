@@ -1264,6 +1264,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1808,12 +1817,14 @@ return all clusters as a pd.DataFrame</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering._split_train_test_per_group">
 <span class="sig-name descname"><span class="pre">_split_train_test_per_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#_split_train_test_per_group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering._split_train_test_per_group" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Split train test for each cluster and make sure there are enough cells for train</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.single_supervise_evaluation">
 <span class="sig-name descname"><span class="pre">single_supervise_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1_norm_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2_norm_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#single_supervise_evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.single_supervise_evaluation" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>A single fit and merge cluster step</p>
+</dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering">
@@ -1831,65 +1842,93 @@ return all clusters as a pd.DataFrame</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering.compute_neighbors">
 <span class="sig-name descname"><span class="pre">compute_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering.compute_neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering.compute_neighbors" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Calculate KNN graph</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering.multi_leiden_clustering">
 <span class="sig-name descname"><span class="pre">multi_leiden_clustering</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering.multi_leiden_clustering"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering.multi_leiden_clustering" title="Permalink to this definition">¶</a></dt>
-<dd><p>Modified from scanpy</p>
+<dd><p>Modified from scanpy, perform Leiden clustering multiple times with different random states</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering._summarize_multi_leiden">
 <span class="sig-name descname"><span class="pre">_summarize_multi_leiden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering._summarize_multi_leiden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering._summarize_multi_leiden" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Summarize the multi_leiden results,
+generate a raw cluster version simply based on the hamming distance
+between cells and split cluster with cutoff (consensus_rate)</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering._create_model">
 <span class="sig-name descname"><span class="pre">_create_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering._create_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering._create_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Init default model</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering.supervise_learning">
 <span class="sig-name descname"><span class="pre">supervise_learning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering.supervise_learning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering.supervise_learning" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Perform supervised learning and cluster merge process</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering.final_evaluation">
 <span class="sig-name descname"><span class="pre">final_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering.final_evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering.final_evaluation" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Final evaluation of the model and assign outliers</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering.save">
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering.save" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Save the model</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_leiden_cases">
 <span class="sig-name descname"><span class="pre">plot_leiden_cases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_n_cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering.plot_leiden_cases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_leiden_cases" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Show some leiden runs with biggest different as measured by ARI</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_before_after">
 <span class="sig-name descname"><span class="pre">plot_before_after</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering.plot_before_after"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_before_after" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Plot the raw clusters from multi-leiden and final clusters after merge</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_steps">
 <span class="sig-name descname"><span class="pre">plot_steps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering.plot_steps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_steps" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Plot the supervised learning and merge steps</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_merge_process">
 <span class="sig-name descname"><span class="pre">plot_merge_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#ConsensusClustering.plot_merge_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.ConsensusClustering.plot_merge_process" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Plot the change of accuracy during merge</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ALLCools.clustering.ConsensusClustering.select_confusion_pairs">
 <span class="sig-name descname"><span class="pre">select_confusion_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">true_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratio_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/ALLCools/clustering/ConsensusClustering.html#select_confusion_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.clustering.ConsensusClustering.select_confusion_pairs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Select cluster pairs that are confusing (ratio_cutoff) between true and predicted labels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>true_label</strong> (<em>true cell labels</em>) – </p></li>
+<li><p><strong>predicted_label</strong> (<em>predicted cell labels</em>) – </p></li>
+<li><p><strong>ratio_cutoff</strong> (<em>ratio of clusters cutoff to define confusion</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of cluster pair tuples</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>confused_pairs</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 </div>

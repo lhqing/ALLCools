@@ -1255,6 +1255,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1794,6 +1803,7 @@
     <span class="n">cell_chunk_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
     <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_MCDS_DTYPE</span><span class="p">,</span>
     <span class="n">binarize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;zarr&#39;</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;\</span>
 <span class="sd">    Generate MCDS from a list of ALLC file provided with file id.</span>
@@ -1836,11 +1846,15 @@
 <span class="sd">        The values exceed max will be clipped.</span>
 <span class="sd">    binarize</span>
 <span class="sd">        {binarize_doc}</span>
+<span class="sd">    engine</span>
+<span class="sd">        use zarr or netcdf to store dataset, default is zarr</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">engine</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;zarr&#39;</span><span class="p">,</span> <span class="s1">&#39;netcdf&#39;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;engine need to be &quot;zarr&quot; or &quot;netcdf&quot;, got </span><span class="si">{</span><span class="n">engine</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="c1"># TODO region bed should have unique id, check before generate mcds</span>
     <span class="n">dtype</span> <span class="o">=</span> <span class="n">parse_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
 
@@ -1936,6 +1950,7 @@
                 <span class="n">cell_chunk_size</span><span class="o">=</span><span class="n">cell_chunk_size</span><span class="p">,</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
                 <span class="n">binarize</span><span class="o">=</span><span class="n">binarize</span><span class="p">,</span>
+                <span class="n">engine</span><span class="o">=</span><span class="n">engine</span>
             <span class="p">)</span>
         <span class="k">return</span>
 
@@ -1981,7 +1996,13 @@
         <span class="n">output_path</span> <span class="o">=</span> <span class="n">output_prefix</span> <span class="o">+</span> <span class="s2">&quot;.mcds&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">output_path</span> <span class="o">=</span> <span class="n">output_prefix</span>
-    <span class="n">total_ds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">engine</span> <span class="o">==</span> <span class="s1">&#39;zarr&#39;</span><span class="p">:</span>
+        <span class="n">total_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">engine</span> <span class="o">==</span> <span class="s1">&#39;netcdf&#39;</span><span class="p">:</span>
+        <span class="n">total_ds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
 
     <span class="c1"># sanity check mC &lt;= cov</span>
     <span class="k">for</span> <span class="n">da_name</span><span class="p">,</span> <span class="n">da</span> <span class="ow">in</span> <span class="n">total_ds</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>

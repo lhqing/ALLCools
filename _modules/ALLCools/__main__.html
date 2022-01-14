@@ -1255,6 +1255,15 @@
        </code>
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -1664,7 +1673,7 @@
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of processes to use in parallel. DO NOT use cpu &gt; 1 for single cell ALLC generation. &quot;</span>
-        <span class="s2">&quot;Parallel on cell level is better for single cell project.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;Parallel on cell level is better for single cell project.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1672,7 +1681,7 @@
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of upstream base(s) of the C base to include in ALLC context column, &quot;</span>
-        <span class="s2">&quot;usually use 0 for normal BS-seq, 1 for NOMe-seq.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;usually use 0 for normal BS-seq, 1 for NOMe-seq.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1680,7 +1689,7 @@
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of downstream base(s) of the C base to include in ALLC context column, &quot;</span>
-        <span class="s2">&quot;usually use 2 for both BS-seq and NOMe-seq.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;usually use 2 for both BS-seq and NOMe-seq.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1695,7 +1704,7 @@
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Minimum base quality for a base being considered, samtools mpileup parameter, &quot;</span>
-        <span class="s2">&quot;see samtools documentation.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;see samtools documentation.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1717,12 +1726,12 @@
         <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;standard&quot;</span><span class="p">],</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Standardize 1 ALLC file by checking: &quot;</span>
-        <span class="s2">&quot;1. No header in the ALLC file; &quot;</span>
-        <span class="s2">&quot;2. Chromosome names in ALLC must be exactly same as those &quot;</span>
-        <span class="s2">&quot;in the chrom_size_path file; &quot;</span>
-        <span class="s2">&quot;3. Output file will be bgzipped with .tbi index; &quot;</span>
-        <span class="s2">&quot;4. Remove additional chromosome (remove_additional_chrom=True) or &quot;</span>
-        <span class="s2">&quot;raise KeyError if unknown chromosome found (default)&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;1. No header in the ALLC file; &quot;</span>
+             <span class="s2">&quot;2. Chromosome names in ALLC must be exactly same as those &quot;</span>
+             <span class="s2">&quot;in the chrom_size_path file; &quot;</span>
+             <span class="s2">&quot;3. Output file will be bgzipped with .tbi index; &quot;</span>
+             <span class="s2">&quot;4. Remove additional chromosome (remove_additional_chrom=True) or &quot;</span>
+             <span class="s2">&quot;raise KeyError if unknown chromosome found (default)&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
     <span class="n">parser_req</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--allc_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="n">allc_path_doc</span><span class="p">)</span>
@@ -1779,7 +1788,7 @@
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;drop_n&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Whether to keep context that contain N, such as CCN. &quot;</span>
-        <span class="s2">&quot;This is usually very rare and need to be dropped.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;This is usually very rare and need to be dropped.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">drop_n</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -1788,7 +1797,7 @@
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of rows to calculate the profile from. &quot;</span>
-        <span class="s2">&quot;The default number is usually sufficient to get pretty precise assumption.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;The default number is usually sufficient to get pretty precise assumption.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1830,8 +1839,8 @@
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cpu_basic_doc</span><span class="si">}</span><span class="s2"> The real CPU usage is ~1.5 times than this number, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;due to the sub processes of handling ALLC files using tabix/bgzip. &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Monitor the CPU and Memory usage when running this function.&quot;</span><span class="p">,</span>
+             <span class="sa">f</span><span class="s2">&quot;due to the sub processes of handling ALLC files using tabix/bgzip. &quot;</span>
+             <span class="sa">f</span><span class="s2">&quot;Monitor the CPU and Memory usage when running this function.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1851,7 +1860,7 @@
         <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;extract&quot;</span><span class="p">],</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Extract information (strand, context) from 1 ALLC file. &quot;</span>
-        <span class="s2">&quot;Able to save to several different format.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;Able to save to several different format.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
@@ -1879,10 +1888,10 @@
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span>
         <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="s2">&quot;split&quot;</span><span class="p">,</span> <span class="s2">&quot;merge&quot;</span><span class="p">],</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;What to do with strand information, possible values are: &quot;</span>
-        <span class="s2">&quot;1. both: save +/- strand together in one file without any modification; &quot;</span>
-        <span class="s2">&quot;2. split: save +/- strand into two separate files, with suffix contain Watson (+) and Crick (-); &quot;</span>
-        <span class="s2">&quot;3. merge: This will only merge the count on adjacent CpG in +/- strands, only work for CpG like context. &quot;</span>
-        <span class="s2">&quot;For non-CG context, its the same as both.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;1. both: save +/- strand together in one file without any modification; &quot;</span>
+             <span class="s2">&quot;2. split: save +/- strand into two separate files, with suffix contain Watson (+) and Crick (-); &quot;</span>
+             <span class="s2">&quot;3. merge: This will only merge the count on adjacent CpG in +/- strands, only work for CpG like context. &quot;</span>
+             <span class="s2">&quot;For non-CG context, its the same as both.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -1891,8 +1900,8 @@
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;allc&quot;</span><span class="p">,</span>
         <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;allc&quot;</span><span class="p">,</span> <span class="s2">&quot;bed5&quot;</span><span class="p">],</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output format of extracted information, possible values are: &quot;</span>
-        <span class="s2">&quot;1. allc: keep the allc format; &quot;</span>
-        <span class="s2">&quot;2. bed5: 5-column bed format, chrom, pos, pos, mc, cov; &quot;</span><span class="p">,</span>
+             <span class="s2">&quot;1. allc: keep the allc format; &quot;</span>
+             <span class="s2">&quot;2. bed5: 5-column bed format, chrom, pos, pos, mc, cov; &quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--region&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="n">region_doc</span><span class="p">)</span>
@@ -1904,9 +1913,9 @@
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="n">cpu_basic_doc</span> <span class="o">+</span> <span class="s2">&quot; This function parallel on region level and &quot;</span>
-        <span class="s2">&quot;will generate a bunch of small files if cpu &gt; 1. &quot;</span>
-        <span class="s2">&quot;Do not use cpu &gt; 1 for single cell region count. &quot;</span>
-        <span class="s2">&quot;For single cell data, parallel on cell level is better.&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;will generate a bunch of small files if cpu &gt; 1. &quot;</span>
+                             <span class="s2">&quot;Do not use cpu &gt; 1 for single cell region count. &quot;</span>
+                             <span class="s2">&quot;For single cell data, parallel on cell level is better.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span></div>
 
@@ -1917,12 +1926,12 @@
         <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">,</span> <span class="s2">&quot;2region&quot;</span><span class="p">],</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Calculate mC and cov at regional level. Region can be provided in 2 forms: &quot;</span>
-        <span class="s2">&quot;1. BED file, provided by region_bed_paths, &quot;</span>
-        <span class="s2">&quot;containing arbitrary regions and use bedtools map to calculate; &quot;</span>
-        <span class="s2">&quot;2. Fix-size non-overlap genome bins, provided by bin_sizes, &quot;</span>
-        <span class="s2">&quot;Form 2 is much faster to calculate than form 1. &quot;</span>
-        <span class="s2">&quot;The output file is in 6-column bed-like format: &quot;</span>
-        <span class="s2">&quot;chrom start end region_uid mc cov&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;1. BED file, provided by region_bed_paths, &quot;</span>
+             <span class="s2">&quot;containing arbitrary regions and use bedtools map to calculate; &quot;</span>
+             <span class="s2">&quot;2. Fix-size non-overlap genome bins, provided by bin_sizes, &quot;</span>
+             <span class="s2">&quot;Form 2 is much faster to calculate than form 1. &quot;</span>
+             <span class="s2">&quot;The output file is in 6-column bed-like format: &quot;</span>
+             <span class="s2">&quot;chrom start end region_uid mc cov&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser_req</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;required arguments&quot;</span><span class="p">)</span>
@@ -1988,7 +1997,7 @@
         <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;save_zero_cov&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If present, save the regions that have 0 cov in output, &quot;</span>
-        <span class="s2">&quot;only apply to region count but not the chromosome count.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;only apply to region count but not the chromosome count.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">save_zero_cov</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
@@ -1997,9 +2006,9 @@
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="n">cpu_basic_doc</span> <span class="o">+</span> <span class="s2">&quot; This function parallel on region level and &quot;</span>
-        <span class="s2">&quot;will generate a bunch of small files if cpu &gt; 1. &quot;</span>
-        <span class="s2">&quot;Do not use cpu &gt; 1 for single cell region count. &quot;</span>
-        <span class="s2">&quot;For single cell data, parallel on cell level is better.&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;will generate a bunch of small files if cpu &gt; 1. &quot;</span>
+                             <span class="s2">&quot;Do not use cpu &gt; 1 for single cell region count. &quot;</span>
+                             <span class="s2">&quot;For single cell data, parallel on cell level is better.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span></div>
 
@@ -2106,7 +2115,7 @@
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">3072</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Maximum number of ALLC files to aggregate into 1 MCDS, if number of ALLC provided &gt; max_per_mcds, &quot;</span>
-        <span class="s2">&quot;will generate MCDS in chunks, with same prefix provided.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;will generate MCDS in chunks, with same prefix provided.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -2114,7 +2123,7 @@
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Size of cell chunk in parallel aggregation. Do not have any effect on results. &quot;</span>
-        <span class="s2">&quot;Large chunksize needs large memory.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;Large chunksize needs large memory.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -2133,8 +2142,16 @@
             <span class="s2">&quot;bool&quot;</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Data type of MCDS count matrix. Default is np.uint32. &quot;</span>
-        <span class="s2">&quot;For single cell feature count, this can be set to np.uint16 [0, 65536] to decrease file size. &quot;</span>
-        <span class="s2">&quot;The values exceed min/max will be clipped while keep the mc/cov same, and a warning will be sent.&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;For single cell feature count, this can be set to np.uint16 [0, 65536] to decrease file size. &quot;</span>
+             <span class="s2">&quot;The values exceed min/max will be clipped while keep the mc/cov same, and a warning will be sent.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--engine&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;zarr&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;zarr&quot;</span><span class="p">,</span> <span class="s2">&quot;netcdf&quot;</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;use zarr or netcdf to store dataset, default is zarr&quot;</span>
     <span class="p">)</span>
     <span class="k">return</span></div>
 
@@ -2187,6 +2204,21 @@
     <span class="k">return</span></div>
 
 
+<div class="viewcode-block" id="convert_mcds_to_zarr_register_subparser"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.convert_mcds_to_zarr_register_subparser">[docs]</a><span class="k">def</span> <span class="nf">convert_mcds_to_zarr_register_subparser</span><span class="p">(</span><span class="n">subparser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;convert-mcds-to-zarr&quot;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Convert xarray.Dataset stored in other backends into zarr backend.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;paths&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;provide one or multiple MCDS paths, wildcards supported&#39;</span></div>
+    <span class="p">)</span>
+
+
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/ALLCools/__main__/index.html#ALLCools.__main__.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">description</span><span class="o">=</span><span class="n">DESCRIPTION</span><span class="p">,</span>
@@ -2199,7 +2231,7 @@
     <span class="n">current_module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">]</span>
     <span class="c1"># get all functions in parser</span>
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">register_subparser_func</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
-        <span class="n">current_module</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isfunction</span>
+            <span class="n">current_module</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isfunction</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="s2">&quot;register_subparser&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
             <span class="n">register_subparser_func</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span>
@@ -2245,10 +2277,11 @@
         <span class="kn">from</span> <span class="nn">._allc_to_region_count</span> <span class="kn">import</span> <span class="n">allc_to_region_count</span> <span class="k">as</span> <span class="n">func</span>
     <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;allc-to-bigwig&quot;</span><span class="p">,</span> <span class="s2">&quot;bw&quot;</span><span class="p">,</span> <span class="s2">&quot;2bw&quot;</span><span class="p">]:</span>
         <span class="kn">from</span> <span class="nn">._allc_to_bigwig_new</span> <span class="kn">import</span> <span class="n">allc_to_bigwig</span> <span class="k">as</span> <span class="n">func</span>
-
         <span class="c1"># from ._allc_to_bigwig import allc_to_bigwig as func  # old version using ucsc tools</span>
     <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;generate-mcds&quot;</span><span class="p">,</span> <span class="s2">&quot;mcds&quot;</span><span class="p">]:</span>
         <span class="kn">from</span> <span class="nn">.count_matrix.mcds</span> <span class="kn">import</span> <span class="n">generate_mcds</span> <span class="k">as</span> <span class="n">func</span>
+    <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;convert-mcds-to-zarr&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">.mcds.utilities</span> <span class="kn">import</span> <span class="n">convert_to_zarr</span> <span class="k">as</span> <span class="n">func</span>
     <span class="k">elif</span> <span class="n">cur_command</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;generate-mcad&quot;</span><span class="p">,</span> <span class="s2">&quot;mcad&quot;</span><span class="p">]:</span>
         <span class="kn">from</span> <span class="nn">.count_matrix.mcad</span> <span class="kn">import</span> <span class="n">generate_mcad</span> <span class="k">as</span> <span class="n">func</span>
     <span class="k">else</span><span class="p">:</span>

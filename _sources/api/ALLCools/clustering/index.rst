@@ -48,41 +48,75 @@ Package Contents
 
    .. py:method:: compute_neighbors(self)
 
+      Calculate KNN graph
+
 
    .. py:method:: multi_leiden_clustering(self, partition_type=None, partition_kwargs=None, use_weights=True, n_iterations=-1)
 
-      Modified from scanpy
+      Modified from scanpy, perform Leiden clustering multiple times with different random states
 
 
    .. py:method:: _summarize_multi_leiden(self)
 
+      Summarize the multi_leiden results,
+      generate a raw cluster version simply based on the hamming distance
+      between cells and split cluster with cutoff (consensus_rate)
+
 
    .. py:method:: _create_model(self, n_estimators=1000)
+
+      Init default model
 
 
    .. py:method:: supervise_learning(self)
 
+      Perform supervised learning and cluster merge process
+
 
    .. py:method:: final_evaluation(self)
+
+      Final evaluation of the model and assign outliers
 
 
    .. py:method:: save(self, output_path)
 
+      Save the model
+
 
    .. py:method:: plot_leiden_cases(self, coord_data, coord_base='umap', plot_size=3, dpi=300, plot_n_cases=4, s=3)
+
+      Show some leiden runs with biggest different as measured by ARI
 
 
    .. py:method:: plot_before_after(self, coord_data, coord_base='umap', plot_size=3, dpi=300)
 
+      Plot the raw clusters from multi-leiden and final clusters after merge
+
 
    .. py:method:: plot_steps(self, coord_data, coord_base='umap', plot_size=3, dpi=300)
+
+      Plot the supervised learning and merge steps
 
 
    .. py:method:: plot_merge_process(self, plot_size=3)
 
+      Plot the change of accuracy during merge
+
 
 
 .. py:function:: select_confusion_pairs(true_label, predicted_label, ratio_cutoff=0.001)
+
+   Select cluster pairs that are confusing (ratio_cutoff) between true and predicted labels
+
+   :param true_label:
+   :type true_label: true cell labels
+   :param predicted_label:
+   :type predicted_label: predicted cell labels
+   :param ratio_cutoff:
+   :type ratio_cutoff: ratio of clusters cutoff to define confusion
+
+   :returns: list of cluster pair tuples
+   :rtype: confused_pairs
 
 
 .. py:function:: tsne(adata, obsm='X_pca', metric: Union[str, Callable] = 'euclidean', exaggeration: float = -1, perplexity: int = 30, n_jobs: int = -1)
@@ -152,27 +186,67 @@ Package Contents
 
 .. py:function:: get_pc_centers(adata: anndata.AnnData, group: str, outlier_label=None, obsm='X_pca')
 
-   :param adata:
-   :param group:
-   :param outlier_label:
-   :param obsm:
+   Get the cluster centroids of the PC matrix
+
+   :param adata: adata with cluster labels in obs and PC in obsm
+   :param group: the name of cluster labels in adata.obs
+   :param outlier_label: if there are outlier labels in obs, will exclude outliers before calculating centroids.
+   :param obsm: the key of PC matrix in obsm
+
+   :returns: a dataframe for cluster centroids by PC
+   :rtype: pc_center
 
 
 .. py:class:: ReproduciblePCA(scaler, mc_type, adata=None, pca_obj=None, pc_loading=None, var_names=None, max_value=10)
 
    .. py:method:: mcds_to_adata(self, mcds)
 
+      Get adata from MCDS with only selected features
+
+      :param mcds:
+      :type mcds: Input raw count MCDS object
+
+      :returns: Adata with per-cell normalized mC fraction and selected features
+      :rtype: adata
+
 
    .. py:method:: scale(self, adata)
+
+      Perform {func}`log_scale <ALLCools.clustering.balanced_pca.log_scale>` with fitted scaler
+
+      :param adata: Adata with per-cell normalized mC fraction and selected features
+
+      :returns:
+      :rtype: adata.X is transformed in place
 
 
    .. py:method:: pc_transform(self, adata)
 
+      calculate the PC from adata.X and PC loading, store PCs in adata.obsm["X_pca"] and
+      loadings in adata.varm["PCs"]
+
+      :param adata: Adata with log_scale transformed mC fraction and selected features
+
+      :returns:
+      :rtype: PC information stored in adata.obsm and varm
+
 
    .. py:method:: mcds_to_adata_with_pc(self, mcds)
 
+      From raw count MCDS to adata object with PCs using fitted scaler and PC loadings.
+      Steps include select features, calculate per-cell normalized mC fractions,
+      log_scale transform the data with fitted scaler, and finally add PC matrix.
+
+      :param mcds: Raw count MCDS
+
+      :returns: anndata object with per-cell normalized, log scale transformed matrix in .X and PCs in
+                adata.obsm["X_pca"] and PC loadings in adata.varm["PCs"]. The scale and PC are done with fitted model.
+      :rtype: adata
+
 
    .. py:method:: dump(self, path)
+
+      Save the ReproduciblePCA to path
 
 
 
@@ -218,19 +292,44 @@ Package Contents
 
 .. py:class:: PairwiseDMG(max_cell_per_group=1000, top_n=10000, adj_p_cutoff=0.001, delta_rate_cutoff=0.3, auroc_cutoff=0.9, random_state=0, n_jobs=1)
 
-   .. py:method:: fit_predict(self, x, groups, obs_dim='cell', var_dim='gene', outlier='Outlier', cleanup=True, selected_pairs=None)
+   .. py:method:: fit_predict(self, x, groups, obs_dim='cell', var_dim='gene', outlier='Outlier', cleanup=True, selected_pairs: List[tuple] = None)
+
+      provide data and perform the pairwise DMG
+
+      :param x: 2D cell-by-feature xarray.DataArray
+      :param groups: cluster labels
+      :param obs_dim: name of the cell dim
+      :param var_dim: name of the feature dim
+      :param outlier: name of the outlier group, if provided, will ignore this label
+      :param cleanup: Whether to delete the group adata file
+      :param selected_pairs: By default, pairwise DMG will calculate all possible pairs between all the groups, which might be very
+                             time consuming if the group number is large. With this parameter, you may provide a list of cluster pairs
 
 
    .. py:method:: _save_cluster_adata(self)
 
+      Save each group into separate adata, this way reduce the memory during parallel
+
 
    .. py:method:: _pairwise_dmg(self)
+
+      pairwise DMG runner, result save to self.dmg_table
 
 
    .. py:method:: _cleanup(self)
 
+      Delete group adata files
+
 
    .. py:method:: aggregate_pairwise_dmg(self, adata, groupby, obsm='X_pca')
+
+      Aggregate pairwise DMG results for each cluster, rank DMG for the cluster by the sum of
+      AUROC * cluster_pair_similarity
+      This way, the DMGs having large AUROC between similar clusters get more weights
+
+      :param adata:
+      :param groupby:
+      :param obsm:
 
 
 
@@ -238,19 +337,23 @@ Package Contents
 
    Calculating cluster marker genes using one-vs-rest strategy.
 
-   :param cell_meta:
-   :param group:
-   :param mcds:
-   :param mcds_paths:
-   :param obs_dim:
-   :param var_dim:
-   :param mc_type:
-   :param top_n:
-   :param adj_p_cutoff:
-   :param fc_cutoff:
-   :param auroc_cutoff:
-   :param max_cluster_cells:
-   :param max_other_fold:
+   :param cell_meta: cell metadata containing cluster labels
+   :param group: the name of the cluster label column
+   :param mcds: cell-by-gene MCDS object for calculating DMG. Provide either mcds_paths or mcds.
+   :param mcds_paths: cell-by-gene MCDS paths for calculating DMG. Provide either mcds_paths or mcds.
+   :param obs_dim: dimension name of the cells
+   :param var_dim: dimension name of the features
+   :param mc_type: value to select methylation type in the mc_type dimension
+   :param top_n: report top N DMGs
+   :param adj_p_cutoff: adjusted P value cutoff to report significant DMG
+   :param fc_cutoff: mC fraction fold change cutoff to report significant DMG
+   :param auroc_cutoff: AUROC cutoff to report significant DMG
+   :param max_cluster_cells: The maximum number of cells from a group, downsample large group to this number
+   :param max_other_fold: The fold of other cell numbers comparing
+   :param cpu: number of cpus
+
+   :returns: pandas Dataframe of the one-vs-rest DMGs
+   :rtype: dmg_table
 
 
 .. py:function:: cluster_enriched_features(adata: anndata.AnnData, cluster_col: str, top_n=200, alpha=0.05, stat_plot=True, method='mc')
