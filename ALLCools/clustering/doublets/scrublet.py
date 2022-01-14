@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.decomposition import PCA
-from ..mcds.utilities import calculate_posterior_mc_frac
+from ALLCools.mcds.utilities import calculate_posterior_mc_frac
 from scipy.stats import ks_2samp
 from pynndescent import NNDescent
 from sklearn.metrics import roc_curve

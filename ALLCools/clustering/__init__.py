@@ -11,7 +11,6 @@ from .balanced_pca import (
     get_pc_centers,
     ReproduciblePCA,
 )
-from .scrublet import MethylScrublet
 from .pvclust import Dendrogram
 from .dmg import PairwiseDMG, one_vs_rest_dmg
 from .feature_selection.feature_enrichment import cluster_enriched_features
