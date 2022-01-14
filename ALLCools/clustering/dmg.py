@@ -105,6 +105,7 @@ class PairwiseDMG:
             auroc_cutoff=0.9,
             random_state=0,
             n_jobs=1,
+            verbose=True,
     ):
         """
         Calculate pairwise DMGs. After calculation, results saved in self.dmg_table
@@ -196,11 +197,13 @@ class PairwiseDMG:
         self.selected_pairs = selected_pairs
 
         # save adata for each group to dict
-        print("Generating cluster AnnData files")
+        if self.verbose:
+            print("Generating cluster AnnData files")
         self._save_cluster_adata()
 
         # run pairwise DMG
-        print("Computing pairwise DMG")
+        if self.verbose:
+            print("Computing pairwise DMG")
         self._pairwise_dmg()
 
         # cleanup
@@ -257,9 +260,11 @@ class PairwiseDMG:
                 if self._outlier_label not in i
             ]
         else:
-            print("Using user provided gene pairs")
+            if self.verbose:
+                print("Using user provided gene pairs")
             pairs = self.selected_pairs
-        print(len(pairs), "pairwise DMGs")
+        if self.verbose:
+            print(len(pairs), "pairwise DMGs")
         n_pairs = len(pairs)
 
         with ProcessPoolExecutor(min(n_pairs, self.n_jobs)) as exe:
@@ -280,7 +285,7 @@ class PairwiseDMG:
                 futures[f] = (cluster_l, cluster_r)
             for i, f in enumerate(as_completed(futures)):
                 f.result()
-                if i % step == 0:
+                if i % step == 0 and self.verbose:
                     print(f"{i + 1}/{n_pairs} finished")
 
         # summarize
@@ -418,9 +423,11 @@ def _one_vs_rest_dmr_runner(
         adj_p_cutoff,
         fc_cutoff,
         auroc_cutoff,
+        verbose = True,
 ):
     """one vs rest DMG runner"""
-    print(f"Calculating cluster {cluster} DMGs.")
+    if verbose:
+        print(f"Calculating cluster {cluster} DMGs.")
 
     mcds = MCDS.open(mcds_paths)
     # determine cells to use
@@ -464,6 +471,7 @@ def one_vs_rest_dmg(
         max_cluster_cells=2000,
         max_other_fold=5,
         cpu=1,
+        verbose=True,
 ):
     """
     Calculating cluster marker genes using one-vs-rest strategy.
@@ -539,7 +547,8 @@ def one_vs_rest_dmg(
 
         for f in as_completed(futures):
             cluster = futures[f]
-            print(f"{cluster} Finished.")
+            if verbose:
+                print(f"{cluster} Finished.")
             dmg_df = f.result()
             dmg_df["cluster"] = cluster
             dmg_table.append(dmg_df)
