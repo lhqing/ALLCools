@@ -143,6 +143,7 @@ class PairwiseDMG:
         self.auroc_cutoff = auroc_cutoff
         self.random_state = random_state
         self.n_jobs = n_jobs
+        self.verbose = verbose
 
         # internal
         self._adata_dir = "_adata_for_dmg"
