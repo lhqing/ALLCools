@@ -557,6 +557,6 @@ def one_vs_rest_dmg(
 
     if tmp_created:
         import os
-        os.unlink(tmp)
+        os.rmdir(tmp)
 
     return dmg_table
