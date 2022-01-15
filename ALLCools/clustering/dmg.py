@@ -556,7 +556,7 @@ def one_vs_rest_dmg(
     dmg_table = pd.concat(dmg_table)
 
     if tmp_created:
-        import os
-        os.rmdir(tmp)
+        import shutil
+        shutil.rmtree(tmp)
 
     return dmg_table
