@@ -169,7 +169,6 @@ def allc_to_bigwig(
     -------
 
     """
-    # TODO write test
     if bin_size is None:
         bin_size = 50
 

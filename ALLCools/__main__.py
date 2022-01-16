@@ -305,7 +305,6 @@ def profile_allc_register_subparser(subparser):
 
 
 def merge_allc_register_subparser(subparser):
-    # TODO add alias to arguments
     parser = subparser.add_parser(
         "merge-allc",
         aliases=["merge"],

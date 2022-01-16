@@ -283,7 +283,6 @@ def extract_allc(
     -------
     A list of output file paths, not include index files.
     """
-    # TODO write test
     parallel_chunk_size = 100000000
 
     # determine region and parallel

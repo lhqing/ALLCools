@@ -195,7 +195,6 @@ def allc_to_region_count(
     Returns
     -------
     """
-    # TODO write test
     cpu = int(cpu)
 
     genome_dict = parse_chrom_size(chrom_size_path)

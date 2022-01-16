@@ -424,7 +424,8 @@ def bam_to_allc(
                 threads=1,
                 region=None,
             ) as out_f:
-                # TODO: Parallel ALLC is overlaped, the split by region strategy only split reads, but reads can overlap
+                # TODO: Parallel ALLC is overlapped,
+                #  the split by region strategy only split reads, but reads can overlap
                 # need to adjust and merge end rows in aggregate ALLC
                 for out_temp_path in temp_out_paths:
                     with open_allc(out_temp_path) as f:

@@ -20,4 +20,3 @@ def test_extract_allc():
                     tabix=True,
                     cpu=cpu,
                 )
-    # TODO add correct answer and check the file carefully
