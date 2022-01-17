@@ -365,6 +365,15 @@ def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
         return profile_df
 
 
+def is_gz_file(filepath):
+    """
+    Check if a file is gzip file, bgzip also return True
+    Learnt from here: https://stackoverflow.com/questions/3703276/how-to-tell-if-a-file-is-gzip-compressed
+    """
+    with open(filepath, 'rb') as test_f:
+        return test_f.read(2) == b'\x1f\x8b'
+
+
 @doc_params(allc_path_doc=allc_path_doc)
 def tabix_allc(allc_path, reindex=False):
     """
@@ -380,6 +389,12 @@ def tabix_allc(allc_path, reindex=False):
     -------
 
     """
+    if not is_gz_file(allc_path):
+        raise ValueError(f'{allc_path} does not appears to be a bgzip compressed file. '
+                         f'Please make sure the ALLC file is compressed by bgzip and '
+                         f'have an tabix index ".tbi" associated with it. If not, you may run bgzip/tabix by yourself '
+                         f'or use "allcools standard" command to check, compress, and tabix your file.')
+
     if os.path.exists(f"{allc_path}.tbi") and not reindex:
         return
     run(shlex.split(f"tabix -f -b 2 -e 2 -s 1 {allc_path}"), check=True)
