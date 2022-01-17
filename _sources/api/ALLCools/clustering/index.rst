@@ -15,6 +15,7 @@ Subpackages
    :titlesonly:
    :maxdepth: 3
 
+   doublets/index.rst
    feature_selection/index.rst
 
 
@@ -24,6 +25,7 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
+   ClusterMerging/index.rst
    ConsensusClustering/index.rst
    art_of_tsne/index.rst
    balanced_pca/index.rst
@@ -32,7 +34,6 @@ Submodules
    integration/index.rst
    mcad/index.rst
    pvclust/index.rst
-   scrublet/index.rst
 
 
 Package Contents
@@ -250,35 +251,6 @@ Package Contents
 
 
 
-.. py:class:: MethylScrublet(sim_doublet_ratio=2.0, n_neighbors=None, expected_doublet_rate=0.1, stdev_doublet_rate=0.02, metric='euclidean', random_state=0, n_jobs=-1)
-
-   .. py:method:: fit(self, mc, cov, clusters=None, batches=None)
-
-
-   .. py:method:: simulate_doublets(self)
-
-      Simulate doublets by adding the counts of random observed cell pairs.
-
-
-   .. py:method:: pca(self)
-
-
-   .. py:method:: get_knn_graph(self, data)
-
-
-   .. py:method:: calculate_doublet_scores(self)
-
-
-   .. py:method:: call_doublets(self, threshold=None)
-
-
-   .. py:method:: plot(self)
-
-
-   .. py:method:: _plot_cluster_dist(self)
-
-
-
 .. py:class:: Dendrogram(nboot=1000, method_dist='correlation', method_hclust='average', n_jobs=-1)
 
    .. py:method:: fit(self, data)
@@ -290,7 +262,7 @@ Package Contents
 
 
 
-.. py:class:: PairwiseDMG(max_cell_per_group=1000, top_n=10000, adj_p_cutoff=0.001, delta_rate_cutoff=0.3, auroc_cutoff=0.9, random_state=0, n_jobs=1)
+.. py:class:: PairwiseDMG(max_cell_per_group=1000, top_n=10000, adj_p_cutoff=0.001, delta_rate_cutoff=0.3, auroc_cutoff=0.9, random_state=0, n_jobs=1, verbose=True)
 
    .. py:method:: fit_predict(self, x, groups, obs_dim='cell', var_dim='gene', outlier='Outlier', cleanup=True, selected_pairs: List[tuple] = None)
 
@@ -333,7 +305,7 @@ Package Contents
 
 
 
-.. py:function:: one_vs_rest_dmg(cell_meta, group, mcds=None, mcds_paths=None, obs_dim='cell', var_dim='gene', mc_type='CHN', top_n=1000, adj_p_cutoff=0.01, fc_cutoff=0.8, auroc_cutoff=0.8, max_cluster_cells=2000, max_other_fold=5, cpu=1)
+.. py:function:: one_vs_rest_dmg(cell_meta, group, mcds=None, mcds_paths=None, obs_dim='cell', var_dim='gene', mc_type='CHN', top_n=1000, adj_p_cutoff=0.01, fc_cutoff=0.8, auroc_cutoff=0.8, max_cluster_cells=2000, max_other_fold=5, cpu=1, verbose=True)
 
    Calculating cluster marker genes using one-vs-rest strategy.
 
@@ -438,5 +410,27 @@ Package Contents
 
    :param left_part:
    :param right_part:
+
+
+.. py:class:: ClusterMerge(merge_criterion, stop_criterion=None, stop_clusters=-1, n_cells=200, metric='euclidean', method='average', label_concat_str='::')
+
+   .. py:method:: _construct_tree(self)
+
+
+   .. py:method:: _traverse(node, call_back)
+      :staticmethod:
+
+
+   .. py:method:: _merge_pair(self, pair, concat_str='::')
+
+
+   .. py:method:: fit_predict(self, data_for_tree, cell_to_type, gene_mcds)
+
+
+
+.. py:class:: PairwiseDMGCriterion(max_cell_per_group=100, top_n_markers=5, adj_p_cutoff=0.001, delta_rate_cutoff=0.3, auroc_cutoff=0.85, use_modality='either', random_state=0, n_jobs=10, verbose=False)
+
+   .. py:method:: predict(self, pair_labels, pair_cells, pair_cell_types, pair_mcds, da_name='gene_da_frac')
+
 
 

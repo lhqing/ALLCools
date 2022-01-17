@@ -81,6 +81,12 @@ Module Contents
    :param output_path: Path of the output file. If None, will save the profile next to input ALLC file.
 
 
+.. py:function:: is_gz_file(filepath)
+
+   Check if a file is gzip file, bgzip also return True
+   Learnt from here: https://stackoverflow.com/questions/3703276/how-to-tell-if-a-file-is-gzip-compressed
+
+
 .. py:function:: tabix_allc(allc_path, reindex=False)
 
    a simple wrapper of tabix command to index 1 ALLC file
