@@ -37,16 +37,7 @@ conda config --add channels conda-forge
 
 ### Create environment with required packages
 
-ALLCools can be installed in the following two ways.
-
-First, you can pull ALLCools from [PyPI](https://pypi.org/project/allcools/) in your conda environment (consider
-using <code>pip3</code> to access Python 3)
-
-```shell
-pip install allcools
-```
-
-Alternatively, you can create a `allcools_env.yaml` file as follows that contains the detail about the environment.
+First, you can create a `allcools_env.yaml` file as follows that contains the detail about the environment.
 
 ```yaml
 name: allcools
@@ -86,12 +77,7 @@ dependencies:
       - allcools
 ```
 
-Then, you can use the following command to create a conda environment called "allcools" and install all the required
-packages for you.
-
-````{note}
-[mamba](https://mamba.readthedocs.io/en/latest/installation.html) is a CLI tool to manage conda environments. mamba can be installed alongside <code>conda</code> and it can provide faster sovles for big environments.  
-````
+Then, you can use the following command to create a conda environment called "allcools" and install all the required packages for you.
 
 ```shell
 # first, install a package manager called mamba in base environment.
@@ -103,6 +89,8 @@ mamba env create -f allcools_env.yaml
 ```
 
 ````{tip}
+[mamba](https://mamba.readthedocs.io/en/latest/installation.html) is a CLI tool to manage conda environments. mamba can be installed alongside <code>conda</code> and it can provide faster sovles for big environments.  
+
 We highly recommend you to use mamba for installing packages. If you don't want to use mamba, here is the conda command that achieves the same goal:
 ```shell
 conda env create -f allcools_env.yaml
