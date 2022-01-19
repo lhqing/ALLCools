@@ -48,7 +48,7 @@ COMPLIMENT_BASE = {
 }
 
 
-def reverse_compliment(seq):
+def reverse_complement(seq):
     return "".join(map(lambda i: COMPLIMENT_BASE[i], seq[::-1]))
 
 

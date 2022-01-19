@@ -10,6 +10,7 @@ dependencies:
   - biopython
   - dask
   - numba
+  - htslib>=1.9
   - jupyter
   - jupyter_contrib_nbextensions
   - leidenalg
