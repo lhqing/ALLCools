@@ -121,7 +121,13 @@ def significant_pc_test(
         if p > p_cutoff:
             break
     n_components = min(i + 1, use_pcs.shape[1])
-    print(f"{n_components} components passed P cutoff of {p_cutoff}.")
+    if n_components < 4:
+        min_pc = min(4, use_pcs.shape[1])
+        print(f'only {n_components} passed the P cutoff, '
+              f'in order to proceed following analysis, will use first {min_pc} PCs')
+        n_components = min_pc
+    else:
+        print(f"{n_components} components passed P cutoff of {p_cutoff}.")
     if update:
         adata.obsm[obsm] = pcs[:, :n_components]
         print(
