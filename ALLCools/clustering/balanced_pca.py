@@ -121,8 +121,8 @@ def significant_pc_test(
         if p > p_cutoff:
             break
     n_components = min(i + 1, use_pcs.shape[1])
-    if n_components < 4:
-        min_pc = min(4, use_pcs.shape[1])
+    min_pc = min(4, use_pcs.shape[1])
+    if n_components < min_pc:
         print(f'only {n_components} passed the P cutoff, '
               f'in order to proceed following analysis, will use first {min_pc} PCs')
         n_components = min_pc
