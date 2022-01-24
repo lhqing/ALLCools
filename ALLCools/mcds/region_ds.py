@@ -11,8 +11,7 @@ import yaml
 import pyBigWig
 from pybedtools import BedTool
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from .region_ds_utilities import update_region_ds_config
-from .utilities import determine_engine, obj_to_str, write_ordered_chunks
+from .utilities import determine_engine, obj_to_str, write_ordered_chunks, update_dataset_config
 import os
 from ALLCools.utilities import parse_chrom_size
 
@@ -612,9 +611,7 @@ class RegionDS(xr.Dataset):
                 dtype=kwargs["dtype"],
                 coord_dtypes=None,
             )
-            update_region_ds_config(
-                self.location, new_dataset_dim={f"{region_dim}_{dim}": region_dim}
-            )
+            update_dataset_config(self.location, add_ds_region_dim={f"{region_dim}_{dim}": region_dim})
 
             # load the newly generated da only
             _ds = xr.open_zarr(final_dir_path)
@@ -789,8 +786,7 @@ class RegionDS(xr.Dataset):
         new_dataset_dim = {f'{region_dim}_{dim}': region_dim}
         if combine_cluster:
             new_dataset_dim[f'{region_dim}_{dim}-cluster'] = region_dim
-        update_region_ds_config(self.location,
-                                new_dataset_dim=new_dataset_dim)
+        update_dataset_config(self.location, add_ds_region_dim=new_dataset_dim)
         self.update(motif_ds)
         return
 
@@ -982,11 +978,8 @@ class RegionDS(xr.Dataset):
 
         if output_path is None:
             output_path = f"{self.location}/{self.region_dim}"
-            update_region_ds_config(
-                self.location,
-                change_region_dim=self.region_dim if change_region_dim else None,
-                new_dataset_dim={self.region_dim: self.region_dim},
-            )
+            update_dataset_config(self.location, add_ds_region_dim={self.region_dim: self.region_dim},
+                                  change_region_dim=self.region_dim if change_region_dim else None)
 
         # turn object coords to fix length string dtype before saving to zarr
         if da_name is None:

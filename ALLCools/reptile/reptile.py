@@ -11,8 +11,7 @@ import pyBigWig
 import warnings
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from sklearn.model_selection import train_test_split
-from ALLCools.mcds.utilities import write_ordered_chunks
-from ALLCools.mcds.region_ds_utilities import update_region_ds_config
+from ALLCools.mcds.utilities import write_ordered_chunks, update_dataset_config
 import joblib
 
 
@@ -616,11 +615,8 @@ class REPTILE:
 
         final_da = xr.open_zarr(final_dir)
         subprocess.run(f"rm -rf {chunk_dir}", shell=True)
-        update_region_ds_config(
-            output_dir=self.output_path,
-            new_dataset_dim={f"{region_dim}_prediction": region_dim},
-            change_region_dim=None,
-        )
+        update_dataset_config(output_dir=self.output_path, add_ds_region_dim={f"{region_dim}_prediction": region_dim},
+                              change_region_dim=None)
 
         if region_dim == "query-region":
             self._region_prediction = final_da

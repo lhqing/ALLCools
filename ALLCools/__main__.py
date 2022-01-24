@@ -14,6 +14,9 @@ import sys
 
 import ALLCools
 from ._doc import *
+import os
+
+os.environ["NUMEXPR_MAX_THREADS"] = "8"
 
 log = logging.getLogger()
 
@@ -712,6 +715,77 @@ def convert_mcds_to_zarr_register_subparser(subparser):
         nargs='+',
         help='provide one or multiple MCDS paths, wildcards supported'
     )
+    return
+
+
+def generate_dataset_register_subparser(subparser):
+    parser = subparser.add_parser(
+        "generate-dataset",
+        aliases=["dataset"],
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        help="",
+    )
+
+    parser_req = parser.add_argument_group("required arguments")
+
+    parser_req.add_argument(
+        "--allc_table",
+        type=str,
+        required=True,
+        help=''
+    )
+
+    parser_req.add_argument(
+        "--output_path",
+        type=str,
+        required=True,
+        help=''
+    )
+
+    parser_req.add_argument(
+        "--chrom_size_path",
+        type=str,
+        required=True,
+        help=''
+    )
+
+    parser.add_argument(
+        "--obs_dim",
+        type=str,
+        default='cell',
+        help=''
+    )
+
+    parser.add_argument(
+        "--cpu",
+        type=int,
+        default=1,
+        help=''
+    )
+
+    parser.add_argument(
+        "--chunk_size",
+        type=int,
+        default=10,
+        help=''
+    )
+
+    parser.add_argument(
+        "--regions",
+        type=str,
+        nargs=2,
+        action='append',
+        help=''
+    )
+
+    parser.add_argument(
+        "--quantifiers",
+        type=str,
+        nargs='+',
+        action='append',
+        help=''
+    )
+    return
 
 
 def main():
@@ -779,6 +853,8 @@ def main():
         from .mcds.utilities import convert_to_zarr as func
     elif cur_command in ["generate-mcad", "mcad"]:
         from .count_matrix.mcad import generate_mcad as func
+    elif cur_command in ["generate-dataset", "dataset"]:
+        from .count_matrix.dataset import generate_dataset as func
     else:
         log.debug(f"{cur_command} is not an valid sub-command")
         parser.parse_args(["-h"])

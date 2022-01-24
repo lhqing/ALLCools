@@ -2,6 +2,9 @@ import anndata
 import pandas as pd
 import xarray as xr
 import numpy as np
+import pathlib
+import glob
+import yaml
 from pybedtools import BedTool
 import dask
 import re
@@ -35,7 +38,7 @@ class MCDS(xr.Dataset):
         return
 
     @classmethod
-    def open(cls, mcds_paths, obs_dim="cell", use_obs=None, split_large_chunks=True):
+    def open(cls, mcds_paths, obs_dim="cell", use_obs=None, var_dim=None, split_large_chunks=True, engine=None):
         """
         Take one or multiple MCDS file paths and create single MCDS concatenated on obs_dim
 
@@ -47,34 +50,86 @@ class MCDS(xr.Dataset):
             Dimension name of observations, default is 'cell'
         use_obs
             Subset the MCDS by a list of observation IDs.
+        var_dim
+            Which var_dim dataset to use, needed when MCDS has multiple var_dim stored in the same directory
         split_large_chunks
             Whether split large chunks in dask config array.slicing.split_large_chunks
+        engine
+            xarray engine used to store MCDS, if multiple MCDS provided, the engine need to be the same
         Returns
         -------
         MCDS
         """
-        engine = determine_engine(mcds_paths)
+        # parse wildcard, if any
+        if isinstance(mcds_paths, (str, pathlib.Path)):
+            mcds_paths = [mcds_paths]
+        _flat_mcds_paths = []
+        for path in mcds_paths:
+            if isinstance(path, str):
+                if '*' in path:
+                    _flat_mcds_paths += list(glob.glob(path))
+                else:
+                    _flat_mcds_paths.append(path)
+            else:
+                _flat_mcds_paths.append(str(path))
+
+        # determine dataset var_dim
+        _var_dims = set()
+        _final_paths = []
+        has_dataset = False
+        for path in _flat_mcds_paths:
+            config_path = pathlib.Path(f'{path}/.ALLCools')
+            if config_path.exists():
+                has_dataset = True
+                with open(config_path) as f:
+                    config = yaml.safe_load(f)
+                    if var_dim is None:
+                        if config['region_dim'] is None:
+                            # try to infer if there is only one region
+                            if len(config['ds_region_dim']) == 1:
+                                _ds_var_dim = list(config['ds_region_dim'].values())[0]
+                                _var_dims.add(_ds_var_dim)
+                            else:
+                                raise ValueError(
+                                    f'MCDS paths containing multiple datasets {config["ds_region_dim"]}, '
+                                    'please specify which one to open with the "var_dim" parameter.'
+                                )
+                        else:
+                            _ds_var_dim = config['region_dim']
+                            _var_dims.add(config['region_dim'])
+                        _final_paths.append(f'{path}/{_ds_var_dim}')
+                    else:
+                        if var_dim not in config['ds_region_dim'].keys():
+                            raise KeyError(f'{path} do not have {var_dim}')
+                        _var_dims.add(var_dim)
+                        _final_paths.append(f'{path}/{var_dim}')
+            else:
+                # single netcdf or zarr file
+                _final_paths.append(path)
+
+        if has_dataset and len(_var_dims) != 1:
+            raise ValueError(f'Some MCDS dataset has multiple var_dim, please specify var_dim parameter.')
+
+        # determine engine
         if engine is None:
-            print(f"Open MCDS with netcdf4 engine.")
-        else:
-            print(f"Open MCDS with {engine} engine.")
-        if isinstance(mcds_paths, str) and "*" not in mcds_paths:
-            ds = xr.open_dataset(mcds_paths, engine=engine)
+            engine = determine_engine(_final_paths)
+
+        if len(_final_paths) == 1:
+            ds = xr.open_dataset(_final_paths[0], engine=engine)
         else:
             with dask.config.set(
-                **{"array.slicing.split_large_chunks": split_large_chunks}
-            ):
+                    **{"array.slicing.split_large_chunks": split_large_chunks}):
                 ds = xr.open_mfdataset(
-                    mcds_paths,
+                    _final_paths,
                     parallel=False,
                     combine="nested",
                     concat_dim=obs_dim,
                     engine=engine,
                 )
+
         if use_obs is not None:
             with dask.config.set(
-                **{"array.slicing.split_large_chunks": split_large_chunks}
-            ):
+                    **{"array.slicing.split_large_chunks": split_large_chunks}):
                 use_obs_bool = ds.get_index(obs_dim).isin(use_obs)
                 ds = ds.sel({obs_dim: use_obs_bool})
         return cls(ds).squeeze()
@@ -499,6 +554,18 @@ class MCDS(xr.Dataset):
             self.coords[f"{var_dim}_{mc_type}_{name}"] = column
         return hvf_df
 
+    def get_score_adata(self, var_dim, mc_type, quant_type, obs_dim='cell', sparse=True):
+        da = self[f'{var_dim}_da_{mc_type}-{quant_type}']
+        if sparse:
+            from scipy.sparse import csr_matrix
+            data = csr_matrix(da.transpose(obs_dim, var_dim).values)
+        else:
+            data = da.transpose(obs_dim, var_dim).values
+        adata = anndata.AnnData(X=data,
+                                obs=pd.DataFrame([], index=da.get_index(obs_dim)),
+                                var=pd.DataFrame([], index=da.get_index(var_dim)))
+        return adata
+
     def get_adata(
         self,
         mc_type,
@@ -638,3 +705,8 @@ class MCDS(xr.Dataset):
 
         _region_ds = RegionDS(self, region_dim=region_dim)
         return _region_ds
+
+    # TODO
+    # def save()
+    # save mcds to a location, if the location is a MCDS dataset, auto save to sub_dir and modify .ALLCools
+    # deal with large save issue, load by chunk and write append

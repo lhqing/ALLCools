@@ -2,8 +2,7 @@ import xarray as xr
 import numpy as np
 import pandas as pd
 from ..mcds import RegionDS
-from ..mcds.region_ds_utilities import update_region_ds_config
-from ..mcds.utilities import write_ordered_chunks
+from ..mcds.utilities import write_ordered_chunks, update_dataset_config
 import subprocess
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
@@ -221,9 +220,7 @@ def call_dmr(
     )
     subprocess.run(f"rm -rf {chunk_dir}", shell=True)
 
-    update_region_ds_config(
-        output_dir=output_dir, new_dataset_dim={"dmr": "dmr"}, change_region_dim="dmr"
-    )
+    update_dataset_config(output_dir=output_dir, add_ds_region_dim={"dmr": "dmr"}, change_region_dim="dmr")
 
     if replicate_label is not None:
         collapse_replicates(output_dir, replicate_label)

@@ -236,10 +236,11 @@ def table_to_allc(
         num_upstream_bases=0,
         num_downstream_bases=2,
         add_chr=False,
+        sort=True
 ):
     unzip_path = f'{output_prefix}.allc.tsv'
     zip_path = f'{output_prefix}.allc.tsv.gz'
-    with open(unzip_path, 'a') as out_f:
+    with open(unzip_path, 'w') as out_f:
         chunks = pd.read_csv(input_path,
                              chunksize=chunk_size,
                              sep=sep,
@@ -265,15 +266,24 @@ def table_to_allc(
 
     # sort, bgzip, tabix allc
     try:
-        subprocess.run(
-            f'sort -k1,1 -k2,2n {unzip_path} -S 10G | '  # sort
-            f'bgzip -c > {zip_path} && '  # bgzip
-            f'tabix -f -b 2 -e 2 -s 1 {zip_path} && '  # tabix
-            f'rm -f {unzip_path}',  # remove uncompressed file
-            shell=True,
-            check=True,
-            encoding='utf8',
-            stderr=subprocess.PIPE)
+        if sort:
+            subprocess.run(
+                f'sort -k1,1 -k2,2n {unzip_path} -S 10G | '  # sort
+                f'bgzip -c > {zip_path} && '  # bgzip
+                f'tabix -f -b 2 -e 2 -s 1 {zip_path} && '  # tabix
+                f'rm -f {unzip_path}',  # remove uncompressed file
+                shell=True,
+                check=True,
+                encoding='utf8',
+                stderr=subprocess.PIPE)
+        else:
+            subprocess.run(
+                f'bgzip -f {unzip_path} && '  # bgzip
+                f'tabix -f -b 2 -e 2 -s 1 {zip_path}',  # tabix
+                shell=True,
+                check=True,
+                encoding='utf8',
+                stderr=subprocess.PIPE)
     except subprocess.CalledProcessError as e:
         print(e.stderr)
         raise e

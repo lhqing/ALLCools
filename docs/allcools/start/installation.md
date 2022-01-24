@@ -52,6 +52,7 @@ dependencies:
   - biopython
   - dask
   - numba
+  - htslib>=1.9
   - jupyter
   - jupyter_contrib_nbextensions
   - leidenalg
@@ -64,6 +65,7 @@ dependencies:
   - pyBigWig
   - pynndescent
   - pysam
+  - pytables
   - scanpy
   - scikit-learn
   - seaborn

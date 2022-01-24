@@ -23,6 +23,7 @@ dependencies:
   - pyBigWig
   - pynndescent
   - pysam
+  - pytables
   - scanpy
   - scikit-learn
   - seaborn

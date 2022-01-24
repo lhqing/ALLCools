@@ -25,6 +25,7 @@ def bin_sf(cov, mc, p):
     if cov > mc:
         return stats.binom(cov, p).sf(mc)
     else:
+        # cov == mc, sf = 0
         return 0
 
 
@@ -190,3 +191,7 @@ def generate_mcad(
     if cleanup:
         subprocess.run(["rm", "-rf", str(temp_dir)])
     return
+
+
+# TODO
+# adata_to_zarr

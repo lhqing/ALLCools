@@ -1,5 +1,4 @@
 import subprocess
-import shlex
 import glob
 import logging
 import pathlib
@@ -9,6 +8,8 @@ import pandas as pd
 import xarray as xr
 import warnings
 from typing import Union
+
+import yaml
 
 log = logging.getLogger()
 
@@ -347,7 +348,10 @@ def determine_engine(dataset_paths):
             # single mcds path
             engine = _single_path(dataset_paths)
     else:
-        engine = _multi_paths(dataset_paths)
+        if len(dataset_paths) == 1:
+            engine = _single_path(dataset_paths[0])
+        else:
+            engine = _multi_paths(dataset_paths)
     return engine
 
 
@@ -445,4 +449,30 @@ def convert_to_zarr(paths):
     else:
         for path in paths:
             convert_to_zarr(path)
+    return
+
+
+def update_dataset_config(output_dir, add_ds_region_dim=None, change_region_dim=None, config=None,
+                          add_ds_sample_dim=None):
+    # update RegionDS default dimension
+    try:
+        with open(f"{output_dir}/.ALLCools", "r") as f:
+            _config = yaml.load(f, yaml.SafeLoader)
+    except FileNotFoundError:
+        _config = {"region_dim": None, "ds_region_dim": {}, "ds_sample_dim": {}}
+
+    if config is not None:
+        _config.update(config)
+
+    if change_region_dim is not None:
+        _config["region_dim"] = change_region_dim
+
+    if add_ds_region_dim is not None:
+        _config["ds_region_dim"].update(add_ds_region_dim)
+
+    if add_ds_sample_dim is not None:
+        _config["ds_sample_dim"].update(add_ds_sample_dim)
+
+    with open(f"{output_dir}/.ALLCools", "w") as f:
+        yaml.dump(_config, f)
     return

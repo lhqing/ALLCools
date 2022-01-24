@@ -432,10 +432,20 @@ def standardize_allc(
     -------
 
     """
+    # first check allc tabix and chrom order
     genome_dict = parse_chrom_size(chrom_size_path)
     if check_tbi_chroms(allc_path, genome_dict):
+        # tabix exist, younger than allc, chrom order are the same as genome dict
         # means ALLC is already standard
         return
+
+    # TODO
+    # add an option for order or not
+    # try bgzip and tabix first, if success, the file is at least sorted
+    # if failed, need to first sort the file
+    # then after sort, do bgzip and tabix
+    # read allc by chrom, write to final tmp
+    # tabix final tmp, remove everything else
 
     if "chr1" in genome_dict:
         raw_add_chr = True
