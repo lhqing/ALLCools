@@ -287,7 +287,7 @@ def generate_dataset(allc_table, output_path, regions, quantifiers, chrom_size_p
     # determine parallel chunk size
     n_sample = allc_table.size
     if chunk_size is None:
-        chunk_size = min(n_sample, 10)
+        chunk_size = min(n_sample, 50)
 
     # prepare regions and determine quantifiers
     pathlib.Path(output_path).mkdir(exist_ok=True)

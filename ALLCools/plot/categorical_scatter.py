@@ -50,6 +50,7 @@ def categorical_scatter(
     outline_kws=None,
     scatter_kws=None,
     return_fig=False,
+    rasterized='auto',
 ):
     """
     Plot scatter plot with these options:
@@ -125,8 +126,19 @@ def categorical_scatter(
                 _data, seed=1, size=max_points, coords=["x", "y"]
             )
 
+    # determine rasterized
+    if rasterized == 'auto':
+        if _data.shape[0] > 200:
+            rasterized = True
+        else:
+            rasterized = False
+
     # default scatter options
-    _scatter_kws = {"linewidth": 0, "s": s, "legend": None, "palette": palette}
+    _scatter_kws = {"linewidth": 0,
+                    "s": s,
+                    "legend": None,
+                    "palette": palette,
+                    'rasterized': rasterized}
     if scatter_kws is not None:
         _scatter_kws.update(scatter_kws)
 

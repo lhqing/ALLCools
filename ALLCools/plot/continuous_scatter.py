@@ -78,6 +78,7 @@ def continuous_scatter(
     outline_kws=None,
     outline_pad=2,
     return_fig=False,
+    rasterized='auto',
 ):
     if isinstance(data, anndata.AnnData):
         adata = data
@@ -103,8 +104,18 @@ def continuous_scatter(
                 _data, seed=1, size=max_points, coords=["x", "y"]
             )
 
+    # determine rasterized
+    if rasterized == 'auto':
+        if _data.shape[0] > 200:
+            rasterized = True
+        else:
+            rasterized = False
+
     # default scatter options
-    _scatter_kws = {"linewidth": 0, "s": s, "legend": None}
+    _scatter_kws = {"linewidth": 0,
+                    "s": s,
+                    "legend": None,
+                    'rasterized': rasterized}
     if scatter_kws is not None:
         _scatter_kws.update(scatter_kws)
 
