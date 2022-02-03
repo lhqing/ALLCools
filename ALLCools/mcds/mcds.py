@@ -358,12 +358,24 @@ class MCDS(xr.Dataset):
         pd.DataFrame
         """
         var_dim = self._verify_dim(var_dim, mode='var')
+        if f"{var_dim}_bin_start" in self.coords:
+            start_name = f"{var_dim}_bin_start"
+        elif f"{var_dim}_start" in self.coords:
+            start_name = f"{var_dim}_start"
+        else:
+            raise KeyError(f'Neither {var_dim}_bin_start nor {var_dim}_start exists in MCDS.coords')
+        if f"{var_dim}_bin_end" in self.coords:
+            end_name = f"{var_dim}_bin_end"
+        elif f"{var_dim}_end" in self.coords:
+            end_name = f"{var_dim}_end"
+        else:
+            raise KeyError(f'Neither {var_dim}_bin_end nor {var_dim}_end exists in MCDS.coords')
 
         bed_df = pd.DataFrame(
             [
                 self.coords[f"{var_dim}_chrom"].to_pandas(),
-                self.coords[f"{var_dim}_bin_start"].to_pandas(),
-                self.coords[f"{var_dim}_bin_end"].to_pandas(),
+                self.coords[start_name].to_pandas(),
+                self.coords[end_name].to_pandas(),
             ],
             index=["chrom", "start", "end"],
             columns=self.get_index(var_dim),
@@ -668,18 +680,33 @@ class MCDS(xr.Dataset):
         return hvf_df
 
     def get_score_adata(self, mc_type, quant_type, obs_dim=None, var_dim=None, sparse=True):
+        QUANT_TYPES = ['hypo-score', 'hyper-score']
+        if quant_type.lower() == 'hypo':
+            quant_type = 'hypo-score'
+        elif quant_type.lower() == 'hyper':
+            quant_type = 'hyper_score'
+        else:
+            pass
+        if quant_type not in QUANT_TYPES:
+            raise ValueError(f'quant_type need to be in {QUANT_TYPES}, got {quant_type}.')
+
         obs_dim = self._verify_dim(obs_dim, mode='obs')
         var_dim = self._verify_dim(var_dim, mode='var')
 
         da = self[f'{var_dim}_da_{mc_type}-{quant_type}']
+        # TODO load by chunk and parallel to make IO faster
         if sparse:
             from scipy.sparse import csr_matrix
             data = csr_matrix(da.transpose(obs_dim, var_dim).values)
         else:
             data = da.transpose(obs_dim, var_dim).values
+        # TODO validate chrom coords
         adata = anndata.AnnData(X=data,
                                 obs=pd.DataFrame([], index=da.get_index(obs_dim)),
-                                var=pd.DataFrame([], index=da.get_index(var_dim)))
+                                var=pd.DataFrame({'chrom': da.coords[f'{var_dim}_chrom'],
+                                                  'start': da.coords[f'{var_dim}_start'],
+                                                  'end': da.coords[f'{var_dim}_end']},
+                                                 index=da.get_index(var_dim)))
         return adata
 
     def get_adata(

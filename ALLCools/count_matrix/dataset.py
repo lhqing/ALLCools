@@ -6,6 +6,7 @@ import pandas as pd
 import xarray as xr
 import numpy as np
 import pysam
+import subprocess
 from functools import lru_cache
 from scipy import stats
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -123,6 +124,7 @@ def determine_datasets(regions, quantifiers, chrom_size_path, tmp_dir):
         region_path = f'{tmp_dir}/{name}.regions.csv'
         region_bed_df.to_csv(region_path)
         datasets[name] = {'regions': region_path, 'quant': []}
+
     for quantifier in quantifiers:
         if len(quantifier) < 3:
             raise ValueError(
@@ -294,6 +296,11 @@ def generate_dataset(allc_table, output_path, regions, quantifiers, chrom_size_p
     tmp_dir = f'{output_path}_tmp'
     datasets = determine_datasets(regions, quantifiers, chrom_size_path, tmp_dir)
 
+    # copy chrom_size_path to output_path
+    subprocess.run(['cp', '-f', chrom_size_path,
+                    f'{output_path}/chrom_sizes.txt'],
+                   check=True)
+
     chunk_records = defaultdict(dict)
     with ProcessPoolExecutor(cpu) as exe:
         futures = {}
@@ -331,16 +338,25 @@ def generate_dataset(allc_table, output_path, regions, quantifiers, chrom_size_p
                 ds.to_zarr(f'{output_path}/{region_dim}',
                            append_dim=obs_dim)
             rmtree(chunk_path)
+
+        # save region coords to the ds
+        bed = pd.read_csv(f'{tmp_dir}/{region_dim}.regions.csv', index_col=0)
+        bed.columns = [f'{region_dim}_chrom', f'{region_dim}_start', f'{region_dim}_end']
+        bed.index.name = region_dim
+        # append region bed to the saved ds
+        ds = xr.Dataset()
+        for col, data in bed.items():
+            ds.coords[col] = data
+        ds.to_zarr(f'{output_path}/{region_dim}', mode='a')
+
     # delete tmp
     rmtree(tmp_dir)
 
     from ..mcds.utilities import update_dataset_config
     update_dataset_config(output_path,
                           config={"region_dim": None,
-                                  "ds_region_dim": {region_dim: region_dim for region_dim in datasets.keys()},
-                                  "ds_sample_dim": {region_dim: obs_dim for region_dim in datasets.keys()}})
-
+                                  "ds_region_dim": {region_dim: region_dim
+                                                    for region_dim in datasets.keys()},
+                                  "ds_sample_dim": {region_dim: obs_dim
+                                                    for region_dim in datasets.keys()}})
     return output_path
-
-# TODO
-# merge multiple sources to a single dataset

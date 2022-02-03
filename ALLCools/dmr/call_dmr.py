@@ -220,7 +220,9 @@ def call_dmr(
     )
     subprocess.run(f"rm -rf {chunk_dir}", shell=True)
 
-    update_dataset_config(output_dir=output_dir, add_ds_region_dim={"dmr": "dmr"}, change_region_dim="dmr")
+    update_dataset_config(output_dir=output_dir,
+                          add_ds_region_dim={"dmr": "dmr"},
+                          change_region_dim="dmr")
 
     if replicate_label is not None:
         collapse_replicates(output_dir, replicate_label)

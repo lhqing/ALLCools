@@ -489,7 +489,7 @@ class REPTILE:
             random_state=42,
             cpu=1,
             tpot_generations=5,
-            tpot_max_time_mins=20,
+            tpot_max_time_mins=60,
             **tpot_kwargs,
     ):
         print("Training model with these parameters:")
@@ -559,10 +559,10 @@ class REPTILE:
         self._dmr_model = joblib.load(model_path)
         return
 
-    def fit(self, cpu=10):
+    def fit(self, cpu=10, **kwargs):
         """Convenient function to train everything by default parameters"""
-        self.train_region_model(cpu=cpu)
-        self.train_dmr_model(cpu=cpu)
+        self.train_region_model(cpu=cpu, **kwargs)
+        self.train_dmr_model(cpu=cpu, **kwargs)
         return
 
     def _predict(self, region_dim, cpu, mask_cutoff):
