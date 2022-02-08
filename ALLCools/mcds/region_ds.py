@@ -50,13 +50,13 @@ def _region_bed_sorted(bed_path, g, bed_sorted):
         return bed.sort(g=g)
 
 
-def _bed_intersection(bed: pybedtools.BedTool, path, g, region_index, bed_sorted):
+def _bed_intersection(bed: pybedtools.BedTool, path, g, region_index, bed_sorted, fraction=0.2):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         query_bed = _region_bed_sorted(path, g, bed_sorted)
         try:
             df = bed.intersect(
-                query_bed, wa=True, f=0.2, g=g, sorted=True
+                query_bed, wa=True, f=fraction, g=g, sorted=True
             ).to_dataframe()
             if df.shape[0] == 0:
                 regions_idx = pd.Series([])
@@ -121,6 +121,7 @@ def _annotate_by_beds_worker(
         dim,
         output_path,
         bed_sorted,
+        fraction=0.2,
         **kwargs,
 ):
     len(kwargs)
@@ -145,6 +146,7 @@ def _annotate_by_beds_worker(
                 bed_sorted=bed_sorted,
                 g=chrom_size_path,
                 region_index=region_ds.get_index(region_ds.region_dim),
+                fraction=fraction
             )
             total_values[sample] = values.astype(dtype)
         total_values = pd.DataFrame(total_values)
@@ -676,6 +678,7 @@ class RegionDS(xr.Dataset):
             dtype="bool",
             bed_sorted=True,
             cpu=1,
+            fraction=0.2,
             save=True,
     ):
         bed_tmp = pathlib.Path(
@@ -704,6 +707,7 @@ class RegionDS(xr.Dataset):
             chunk_size=chunk_size,
             dtype=dtype,
             bed_sorted=bed_sorted,
+            fraction=fraction
         )
         self._chunk_annotation_executor(
             _annotate_by_beds_worker, cpu=cpu, save=save, **kwargs
