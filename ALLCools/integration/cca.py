@@ -29,7 +29,7 @@ def simple_cca(adata, group_col, n_components=50, random_state=0):
     return
 
 
-def incremental_cca(a, b, chunk_size=10000, random_state=0):
+def incremental_cca(a, b, max_chunk_size=10000, random_state=0):
     """
     Perform Incremental CCA by chunk dot product and IncrementalPCA
 
@@ -39,7 +39,7 @@ def incremental_cca(a, b, chunk_size=10000, random_state=0):
         dask.Array of dataset a
     b
         dask.Array of dataset b
-    chunk_size
+    max_chunk_size
         Chunk size for Incremental fit and transform, the larger the better as long as MEM is enough
     random_state
 
@@ -57,6 +57,8 @@ def incremental_cca(a, b, chunk_size=10000, random_state=0):
 
     # partial fit
     n_sample = a.shape[0]
+    n_chunks = n_sample // max_chunk_size + 1
+    chunk_size = int(n_sample / n_chunks) + 1
     for chunk_start in range(0, n_sample, chunk_size):
         print(chunk_start)
         X_chunk = a[chunk_start:chunk_start + chunk_size, :].dot(b.T)

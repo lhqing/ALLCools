@@ -43,7 +43,7 @@ def calculate_direct_confusion(left_part, right_part):
     records = []
     for left_cluster, left_row in left_confusion_portion.iterrows():
         for right_cluster, right_row in right_confusion_portion.iterrows():
-            union_index = left_row.index | right_row.index
+            union_index = left_row.index.intersection(right_row.index)
             left_row = left_row.reindex(union_index).fillna(0)
             right_row = right_row.reindex(union_index).fillna(0)
             overlap_value = np.min([left_row.values, right_row.values], axis=0).sum()
