@@ -98,7 +98,14 @@ class MCDS(xr.Dataset):
             return dim
 
     @classmethod
-    def open(cls, mcds_paths, obs_dim="cell", use_obs=None, var_dim=None, split_large_chunks=True, engine=None):
+    def open(cls,
+             mcds_paths,
+             obs_dim="cell",
+             use_obs=None,
+             var_dim=None,
+             chunks='auto',
+             split_large_chunks=True,
+             engine=None):
         """
         Take one or multiple MCDS file paths and create single MCDS concatenated on obs_dim
 
@@ -112,6 +119,10 @@ class MCDS(xr.Dataset):
             Subset the MCDS by a list of observation IDs.
         var_dim
             Which var_dim dataset to use, needed when MCDS has multiple var_dim stored in the same directory
+        chunks
+            if not None, xarray will use chunks to load data as dask.array. The "auto" means xarray will
+            determine chunks automatically. For more options, read the `xarray.open_dataset` `chunks` parameter
+            documentation. If None, xarray will not use dask, which is not desired in most cases.
         split_large_chunks
             Whether split large chunks in dask config array.slicing.split_large_chunks
         engine
@@ -141,6 +152,7 @@ class MCDS(xr.Dataset):
                               obs_dim=obs_dim,
                               use_obs=use_obs,
                               var_dim=_var_dim,
+                              chunks=chunks,
                               split_large_chunks=split_large_chunks,
                               engine=engine)
                 ds_list.append(ds)
@@ -196,7 +208,7 @@ class MCDS(xr.Dataset):
             engine = determine_engine(_final_paths)
 
         if len(_final_paths) == 1:
-            ds = xr.open_dataset(_final_paths[0], engine=engine)
+            ds = xr.open_dataset(_final_paths[0], engine=engine, chunks=chunks)
         else:
             with dask.config.set(
                     **{"array.slicing.split_large_chunks": split_large_chunks}):
@@ -205,6 +217,7 @@ class MCDS(xr.Dataset):
                     parallel=False,
                     combine="nested",
                     concat_dim=obs_dim,
+                    chunks=chunks,
                     engine=engine,
                 )
 
