@@ -38,6 +38,11 @@ class MCDS(xr.Dataset):
         )
         self.obs_dim = obs_dim
         self.var_dim = var_dim
+
+        # validate obs_dim is unique
+        if self.obs_names.duplicated().sum() != 0:
+            print('Warning: obs_names are not unique.')
+
         return
 
     @property
@@ -78,6 +83,22 @@ class MCDS(xr.Dataset):
         self.attrs['obs_dim'] = obs_dim
         return
 
+    @property
+    def obs_names(self):
+        if self.obs_dim is None:
+            return None
+        else:
+            obs_index = self.get_index(self.obs_dim)
+            return obs_index
+
+    @property
+    def var_names(self):
+        if self.var_dim is None:
+            return None
+        else:
+            var_index = self.get_index(self.var_dim)
+            return var_index
+
     def _verify_dim(self, dim, mode):
         if dim is None:
             if mode == 'var':
@@ -105,6 +126,7 @@ class MCDS(xr.Dataset):
              var_dim=None,
              chunks='auto',
              split_large_chunks=True,
+             obj_to_str=True,
              engine=None):
         """
         Take one or multiple MCDS file paths and create single MCDS concatenated on obs_dim
@@ -125,6 +147,8 @@ class MCDS(xr.Dataset):
             documentation. If None, xarray will not use dask, which is not desired in most cases.
         split_large_chunks
             Whether split large chunks in dask config array.slicing.split_large_chunks
+        obj_to_str
+            Whether turn object coordinates into string data type
         engine
             xarray engine used to store MCDS, if multiple MCDS provided, the engine need to be the same
         Returns
@@ -208,7 +232,11 @@ class MCDS(xr.Dataset):
             engine = determine_engine(_final_paths)
 
         if len(_final_paths) == 1:
-            ds = xr.open_dataset(_final_paths[0], engine=engine, chunks=chunks)
+            ds = xr.open_dataset(
+                _final_paths[0],
+                engine=engine,
+                # chunks=chunks  # do not apply chunks parameter here, apply in the end
+            )
         else:
             with dask.config.set(
                     **{"array.slicing.split_large_chunks": split_large_chunks}):
@@ -217,7 +245,7 @@ class MCDS(xr.Dataset):
                     parallel=False,
                     combine="nested",
                     concat_dim=obs_dim,
-                    chunks=chunks,
+                    # chunks=chunks,  # do not apply chunks parameter here, apply in the end
                     engine=engine,
                 )
 
@@ -226,6 +254,16 @@ class MCDS(xr.Dataset):
                     **{"array.slicing.split_large_chunks": split_large_chunks}):
                 use_obs_bool = ds.get_index(obs_dim).isin(use_obs)
                 ds = ds.sel({obs_dim: use_obs_bool})
+
+        # change object dtype to string
+        if obj_to_str:
+            for k in ds.coords.keys():
+                if ds.coords[k].dtype == 'O':
+                    ds.coords[k] = ds.coords[k].astype(str)
+
+        if chunks is not None:
+            ds = ds.chunk(chunks=chunks)
+
         return cls(ds, obs_dim=obs_dim, var_dim=var_dim).squeeze()
 
     def add_mc_frac(

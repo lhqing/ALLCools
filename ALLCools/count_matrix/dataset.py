@@ -199,7 +199,7 @@ def calculate_pv(data, reverse_value, obs_dim, var_dim, cutoff=0.9):
     for cell in data.get_index(obs_dim):
         value = cell_sf(data.sel(cell=cell).to_pandas())
         pv.append(value)
-    pv = np.array(pv, dtype='float16')
+    pv = np.array(pv)
 
     if reverse_value:
         pv = 1 - pv
@@ -209,11 +209,17 @@ def calculate_pv(data, reverse_value, obs_dim, var_dim, cutoff=0.9):
     pv = xr.DataArray(pv,
                       coords=[data.coords[obs_dim], data.coords[var_dim]],
                       dims=[obs_dim, var_dim])
+    pv = pv.astype('float16')
     return pv
 
 
-def count_single_zarr(allc_table, region_config, obs_dim, region_dim,
-                      output_path):
+def count_single_zarr(allc_table,
+                      region_config,
+                      obs_dim,
+                      region_dim,
+                      output_path,
+                      obs_dim_dtype,
+                      count_dtype='uint32'):
     """process single region set and its quantifiers"""
     # count all ALLC and mC types that's needed for quantifiers if this region_dim
     count_ds = count_single_region_set(allc_table=allc_table,
@@ -229,8 +235,10 @@ def count_single_zarr(allc_table, region_config, obs_dim, region_dim,
             count_mc_types += quant.mc_types
     count_mc_types = list(set(count_mc_types))
     if len(count_mc_types) > 0:
-        total_ds[f'{region_dim}_da'] = count_ds.sel(
-            mc_type=count_mc_types)[f'{region_dim}_da']
+        count_da = count_ds.sel(mc_type=count_mc_types)[f'{region_dim}_da']
+        max_int = np.iinfo(count_dtype).max
+        count_da = xr.where(count_da > max_int, max_int, count_da)
+        total_ds[f'{region_dim}_da'] = count_da.astype(count_dtype)
 
     # deal with hypo-score, hyper-score quantifiers
     for quant in region_config['quant']:
@@ -253,6 +261,7 @@ def count_single_zarr(allc_table, region_config, obs_dim, region_dim,
                     **quant.kwargs)
                 total_ds[f'{region_dim}_da_{mc_type}-hyper-score'] = data
     total_ds = xr.Dataset(total_ds)
+    total_ds.coords[obs_dim] = total_ds.coords[obs_dim].astype(obs_dim_dtype)
     total_ds.to_zarr(output_path, mode='w')
     return output_path
 
@@ -286,6 +295,10 @@ def generate_dataset(allc_table, output_path, regions, quantifiers, chrom_size_p
                                  squeeze=True)
         allc_table.index.name = obs_dim
 
+    # determine index length and str dtype
+    max_length = allc_table.index.map(lambda idx: len(idx)).max()
+    obs_dim_dtype = f'<U{max_length}'
+
     # determine parallel chunk size
     n_sample = allc_table.size
     if chunk_size is None:
@@ -314,7 +327,8 @@ def generate_dataset(allc_table, output_path, regions, quantifiers, chrom_size_p
                                region_config=region_config,
                                obs_dim=obs_dim,
                                region_dim=region_dim,
-                               output_path=chunk_path)
+                               output_path=chunk_path,
+                               obs_dim_dtype=obs_dim_dtype)
                 futures[f] = (region_dim, i)
 
         for f in as_completed(futures):
@@ -347,6 +361,10 @@ def generate_dataset(allc_table, output_path, regions, quantifiers, chrom_size_p
         ds = xr.Dataset()
         for col, data in bed.items():
             ds.coords[col] = data
+        # change object dtype to string
+        for k in ds.coords.keys():
+            if ds.coords[k].dtype == 'O':
+                ds.coords[k] = ds.coords[k].astype(str)
         ds.to_zarr(f'{output_path}/{region_dim}', mode='a')
 
     # delete tmp
