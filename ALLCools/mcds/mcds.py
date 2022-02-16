@@ -368,16 +368,21 @@ class MCDS(xr.Dataset):
         obs_dim = self._verify_dim(obs_dim, mode='obs')
         var_dim = self._verify_dim(var_dim, mode='var')
 
-        _da = self[f"{var_dim}_da"]
-        if 'mc_type' in _da.dims:
-            feature_cov_mean = _da.sel(count_type="cov").sum(dim="mc_type").mean(dim=obs_dim).squeeze().to_pandas()
+        cov_mean_key = f"{var_dim}_cov_mean"
+        if cov_mean_key in self.coords:
+            print(f'Using existing {cov_mean_key} in MCDS.coords, if this is not desired, delete the '
+                  f'existing results by `del mcds.coords["{cov_mean_key}"]` and recalculate.')
+            feature_cov_mean = self.coords[cov_mean_key].to_pandas()
         else:
-            feature_cov_mean = _da.sel(count_type="cov").mean(dim=obs_dim).squeeze().to_pandas()
-        self.coords[f"{var_dim}_cov_mean"] = feature_cov_mean
-
-        print(
-            f"Feature {var_dim} mean cov across cells added in MCDS.coords['{var_dim}_cov_mean']."
-        )
+            _da = self[f"{var_dim}_da"]
+            if 'mc_type' in _da.dims:
+                feature_cov_mean = _da.sel(count_type="cov").sum(dim="mc_type").mean(dim=obs_dim).squeeze().to_pandas()
+            else:
+                feature_cov_mean = _da.sel(count_type="cov").mean(dim=obs_dim).squeeze().to_pandas()
+            self.coords[cov_mean_key] = feature_cov_mean
+            print(
+                f"Feature {var_dim} mean cov across cells added in MCDS.coords['{cov_mean_key}']."
+            )
         if plot:
             cutoff_vs_cell_remain(feature_cov_mean, name=f"{var_dim}_cov_mean")
         return
