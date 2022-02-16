@@ -6,9 +6,8 @@ import msgpack
 import pandas as pd
 import xarray as xr
 
-from .._doc import *
-from .._open import open_allc
-from ..utilities import parse_mc_pattern
+from ..._open import open_allc
+from ...utilities import parse_mc_pattern
 
 
 def _count_data_to_xarray(total_data: dict, allc_series):
@@ -75,8 +74,6 @@ def _count_single_cmotif_bin_on_multiple_allc(cmotif_dict_path, allc_paths,
     return mc_records, cov_records
 
 
-@doc_params(allc_table_doc=allc_table_doc,
-            cpu_basic_doc=cpu_basic_doc)
 def allc_motif_scan(allc_table, output_path, mc_contexts, c_motif_dir,
                     count_binary=True, cpu=1):
     """\

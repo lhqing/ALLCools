@@ -5,10 +5,9 @@ from collections import defaultdict
 import msgpack
 import pandas as pd
 
-from .._doc import *
 from .fimo import _scan_motif_over_fasta, _aggregate_motif_beds
 from ..dmr.get_fasta import get_fasta
-from .._bam_to_allc import _get_chromosome_sequence_upper, _read_faidx
+from ..._bam_to_allc import _get_chromosome_sequence_upper, _read_faidx
 
 
 def _generate_c_motif_database(motif_bed, fasta_path, output_dir, bin_size=10000000):
@@ -105,8 +104,6 @@ def _generate_c_motif_database(motif_bed, fasta_path, output_dir, bin_size=10000
     return
 
 
-@doc_params(chrom_size_path_doc=chrom_size_path_doc,
-            cpu_basic_doc=cpu_basic_doc)
 def generate_cmotif_database(bed_file_paths,
                              reference_fasta,
                              motif_files,

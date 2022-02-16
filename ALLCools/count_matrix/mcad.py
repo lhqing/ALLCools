@@ -192,6 +192,3 @@ def generate_mcad(
         subprocess.run(["rm", "-rf", str(temp_dir)])
     return
 
-
-# TODO
-# adata_to_zarr

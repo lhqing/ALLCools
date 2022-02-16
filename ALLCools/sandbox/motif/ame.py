@@ -8,7 +8,6 @@ import pandas as pd
 
 from .utilities import split_meme_motif_file
 from ..dmr.get_fasta import get_fasta
-from .._doc import *
 
 
 def _single_ame_runner(fasta_path, motif_paths, ame_kws_str=''):
@@ -27,7 +26,6 @@ def _single_ame_runner(fasta_path, motif_paths, ame_kws_str=''):
     return cmd
 
 
-@doc_params(chrom_size_path_doc=chrom_size_path_doc)
 def ame(bed_file,
         motif_files,
         output_path,

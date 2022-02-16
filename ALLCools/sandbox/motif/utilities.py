@@ -1,14 +1,7 @@
 import logomaker
 import numpy as np
 import pandas as pd
-import pathlib
 import re
-import shlex
-import subprocess
-from pybedtools import BedTool, cleanup
-
-from .._open import open_gz
-from ..utilities import parse_chrom_size
 
 
 def meme_to_homer(meme_path, homer_path, score_power=0.85):

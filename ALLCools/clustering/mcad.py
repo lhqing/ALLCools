@@ -33,7 +33,7 @@ def remove_black_list_region(adata, black_list_path, f=0.2):
             black_feature_id = pd.Index(
                 feature_bed_df.reset_index()
                 .set_index(["chrom", "start", "end"])
-                .loc[black_feature_index]["region"]
+                .loc[black_feature_index][feature_bed_df.index.name]
             )
             print(
                 f"{black_feature_id.size} features removed due to overlapping"
@@ -65,25 +65,24 @@ def binarize_matrix(adata, cutoff=0.95):
     return
 
 
-def filter_regions(adata, hypo_cutoff=None):
+def filter_regions(adata, hypo_percent=0.5):
     """
-    Filter regions based on their
+    Filter regions based on % of cells having non-zero scores.
 
     Parameters
     ----------
     adata
-    hypo_cutoff
-        min number of cells that are hypo-methylated (1) in this region.
-        If None, will use adata.shape[0] * 0.003
+    hypo_percent
+        min % of cells that are non-zero in this region.
 
     Returns
     -------
 
     """
-    if hypo_cutoff is None:
-        hypo_cutoff = adata.shape[0] * 0.003
-    hypo_judge = adata.X.sum(axis=0).A1 > hypo_cutoff
+    n_cell = int(adata.shape[0] * hypo_percent / 100)
+    hypo_judge = (adata.X > 0).sum(axis=0).A1 > n_cell
     adata._inplace_subset_var(hypo_judge)
+    print(f'{hypo_judge.sum()} regions remained, with # of non-zero cells > {n_cell}.')
     return
 
 

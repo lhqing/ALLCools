@@ -1,17 +1,18 @@
 import pathlib
+import subprocess
+import warnings
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from itertools import combinations
+from typing import List
 
 import anndata
-import pandas as pd
-import xarray as xr
-import warnings
-import scanpy as sc
 import numpy as np
-from sklearn.metrics import roc_auc_score
-from itertools import combinations
-from concurrent.futures import ProcessPoolExecutor, as_completed
-import subprocess
-from typing import List
+import pandas as pd
+import scanpy as sc
+import xarray as xr
 from sklearn.metrics import pairwise_distances
+from sklearn.metrics import roc_auc_score
+
 from ..mcds import MCDS
 
 
@@ -153,8 +154,8 @@ class PairwiseDMG:
             self,
             x,
             groups,
+            var_dim,
             obs_dim="cell",
-            var_dim="gene",
             outlier="Outlier",
             cleanup=True,
             selected_pairs: List[tuple] = None,
@@ -424,13 +425,13 @@ def _one_vs_rest_dmr_runner(
         adj_p_cutoff,
         fc_cutoff,
         auroc_cutoff,
-        verbose = True,
+        verbose=True,
 ):
     """one vs rest DMG runner"""
     if verbose:
         print(f"Calculating cluster {cluster} DMGs.")
 
-    mcds = MCDS.open(mcds_paths)
+    mcds = MCDS.open(mcds_paths, obs_dim=obs_dim, var_dim=var_dim)
     # determine cells to use
     cluster_judge = cell_meta[group] == cluster
     in_cells = cluster_judge[cluster_judge]

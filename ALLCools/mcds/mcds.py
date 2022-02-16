@@ -1,21 +1,50 @@
+import glob
+import pathlib
+import re
+import warnings
+from typing import Union
+
 import anndata
+import dask
+import numpy as np
 import pandas as pd
 import xarray as xr
-import numpy as np
-import pathlib
-import glob
 import yaml
 from pybedtools import BedTool
-import dask
-import re
-from typing import Union
-import warnings
+
 from .utilities import (
     highly_variable_methylation_feature,
     calculate_posterior_mc_frac,
     determine_engine,
 )
 from ..plot.qc_plots import cutoff_vs_cell_remain, plot_dispersion
+
+
+def make_obs_df_var_df(use_data, obs_dim, var_dim):
+    obs_df = pd.DataFrame([], index=use_data.get_index(obs_dim).astype(str))
+    var_df = pd.DataFrame([], index=use_data.get_index(var_dim).astype(str))
+    coord_prefix = re.compile(f"({obs_dim}|{var_dim})_")
+    for k, v in use_data.coords.items():
+        if k in [obs_dim, var_dim]:
+            continue
+        try:
+            # v.dims should be size 1
+            if v.dims[0] == obs_dim:
+                series = v.to_pandas()
+                # adata.obs_name is str type
+                series.index = series.index.astype(str)
+                obs_df[coord_prefix.sub("", k)] = series
+            elif v.dims[0] == var_dim:
+                series = v.to_pandas()
+                # adata.var_name is str type
+                series.index = series.index.astype(str)
+                var_df[coord_prefix.sub("", k)] = series
+            else:
+                pass
+        except IndexError:
+            # v.dims is 0, just ignore
+            pass
+    return obs_df, var_df
 
 
 class MCDS(xr.Dataset):
@@ -39,10 +68,10 @@ class MCDS(xr.Dataset):
         self.obs_dim = obs_dim
         self.var_dim = var_dim
 
-        # validate obs_dim is unique
-        if self.obs_names.duplicated().sum() != 0:
-            print('Warning: obs_names are not unique.')
-
+        if self.obs_dim is not None:
+            # validate obs_dim is unique
+            if self.obs_names.duplicated().sum() != 0:
+                print('Warning: obs_names are not unique.')
         return
 
     @property
@@ -752,12 +781,9 @@ class MCDS(xr.Dataset):
         else:
             data = da.transpose(obs_dim, var_dim).values
         # TODO validate chrom coords
-        adata = anndata.AnnData(X=data,
-                                obs=pd.DataFrame([], index=da.get_index(obs_dim)),
-                                var=pd.DataFrame({'chrom': da.coords[f'{var_dim}_chrom'],
-                                                  'start': da.coords[f'{var_dim}_start'],
-                                                  'end': da.coords[f'{var_dim}_end']},
-                                                 index=da.get_index(var_dim)))
+
+        obs_df, var_df = make_obs_df_var_df(da, obs_dim, var_dim)
+        adata = anndata.AnnData(X=data, obs=obs_df, var=var_df)
         return adata
 
     def get_adata(
@@ -847,29 +873,7 @@ class MCDS(xr.Dataset):
                 else:
                     use_data = frac_da.sel({"mc_type": mc_type}).squeeze()
 
-            obs_df = pd.DataFrame([], index=use_data.get_index(obs_dim).astype(str))
-            var_df = pd.DataFrame([], index=use_data.get_index(var_dim).astype(str))
-            coord_prefix = re.compile(f"({obs_dim}|{var_dim})_")
-            for k, v in use_data.coords.items():
-                if k in [obs_dim, var_dim]:
-                    continue
-                try:
-                    # v.dims should be size 1
-                    if v.dims[0] == obs_dim:
-                        series = v.to_pandas()
-                        # adata.obs_name is str type
-                        series.index = series.index.astype(str)
-                        obs_df[coord_prefix.sub("", k)] = series
-                    elif v.dims[0] == var_dim:
-                        series = v.to_pandas()
-                        # adata.var_name is str type
-                        series.index = series.index.astype(str)
-                        var_df[coord_prefix.sub("", k)] = series
-                    else:
-                        pass
-                except IndexError:
-                    # v.dims is 0, just ignore
-                    pass
+            obs_df, var_df = make_obs_df_var_df(use_data, obs_dim, var_dim)
 
             adata = anndata.AnnData(
                 X=use_data.transpose(obs_dim, var_dim).values, obs=obs_df, var=var_df
