@@ -30,13 +30,12 @@ Module Contents
    :rtype: None
 
 
-.. py:function:: filter_regions(adata, hypo_cutoff=None)
+.. py:function:: filter_regions(adata, hypo_percent=0.5)
 
-   Filter regions based on their
+   Filter regions based on % of cells having non-zero scores.
 
    :param adata:
-   :param hypo_cutoff: min number of cells that are hypo-methylated (1) in this region.
-                       If None, will use adata.shape[0] * 0.003
+   :param hypo_percent: min % of cells that are non-zero in this region.
 
 
 .. py:function:: tf_idf(data, scale_factor)

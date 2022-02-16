@@ -11,6 +11,7 @@ Subpackages
    :maxdepth: 3
 
    igv/index.rst
+   motif/index.rst
 
 
 Submodules

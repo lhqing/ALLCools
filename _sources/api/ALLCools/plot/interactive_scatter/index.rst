@@ -7,6 +7,15 @@
 Module Contents
 ---------------
 
-.. py:function:: interactive_scatter(data, hue=None, coord_base='umap', continous_cmap='viridis', size=5)
+.. py:function:: interactive_scatter(data, hue=None, coord_base='umap', continous_cmap='viridis', size=5, max_points=3000)
+
+   Plot an interactive scatter plot with plotly
+
+   :param data:
+   :param hue:
+   :param coord_base:
+   :param continous_cmap:
+   :param size:
+   :param max_points:
 
 

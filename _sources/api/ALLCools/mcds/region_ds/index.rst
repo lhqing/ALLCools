@@ -13,13 +13,13 @@ Module Contents
 .. py:function:: _region_bed_sorted(bed_path, g, bed_sorted)
 
 
-.. py:function:: _bed_intersection(bed: pybedtools.BedTool, path, g, region_index, bed_sorted)
+.. py:function:: _bed_intersection(bed: pybedtools.BedTool, path, g, region_index, bed_sorted, fraction=0.2)
 
 
 .. py:function:: _annotate_by_bigwigs_worker(dataset_path, region_dim, chrom_size_path, track_paths, output_path, dim, slop, value_type, dtype, **kwargs)
 
 
-.. py:function:: _annotate_by_beds_worker(dataset_path, region_dim, chrom_size_path, slop, track_paths, dtype, dim, output_path, bed_sorted, **kwargs)
+.. py:function:: _annotate_by_beds_worker(dataset_path, region_dim, chrom_size_path, slop, track_paths, dtype, dim, output_path, bed_sorted, fraction=0.2, **kwargs)
 
 
 .. py:function:: _fisher_exact(row, alternative='two-sided')
@@ -213,7 +213,7 @@ Module Contents
    .. py:method:: annotate_by_bigwigs(self, bigwig_table, dim, slop=100, chrom_size_path=None, value_type='mean', chunk_size='auto', dtype='float32', cpu=1, save=True)
 
 
-   .. py:method:: annotate_by_beds(self, bed_table, dim, slop=100, chrom_size_path=None, chunk_size='auto', dtype='bool', bed_sorted=True, cpu=1, save=True)
+   .. py:method:: annotate_by_beds(self, bed_table, dim, slop=100, chrom_size_path=None, chunk_size='auto', dtype='bool', bed_sorted=True, cpu=1, fraction=0.2, save=True)
 
 
    .. py:method:: get_feature(self, feature_name, dim=None, da_name=None)

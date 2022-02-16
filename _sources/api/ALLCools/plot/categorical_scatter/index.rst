@@ -7,7 +7,7 @@
 Module Contents
 ---------------
 
-.. py:function:: categorical_scatter(data, ax, coord_base='umap', x=None, y=None, hue=None, palette='auto', text_anno=None, text_anno_kws=None, text_anno_palette=None, text_transform=None, dodge_text=False, dodge_kws=None, show_legend=False, legend_kws=None, s=5, size=None, sizes: dict = None, size_norm=None, axis_format='tiny', max_points=5000, labelsize=4, linewidth=0, zoomxy=1.05, outline=None, outline_pad=3, outline_kws=None, scatter_kws=None, return_fig=False)
+.. py:function:: categorical_scatter(data, ax, coord_base='umap', x=None, y=None, hue=None, palette='auto', text_anno=None, text_anno_kws=None, text_anno_palette=None, text_transform=None, dodge_text=False, dodge_kws=None, show_legend=False, legend_kws=None, s=5, size=None, sizes: dict = None, size_norm=None, axis_format='tiny', max_points=5000, labelsize=4, linewidth=0, zoomxy=1.05, outline=None, outline_pad=3, outline_kws=None, scatter_kws=None, return_fig=False, rasterized='auto')
 
    Plot scatter plot with these options:
        - Color by a categorical variable, and generate legend of the variable if needed

@@ -14,7 +14,7 @@ Module Contents
 
 .. py:class:: PairwiseDMG(max_cell_per_group=1000, top_n=10000, adj_p_cutoff=0.001, delta_rate_cutoff=0.3, auroc_cutoff=0.9, random_state=0, n_jobs=1, verbose=True)
 
-   .. py:method:: fit_predict(self, x, groups, obs_dim='cell', var_dim='gene', outlier='Outlier', cleanup=True, selected_pairs: List[tuple] = None)
+   .. py:method:: fit_predict(self, x, groups, var_dim, obs_dim='cell', outlier='Outlier', cleanup=True, selected_pairs: List[tuple] = None)
 
       provide data and perform the pairwise DMG
 

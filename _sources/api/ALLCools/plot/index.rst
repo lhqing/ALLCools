@@ -27,7 +27,7 @@ Submodules
 Package Contents
 ----------------
 
-.. py:function:: categorical_scatter(data, ax, coord_base='umap', x=None, y=None, hue=None, palette='auto', text_anno=None, text_anno_kws=None, text_anno_palette=None, text_transform=None, dodge_text=False, dodge_kws=None, show_legend=False, legend_kws=None, s=5, size=None, sizes: dict = None, size_norm=None, axis_format='tiny', max_points=5000, labelsize=4, linewidth=0, zoomxy=1.05, outline=None, outline_pad=3, outline_kws=None, scatter_kws=None, return_fig=False)
+.. py:function:: categorical_scatter(data, ax, coord_base='umap', x=None, y=None, hue=None, palette='auto', text_anno=None, text_anno_kws=None, text_anno_palette=None, text_transform=None, dodge_text=False, dodge_kws=None, show_legend=False, legend_kws=None, s=5, size=None, sizes: dict = None, size_norm=None, axis_format='tiny', max_points=5000, labelsize=4, linewidth=0, zoomxy=1.05, outline=None, outline_pad=3, outline_kws=None, scatter_kws=None, return_fig=False, rasterized='auto')
 
    Plot scatter plot with these options:
        - Color by a categorical variable, and generate legend of the variable if needed
@@ -64,10 +64,19 @@ Package Contents
    :param scatter_kws: kws dict pass to sns.scatterplot
 
 
-.. py:function:: continuous_scatter(data, ax, coord_base='umap', x=None, y=None, scatter_kws=None, hue=None, hue_norm=None, hue_portion=0.95, cmap='viridis', colorbar=True, colorbar_label_kws=None, size=None, size_norm=None, size_portion=0.95, sizes=None, sizebar=True, text_anno=None, dodge_text=False, dodge_kws=None, text_anno_kws=None, text_anno_palette=None, text_transform=None, axis_format='tiny', max_points=5000, s=5, labelsize=4, linewidth=0.5, cax=None, zoomxy=1.05, outline=None, outline_kws=None, outline_pad=2, return_fig=False)
+.. py:function:: continuous_scatter(data, ax, coord_base='umap', x=None, y=None, scatter_kws=None, hue=None, hue_norm=None, hue_portion=0.95, cmap='viridis', colorbar=True, colorbar_label_kws=None, size=None, size_norm=None, size_portion=0.95, sizes=None, sizebar=True, text_anno=None, dodge_text=False, dodge_kws=None, text_anno_kws=None, text_anno_palette=None, text_transform=None, axis_format='tiny', max_points=5000, s=5, labelsize=4, linewidth=0.5, cax=None, zoomxy=1.05, outline=None, outline_kws=None, outline_pad=2, return_fig=False, rasterized='auto')
 
 
-.. py:function:: interactive_scatter(data, hue=None, coord_base='umap', continous_cmap='viridis', size=5)
+.. py:function:: interactive_scatter(data, hue=None, coord_base='umap', continous_cmap='viridis', size=5, max_points=3000)
+
+   Plot an interactive scatter plot with plotly
+
+   :param data:
+   :param hue:
+   :param coord_base:
+   :param continous_cmap:
+   :param size:
+   :param max_points:
 
 
 .. py:function:: add_ax_box(ax, expend=0, **patch_kws)

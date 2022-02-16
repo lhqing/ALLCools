@@ -66,7 +66,7 @@ Module Contents
    .. py:method:: prepare_training_input(self, name)
 
 
-   .. py:method:: auto_ml(data, label, output_path, train_size=0.75, random_state=42, cpu=1, tpot_generations=5, tpot_max_time_mins=20, **tpot_kwargs)
+   .. py:method:: auto_ml(data, label, output_path, train_size=0.75, random_state=42, cpu=1, tpot_generations=5, tpot_max_time_mins=60, **tpot_kwargs)
       :staticmethod:
 
 
@@ -79,7 +79,7 @@ Module Contents
    .. py:method:: train_dmr_model(self, slop=None, cpu=1, **kwargs)
 
 
-   .. py:method:: fit(self, cpu=10)
+   .. py:method:: fit(self, cpu=10, **kwargs)
 
       Convenient function to train everything by default parameters
 

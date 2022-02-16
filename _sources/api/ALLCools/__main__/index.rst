@@ -160,6 +160,9 @@ Module Contents
 .. py:function:: convert_mcds_to_zarr_register_subparser(subparser)
 
 
+.. py:function:: generate_dataset_register_subparser(subparser)
+
+
 .. py:function:: main()
 
 

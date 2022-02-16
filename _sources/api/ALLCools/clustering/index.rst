@@ -31,7 +31,6 @@ Submodules
    balanced_pca/index.rst
    dmg/index.rst
    incremental_pca/index.rst
-   integration/index.rst
    mcad/index.rst
    pvclust/index.rst
 
@@ -264,7 +263,7 @@ Package Contents
 
 .. py:class:: PairwiseDMG(max_cell_per_group=1000, top_n=10000, adj_p_cutoff=0.001, delta_rate_cutoff=0.3, auroc_cutoff=0.9, random_state=0, n_jobs=1, verbose=True)
 
-   .. py:method:: fit_predict(self, x, groups, obs_dim='cell', var_dim='gene', outlier='Outlier', cleanup=True, selected_pairs: List[tuple] = None)
+   .. py:method:: fit_predict(self, x, groups, var_dim, obs_dim='cell', outlier='Outlier', cleanup=True, selected_pairs: List[tuple] = None)
 
       provide data and perform the pairwise DMG
 
@@ -356,13 +355,12 @@ Package Contents
              * *"cluster_order" (cluster order of the "qvals")*
 
 
-.. py:function:: filter_regions(adata, hypo_cutoff=None)
+.. py:function:: filter_regions(adata, hypo_percent=0.5)
 
-   Filter regions based on their
+   Filter regions based on % of cells having non-zero scores.
 
    :param adata:
-   :param hypo_cutoff: min number of cells that are hypo-methylated (1) in this region.
-                       If None, will use adata.shape[0] * 0.003
+   :param hypo_percent: min % of cells that are non-zero in this region.
 
 
 .. py:function:: lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='X_pca', random_state=0, fit_size=None)
@@ -399,17 +397,6 @@ Package Contents
 
    :returns:
    :rtype: None
-
-
-.. py:function:: calculate_direct_confusion(left_part, right_part)
-
-   Given 2 dataframe for left/source and right/target dataset,
-   calculate the direct confusion matrix based on co-cluster labels.
-   Each dataframe only contain 2 columns, first is original cluster, second is co-cluster.
-   The returned confusion matrix will be the form of source-cluster by target-cluster.
-
-   :param left_part:
-   :param right_part:
 
 
 .. py:class:: ClusterMerge(merge_criterion, stop_criterion=None, stop_clusters=-1, n_cells=200, metric='euclidean', method='average', label_concat_str='::')

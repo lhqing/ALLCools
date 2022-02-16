@@ -56,3 +56,6 @@ Module Contents
    Convert xarray.Dataset stored in other backends into zarr backend.
 
 
+.. py:function:: update_dataset_config(output_dir, add_ds_region_dim=None, change_region_dim=None, config=None, add_ds_sample_dim=None)
+
+

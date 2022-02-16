@@ -40,6 +40,7 @@ Submodules
    _open/index.rst
    _version/index.rst
    api/index.rst
+   table_to_allc/index.rst
    utilities/index.rst
 
 

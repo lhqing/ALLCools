@@ -17,6 +17,7 @@ Submodules
    :maxdepth: 1
 
    atac/index.rst
+   dataset/index.rst
    h5ad/index.rst
    mcad/index.rst
    mcds/index.rst

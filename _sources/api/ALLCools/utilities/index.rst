@@ -17,7 +17,7 @@ Module Contents
 
    
 
-.. py:function:: reverse_compliment(seq)
+.. py:function:: reverse_complement(seq)
 
 
 .. py:function:: get_allc_chroms(allc_path)
