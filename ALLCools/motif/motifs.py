@@ -31,17 +31,18 @@ def _get_motif_threshold(motif, method, threshold_value):
 def _single_seq_single_motif_max_score(seq, motif, threshold):
     if len(seq) < motif.length:
         return 0, 0, 0
-    try:
-        # position and direction information can be collected in motif.pssm.search
-        # but not used here
-        scores = [i[1] for i in motif.pssm.search(seq, threshold=threshold)]
-        n_sites = len(scores)
+
+    # position and direction information can be collected in motif.pssm.search
+    # but not used here
+    scores = [i[1] for i in motif.pssm.search(seq.seq, threshold=threshold)]
+    n_sites = len(scores)
+    if n_sites == 0:
+        max_score = 0
+        total_score = 0
+    else:
         max_score = max(scores)
         total_score = sum(scores)
-        return n_sites, max_score, total_score
-    except ValueError:
-        # motif not found
-        return 0, 0, 0
+    return n_sites, max_score, total_score
 
 
 class MotifSet:
