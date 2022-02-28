@@ -291,6 +291,8 @@ class MCDS(xr.Dataset):
                     ds.coords[k] = ds.coords[k].astype(str)
 
         if chunks is not None:
+            if chunks == 'auto':
+                chunks = {k: min(4096, max(v // 5, 1)) for k, v in ds.dims.items()}
             ds = ds.chunk(chunks=chunks)
 
         return cls(ds, obs_dim=obs_dim, var_dim=var_dim).squeeze()

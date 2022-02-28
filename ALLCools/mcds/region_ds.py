@@ -1,19 +1,21 @@
+import os
+import pathlib
+import subprocess
+import warnings
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
+import dask
+import joblib
+import numpy as np
 import pandas as pd
+import pyBigWig
 import pybedtools
 import xarray as xr
-import numpy as np
-import dask
-import warnings
-import joblib
-import subprocess
-import pathlib
 import yaml
-import pyBigWig
 from pybedtools import BedTool
-from concurrent.futures import ProcessPoolExecutor, as_completed
-from .utilities import determine_engine, obj_to_str, write_ordered_chunks, update_dataset_config
-import os
+
 from ALLCools.utilities import parse_chrom_size
+from .utilities import determine_engine, obj_to_str, write_ordered_chunks, update_dataset_config
 
 os.environ["NUMEXPR_MAX_THREADS"] = "16"
 
@@ -291,6 +293,7 @@ class RegionDS(xr.Dataset):
             split_large_chunks=True,
             chrom_size_path=None,
             select_dir=None,
+            chunks='auto',
             engine="zarr",
     ):
         if isinstance(path, (str, pathlib.PosixPath)):
@@ -385,6 +388,17 @@ class RegionDS(xr.Dataset):
 
         if use_regions is not None:
             region_ds = region_ds.sel({region_dim: use_regions})
+
+        if chunks is not None:
+            # change object dtype to string
+            if obj_to_str:
+                for k in region_ds.coords.keys():
+                    if region_ds.coords[k].dtype == 'O':
+                        region_ds.coords[k] = region_ds.coords[k].astype(str)
+
+            if chunks == 'auto':
+                chunks = {k: min(4096, max(v // 5, 1)) for k, v in region_ds.dims.items()}
+            region_ds = region_ds.chunk(chunks=chunks)
         return region_ds
 
     @classmethod

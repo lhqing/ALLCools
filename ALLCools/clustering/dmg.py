@@ -27,6 +27,10 @@ def _single_pairwise_dmg(
         dmg_dir,
 ):
     """Calculate DMG between a pair of adata file"""
+    output_path = f"{dmg_dir}/{cluster_l}-{cluster_r}.hdf"
+    if pathlib.Path(output_path).exists():
+        return
+
     # load data
     adata_l = anndata.read_h5ad(f"{adata_dir}/{cluster_l}.h5ad")
     adata_r = anndata.read_h5ad(f"{adata_dir}/{cluster_r}.h5ad")
@@ -34,6 +38,7 @@ def _single_pairwise_dmg(
     # generate single adata for DMG
     adata = adata_l.concatenate(adata_r, batch_key="groups", index_unique=None)
     adata.obs = pd.concat([adata_l.obs, adata_r.obs])
+    adata.obs['groups'] = adata.obs['groups'].astype('category')
     try:
         assert adata.obs_names.duplicated().sum() == 0
     except AssertionError as e:
@@ -92,7 +97,7 @@ def _single_pairwise_dmg(
     dmg_result = dmg_result[(dmg_result["AUROC"] > auroc_cutoff)].copy()
 
     # save
-    dmg_result.to_hdf(f"{dmg_dir}/{cluster_l}-{cluster_r}.hdf", key="data")
+    dmg_result.to_hdf(output_path, key="data")
     return
 
 

@@ -47,12 +47,12 @@ def _calculate_enrichment_score(raw_adata, labels):
         # but in the mc frac case, larger fraction means smaller mean
         # so the fraction part is reversed
         e = ((in_hypo_frac + 0.1) / (out_hypo_frac + 0.1) *
-                      (out_mean + 0.01) / (in_mean + 0.01))
+             (out_mean + 0.01) / (in_mean + 0.01))
         enrichment.append(e)
         # enrichment > 1, the gene is hypo-methylated in that cluster, the larger the better
 
     enrichment = pd.DataFrame(enrichment,
-                               index=label_orders).loc[:, raw_adata.var_names].copy()
+                              index=label_orders).loc[:, raw_adata.var_names].copy()
     return enrichment
 
 
@@ -84,8 +84,8 @@ def _calculate_enrichment_score_cytograph(adata, labels):
         # Mean value per cluster
         this_mean = np.ravel(adata[is_in_cluster, :].X.mean(axis=0))
         means.append(this_mean)
-        other_mean = (total_sum - this_mean * this_cells) / (total_cells -
-                                                             this_cells)
+        other_mean = (total_sum - this_mean * this_cells) / \
+                     (total_cells - this_cells)
         means_other.append(other_mean)
     nnz = np.vstack(nnz).astype(np.float64)
     nnz_other = np.vstack(nnz_other).astype(np.float64)
