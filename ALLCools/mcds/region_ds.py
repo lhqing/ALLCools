@@ -1,5 +1,6 @@
 import os
 import pathlib
+import shutil
 import subprocess
 import warnings
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -21,7 +22,7 @@ os.environ["NUMEXPR_MAX_THREADS"] = "16"
 
 
 def _bigwig_over_bed(bed: pd.DataFrame, path, value_type="mean", dtype="float32"):
-    with pyBigWig.open(path, "r") as bw:
+    with pyBigWig.open(path) as bw:
 
         def _region_stat(row, t=value_type):
             chrom, start, end, *_ = row
@@ -467,7 +468,7 @@ class RegionDS(xr.Dataset):
             region_dim=region_dim,
             location=location,
             chrom_size_path=chrom_size_path,
-        ).squeeze()
+        )
         return ds
 
     def iter_index(self, chunk_size=100000, dim=None):
@@ -487,7 +488,12 @@ class RegionDS(xr.Dataset):
             da = f"{dim}_da"
         _da = self[da]
 
-        assert dim in _da.dims
+        try:
+            assert dim in _da.dims
+        except AssertionError as e:
+            print('dim', dim)
+            print('_da.dims', _da.dims)
+            raise e
 
         for _index in self.iter_index(chunk_size=chunk_size, dim=dim):
             use_da = _da.sel({dim: _index})
@@ -758,7 +764,8 @@ class RegionDS(xr.Dataset):
             combine_cluster=True,
             fnr_fpr_fold=1000,
             chunk_size=None,
-            dim="motif",
+            motif_dim="motif",
+            snakemake=False
     ):
         region_ds_path = self.location
         if region_ds_path is None:
@@ -766,8 +773,8 @@ class RegionDS(xr.Dataset):
 
         if chrom_size_path is None:
             chrom_size_path = self.attrs.get("chrom_size_path")
-        region_dim = self.region_dim
 
+        # prepare fasta file for regions
         fasta_path = f"{region_ds_path}/regions.fasta"
         self.get_fasta(
             genome_fasta,
@@ -777,8 +784,41 @@ class RegionDS(xr.Dataset):
             standardize_length=standardize_length,
         )
 
-        from ..motif import MotifSet
+        if snakemake:
+            # prepare snakemake files and scan motif with larger parallel
+            self._scan_motifs_snakemake(
+                fasta_path,
+                output_dir=region_ds_path,
+                cpu=cpu,
+                motif_dim=motif_dim,
+                combine_cluster=combine_cluster,
+                motif_set_path=motif_set_path,
+                fnr_fpr_fold=fnr_fpr_fold,
+                chunk_size=chunk_size
+            )
+        else:
+            # directly scan motif under current process
+            self._scan_motif_local(
+                fasta_path=fasta_path,
+                cpu=cpu,
+                motif_set_path=motif_set_path,
+                combine_cluster=combine_cluster,
+                fnr_fpr_fold=fnr_fpr_fold,
+                chunk_size=chunk_size,
+                motif_dim=motif_dim
+            )
 
+    def _scan_motif_local(
+            self,
+            fasta_path,
+            cpu=1,
+            motif_set_path=None,
+            combine_cluster=True,
+            fnr_fpr_fold=1000,
+            chunk_size=None,
+            motif_dim="motif"
+    ):
+        from ..motif import MotifSet
         if motif_set_path is not None:
             motif_set: MotifSet = joblib.load(motif_set_path)
         else:
@@ -792,20 +832,103 @@ class RegionDS(xr.Dataset):
                 cpu=cpu, method="balance", threshold_value=fnr_fpr_fold
             )
 
+        region_dim = self.region_dim
+        region_ds_path = self.location
+
         motif_ds = motif_set.scan_motifs(
             fasta_path=fasta_path,
             output_dir=region_ds_path,
             cpu=cpu,
             region_dim=region_dim,
             combine_cluster=combine_cluster,
-            motif_dim=dim,
+            motif_dim=motif_dim,
             chunk_size=chunk_size,
         )
-        new_dataset_dim = {f'{region_dim}_{dim}': region_dim}
+        new_dataset_dim = {f'{region_dim}_{motif_dim}': region_dim}
         if combine_cluster:
-            new_dataset_dim[f'{region_dim}_{dim}-cluster'] = region_dim
+            new_dataset_dim[f'{region_dim}_{motif_dim}-cluster'] = region_dim
         update_dataset_config(self.location, add_ds_region_dim=new_dataset_dim)
         self.update(motif_ds)
+        return
+
+    def _scan_motifs_snakemake(
+            self,
+            fasta_path,
+            output_dir,
+            cpu,
+            motif_dim="motif",
+            combine_cluster=True,
+            motif_set_path=None,
+            fnr_fpr_fold=1000,
+            chunk_size=50000
+    ):
+        if chunk_size is None:
+            chunk_size = 50000
+
+        from ALLCools.motif.snakemake import (
+            prepare_motif_scan_snakemake,
+            check_snakemake_success,
+            save_motif_chunks
+        )
+
+        region_ds_path = output_dir
+        snakemake_temp_dir = f'{region_ds_path}/motif_scan_snakemake'
+        output_dir = snakemake_temp_dir
+
+        region_dim = self.region_dim
+
+        status_path = f'{output_dir}/status'
+        if pathlib.Path(status_path).exists():
+            # check if all dir is executed successfully
+            all_success = check_snakemake_success(output_dir)
+            if all_success:
+                print('Motif scan finished, merge chunks into RegionDS.')
+                save_motif_chunks(motif_chunk_dir=output_dir,
+                                  region_dim=region_dim,
+                                  output_path=f'{region_ds_path}/{region_dim}_{motif_dim}',
+                                  is_motif_cluster=False)
+
+                if combine_cluster:
+                    save_motif_chunks(motif_chunk_dir=output_dir,
+                                      region_dim=region_dim,
+                                      output_path=f'{region_ds_path}/{region_dim}_{motif_dim}-cluster',
+                                      is_motif_cluster=True)
+
+                # update config
+                new_dataset_dim = {f'{region_dim}_{motif_dim}': region_dim}
+                if combine_cluster:
+                    new_dataset_dim[f'{region_dim}_{motif_dim}-cluster'] = region_dim
+                update_dataset_config(self.location, add_ds_region_dim=new_dataset_dim)
+
+                # load to current obj
+                motif_ds = xr.open_zarr(f'{region_ds_path}/{region_dim}_{motif_dim}')
+                self.update(motif_ds)
+                if combine_cluster:
+                    motif_ds = xr.open_zarr(f'{region_ds_path}/{region_dim}_{motif_dim}-cluster')
+                    self.update(motif_ds)
+
+                # finally, delete chunks
+                shutil.rmtree(output_dir)
+                return
+            else:
+                print('You can keep the success ones and '
+                      'rerun this function once the remaining chunks are executed successfully')
+                return
+        else:
+            # prepare snakemake dir
+            prepare_motif_scan_snakemake(output_dir=output_dir,
+                                         fasta_path=fasta_path,
+                                         region_dim=self.region_dim,
+                                         motif_dim=motif_dim,
+                                         motif_set_path=motif_set_path,
+                                         chunk_size=chunk_size,
+                                         combine_cluster=combine_cluster,
+                                         fnr_fpr_fold=fnr_fpr_fold,
+                                         cpu=cpu)
+            print('Snakemake files are prepared, '
+                  'please execute snakemake commands for the actual motif scan. '
+                  'Once you executed everything, you may rerun this function with exact parameters to '
+                  'resume and store final results to RegionDS.')
         return
 
     def get_hypo_hyper_index(
@@ -990,11 +1113,11 @@ class RegionDS(xr.Dataset):
         return
 
     def save(self, da_name=None, output_path=None, mode="w", change_region_dim=True):
-        if self.location is None:
-            raise ValueError(f"RegionDS.location is None when trying to save.")
-        pathlib.Path(self.location).mkdir(parents=True, exist_ok=True)
-
         if output_path is None:
+            if self.location is None:
+                raise ValueError(f"RegionDS.location is None when trying to save.")
+            pathlib.Path(self.location).mkdir(parents=True, exist_ok=True)
+
             output_path = f"{self.location}/{self.region_dim}"
             update_dataset_config(self.location, add_ds_region_dim={self.region_dim: self.region_dim},
                                   change_region_dim=self.region_dim if change_region_dim else None)
