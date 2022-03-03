@@ -666,6 +666,19 @@ class REPTILE:
                 header=None,
             )
 
+            # use bedtools unionbedg to aggregate scores
+            subprocess.run(
+                f"bedtools unionbedg -i "
+                f"{self.bigwig_dir}/{sample}_dmr_pred.bg "
+                f"{self.bigwig_dir}/{sample}_region_pred.bg > "
+                f"{self.bigwig_dir}/{sample}_unionbedg.tsv",
+                shell=True,
+                check=True)
+
+            union_table = pd.read_csv(f'{self.bigwig_dir}/{sample}_unionbedg.tsv',
+                                      sep='\t',
+                                      header=None)
+
             bw_path = f"{self.bigwig_dir}/{sample}_reptile_score.bw"
             with pyBigWig.open(bw_path, "w") as bw:
                 chrom_sizes = pd.read_csv(
@@ -674,75 +687,64 @@ class REPTILE:
                     index_col=0,
                     header=None,
                     squeeze=True,
-                ).to_dict()
+                ).sort_index()
+
                 bw.addHeader(
-                    [(k, v) for k, v in pd.Series(chrom_sizes).sort_index().items()]
+                    [(k, v) for k, v in chrom_sizes.items()]
                 )
 
-                p = subprocess.run(
-                    f"bedtools unionbedg -i "
-                    f"{self.bigwig_dir}/{sample}_dmr_pred.bg "
-                    f"{self.bigwig_dir}/{sample}_region_pred.bg",
-                    shell=True,
-                    check=True,
-                    stdout=subprocess.PIPE,
-                    encoding="utf8",
-                )
+                for chrom in chrom_sizes.index:
+                    cur_bin = 0
+                    cur_scores = [0]
+                    for _, row in union_table[union_table[0] == chrom].iterrows():
+                        chrom, start, end, *scores = row
+                        score = max(map(float, scores))
+                        start_bin = int(start) // bw_bin_size
+                        end_bin = int(end) // bw_bin_size + 1
 
-                cur_bin = 0
-                cur_scores = [0]
-                for line in p.stdout.split("\n"):
-                    if line == "":
-                        continue
-                    if line[-1] == ".":
-                        # no score
-                        continue
+                        for bin_id in range(start_bin, end_bin):
+                            if bin_id > cur_bin:
+                                # save previous bin
+                                cur_pos = cur_bin * bw_bin_size
+                                mean_score = sum(cur_scores) / len(cur_scores)
+                                try:
+                                    if mean_score > 0.01:
+                                        bw.addEntries(
+                                            chrom,
+                                            [cur_pos],
+                                            values=[mean_score],
+                                            span=bw_bin_size,
+                                        )
+                                except RuntimeError as e:
+                                    print(chrom, cur_pos, mean_score, bw_bin_size)
+                                    raise e
 
-                    chrom, start, end, *scores = line.split("\t")
-                    score = max(map(float, scores))
-                    start_bin = int(start) // bw_bin_size
-                    end_bin = int(end) // bw_bin_size + 1
+                                # init new bin
+                                cur_bin = bin_id
+                                cur_scores = [score]
+                            elif bin_id == cur_bin:
+                                # the same bin, take average
+                                cur_scores.append(score)
+                            else:
+                                # no score, initial state
+                                pass
 
-                    for bin_id in range(start_bin, end_bin):
-                        if bin_id > cur_bin:
-                            # save previous bin
-                            cur_pos = cur_bin * bw_bin_size
-                            mean_score = sum(cur_scores) / len(cur_scores)
-                            try:
-                                bw.addEntries(
-                                    chrom,
-                                    [cur_pos],
-                                    values=[mean_score],
-                                    span=bw_bin_size,
-                                )
-                            except RuntimeError as e:
-                                print(chrom, cur_pos, mean_score, bw_bin_size)
-                                raise e
-
-                            # init new bin
-                            cur_bin = bin_id
-                            cur_scores = [score]
-                        elif bin_id == cur_bin:
-                            # the same bin, take average
-                            cur_scores.append(score)
-                        else:
-                            # no score, initial state
-                            pass
-
-                # final
-                cur_pos = cur_bin * bw_bin_size
-                mean_score = sum(cur_scores) / len(cur_scores)
-                try:
-                    bw.addEntries(
-                        chrom, [cur_pos], values=[mean_score], span=bw_bin_size
-                    )
-                except RuntimeError as e:
-                    print(chrom, cur_pos, mean_score, bw_bin_size)
-                    raise e
+                    # final
+                    cur_pos = cur_bin * bw_bin_size
+                    mean_score = sum(cur_scores) / len(cur_scores)
+                    try:
+                        if mean_score > 0.01:
+                            bw.addEntries(
+                                chrom, [cur_pos], values=[mean_score], span=bw_bin_size
+                            )
+                    except RuntimeError as e:
+                        print(chrom, cur_pos, mean_score, bw_bin_size)
+                        raise e
 
             subprocess.run(
                 f"rm -f {self.bigwig_dir}/{sample}_dmr_pred.bg "
-                f"{self.bigwig_dir}/{sample}_region_pred.bg",
+                f"{self.bigwig_dir}/{sample}_region_pred.bg "
+                f"{self.bigwig_dir}/{sample}_unionbedg.tsv",
                 shell=True,
             )
         return bw_path
