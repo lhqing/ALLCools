@@ -33,11 +33,11 @@ def clip_too_large_cov(data_df, machine_max):
 
 
 def _region_count_table_to_csr_npz(
-    region_count_tables,
-    region_id_map,
-    output_prefix,
-    compression=True,
-    dtype=DEFAULT_MCDS_DTYPE,
+        region_count_tables,
+        region_id_map,
+        output_prefix,
+        compression=True,
+        dtype=DEFAULT_MCDS_DTYPE,
 ):
     """
     helper func of _aggregate_region_count_to_mcds
@@ -119,7 +119,7 @@ def _region_count_table_to_csr_npz(
 
 
 def _csr_matrix_to_dataarray(
-    matrix_table, row_name, row_index, col_name, col_index, other_dim_info
+        matrix_table, row_name, row_index, col_name, col_index, other_dim_info
 ):
     """
     helper func of _aggregate_region_count_to_mcds
@@ -156,12 +156,12 @@ def _csr_matrix_to_dataarray(
 
 
 def _aggregate_region_count_to_mcds(
-    output_dir,
-    dataset_name,
-    chunk_size=100,
-    row_name="cell",
-    cpu=1,
-    dtype=DEFAULT_MCDS_DTYPE,
+        output_dir,
+        dataset_name,
+        chunk_size=100,
+        row_name="cell",
+        cpu=1,
+        dtype=DEFAULT_MCDS_DTYPE,
 ):
     """
     This function aggregate all the region count table into a single mcds
@@ -177,7 +177,7 @@ def _aggregate_region_count_to_mcds(
         # aggregate count table into 2D sparse array, parallel in cell chunks
         future_dict = {}
         for (mc_type, region_name, strandness), sub_summary_df in summary_df.groupby(
-            ["mc_type", "region_name", "strandness"]
+                ["mc_type", "region_name", "strandness"]
         ):
             sub_summary_df = sub_summary_df.set_index("file_id")
             if region_name not in region_index_dict:
@@ -194,9 +194,9 @@ def _aggregate_region_count_to_mcds(
                     additional_coords[_col] = value
 
             for chunk_id, chunk_start in enumerate(
-                range(0, file_uids.size, chunk_size)
+                    range(0, file_uids.size, chunk_size)
             ):
-                file_id_chunk = file_uids[chunk_start : chunk_start + chunk_size]
+                file_id_chunk = file_uids[chunk_start: chunk_start + chunk_size]
                 file_paths = sub_summary_df.loc[file_id_chunk]["file_path"].tolist()
                 future = executor.submit(
                     _region_count_table_to_csr_npz,
@@ -204,7 +204,7 @@ def _aggregate_region_count_to_mcds(
                     region_id_map=str(output_dir / f"REGION_ID_{region_name}.hdf"),
                     output_prefix=str(
                         output_dir / f"{dataset_name}_{region_name}_"
-                        f"{mc_type}_{strandness}_{chunk_id}"
+                                     f"{mc_type}_{strandness}_{chunk_id}"
                     ),
                     compression=True,
                     dtype=dtype,
@@ -283,23 +283,23 @@ def _aggregate_region_count_to_mcds(
     binarize_doc=binarize_doc,
 )
 def generate_mcds(
-    allc_table,
-    output_prefix,
-    chrom_size_path,
-    mc_contexts,
-    rna_table=None,
-    split_strand=False,
-    bin_sizes=None,
-    region_bed_paths=None,
-    region_bed_names=None,
-    cov_cutoff=9999,
-    cpu=1,
-    remove_tmp=True,
-    max_per_mcds=3072,
-    cell_chunk_size=100,
-    dtype=DEFAULT_MCDS_DTYPE,
-    binarize=False,
-    engine='zarr'
+        allc_table,
+        output_prefix,
+        chrom_size_path,
+        mc_contexts,
+        rna_table=None,
+        split_strand=False,
+        bin_sizes=None,
+        region_bed_paths=None,
+        region_bed_names=None,
+        cov_cutoff=9999,
+        cpu=1,
+        remove_tmp=True,
+        max_per_mcds=3072,
+        cell_chunk_size=100,
+        dtype=DEFAULT_MCDS_DTYPE,
+        binarize=False,
+        engine='zarr'
 ):
     """\
     Generate MCDS from a list of ALLC file provided with file id.
@@ -412,12 +412,12 @@ def generate_mcds(
         mcds_n_chunk = ceil(allc_series.size / max_per_mcds)
         chunk_size = ceil(allc_series.size / mcds_n_chunk)
         allc_series_chunks = [
-            allc_series[chunk_start : chunk_start + chunk_size]
+            allc_series[chunk_start: chunk_start + chunk_size]
             for chunk_start in range(0, allc_series.size, chunk_size)
         ]
         if rna_table is not None:
             rna_series_chunks = [
-                rna_series[chunk_start : chunk_start + chunk_size]
+                rna_series[chunk_start: chunk_start + chunk_size]
                 for chunk_start in range(0, rna_series.size, chunk_size)
             ]
         print(f"Number of file_uids {allc_series.size} > max_per_mcds {max_per_mcds}, ")
