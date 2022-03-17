@@ -1,19 +1,20 @@
 import pathlib
+import subprocess
+import warnings
+from collections import defaultdict
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
+import dask
+import joblib
 import numpy as np
 import pandas as pd
-import xarray as xr
-import pybedtools
-import dask
-import subprocess
-from collections import defaultdict
-from ALLCools.mcds import RegionDS
 import pyBigWig
-import warnings
-from concurrent.futures import ProcessPoolExecutor, as_completed
+import pybedtools
+import xarray as xr
 from sklearn.model_selection import train_test_split
-from ALLCools.mcds.utilities import write_ordered_chunks, update_dataset_config
-import joblib
 
+from ALLCools.mcds import RegionDS
+from ALLCools.mcds.utilities import write_ordered_chunks, update_dataset_config
 
 
 def _create_train_region_ds(reptile):
@@ -209,6 +210,49 @@ def _predict_sample(
         return output_path
 
 
+def _call_enhancer_region(bw_path, dmr_bed, threshold, merge_dist, chrom_size_path):
+    high_score_regions = []
+    with pyBigWig.open(bw_path) as bw:
+        for chrom, length in bw.chroms().items():
+            intervals = bw.intervals(chrom)
+            cur_start = None
+            cur_end = None
+            if intervals is None:
+                continue
+            for start, end, score in intervals:
+                if score > threshold:
+                    # high score met, start or extend current enhancer
+                    if cur_start is None:
+                        # init
+                        cur_start = start
+                        cur_end = end
+                    else:
+                        # update end
+                        cur_end = end
+                else:
+                    # small score met, check and save previous enhancer
+                    if cur_start is None:
+                        continue
+                    else:
+                        # save region
+                        high_score_regions.append([chrom, cur_start, cur_end])
+                        cur_start = None
+                        cur_end = None
+            # last region
+            if cur_start is not None:
+                high_score_regions.append([chrom, cur_start, cur_end])
+
+        high_score_regions = pd.DataFrame(high_score_regions, columns=['chrom', 'start', 'end'])
+        # merge close enhancers, annotate DMR ids
+        high_score_regions = pybedtools.BedTool \
+            .from_dataframe(high_score_regions) \
+            .sort(g=chrom_size_path) \
+            .merge(d=merge_dist) \
+            .map(b=dmr_bed, c=4, o='collapse', g=chrom_size_path) \
+            .to_dataframe()
+    return high_score_regions
+
+
 class REPTILE:
     def __init__(
             self,
@@ -238,6 +282,9 @@ class REPTILE:
         # for final prediction results
         self.bigwig_dir = f"{self.output_path}/bigwig"
         pathlib.Path(self.bigwig_dir).mkdir(exist_ok=True)
+        # for final enhancer bed
+        self.enhancer_dir = f"{self.output_path}/enhancer"
+        pathlib.Path(self.enhancer_dir).mkdir(exist_ok=True)
 
         self.train_regions = train_regions
         self.dmr_regions = dmr_regions
@@ -624,10 +671,16 @@ class REPTILE:
             self._dmr_prediction = final_da
         return
 
-    def predict(self, cpu, mask_cutoff=0.3, bw_bin_size=50):
+    def predict(self, cpu, mask_cutoff=0.3, bw_bin_size=10, enhancer_cutoff=0.7):
         self._predict(region_dim="query-region", cpu=cpu, mask_cutoff=mask_cutoff)
         self._predict(region_dim="query-dmr", cpu=cpu, mask_cutoff=mask_cutoff)
-        self.dump_bigwigs(cpu=cpu, mask_cutoff=mask_cutoff, bw_bin_size=bw_bin_size)
+
+        # loading all region ids is quite memory intensive
+        # besides, this step is not time-consuming
+        self.dump_bigwigs(cpu=min(cpu, 5), mask_cutoff=mask_cutoff, bw_bin_size=bw_bin_size)
+
+        # call enhancer with enhancer_cutoff, merge enhancer within one step size
+        self.call_enhancers(threshold=enhancer_cutoff, merge_dist=self.step_size)
         return
 
     def _dump_sample(self, sample, mask_cutoff, bw_bin_size):
@@ -770,4 +823,23 @@ class REPTILE:
                 print(f"{sample} result dump to: ", end="")
                 bw_path = f.result()
                 print(bw_path)
+        return
+
+    def call_enhancers(self, threshold=0.7, merge_dist=None):
+        if merge_dist is None:
+            merge_dist = self.step_size
+
+        print(f'Call final enhancer with threshold {threshold}, merge enhancer within {merge_dist}bp')
+        dmr_bed = pybedtools.BedTool(self.dmr_regions).sort(g=self.chrom_size_path)
+
+        for sample in self.samples:
+            bw_path = f"{self.bigwig_dir}/{sample}_reptile_score.bw"
+            enhancer_df = _call_enhancer_region(bw_path=bw_path,
+                                                dmr_bed=dmr_bed,
+                                                threshold=threshold,
+                                                merge_dist=merge_dist,
+                                                chrom_size_path=self.chrom_size_path)
+            sample_out_path = f"{self.enhancer_dir}/{sample}_enhancer.bed"
+            enhancer_df.to_csv(sample_out_path, sep='\t', index=None, header=None)
+            print(f'Sample {sample} has {enhancer_df.shape[0]} enhancers.')
         return
