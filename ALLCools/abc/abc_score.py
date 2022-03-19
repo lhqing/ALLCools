@@ -24,19 +24,43 @@ def scan_single_bw(bw_path, bed, value_type='sum'):
     return bw_values
 
 
+def preprocess_bed(input_bed, blacklist_path, chrom_sizes, temp_dir):
+    # sort and save to temp_dir
+    bed_name = pathlib.Path(input_bed).name
+    if bed_name.endswith('.gz'):
+        bed_name = bed_name[:-3]
+    new_path = f'{temp_dir}/{bed_name}'
+    bed = pd.read_csv(input_bed, sep='\t', index_col=None, header=None)
+    # sort bed
+    bed = bed.sort_values([0, 1])
+    bed = bed[bed[0].isin(chrom_sizes.index)]
+    bed.to_csv(new_path, sep='\t', index=None, header=None)
+
+    # remove blacklist
+    if blacklist_path is not None:
+        after_remove_path = f'{new_path}.remove_blacklist.bed'
+        subprocess.run(f'bedtools intersect -a {new_path} -b {blacklist_path} -v > {after_remove_path}',
+                       shell=True, check=True)
+        subprocess.run(f'mv -f {after_remove_path} {new_path}',
+                       shell=True, check=True)
+    return new_path
+
+
 class ABCModel:
     def __init__(self,
                  cool_url,
                  enhancer_bed_path,
                  tss_bed_path,
-                 output_path,
+                 output_prefix,
                  epi_mark: dict,
                  calculation_mode,
+                 blacklist_path=None,
                  enhancer_size=500,
                  promoter_size=500,
                  max_dist=5000000,
                  min_score_cutoff=0.02,
                  balance=False,
+                 cleanup=True,
                  cpu=1):
         if calculation_mode == 'ATAC-mCG':
             self.activity_score_func = activity_score_atac_mcg
@@ -46,16 +70,18 @@ class ABCModel:
         self.clr = cooler.Cooler(cool_url)
         self.enhancer_bed_path = enhancer_bed_path
         self.tss_bed_path = tss_bed_path
+        self.blacklist_path = blacklist_path
         self.epi_mark = epi_mark
-        self.output_path = output_path
-        self.temp_dir = f'{output_path}_temp'
+        self.output_prefix = output_prefix
+        self.temp_dir = f'{output_prefix}_temp'
         pathlib.Path(self.temp_dir).mkdir(parents=True, exist_ok=True)
 
         # cool sizes
         self.bin_size = self.clr.binsize
         self.chrom_names = self.clr.chromnames.copy()
         self.chrom_sizes = self.clr.chromsizes.copy()
-        self.chrom_sizes.to_csv(f'{self.temp_dir}/chrom_sizes.txt', header=None, sep='\t')
+        self.chrom_sizes_path = f'{self.temp_dir}/chrom_sizes.txt'
+        self.chrom_sizes.to_csv(self.chrom_sizes_path, header=None, sep='\t')
 
         self.min_score_cutoff = min_score_cutoff
         self.max_dist = max_dist
@@ -73,9 +99,16 @@ class ABCModel:
 
         # calculate
         self.results = self.calculate(balance=balance, cpu=cpu)
+
+        if cleanup:
+            subprocess.run(f'rm -rf {self.temp_dir}', shell=True)
         return
 
     def _enhancer_bed(self):
+        self.enhancer_bed_path = preprocess_bed(input_bed=self.enhancer_bed_path,
+                                                blacklist_path=self.blacklist_path,
+                                                chrom_sizes=self.chrom_sizes,
+                                                temp_dir=self.temp_dir)
         enhancer_bed = pd.read_csv(self.enhancer_bed_path,
                                    sep='\t',
                                    index_col=None,
@@ -89,6 +122,10 @@ class ABCModel:
         return enhancer_bed
 
     def _tss_bed(self):
+        self.tss_bed_path = preprocess_bed(input_bed=self.tss_bed_path,
+                                           blacklist_path=self.blacklist_path,
+                                           chrom_sizes=self.chrom_sizes,
+                                           temp_dir=self.temp_dir)
         tss_bed = pd.read_csv(self.tss_bed_path,
                               header=None,
                               index_col=None,
@@ -126,7 +163,7 @@ class ABCModel:
         pe_bed = pd.concat([self.enhancer_bed, self.promoter_bed]).sort_values(['chrom', 'start'])
         if pe_bed['id'].duplicated().sum() > 0:
             raise ValueError(f'enhancer and TSS ids have duplicates.')
-        pe_bed.to_csv(f'{temp_dir}/enhancer_and_tss.bed', index=None, header=None, sep='\t')
+        pe_bed.to_csv(f'{temp_dir}/enhancer_and_tss.bed', index=False, header=False, sep='\t')
 
         # merge regions
         merge_cmd = f'bedtools merge -c 4 -o collapse ' \
@@ -242,7 +279,11 @@ class ABCModel:
                     if e not in self.tss_ids:
                         ep_records.append([e, p, score, enhancer_activity])
         ep_records = pd.DataFrame(ep_records)
-        ep_records.columns = ['enhancer_id', 'tss_id', 'ABC_score', 'enhancer_activity']
+        columns = ['enhancer_id', 'tss_id', 'ABC_score', 'enhancer_activity']
+        if ep_records.shape[0] == 0:
+            ep_records = pd.DataFrame([], columns=columns)
+        else:
+            ep_records.columns = columns
         return ep_records
 
     def calculate(self, balance=False, cpu=1):
@@ -285,7 +326,6 @@ class ABCModel:
         bedpe.columns = ['enhancer_chrom', 'enhancer_start', 'enhancer_end',
                          'tss_chrom', 'tss_start', 'tss_end',
                          'ABC_score', 'enhancer_id', 'tss_id', 'enhancer_activity']
-
-        bedpe.to_csv(self.output_path)
-        subprocess.run(f'rm -rf {self.temp_dir}', shell=True)
+        output_path = f'{self.output_prefix}.bedpe.gz'
+        bedpe.to_csv(output_path, sep='\t', index=False, header=False)
         return bedpe
