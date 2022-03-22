@@ -16,5 +16,6 @@ Submodules
    :maxdepth: 1
 
    feature_enrichment/index.rst
+   gene_panel_design/index.rst
 
 

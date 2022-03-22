@@ -10,6 +10,7 @@ Module Contents
 .. py:function:: _calculate_enrichment_score(raw_adata, labels)
 
    Enrichment score modified from :cite:p:`Zeisel2018` for normalized methylation fractions
+   Assuming the methylation value is posterior frac calculated by MCDS.add_mc_frac)
 
 
 .. py:function:: _calculate_enrichment_score_cytograph(adata, labels)

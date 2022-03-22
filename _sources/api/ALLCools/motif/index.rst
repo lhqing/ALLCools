@@ -21,6 +21,7 @@ Submodules
 
    motifs/index.rst
    parse_meme/index.rst
+   snakemake/index.rst
 
 
 Package Contents

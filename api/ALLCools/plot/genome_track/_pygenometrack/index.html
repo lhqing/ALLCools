@@ -1,0 +1,2631 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALLCools.plot.genome_track._pygenometrack</title>
+    
+  <link href="../../../../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-codeautolink.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/jquery.js"></script>
+    <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/togglebutton.js"></script>
+    <script src="../../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../../../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../../../../../_static/allcools_favicon.png"/>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="ALLCools.plot.genome_track.utilities" href="../utilities/index.html" />
+    <link rel="prev" title="ALLCools.plot.genome_track" href="../index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4F8CRF0GK9"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-4F8CRF0GK9');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../../../_static/allcools_logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../intro.html">
+   ALLCools: ALL methyl-Cytosine tools
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GET STARTED
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../start/installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../start/input_files.html">
+   Input Files
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../start/analysis_steps.html">
+   Analysis Steps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../start/interactive.html">
+   Examples In This Document
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  CELLULAR ANALYSIS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../../cell_level/basic/intro_basic_clustering.html">
+   Basic Clustering Walk-through
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/basic/mch_mcg_100k_basic.html">
+     Basic Cell Clustering Using 100Kb Bins
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/basic/mcg_5kb_basic.html">
+     Basic Cell Clustering Using mCG-5Kb Bins
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../../cell_level/step_by_step/intro_step_by_step_clustering.html">
+   Step-by-step Clustering Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../../../cell_level/step_by_step/100kb/intro_100kb.html">
+     Step-by-step Clustering Using 100Kb bins
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../../cell_level/step_by_step/100kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../../cell_level/step_by_step/100kb/02-BasicFeatureFiltering.html">
+       Feature Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../../cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
+       Calculate Highly Variable Features And Get mC Fraction AnnData
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../../cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../../cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+       Preclustering and Cluster Enriched Features
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../../cell_level/step_by_step/100kb/05-DecompositionAndEmbedding.html">
+       Decomposition And Embedding
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../../cell_level/step_by_step/100kb/06-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../../../cell_level/step_by_step/5kb/intro_5kb.html">
+     Step-by-step Clustering using mCG-5Kb Input
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
+       Cell Basic Filtering
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
+       Decomposition Using mCG-5Kb Bins
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../../cell_level/step_by_step/5kb/03-Clustering.html">
+       Consensus Clustering
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../../cell_level/dmg/intro_dmg.html">
+   Differential Methylated Genes Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/dmg/01-AddGenemCFractions.html">
+     Calculate Gene mC Fractions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/dmg/02-DifferentiallyMethylatedGenes.html">
+     Cluster Differentially Methylated Genes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/dmg/03-PlotClusterDMGs.html">
+     Plot Cluster DMGs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/dmg/04-PairwiseDMG.html">
+     Differential Methylated Genes - Pairwise
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../../cell_level/integration/intro_integration.html">
+   Data Integration
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/integration/multi_modalities/Neurons/01-preprocess_10x.html">
+     Preprocess 10X snRNA-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/integration/multi_modalities/Neurons/02-preprocess_SMART.html">
+     Preprocess SMART-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/integration/multi_modalities/Neurons/03-preprocess_snATAC.html">
+     Preprocess snATAC-seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/integration/multi_modalities/Neurons/04-integration.html">
+     Perform Cross-Modality Integration
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../../cell_level/doublets/intro_doublets.html">
+   Doublets Identification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cell_level/doublets/doublet_score_chrom100k.html">
+     Calculate Cell Doublet Score
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GENOMIC ANALYSIS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../../cluster_level/intro.html">
+   Post-clustering Genomic Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cluster_level/RegionDS/01a.call_dmr.html">
+     DMR Calling
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cluster_level/RegionDS/01b.other_option_to_init_region_ds.html">
+     Alternative Way to Create RegionDS
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cluster_level/RegionDS/02.annotation.html">
+     Annotate RegionDS
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cluster_level/RegionDS/03.filter_dmr.html">
+     Filter DMR
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../../cluster_level/RegionDS/intro_motif.html">
+   Motif Scan and Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cluster_level/RegionDS/04.motif_scan.html">
+     Motif Scan
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cluster_level/RegionDS/05.motif_enrichment.html">
+     Motif Enrichment Analysis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../../cluster_level/Correlation/intro_corr.html">
+   Region-Region Correlation Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+  <label for="toctree-checkbox-10">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cluster_level/Correlation/01.mc_cluster_profile.html">
+     Prepare Cluster-by-Gene mC Profile
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cluster_level/Correlation/02.dmr_gene_corr.html">
+     DMR-Gene Correlation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../../cluster_level/REPTILE/intro_reptile.html">
+   REPTILE
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cluster_level/REPTILE/01.prepare_input.html">
+     Prepare REPTILE
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../../cluster_level/REPTILE/02.run_reptile.html">
+     Predict Enhancer with REPTILE Algorithm
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  COMMAND LINE TOOLS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools.html">
+   Entry Point
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_allc.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     allc
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_standard.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     standard
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_profile.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     profile
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_tbi.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     tbi
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_merge.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     merge
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_extract.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     extract
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_bw.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     bw
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_region.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     region
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_dataset.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcds
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_mcds.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcds
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../command_line/allcools_mcad.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     allcools
+    </span>
+    <span class="pre">
+     mcad
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  API
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../../index.html">
+   <code class="xref py py-mod docutils literal notranslate">
+    <span class="pre">
+     ALLCools
+    </span>
+   </code>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../abc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.abc
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../abc/abc_score/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.abc.abc_score
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../clustering/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.clustering
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../clustering/doublets/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.doublets
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+      <label for="toctree-checkbox-15">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../clustering/doublets/coverage_doublets/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.clustering.doublets.coverage_doublets
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../clustering/doublets/scrublet/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.clustering.doublets.scrublet
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../clustering/feature_selection/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.feature_selection
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+      <label for="toctree-checkbox-16">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../clustering/feature_selection/feature_enrichment/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.clustering.feature_selection.feature_enrichment
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../clustering/feature_selection/gene_panel_design/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.clustering.feature_selection.gene_panel_design
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../clustering/ClusterMerging/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.ClusterMerging
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../clustering/ConsensusClustering/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.ConsensusClustering
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../clustering/art_of_tsne/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.art_of_tsne
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../clustering/balanced_pca/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.balanced_pca
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../clustering/dmg/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.dmg
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../clustering/incremental_pca/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.incremental_pca
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../clustering/mcad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.mcad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../clustering/pvclust/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.pvclust
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../count_matrix/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.count_matrix
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../count_matrix/atac/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.atac
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../count_matrix/dataset/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.dataset
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../count_matrix/h5ad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.h5ad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../count_matrix/mcad/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.mcad
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../count_matrix/mcds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.mcds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../count_matrix/snap/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.snap
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../count_matrix/zarr/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.count_matrix.zarr
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../dmr/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.dmr
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../dmr/call_dmr/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.call_dmr
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../dmr/call_dms/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.call_dms
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../dmr/parse_methylpy/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.parse_methylpy
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../dmr/rms_test/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dmr.rms_test
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../integration/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.integration
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../integration/cca/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.integration.cca
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../integration/confusion/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.integration.confusion
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../integration/harmony/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.integration.harmony
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../mcds/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.mcds
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../mcds/correlation/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.correlation
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../mcds/mcds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.mcds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../mcds/region_ds/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.region_ds
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../mcds/utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.mcds.utilities
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../motif/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.motif
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../motif/default_motif_set/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.default_motif_set
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../motif/motifs/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.motifs
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../motif/parse_meme/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.parse_meme
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../motif/snakemake/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.motif.snakemake
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../../index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.plot
+      </span>
+     </code>
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active has-children">
+      <a class="reference internal" href="../index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.genome_track
+        </span>
+       </code>
+      </a>
+      <input checked="" class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+      <label for="toctree-checkbox-23">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul class="current">
+       <li class="toctree-l4 current active">
+        <a class="current reference internal" href="#">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.plot.genome_track._pygenometrack
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../utilities/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.plot.genome_track.utilities
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../categorical_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.categorical_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../color/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.color
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../continuous_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.continuous_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../contour/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.contour
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../decomposition/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.decomposition
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../dendro/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.dendro
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../interactive_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.interactive_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../qc_plots/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.qc_plots
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../size/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.size
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../sunburst/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.sunburst
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../text_anno_scatter/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.text_anno_scatter
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../utilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.plot.utilities
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../pseudo_cell/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.pseudo_cell
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../pseudo_cell/pseudo_cell_kmeans/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.pseudo_cell.pseudo_cell_kmeans
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../pseudo_cell/pseudo_cell_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.pseudo_cell.pseudo_cell_knn
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../reptile/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.reptile
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+    <label for="toctree-checkbox-25">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../reptile/reptile/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.reptile.reptile
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../sandbox/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.sandbox
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../sandbox/igv/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.igv
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+      <label for="toctree-checkbox-27">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/igv/BaseClass/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.BaseClass
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/igv/Session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Session
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/igv/Track/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.Track
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/igv/defaults/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.defaults
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/igv/make_session/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.igv.make_session
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../sandbox/motif/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.motif
+        </span>
+       </code>
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
+      <label for="toctree-checkbox-28">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/motif/ame/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.motif.ame
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/motif/cmotif/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.motif.cmotif
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/motif/fimo/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.motif.fimo
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/motif/motif_scan/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.motif.motif_scan
+          </span>
+         </code>
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../sandbox/motif/utilities/index.html">
+         <code class="xref py py-mod docutils literal notranslate">
+          <span class="pre">
+           ALLCools.sandbox.motif.utilities
+          </span>
+         </code>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../sandbox/balanced_knn/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.balanced_knn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../sandbox/scanorama/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.scanorama
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../sandbox/sccaf/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.sandbox.sccaf
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../schema/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.schema
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
+    <label for="toctree-checkbox-29">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../schema/mcds_schema/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.schema.mcds_schema
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../__main__/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.__main__
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../_allc_to_bigwig/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_bigwig
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../_allc_to_bigwig_new/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_bigwig_new
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../_allc_to_region_count/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._allc_to_region_count
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../_bam_to_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._bam_to_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../_doc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._doc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../_extract_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._extract_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../_merge_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._merge_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../_open/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._open
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../_version/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools._version
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../api/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.api
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../table_to_allc/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.table_to_allc
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../utilities/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.utilities
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  PROJECT INFO
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../../project_info/citation.html">
+   Citation And Reference
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/lhqing/ALLCools/releases">
+   Changelog
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../../../_sources/api/ALLCools/plot/genome_track/_pygenometrack/index.rst"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fapi/ALLCools/plot/genome_track/_pygenometrack/index.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/api/ALLCools/plot/genome_track/_pygenometrack/index.rst"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-contents">
+   Module Contents
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.FORMAT">
+     FORMAT
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.log">
+     log
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_TRACK_HEIGHT">
+     DEFAULT_TRACK_HEIGHT
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_FIGURE_WIDTH">
+     DEFAULT_FIGURE_WIDTH
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_WIDTH_RATIOS">
+     DEFAULT_WIDTH_RATIOS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_MARGINS">
+     DEFAULT_MARGINS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.MultiDict">
+     MultiDict
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.MultiDict._unique">
+       _unique
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.MultiDict.__setitem__">
+       __setitem__
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks">
+     PlotTracks
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.get_available_tracks">
+       get_available_tracks
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.get_tracks_height">
+       get_tracks_height
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.plot">
+       plot
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.plot_vlines">
+       plot_vlines
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.parse_tracks">
+       parse_tracks
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.close_files">
+       close_files
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.check_file_exists">
+       check_file_exists
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.guess_filetype">
+       guess_filetype
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.cm2inch">
+       cm2inch
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.print_elapsed">
+       print_elapsed
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack">
+     SpacerTrack
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.SUPPORTED_ENDINGS">
+       SUPPORTED_ENDINGS
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.TRACK_TYPE">
+       TRACK_TYPE
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.DEFAULTS_PROPERTIES">
+       DEFAULTS_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.NECESSARY_PROPERTIES">
+       NECESSARY_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.SYNONYMOUS_PROPERTIES">
+       SYNONYMOUS_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.POSSIBLE_PROPERTIES">
+       POSSIBLE_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.BOOLEAN_PROPERTIES">
+       BOOLEAN_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.STRING_PROPERTIES">
+       STRING_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.FLOAT_PROPERTIES">
+       FLOAT_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.INTEGER_PROPERTIES">
+       INTEGER_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.plot">
+       plot
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.plot_y_axis">
+       plot_y_axis
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack">
+     XAxisTrack
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.SUPPORTED_ENDINGS">
+       SUPPORTED_ENDINGS
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.TRACK_TYPE">
+       TRACK_TYPE
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.NECESSARY_PROPERTIES">
+       NECESSARY_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.DEFAULTS_PROPERTIES">
+       DEFAULTS_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.SYNONYMOUS_PROPERTIES">
+       SYNONYMOUS_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.POSSIBLE_PROPERTIES">
+       POSSIBLE_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.BOOLEAN_PROPERTIES">
+       BOOLEAN_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.STRING_PROPERTIES">
+       STRING_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.FLOAT_PROPERTIES">
+       FLOAT_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.INTEGER_PROPERTIES">
+       INTEGER_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.plot">
+       plot
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.plot_y_axis">
+       plot_y_axis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>ALLCools.plot.genome_track._pygenometrack</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-contents">
+   Module Contents
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.FORMAT">
+     FORMAT
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.log">
+     log
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_TRACK_HEIGHT">
+     DEFAULT_TRACK_HEIGHT
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_FIGURE_WIDTH">
+     DEFAULT_FIGURE_WIDTH
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_WIDTH_RATIOS">
+     DEFAULT_WIDTH_RATIOS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_MARGINS">
+     DEFAULT_MARGINS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.MultiDict">
+     MultiDict
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.MultiDict._unique">
+       _unique
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.MultiDict.__setitem__">
+       __setitem__
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks">
+     PlotTracks
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.get_available_tracks">
+       get_available_tracks
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.get_tracks_height">
+       get_tracks_height
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.plot">
+       plot
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.plot_vlines">
+       plot_vlines
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.parse_tracks">
+       parse_tracks
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.close_files">
+       close_files
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.check_file_exists">
+       check_file_exists
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.guess_filetype">
+       guess_filetype
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.cm2inch">
+       cm2inch
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.print_elapsed">
+       print_elapsed
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack">
+     SpacerTrack
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.SUPPORTED_ENDINGS">
+       SUPPORTED_ENDINGS
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.TRACK_TYPE">
+       TRACK_TYPE
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.DEFAULTS_PROPERTIES">
+       DEFAULTS_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.NECESSARY_PROPERTIES">
+       NECESSARY_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.SYNONYMOUS_PROPERTIES">
+       SYNONYMOUS_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.POSSIBLE_PROPERTIES">
+       POSSIBLE_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.BOOLEAN_PROPERTIES">
+       BOOLEAN_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.STRING_PROPERTIES">
+       STRING_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.FLOAT_PROPERTIES">
+       FLOAT_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.INTEGER_PROPERTIES">
+       INTEGER_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.plot">
+       plot
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.plot_y_axis">
+       plot_y_axis
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack">
+     XAxisTrack
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.SUPPORTED_ENDINGS">
+       SUPPORTED_ENDINGS
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.TRACK_TYPE">
+       TRACK_TYPE
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.NECESSARY_PROPERTIES">
+       NECESSARY_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.DEFAULTS_PROPERTIES">
+       DEFAULTS_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.SYNONYMOUS_PROPERTIES">
+       SYNONYMOUS_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.POSSIBLE_PROPERTIES">
+       POSSIBLE_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.BOOLEAN_PROPERTIES">
+       BOOLEAN_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.STRING_PROPERTIES">
+       STRING_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.FLOAT_PROPERTIES">
+       FLOAT_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.INTEGER_PROPERTIES">
+       INTEGER_PROPERTIES
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.plot">
+       plot
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.plot_y_axis">
+       plot_y_axis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="section" id="module-ALLCools.plot.genome_track._pygenometrack">
+<span id="allcools-plot-genome-track-pygenometrack"></span><h1><a class="reference internal" href="#module-ALLCools.plot.genome_track._pygenometrack" title="ALLCools.plot.genome_track._pygenometrack"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ALLCools.plot.genome_track._pygenometrack</span></code></a><a class="headerlink" href="#module-ALLCools.plot.genome_track._pygenometrack" title="Permalink to this headline">¶</a></h1>
+<p>Modified from pygenometracks
+LICENSE: <a class="reference external" href="https://github.com/deeptools/pyGenomeTracks/blob/master/LICENSE">https://github.com/deeptools/pyGenomeTracks/blob/master/LICENSE</a></p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.FORMAT">
+<span class="sig-name descname"><span class="pre">FORMAT</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">[%(levelname)s:%(filename)s:%(lineno)s</span> <span class="pre">-</span> <span class="pre">%(funcName)20s()]</span> <span class="pre">%(message)s</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#FORMAT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.FORMAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.log">
+<span class="sig-name descname"><span class="pre">log</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.DEFAULT_TRACK_HEIGHT">
+<span class="sig-name descname"><span class="pre">DEFAULT_TRACK_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.5</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#DEFAULT_TRACK_HEIGHT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_TRACK_HEIGHT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.DEFAULT_FIGURE_WIDTH">
+<span class="sig-name descname"><span class="pre">DEFAULT_FIGURE_WIDTH</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">40</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#DEFAULT_FIGURE_WIDTH"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_FIGURE_WIDTH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.DEFAULT_WIDTH_RATIOS">
+<span class="sig-name descname"><span class="pre">DEFAULT_WIDTH_RATIOS</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">[0.01,</span> <span class="pre">0.9,</span> <span class="pre">0.1]</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#DEFAULT_WIDTH_RATIOS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_WIDTH_RATIOS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.DEFAULT_MARGINS">
+<span class="sig-name descname"><span class="pre">DEFAULT_MARGINS</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#DEFAULT_MARGINS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.DEFAULT_MARGINS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.MultiDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultiDict</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#MultiDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.MultiDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
+<p>Class to allow identically named
+sections in configuration file
+by appending the section number
+for example:
+1. section name</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.MultiDict._unique">
+<span class="sig-name descname"><span class="pre">_unique</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#MultiDict._unique"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.MultiDict._unique" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.MultiDict.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#MultiDict.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.MultiDict.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set self[key] to value.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PlotTracks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_FIGURE_WIDTH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track_label_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_regions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks.get_available_tracks">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_available_tracks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks.get_available_tracks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.get_available_tracks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks.get_tracks_height">
+<span class="sig-name descname"><span class="pre">get_tracks_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks.get_tracks_height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.get_tracks_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main purpose of the following loop is
+to get the height of each of the tracks
+because for the Hi-C the height is variable with respect
+to the range being plotted, the function is called
+when each plot is going to be printed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_region</strong> – start of the region to plot.
+Only used in case the plot is a Hi-C matrix</p></li>
+<li><p><strong>end_region</strong> – end of the region to plot.
+Only used in case the plot is a Hi-C matrix</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chrom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_align_titles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'left'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decreasing_x_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks.plot_vlines">
+<span class="sig-name descname"><span class="pre">plot_vlines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chrom_region</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_region</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_region</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks.plot_vlines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.plot_vlines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots dotted lines from the top of the first plot to the bottom
+of the last plot at the specified positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>axis_list</strong> – list of plotted axis</p>
+</dd>
+</dl>
+<p>:param chrom_region chromosome name
+:param start_region start position
+:param end_region end position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks.parse_tracks">
+<span class="sig-name descname"><span class="pre">parse_tracks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracks_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_regions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks.parse_tracks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.parse_tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a configuration file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tracks_file</strong> – file path containing the track configuration</p></li>
+<li><p><strong>plot_regions</strong> – a list of tuple [(chrom1, start1, end1), (chrom2, start2, end2)]
+on which the data should be loaded
+here the vlines</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>array of dictionaries and vlines_file.
+One dictionary per track</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks.close_files">
+<span class="sig-name descname"><span class="pre">close_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks.close_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.close_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close all opened files</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks.check_file_exists">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_file_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">track_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracks_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_hic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks.check_file_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.check_file_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a file or list of files exists. If the file does not exist
+tries to check if the file may be relative to the track_file path,
+in such case the path is updated.
+:param track_dict: dictionary of track values. Should contain</p>
+<blockquote>
+<div><p>a ‘file’ key containing the path of the file
+or files to be checked separated by space
+For example: file1 file2 file3</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tracks_path</strong> – path of the tracks file</p></li>
+<li><p><strong>is_hic</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks.guess_filetype">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">guess_filetype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">track_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">available_tracks</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks.guess_filetype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.guess_filetype" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>track_dict</strong> – dictionary of track values with the ‘file’ key
+containing a string path of the file or files.
+Only the ending of the last file is used
+in case when there are more files</p></li>
+<li><p><strong>available_tracks</strong> – list of available tracks</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>string file type detected</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks.cm2inch">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cm2inch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">tupl</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks.cm2inch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.cm2inch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.PlotTracks.print_elapsed">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">print_elapsed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#PlotTracks.print_elapsed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.PlotTracks.print_elapsed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SpacerTrack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pygenometracks.tracks.GenomeTrack.GenomeTrack</span></code></p>
+<p>The GenomeTrack object is a holder for all tracks that are to be plotted.
+For example, to plot a bedgraph file a new class that extends GenomeTrack
+should be created.</p>
+<p>It is expected that all GenomeTrack objects have a plot method.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.SUPPORTED_ENDINGS">
+<span class="sig-name descname"><span class="pre">SUPPORTED_ENDINGS</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">[]</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.SUPPORTED_ENDINGS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.SUPPORTED_ENDINGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.TRACK_TYPE">
+<span class="sig-name descname"><span class="pre">TRACK_TYPE</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">spacer</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.TRACK_TYPE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.TRACK_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.DEFAULTS_PROPERTIES">
+<span class="sig-name descname"><span class="pre">DEFAULTS_PROPERTIES</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.DEFAULTS_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.DEFAULTS_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.NECESSARY_PROPERTIES">
+<span class="sig-name descname"><span class="pre">NECESSARY_PROPERTIES</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">[]</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.NECESSARY_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.NECESSARY_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.SYNONYMOUS_PROPERTIES">
+<span class="sig-name descname"><span class="pre">SYNONYMOUS_PROPERTIES</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.SYNONYMOUS_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.SYNONYMOUS_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.POSSIBLE_PROPERTIES">
+<span class="sig-name descname"><span class="pre">POSSIBLE_PROPERTIES</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.POSSIBLE_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.POSSIBLE_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.BOOLEAN_PROPERTIES">
+<span class="sig-name descname"><span class="pre">BOOLEAN_PROPERTIES</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">[]</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.BOOLEAN_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.BOOLEAN_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.STRING_PROPERTIES">
+<span class="sig-name descname"><span class="pre">STRING_PROPERTIES</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">['overlay_previous',</span> <span class="pre">'title',</span> <span class="pre">'file_type']</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.STRING_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.STRING_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.FLOAT_PROPERTIES">
+<span class="sig-name descname"><span class="pre">FLOAT_PROPERTIES</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.FLOAT_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.FLOAT_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.INTEGER_PROPERTIES">
+<span class="sig-name descname"><span class="pre">INTEGER_PROPERTIES</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.INTEGER_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.INTEGER_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chrom_region</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_region</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_region</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.SpacerTrack.plot_y_axis">
+<span class="sig-name descname"><span class="pre">plot_y_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#SpacerTrack.plot_y_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.SpacerTrack.plot_y_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the scale of the y axis with respect to the plot_axis
+:param ax: axis to use to plot the scale
+:param plot_axis: the reference axis to get the max and min.
+:param transform: what was the transformation of the data
+:param log_pseudocount:
+:param y_axis: ‘tranformed’ or ‘original’
+:param only_at_ticks: False: only min_max are diplayed</p>
+<blockquote>
+<div><p>True: only ticks values are displayed</p>
+</div></blockquote>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">XAxisTrack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">pygenometracks.tracks.GenomeTrack.GenomeTrack</span></code></p>
+<p>The GenomeTrack object is a holder for all tracks that are to be plotted.
+For example, to plot a bedgraph file a new class that extends GenomeTrack
+should be created.</p>
+<p>It is expected that all GenomeTrack objects have a plot method.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.SUPPORTED_ENDINGS">
+<span class="sig-name descname"><span class="pre">SUPPORTED_ENDINGS</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">[]</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.SUPPORTED_ENDINGS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.SUPPORTED_ENDINGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.TRACK_TYPE">
+<span class="sig-name descname"><span class="pre">TRACK_TYPE</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">x_axis</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.TRACK_TYPE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.TRACK_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.NECESSARY_PROPERTIES">
+<span class="sig-name descname"><span class="pre">NECESSARY_PROPERTIES</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">[]</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.NECESSARY_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.NECESSARY_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.DEFAULTS_PROPERTIES">
+<span class="sig-name descname"><span class="pre">DEFAULTS_PROPERTIES</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.DEFAULTS_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.DEFAULTS_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.SYNONYMOUS_PROPERTIES">
+<span class="sig-name descname"><span class="pre">SYNONYMOUS_PROPERTIES</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.SYNONYMOUS_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.SYNONYMOUS_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.POSSIBLE_PROPERTIES">
+<span class="sig-name descname"><span class="pre">POSSIBLE_PROPERTIES</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.POSSIBLE_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.POSSIBLE_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.BOOLEAN_PROPERTIES">
+<span class="sig-name descname"><span class="pre">BOOLEAN_PROPERTIES</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">[]</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.BOOLEAN_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.BOOLEAN_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.STRING_PROPERTIES">
+<span class="sig-name descname"><span class="pre">STRING_PROPERTIES</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">['overlay_previous',</span> <span class="pre">'title',</span> <span class="pre">'where',</span> <span class="pre">'file_type']</span></em><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.STRING_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.STRING_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.FLOAT_PROPERTIES">
+<span class="sig-name descname"><span class="pre">FLOAT_PROPERTIES</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.FLOAT_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.FLOAT_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.INTEGER_PROPERTIES">
+<span class="sig-name descname"><span class="pre">INTEGER_PROPERTIES</span></span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.INTEGER_PROPERTIES"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.INTEGER_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chrom_region</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region_end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ALLCools.plot.genome_track._pygenometrack.XAxisTrack.plot_y_axis">
+<span class="sig-name descname"><span class="pre">plot_y_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/ALLCools/plot/genome_track/_pygenometrack.html#XAxisTrack.plot_y_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ALLCools.plot.genome_track._pygenometrack.XAxisTrack.plot_y_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the scale of the y axis with respect to the plot_axis
+:param ax: axis to use to plot the scale
+:param plot_axis: the reference axis to get the max and min.
+:param transform: what was the transformation of the data
+:param log_pseudocount:
+:param y_axis: ‘tranformed’ or ‘original’
+:param only_at_ticks: False: only min_max are diplayed</p>
+<blockquote>
+<div><p>True: only ticks values are displayed</p>
+</div></blockquote>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./api/ALLCools/plot/genome_track/_pygenometrack"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ALLCools.plot.genome_track</span></code></p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../utilities/index.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ALLCools.plot.genome_track.utilities</span></code></p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Hanqing Liu<br/>
+    
+        &copy; Copyright 2019 - 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

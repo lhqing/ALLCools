@@ -368,7 +368,7 @@ Package Contents
       :param sort_bed:
 
 
-   .. py:method:: open(cls, path, region_dim=None, use_regions=None, split_large_chunks=True, chrom_size_path=None, select_dir=None, engine='zarr')
+   .. py:method:: open(cls, path, region_dim=None, use_regions=None, split_large_chunks=True, chrom_size_path=None, select_dir=None, chunks='auto', engine='zarr')
       :classmethod:
 
 
@@ -409,7 +409,13 @@ Package Contents
    .. py:method:: get_feature(self, feature_name, dim=None, da_name=None)
 
 
-   .. py:method:: scan_motifs(self, genome_fasta, cpu=1, standardize_length=500, motif_set_path=None, chrom_size_path=None, combine_cluster=True, fnr_fpr_fold=1000, chunk_size=None, dim='motif')
+   .. py:method:: scan_motifs(self, genome_fasta, cpu=1, standardize_length=500, motif_set_path=None, chrom_size_path=None, combine_cluster=True, fnr_fpr_fold=1000, chunk_size=None, motif_dim='motif', snakemake=False)
+
+
+   .. py:method:: _scan_motif_local(self, fasta_path, cpu=1, motif_set_path=None, combine_cluster=True, fnr_fpr_fold=1000, chunk_size=None, motif_dim='motif')
+
+
+   .. py:method:: _scan_motifs_snakemake(self, fasta_path, output_dir, cpu, motif_dim='motif', combine_cluster=True, motif_set_path=None, fnr_fpr_fold=1000, chunk_size=50000)
 
 
    .. py:method:: get_hypo_hyper_index(self, a, region_dim=None, region_state_da=None, sample_dim='sample', use_collapsed=True)

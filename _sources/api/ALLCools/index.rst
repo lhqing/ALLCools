@@ -10,6 +10,7 @@ Subpackages
    :titlesonly:
    :maxdepth: 3
 
+   abc/index.rst
    clustering/index.rst
    count_matrix/index.rst
    dmr/index.rst

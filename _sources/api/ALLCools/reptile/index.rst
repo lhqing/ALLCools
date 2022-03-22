@@ -78,13 +78,16 @@ Package Contents
    .. py:method:: _predict(self, region_dim, cpu, mask_cutoff)
 
 
-   .. py:method:: predict(self, cpu, mask_cutoff=0.3, bw_bin_size=50)
+   .. py:method:: predict(self, cpu, mask_cutoff=0.3, bw_bin_size=10, enhancer_cutoff=0.7)
 
 
    .. py:method:: _dump_sample(self, sample, mask_cutoff, bw_bin_size)
 
 
    .. py:method:: dump_bigwigs(self, cpu, mask_cutoff, bw_bin_size)
+
+
+   .. py:method:: call_enhancers(self, threshold=0.7, merge_dist=None)
 
 
 

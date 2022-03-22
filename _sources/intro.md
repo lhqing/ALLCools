@@ -5,18 +5,16 @@ ALLCools is a software package for single-cell DNA methylome data analysis. It c
 
 ## Documentation Organization
 
-1. For installation, please read **GET STARTED** [here](https://lhqing.github.io/ALLCools/start/installation.html);
+1. For installation, please read **GET STARTED** [here](start/installation.md);
 2. The ALLCools workflow encompasses the following two sections:
-   1. **CELLULAR ANALYSIS**: This [section](https://lhqing.github.io/ALLCools/cell_level/basic/intro_basic_clustering.html) goes over basic clustering steps, differential methylated genes (DMG) analysis, data integration, and doublets identification;
-   2. **GENOMIC ANALYSIS**: This [section](https://lhqing.github.io/ALLCools/cluster_level/intro.html) covers differential methylated region (DMR) calling, genome annotation, DNA motif analysis, correlation analysis, and enhancer prediction.
-3. To generate analysis files from your own data, please read the **COMMAND LINE TOOLS** [here](https://lhqing.github.io/ALLCools/command_line/allcools.html);
-4. To customize visualization, please read the **VISUALIZATION** [here](https://lhqing.github.io/ALLCools/visualization/intro.html);
-5. For more details on the analysis steps, please read the **DISCUSSION** [here](https://lhqing.github.io/ALLCools/discuss/intro.html);
-6. For references to functions used in this package, please read the **API** [here](https://lhqing.github.io/ALLCools/api/ALLCools/index.html).
+   1. **CELLULAR ANALYSIS**: This [section](cell_level/basic/intro_basic_clustering.md) goes over basic clustering steps, differential methylated genes (DMG) analysis, data integration, and doublets identification;
+   2. **GENOMIC ANALYSIS**: This [section](cluster_level/intro.md) covers differential methylated region (DMR) calling, genome annotation, DNA motif analysis, correlation analysis, and enhancer prediction;
+3. To generate analysis files from your own data, please read the **COMMAND LINE TOOLS** [here](command_line/allcools.ipynb);
+4. For references to function used in this package, please read the **API** [here](https://lhqing.github.io/ALLCools/api/ALLCools/index.html).
 
 ```{figure} ./img/doc_organize.png
 ---
-height: 350px
+height: 180px
 name: doc-organize-fig
 ---
 ALLCools documentation organization.
@@ -26,6 +24,8 @@ ALLCools documentation organization.
 
 - Hanqing Liu, developer, initial conception
 - Jingtian Zhou, developer, 5kb clustering algorithms
+- Wei Tian
+- Jiaying Xu
 
 ## Support
 
@@ -45,4 +45,4 @@ Click on this to create a page specific issue.
 
 ## Citing ALLCools
 
-If ALLCools has been significant in your research, and you would like to acknowledge the project in your academic publication, we suggest citing our paper {cite:p}`Liu2021`. For any specific methods and algorithm, also consider citing the original author's paper included in the Citation and Reference page [here](https://lhqing.github.io/ALLCools/project_info/citation.html). 
+If ALLCools has been significant in your research, and you would like to acknowledge the project in your academic publication, we suggest citing our paper {cite:p}`Liu2021`. For any specific methods and algorithms, also consider citing the original author's paper included in the Citation and Reference page [here](project_info/citation.md). 

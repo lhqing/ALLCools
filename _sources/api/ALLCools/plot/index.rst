@@ -4,6 +4,15 @@
 .. py:module:: ALLCools.plot
 
 
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   genome_track/index.rst
+
+
 Submodules
 ----------
 .. toctree::
