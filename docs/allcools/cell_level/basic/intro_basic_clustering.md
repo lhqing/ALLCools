@@ -8,9 +8,7 @@
 ## Input Files
 
 ### For 100Kb bins clustering
-The dataset we used for 100Kb clustering documentation comes from two brain regions of adult P56 male mice. 
-The MOp stand for primary motor cortex, the HIP stand for hippocampus (CA) region. 
-These two datasets belong to a larger whole brain methylome atlas dataset (add reference).
+The dataset we used for 100Kb clustering documentation comes from the hippocampus (HIP) of adult P56 male mice. These datasets belong to a larger mouse brain methylome atlas dataset {cite:p}`Liu2021`.
 
 #### Download Input Files
 - Cell metadata: ADD DOWNLOAD URL
@@ -18,12 +16,12 @@ These two datasets belong to a larger whole brain methylome atlas dataset (add r
 - MCDS files: ADD DOWNLOAD URL
 
 ### For 5Kb bins clustering
-The dataset we used for 5Kb clustering documentation comes from pituitary of adult P56 male mice (add reference).
+The dataset we used for 5Kb clustering documentation comes from human PBMC (ADD REFERENCE).
 
 #### Download Input Files
 - Cell metadata: ADD DOWNLOAD URL
 - single-cell ALLC files: ADD DOWNLOAD URL
-- MCAD files: ADD DOWNLOAD URL
+- MCDS files: ADD DOWNLOAD URL
 
 ## Prepare your own datasets
 ### Cell metadata
@@ -36,9 +34,5 @@ See [`allcools bam-to-allc`](../../command_line/allcools_allc.ipynb) for how to 
 from filtered single-cell BAM files.
 
 ### MCDS files
-See [`allcools mcds`](../../command_line/allcools_mcds.ipynb) for how to generate MCDS files 
-from single-cell ALLC files
+See [`allcools generate-dataset`](../../command_line/allcools_dataset.ipynb) for how to generate MCDS files containing raw count matrix, and/or hypo-/hyper-methylation score matrix for any kinds of genomic features.
 
-### MCAD files
-See [`allcools mcad`](../../command_line/allcools_mcad.ipynb) for how to generate MCAD files 
-from single-cell ALLC files

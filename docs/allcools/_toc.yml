@@ -54,7 +54,7 @@ parts:
 
   - caption: GENOMIC ANALYSIS
     chapters:
-      - file: cluster_level/RegionDS/intro
+      - file: cluster_level/intro
         sections:
           - file: cluster_level/RegionDS/01a.call_dmr
           - file: cluster_level/RegionDS/01b.other_option_to_init_region_ds
@@ -84,19 +84,20 @@ parts:
       - file: command_line/allcools_extract
       - file: command_line/allcools_bw
       - file: command_line/allcools_region
+      - file: command_line/allcools_dataset
       - file: command_line/allcools_mcds
       - file: command_line/allcools_mcad
 
 
-  - caption: VISUALIZATION
-    chapters:
-      - file: visualization/intro
+#  - caption: VISUALIZATION
+#    chapters:
+#      - file: visualization/intro
 
 
-  - caption: DISCUSSION
-    chapters:
-      - file: discuss/intro
-      - file: discuss/dmr_benchmark
+#  - caption: DISCUSSION
+#    chapters:
+#      - file: discuss/intro
+#      - file: discuss/dmr_benchmark
 
 
   - caption: API

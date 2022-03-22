@@ -2,7 +2,7 @@
 
 ## Data files used in this documentation
 
-Data files will be posted publicly once we finished the v1.0 development. Estimated time is March 2022.
+Data files will be posted publicly once we finished the v1.0 development. Estimated time is May 2022.
 
 ## Download Analysis `.ipynb` files
 

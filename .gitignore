@@ -120,3 +120,5 @@ dmypy.json
 test/file/.DS_Store
 .DS_Store
 ALLCools/_version.py
+/docs/allcools/cell_level/dmg/geneslop2k_frac.mcds/
+/docs/allcools/cell_level/dmg/gene_frac/
