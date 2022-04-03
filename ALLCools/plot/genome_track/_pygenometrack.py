@@ -130,6 +130,10 @@ class PlotTracks(object):
                     track_type = child.TRACK_TYPE
                     avail_tracks[track_type] = child
                     work.append(child)
+
+        # plus tracks defined in ALLCools
+        from .HiCMatrixCoolTrack import HiCMatrixCoolTrack
+        avail_tracks['cooler'] = HiCMatrixCoolTrack
         return avail_tracks
 
     def get_tracks_height(self, start_region=None, end_region=None):
@@ -163,7 +167,7 @@ class PlotTracks(object):
             elif track_dict['file_type'] == 'x_axis':
                 height = track_dict['fontsize'] / 8
             elif 'depth' in track_dict and \
-                    track_dict['file_type'] == 'hic_matrix':
+                    track_dict['file_type'] in ('hic_matrix', 'cooler'):
                 # compute the height of a Hi-C track
                 # based on the depth such that the
                 # resulting plot appears proportional
@@ -351,12 +355,18 @@ class PlotTracks(object):
         :return: array of dictionaries and vlines_file.
                  One dictionary per track
         """
-        if isinstance(tracks_file, str) and not pathlib.Path(tracks_file).exists():
-            # assume the tracks_file are the config string
+        try:
+            if isinstance(tracks_file, str) and not pathlib.Path(tracks_file).exists():
+                # assume the tracks_file are the config string
+                import io
+                handle = io.StringIO(tracks_file)
+            else:
+                handle = open(tracks_file, 'r')
+        except OSError:
+            # if the config string too long, path exists raise error.
             import io
             handle = io.StringIO(tracks_file)
-        else:
-            handle = open(tracks_file, 'r')
+
         parser = ConfigParser(dict_type=MultiDict, strict=False)
         parser.read_file(handle)
         handle.close()
@@ -743,3 +753,112 @@ class XAxisTrack(GenomeTrack):
 
     def plot_y_axis(self, ax, plot_ax):
         pass
+
+
+def prepare_config(file_configs, add_spacer=True, spacer_height=0.5):
+    """
+    Prepare pyGenomeTracks config string.
+
+    Parameters
+    ----------
+    file_configs
+        A list of file paths, or a list of file config dicts, containing file path and other config.
+        See pyGenomeTracks documentation for possible parameters.
+    add_spacer
+        Whether add spacer between tracks
+    spacer_height
+        spacer height in cm
+
+    Returns
+    -------
+    a single config string that can be read by PlotTracks
+    """
+    config_str = f"""
+# pyGenomeTrack documentation: https://pygenometracks.readthedocs.io/en/latest/content/all_tracks.html
+[x-axis]
+[spacer]
+height = {spacer_height}
+"""
+
+    available_tracks = PlotTracks.get_available_tracks()
+    for file_config in file_configs:
+        if isinstance(file_config, (str, pathlib.Path)):
+            # only file path provided
+            file_config = {'file': file_config}
+
+        if isinstance(file_config, dict):
+            track_added = False
+            if 'file' not in file_config:
+                raise KeyError(f'file config dict do not contain "file" key. The provided config was \n{file_config}')
+            file_path = file_config['file']
+            file_path = pathlib.Path(file_path)
+            if 'title' not in file_config:
+                label = ".".join(file_path.name.split(".")[0:-1])
+                file_config['title'] = label
+
+            if file_path.name.endswith('cool'):
+                # assume cool file
+                file_config['file_type'] = 'cooler'
+
+            if 'file_type' in file_config:
+                track_type = file_config['file_type']
+                track_class = available_tracks[track_type]
+                print(f"Adding {track_type} file: {file_path.name}")
+                config_str += _prepare_track_config(file_config=file_config,
+                                                    track_type=track_type,
+                                                    track_class=track_class,
+                                                    add_spacer=add_spacer,
+                                                    spacer_height=spacer_height)
+                track_added = True
+            else:
+                for track_type, track_class in available_tracks.items():
+                    for ending in track_class.SUPPORTED_ENDINGS:
+                        if file_path.name.endswith(ending):
+                            print(f"Adding {track_type} file: {file_path.name}\n")
+                            config_str += _prepare_track_config(file_config=file_config,
+                                                                track_type=track_type,
+                                                                track_class=track_class,
+                                                                add_spacer=add_spacer,
+                                                                spacer_height=spacer_height)
+                            track_added = True
+
+            if track_added is False:
+                print(f"WARNING: file format not recognized for: {file_path.name}\n")
+                print('Provide "file_type" key in the file config, or use supported endings:')
+                for track_type, track_class in available_tracks.items():
+                    print(f'{track_type}: {",".join(track_class.SUPPORTED_ENDINGS)}')
+        else:
+            raise TypeError(f'file_configs must be a list of file config dict, or file paths, '
+                            f'got type {type(file_config)} with \n{file_config}')
+    return config_str
+
+
+def _prepare_track_config(file_config, track_type, track_class, add_spacer=True, spacer_height=0.5):
+    config_str = ''
+
+    for required_config in track_class.NECESSARY_PROPERTIES:
+        if required_config not in file_config:
+            raise KeyError(f'file config dict of track_type {track_type} '
+                           f'missing required config {required_config}. \n{file_config}')
+    final_config = track_class.DEFAULTS_PROPERTIES.copy()
+    final_config.update(file_config)
+
+    kv_pairs = []
+    for k, v in final_config.items():
+        if v is None:
+            kv_pair = f'{k} = none'  # config ini recognize None as string
+        else:
+            kv_pair = f'{k} = {v}'
+        if k not in file_config:
+            # comment out default value:
+            kv_pair = '#' + kv_pair
+        kv_pairs.append(kv_pair)
+
+    file_config_str = '\n'.join(kv_pairs)
+    config_str += f"\n[{final_config['title']}]\n{file_config_str}"
+    config_str += f'\n# See doc: https://pygenometracks.readthedocs.io/en/latest/content/tracks/{track_type}.html\n'
+    if add_spacer:
+        config_str += f"\n[spacer]\n" \
+                      f"height = {spacer_height}\n"
+
+    return config_str
