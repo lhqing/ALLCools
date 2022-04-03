@@ -104,6 +104,52 @@ strandness_doc = (
     "only work for CpG like context. For non-CG context, its the same as both."
 )
 
+generate_dataset_doc = (
+    "Generate MCDS dataset from a list of ALLC files (recorded in the allc_table). "
+    "Multiple region sets, methylation contexts and quantification types can be included in one command."
+)
+
+generate_dataset_obs_dim_doc = 'Name of the observation dimension.'
+
+generate_dataset_chunk_size_doc = 'Chunk allc_table with chunk_size when generate dataset in parallel'
+
+generate_dataset_regions_doc = (
+    'Definition of genomic regions in the form of "--regions {region_name} {region_definition}". '
+    'This parameter can be specified multiple times, to allow quantification of multiple region sets '
+    'in the same MCDS dataset. Several cases are allowed: '
+    '1) a integer number means fix-sized genomic bins, region bed and region id will be generated '
+    'automatically based on the chrom_size_path parameter (e.g., "--regions chrom100k 100000"); '
+    '2) a path to a three-column bed file, in this case, '
+    'a forth column containing region id in the form of {region_name}_{i} will be added automatically '
+    '(e.g., "--regions gene /path/to/gene_bed_no_id.bed", '
+    'where the bed file only has chrom, start, end columns); '
+    '3) a path to a four-column bed file, in this case, the forth column will be treated as region id '
+    'and the region ids must be UNIQUE. (e.g., "--regions gene /path/to/gene_bed_with_id.bed", '
+    'where the bed file has chrom, start, end, id columns).'
+)
+
+generate_dataset_quantifiers_doc = (
+    'Definition of genome region quantifiers in the form of '
+    '"--quantifiers {region_name} {quant_type} {mc_contexts} {optional_parameter}". '
+    'The region_name determines which region set this quantifier applies to, '
+    'region_name must be defined by "--regions" parameter. '
+    'The quant_type specify which quantifiers, it must be in ["count", "hypo-score", "hyper-score"]. '
+    'The mc_contexts specify a comma separated mC context list, '
+    'it must be the same size as the ALLC table, and uses IUPAC base abbreviation. '
+    '--quantifiers parameter can be specified multiple times, '
+    'to allow different quantification for different region sets, '
+    'or multiple quantification for the same region set. '
+    'Some examples: '
+    '1) To quantify raw counts of a region set in mCG and mCH context: '
+    '"--quantifiers gene count CGN,CHN" '
+    '2) To quantify the mCG hypo-methylation score of chrom 5Kb bins: '
+    '"--quantifiers chrom5k hypo-score CGN cutoff=0.9", '
+    'by default, cutoff=0.9, so the last part is optional. '
+    '3) To ALSO quantify the mCG raw counts of chrom 5Kb bins in the same MCDS, '
+    'just specify another quantifiers in the same command: '
+    '"--quantifiers chrom5k count CGN", note the count matrix of chrom5k will be large. '
+    'Its not usually needed, but you have the option if needed.'
+)
 
 def doc_params(**kwds):
     """\

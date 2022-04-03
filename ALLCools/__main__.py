@@ -15,6 +15,7 @@ import sys
 import ALLCools
 from ._doc import *
 import os
+from argparse import RawTextHelpFormatter
 
 os.environ["NUMEXPR_MAX_THREADS"] = "8"
 
@@ -723,7 +724,7 @@ def generate_dataset_register_subparser(subparser):
         "generate-dataset",
         aliases=["dataset"],
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-        help="",
+        help=generate_dataset_doc,
     )
 
     parser_req = parser.add_argument_group("required arguments")
@@ -732,58 +733,60 @@ def generate_dataset_register_subparser(subparser):
         "--allc_table",
         type=str,
         required=True,
-        help=''
+        help=allc_table_doc
     )
 
     parser_req.add_argument(
         "--output_path",
         type=str,
         required=True,
-        help=''
+        help='Output path of the MCDS dataset'
     )
 
     parser_req.add_argument(
         "--chrom_size_path",
         type=str,
         required=True,
-        help=''
+        help=chrom_size_path_doc
     )
 
     parser.add_argument(
         "--obs_dim",
         type=str,
         default='cell',
-        help=''
+        help=generate_dataset_obs_dim_doc
     )
 
     parser.add_argument(
         "--cpu",
         type=int,
         default=1,
-        help=''
+        help=cpu_basic_doc
     )
 
     parser.add_argument(
         "--chunk_size",
         type=int,
         default=10,
-        help=''
+        help=generate_dataset_chunk_size_doc
     )
 
-    parser.add_argument(
+    parser_req.add_argument(
         "--regions",
         type=str,
         nargs=2,
         action='append',
-        help=''
+        required=True,
+        help=generate_dataset_regions_doc
     )
 
-    parser.add_argument(
+    parser_req.add_argument(
         "--quantifiers",
         type=str,
         nargs='+',
         action='append',
-        help=''
+        required=True,
+        help=generate_dataset_quantifiers_doc
     )
     return
 

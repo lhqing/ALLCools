@@ -11,6 +11,7 @@ from functools import lru_cache
 from scipy import stats
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from shutil import rmtree
+from .._doc import *
 
 ALLOW_QUANT_TYPES = ['count', 'hypo-score', 'hyper-score']
 
@@ -266,22 +267,39 @@ def count_single_zarr(allc_table,
     return output_path
 
 
+@doc_params(
+    generate_dataset_doc=generate_dataset_doc,
+    allc_table_doc=allc_table_doc,
+    chrom_size_path_doc=chrom_size_path_doc,
+    regions_doc=generate_dataset_regions_doc,
+    quantifiers_doc=generate_dataset_quantifiers_doc,
+    obs_dim_doc=generate_dataset_obs_dim_doc,
+    cpu_basic_doc=cpu_basic_doc,
+    chunk_size_doc=generate_dataset_chunk_size_doc
+)
 def generate_dataset(allc_table, output_path, regions, quantifiers, chrom_size_path,
                      obs_dim='cell', cpu=1, chunk_size=None):
-    """
-    Generate multiple methylation datasets with a set of allc_table,
-    a list of region sets and quantifiers for each region set.
+    """\
+    {generate_dataset_doc}
 
     Parameters
     ----------
     allc_table
+        {allc_table_doc}
     output_path
+        Output path of the MCDS dataset
     regions
+        {regions_doc}
     quantifiers
+        {quantifiers_doc}
     chrom_size_path
+        {chrom_size_path_doc}
     obs_dim
+        {obs_dim_doc}
     cpu
+        {cpu_basic_doc}
     chunk_size
+        {chunk_size_doc}
 
     Returns
     -------
