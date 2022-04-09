@@ -134,6 +134,10 @@ class PlotTracks(object):
         # plus tracks defined in ALLCools
         from .HiCMatrixCoolTrack import HiCMatrixCoolTrack
         avail_tracks['cooler'] = HiCMatrixCoolTrack
+
+        # swap the GtfTrack in pygenometracks with this class in ALLCools
+        from .GtfTrack import GtfTrack
+        avail_tracks['gtf'] = GtfTrack
         return avail_tracks
 
     def get_tracks_height(self, start_region=None, end_region=None):

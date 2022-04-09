@@ -1,3 +1,5 @@
+import pathlib
+
 import pandas as pd
 
 
@@ -14,9 +16,15 @@ def read_gtf(gtf_path):
 
 
 def subset_gtf(gtf, regions, output_path=None, select_feature=None):
+    if isinstance(gtf, (str, pathlib.Path)):
+        gtf = read_gtf(gtf)
+
     if (len(regions) == 3) and isinstance(regions[1], int):
         # assume this is a single region
         regions = [regions]
+
+    if select_feature is not None:
+        gtf = gtf[gtf['feature'].isin(select_feature)].copy()
 
     use_rows = None
     for region in regions:
@@ -27,9 +35,6 @@ def subset_gtf(gtf, regions, output_path=None, select_feature=None):
         else:
             use_rows = use_rows | judge
     gtf_sub = gtf[use_rows]
-
-    if select_feature is not None:
-        gtf_sub = gtf_sub[gtf_sub['feature'].isin(select_feature)]
 
     if output_path is not None:
         gtf_sub.to_csv(output_path, sep='\t', index=None, header=None)
