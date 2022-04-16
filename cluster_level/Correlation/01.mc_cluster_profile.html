@@ -2,67 +2,51 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prepare Cluster-by-Gene mC Profile</title>
-    
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
-
-    
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-
-    
-      
-
-    
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-codeautolink.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
-
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/togglebutton.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Prepare Cluster-by-Gene mC Profile</title>
+<link href="../../_static/css/theme.css" rel="stylesheet"/>
+<link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet"/>
+<link href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css" rel="stylesheet"/>
+<link as="font" crossorigin="" href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2" rel="preload" type="font/woff2"/>
+<link href="../../_static/pygments.css" rel="stylesheet" type="text/css">
+<link href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" rel="stylesheet" type="text/css">
+<link href="../../_static/togglebutton.css" rel="stylesheet" type="text/css">
+<link href="../../_static/copybutton.css" rel="stylesheet" type="text/css">
+<link href="../../_static/mystnb.css" rel="stylesheet" type="text/css">
+<link href="../../_static/sphinx-thebe.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/sphinx-codeautolink.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" rel="stylesheet" type="text/css"/>
+<link href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" rel="stylesheet" type="text/css"/>
+<link as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js" rel="preload"/>
+<script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+<script src="../../_static/jquery.js"></script>
+<script src="../../_static/underscore.js"></script>
+<script src="../../_static/doctools.js"></script>
+<script src="../../_static/togglebutton.js"></script>
+<script src="../../_static/clipboard.min.js"></script>
+<script src="../../_static/copybutton.js"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+<script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+<script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+<script>
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
-    <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <link rel="shortcut icon" href="../../_static/allcools_favicon.png"/>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="DMR-Gene Correlation" href="02.dmr_gene_corr.html" />
-    <link rel="prev" title="Region-Region Correlation Analysis" href="intro_corr.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+<script async="async" src="../../_static/sphinx-thebe.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+<link href="../../_static/allcools_favicon.png" rel="shortcut icon">
+<link href="../../genindex.html" rel="index" title="Index"/>
+<link href="../../search.html" rel="search" title="Search"/>
+<link href="02.dmr_gene_corr.html" rel="next" title="DMR-Gene Correlation"/>
+<link href="intro_corr.html" rel="prev" title="Region-Region Correlation Analysis"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="None" name="docsearch:language"/>
+<!-- Google Analytics -->
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4F8CRF0GK9"></script>
 <script>
                     window.dataLayer = window.dataLayer || [];
@@ -70,1737 +54,1677 @@
                     gtag('js', new Date());
                     gtag('config', 'G-4F8CRF0GK9');
                 </script>
-
-  </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
-
-    
-
-    <div class="container-xl">
-      <div class="row">
-          
+</link></link></link></link></link></link></head>
+<body data-offset="80" data-spy="scroll" data-target="#bd-toc-nav">
+<div class="container-fluid" id="banner"></div>
+<div class="container-xl">
+<div class="row">
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../index.html">
-      
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
-        
-      
-      
-      <img src="../../_static/allcools_logo.png" class="logo" alt="logo">
-      
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro.html">
+<div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+<!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+<img alt="logo" class="logo" src="../../_static/allcools_logo.png"/>
+</a>
+</div><form action="../../search.html" class="bd-search d-flex align-items-center" method="get">
+<i class="icon fas fa-search"></i>
+<input aria-label="Search this book..." autocomplete="off" class="form-control" id="search-input" name="q" placeholder="Search this book..." type="search"/>
+</form><nav aria-label="Main" class="bd-links" id="bd-docs-nav">
+<div class="bd-toc-item active">
+<ul class="nav bd-sidenav">
+<li class="toctree-l1">
+<a class="reference internal" href="../../intro.html">
    ALLCools: ALL methyl-Cytosine tools
   </a>
- </li>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
+<span class="caption-text">
   GET STARTED
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../start/installation.html">
+<li class="toctree-l1">
+<a class="reference internal" href="../../start/installation.html">
    Installation
   </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../start/input_files.html">
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../start/input_files.html">
    Input Files
   </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../start/analysis_steps.html">
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../start/analysis_steps.html">
    Analysis Steps
   </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../start/interactive.html">
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../start/interactive.html">
    Examples In This Document
   </a>
- </li>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
+<span class="caption-text">
   CELLULAR ANALYSIS
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../cell_level/basic/intro_basic_clustering.html">
+<li class="toctree-l1 has-children">
+<a class="reference internal" href="../../cell_level/basic/intro_basic_clustering.html">
    Basic Clustering Walk-through
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/basic/mch_mcg_100k_basic.html">
+<input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox">
+<label for="toctree-checkbox-1">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/basic/mch_mcg_100k_basic.html">
      Basic Cell Clustering Using 100Kb Bins
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/basic/mcg_5kb_basic.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/basic/mcg_5kb_basic.html">
      Basic Cell Clustering Using mCG-5Kb Bins
     </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../cell_level/step_by_step/intro_step_by_step_clustering.html">
+</li>
+</ul>
+</input></li>
+<li class="toctree-l1 has-children">
+<a class="reference internal" href="../../cell_level/step_by_step/intro_step_by_step_clustering.html">
    Step-by-step Clustering Analysis
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../cell_level/step_by_step/100kb/intro_100kb.html">
+<input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+<label for="toctree-checkbox-2">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../cell_level/step_by_step/100kb/intro_100kb.html">
      Step-by-step Clustering Using 100Kb bins
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-    <label for="toctree-checkbox-3">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/100kb/01-CellBasicFiltering.html">
+<input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+<label for="toctree-checkbox-3">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../cell_level/step_by_step/100kb/01-CellBasicFiltering.html">
        Cell Basic Filtering
       </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/100kb/02-BasicFeatureFiltering.html">
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../cell_level/step_by_step/100kb/02-BasicFeatureFiltering.html">
        Feature Basic Filtering
       </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection.html">
        Calculate Highly Variable Features And Get mC Fraction AnnData
       </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH.html">
        Preclustering and Cluster Enriched Features
       </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG.html">
        Preclustering and Cluster Enriched Features
       </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/100kb/05-DecompositionAndEmbedding.html">
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../cell_level/step_by_step/100kb/05-DecompositionAndEmbedding.html">
        Decomposition And Embedding
       </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/100kb/06-Clustering.html">
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../cell_level/step_by_step/100kb/06-Clustering.html">
        Consensus Clustering
       </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../cell_level/step_by_step/5kb/intro_5kb.html">
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../cell_level/step_by_step/5kb/intro_5kb.html">
      Step-by-step Clustering using mCG-5Kb Input
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-    <label for="toctree-checkbox-4">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
+<input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+<label for="toctree-checkbox-4">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
        Cell Basic Filtering
       </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
        Decomposition Using mCG-5Kb Bins
       </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/5kb/03-Clustering.html">
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../cell_level/step_by_step/5kb/03-Clustering.html">
        Consensus Clustering
       </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../cell_level/dmg/intro_dmg.html">
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children">
+<a class="reference internal" href="../../cell_level/dmg/intro_dmg.html">
    Differential Methylated Genes Analysis
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-  <label for="toctree-checkbox-5">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/dmg/01-AddGenemCFractions.html">
+<input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+<label for="toctree-checkbox-5">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/dmg/01-AddGenemCFractions.html">
      Calculate Gene mC Fractions
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/dmg/02-DifferentiallyMethylatedGenes.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/dmg/02-DifferentiallyMethylatedGenes.html">
      Cluster Differentially Methylated Genes
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/dmg/03-PlotClusterDMGs.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/dmg/03-PlotClusterDMGs.html">
      Plot Cluster DMGs
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/dmg/04-PairwiseDMG.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/dmg/04-PairwiseDMG.html">
      Differential Methylated Genes - Pairwise
     </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../cell_level/integration/intro_integration.html">
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children">
+<a class="reference internal" href="../../cell_level/integration/intro_integration.html">
    Data Integration
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-  <label for="toctree-checkbox-6">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/01-preprocess_10x.html">
+<input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+<label for="toctree-checkbox-6">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/01-preprocess_10x.html">
      Preprocess 10X snRNA-seq
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/02-preprocess_SMART.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/02-preprocess_SMART.html">
      Preprocess SMART-seq
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/03-preprocess_snATAC.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/03-preprocess_snATAC.html">
      Preprocess snATAC-seq
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/04-integration.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/integration/multi_modalities/Neurons/04-integration.html">
      Perform Cross-Modality Integration
     </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../cell_level/doublets/intro_doublets.html">
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children">
+<a class="reference internal" href="../../cell_level/doublets/intro_doublets.html">
    Doublets Identification
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-  <label for="toctree-checkbox-7">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../cell_level/doublets/doublet_score_chrom100k.html">
+<input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+<label for="toctree-checkbox-7">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../../cell_level/doublets/doublet_score_chrom100k.html">
      Calculate Cell Doublet Score
     </a>
-   </li>
-  </ul>
- </li>
+</li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
+<span class="caption-text">
   GENOMIC ANALYSIS
  </span>
 </p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../intro.html">
+<li class="toctree-l1 has-children">
+<a class="reference internal" href="../intro.html">
    Post-clustering Genomic Analysis
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-  <label for="toctree-checkbox-8">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../RegionDS/01a.call_dmr.html">
+<input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+<label for="toctree-checkbox-8">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../RegionDS/01a.call_dmr.html">
      DMR Calling
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../RegionDS/01b.other_option_to_init_region_ds.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../RegionDS/01b.other_option_to_init_region_ds.html">
      Alternative Way to Create RegionDS
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../RegionDS/02.annotation.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../RegionDS/02.annotation.html">
      Annotate RegionDS
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../RegionDS/03.filter_dmr.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../RegionDS/03.filter_dmr.html">
      Filter DMR
     </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../RegionDS/intro_motif.html">
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children">
+<a class="reference internal" href="../RegionDS/intro_motif.html">
    Motif Scan and Analysis
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
-  <label for="toctree-checkbox-9">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../RegionDS/04.motif_scan.html">
+<input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+<label for="toctree-checkbox-9">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../RegionDS/04.motif_scan.html">
      Motif Scan
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../RegionDS/05.motif_enrichment.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../RegionDS/05.motif_enrichment.html">
      Motif Enrichment Analysis
     </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="intro_corr.html">
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children">
+<a class="reference internal" href="intro_corr.html">
    Region-Region Correlation Analysis
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
-  <label for="toctree-checkbox-10">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul class="current">
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+<input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+<label for="toctree-checkbox-10">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul class="current">
+<li class="toctree-l2 current active">
+<a class="current reference internal" href="#">
      Prepare Cluster-by-Gene mC Profile
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="02.dmr_gene_corr.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="02.dmr_gene_corr.html">
      DMR-Gene Correlation
     </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../REPTILE/intro_reptile.html">
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children">
+<a class="reference internal" href="../REPTILE/intro_reptile.html">
    REPTILE
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
-  <label for="toctree-checkbox-11">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../REPTILE/01.prepare_input.html">
+<input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+<label for="toctree-checkbox-11">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l2">
+<a class="reference internal" href="../REPTILE/01.prepare_input.html">
      Prepare REPTILE
     </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../REPTILE/02.run_reptile.html">
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../REPTILE/02.run_reptile.html">
      Predict Enhancer with REPTILE Algorithm
     </a>
-   </li>
-  </ul>
- </li>
+</li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
+<span class="caption-text">
   COMMAND LINE TOOLS
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools.html">
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools.html">
    Entry Point
   </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_allc.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_allc.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      allc
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_standard.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_standard.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      standard
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_profile.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_profile.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      profile
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_tbi.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_tbi.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      tbi
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_merge.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_merge.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      merge
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_extract.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_extract.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      extract
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_bw.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_bw.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      bw
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_region.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_region.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      region
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_dataset.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_dataset.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      generate-dataset
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_mcds.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_mcds.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      mcds
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_mcad.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_mcad.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      mcad
     </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../command_line/allcools_table_to_allc.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="../../command_line/allcools_table_to_allc.html">
+<code class="docutils literal notranslate">
+<span class="pre">
      allcools
     </span>
-    <span class="pre">
+<span class="pre">
      tbi
     </span>
-   </code>
-  </a>
- </li>
+</code>
+</a>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
+<span class="caption-text">
   API
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../api/ALLCools/index.html">
-   <code class="xref py py-mod docutils literal notranslate">
-    <span class="pre">
+<li class="toctree-l1 has-children">
+<a class="reference internal" href="../../api/ALLCools/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
      ALLCools
     </span>
-   </code>
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
-  <label for="toctree-checkbox-12">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/abc/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+<label for="toctree-checkbox-12">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/abc/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.abc
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
-    <label for="toctree-checkbox-13">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/abc/abc_score/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+<label for="toctree-checkbox-13">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/abc/abc_score/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.abc.abc_score
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/clustering/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/clustering/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.clustering
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
-    <label for="toctree-checkbox-14">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../api/ALLCools/clustering/doublets/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+<label for="toctree-checkbox-14">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3 has-children">
+<a class="reference internal" href="../../api/ALLCools/clustering/doublets/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.clustering.doublets
         </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
-      <label for="toctree-checkbox-15">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/clustering/doublets/coverage_doublets/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+<label for="toctree-checkbox-15">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/clustering/doublets/coverage_doublets/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.clustering.doublets.coverage_doublets
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/clustering/doublets/scrublet/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/clustering/doublets/scrublet/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.clustering.doublets.scrublet
           </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../api/ALLCools/clustering/feature_selection/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children">
+<a class="reference internal" href="../../api/ALLCools/clustering/feature_selection/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.clustering.feature_selection
         </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-      <label for="toctree-checkbox-16">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/clustering/feature_selection/feature_enrichment/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+<label for="toctree-checkbox-16">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/clustering/feature_selection/feature_enrichment/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.clustering.feature_selection.feature_enrichment
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/clustering/feature_selection/gene_panel_design/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/clustering/feature_selection/gene_panel_design/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.clustering.feature_selection.gene_panel_design
           </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/ClusterMerging/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/ClusterMerging/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.clustering.ClusterMerging
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/ConsensusClustering/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/ConsensusClustering/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.clustering.ConsensusClustering
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/art_of_tsne/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/art_of_tsne/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.clustering.art_of_tsne
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/balanced_pca/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/balanced_pca/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.clustering.balanced_pca
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/dmg/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/dmg/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.clustering.dmg
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/incremental_pca/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/incremental_pca/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.clustering.incremental_pca
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/mcad/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/mcad/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.clustering.mcad
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/clustering/pvclust/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/pvclust/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.clustering.pvclust
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/count_matrix/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/count_matrix/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.count_matrix
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label for="toctree-checkbox-17">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/count_matrix/atac/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+<label for="toctree-checkbox-17">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/count_matrix/atac/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.count_matrix.atac
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/count_matrix/dataset/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/count_matrix/dataset/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.count_matrix.dataset
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/count_matrix/h5ad/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/count_matrix/h5ad/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.count_matrix.h5ad
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/count_matrix/mcad/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/count_matrix/mcad/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.count_matrix.mcad
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/count_matrix/mcds/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/count_matrix/mcds/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.count_matrix.mcds
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/count_matrix/snap/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/count_matrix/snap/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.count_matrix.snap
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/count_matrix/zarr/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/count_matrix/zarr/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.count_matrix.zarr
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/dmr/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/dmr/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.dmr
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/dmr/call_dmr/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+<label for="toctree-checkbox-18">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/dmr/call_dmr/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.dmr.call_dmr
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/dmr/call_dms/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/dmr/call_dms/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.dmr.call_dms
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/dmr/parse_methylpy/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/dmr/parse_methylpy/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.dmr.parse_methylpy
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/dmr/rms_test/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/dmr/rms_test/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.dmr.rms_test
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/gtf/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/gtf/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.gtf
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/gtf/Gtf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+<label for="toctree-checkbox-19">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/gtf/Gtf/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.gtf.Gtf
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/gtf/utilities/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/gtf/utilities/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.gtf.utilities
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/integration/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/integration/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.integration
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/integration/cca/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+<label for="toctree-checkbox-20">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/integration/cca/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.integration.cca
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/integration/confusion/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/integration/confusion/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.integration.confusion
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/integration/harmony/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/integration/harmony/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.integration.harmony
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/mcds/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/mcds/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.mcds
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/mcds/correlation/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+<label for="toctree-checkbox-21">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/mcds/correlation/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.mcds.correlation
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/mcds/mcds/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/mcds/mcds/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.mcds.mcds
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/mcds/region_ds/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/mcds/region_ds/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.mcds.region_ds
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/mcds/utilities/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/mcds/utilities/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.mcds.utilities
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/motif/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/motif/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.motif
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/motif/default_motif_set/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+<label for="toctree-checkbox-22">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/motif/default_motif_set/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.motif.default_motif_set
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/motif/motifs/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/motif/motifs/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.motif.motifs
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/motif/parse_meme/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/motif/parse_meme/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.motif.parse_meme
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/motif/snakemake/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/motif/snakemake/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.motif.snakemake
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/plot/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/plot/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.plot
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../api/ALLCools/plot/genome_track/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+<label for="toctree-checkbox-23">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3 has-children">
+<a class="reference internal" href="../../api/ALLCools/plot/genome_track/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.genome_track
         </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
-      <label for="toctree-checkbox-24">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/plot/genome_track/GtfTrack/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+<label for="toctree-checkbox-24">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/plot/genome_track/GtfTrack/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.plot.genome_track.GtfTrack
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.plot.genome_track.HiCMatrixCoolTrack
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/plot/genome_track/_pygenometrack/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/plot/genome_track/_pygenometrack/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.plot.genome_track._pygenometrack
           </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/categorical_scatter/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/categorical_scatter/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.categorical_scatter
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/color/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/color/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.color
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/continuous_scatter/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/continuous_scatter/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.continuous_scatter
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/contour/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/contour/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.contour
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/decomposition/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/decomposition/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.decomposition
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/dendro/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/dendro/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.dendro
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/interactive_scatter/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/interactive_scatter/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.interactive_scatter
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/qc_plots/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/qc_plots/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.qc_plots
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/size/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/size/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.size
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/sunburst/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/sunburst/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.sunburst
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/text_anno_scatter/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/text_anno_scatter/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.text_anno_scatter
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/plot/utilities/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/plot/utilities/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.plot.utilities
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/pseudo_cell/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/pseudo_cell/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.pseudo_cell
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
-    <label for="toctree-checkbox-25">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/pseudo_cell/pseudo_cell_kmeans/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+<label for="toctree-checkbox-25">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/pseudo_cell/pseudo_cell_kmeans/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.pseudo_cell.pseudo_cell_kmeans
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/pseudo_cell/pseudo_cell_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/pseudo_cell/pseudo_cell_knn/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.pseudo_cell.pseudo_cell_knn
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/reptile/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/reptile/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.reptile
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
-    <label for="toctree-checkbox-26">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/reptile/reptile/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+<label for="toctree-checkbox-26">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/reptile/reptile/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.reptile.reptile
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/sandbox/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/sandbox/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.sandbox
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
-    <label for="toctree-checkbox-27">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../api/ALLCools/sandbox/igv/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+<label for="toctree-checkbox-27">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3 has-children">
+<a class="reference internal" href="../../api/ALLCools/sandbox/igv/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.sandbox.igv
         </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
-      <label for="toctree-checkbox-28">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/BaseClass/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
+<label for="toctree-checkbox-28">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/sandbox/igv/BaseClass/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.sandbox.igv.BaseClass
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Session/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/sandbox/igv/Session/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.sandbox.igv.Session
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Track/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/sandbox/igv/Track/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.sandbox.igv.Track
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/defaults/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/sandbox/igv/defaults/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.sandbox.igv.defaults
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/make_session/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/sandbox/igv/make_session/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.sandbox.igv.make_session
           </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../api/ALLCools/sandbox/motif/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children">
+<a class="reference internal" href="../../api/ALLCools/sandbox/motif/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.sandbox.motif
         </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
-      <label for="toctree-checkbox-29">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/motif/ame/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
+<label for="toctree-checkbox-29">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/sandbox/motif/ame/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.sandbox.motif.ame
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/motif/cmotif/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/sandbox/motif/cmotif/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.sandbox.motif.cmotif
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/motif/fimo/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/sandbox/motif/fimo/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.sandbox.motif.fimo
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/motif/motif_scan/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/sandbox/motif/motif_scan/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.sandbox.motif.motif_scan
           </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/motif/utilities/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l4">
+<a class="reference internal" href="../../api/ALLCools/sandbox/motif/utilities/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
            ALLCools.sandbox.motif.utilities
           </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/sandbox/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/sandbox/balanced_knn/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.sandbox.balanced_knn
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/sandbox/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/sandbox/scanorama/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.sandbox.scanorama
         </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.sandbox.sccaf
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/schema/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/schema/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.schema
       </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/>
-    <label for="toctree-checkbox-30">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/schema/mcds_schema/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/>
+<label for="toctree-checkbox-30">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/schema/mcds_schema/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
          ALLCools.schema.mcds_schema
         </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/__main__/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/__main__/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.__main__
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/_allc_to_bigwig/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/_allc_to_bigwig/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools._allc_to_bigwig
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/_allc_to_bigwig_new/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/_allc_to_bigwig_new/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools._allc_to_bigwig_new
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/_allc_to_region_count/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/_allc_to_region_count/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools._allc_to_region_count
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/_bam_to_allc/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/_bam_to_allc/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools._bam_to_allc
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/_doc/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/_doc/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools._doc
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/_extract_allc/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/_extract_allc/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools._extract_allc
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/_merge_allc/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/_merge_allc/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools._merge_allc
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/_open/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/_open/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools._open
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/_version/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/_version/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools._version
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/api/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/api/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.api
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/table_to_allc/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/table_to_allc/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.table_to_allc
       </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/utilities/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
+</code>
+</a>
+</li>
+<li class="toctree-l2">
+<a class="reference internal" href="../../api/ALLCools/utilities/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
        ALLCools.utilities
       </span>
-     </code>
-    </a>
-   </li>
-  </ul>
- </li>
+</code>
+</a>
+</li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
+<span class="caption-text">
   PROJECT INFO
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../project_info/citation.html">
+<li class="toctree-l1">
+<a class="reference internal" href="../../project_info/citation.html">
    Citation And Reference
   </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://github.com/lhqing/ALLCools/releases">
+</li>
+<li class="toctree-l1">
+<a class="reference external" href="https://github.com/lhqing/ALLCools/releases">
    Changelog
   </a>
- </li>
+</li>
 </ul>
-
-    </div>
+</div>
 </nav> <!-- To handle the deprecated key -->
-
 <div class="navbar_extra_footer">
   Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
 </div>
-
 </div>
-
-
-          
-
-
-          
 <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
+<div class="topbar container-xl fixed-top">
+<div class="topbar-contents row">
+<div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+<div class="col pl-md-4 topbar-main">
+<button aria-controls="site-navigation" aria-expanded="true" aria-label="Toggle navigation" class="navbar-toggler ml-0" data-placement="left" data-target=".site-navigation" data-toggle="tooltip" id="navbar-toggler" title="Toggle navigation" type="button">
+<i class="fas fa-bars"></i>
+<i class="fas fa-arrow-left"></i>
+<i class="fas fa-arrow-up"></i>
+</button>
 <div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/cluster_level/Correlation/01.mc_cluster_profile.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
+<button aria-label="Download this page" class="btn btn-secondary topbarbtn" id="dropdown-buttons-trigger"><i class="fas fa-download"></i></button>
+<div class="dropdown-buttons">
+<!-- ipynb file if we had a myst markdown file -->
+<!-- Download raw file -->
+<a class="dropdown-buttons" href="../../_sources/cluster_level/Correlation/01.mc_cluster_profile.ipynb"><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Download source file" type="button">.ipynb</button></a>
+<!-- Download PDF via print -->
+<button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" id="download-print" onclick="printPdf(this)" title="Print to PDF" type="button">.pdf</button>
 </div>
-
-            <!-- Source interaction buttons -->
-
+</div>
+<!-- Source interaction buttons -->
 <div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fcluster_level/Correlation/01.mc_cluster_profile.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/cluster_level/Correlation/01.mc_cluster_profile.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
+<button aria-label="Connect with source repository" class="btn btn-secondary topbarbtn" id="dropdown-buttons-trigger"><i class="fab fa-github"></i></button>
+<div class="dropdown-buttons sourcebuttons">
+<a class="repository-button" href="https://github.com/lhqing/ALLCools"><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Source repository" type="button"><i class="fab fa-github"></i>repository</button></a>
+<a class="issues-button" href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fcluster_level/Correlation/01.mc_cluster_profile.html&amp;body=Your%20issue%20content%20here."><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Open an issue" type="button"><i class="fas fa-lightbulb"></i>open issue</button></a>
+<a class="edit-button" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/cluster_level/Correlation/01.mc_cluster_profile.ipynb"><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Edit this page" type="button"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
 </div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+</div>
+<!-- Full screen (wrap in <a> to have style consistency -->
+<a class="full-screen-button"><button aria-label="Fullscreen mode" class="btn btn-secondary topbarbtn" data-placement="bottom" data-toggle="tooltip" onclick="toggleFullScreen()" title="Fullscreen mode" type="button"><i class="fas fa-expand"></i></button></a>
+<!-- Launch buttons -->
+</div>
+<!-- Table of contents -->
+<div class="d-none d-md-block col-md-2 bd-toc show noprint">
+<div class="tocsection onthispage pt-5 pb-3">
+<i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#merge-cluster">
+<nav aria-label="Page" id="bd-toc-nav">
+<ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry">
+<a class="reference internal nav-link" href="#merge-cluster">
    Merge Cluster
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cluster-enrichment">
+</li>
+<li class="toc-h2 nav-item toc-entry">
+<a class="reference internal nav-link" href="#cluster-enrichment">
    Cluster Enrichment
   </a>
- </li>
+</li>
 </ul>
-
-            </nav>
-        </div>
-    </div>
+</nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Prepare Cluster-by-Gene mC Profile</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#merge-cluster">
+</div>
+</div>
+<div class="row" id="main-content">
+<div class="col-12 col-md-9 pl-md-3 pr-md-0">
+<!-- Table of contents that is only displayed when printing the page -->
+<div class="onlyprint" id="jb-print-docs-body">
+<h1>Prepare Cluster-by-Gene mC Profile</h1>
+<!-- Table of contents -->
+<div id="print-main-content">
+<div id="jb-print-toc">
+<div>
+<h2> Contents </h2>
+</div>
+<nav aria-label="Page">
+<ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry">
+<a class="reference internal nav-link" href="#merge-cluster">
    Merge Cluster
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cluster-enrichment">
+</li>
+<li class="toc-h2 nav-item toc-entry">
+<a class="reference internal nav-link" href="#cluster-enrichment">
    Cluster Enrichment
   </a>
- </li>
+</li>
 </ul>
-
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
-                
-  <div class="tex2jax_ignore mathjax_ignore section" id="prepare-cluster-by-gene-mc-profile">
+</nav>
+</div>
+</div>
+</div>
+<div>
+<div class="tex2jax_ignore mathjax_ignore section" id="prepare-cluster-by-gene-mc-profile">
 <h1>Prepare Cluster-by-Gene mC Profile<a class="headerlink" href="#prepare-cluster-by-gene-mc-profile" title="Permalink to this headline">¶</a></h1>
 <p>This notebook sum cell feature counts in a cell MCDS by cell clusters. The cluster MCDS can be transform and saved as RegionDS</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">ALLCools.mcds</span> <span class="kn">import</span> <span class="n">MCDS</span>
-<span class="kn">from</span> <span class="nn">ALLCools.clustering</span> <span class="kn">import</span> <span class="n">cluster_enriched_features</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="https://pandas.pydata.org/pandas-docs/stable/index.html#module-pandas" title="pandas"><span class="nn">pandas</span></a> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <a class="sphinx-codeautolink-a" href="../../api/ALLCools/mcds/index.html#module-ALLCools.mcds" title="ALLCools.mcds"><span class="nn">ALLCools.mcds</span></a> <span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../../api/ALLCools/mcds/mcds/index.html#ALLCools.mcds.mcds.MCDS" title="ALLCools.mcds.mcds.MCDS"><span class="n">MCDS</span></a>
+<span class="kn">from</span> <a class="sphinx-codeautolink-a" href="../../api/ALLCools/clustering/index.html#module-ALLCools.clustering" title="ALLCools.clustering"><span class="nn">ALLCools.clustering</span></a> <span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../../api/ALLCools/clustering/index.html#ALLCools.clustering.cluster_enriched_features" title="ALLCools.clustering.cluster_enriched_features"><span class="n">cluster_enriched_features</span></a>
 </pre></div>
 </div>
 </div>
@@ -1810,29 +1734,29 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mc_cluster</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-    <span class="s1">&#39;../../data/HIPBulk/DesideBulkLevel/snmC.anno.csv&#39;</span><span class="p">,</span>
+    <span class="s1">'../../data/HIPBulk/DesideBulkLevel/snmC.anno.csv'</span><span class="p">,</span>
     <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">m3c_cluster</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-    <span class="s1">&#39;../../data/HIPBulk/DesideBulkLevel/snm3C.anno.csv&#39;</span><span class="p">,</span>
+    <span class="s1">'../../data/HIPBulk/DesideBulkLevel/snm3C.anno.csv'</span><span class="p">,</span>
     <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">mc_cluster</span> <span class="o">=</span> <span class="s1">&#39;snmC_&#39;</span> <span class="o">+</span> <span class="n">mc_cluster</span>
-<span class="n">m3c_cluster</span> <span class="o">=</span> <span class="s1">&#39;snm3C_&#39;</span> <span class="o">+</span> <span class="n">m3c_cluster</span>
+<span class="n">mc_cluster</span> <span class="o">=</span> <span class="s1">'snmC_'</span> <span class="o">+</span> <span class="n">mc_cluster</span>
+<span class="n">m3c_cluster</span> <span class="o">=</span> <span class="s1">'snm3C_'</span> <span class="o">+</span> <span class="n">m3c_cluster</span>
 <span class="n">cell_cluster</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">mc_cluster</span><span class="p">,</span> <span class="n">m3c_cluster</span><span class="p">])</span>
-<span class="n">cell_cluster</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;cell&#39;</span>
-<span class="n">cell_cluster</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;sample&#39;</span>
+<span class="n">cell_cluster</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'cell'</span>
+<span class="n">cell_cluster</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'sample'</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../../data/Brain/snm*C-seq*/*.mcds&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'../../data/Brain/snm*C-seq*/*.mcds'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1844,14 +1768,14 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell_cluster</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">'sample'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell_cluster</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_mcds</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">merge_cluster</span><span class="p">(</span><span class="n">cluster_col</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_region_ds</span><span class="p">(</span><span class="s1">&#39;geneslop2k&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_mcds</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">merge_cluster</span><span class="p">(</span><span class="n">cluster_col</span><span class="o">=</span><span class="s1">'sample'</span><span class="p">)</span><span class="o">.</span><span class="n">to_region_ds</span><span class="p">(</span><span class="s1">'geneslop2k'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1865,12 +1789,12 @@
 <div class="cell_output docutils container">
 <div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
 <defs>
-<symbol id="icon-database" viewBox="0 0 32 32">
+<symbol id="icon-database" viewbox="0 0 32 32">
 <path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
 <path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
 <path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
 </symbol>
-<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<symbol id="icon-file-text2" viewbox="0 0 32 32">
 <path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
 <path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
 <path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
@@ -2214,20 +2138,20 @@ dl.xr-attrs {
   stroke: currentColor;
   fill: currentColor;
 }
-</style><pre class='xr-text-repr-fallback'>&lt;xarray.RegionDS&gt;
+</style><pre class="xr-text-repr-fallback">&lt;xarray.RegionDS&gt;
 Dimensions:              (mc_type: 2, count_type: 2, geneslop2k: 55487, sample: 20, chrom100k: 27269)
 Coordinates: (12/14)
-  * mc_type              (mc_type) object &#x27;CGN&#x27; &#x27;CHN&#x27;
-  * count_type           (count_type) object &#x27;mc&#x27; &#x27;cov&#x27;
-    strand_type          &lt;U4 &#x27;both&#x27;
-  * geneslop2k           (geneslop2k) object &#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSM...
-    geneslop2k_chrom     (geneslop2k) object &#x27;chr1&#x27; &#x27;chr1&#x27; ... &#x27;chrM&#x27; &#x27;chrM&#x27;
+  * mc_type              (mc_type) object 'CGN' 'CHN'
+  * count_type           (count_type) object 'mc' 'cov'
+    strand_type          &lt;U4 'both'
+  * geneslop2k           (geneslop2k) object 'ENSMUSG00000102693.1' ... 'ENSM...
+    geneslop2k_chrom     (geneslop2k) object 'chr1' 'chr1' ... 'chrM' 'chrM'
     geneslop2k_start     (geneslop2k) int64 3071252 3100015 ... 13288 13355
     ...                   ...
     sample_CGN           (sample) float64 0.7203 0.7387 0.7422 ... 0.7434 0.7196
     sample_CHN           (sample) float64 0.007835 0.02362 ... 0.01121 0.005743
   * chrom100k            (chrom100k) int64 0 1 2 3 4 ... 27265 27266 27267 27268
-    chrom100k_chrom      (chrom100k) object &#x27;chr1&#x27; &#x27;chr1&#x27; ... &#x27;chrY&#x27; &#x27;chrM&#x27;
+    chrom100k_chrom      (chrom100k) object 'chr1' 'chr1' ... 'chrY' 'chrM'
     chrom100k_bin_start  (chrom100k) int64 0 100000 200000 ... 91700000 0
     chrom100k_bin_end    (chrom100k) int64 100000 200000 ... 91744698 16299
 Data variables:
@@ -2236,19 +2160,19 @@ Data variables:
     geneslop2k_da_frac   (sample, geneslop2k, mc_type) float64 1.252 ... 4.546
     chrom100k_da_frac    (sample, chrom100k, mc_type) float64 1.0 1.0 ... 5.264
 Attributes:
-    region_dim:  geneslop2k</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.RegionDS</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-d77407b8-f33b-4a21-b24e-3d6675893fea' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-d77407b8-f33b-4a21-b24e-3d6675893fea' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>mc_type</span>: 2</li><li><span class='xr-has-index'>count_type</span>: 2</li><li><span class='xr-has-index'>geneslop2k</span>: 55487</li><li><span class='xr-has-index'>sample</span>: 20</li><li><span class='xr-has-index'>chrom100k</span>: 27269</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-34d91b60-1c89-4497-81d6-0cc7fe92d7ff' class='xr-section-summary-in' type='checkbox'  checked><label for='section-34d91b60-1c89-4497-81d6-0cc7fe92d7ff' class='xr-section-summary' >Coordinates: <span>(14)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>mc_type</span></div><div class='xr-var-dims'>(mc_type)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;CGN&#x27; &#x27;CHN&#x27;</div><input id='attrs-b32e669d-7885-4eed-bf7c-323812a3bdb9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-b32e669d-7885-4eed-bf7c-323812a3bdb9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-57940762-6970-4835-8514-571d99ab0833' class='xr-var-data-in' type='checkbox'><label for='data-57940762-6970-4835-8514-571d99ab0833' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;CGN&#x27;, &#x27;CHN&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>count_type</span></div><div class='xr-var-dims'>(count_type)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;mc&#x27; &#x27;cov&#x27;</div><input id='attrs-fc59db05-e22d-4283-a509-800ba76ea59f' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-fc59db05-e22d-4283-a509-800ba76ea59f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f82273ef-3fe9-4221-bfa1-b7cfe8cd0b2a' class='xr-var-data-in' type='checkbox'><label for='data-f82273ef-3fe9-4221-bfa1-b7cfe8cd0b2a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;mc&#x27;, &#x27;cov&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>strand_type</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>&lt;U4</div><div class='xr-var-preview xr-preview'>&#x27;both&#x27;</div><input id='attrs-63a5efe8-c15e-4149-8ef8-e927d31d59e1' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-63a5efe8-c15e-4149-8ef8-e927d31d59e1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-78e66101-c810-4307-98c9-3ebd0ef63378' class='xr-var-data-in' type='checkbox'><label for='data-78e66101-c810-4307-98c9-3ebd0ef63378' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(&#x27;both&#x27;, dtype=&#x27;&lt;U4&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>geneslop2k</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;ENSMUSG00000102693.1&#x27; ... &#x27;ENSM...</div><input id='attrs-8f3fcf12-0ec4-416b-afe5-b77247b37b7e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-8f3fcf12-0ec4-416b-afe5-b77247b37b7e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-306dc5b8-6443-402f-8854-43b30ce1e905' class='xr-var-data-in' type='checkbox'><label for='data-306dc5b8-6443-402f-8854-43b30ce1e905' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;ENSMUSG00000102693.1&#x27;, &#x27;ENSMUSG00000064842.1&#x27;, &#x27;ENSMUSG00000051951.5&#x27;,
-       ..., &#x27;ENSMUSG00000064370.1&#x27;, &#x27;ENSMUSG00000064371.1&#x27;,
-       &#x27;ENSMUSG00000064372.1&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_chrom</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;chr1&#x27; &#x27;chr1&#x27; ... &#x27;chrM&#x27; &#x27;chrM&#x27;</div><input id='attrs-0270d5d3-c8a2-4d7a-9fab-5de10edd891f' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-0270d5d3-c8a2-4d7a-9fab-5de10edd891f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1a661bde-a6f0-4cea-8236-172c34b4013a' class='xr-var-data-in' type='checkbox'><label for='data-1a661bde-a6f0-4cea-8236-172c34b4013a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;chr1&#x27;, &#x27;chr1&#x27;, &#x27;chr1&#x27;, ..., &#x27;chrM&#x27;, &#x27;chrM&#x27;, &#x27;chrM&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_start</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>3071252 3100015 ... 13288 13355</div><input id='attrs-26e39d87-8321-4124-89ca-168e299cad09' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-26e39d87-8321-4124-89ca-168e299cad09' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-74668be5-a849-47bc-8c8d-4f691d965497' class='xr-var-data-in' type='checkbox'><label for='data-74668be5-a849-47bc-8c8d-4f691d965497' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([3071252, 3100015, 3203900, ...,   12144,   13288,   13355])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_end</span></div><div class='xr-var-dims'>(geneslop2k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>3076321 3104124 ... 16299 16299</div><input id='attrs-f1b277bc-77c9-45f2-806c-d815ad609399' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f1b277bc-77c9-45f2-806c-d815ad609399' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c309cd44-1857-415e-b876-c361aa190399' class='xr-var-data-in' type='checkbox'><label for='data-c309cd44-1857-415e-b876-c361aa190399' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([3076321, 3104124, 3673497, ...,   16299,   16299,   16299])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>sample</span></div><div class='xr-var-dims'>(sample)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;snm3C_ASC&#x27; ... &#x27;snmC_OPC&#x27;</div><input id='attrs-626188f8-3aec-42dc-8b7f-3effa7025348' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-626188f8-3aec-42dc-8b7f-3effa7025348' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-8bdbf529-fe00-4efd-959e-2fb7553a4929' class='xr-var-data-in' type='checkbox'><label for='data-8bdbf529-fe00-4efd-959e-2fb7553a4929' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;snm3C_ASC&#x27;, &#x27;snm3C_CA1&#x27;, &#x27;snm3C_CA23&#x27;, &#x27;snm3C_CGE-VipLamp5&#x27;,
-       &#x27;snm3C_DG&#x27;, &#x27;snm3C_MGC&#x27;, &#x27;snm3C_MGE-PvSst&#x27;, &#x27;snm3C_NonN&#x27;, &#x27;snm3C_ODC&#x27;,
-       &#x27;snm3C_OPC&#x27;, &#x27;snmC_ASC&#x27;, &#x27;snmC_CA1&#x27;, &#x27;snmC_CA23&#x27;, &#x27;snmC_CGE-VipLamp5&#x27;,
-       &#x27;snmC_DG&#x27;, &#x27;snmC_MGC&#x27;, &#x27;snmC_MGE-PvSst&#x27;, &#x27;snmC_NonN&#x27;, &#x27;snmC_ODC&#x27;,
-       &#x27;snmC_OPC&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>sample_CGN</span></div><div class='xr-var-dims'>(sample)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.7203 0.7387 ... 0.7434 0.7196</div><input id='attrs-803bcd26-c53f-4882-a2ef-8d0733201fdd' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-803bcd26-c53f-4882-a2ef-8d0733201fdd' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-057e41db-e1cf-40ee-a1b8-ec2a40e7dae2' class='xr-var-data-in' type='checkbox'><label for='data-057e41db-e1cf-40ee-a1b8-ec2a40e7dae2' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0.72027702, 0.7386765 , 0.74223235, 0.78137746, 0.70998683,
+    region_dim:  geneslop2k</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.RegionDS</div></div><ul class="xr-sections"><li class="xr-section-item"><input class="xr-section-summary-in" disabled="" id="section-d77407b8-f33b-4a21-b24e-3d6675893fea" type="checkbox"/><label class="xr-section-summary" for="section-d77407b8-f33b-4a21-b24e-3d6675893fea" title="Expand/collapse section">Dimensions:</label><div class="xr-section-inline-details"><ul class="xr-dim-list"><li><span class="xr-has-index">mc_type</span>: 2</li><li><span class="xr-has-index">count_type</span>: 2</li><li><span class="xr-has-index">geneslop2k</span>: 55487</li><li><span class="xr-has-index">sample</span>: 20</li><li><span class="xr-has-index">chrom100k</span>: 27269</li></ul></div><div class="xr-section-details"></div></li><li class="xr-section-item"><input checked="" class="xr-section-summary-in" id="section-34d91b60-1c89-4497-81d6-0cc7fe92d7ff" type="checkbox"/><label class="xr-section-summary" for="section-34d91b60-1c89-4497-81d6-0cc7fe92d7ff">Coordinates: <span>(14)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">mc_type</span></div><div class="xr-var-dims">(mc_type)</div><div class="xr-var-dtype">object</div><div class="xr-var-preview xr-preview">'CGN' 'CHN'</div><input class="xr-var-attrs-in" disabled="" id="attrs-b32e669d-7885-4eed-bf7c-323812a3bdb9" type="checkbox"/><label for="attrs-b32e669d-7885-4eed-bf7c-323812a3bdb9" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-57940762-6970-4835-8514-571d99ab0833" type="checkbox"/><label for="data-57940762-6970-4835-8514-571d99ab0833" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['CGN', 'CHN'], dtype=object)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">count_type</span></div><div class="xr-var-dims">(count_type)</div><div class="xr-var-dtype">object</div><div class="xr-var-preview xr-preview">'mc' 'cov'</div><input class="xr-var-attrs-in" disabled="" id="attrs-fc59db05-e22d-4283-a509-800ba76ea59f" type="checkbox"/><label for="attrs-fc59db05-e22d-4283-a509-800ba76ea59f" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-f82273ef-3fe9-4221-bfa1-b7cfe8cd0b2a" type="checkbox"/><label for="data-f82273ef-3fe9-4221-bfa1-b7cfe8cd0b2a" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['mc', 'cov'], dtype=object)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>strand_type</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">&lt;U4</div><div class="xr-var-preview xr-preview">'both'</div><input class="xr-var-attrs-in" disabled="" id="attrs-63a5efe8-c15e-4149-8ef8-e927d31d59e1" type="checkbox"/><label for="attrs-63a5efe8-c15e-4149-8ef8-e927d31d59e1" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-78e66101-c810-4307-98c9-3ebd0ef63378" type="checkbox"/><label for="data-78e66101-c810-4307-98c9-3ebd0ef63378" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array('both', dtype='&lt;U4')</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">geneslop2k</span></div><div class="xr-var-dims">(geneslop2k)</div><div class="xr-var-dtype">object</div><div class="xr-var-preview xr-preview">'ENSMUSG00000102693.1' ... 'ENSM...</div><input class="xr-var-attrs-in" disabled="" id="attrs-8f3fcf12-0ec4-416b-afe5-b77247b37b7e" type="checkbox"/><label for="attrs-8f3fcf12-0ec4-416b-afe5-b77247b37b7e" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-306dc5b8-6443-402f-8854-43b30ce1e905" type="checkbox"/><label for="data-306dc5b8-6443-402f-8854-43b30ce1e905" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['ENSMUSG00000102693.1', 'ENSMUSG00000064842.1', 'ENSMUSG00000051951.5',
+       ..., 'ENSMUSG00000064370.1', 'ENSMUSG00000064371.1',
+       'ENSMUSG00000064372.1'], dtype=object)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k_chrom</span></div><div class="xr-var-dims">(geneslop2k)</div><div class="xr-var-dtype">object</div><div class="xr-var-preview xr-preview">'chr1' 'chr1' ... 'chrM' 'chrM'</div><input class="xr-var-attrs-in" disabled="" id="attrs-0270d5d3-c8a2-4d7a-9fab-5de10edd891f" type="checkbox"/><label for="attrs-0270d5d3-c8a2-4d7a-9fab-5de10edd891f" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-1a661bde-a6f0-4cea-8236-172c34b4013a" type="checkbox"/><label for="data-1a661bde-a6f0-4cea-8236-172c34b4013a" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['chr1', 'chr1', 'chr1', ..., 'chrM', 'chrM', 'chrM'], dtype=object)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k_start</span></div><div class="xr-var-dims">(geneslop2k)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">3071252 3100015 ... 13288 13355</div><input class="xr-var-attrs-in" disabled="" id="attrs-26e39d87-8321-4124-89ca-168e299cad09" type="checkbox"/><label for="attrs-26e39d87-8321-4124-89ca-168e299cad09" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-74668be5-a849-47bc-8c8d-4f691d965497" type="checkbox"/><label for="data-74668be5-a849-47bc-8c8d-4f691d965497" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([3071252, 3100015, 3203900, ...,   12144,   13288,   13355])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k_end</span></div><div class="xr-var-dims">(geneslop2k)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">3076321 3104124 ... 16299 16299</div><input class="xr-var-attrs-in" disabled="" id="attrs-f1b277bc-77c9-45f2-806c-d815ad609399" type="checkbox"/><label for="attrs-f1b277bc-77c9-45f2-806c-d815ad609399" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-c309cd44-1857-415e-b876-c361aa190399" type="checkbox"/><label for="data-c309cd44-1857-415e-b876-c361aa190399" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([3076321, 3104124, 3673497, ...,   16299,   16299,   16299])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">sample</span></div><div class="xr-var-dims">(sample)</div><div class="xr-var-dtype">object</div><div class="xr-var-preview xr-preview">'snm3C_ASC' ... 'snmC_OPC'</div><input class="xr-var-attrs-in" disabled="" id="attrs-626188f8-3aec-42dc-8b7f-3effa7025348" type="checkbox"/><label for="attrs-626188f8-3aec-42dc-8b7f-3effa7025348" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-8bdbf529-fe00-4efd-959e-2fb7553a4929" type="checkbox"/><label for="data-8bdbf529-fe00-4efd-959e-2fb7553a4929" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['snm3C_ASC', 'snm3C_CA1', 'snm3C_CA23', 'snm3C_CGE-VipLamp5',
+       'snm3C_DG', 'snm3C_MGC', 'snm3C_MGE-PvSst', 'snm3C_NonN', 'snm3C_ODC',
+       'snm3C_OPC', 'snmC_ASC', 'snmC_CA1', 'snmC_CA23', 'snmC_CGE-VipLamp5',
+       'snmC_DG', 'snmC_MGC', 'snmC_MGE-PvSst', 'snmC_NonN', 'snmC_ODC',
+       'snmC_OPC'], dtype=object)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>sample_CGN</span></div><div class="xr-var-dims">(sample)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">0.7203 0.7387 ... 0.7434 0.7196</div><input class="xr-var-attrs-in" disabled="" id="attrs-803bcd26-c53f-4882-a2ef-8d0733201fdd" type="checkbox"/><label for="attrs-803bcd26-c53f-4882-a2ef-8d0733201fdd" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-057e41db-e1cf-40ee-a1b8-ec2a40e7dae2" type="checkbox"/><label for="data-057e41db-e1cf-40ee-a1b8-ec2a40e7dae2" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([0.72027702, 0.7386765 , 0.74223235, 0.78137746, 0.70998683,
        0.69529767, 0.79745986, 0.6957201 , 0.72761756, 0.70625517,
        0.73871943, 0.74009099, 0.75324386, 0.80065615, 0.72773628,
-       0.71349106, 0.8149437 , 0.70807914, 0.74336865, 0.71960449])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>sample_CHN</span></div><div class='xr-var-dims'>(sample)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.007835 0.02362 ... 0.005743</div><input id='attrs-57d7ad4f-5bfc-4f2c-9df9-b4cf03e38a0c' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-57d7ad4f-5bfc-4f2c-9df9-b4cf03e38a0c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e19b6ffd-797d-4061-a36b-66c3c52c56d3' class='xr-var-data-in' type='checkbox'><label for='data-e19b6ffd-797d-4061-a36b-66c3c52c56d3' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0.00783526, 0.02362182, 0.02493468, 0.02857215, 0.0106706 ,
+       0.71349106, 0.8149437 , 0.70807914, 0.74336865, 0.71960449])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>sample_CHN</span></div><div class="xr-var-dims">(sample)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">0.007835 0.02362 ... 0.005743</div><input class="xr-var-attrs-in" disabled="" id="attrs-57d7ad4f-5bfc-4f2c-9df9-b4cf03e38a0c" type="checkbox"/><label for="attrs-57d7ad4f-5bfc-4f2c-9df9-b4cf03e38a0c" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-e19b6ffd-797d-4061-a36b-66c3c52c56d3" type="checkbox"/><label for="data-e19b6ffd-797d-4061-a36b-66c3c52c56d3" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([0.00783526, 0.02362182, 0.02493468, 0.02857215, 0.0106706 ,
        0.00696775, 0.03594073, 0.00793199, 0.01268308, 0.00754718,
        0.00681991, 0.01997363, 0.02210814, 0.02925379, 0.00979016,
-       0.00561416, 0.03664812, 0.00748145, 0.01121077, 0.00574326])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chrom100k</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 ... 27265 27266 27267 27268</div><input id='attrs-0f53fbdd-5c9c-4763-841f-fed3c1293e08' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-0f53fbdd-5c9c-4763-841f-fed3c1293e08' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c506bcb0-1ff0-4449-856a-1dc2c983452b' class='xr-var-data-in' type='checkbox'><label for='data-c506bcb0-1ff0-4449-856a-1dc2c983452b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([    0,     1,     2, ..., 27266, 27267, 27268])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_chrom</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;chr1&#x27; &#x27;chr1&#x27; ... &#x27;chrY&#x27; &#x27;chrM&#x27;</div><input id='attrs-471cb39f-fbb5-42b3-8e75-3a0427b64695' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-471cb39f-fbb5-42b3-8e75-3a0427b64695' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-547d31eb-3b53-46f0-9dab-c279be9a95ec' class='xr-var-data-in' type='checkbox'><label for='data-547d31eb-3b53-46f0-9dab-c279be9a95ec' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;chr1&#x27;, &#x27;chr1&#x27;, &#x27;chr1&#x27;, ..., &#x27;chrY&#x27;, &#x27;chrY&#x27;, &#x27;chrM&#x27;], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_bin_start</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 100000 200000 ... 91700000 0</div><input id='attrs-2faa36e7-62ec-495d-b4f3-8d876a6e5ca9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-2faa36e7-62ec-495d-b4f3-8d876a6e5ca9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-82b92529-9154-4158-b428-6963d5de815f' class='xr-var-data-in' type='checkbox'><label for='data-82b92529-9154-4158-b428-6963d5de815f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([       0,   100000,   200000, ..., 91600000, 91700000,        0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_bin_end</span></div><div class='xr-var-dims'>(chrom100k)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>100000 200000 ... 91744698 16299</div><input id='attrs-c22948f9-1a8b-48a2-83d4-232b96663893' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-c22948f9-1a8b-48a2-83d4-232b96663893' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9592e772-f73c-4242-812a-7197c30130cb' class='xr-var-data-in' type='checkbox'><label for='data-9592e772-f73c-4242-812a-7197c30130cb' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  100000,   200000,   300000, ..., 91700000, 91744698,    16299])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-c44b7da9-0dab-4a79-a362-85116acbbb4f' class='xr-section-summary-in' type='checkbox'  checked><label for='section-c44b7da9-0dab-4a79-a362-85116acbbb4f' class='xr-section-summary' >Data variables: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_da</span></div><div class='xr-var-dims'>(sample, geneslop2k, mc_type, count_type)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>1.193e+03 1.385e+03 ... 2.146e+04</div><input id='attrs-09f85167-efef-47c2-a954-af2af234d64e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-09f85167-efef-47c2-a954-af2af234d64e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f1bdc5b2-2906-4648-bc8e-286b7a1622fe' class='xr-var-data-in' type='checkbox'><label for='data-f1bdc5b2-2906-4648-bc8e-286b7a1622fe' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[[[1.1930000e+03, 1.3850000e+03],
+       0.00561416, 0.03664812, 0.00748145, 0.01121077, 0.00574326])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">chrom100k</span></div><div class="xr-var-dims">(chrom100k)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">0 1 2 3 ... 27265 27266 27267 27268</div><input class="xr-var-attrs-in" disabled="" id="attrs-0f53fbdd-5c9c-4763-841f-fed3c1293e08" type="checkbox"/><label for="attrs-0f53fbdd-5c9c-4763-841f-fed3c1293e08" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-c506bcb0-1ff0-4449-856a-1dc2c983452b" type="checkbox"/><label for="data-c506bcb0-1ff0-4449-856a-1dc2c983452b" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([    0,     1,     2, ..., 27266, 27267, 27268])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>chrom100k_chrom</span></div><div class="xr-var-dims">(chrom100k)</div><div class="xr-var-dtype">object</div><div class="xr-var-preview xr-preview">'chr1' 'chr1' ... 'chrY' 'chrM'</div><input class="xr-var-attrs-in" disabled="" id="attrs-471cb39f-fbb5-42b3-8e75-3a0427b64695" type="checkbox"/><label for="attrs-471cb39f-fbb5-42b3-8e75-3a0427b64695" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-547d31eb-3b53-46f0-9dab-c279be9a95ec" type="checkbox"/><label for="data-547d31eb-3b53-46f0-9dab-c279be9a95ec" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['chr1', 'chr1', 'chr1', ..., 'chrY', 'chrY', 'chrM'], dtype=object)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>chrom100k_bin_start</span></div><div class="xr-var-dims">(chrom100k)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">0 100000 200000 ... 91700000 0</div><input class="xr-var-attrs-in" disabled="" id="attrs-2faa36e7-62ec-495d-b4f3-8d876a6e5ca9" type="checkbox"/><label for="attrs-2faa36e7-62ec-495d-b4f3-8d876a6e5ca9" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-82b92529-9154-4158-b428-6963d5de815f" type="checkbox"/><label for="data-82b92529-9154-4158-b428-6963d5de815f" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([       0,   100000,   200000, ..., 91600000, 91700000,        0])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>chrom100k_bin_end</span></div><div class="xr-var-dims">(chrom100k)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">100000 200000 ... 91744698 16299</div><input class="xr-var-attrs-in" disabled="" id="attrs-c22948f9-1a8b-48a2-83d4-232b96663893" type="checkbox"/><label for="attrs-c22948f9-1a8b-48a2-83d4-232b96663893" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-9592e772-f73c-4242-812a-7197c30130cb" type="checkbox"/><label for="data-9592e772-f73c-4242-812a-7197c30130cb" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([  100000,   200000,   300000, ..., 91700000, 91744698,    16299])</pre></div></li></ul></div></li><li class="xr-section-item"><input checked="" class="xr-section-summary-in" id="section-c44b7da9-0dab-4a79-a362-85116acbbb4f" type="checkbox"/><label class="xr-section-summary" for="section-c44b7da9-0dab-4a79-a362-85116acbbb4f">Data variables: <span>(4)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k_da</span></div><div class="xr-var-dims">(sample, geneslop2k, mc_type, count_type)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">1.193e+03 1.385e+03 ... 2.146e+04</div><input class="xr-var-attrs-in" disabled="" id="attrs-09f85167-efef-47c2-a954-af2af234d64e" type="checkbox"/><label for="attrs-09f85167-efef-47c2-a954-af2af234d64e" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-f1bdc5b2-2906-4648-bc8e-286b7a1622fe" type="checkbox"/><label for="data-f1bdc5b2-2906-4648-bc8e-286b7a1622fe" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([[[[1.1930000e+03, 1.3850000e+03],
          [4.8500000e+02, 6.5949000e+04]],
 
         [[1.4510000e+03, 1.6610000e+03],
@@ -2288,7 +2212,7 @@ Attributes:
          [5.8800000e+02, 2.1761000e+04]],
 
         [[7.7000000e+01, 2.3230000e+03],
-         [5.7600000e+02, 2.1461000e+04]]]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_da</span></div><div class='xr-var-dims'>(sample, chrom100k, mc_type, count_type)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0 0.0 0.0 ... 3.125e+03 1.016e+05</div><input id='attrs-a86adedb-2722-488e-8f7f-b5304684c254' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a86adedb-2722-488e-8f7f-b5304684c254' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a10d6cc0-31bc-4603-bfde-b7cb121e4473' class='xr-var-data-in' type='checkbox'><label for='data-a10d6cc0-31bc-4603-bfde-b7cb121e4473' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[[[0.000000e+00, 0.000000e+00],
+         [5.7600000e+02, 2.1461000e+04]]]])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>chrom100k_da</span></div><div class="xr-var-dims">(sample, chrom100k, mc_type, count_type)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">0.0 0.0 0.0 ... 3.125e+03 1.016e+05</div><input class="xr-var-attrs-in" disabled="" id="attrs-a86adedb-2722-488e-8f7f-b5304684c254" type="checkbox"/><label for="attrs-a86adedb-2722-488e-8f7f-b5304684c254" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-a10d6cc0-31bc-4603-bfde-b7cb121e4473" type="checkbox"/><label for="data-a10d6cc0-31bc-4603-bfde-b7cb121e4473" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([[[[0.000000e+00, 0.000000e+00],
          [0.000000e+00, 0.000000e+00]],
 
         [[0.000000e+00, 0.000000e+00],
@@ -2328,7 +2252,7 @@ Attributes:
          [0.000000e+00, 0.000000e+00]],
 
         [[4.190000e+02, 1.206300e+04],
-         [3.125000e+03, 1.015860e+05]]]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geneslop2k_da_frac</span></div><div class='xr-var-dims'>(sample, geneslop2k, mc_type)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>1.252 0.9426 1.27 ... 0.05111 4.546</div><input id='attrs-209d3f00-f322-4504-a29a-2b8d9b136db2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-209d3f00-f322-4504-a29a-2b8d9b136db2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-573173d5-bdb8-403c-b815-9eb35e88a447' class='xr-var-data-in' type='checkbox'><label for='data-573173d5-bdb8-403c-b815-9eb35e88a447' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[[1.25219807, 0.94261248],
+         [3.125000e+03, 1.015860e+05]]]])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k_da_frac</span></div><div class="xr-var-dims">(sample, geneslop2k, mc_type)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">1.252 0.9426 1.27 ... 0.05111 4.546</div><input class="xr-var-attrs-in" disabled="" id="attrs-209d3f00-f322-4504-a29a-2b8d9b136db2" type="checkbox"/><label for="attrs-209d3f00-f322-4504-a29a-2b8d9b136db2" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-573173d5-bdb8-403c-b815-9eb35e88a447" type="checkbox"/><label for="data-573173d5-bdb8-403c-b815-9eb35e88a447" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([[[1.25219807, 0.94261248],
         [1.27002211, 0.84193406],
         [1.05833895, 0.81769466],
         ...,
@@ -2368,7 +2292,7 @@ Attributes:
         ...,
         [0.05581611, 4.80563787],
         [0.05150077, 4.57853936],
-        [0.05111019, 4.54569428]]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>chrom100k_da_frac</span></div><div class='xr-var-dims'>(sample, chrom100k, mc_type)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>1.0 1.0 1.0 ... 1.0 0.04887 5.264</div><input id='attrs-965612af-5984-487f-93c7-0e77f036d1f7' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-965612af-5984-487f-93c7-0e77f036d1f7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-17710795-48d7-40ca-8947-a3f450dd4e7b' class='xr-var-data-in' type='checkbox'><label for='data-17710795-48d7-40ca-8947-a3f450dd4e7b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[[1.        , 1.        ],
+        [0.05111019, 4.54569428]]])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>chrom100k_da_frac</span></div><div class="xr-var-dims">(sample, chrom100k, mc_type)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">1.0 1.0 1.0 ... 1.0 0.04887 5.264</div><input class="xr-var-attrs-in" disabled="" id="attrs-965612af-5984-487f-93c7-0e77f036d1f7" type="checkbox"/><label for="attrs-965612af-5984-487f-93c7-0e77f036d1f7" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-17710795-48d7-40ca-8947-a3f450dd4e7b" type="checkbox"/><label for="data-17710795-48d7-40ca-8947-a3f450dd4e7b" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([[[1.        , 1.        ],
         [1.        , 1.        ],
         [1.        , 1.        ],
         ...,
@@ -2408,11 +2332,11 @@ Attributes:
         ...,
         [1.        , 1.        ],
         [1.        , 1.        ],
-        [0.04887091, 5.26428485]]])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-91f142ff-d297-4a5e-82ff-6acb19df87af' class='xr-section-summary-in' type='checkbox'  checked><label for='section-91f142ff-d297-4a5e-82ff-6acb19df87af' class='xr-section-summary' >Attributes: <span>(1)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>region_dim :</span></dt><dd>geneslop2k</dd></dl></div></li></ul></div></div></div></div>
+        [0.04887091, 5.26428485]]])</pre></div></li></ul></div></li><li class="xr-section-item"><input checked="" class="xr-section-summary-in" id="section-91f142ff-d297-4a5e-82ff-6acb19df87af" type="checkbox"/><label class="xr-section-summary" for="section-91f142ff-d297-4a5e-82ff-6acb19df87af">Attributes: <span>(1)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>region_dim :</span></dt><dd>geneslop2k</dd></dl></div></li></ul></div></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_mcds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="s1">&#39;test_HIP_Cluster&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_mcds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="s1">'test_HIP_Cluster'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2427,17 +2351,17 @@ Attributes:
 <h2>Cluster Enrichment<a class="headerlink" href="#cluster-enrichment" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span><span class="o">.</span><span class="n">add_mc_frac</span><span class="p">(</span><span class="n">var_dim</span><span class="o">=</span><span class="s1">&#39;geneslop2k&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span><span class="o">.</span><span class="n">add_mc_frac</span><span class="p">(</span><span class="n">var_dim</span><span class="o">=</span><span class="s1">'geneslop2k'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">get_adata</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s1">&#39;CHN&#39;</span><span class="p">,</span>
-                       <span class="n">var_dim</span><span class="o">=</span><span class="s1">&#39;geneslop2k&#39;</span><span class="p">,</span>
-                       <span class="n">da_suffix</span><span class="o">=</span><span class="s1">&#39;frac&#39;</span><span class="p">,</span>
-                       <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">get_adata</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="s1">'CHN'</span><span class="p">,</span>
+                       <span class="n">var_dim</span><span class="o">=</span><span class="s1">'geneslop2k'</span><span class="p">,</span>
+                       <span class="n">da_suffix</span><span class="o">=</span><span class="s1">'frac'</span><span class="p">,</span>
+                       <span class="n">obs_dim</span><span class="o">=</span><span class="s1">'cell'</span><span class="p">,</span>
                        <span class="n">select_hvf</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2455,9 +2379,9 @@ Attributes:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">'cluster'</span><span class="p">]</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">'sample'</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'_'</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-<span class="n">cell_ids</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;cluster&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span>
+<span class="n">cell_ids</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'cluster'</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span>
     <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1500</span> <span class="k">else</span> <span class="n">i</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1500</span><span class="p">))</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">adata</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">cell_ids</span><span class="p">,</span> <span class="p">:]</span>
 </pre></div>
@@ -2467,11 +2391,11 @@ Attributes:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_enriched_features</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span>
-                          <span class="n">cluster_col</span><span class="o">=</span><span class="s1">&#39;cluster&#39;</span><span class="p">,</span>
+                          <span class="n">cluster_col</span><span class="o">=</span><span class="s1">'cluster'</span><span class="p">,</span>
                           <span class="n">top_n</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
                           <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
                           <span class="n">stat_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                          <span class="n">method</span><span class="o">=</span><span class="s1">&#39;mc&#39;</span><span class="p">)</span>
+                          <span class="n">method</span><span class="o">=</span><span class="s1">'mc'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2481,36 +2405,35 @@ Computing enrichment score
 Computing enrichment score FDR-corrected P values
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>findfont: Font family [&#39;sans-serif&#39;] not found. Falling back to DejaVu Sans.
-findfont: Generic family &#39;sans-serif&#39; not found because none of the following families were found: Helvetica
-findfont: Font family [&#39;sans-serif&#39;] not found. Falling back to DejaVu Sans.
-findfont: Generic family &#39;sans-serif&#39; not found because none of the following families were found: Helvetica
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>findfont: Font family ['sans-serif'] not found. Falling back to DejaVu Sans.
+findfont: Generic family 'sans-serif' not found because none of the following families were found: Helvetica
+findfont: Font family ['sans-serif'] not found. Falling back to DejaVu Sans.
+findfont: Generic family 'sans-serif' not found because none of the following families were found: Helvetica
 Trying to set attribute `._uns` of view, copying.
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Selected 1653 unique features
 </pre></div>
 </div>
-<img alt="../../_images/01.mc_cluster_profile_13_3.png" src="../../_images/01.mc_cluster_profile_13_3.png" />
-</div>
+<img alt="../../_images/01.mc_cluster_profile_13_3.png" src="../../_images/01.mc_cluster_profile_13_3.png">
+</img></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qvals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">&#39;cluster_feature_enrichment&#39;</span><span class="p">][</span><span class="s1">&#39;qvals&#39;</span><span class="p">],</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">'cluster_feature_enrichment'</span><span class="p">][</span><span class="s1">'qvals'</span><span class="p">],</span>
     <span class="n">index</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="p">,</span>
-    <span class="n">columns</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">&#39;cluster_feature_enrichment&#39;</span><span class="p">]</span>
-    <span class="p">[</span><span class="s1">&#39;cluster_order&#39;</span><span class="p">])</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">'cluster_feature_enrichment'</span><span class="p">]</span>
+    <span class="p">[</span><span class="s1">'cluster_order'</span><span class="p">])</span>
 
-<span class="n">qvals</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span><span class="s1">&#39;mCH.cluster_enrichment_qvals.hdf&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+<span class="n">qvals</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span><span class="s1">'mCH.cluster_enrichment_qvals.hdf'</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">'data'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-
-    <script type="text/x-thebe-config">
+<script type="text/x-thebe-config">
     {
         requestKernel: true,
         binderOptions: {
@@ -2528,46 +2451,38 @@ Trying to set attribute `._uns` of view, copying.
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
-
-              </div>
-              
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="intro_corr.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Region-Region Correlation Analysis</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="02.dmr_gene_corr.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">DMR-Gene Correlation</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
+<script>kernelName = 'python3'</script>
 </div>
-            
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
+<!-- Previous / next buttons -->
+<div class="prev-next-area">
+<a class="left-prev" href="intro_corr.html" id="prev-link" title="previous page">
+<i class="fas fa-angle-left"></i>
+<div class="prev-next-info">
+<p class="prev-next-subtitle">previous</p>
+<p class="prev-next-title">Region-Region Correlation Analysis</p>
+</div>
+</a>
+<a class="right-next" href="02.dmr_gene_corr.html" id="next-link" title="next page">
+<div class="prev-next-info">
+<p class="prev-next-subtitle">next</p>
+<p class="prev-next-title">DMR-Gene Correlation</p>
+</div>
+<i class="fas fa-angle-right"></i>
+</a>
+</div>
+</div>
+</div>
+<footer class="footer">
+<p>
     
       By Hanqing Liu<br/>
     
-        &copy; Copyright 2019 - 2022.<br/>
-  </p>
+        © Copyright 2019 - 2022.<br/>
+</p>
 </footer>
 </main>
-
-
-      </div>
-    </div>
-  
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
-
-  </body>
+</div>
+</div>
+<script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+</body>
 </html>
