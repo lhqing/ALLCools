@@ -14,6 +14,7 @@ Subpackages
    clustering/index.rst
    count_matrix/index.rst
    dmr/index.rst
+   gtf/index.rst
    integration/index.rst
    mcds/index.rst
    motif/index.rst

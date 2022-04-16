@@ -122,6 +122,131 @@ Module Contents
 
    
 
+.. py:data:: generate_dataset_doc
+   :annotation: = Generate MCDS dataset from a list of ALLC files (recorded in the allc_table). Multiple region...
+
+   
+
+.. py:data:: generate_dataset_obs_dim_doc
+   :annotation: = Name of the observation dimension.
+
+   
+
+.. py:data:: generate_dataset_chunk_size_doc
+   :annotation: = Chunk allc_table with chunk_size when generate dataset in parallel
+
+   
+
+.. py:data:: generate_dataset_regions_doc
+   :annotation: = Definition of genomic regions in the form of "--regions {region_name} {region_definition}". This...
+
+   
+
+.. py:data:: generate_dataset_quantifiers_doc
+   :annotation: = Definition of genome region quantifiers in the form of "--quantifiers {region_name} {quant_type}...
+
+   
+
+.. py:data:: table_to_allc_doc
+   :annotation: = Convert different kinds of methylation table into ALLC format. Currently, only plain text table...
+
+   
+
+.. py:data:: table_to_allc_input_path
+   :annotation: = input path of the table
+
+   
+
+.. py:data:: table_to_allc_output_prefix
+   :annotation: = output prefix of the ALLC table
+
+   
+
+.. py:data:: table_to_allc_sep
+   :annotation: = character to separate columns in the table
+
+   
+
+.. py:data:: table_to_allc_header
+   :annotation: = Whether the table contains header line or not
+
+   
+
+.. py:data:: table_to_allc_chunk_size
+   :annotation: = chunk_size to perform conversion
+
+   
+
+.. py:data:: table_to_allc_chrom
+   :annotation: = the chromosome column number, 0-based index
+
+   
+
+.. py:data:: table_to_allc_pos
+   :annotation: = the position column number, 0-based index
+
+   
+
+.. py:data:: table_to_allc_strand
+   :annotation: = the strand column number, 0-based index. If not provided, will infer automatically based on the...
+
+   
+
+.. py:data:: table_to_allc_context
+   :annotation: = the cytosine context column number, 0-based index. If not provided, will inter automatically...
+
+   
+
+.. py:data:: table_to_allc_mc
+   :annotation: = the methylated cytosine count column number, 0-based index.
+
+   
+
+.. py:data:: table_to_allc_uc
+   :annotation: = the unmethylated cytosine count column number, 0-based index.
+
+   
+
+.. py:data:: table_to_allc_cov
+   :annotation: = the total cytosine coverage count column number, 0-based index.
+
+   
+
+.. py:data:: table_to_allc_mc_frac
+   :annotation: = the methylation fraction column number, 0-based index.
+
+   
+
+.. py:data:: table_to_allc_pseudo_count
+   :annotation: = Use this pseudo_count number as the total cytosine coverage count, if the "cov" column is...
+
+   
+
+.. py:data:: table_to_allc_fasta_path
+   :annotation: = the genome FASTA file path, required if either "strand" or "context" column is missing.
+
+   
+
+.. py:data:: table_to_allc_num_upstream_bases
+   :annotation: = number of up stream bases to include when get cytosine context.
+
+   
+
+.. py:data:: table_to_allc_num_downstream_bases
+   :annotation: = number of down stream bases to include when get cytosine context.
+
+   
+
+.. py:data:: table_to_allc_add_chr
+   :annotation: = whether add "chr" before the chromosome name.
+
+   
+
+.. py:data:: table_to_allc_sort
+   :annotation: = whether sort the ALLC table after conversion.
+
+   
+
 .. py:function:: doc_params(**kwds)
 
    Docstrings should start with "" in the first line for proper formatting.

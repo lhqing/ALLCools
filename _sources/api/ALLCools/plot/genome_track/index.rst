@@ -10,8 +10,9 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
+   GtfTrack/index.rst
+   HiCMatrixCoolTrack/index.rst
    _pygenometrack/index.rst
-   utilities/index.rst
 
 
 Package Contents
@@ -111,9 +112,16 @@ Package Contents
 
 
 
-.. py:function:: read_gtf(gtf_path)
+.. py:function:: prepare_config(file_configs, add_spacer=True, spacer_height=0.5)
 
+   Prepare pyGenomeTracks config string.
 
-.. py:function:: subset_gtf(gtf, regions, output_path=None, select_feature=None)
+   :param file_configs: A list of file paths, or a list of file config dicts, containing file path and other config.
+                        See pyGenomeTracks documentation for possible parameters.
+   :param add_spacer: Whether add spacer between tracks
+   :param spacer_height: spacer height in cm
+
+   :returns:
+   :rtype: a single config string that can be read by PlotTracks
 
 

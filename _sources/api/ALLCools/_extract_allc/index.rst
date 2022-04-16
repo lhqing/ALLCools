@@ -34,7 +34,7 @@ Module Contents
 .. py:function:: extract_allc(allc_path: str, output_prefix: str, mc_contexts: Union[str, list], chrom_size_path: str, strandness: str = 'both', output_format: str = 'allc', region: str = None, cov_cutoff: int = 9999, tabix: bool = True, cpu=1, binarize=False)
 
    Extract information (strand, context) from 1 ALLC file.
-   Save to several different format.
+   Save to several formats.
 
    :param allc_path: {allc_path_doc}
    :param output_prefix: Path prefix of the output ALLC file.

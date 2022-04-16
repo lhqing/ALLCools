@@ -318,3 +318,19 @@ Module Contents
 
 
 
+.. py:function:: prepare_config(file_configs, add_spacer=True, spacer_height=0.5)
+
+   Prepare pyGenomeTracks config string.
+
+   :param file_configs: A list of file paths, or a list of file config dicts, containing file path and other config.
+                        See pyGenomeTracks documentation for possible parameters.
+   :param add_spacer: Whether add spacer between tracks
+   :param spacer_height: spacer height in cm
+
+   :returns:
+   :rtype: a single config string that can be read by PlotTracks
+
+
+.. py:function:: _prepare_track_config(file_config, track_type, track_class, add_spacer=True, spacer_height=0.5)
+
+

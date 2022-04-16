@@ -163,6 +163,9 @@ Module Contents
 .. py:function:: generate_dataset_register_subparser(subparser)
 
 
+.. py:function:: table_to_allc_register_subparser(subparser)
+
+
 .. py:function:: main()
 
 

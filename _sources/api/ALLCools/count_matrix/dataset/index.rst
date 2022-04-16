@@ -50,17 +50,16 @@ Module Contents
 
 .. py:function:: generate_dataset(allc_table, output_path, regions, quantifiers, chrom_size_path, obs_dim='cell', cpu=1, chunk_size=None)
 
-   Generate multiple methylation datasets with a set of allc_table,
-   a list of region sets and quantifiers for each region set.
+   {generate_dataset_doc}
 
-   :param allc_table:
-   :param output_path:
-   :param regions:
-   :param quantifiers:
-   :param chrom_size_path:
-   :param obs_dim:
-   :param cpu:
-   :param chunk_size:
+   :param allc_table: {allc_table_doc}
+   :param output_path: Output path of the MCDS dataset
+   :param regions: {regions_doc}
+   :param quantifiers: {quantifiers_doc}
+   :param chrom_size_path: {chrom_size_path_doc}
+   :param obs_dim: {obs_dim_doc}
+   :param cpu: {cpu_basic_doc}
+   :param chunk_size: {chunk_size_doc}
 
    :returns:
    :rtype: output_path
