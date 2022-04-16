@@ -106,6 +106,7 @@ Therefore, instead of saving the raw counts, we provide an alternative way of qu
 
 In further analysis steps, the hypo- or hyper-methylation score matrix can be treated as a boolean matrix, using a clustering strategy similar to snATAC-seq cell clustering. For more details, see our [mCG-5Kb bins clustering methods](../cell_level/basic/mcg_5kb_basic.ipynb) tutorial.
 
+(hypo_and_hyper_score)=
 #### Hypo-methylation and Hyper-methylation Score
 
 ```{note}

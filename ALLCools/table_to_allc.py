@@ -1,8 +1,11 @@
+import subprocess
+
 import numpy as np
 import pandas as pd
 import pysam
+
 from ALLCools.utilities import reverse_complement, parse_chrom_size
-import subprocess
+from ._doc import *
 
 
 def mode_mc_cov(table, mc, cov):
@@ -171,12 +174,13 @@ def dataframe_to_allc(table,
             'mc+cov', 'mc+uc', 'uc+cov', 'mc_frac+cov', 'mc_frac+mc',
             'mc_frac+uc', 'mc_frac+pseudo_count'
         ]
-        raise ValueError(f'Need to provide one of these combinations: {modes}')
+        raise ValueError(f'Need to provide one of these combinations in minimum: {modes}')
     # print(f'Using mode {mode} to get cytosine base counts.')
 
     # add chr to chrom names or not, user specify
     if add_chr:
         table[chrom] = 'chr' + table[chrom].astype(str)
+
     # select chroms
     if chroms is not None:
         table = table[table[chrom].isin(chroms)].copy()
@@ -217,6 +221,28 @@ def dataframe_to_allc(table,
     return allc
 
 
+@doc_params(
+    table_to_allc_doc=table_to_allc_doc,
+    input_path_doc=table_to_allc_input_path,
+    output_prefix_doc=table_to_allc_output_prefix,
+    sep_doc=table_to_allc_sep,
+    header_doc=table_to_allc_header,
+    chunk_size_doc=table_to_allc_chunk_size,
+    chrom_doc=table_to_allc_chrom,
+    pos_doc=table_to_allc_pos,
+    strand_doc=table_to_allc_strand,
+    context_doc=table_to_allc_context,
+    mc_doc=table_to_allc_mc,
+    uc_doc=table_to_allc_uc,
+    cov_doc=table_to_allc_cov,
+    mc_frac_doc=table_to_allc_mc_frac,
+    pseudo_count_doc=table_to_allc_pseudo_count,
+    fasta_path_doc=table_to_allc_fasta_path,
+    num_upstream_bases_doc=table_to_allc_num_upstream_bases,
+    num_downstream_bases_doc=table_to_allc_num_downstream_bases,
+    add_chr_doc=table_to_allc_add_chr,
+    sort_doc=table_to_allc_sort
+)
 def table_to_allc(
         input_path,
         output_prefix,
@@ -238,6 +264,54 @@ def table_to_allc(
         add_chr=False,
         sort=True
 ):
+    """\
+    {table_to_allc_doc}
+
+    Parameters
+    ----------
+    input_path
+        {table_to_allc_input_path}
+    output_prefix
+        {table_to_allc_output_prefix}
+    sep
+        {table_to_allc_sep}
+    header
+        {table_to_allc_header}
+    chunk_size
+        {table_to_allc_chunk_size}
+    chrom
+        {table_to_allc_chrom}
+    pos
+        {table_to_allc_pos}
+    strand
+        {table_to_allc_strand}
+    context
+        {table_to_allc_context}
+    mc
+        {table_to_allc_mc}
+    uc
+        {table_to_allc_uc}
+    cov
+        {table_to_allc_cov}
+    mc_frac
+        {table_to_allc_mc_frac}
+    pseudo_count
+        {table_to_allc_pseudo_count}
+    fasta_path
+        {table_to_allc_fasta_path}
+    num_upstream_bases
+        {table_to_allc_num_upstream_bases}
+    num_downstream_bases
+        {table_to_allc_num_downstream_bases}
+    add_chr
+        {table_to_allc_add_chr}
+    sort
+        {table_to_allc_sort}
+
+    Returns
+    -------
+    output path of the converted ALLC file.
+    """
     unzip_path = f'{output_prefix}.allc.tsv'
     zip_path = f'{output_prefix}.allc.tsv.gz'
     with open(unzip_path, 'w') as out_f:

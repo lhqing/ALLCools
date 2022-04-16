@@ -249,6 +249,10 @@ class PlotTracks(object):
         # 'overlay_previous' parameter and should be skipped
         skipped_tracks = 0
         plot_axis = None
+        y_axis = None
+        label_axis = None
+        width_dpi = None
+        ylim = None
         for idx, track in enumerate(self.track_obj_list):
             log.info(f"plotting {track.properties['section_name']}")
 
@@ -258,10 +262,6 @@ class PlotTracks(object):
             else:
                 overlay = False
 
-            y_axis = None
-            label_axis = None
-            width_dpi = None
-            ylim = None
             if track.properties['overlay_previous'] == 'share-y':
                 ylim = plot_axis.get_ylim()
             else:
@@ -804,6 +804,11 @@ height = {spacer_height}
                 # assume cool file
                 file_config['file_type'] = 'cooler'
 
+            this_add_spacer = add_spacer
+            overlay = file_config.get('overlay_previous')
+            if overlay in {'yes', 'share-y'}:
+                this_add_spacer = False
+
             if 'file_type' in file_config:
                 track_type = file_config['file_type']
                 track_class = available_tracks[track_type]
@@ -811,7 +816,7 @@ height = {spacer_height}
                 config_str += _prepare_track_config(file_config=file_config,
                                                     track_type=track_type,
                                                     track_class=track_class,
-                                                    add_spacer=add_spacer,
+                                                    add_spacer=this_add_spacer,
                                                     spacer_height=spacer_height)
                 track_added = True
             else:
@@ -822,7 +827,7 @@ height = {spacer_height}
                             config_str += _prepare_track_config(file_config=file_config,
                                                                 track_type=track_type,
                                                                 track_class=track_class,
-                                                                add_spacer=add_spacer,
+                                                                add_spacer=this_add_spacer,
                                                                 spacer_height=spacer_height)
                             track_added = True
 
@@ -839,6 +844,9 @@ height = {spacer_height}
 
 def _prepare_track_config(file_config, track_type, track_class, add_spacer=True, spacer_height=0.5):
     config_str = ''
+    if add_spacer:
+        config_str += f"\n[spacer]\n" \
+                      f"height = {spacer_height}\n"
 
     for required_config in track_class.NECESSARY_PROPERTIES:
         if required_config not in file_config:
@@ -861,8 +869,6 @@ def _prepare_track_config(file_config, track_type, track_class, add_spacer=True,
     file_config_str = '\n'.join(kv_pairs)
     config_str += f"\n[{final_config['title']}]\n{file_config_str}"
     config_str += f'\n# See doc: https://pygenometracks.readthedocs.io/en/latest/content/tracks/{track_type}.html\n'
-    if add_spacer:
-        config_str += f"\n[spacer]\n" \
-                      f"height = {spacer_height}\n"
+
 
     return config_str

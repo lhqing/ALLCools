@@ -247,7 +247,7 @@ def extract_allc(
 ):
     """\
     Extract information (strand, context) from 1 ALLC file.
-    Save to several different format.
+    Save to several formats.
 
     Parameters
     ----------

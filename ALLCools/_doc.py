@@ -151,6 +151,33 @@ generate_dataset_quantifiers_doc = (
     'Its not usually needed, but you have the option if needed.'
 )
 
+table_to_allc_doc = 'Convert different kinds of methylation table into ALLC format. ' \
+                    'Currently, only plain text table is accepted.'
+table_to_allc_input_path = 'input path of the table'
+table_to_allc_output_prefix = 'output prefix of the ALLC table'
+table_to_allc_sep = 'character to separate columns in the table'
+table_to_allc_header = 'Whether the table contains header line or not'
+table_to_allc_chunk_size = 'chunk_size to perform conversion'
+table_to_allc_chrom = 'the chromosome column number, 0-based index'
+table_to_allc_pos = 'the position column number, 0-based index'
+table_to_allc_strand = 'the strand column number, 0-based index. ' \
+                       'If not provided, will infer automatically based on the fasta_path'
+table_to_allc_context = 'the cytosine context column number, 0-based index. ' \
+                        'If not provided, will inter automatically based on the fasta_path'
+table_to_allc_mc = 'the methylated cytosine count column number, 0-based index.'
+table_to_allc_uc = 'the unmethylated cytosine count column number, 0-based index.'
+table_to_allc_cov = 'the total cytosine coverage count column number, 0-based index.'
+table_to_allc_mc_frac = 'the methylation fraction column number, 0-based index.'
+table_to_allc_pseudo_count = 'Use this pseudo_count number as the total cytosine coverage count, ' \
+                             'if the "cov" column is missing and "mc_frac" column is provided.'
+table_to_allc_fasta_path = 'the genome FASTA file path, ' \
+                           'required if either "strand" or "context" column is missing.'
+table_to_allc_num_upstream_bases = 'number of up stream bases to include when get cytosine context.'
+table_to_allc_num_downstream_bases = 'number of down stream bases to include when get cytosine context.'
+table_to_allc_add_chr = 'whether add "chr" before the chromosome name.'
+table_to_allc_sort = 'whether sort the ALLC table after conversion.'
+
+
 def doc_params(**kwds):
     """\
     Docstrings should start with "\" in the first line for proper formatting.

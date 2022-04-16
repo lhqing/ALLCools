@@ -87,6 +87,7 @@ parts:
       - file: command_line/allcools_dataset
       - file: command_line/allcools_mcds
       - file: command_line/allcools_mcad
+      - file: command_line/allcools_table_to_allc
 
 
 #  - caption: VISUALIZATION

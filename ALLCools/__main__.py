@@ -9,13 +9,12 @@ When adding new function:
 import argparse
 import inspect
 import logging
+import os
 import subprocess
 import sys
 
 import ALLCools
 from ._doc import *
-import os
-from argparse import RawTextHelpFormatter
 
 os.environ["NUMEXPR_MAX_THREADS"] = "8"
 
@@ -791,6 +790,152 @@ def generate_dataset_register_subparser(subparser):
     return
 
 
+def table_to_allc_register_subparser(subparser):
+    parser = subparser.add_parser(
+        "table-to-allc",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        help=table_to_allc_doc,
+    )
+
+    parser_req = parser.add_argument_group("required arguments")
+
+    parser_req.add_argument(
+        "--input_path",
+        type=str,
+        required=True,
+        help=table_to_allc_input_path
+    )
+
+    parser_req.add_argument(
+        "--output_prefix",
+        type=str,
+        required=True,
+        help=table_to_allc_output_prefix
+    )
+
+    parser.add_argument(
+        "--sep",
+        type=str,
+        default='\t',
+        help=table_to_allc_sep
+    )
+
+    parser.add_argument(
+        "--header",
+        type=str,
+        default=None,
+        help=table_to_allc_header
+    )
+
+    parser.add_argument(
+        "--chunk_size",
+        type=int,
+        default=100000,
+        help=table_to_allc_chunk_size
+    )
+
+    parser.add_argument(
+        "--chrom",
+        type=int,
+        default=0,
+        help=table_to_allc_chrom
+    )
+
+    parser.add_argument(
+        "--pos",
+        type=int,
+        default=1,
+        help=table_to_allc_pos
+    )
+
+    parser.add_argument(
+        "--strand",
+        type=int,
+        default=None,
+        help=table_to_allc_strand
+    )
+
+    parser.add_argument(
+        "--context",
+        type=int,
+        default=None,
+        help=table_to_allc_context
+    )
+
+    parser.add_argument(
+        "--mc",
+        type=int,
+        default=None,
+        help=table_to_allc_mc
+    )
+
+    parser.add_argument(
+        "--uc",
+        type=int,
+        default=None,
+        help=table_to_allc_uc
+    )
+
+    parser.add_argument(
+        "--cov",
+        type=int,
+        default=None,
+        help=table_to_allc_cov
+    )
+
+    parser.add_argument(
+        "--mc_frac",
+        type=int,
+        default=None,
+        help=table_to_allc_mc_frac
+    )
+
+    parser.add_argument(
+        "--pseudo_count",
+        type=int,
+        default=1,
+        help=table_to_allc_pseudo_count
+    )
+
+    parser.add_argument(
+        "--fasta_path",
+        type=str,
+        default=None,
+        help=table_to_allc_fasta_path
+    )
+
+    parser.add_argument(
+        "--num_upstream_bases",
+        type=int,
+        default=0,
+        help=table_to_allc_num_upstream_bases
+    )
+
+    parser.add_argument(
+        "--num_downstream_bases",
+        type=int,
+        default=2,
+        help=table_to_allc_num_downstream_bases
+    )
+
+    parser.add_argument(
+        "--add_chr",
+        dest="add_chr",
+        action="store_true",
+        help=table_to_allc_add_chr
+    )
+    parser.set_defaults(add_chr=False)
+
+    parser.add_argument(
+        "--no_sort",
+        dest="sort",
+        action="store_false",
+        help=table_to_allc_sort
+    )
+    parser.set_defaults(sort=True)
+    return
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=DESCRIPTION,
@@ -858,6 +1003,8 @@ def main():
         from .count_matrix.mcad import generate_mcad as func
     elif cur_command in ["generate-dataset", "dataset"]:
         from .count_matrix.dataset import generate_dataset as func
+    elif cur_command in ['table-to-allc']:
+        from .table_to_allc import table_to_allc as func
     else:
         log.debug(f"{cur_command} is not an valid sub-command")
         parser.parse_args(["-h"])
