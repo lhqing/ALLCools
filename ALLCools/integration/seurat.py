@@ -73,10 +73,10 @@ def transform(data, anchorall, ref, qry, key_correct, npc=30, kweight=100, sd=1)
     for i,xx in enumerate(ref):
         for j,yy in enumerate(qry):
             if xx<yy:
-                tmp = anchorall[(xx, yy)]
+                tmp = anchorall[(xx, yy)].copy()
             else:
-                tmp = anchorall[(yy, xx)]
-                tmp[['x1', 'x2']] = tmp[['x2', 'x1']].copy()
+                tmp = anchorall[(yy, xx)].copy()
+                tmp[['x1', 'x2']] = tmp[['x2', 'x1']]
             tmp['x1'] += cumref[i]
             tmp['x2'] += cumqry[j]
             anchor.append(tmp)
