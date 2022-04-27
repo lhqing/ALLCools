@@ -950,8 +950,9 @@ class MCDS(xr.Dataset):
                       use_obs=None,
                       chunk_size=1000):
         """
-        Write MCDS into a on-disk zarr dataset. Data arrays for each var_dim will be saved in separate
-        sub-directories of output_path.
+        Write MCDS into an on-disk zarr dataset.
+        Data arrays for each var_dim will be saved in separate sub-directories of output_path.
+        The use_obs can be used to select and order observation accordingly.
 
         Parameters
         ----------
@@ -965,7 +966,7 @@ class MCDS(xr.Dataset):
         var_dims
             dimension name, or a list of dimension names of variables
         use_obs
-            Select AND order observations when write.
+            Select and order observations according to this parameter when wrote to output_path.
         chunk_size
             The load and write chunks, set this as large as possible based on available memory.
 
@@ -1010,7 +1011,14 @@ class MCDS(xr.Dataset):
                                          f'Dims of {da_name} is {da.dims}')
 
         obs_index = self.get_index(obs_dim)
+        if use_obs is not None:
+            # check use_obs first
+            if (~use_obs.isin(obs_index)).sum() > 0:
+                raise IndexError(f'Not all obs id in use_obs parameter exist in MCDS '
+                                 f'{self.obs_dim if obs_dim is None else obs_dim} dim')
+
         for var_dim, da_names in data_vars_dict.items():
+            print(f'Saving {var_dim}')
             _this_output_path = f'{output_path}/{var_dim}'
             if pathlib.Path(_this_output_path).exists():
                 print(f'{output_path}/{var_dim} will be overwrote by new data array')
@@ -1023,7 +1031,8 @@ class MCDS(xr.Dataset):
                 _mcds.attrs.pop('obs_dim')
                 _mcds.attrs.pop('var_dim')
 
-                for i, chunk_start in enumerate(range(0, obs_index.size, chunk_size)):
+                total_obs = obs_index.size if use_obs is None else use_obs.size
+                for i, chunk_start in enumerate(range(0, total_obs, chunk_size)):
                     if use_obs is None:
                         _obs_chunk = obs_index[chunk_start:chunk_start + chunk_size]
                         _chunk_ds = _mcds.sel({obs_dim: _obs_chunk}).load()

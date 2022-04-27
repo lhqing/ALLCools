@@ -43,7 +43,12 @@ def level_one_palette(name_list, order=None, palette="auto"):
             palette = "rainbow"
 
     if order is None:
-        order = list(sorted(name_set))
+        try:
+            order = list(sorted(name_set))
+        except TypeError:
+            # name set contains multiple dtype (e.g., str and np.NaN)
+            # do not sort
+            order = list(name_set)
     else:
         if (set(order) != name_set) or (len(order) != len(name_set)):
             raise ValueError("Order is not equal to set(name_list).")
