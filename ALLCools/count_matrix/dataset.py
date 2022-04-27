@@ -309,8 +309,7 @@ def generate_dataset(allc_table, output_path, regions, quantifiers, chrom_size_p
         allc_table = pd.read_csv(allc_table,
                                  sep='\t',
                                  header=None,
-                                 index_col=0,
-                                 squeeze=True)
+                                 index_col=0).squeeze()
         allc_table.index.name = obs_dim
 
     # determine index length and str dtype
