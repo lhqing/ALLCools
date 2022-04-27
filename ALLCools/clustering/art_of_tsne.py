@@ -15,11 +15,11 @@ from openTSNE import TSNEEmbedding, affinity, initialization
 
 
 def art_of_tsne(
-    X: np.ndarray,
-    metric: Union[str, Callable] = "euclidean",
-    exaggeration: float = -1,
-    perplexity: int = 30,
-    n_jobs: int = -1,
+        X: np.ndarray,
+        metric: Union[str, Callable] = "euclidean",
+        exaggeration: float = -1,
+        perplexity: int = 30,
+        n_jobs: int = -1,
 ) -> TSNEEmbedding:
     """
     Implementation of Dmitry Kobak and Philipp Berens
@@ -53,7 +53,7 @@ def art_of_tsne(
         # Subsample and run a regular art_of_tsne on the subset
         indices = np.random.permutation(n)
         reverse = np.argsort(indices)
-        X_sample, X_rest = X[indices[: n // 40]], X[indices[n // 40 :]]
+        X_sample, X_rest = X[indices[: n // 40]], X[indices[n // 40:]]
         logging.info(f"Embedding subset")
         Z_sample = art_of_tsne(X_sample, metric=metric)
 
@@ -150,12 +150,12 @@ def art_of_tsne(
 
 
 def tsne(
-    adata,
-    obsm="X_pca",
-    metric: Union[str, Callable] = "euclidean",
-    exaggeration: float = -1,
-    perplexity: int = 30,
-    n_jobs: int = -1,
+        adata,
+        obsm="X_pca",
+        metric: Union[str, Callable] = "euclidean",
+        exaggeration: float = -1,
+        perplexity: int = 30,
+        n_jobs: int = -1,
 ):
     """
     Calculating T-SNE embedding with the openTSNE package :cite:p:`Policar2019` and
