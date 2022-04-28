@@ -1,6 +1,6 @@
+import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.lines import Line2D
-import matplotlib.pyplot as plt
 
 from .color import level_one_palette
 from .contour import density_contour
@@ -9,47 +9,49 @@ from .utilities import (
     _make_tiny_axis_label,
     _density_based_sample,
     _extract_coords,
+    _take_data_series,
+    _auto_size,
     zoom_ax,
 )
 
 
 def categorical_scatter(
-    data,
-    ax=None,
-    # coords
-    coord_base="umap",
-    x=None,
-    y=None,
-    # color
-    hue=None,
-    palette="auto",
-    # text annotation
-    text_anno=None,
-    text_anno_kws=None,
-    text_anno_palette=None,
-    text_transform=None,
-    dodge_text=False,
-    dodge_kws=None,
-    # legend
-    show_legend=False,
-    legend_kws=None,
-    # size
-    s=5,
-    size=None,
-    sizes: dict = None,
-    size_norm=None,
-    # other
-    axis_format="tiny",
-    max_points=5000,
-    labelsize=4,
-    linewidth=0,
-    zoomxy=1.05,
-    outline=None,
-    outline_pad=3,
-    outline_kws=None,
-    scatter_kws=None,
-    return_fig=False,
-    rasterized='auto',
+        data,
+        ax=None,
+        # coords
+        coord_base="umap",
+        x=None,
+        y=None,
+        # color
+        hue=None,
+        palette="auto",
+        # text annotation
+        text_anno=None,
+        text_anno_kws=None,
+        text_anno_palette=None,
+        text_transform=None,
+        dodge_text=False,
+        dodge_kws=None,
+        # legend
+        show_legend=False,
+        legend_kws=None,
+        # size
+        s='auto',
+        size=None,
+        sizes: dict = None,
+        size_norm=None,
+        # other
+        axis_format="tiny",
+        max_points=50000,
+        labelsize=4,
+        linewidth=0,
+        zoomxy=1.05,
+        outline=None,
+        outline_pad=3,
+        outline_kws=None,
+        scatter_kws=None,
+        return_fig=False,
+        rasterized='auto',
 ):
     """
     Plot scatter plot with these options:
@@ -117,13 +119,18 @@ def categorical_scatter(
             _data = _density_based_sample(
                 _data, seed=1, size=max_points, coords=["x", "y"]
             )
+    n_dots = _data.shape[0]
 
     # determine rasterized
     if rasterized == 'auto':
-        if _data.shape[0] > 200:
+        if n_dots > 200:
             rasterized = True
         else:
             rasterized = False
+
+    # auto size if user didn't provide one
+    if s is 'auto':
+        s = _auto_size(ax, n_dots)
 
     # default scatter options
     _scatter_kws = {"linewidth": 0,
@@ -138,7 +145,7 @@ def categorical_scatter(
     palette_dict = None
     if hue is not None:
         if isinstance(hue, str):
-            _data["hue"] = data[hue].copy()
+            _data["hue"] = _take_data_series(data, hue)
         else:
             _data["hue"] = hue.copy()
         hue = "hue"
@@ -160,6 +167,7 @@ def categorical_scatter(
     if size is not None:
         # discard s from _scatter_kws and use size in sns.scatterplot
         _scatter_kws.pop("s")
+
     sns.scatterplot(
         x="x",
         y="y",
@@ -175,7 +183,7 @@ def categorical_scatter(
     # deal with text annotation
     if text_anno is not None:
         if isinstance(text_anno, str):
-            _data["text_anno"] = data[text_anno].copy()
+            _data["text_anno"] = _take_data_series(data, text_anno)
         else:
             _data["text_anno"] = text_anno.copy()
 
@@ -196,7 +204,7 @@ def categorical_scatter(
     # deal with outline
     if outline:
         if isinstance(outline, str):
-            _data["outline"] = data[outline].copy()
+            _data["outline"] = _take_data_series(data, outline)
         else:
             _data["outline"] = outline.copy()
         _outline_kws = {

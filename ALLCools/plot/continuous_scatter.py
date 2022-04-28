@@ -1,10 +1,11 @@
+import copy
+
+import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 from matplotlib.cm import get_cmap, ScalarMappable
 from matplotlib.colors import Normalize
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-import copy
-import matplotlib.pyplot as plt
 
 from .color import plot_colorbar
 from .contour import density_contour
@@ -13,6 +14,8 @@ from .utilities import (
     _density_based_sample,
     _extract_coords,
     _make_tiny_axis_label,
+    _take_data_series,
+    _auto_size,
     zoom_ax,
 )
 
@@ -23,8 +26,8 @@ def tight_hue_range(hue_data, portion):
     hue_quantile = hue_data.quantile(q=np.arange(0, 1, 0.01))
     min_window_right = (
         hue_quantile.rolling(window=int(portion * 100))
-        .apply(lambda i: i.max() - i.min(), raw=True)
-        .idxmin()
+            .apply(lambda i: i.max() - i.min(), raw=True)
+            .idxmin()
     )
     min_window_left = max(0, min_window_right - portion)
     vmin, vmax = tuple(hue_data.quantile(q=[min_window_left, min_window_right]))
@@ -43,41 +46,41 @@ def tight_hue_range(hue_data, portion):
 
 
 def continuous_scatter(
-    data,
-    ax=None,
-    coord_base="umap",
-    x=None,
-    y=None,
-    scatter_kws=None,
-    hue=None,
-    hue_norm=None,
-    hue_portion=0.95,
-    cmap="viridis",
-    colorbar=True,
-    colorbar_label_kws=None,
-    size=None,
-    size_norm=None,
-    size_portion=0.95,
-    sizes=None,
-    sizebar=True,
-    text_anno=None,
-    dodge_text=False,
-    dodge_kws=None,
-    text_anno_kws=None,
-    text_anno_palette=None,
-    text_transform=None,
-    axis_format="tiny",
-    max_points=5000,
-    s=5,
-    labelsize=4,
-    linewidth=0.5,
-    cax=None,
-    zoomxy=1.05,
-    outline=None,
-    outline_kws=None,
-    outline_pad=2,
-    return_fig=False,
-    rasterized='auto',
+        data,
+        ax=None,
+        coord_base="umap",
+        x=None,
+        y=None,
+        scatter_kws=None,
+        hue=None,
+        hue_norm=None,
+        hue_portion=0.95,
+        cmap="viridis",
+        colorbar=True,
+        colorbar_label_kws=None,
+        size=None,
+        size_norm=None,
+        size_portion=0.95,
+        sizes=None,
+        sizebar=True,
+        text_anno=None,
+        dodge_text=False,
+        dodge_kws=None,
+        text_anno_kws=None,
+        text_anno_palette=None,
+        text_transform=None,
+        axis_format="tiny",
+        max_points=50000,
+        s='auto',
+        labelsize=4,
+        linewidth=0.5,
+        cax=None,
+        zoomxy=1.05,
+        outline=None,
+        outline_kws=None,
+        outline_pad=2,
+        return_fig=False,
+        rasterized='auto',
 ):
     # init figure if not provided
     if ax is None:
@@ -95,13 +98,18 @@ def continuous_scatter(
             _data = _density_based_sample(
                 _data, seed=1, size=max_points, coords=["x", "y"]
             )
+    n_dots = _data.shape[0]
 
     # determine rasterized
     if rasterized == 'auto':
-        if _data.shape[0] > 200:
+        if n_dots > 200:
             rasterized = True
         else:
             rasterized = False
+
+    # auto size if user didn't provide one
+    if s is 'auto':
+        s = _auto_size(ax, n_dots)
 
     # default scatter options
     _scatter_kws = {"linewidth": 0,
@@ -114,7 +122,7 @@ def continuous_scatter(
     # deal with color
     if hue is not None:
         if isinstance(hue, str):
-            _data["hue"] = data[hue].astype(float)
+            _data["hue"] = _take_data_series(data, hue).astype(float)
             colorbar_label = hue
         else:
             _data["hue"] = hue.astype(float)
@@ -143,7 +151,7 @@ def continuous_scatter(
     # deal with size
     if size is not None:
         if isinstance(size, str):
-            _data["size"] = data[size].astype(float)
+            _data["size"] = _take_data_series(data, size).astype(float)
         else:
             _data["size"] = size.astype(float)
         size = "size"
@@ -178,7 +186,7 @@ def continuous_scatter(
 
     if text_anno is not None:
         if isinstance(text_anno, str):
-            _data["text_anno"] = data[text_anno]
+            _data["text_anno"] = _take_data_series(data, text_anno)
         else:
             _data["text_anno"] = text_anno
 
@@ -199,7 +207,7 @@ def continuous_scatter(
     # deal with outline
     if outline:
         if isinstance(outline, str):
-            _data["outline"] = data[outline]
+            _data["outline"] = _take_data_series(data, outline)
         else:
             _data["outline"] = outline
         _outline_kws = {

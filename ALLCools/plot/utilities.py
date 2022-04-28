@@ -112,8 +112,8 @@ def _extract_coords(data, coord_base, x, y):
         data_var = set(i for i in ds.data_vars.keys() if i.startswith(coord_base)).pop()
         _data = pd.DataFrame(
             {
-                "x": ds[data_var].sel(coord_base=f'{coord_base}_0').to_pandas(),
-                "y": ds[data_var].sel(coord_base=f'{coord_base}_1').to_pandas()
+                "x": ds[data_var].sel({coord_base: f'{coord_base}_0'}).to_pandas(),
+                "y": ds[data_var].sel({coord_base: f'{coord_base}_1'}).to_pandas()
             }
         )
     else:
@@ -197,3 +197,49 @@ def tight_hue_range(hue_data, portion):
     else:
         vmax = hue_data.max()
     return vmin, vmax
+
+
+def _take_data_series(data, k):
+    if isinstance(data, (xr.Dataset, xr.DataArray)):
+        _value = data[k].to_pandas()
+    else:
+        _value = data[k].copy()
+    return _value
+
+
+def _auto_size(ax, n_dots):
+    """Auto determine dot size based on ax size and n dots"""
+    bbox = ax.get_window_extent().transformed(ax.get_figure().dpi_scale_trans.inverted())
+    scale = bbox.width * bbox.height / 14.6  # 14.6 is a 5*5 fig I used to estimate
+    n = n_dots / scale  # larger figure means data look sparser
+    if n < 500:
+        s = 10 - n / 100
+    elif n < 1500:
+        s = 4
+    elif n < 3000:
+        s = 3
+    elif n < 8000:
+        s = 2
+    elif n < 15000:
+        s = 1
+    elif n < 30000:
+        s = 0.8
+    elif n < 80000:
+        s = 0.5
+    elif n < 150000:
+        s = 0.4
+    elif n < 300000:
+        s = 0.3
+    elif n < 500000:
+        s = 0.2
+    elif n < 1000000:
+        s = 0.1
+    elif n < 2000000:
+        s = 0.07
+    elif n < 3000000:
+        s = 0.05
+    elif n < 5000000:
+        s = 0.03
+    else:
+        s = 0.02
+    return s
