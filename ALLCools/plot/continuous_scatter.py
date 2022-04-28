@@ -4,8 +4,7 @@ from matplotlib.cm import get_cmap, ScalarMappable
 from matplotlib.colors import Normalize
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import copy
-import anndata
-import pandas as pd
+import matplotlib.pyplot as plt
 
 from .color import plot_colorbar
 from .contour import density_contour
@@ -45,7 +44,7 @@ def tight_hue_range(hue_data, portion):
 
 def continuous_scatter(
     data,
-    ax,
+    ax=None,
     coord_base="umap",
     x=None,
     y=None,
@@ -80,6 +79,12 @@ def continuous_scatter(
     return_fig=False,
     rasterized='auto',
 ):
+    # init figure if not provided
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(4, 4), dpi=300)
+    else:
+        fig = None
+
     # add coords
     _data, x, y = _extract_coords(data, coord_base, x, y)
     # _data has 2 cols: "x" and "y"
@@ -254,6 +259,6 @@ def continuous_scatter(
         zoom_ax(ax, zoomxy)
 
     if return_fig:
-        return tuple(return_axes), _data
+        return (fig, tuple(return_axes)), _data
     else:
         return

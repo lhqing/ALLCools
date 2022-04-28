@@ -1,7 +1,6 @@
 import seaborn as sns
 from matplotlib.lines import Line2D
-import anndata
-import pandas as pd
+import matplotlib.pyplot as plt
 
 from .color import level_one_palette
 from .contour import density_contour
@@ -16,7 +15,7 @@ from .utilities import (
 
 def categorical_scatter(
     data,
-    ax,
+    ax=None,
     # coords
     coord_base="umap",
     x=None,
@@ -102,6 +101,12 @@ def categorical_scatter(
     -------
 
     """
+    # init figure if not provided
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(4, 4), dpi=300)
+    else:
+        fig = None
+
     # add coords
     _data, x, y = _extract_coords(data, coord_base, x, y)
     # _data has 2 cols: "x" and "y"
@@ -253,6 +258,6 @@ def categorical_scatter(
         zoom_ax(ax, zoomxy)
 
     if return_fig:
-        return ax, _data
+        return (fig, ax), _data
     else:
         return
