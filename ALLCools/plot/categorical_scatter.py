@@ -102,21 +102,8 @@ def categorical_scatter(
     -------
 
     """
-    if isinstance(data, anndata.AnnData):
-        adata = data
-        data = adata.obs
-        x = f"{coord_base}_0"
-        y = f"{coord_base}_1"
-        _data = pd.DataFrame(
-            {
-                "x": adata.obsm[f"X_{coord_base}"][:, 0],
-                "y": adata.obsm[f"X_{coord_base}"][:, 1],
-            },
-            index=adata.obs_names,
-        )
-    else:
-        # add coords
-        _data, x, y = _extract_coords(data, coord_base, x, y)
+    # add coords
+    _data, x, y = _extract_coords(data, coord_base, x, y)
     # _data has 2 cols: "x" and "y"
 
     # down sample plot data if needed.

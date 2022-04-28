@@ -1,5 +1,6 @@
 from decimal import Decimal
-
+import anndata
+import xarray as xr
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -94,10 +95,31 @@ def _extract_coords(data, coord_base, x, y):
     else:
         x = f"{coord_base}_0"
         y = f"{coord_base}_1"
-    if (x not in data.columns) or (y not in data.columns):
-        raise KeyError(f"{x} or {y} not found in columns.")
 
-    _data = pd.DataFrame({"x": data[x], "y": data[y]})
+    if isinstance(data, anndata.AnnData):
+        adata = data
+        _data = pd.DataFrame(
+            {
+                "x": adata.obsm[f"X_{coord_base}"][:, 0],
+                "y": adata.obsm[f"X_{coord_base}"][:, 1],
+            },
+            index=adata.obs_names,
+        )
+    elif isinstance(data, xr.Dataset):
+        ds = data
+        if coord_base not in ds.dims:
+            raise KeyError(f'xr.Dataset do not contain {coord_base} dim')
+        data_var = set(i for i in ds.data_vars.keys() if i.startswith(coord_base)).pop()
+        _data = pd.DataFrame(
+            {
+                "x": ds[data_var].sel(coord_base=f'{coord_base}_0').to_pandas(),
+                "y": ds[data_var].sel(coord_base=f'{coord_base}_1').to_pandas()
+            }
+        )
+    else:
+        if (x not in data.columns) or (y not in data.columns):
+            raise KeyError(f"{x} or {y} not found in columns.")
+        _data = pd.DataFrame({"x": data[x], "y": data[y]})
     return _data, x, y
 
 
