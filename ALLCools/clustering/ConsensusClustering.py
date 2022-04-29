@@ -1,10 +1,15 @@
-from concurrent.futures import ProcessPoolExecutor, as_completed
+import warnings
 from collections import OrderedDict
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
 import anndata
 import joblib
 import leidenalg
+import matplotlib.pyplot as plt
+import networkx as nx
 import numpy as np
 import pandas as pd
+import seaborn as sns
 from imblearn.ensemble import BalancedRandomForestClassifier
 from natsort import natsorted
 from scanpy.neighbors import Neighbors
@@ -14,11 +19,8 @@ from sklearn.metrics import (
     balanced_accuracy_score,
     adjusted_rand_score,
 )
-import networkx as nx
-import matplotlib.pyplot as plt
-import seaborn as sns
-import warnings
 from sklearn.model_selection import cross_val_predict
+
 from ..plot import categorical_scatter
 
 
@@ -618,11 +620,17 @@ class ConsensusClustering:
     def plot_leiden_cases(
             self, coord_data, coord_base="umap", plot_size=3, dpi=300, plot_n_cases=4, s=3
     ):
-        """Show some leiden runs with biggest different as measured by ARI"""
+        """Show some leiden runs with the biggest different as measured by ARI"""
+        if isinstance(coord_data, anndata.AnnData):
+            coord_data = pd.DataFrame({
+                f'{coord_base}_0': coord_data.obsm[f'X_{coord_base}'][:, 0],
+                f'{coord_base}_1': coord_data.obsm[f'X_{coord_base}'][:, 1]
+            })
+
         # choose some most different leiden runs by rand index
         sample_cells = min(1000, self.leiden_result_df.shape[0])
-        sample_runs = min(30, self.leiden_result_df.shape[1])
-        use_df = self.leiden_result_df.sample(sample_cells).T.sample(sample_runs)
+        sample_runs = min(50, self.leiden_result_df.shape[1])
+        use_df = self.leiden_result_df.sample(sample_cells, replace=False).T.sample(sample_runs)
         rand_index_rank = (
             pd.DataFrame(
                 pairwise_distances(use_df, metric=adjusted_rand_score),

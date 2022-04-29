@@ -52,7 +52,6 @@ def plot_decomp_scatters(
             y=f"{base_name}{_y + 1}",
             hue=hue,
             hue_norm=hue_norm,
-            s=1,
             linewidth=0,
             palette=palette,
             legend=None,
