@@ -202,6 +202,8 @@ def tight_hue_range(hue_data, portion):
 def _take_data_series(data, k):
     if isinstance(data, (xr.Dataset, xr.DataArray)):
         _value = data[k].to_pandas()
+    elif isinstance(data, anndata.AnnData):
+        _value = data.obs[k].copy()
     else:
         _value = data[k].copy()
     return _value
