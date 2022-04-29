@@ -505,8 +505,8 @@ class ConsensusClustering:
                 y=cur_y,
                 frac=self.train_frac,
                 max_train=self.train_max_n,
-                random_state=self.random_state
-                             + cur_iter,  # every time train-test split got a different random state
+                random_state=self.random_state + cur_iter,
+                # every time train-test split got a different random state
             )
             (
                 clf,
@@ -709,7 +709,7 @@ class ConsensusClustering:
             print("No merge step to plot")
             return
         if isinstance(coord_data, anndata.AnnData):
-            coord_data = _adata_to_coord_data(coord_data, coord_base)
+            plot_data = _adata_to_coord_data(coord_data, coord_base)
         else:
             plot_data = coord_data.copy()
         self.plot_before_after(
