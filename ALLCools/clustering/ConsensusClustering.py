@@ -24,6 +24,14 @@ from sklearn.model_selection import cross_val_predict
 from ..plot import categorical_scatter
 
 
+def _adata_to_coord_data(adata, coord_base):
+    coord_data = pd.DataFrame({
+        f'{coord_base}_0': adata.obsm[f'X_{coord_base}'][:, 0],
+        f'{coord_base}_1': adata.obsm[f'X_{coord_base}'][:, 1]
+    })
+    return coord_data
+
+
 def _r1_normalize(cmat):
     """
     Adapted from https://github.com/SCCAF/sccaf/blob/develop/SCCAF/__init__.py
@@ -622,10 +630,7 @@ class ConsensusClustering:
     ):
         """Show some leiden runs with the biggest different as measured by ARI"""
         if isinstance(coord_data, anndata.AnnData):
-            coord_data = pd.DataFrame({
-                f'{coord_base}_0': coord_data.obsm[f'X_{coord_base}'][:, 0],
-                f'{coord_base}_1': coord_data.obsm[f'X_{coord_base}'][:, 1]
-            })
+            coord_data = _adata_to_coord_data(coord_data, coord_base)
 
         # choose some most different leiden runs by rand index
         sample_cells = min(1000, self.leiden_result_df.shape[0])
@@ -663,6 +668,8 @@ class ConsensusClustering:
 
     def plot_before_after(self, coord_data, coord_base="umap", plot_size=3, dpi=300):
         """Plot the raw clusters from multi-leiden and final clusters after merge"""
+        if isinstance(coord_data, anndata.AnnData):
+            coord_data = _adata_to_coord_data(coord_data, coord_base)
         if len(self.step_data) == 0:
             print("No merge step to plot")
             return
@@ -701,7 +708,10 @@ class ConsensusClustering:
         if len(self.step_data) == 0:
             print("No merge step to plot")
             return
-        plot_data = coord_data.copy()
+        if isinstance(coord_data, anndata.AnnData):
+            coord_data = _adata_to_coord_data(coord_data, coord_base)
+        else:
+            plot_data = coord_data.copy()
         self.plot_before_after(
             coord_data, coord_base=coord_base, plot_size=plot_size, dpi=dpi
         )
