@@ -156,7 +156,10 @@ class MCDS(xr.Dataset):
              chunks='auto',
              split_large_chunks=True,
              obj_to_str=True,
-             engine=None):
+             engine=None,
+             coords='minimal',
+             compat='override',
+             **kwargs):
         """
         Take one or multiple MCDS file paths and create single MCDS concatenated on obs_dim
 
@@ -180,6 +183,16 @@ class MCDS(xr.Dataset):
             Whether turn object coordinates into string data type
         engine
             xarray engine used to store MCDS, if multiple MCDS provided, the engine need to be the same
+        coords
+            the coords parameter of :py:func:`xarray.open_mfdataset` function,
+            default is "minimal", means only coordinates in which the dimension already appears are included.
+        compat
+            the compat parameter of :py:func:`xarray.open_mfdataset` function,
+            default is "override", means skip comparing variables with the same name and pick variable from first MCDS.
+        **kwargs
+            Additional arguments passed on to :py:func:`xarray.open_dataset` or
+            :py:func:`xarray.open_mfdataset` function.
+
         Returns
         -------
         MCDS
@@ -207,7 +220,8 @@ class MCDS(xr.Dataset):
                               var_dim=_var_dim,
                               chunks=chunks,
                               split_large_chunks=split_large_chunks,
-                              engine=engine)
+                              engine=engine,
+                              **kwargs)
                 ds_list.append(ds)
             ds = xr.merge(ds_list)
             return cls(ds, obs_dim=obs_dim, var_dim=None).squeeze()
@@ -264,11 +278,14 @@ class MCDS(xr.Dataset):
             ds = xr.open_dataset(
                 _final_paths[0],
                 engine=engine,
+                **kwargs
                 # chunks=chunks  # do not apply chunks parameter here, apply in the end
             )
         else:
             with dask.config.set(
                     **{"array.slicing.split_large_chunks": split_large_chunks}):
+                kwargs['coords'] = coords
+                kwargs['compat'] = compat
                 ds = xr.open_mfdataset(
                     _final_paths,
                     parallel=False,
@@ -276,6 +293,7 @@ class MCDS(xr.Dataset):
                     concat_dim=obs_dim,
                     # chunks=chunks,  # do not apply chunks parameter here, apply in the end
                     engine=engine,
+                    **kwargs
                 )
 
         if use_obs is not None:
@@ -284,11 +302,13 @@ class MCDS(xr.Dataset):
                 use_obs_bool = ds.get_index(obs_dim).isin(use_obs)
                 ds = ds.sel({obs_dim: use_obs_bool})
 
-        # change object dtype to string
+        # change object dtype to fix-sized string dtype
         if obj_to_str:
             for k in ds.coords.keys():
                 if ds.coords[k].dtype == 'O':
-                    ds.coords[k] = ds.coords[k].astype(str)
+                    # must load then convert dtype,
+                    # otherwise the size somehow not converted correctly
+                    ds.coords[k] = ds.coords[k].load().astype(str)
 
         if chunks is not None:
             if chunks == 'auto':
