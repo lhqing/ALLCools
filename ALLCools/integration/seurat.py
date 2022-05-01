@@ -166,7 +166,7 @@ def find_order(dist, ncell):
     
 def integrate(adata_list, key_correct='X_pca', key_local='X_pca', key_anchor='X', dimred='pca', 
               kanchor=5, kscore=30, kweight=100, kfilter=200, klocal=50, 
-              scale1=False, scale2=False, ncc=30, n_features=200, npc=30, sd=1):
+              scale1=False, scale2=False, ncc=30, n_features=200, npc=30, sd=1, alignments=None):
     
     nds = len(adata_list)
     ncell = [xx.shape[0] for xx in adata_list]
@@ -184,8 +184,22 @@ def integrate(adata_list, key_correct='X_pca', key_local='X_pca', key_anchor='X'
     print('Find anchors across datasets')
     dist = []
     anchor = {}
+    
+    if (alignments is not None):
+        allpairs = []
+        for pair in alignments:
+            for xx in pair[0]:
+                for yy in pair[1]:
+                    if xx<yy:
+                        allpairs.append(f'{xx}-{yy}')
+                    else:
+                        allpairs.append(f'{yy}-{xx}')
+        allpairs = np.unique(allpairs)
+    
     for i in range(nds-1):
         for j in range(i+1, nds):
+            if (alignments is not None) and (f'{i}-{j}' not in allpairs):
+                continue
             # run cca
             if (key_anchor=='X') and (dimred=='pca'):
                 U, V = cca(adata_list[i].X.copy(), adata_list[j].X.copy(), scale1=scale1, scale2=scale2, n_components=ncc)
@@ -228,7 +242,8 @@ def integrate(adata_list, key_correct='X_pca', key_local='X_pca', key_anchor='X'
     print('Merge datasets')
     
     # find order of pairwise dataset merging with hierarchical clustering
-    alignments = find_order(np.array(dist), ncell)
+    if (alignments is None):
+        alignments = find_order(np.array(dist), ncell)
     print(alignments)
     
     # correct batch
@@ -241,8 +256,3 @@ def integrate(adata_list, key_correct='X_pca', key_local='X_pca', key_anchor='X'
         corrected = transform(np.array(corrected), anchor, xx[0], xx[1], key_correct, npc=npc, kweight=kweight, sd=sd)
     return corrected
 
-
-
-
-
- 
