@@ -4,8 +4,6 @@ import pynndescent
 from scipy.cluster.hierarchy import linkage
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import normalize
-
-# from fbpca import pca
 from .cca import cca, lsi_cca
 
 
