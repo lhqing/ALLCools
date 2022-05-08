@@ -137,7 +137,7 @@ def significant_pc_test(
 
 
 def balanced_pca(
-        adata: anndata.AnnData, groups: str = "pre_clusters", max_cell_prop=0.1, n_comps=200, scale=False
+        adata: anndata.AnnData, groups: str = "pre_clusters", max_cell_prop=0.1, n_comps=100, scale=False
 ):
     """
     Given a categorical variable (e.g., a pre-clustering label), perform balanced PCA by downsample
@@ -181,7 +181,9 @@ def balanced_pca(
         adata_train = adata[use_cells, :].copy()
 
     # in case cells are smaller than n_comps
-    n_comps = min(min(adata_train.shape), n_comps)
+    n_comps = min(min(adata_train.shape) - 1, n_comps)
+    if n_comps < 2:
+        raise ValueError(f"n_comps is {n_comps} which is too small.")
 
     # scale (optional)
     if scale:

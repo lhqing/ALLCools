@@ -33,7 +33,8 @@ def get_kv_dict(data_df, major, sub):
 
 
 def level_one_palette(name_list, order=None, palette="auto"):
-    name_set = set(name_list)
+    name_set = set(name_list.dropna())
+
     if palette == "auto":
         if len(name_set) < 10:
             palette = "tab10"
@@ -52,6 +53,7 @@ def level_one_palette(name_list, order=None, palette="auto"):
     else:
         if (set(order) != name_set) or (len(order) != len(name_set)):
             raise ValueError("Order is not equal to set(name_list).")
+
     n = len(order)
     colors = sns.color_palette(palette, n)
     color_palette = {}
