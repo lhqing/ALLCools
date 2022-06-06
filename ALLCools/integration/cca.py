@@ -1,26 +1,32 @@
 import numpy as np
 from dask_ml.decomposition import IncrementalPCA as dIPCA
 from scipy.stats import zscore
-from sklearn.decomposition import PCA
+from sklearn.decomposition import TruncatedSVD
+from sklearn.utils.extmath import safe_sparse_dot
+from ..clustering.lsi import tf_idf
 
 
-def cca(data1, data2, scale1=False, scale2=False, n_components=50, random_state=42):
+def cca(data1, data2, scale1=True, scale2=True, n_components=50, max_cc_cell=20000, random_state=0):
     if scale1:
         data1 = zscore(data1, axis=1)
     if scale2:
         data2 = zscore(data2, axis=1)
+    np.random.seed(random_state)
+    model = TruncatedSVD(n_components=n_components, algorithm='arpack', random_state=random_state)
 
-    X = data1.dot(data2.T)
-    pca = PCA(n_components=n_components,
-              copy=True,
-              whiten=False,
-              svd_solver='auto',
-              tol=0.0,
-              iterated_power='auto',
-              random_state=random_state)
-    pc = pca.fit_transform(X)
-    loading = pca.components_
-    return pc, loading.T
+    U = model.fit_transform(data1.dot(data2.T))
+    sel_dim = (model.singular_values_ != 0)
+    if max_cc_cell > data2.shape[0]:
+        V = model.components_[sel_dim].T
+    else:
+        V = safe_sparse_dot(safe_sparse_dot(U.T[sel_dim], data1), data2.T).T
+        V = V / np.square(model.singular_values_)
+    if max_cc_cell > data1.shape[0]:
+        U = U[:, sel_dim] / model.singular_values_
+    else:
+        U = safe_sparse_dot(data1, safe_sparse_dot(model.components_[sel_dim], data2).T)
+        U = U / model.singular_values_
+    return U, V
 
 
 def adata_cca(adata, group_col, separate_scale=True, n_components=50, random_state=42):
@@ -62,6 +68,8 @@ def incremental_cca(a, b, max_chunk_size=10000, random_state=0):
     -------
     Top CCA components
     """
+    raise NotImplementedError
+    # TODO PC is wrong
     pca = dIPCA(n_components=50,
                 whiten=False,
                 copy=True,
@@ -93,32 +101,30 @@ def incremental_cca(a, b, max_chunk_size=10000, random_state=0):
     return total_cc
 
 
-def _tf_idf(data, col_sum, scale_factor):
-    row_sum = data.sum(axis=1).A1.astype(int)
-    data.data = data.data / np.repeat(row_sum, row_sum)
-    data.data = np.log(data.data * scale_factor + 1)
-    idf = np.log(1 + data.shape[0] / col_sum)
-    return idf
-
-
-def lsi_cca(data1, data2, min_cov=5, scale_factor=100000, n_components=50, random_state=42):
-    col_sum1 = data1.sum(axis=0).A1
-    col_sum2 = data2.sum(axis=0).A1
-    binfilter = np.logical_and(col_sum1 > min_cov, col_sum2 > min_cov)
-    data1 = data1[:, binfilter]
-    data2 = data2[:, binfilter]
-
-    idf1 = _tf_idf(data1, col_sum1, scale_factor)
-    idf2 = _tf_idf(data2, col_sum2, scale_factor)
-    tf = data1.multiply(idf1).dot(data2.multiply(idf2).T)
-
-    pca = PCA(n_components=n_components,
-              copy=True,
-              whiten=False,
-              svd_solver='auto',
-              tol=0.0,
-              iterated_power='auto',
-              random_state=random_state)
-    pc = pca.fit_transform(tf)
-    loading = pca.components_
-    return pc, loading.T
+def lsi_cca(data1, data2, scale_factor=100000, n_components=50, max_cc_cell=20000, chunk_size=50000):
+    np.random.seed(0)
+    sel1 = np.random.choice(np.arange(data1.shape[0]), min(max_cc_cell, data1.shape[0]), False)
+    sel2 = np.random.choice(np.arange(data2.shape[0]), min(max_cc_cell, data2.shape[0]), False)
+    tf1, idf1 = tf_idf(data1[sel1], scale_factor=scale_factor)
+    tf2, idf2 = tf_idf(data2[sel2], scale_factor=scale_factor)
+    tf = tf1.dot(tf2.T)
+    model = TruncatedSVD(n_components=n_components, algorithm='arpack', random_state=0)
+    U = model.fit_transform(tf)
+    seldim = (model.singular_values_ != 0)
+    if max_cc_cell > data2.shape[0]:
+        V = model.components_[seldim].T
+    else:
+        V = np.concatenate([safe_sparse_dot(safe_sparse_dot(U.T[seldim], tf1),
+                                            tf_idf(data2[chunk_start:(chunk_start + chunk_size)],
+                                                   scale_factor=scale_factor, idf=idf2)[0].T).T
+                            for chunk_start in np.arange(0, data2.shape[0], chunk_size)], axis=0)
+        V = V / np.square(model.singular_values_)
+    if max_cc_cell > data1.shape[0]:
+        U = U[:, seldim] / model.singular_values_
+    else:
+        U = np.concatenate([safe_sparse_dot(
+            tf_idf(data1[chunk_start:(chunk_start + chunk_size)], scale_factor=scale_factor, idf=idf1)[0],
+            safe_sparse_dot(model.components_[seldim], tf2).T)
+            for chunk_start in np.arange(0, data1.shape[0], chunk_size)], axis=0)
+        U = U / model.singular_values_
+    return U, V

@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 import yaml
+import scipy.sparse as ss
 from pybedtools import BedTool
 
 from .utilities import (
@@ -516,16 +517,16 @@ class MCDS(xr.Dataset):
             try:
                 black_feature_index = (
                     black_feature.to_dataframe()
-                        .set_index(["chrom", "start", "end"])
-                        .index
+                    .set_index(["chrom", "start", "end"])
+                    .index
                 )
             except pd.errors.EmptyDataError:
                 print("No feature overlapping the black list bed file.")
                 return self
         black_feature_id = pd.Index(
             feature_bed_df.reset_index()
-                .set_index(["chrom", "start", "end"])
-                .loc[black_feature_index][var_dim]
+            .set_index(["chrom", "start", "end"])
+            .loc[black_feature_index][var_dim]
         )
 
         print(
@@ -536,7 +537,7 @@ class MCDS(xr.Dataset):
             mcds = self.sel({var_dim: ~self.get_index(var_dim).isin(black_feature_id)})
         return mcds
 
-    def remove_chromosome(self, exclude_chromosome, var_dim=None):
+    def remove_chromosome(self, exclude_chromosome=None, include_chromosome=None, var_dim=None):
         """
         Remove regions in specific chromosome
 
@@ -545,17 +546,34 @@ class MCDS(xr.Dataset):
         var_dim
             Name of var_dim
         exclude_chromosome
-            Chromosome to remove
+            if provided, only these chromosomes will be removed
+        include_chromosome
+            if provided, only these chromosomes will be kept
         Returns
         -------
         MCDS (xr.Dataset)
         """
         var_dim = self._verify_dim(var_dim, mode='var')
-        judge = self.coords[f"{var_dim}_chrom"].isin(exclude_chromosome)
-        print(f"{int(judge.sum())} {var_dim} features in {exclude_chromosome} removed.")
-        with dask.config.set(**{"array.slicing.split_large_chunks": False}):
-            mcds = self.sel({var_dim: ~judge})
+        if exclude_chromosome is not None:
+            judge = self.coords[f"{var_dim}_chrom"].isin(exclude_chromosome)
+            print(f"{int(judge.sum())} {var_dim} features in {exclude_chromosome} removed.")
+            with dask.config.set(**{"array.slicing.split_large_chunks": False}):
+                mcds = self.sel({var_dim: ~judge})
+        if include_chromosome is not None:
+            judge = self.coords[f"{var_dim}_chrom"].isin(include_chromosome)
+            print(f"{int(judge.sum())} {var_dim} features in {include_chromosome} kept.")
+            with dask.config.set(**{"array.slicing.split_large_chunks": False}):
+                mcds = self.sel({var_dim: judge})
         return mcds
+
+    def _get_da_name(self, var_dim, da_suffix):
+        name1 = f"{var_dim}_{da_suffix}"
+        if name1 in self:
+            return name1
+        name2 = f"{var_dim}_da_{da_suffix}"
+        if name2 in self:
+            return name2
+        raise KeyError(f"{name1} or {name2} not found in MCDS.")
 
     def calculate_hvf_svr(
             self,
@@ -564,6 +582,7 @@ class MCDS(xr.Dataset):
             obs_dim=None,
             n_top_feature=5000,
             da_suffix="frac",
+            da_name=None,
             plot=True,
     ):
         from sklearn.svm import SVR
@@ -571,7 +590,11 @@ class MCDS(xr.Dataset):
         obs_dim = self._verify_dim(obs_dim, mode='obs')
         var_dim = self._verify_dim(var_dim, mode='var')
 
-        frac_da = self[f"{var_dim}_da_{da_suffix}"]
+        if da_name is None:
+            frac_da_name = self._get_da_name(var_dim, da_suffix)
+        else:
+            frac_da_name = da_name
+        frac_da = self[frac_da_name]
         count_da = self[f"{var_dim}_da"]
         if 'mc_type' in self.dims:
             if mc_type is None:
@@ -654,8 +677,8 @@ class MCDS(xr.Dataset):
                         marker=dict(
                             size=2,
                             color=plot_data["feature_select"]
-                                .map({True: "red", False: "gray"})
-                                .tolist(),  # set color to an array/list of desired values
+                            .map({True: "red", False: "gray"})
+                            .tolist(),  # set color to an array/list of desired values
                             opacity=0.8,
                         ),
                     )
@@ -723,6 +746,8 @@ class MCDS(xr.Dataset):
             bin size to separate features across mean
         cov_binsize
             bin size to separate features across coverage
+        da_suffix
+            Suffix to add to the name of the dataarray
         plot
             If true, will plot mean, coverage and normalized dispersion scatter plots.
 
@@ -733,7 +758,8 @@ class MCDS(xr.Dataset):
         obs_dim = self._verify_dim(obs_dim, mode='obs')
         var_dim = self._verify_dim(var_dim, mode='var')
 
-        frac_da = self[f"{var_dim}_da_{da_suffix}"]
+        frac_da_name = self._get_da_name(var_dim, da_suffix)
+        frac_da = self[frac_da_name]
         if 'mc_type' in self.dims:
             if mc_type is None:
                 mc_types = self.get_index('mc_type')
@@ -786,11 +812,58 @@ class MCDS(xr.Dataset):
                 self.coords[f"{var_dim}_{mc_type}_{name}"] = column
         return hvf_df
 
-    def get_score_adata(self, mc_type, quant_type, obs_dim=None, var_dim=None, sparse=True):
+    def get_count_adata(self,
+                        da_name,
+                        obs_dim=None,
+                        var_dim=None,
+                        sparse=True,
+                        loading_chunk=100000,
+                        binarize_cutoff=None):
+        obs_dim = self._verify_dim(obs_dim, mode='obs')
+        var_dim = self._verify_dim(var_dim, mode='var')
+        da = self[da_name].transpose(obs_dim, var_dim)
+
+        # load matrix by chunks
+        da_obs = da.get_index(obs_dim)
+        total_data = []
+        for chunk_start in range(0, da_obs.size, loading_chunk):
+            chunk_cells = da_obs[chunk_start:chunk_start + loading_chunk]
+            chunk_da = da.sel({obs_dim: chunk_cells})
+            if sparse:
+                chunk = ss.csr_matrix(chunk_da.values)
+            else:
+                chunk = chunk_da.values
+            # binarize the matrix to further reduce memory size
+            if binarize_cutoff is not None:
+                chunk = (chunk > binarize_cutoff).astype(np.int8)
+            total_data.append(chunk)
+        # concatenate all chunks
+        if sparse:
+            total_data = ss.vstack(total_data)
+        else:
+            total_data = np.vstack(total_data)
+
+        obs_df, var_df = make_obs_df_var_df(da, obs_dim, var_dim)
+        adata = anndata.AnnData(X=total_data, obs=obs_df, var=var_df)
+
+        if 'chrom' in adata.var:
+            chroms = adata.var['chrom'].astype('category')
+            from natsort import natsorted
+            adata.var['chrom'] = chroms.cat.reorder_categories(natsorted(chroms.cat.categories))
+        return adata
+
+    def get_score_adata(self,
+                        mc_type,
+                        quant_type,
+                        obs_dim=None,
+                        var_dim=None,
+                        sparse=True,
+                        loading_chunk=100000,
+                        binarize_cutoff=None):
         QUANT_TYPES = ['hypo-score', 'hyper-score']
-        if quant_type.lower() == 'hypo':
+        if quant_type.lower().startswith('hypo'):
             quant_type = 'hypo-score'
-        elif quant_type.lower() == 'hyper':
+        elif quant_type.lower().startswith('hyper'):
             quant_type = 'hyper_score'
         else:
             pass
@@ -799,18 +872,13 @@ class MCDS(xr.Dataset):
 
         obs_dim = self._verify_dim(obs_dim, mode='obs')
         var_dim = self._verify_dim(var_dim, mode='var')
-
-        da = self[f'{var_dim}_da_{mc_type}-{quant_type}']
-        # TODO load by chunk and parallel to make IO faster
-        if sparse:
-            from scipy.sparse import csr_matrix
-            data = csr_matrix(da.transpose(obs_dim, var_dim).values)
-        else:
-            data = da.transpose(obs_dim, var_dim).values
-        # TODO validate chrom coords
-
-        obs_df, var_df = make_obs_df_var_df(da, obs_dim, var_dim)
-        adata = anndata.AnnData(X=data, obs=obs_df, var=var_df)
+        da_name = f'{var_dim}_da_{mc_type}-{quant_type}'
+        adata = self.get_count_adata(da_name=da_name,
+                                     obs_dim=obs_dim,
+                                     var_dim=var_dim,
+                                     sparse=sparse,
+                                     loading_chunk=loading_chunk,
+                                     binarize_cutoff=binarize_cutoff)
         return adata
 
     def get_adata(
@@ -860,15 +928,16 @@ class MCDS(xr.Dataset):
         with dask.config.set(
                 **{"array.slicing.split_large_chunks": split_large_chunks}
         ):
-            frac_da = self[f"{var_dim}_da_{da_suffix}"]
+            frac_da_name = self._get_da_name(var_dim, da_suffix)
+            frac_da = self[frac_da_name]
             if mc_type is None:
                 if select_hvf:
                     try:
                         use_features = (
                             self.coords[f"{var_dim}_feature_select"]
-                                .to_pandas()
-                                .dropna()
-                                .astype(bool)
+                            .to_pandas()
+                            .dropna()
+                            .astype(bool)
                         )
                         use_features = use_features[use_features].index
                         use_data = frac_da.sel({var_dim: use_features}).squeeze()
@@ -885,9 +954,9 @@ class MCDS(xr.Dataset):
                     try:
                         use_features = (
                             self.coords[f"{var_dim}_{mc_type}_feature_select"]
-                                .to_pandas()
-                                .dropna()
-                                .astype(bool)
+                            .to_pandas()
+                            .dropna()
+                            .astype(bool)
                         )
                         use_features = use_features[use_features].index
                         use_data = frac_da.sel({"mc_type": mc_type, var_dim: use_features}).squeeze()
@@ -938,13 +1007,13 @@ class MCDS(xr.Dataset):
                         overall_mc_dim = overall_mc_da[:-3]
                         mc = (
                             cluster_mcds[overall_mc_da]
-                                .sel(mc_type=mc_type, count_type="mc")
-                                .sum(dim=overall_mc_dim)
+                            .sel(mc_type=mc_type, count_type="mc")
+                            .sum(dim=overall_mc_dim)
                         )
                         cov = (
                             cluster_mcds[overall_mc_da]
-                                .sel(mc_type=mc_type, count_type="cov")
-                                .sum(dim=overall_mc_dim)
+                            .sel(mc_type=mc_type, count_type="cov")
+                            .sum(dim=overall_mc_dim)
                         )
                         cluster_mcds.coords[f"{cluster_col}_{mc_type}_overall"] = mc / cov
                 else:

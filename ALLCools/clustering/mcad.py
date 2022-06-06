@@ -65,7 +65,7 @@ def binarize_matrix(adata, cutoff=0.95):
     return
 
 
-def filter_regions(adata, hypo_percent=0.5):
+def filter_regions(adata, hypo_percent=0.5, n_cell=None, zscore_abs_cutoff=None):
     """
     Filter regions based on % of cells having non-zero scores.
 
@@ -74,89 +74,29 @@ def filter_regions(adata, hypo_percent=0.5):
     adata
     hypo_percent
         min % of cells that are non-zero in this region.
-
+        If n_cell is provided, this parameter will be ignored.
+    n_cell
+        number of cells that are non-zero in this region.
+    zscore_abs_cutoff
+        absolute feature non-zero cell count zscore cutoff to remove lowest and highest coverage features.
     Returns
     -------
 
     """
-    n_cell = int(adata.shape[0] * hypo_percent / 100)
-    hypo_judge = (adata.X > 0).sum(axis=0).A1 > n_cell
-    adata._inplace_subset_var(hypo_judge)
-    print(f'{hypo_judge.sum()} regions remained, with # of non-zero cells > {n_cell}.')
+    feature_nnz_cell = (adata.X > 0).sum(axis=0).A1
+
+    if n_cell is None:
+        n_cell = int(adata.shape[0] * hypo_percent / 100)
+    n_cell_judge = feature_nnz_cell > n_cell
+    adata._inplace_subset_var(n_cell_judge)
+    feature_nnz_cell = feature_nnz_cell[n_cell_judge].copy()
+
+    if zscore_abs_cutoff is not None:
+        from scipy.stats import zscore
+        zscore_judge = np.abs(zscore(np.log2(feature_nnz_cell))) < zscore_abs_cutoff
+        adata._inplace_subset_var(zscore_judge)
+
+    print(f'{adata.shape[1]} regions remained.')
     return
 
 
-def tf_idf(data, scale_factor):
-    col_sum = data.sum(axis=0).A1
-    row_sum = data.sum(axis=1).A1
-
-    idf = np.log(1 + data.shape[0] / col_sum)
-    tf = data
-    tf.data = tf.data / np.repeat(row_sum, row_sum)
-    tf.data = np.log(tf.data * scale_factor + 1)
-    tf = tf.multiply(idf)
-    return tf
-
-
-def lsi(
-    adata,
-    scale_factor=100000,
-    n_components=100,
-    algorithm="arpack",
-    obsm="X_pca",
-    random_state=0,
-    fit_size=None,
-):
-    """
-    Run TF-IDF on the binarized adata.X, followed by TruncatedSVD and then scale the components by svd.singular_values_
-
-    Parameters
-    ----------
-    adata
-
-    scale_factor
-    n_components
-    algorithm
-    obsm
-    random_state
-    fit_size
-        Ratio or absolute int value, use to downsample when fitting the SVD to speed up run time.
-
-    Returns
-    -------
-
-    """
-    # tf-idf
-    data = adata.X.astype(np.int8).copy()
-    tf = tf_idf(data, scale_factor)
-    n_rows, n_cols = tf.shape
-    n_components = min(n_rows, n_cols, n_components)
-    svd = TruncatedSVD(
-        n_components=n_components, algorithm=algorithm, random_state=random_state
-    )
-
-    if fit_size is None:
-        # fit the SVD using all rows
-        matrix_reduce = svd.fit_transform(tf)
-    elif fit_size >= n_rows:
-        # fit size is larger than actual data size
-        matrix_reduce = svd.fit_transform(tf)
-    else:
-        # fit the SVD using partial rows to speed up
-        if fit_size < 1:
-            fit_size = max(int(n_rows * fit_size), n_components)
-        use_cells = (
-            pd.Series(range(n_rows))
-            .sample(fit_size, random_state=random_state)
-            .sort_index()
-            .tolist()
-        )
-        svd.fit(tf.tocsr()[use_cells, :])
-        matrix_reduce = svd.transform(tf)
-
-    matrix_reduce = matrix_reduce / svd.singular_values_
-
-    # PCA is the default name for many following steps in scanpy, use the name here for convenience.
-    # However, this is not PCA
-    adata.obsm[obsm] = matrix_reduce
-    return svd

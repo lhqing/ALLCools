@@ -4,6 +4,7 @@ import pynndescent
 from scipy.cluster.hierarchy import linkage
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import normalize
+
 from .cca import cca, lsi_cca
 
 
@@ -23,7 +24,6 @@ def top_features_idx(data, n_features):
     features_idx : np.array
     """
     # data.shape = (n_cc, total_features)
-
     n_cc = data.shape[0]
     n_features_per_dim = n_features * 10 // n_cc
     sample_range = np.arange(n_cc)[:, None]
@@ -50,19 +50,17 @@ def filter_anchor(anchor,
                   adata_ref=None,
                   adata_qry=None,
                   high_dim_feature=None,
-                  kfilter=200):
+                  k_filter=200):
     """
-    Check if the anchor is also a anchor in the high dimensional space of ref cells.
-
-    Construct a new knn graph with only the high_dim_feature,
-    keep anchors if query still within kfilter neighbors of reference
-    """
+    Check if an anchor is still an anchor when only using the high_dim_features to construct KNN graph.
+    If not, remove the anchor."""
     ref_data = normalize(adata_ref.X[:, high_dim_feature], axis=1)
     qry_data = normalize(adata_qry.X[:, high_dim_feature], axis=1)
     index = pynndescent.NNDescent(ref_data,
                                   metric='euclidean',
-                                  n_neighbors=kfilter)
-    G = index.query(qry_data, k=kfilter)[0]
+                                  n_neighbors=k_filter,
+                                  random_state=0)
+    G = index.query(qry_data, k=k_filter)[0]
     input_anchors = anchor.shape[0]
     anchor = np.array([xx for xx in anchor if (xx[0] in G[xx[1]])])
     print(f'Anchor selected with high CC feature graph: {anchor.shape[0]} / {input_anchors}')
@@ -83,58 +81,61 @@ def score_anchor(anchor,
                  G12,
                  G21,
                  G22,
-                 kscore=30,
+                 k_score=30,
                  Gp1=None,
                  Gp2=None,
-                 klocal=50):
+                 k_local=50):
     """
     score the anchor by the number of shared neighbors
 
     Parameters
     ----------
     anchor
+        anchor in shape (n_anchor, 2)
     G11
     G12
     G21
     G22
-    kscore
+    k_score
+        number of neighbors to score the anchor
     Gp1
+        Intra-dataset1 kNN graph
     Gp2
-    klocal
+        Intra-dataset2 kNN graph
+    k_local
+        number of neighbors to calculate the local score
 
     Returns
     -------
-
+    anchor with score in shape (n_anchor, 3): pd.DataFrame
     """
     tmp = [
-        len(set(G11[x, :kscore]).intersection(G21[y, :kscore])) +
-        len(set(G12[x, :kscore]).intersection(G22[y, :kscore]))
+        len(set(G11[x, :k_score]).intersection(G21[y, :k_score])) +
+        len(set(G12[x, :k_score]).intersection(G22[y, :k_score]))
         for x, y in anchor
     ]
-    # len(temp) = len(anchor)
+    anchor_df = pd.DataFrame(anchor, columns=['x1', 'x2'])
+    anchor_df['score'] = min_max(tmp)
 
-    anchor = pd.DataFrame(anchor, columns=['x1', 'x2'])
-    anchor['score'] = min_max(tmp)
-
-    if klocal:
+    if k_local:
+        # if k_local is not None, then use local KNN to adjust the score
         share_nn = np.array([
-            len(set(Gp1[i]).intersection(G11[i, :klocal]))
+            len(set(Gp1[i]).intersection(G11[i, :k_local]))
             for i in range(len(Gp1))
         ])
-        tmp = [share_nn[xx] for xx in anchor['x1'].values]
-        anchor['score_local1'] = min_max(tmp)
+        tmp = [share_nn[xx] for xx in anchor_df['x1'].values]
+        anchor_df['score_local1'] = min_max(tmp)
 
         share_nn = np.array([
-            len(set(Gp2[i]).intersection(G22[i, :klocal]))
+            len(set(Gp2[i]).intersection(G22[i, :k_local]))
             for i in range(len(Gp2))
         ])
-        tmp = [share_nn[xx] for xx in anchor['x2'].values]
-        anchor['score_local2'] = min_max(tmp)
+        tmp = [share_nn[xx] for xx in anchor_df['x2'].values]
+        anchor_df['score_local2'] = min_max(tmp)
 
-        anchor['score'] = anchor['score'] * anchor['score_local1'] * anchor[
-            'score_local2']
-
-    return anchor
+        anchor_df['score'] = anchor_df['score'] * anchor_df[
+            'score_local1'] * anchor_df['score_local2']
+    return anchor_df
 
 
 def transform(data,
@@ -144,7 +145,8 @@ def transform(data,
               key_correct,
               npc=30,
               k_weight=100,
-              sd=1):
+              sd=1,
+              chunk_size=50000):
     data_ref = np.concatenate(data[ref])
     data_qry = np.concatenate(data[qry])
     cum_ref, cum_qry = [0], [0]
@@ -152,6 +154,7 @@ def transform(data,
         cum_ref.append(cum_ref[-1] + data[xx].shape[0])
     for xx in qry:
         cum_qry.append(cum_qry[-1] + data[xx].shape[0])
+
     anchor = []
     for i, xx in enumerate(ref):
         for j, yy in enumerate(qry):
@@ -169,22 +172,25 @@ def transform(data,
     anchor = anchor[['x1', 'x2']].values
     bias = data_ref[anchor[:, 0]] - data_qry[anchor[:, 1]]
     if key_correct == 'X':
-        model = PCA(n_components=npc, svd_solver='arpack')
+        model = PCA(n_components=npc, svd_solver='arpack', random_state=0)
         reduce_qry = model.fit_transform(data_qry)
     else:
         reduce_qry = data_qry
     index = pynndescent.NNDescent(reduce_qry[anchor[:, 1]],
                                   metric='euclidean',
-                                  n_neighbors=50)
+                                  n_neighbors=k_weight,
+                                  random_state=0)
     G, D = index.query(reduce_qry, k=k_weight)
-
+    data_prj = np.zeros(data_qry.shape)
     cell_filter = (D[:, -1] == 0)
     D = (1 - D / D[:, -1][:, None]) * score[G]
     D[cell_filter] = score[G[cell_filter]]
     D = 1 - np.exp(-D * (sd ** 2) / 4)
     D = D / (np.sum(D, axis=1) + 1e-6)[:, None]
-    data_prj = data_qry + (D[:, :, None] * bias[G]).sum(axis=1)
-
+    for chunk_start in np.arange(0, data_prj.shape[0], chunk_size):
+        data_prj[chunk_start:(chunk_start + chunk_size)] = data_qry[chunk_start:(chunk_start + chunk_size)] + (
+                D[chunk_start:(chunk_start + chunk_size), :, None] * bias[
+            G[chunk_start:(chunk_start + chunk_size)]]).sum(axis=1)
     for i, xx in enumerate(qry):
         data[xx] = data_prj[cum_qry[i]:cum_qry[i + 1]]
     return data
@@ -207,10 +213,10 @@ def find_neighbor(cc1, cc2, k):
     -------
     11, 12, 21, 22 neighbor matrix in shape (n_cell, k)
     """
-    index = pynndescent.NNDescent(cc1, metric='euclidean', n_neighbors=k + 1)
+    index = pynndescent.NNDescent(cc1, metric='euclidean', n_neighbors=k + 1, random_state=0)
     G11 = index.neighbor_graph[0][:, 1:k + 1]
     G21 = index.query(cc2, k=k)[0]
-    index = pynndescent.NNDescent(cc2, metric='euclidean', n_neighbors=k + 1)
+    index = pynndescent.NNDescent(cc2, metric='euclidean', n_neighbors=k + 1, random_state=0)
     G22 = index.neighbor_graph[0][:, 1:k + 1]
     G12 = index.query(cc1, k=k)[0]
     return G11, G12, G21, G22
@@ -218,7 +224,6 @@ def find_neighbor(cc1, cc2, k):
 
 def find_mnn(G12, G21, kanchor):
     """Calculate mutual nearest neighbor for two datasets"""
-
     anchor = [[i, G12[i, j]]
               for i in range(G12.shape[0])
               for j in range(kanchor)
@@ -227,6 +232,7 @@ def find_mnn(G12, G21, kanchor):
 
 
 def find_order(dist, ncell):
+    # use dendrogram to find the order of dataset pairs
     D = linkage(1 / dist, method='average')
     node_dict = {i: [i] for i in range(len(ncell))}
     alignment = []
@@ -239,163 +245,174 @@ def find_order(dist, ncell):
     return alignment
 
 
-def integrate(adata_list,
-              key_correct='X_pca',
-              key_anchor='X',
-              dimred='pca',
-              scale1=False,
-              scale2=False,
-              ncc=30,
-              kanchor=5,
-              kscore=30,
-              kweight=100,
-              klocal=None,
-              key_local='X_pca',
-              kfilter=None,
-              n_features=200,
-              npc=30,
-              sd=1,
-              random_state=0,
-              alignments=None):
+def find_anchor(adata_list,
+                k_local=50,
+                key_local='X_pca',
+                k_anchor=5,
+                key_anchor='X',
+                dimred='pca',
+                max_cc_cell=20000,
+                k_score=30,
+                k_filter=200,
+                scale1=False,
+                scale2=False,
+                ncc=30,
+                n_features=200,
+                alignments=None):
     nds = len(adata_list)
     ncell = [xx.shape[0] for xx in adata_list]
 
-    # if score anchor by local structure preservation, compute knn for individual dataset
+    # If klocal is provided, we calculate the local knn graph to
+    # evaluate whether the anchor preserves local structure within the dataset.
     # One can use a different obsm with key_local to compute knn for each dataset
-    if klocal:
+    if k_local:
         print('Find neighbors within datasets')
         Gp = []
         for i in range(nds):
             index = pynndescent.NNDescent(adata_list[i].obsm[key_local],
                                           metric='euclidean',
-                                          n_neighbors=klocal + 1)
+                                          n_neighbors=k_local + 1,
+                                          random_state=0)
             Gp.append(index.neighbor_graph[0][:, 1:])
     else:
         Gp = [None for _ in range(nds)]
 
-    print('Find anchors across datasets')
-    dist = []
-    anchor = {}
-
     if alignments is not None:
-        allpairs = []
+        all_pairs = []
         for pair in alignments:
             for xx in pair[0]:
                 for yy in pair[1]:
                     if xx < yy:
-                        allpairs.append(f'{xx}-{yy}')
+                        all_pairs.append(f'{xx}-{yy}')
                     else:
-                        allpairs.append(f'{yy}-{xx}')
-        allpairs = np.unique(allpairs)
+                        all_pairs.append(f'{yy}-{xx}')
+        all_pairs = np.unique(all_pairs)
     else:
-        allpairs = []
+        all_pairs = np.array([])
 
+    print('Find anchors across datasets')
+    anchor = {}
     for i in range(nds - 1):
         for j in range(i + 1, nds):
-            if (alignments is not None) and (f'{i}-{j}' not in allpairs):
+            if (alignments is not None) and (f'{i}-{j}' not in all_pairs):
                 continue
             # run cca between datasets
-            if (key_anchor == 'X') and (dimred == 'pca'):
-                U, V = cca(adata_list[i].X.copy(),
-                           adata_list[j].X.copy(),
-                           scale1=scale1,
-                           scale2=scale2,
-                           n_components=ncc,
-                           random_state=random_state)
-            elif (key_anchor == 'X') and (dimred == 'lsi'):
-                U, V = lsi_cca(adata_list[i].X.copy(),
-                               adata_list[j].X.copy(),
-                               n_components=ncc,
-                               random_state=random_state)
+            print('Run CCA')
+            if key_anchor == 'X':
+                U = adata_list[i].X.copy()
+                V = adata_list[j].X.copy()
             else:
-                U, V = cca(adata_list[i].obsm[key_anchor].copy(),
-                           adata_list[j].obsm[key_anchor].copy(),
-                           scale1=scale1,
-                           scale2=scale2,
-                           n_components=ncc,
-                           random_state=random_state)
+                U = adata_list[i].obsm[key_anchor]
+                V = adata_list[j].obsm[key_anchor]
 
-            # compute cca feature loading
-            if kfilter:
-                # cc.shape = (n_cell1+n_cell2, n_cc)
-                cc = np.concatenate([U, V], axis=0)
-                # matrix.shape = (n_cell1+n_cell2, total_feature)
-                matrix = np.concatenate([adata_list[i].X, adata_list[j].X],
-                                        axis=0)
-                high_dim_feature_idx = top_features_idx(cc.T.dot(matrix), n_features=n_features)
-            else:
-                high_dim_feature_idx = None
+            if dimred == 'pca':
+                U, V = cca(U, V, scale1=scale1, scale2=scale2, n_components=ncc)
+            elif dimred == 'lsi':
+                U, V = lsi_cca(U, V, n_components=ncc, max_cc_cell=max_cc_cell)
+
+            # compute ccv feature loading
+            high_dim_feature = np.array([])
+            if k_filter:
+                mat = np.concatenate([U, V], axis=0).T.dot(
+                    np.concatenate([adata_list[i].X, adata_list[j].X], axis=0)
+                )
+                high_dim_feature = top_features_idx(mat, n_features=n_features)
 
             # normalize ccv
             U = normalize(U, axis=1)
             V = normalize(V, axis=1)
 
-            # fine neighbors between and within datasets
-            G11, G12, G21, G22 = find_neighbor(
-                U, V, k=max([kanchor, klocal, kscore, 50]))
-
-            # find mnn as anchors
-            anchor[(i, j)] = find_mnn(G12, G21, kanchor)
+            # find MNN as anchors
+            print('Find Anchors')
+            G11, G12, G21, G22 = find_neighbor(U, V, k=max([k_anchor, k_local, k_score, 50]))
+            raw_anchors = find_mnn(G12, G21, k_anchor)
 
             # filter anchors by high dimensional neighbors
-            if kfilter:
-                print(f'Filter anchors')
-                # use larger dataset as ref, small as query
+            if k_filter:
                 if ncell[i] >= ncell[j]:
-                    anchor[(i, j)] = filter_anchor(anchor=anchor[(i, j)],
-                                                   adata_ref=adata_list[i],
-                                                   adata_qry=adata_list[j],
-                                                   high_dim_feature=high_dim_feature_idx,
-                                                   kfilter=kfilter)
+                    raw_anchors = filter_anchor(anchor=raw_anchors,
+                                                adata_ref=adata_list[i],
+                                                adata_qry=adata_list[j],
+                                                high_dim_feature=high_dim_feature,
+                                                k_filter=k_filter)
                 else:
-                    # put larger dataset first, after filtering, put the order back
-                    anchor[(i, j)] = filter_anchor(anchor=anchor[(i, j)][:, ::-1],
-                                                   adata_ref=adata_list[j],
-                                                   adata_qry=adata_list[i],
-                                                   high_dim_feature=high_dim_feature_idx,
-                                                   kfilter=kfilter)[:, ::-1]
+                    raw_anchors = filter_anchor(anchor=raw_anchors[:, ::-1],
+                                                adata_ref=adata_list[j],
+                                                adata_qry=adata_list[i],
+                                                high_dim_feature=high_dim_feature,
+                                                k_filter=k_filter)[:, ::-1]
 
             # score anchors with snn and local structure preservation
-            anchor[(i, j)] = score_anchor(anchor[(i, j)],
-                                          G11,
-                                          G12,
-                                          G21,
-                                          G22,
-                                          kscore=kscore,
-                                          klocal=klocal,
-                                          Gp1=Gp[i],
-                                          Gp2=Gp[j])
-            # anchor value is a dataframe, with x, y, score
+            print('Score Anchors')
+            anchor_df = score_anchor(anchor=raw_anchors,
+                                     G11=G11,
+                                     G12=G12,
+                                     G21=G21,
+                                     G22=G22,
+                                     k_score=k_score,
+                                     k_local=k_local,
+                                     Gp1=Gp[i],
+                                     Gp2=Gp[j])
+            anchor[(i, j)] = anchor_df.copy()
 
             # distance between datasets
-            dist.append(len(anchor[(i, j)]) / min([ncell[i], ncell[j]]))
-            print(f'Identified {len(anchor[i, j])} anchors between datasets '
-                  f'{i} and {j}')
+            # dist.append(len(anchor[(i,j)]) / min([ncell[i], ncell[j]]))
+            print(f'Identified {len(anchor[i, j])} anchors between datasets {i} and {j}.')
+    return anchor
 
-    print(dist)
-    print('Merge datasets')
+
+def integrate(adata_list,
+              anchor,
+              key_correct='X_pca',
+              k_weight=100,
+              npc=30,
+              sd=1,
+              alignments=None):
+    nds = len(adata_list)
+    ncell = [xx.shape[0] for xx in adata_list]
+
+    if alignments is not None:
+        # if alignments is provided, we only align dataset pairs occurred in alignments
+        all_pairs = []
+        for pair in alignments:
+            for xx in pair[0]:
+                for yy in pair[1]:
+                    if xx < yy:
+                        all_pairs.append(f'{xx}-{yy}')
+                    else:
+                        all_pairs.append(f'{yy}-{xx}')
+        all_pairs = np.unique(all_pairs)
+    else:
+        all_pairs = []
 
     # find order of pairwise dataset merging with hierarchical clustering
-    if alignments is None:
-        alignments = find_order(np.array(dist), ncell)
-    print(alignments)
+    dist = []
+    for i in range(nds - 1):
+        for j in range(i + 1, nds):
+            if (alignments is not None) and (f'{i}-{j}' not in all_pairs):
+                continue
+            dist.append(len(anchor[(i, j)]) / min([ncell[i], ncell[j]]))
+    alignments = find_order(np.array(dist), ncell)
 
+    print('Merge datasets')
     # correct batch
     if key_correct == 'X':
-        corrected = [adata_list[i].X.copy() for i in range(nds)]
+        # correct the original feature matrix
+        corrected = [adata_list[i].X.copy()
+                     for i in range(nds)]
     else:
-        corrected = [
-            normalize(adata_list[i].obsm[key_correct], axis=1)
-            for i in range(nds)
-        ]
+        # correct dimensionality reduced matrix only
+        corrected = [normalize(adata_list[i].obsm[key_correct], axis=1)
+                     for i in range(nds)]
 
     for xx in alignments:
-        corrected = transform(np.array(corrected),
-                              anchor,
-                              xx[0],
-                              xx[1],
-                              key_correct,
+        print(xx)
+        corrected = transform(data=np.array(corrected),
+                              anchor_all=anchor,
+                              ref=xx[0],
+                              qry=xx[1],
+                              key_correct=key_correct,
                               npc=npc,
-                              k_weight=kweight,
+                              k_weight=k_weight,
                               sd=sd)
     return corrected

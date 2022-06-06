@@ -14,5 +14,6 @@ from .balanced_pca import (
 from .pvclust import Dendrogram
 from .dmg import PairwiseDMG, one_vs_rest_dmg
 from .feature_selection.feature_enrichment import cluster_enriched_features
-from .mcad import filter_regions, lsi, binarize_matrix, remove_black_list_region
+from .mcad import filter_regions, binarize_matrix, remove_black_list_region
+from .lsi import lsi, LSI
 from .ClusterMerging import ClusterMerge, PairwiseDMGCriterion
