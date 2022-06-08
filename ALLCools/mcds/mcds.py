@@ -583,7 +583,7 @@ class MCDS(xr.Dataset):
             n_top_feature=5000,
             da_suffix="frac",
             da_name=None,
-            plot=True,
+            plot=True
     ):
         from sklearn.svm import SVR
         import plotly.graph_objects as go
@@ -715,7 +715,7 @@ class MCDS(xr.Dataset):
             mean_binsize=0.05,
             cov_binsize=100,
             da_suffix="frac",
-            plot=True,
+            plot=True
     ):
         """
         Calculate normalized dispersion to select highly variable features.
@@ -888,7 +888,7 @@ class MCDS(xr.Dataset):
             var_dim=None,
             da_suffix="frac",
             select_hvf=True,
-            split_large_chunks=True,
+            split_large_chunks=True
     ):
         """
         Get anndata from MCDS mC rate matrix
@@ -982,7 +982,7 @@ class MCDS(xr.Dataset):
             obs_dim=None,
             add_mc_frac=True,
             add_overall_mc=True,
-            overall_mc_da="chrom100k_da",
+            overall_mc_da="chrom100k_da"
     ):
         obs_dim = self._verify_dim(obs_dim, mode='obs')
 

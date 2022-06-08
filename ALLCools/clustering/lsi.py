@@ -8,10 +8,21 @@ from anndata import AnnData
 def tf_idf(data, scale_factor=100000, idf=None):
     if idf is None:
         # add small value in case downsample creates empty feature
-        col_sum = data.sum(axis=0).A1.astype(np.float32) + 0.001
+        _col_sum = data.sum(axis=0)
+        try:
+            col_sum = _col_sum.A1.astype(np.float32) + 0.00001
+        except AttributeError:
+            col_sum = _col_sum.ravel().astype(np.float32) + 0.00001
         idf = np.log(1 + data.shape[0] / col_sum).astype(np.float32)
+    else:
+        idf = idf.astype(np.float32)
 
-    row_sum = data.sum(axis=1).A1.astype(np.float32)
+    _row_sum = data.sum(axis=1)
+    try:
+        row_sum = _row_sum.A1.astype(np.float32) + 0.00001
+    except AttributeError:
+        row_sum = _row_sum.ravel().astype(np.float32) + 0.00001
+
     tf = data.astype(np.float32)
     tf.data = tf.data / np.repeat(row_sum, row_sum.astype(int))
     tf.data = np.log1p(np.multiply(tf.data, scale_factor, dtype='float32'))
@@ -140,6 +151,8 @@ class LSI:
         self.model.n_components = min(n_rows - 1, n_cols - 1, self.model.n_components)
         tf_reduce = self.model.fit_transform(tf)
 
+        tf_reduce = tf_reduce / self.model.singular_values_
+
         if isinstance(data, AnnData):
             data.obsm[obsm_name] = tf_reduce
         else:
@@ -157,6 +170,9 @@ class LSI:
             tf_reduce.append(self.model.transform(tf))
 
         tf_reduce = np.concatenate(tf_reduce, axis=0)
+
+        tf_reduce = tf_reduce / self.model.singular_values_
+
         if isinstance(data, AnnData):
             data.obsm[obsm_name] = tf_reduce
         else:

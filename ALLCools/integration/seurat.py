@@ -53,7 +53,8 @@ def filter_anchor(anchor,
                   k_filter=200):
     """
     Check if an anchor is still an anchor when only using the high_dim_features to construct KNN graph.
-    If not, remove the anchor."""
+    If not, remove the anchor.
+    """
     ref_data = normalize(adata_ref.X[:, high_dim_feature], axis=1)
     qry_data = normalize(adata_qry.X[:, high_dim_feature], axis=1)
     index = pynndescent.NNDescent(ref_data,
@@ -181,16 +182,18 @@ def transform(data,
                                   n_neighbors=k_weight,
                                   random_state=0)
     G, D = index.query(reduce_qry, k=k_weight)
+    # todo understand this chunk of code
     data_prj = np.zeros(data_qry.shape)
     cell_filter = (D[:, -1] == 0)
     D = (1 - D / D[:, -1][:, None]) * score[G]
     D[cell_filter] = score[G[cell_filter]]
     D = 1 - np.exp(-D * (sd ** 2) / 4)
     D = D / (np.sum(D, axis=1) + 1e-6)[:, None]
+
     for chunk_start in np.arange(0, data_prj.shape[0], chunk_size):
-        data_prj[chunk_start:(chunk_start + chunk_size)] = data_qry[chunk_start:(chunk_start + chunk_size)] + (
-                D[chunk_start:(chunk_start + chunk_size), :, None] * bias[
-            G[chunk_start:(chunk_start + chunk_size)]]).sum(axis=1)
+        chunk_slice = slice(chunk_start, chunk_start + chunk_size)
+        chunk_adj = (D[chunk_slice, :, None] * bias[G[chunk_slice]]).sum(axis=1)
+        data_prj[chunk_slice] = data_prj[chunk_slice] + chunk_adj
     for i, xx in enumerate(qry):
         data[xx] = data_prj[cum_qry[i]:cum_qry[i + 1]]
     return data
@@ -232,7 +235,9 @@ def find_mnn(G12, G21, kanchor):
 
 
 def find_order(dist, ncell):
-    # use dendrogram to find the order of dataset pairs
+    """
+    use dendrogram to find the order of dataset pairs
+    """
     D = linkage(1 / dist, method='average')
     node_dict = {i: [i] for i in range(len(ncell))}
     alignment = []
@@ -258,7 +263,8 @@ def find_anchor(adata_list,
                 scale2=False,
                 ncc=30,
                 n_features=200,
-                alignments=None):
+                alignments=None,
+                random_state=0):
     nds = len(adata_list)
     ncell = [xx.shape[0] for xx in adata_list]
 
@@ -272,7 +278,7 @@ def find_anchor(adata_list,
             index = pynndescent.NNDescent(adata_list[i].obsm[key_local],
                                           metric='euclidean',
                                           n_neighbors=k_local + 1,
-                                          random_state=0)
+                                          random_state=random_state)
             Gp.append(index.neighbor_graph[0][:, 1:])
     else:
         Gp = [None for _ in range(nds)]
@@ -299,8 +305,17 @@ def find_anchor(adata_list,
             # run cca between datasets
             print('Run CCA')
             if key_anchor == 'X':
-                U = adata_list[i].X.copy()
-                V = adata_list[j].X.copy()
+                # in case the adata var is not in the same order
+                # select and order the var to make sure it is matched
+                if (adata_list[i].shape[1] != adata_list[j].shape[1]) or (
+                        (adata_list[i].var.index == adata_list[j].var.index).sum() < adata_list[i].shape[1]
+                ):
+                    sel_b = adata_list[i].var.index & adata_list[j].var.index
+                    U = adata_list[i][:, sel_b].X.copy()
+                    V = adata_list[j][:, sel_b].X.copy()
+                else:
+                    U = adata_list[i].X.copy()
+                    V = adata_list[j].X.copy()
             else:
                 U = adata_list[i].obsm[key_anchor]
                 V = adata_list[j].obsm[key_anchor]
@@ -393,6 +408,7 @@ def integrate(adata_list,
                 continue
             dist.append(len(anchor[(i, j)]) / min([ncell[i], ncell[j]]))
     alignments = find_order(np.array(dist), ncell)
+    print(f'Alignments: {alignments}')
 
     print('Merge datasets')
     # correct batch
