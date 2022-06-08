@@ -52,7 +52,8 @@ def filter_anchor(anchor,
                   high_dim_feature=None,
                   k_filter=200):
     """
-    Check if an anchor is still an anchor when only using the high_dim_features to construct KNN graph.
+    Check if an anchor is still an anchor when only
+    using the high_dim_features to construct KNN graph.
     If not, remove the anchor.
     """
     ref_data = normalize(adata_ref.X[:, high_dim_feature], axis=1)
@@ -191,9 +192,9 @@ def transform(data,
     D = D / (np.sum(D, axis=1) + 1e-6)[:, None]
 
     for chunk_start in np.arange(0, data_prj.shape[0], chunk_size):
-        chunk_slice = slice(chunk_start, chunk_start + chunk_size)
-        chunk_adj = (D[chunk_slice, :, None] * bias[G[chunk_slice]]).sum(axis=1)
-        data_prj[chunk_slice] = data_prj[chunk_slice] + chunk_adj
+        data_prj[chunk_start:(chunk_start + chunk_size)] = data_qry[chunk_start:(chunk_start + chunk_size)] + (
+                D[chunk_start:(chunk_start + chunk_size), :, None] * bias[
+            G[chunk_start:(chunk_start + chunk_size)]]).sum(axis=1)
     for i, xx in enumerate(qry):
         data[xx] = data_prj[cum_qry[i]:cum_qry[i + 1]]
     return data
@@ -308,7 +309,8 @@ def find_anchor(adata_list,
                 # in case the adata var is not in the same order
                 # select and order the var to make sure it is matched
                 if (adata_list[i].shape[1] != adata_list[j].shape[1]) or (
-                        (adata_list[i].var.index == adata_list[j].var.index).sum() < adata_list[i].shape[1]
+                        (adata_list[i].var.index == adata_list[j].var.index).sum() <
+                        adata_list[i].shape[1]
                 ):
                     sel_b = adata_list[i].var.index & adata_list[j].var.index
                     U = adata_list[i][:, sel_b].X.copy()

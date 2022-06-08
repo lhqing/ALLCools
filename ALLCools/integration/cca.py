@@ -18,7 +18,7 @@ def cca(data1,
     np.random.seed(random_state)
 
     # downsample cells
-    if max_cc_cell and max_cc_cell > data1.shape[0]:
+    if max_cc_cell < data1.shape[0]:
         sel1 = np.sort(
             np.random.choice(
                 np.arange(data1.shape[0]),
@@ -29,7 +29,7 @@ def cca(data1,
         tf_data1 = data1[sel1, :]
     else:
         tf_data1 = data1
-    if max_cc_cell and max_cc_cell > data2.shape[0]:
+    if max_cc_cell < data2.shape[0]:
         sel2 = np.sort(
             np.random.choice(
                 np.arange(data2.shape[0]),
@@ -183,22 +183,22 @@ def lsi_cca(data1,
     np.random.seed(0)
 
     # downsample data1 and data2 to run tf_idf and CCA
-    if max_cc_cell and max_cc_cell > data1.shape[0]:
+    if max_cc_cell < data1.shape[0]:
         sel1 = np.sort(
             np.random.choice(
                 np.arange(data1.shape[0]),
-                min(max_cc_cell, data1.shape[0]),
+                max_cc_cell,
                 False
             )
         )
         tf_data1 = data1[sel1, :]
     else:
         tf_data1 = data1
-    if max_cc_cell and max_cc_cell > data2.shape[0]:
+    if max_cc_cell < data2.shape[0]:
         sel2 = np.sort(
             np.random.choice(
                 np.arange(data2.shape[0]),
-                min(max_cc_cell, data2.shape[0]),
+                max_cc_cell,
                 False
             )
         )
