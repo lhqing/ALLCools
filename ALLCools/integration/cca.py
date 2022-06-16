@@ -1,5 +1,5 @@
 import numpy as np
-from dask_ml.decomposition import IncrementalPCA as dIPCA
+# from dask_ml.decomposition import IncrementalPCA as dIPCA
 from sklearn.decomposition import TruncatedSVD
 from sklearn.utils.extmath import safe_sparse_dot
 from ..clustering.lsi import tf_idf
@@ -122,55 +122,55 @@ def adata_cca(adata, group_col, separate_scale=True, n_components=50, random_sta
     return
 
 
-def incremental_cca(a, b, max_chunk_size=10000, random_state=0):
-    """
-    Perform Incremental CCA by chunk dot product and IncrementalPCA
-
-    Parameters
-    ----------
-    a
-        dask.Array of dataset a
-    b
-        dask.Array of dataset b
-    max_chunk_size
-        Chunk size for Incremental fit and transform, the larger the better as long as MEM is enough
-    random_state
-
-    Returns
-    -------
-    Top CCA components
-    """
-    raise NotImplementedError
-    # TODO PC is wrong
-    pca = dIPCA(n_components=50,
-                whiten=False,
-                copy=True,
-                batch_size=None,
-                svd_solver='auto',
-                iterated_power=0,
-                random_state=random_state)
-
-    # partial fit
-    n_sample = a.shape[0]
-    n_chunks = n_sample // max_chunk_size + 1
-    chunk_size = int(n_sample / n_chunks) + 1
-    for chunk_start in range(0, n_sample, chunk_size):
-        print(chunk_start)
-        X_chunk = a[chunk_start:chunk_start + chunk_size, :].dot(b.T)
-        pca.partial_fit(X_chunk)
-
-    # transform
-    pcs = []
-    for chunk_start in range(0, n_sample, chunk_size):
-        print(chunk_start)
-        X_chunk = a[chunk_start:chunk_start + chunk_size, :].dot(b.T)
-        pc_chunk = pca.transform(X_chunk).compute()
-        pcs.append(pc_chunk)
-    pcs = np.concatenate(pcs)
-
-    # concatenate CCA
-    total_cc = np.concatenate([pcs, pca.components_.T])
-    return total_cc
+# def incremental_cca(a, b, max_chunk_size=10000, random_state=0):
+#     """
+#     Perform Incremental CCA by chunk dot product and IncrementalPCA
+#
+#     Parameters
+#     ----------
+#     a
+#         dask.Array of dataset a
+#     b
+#         dask.Array of dataset b
+#     max_chunk_size
+#         Chunk size for Incremental fit and transform, the larger the better as long as MEM is enough
+#     random_state
+#
+#     Returns
+#     -------
+#     Top CCA components
+#     """
+#     raise NotImplementedError
+#     # TODO PC is wrong
+#     pca = dIPCA(n_components=50,
+#                 whiten=False,
+#                 copy=True,
+#                 batch_size=None,
+#                 svd_solver='auto',
+#                 iterated_power=0,
+#                 random_state=random_state)
+#
+#     # partial fit
+#     n_sample = a.shape[0]
+#     n_chunks = n_sample // max_chunk_size + 1
+#     chunk_size = int(n_sample / n_chunks) + 1
+#     for chunk_start in range(0, n_sample, chunk_size):
+#         print(chunk_start)
+#         X_chunk = a[chunk_start:chunk_start + chunk_size, :].dot(b.T)
+#         pca.partial_fit(X_chunk)
+#
+#     # transform
+#     pcs = []
+#     for chunk_start in range(0, n_sample, chunk_size):
+#         print(chunk_start)
+#         X_chunk = a[chunk_start:chunk_start + chunk_size, :].dot(b.T)
+#         pc_chunk = pca.transform(X_chunk).compute()
+#         pcs.append(pc_chunk)
+#     pcs = np.concatenate(pcs)
+#
+#     # concatenate CCA
+#     total_cc = np.concatenate([pcs, pca.components_.T])
+#     return total_cc
 
 
 def lsi_cca(data1,

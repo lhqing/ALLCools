@@ -3,8 +3,7 @@ import pandas as pd
 import pynndescent
 from scipy.cluster.hierarchy import linkage
 from sklearn.decomposition import PCA
-from sklearn.preprocessing import normalize
-
+from sklearn.preprocessing import normalize, OneHotEncoder
 from .cca import cca, lsi_cca
 
 
@@ -140,17 +139,17 @@ def score_anchor(anchor,
     return anchor_df
 
 
-def transform(data,
-              anchor_all,
-              ref,
-              qry,
-              key_correct,
-              npc=30,
-              k_weight=100,
-              sd=1,
-              chunk_size=50000):
-    data_ref = np.concatenate(data[ref])
-    data_qry = np.concatenate(data[qry])
+def find_nearest_anchor(data,
+                        anchor_all,
+                        data_qry,
+                        ref,
+                        qry,
+                        key_correct='X_pca',
+                        npc=30,
+                        kweight=100,
+                        sd=1,
+                        random_state=0):
+    print('Initialize')
     cum_ref, cum_qry = [0], [0]
     for xx in ref:
         cum_ref.append(cum_ref[-1] + data[xx].shape[0])
@@ -170,37 +169,128 @@ def transform(data,
             anchor.append(tmp)
     anchor = pd.concat(anchor)
     score = anchor['score'].values
-
     anchor = anchor[['x1', 'x2']].values
-    bias = data_ref[anchor[:, 0]] - data_qry[anchor[:, 1]]
+
     if key_correct == 'X':
-        model = PCA(n_components=npc, svd_solver='arpack', random_state=0)
+        model = PCA(n_components=npc,
+                    svd_solver='arpack',
+                    random_state=random_state)
         reduce_qry = model.fit_transform(data_qry)
     else:
         reduce_qry = data_qry
+
+    print('Find nearest anchors')
     index = pynndescent.NNDescent(reduce_qry[anchor[:, 1]],
                                   metric='euclidean',
-                                  n_neighbors=k_weight,
-                                  random_state=0)
-    G, D = index.query(reduce_qry, k=k_weight)
-    # todo understand this chunk of code
-    data_prj = np.zeros(data_qry.shape)
-    cell_filter = (D[:, -1] == 0)
+                                  n_neighbors=kweight,
+                                  random_state=random_state)
+    G, D = index.query(reduce_qry, k=kweight)
+
+    print('Normalize graph')
+    cellfilter = (D[:, -1] == 0)
     D = (1 - D / D[:, -1][:, None]) * score[G]
-    D[cell_filter] = score[G[cell_filter]]
+    D[cellfilter] = score[G[cellfilter]]
     D = 1 - np.exp(-D * (sd ** 2) / 4)
     D = D / (np.sum(D, axis=1) + 1e-6)[:, None]
 
+    return anchor, G, D, cum_qry
+
+
+def transfer(adata_list,
+             anchor_all,
+             ref,
+             qry,
+             categorical_key=(),
+             continuous_key=(),
+             key_dist='X_pca',
+             kweight=100,
+             npc=30,
+             sd=1,
+             chunk_size=50000,
+             random_state=0):
+    data_qry = np.concatenate(
+        [normalize(adata_list[i].obsm[key_dist], axis=1) for i in qry])
+    anchor, G, D, cum_qry = find_nearest_anchor(adata_list,
+                                                anchor_all,
+                                                data_qry,
+                                                ref,
+                                                qry,
+                                                npc=npc,
+                                                kweight=kweight,
+                                                sd=sd,
+                                                random_state=random_state)
+
+    print('Label transfer')
+    label_ref = []
+    columns = []
+    if len(categorical_key) > 0:
+        tmp = pd.concat([adata_list[i].obs[categorical_key] for i in ref],
+                        axis=0)
+        enc = OneHotEncoder()
+        label_ref.append(
+            enc.fit_transform(tmp[categorical_key].values.astype(
+                np.str_)).toarray())
+        columns += enc.categories_
+    if len(continuous_key) > 0:
+        tmp = pd.concat([adata_list[i].obs[continuous_key]
+                         for i in ref],
+                        axis=0)
+        label_ref.append(tmp[continuous_key].values)
+        columns += [[xx] for xx in continuous_key]
+
+    label_ref = np.concatenate(label_ref, axis=1)
+    label_qry = np.zeros((data_qry.shape[0], label_ref.shape[1]))
+
+    bias = label_ref[anchor[:, 0]]
+    for chunk_start in np.arange(0, label_qry.shape[0], chunk_size):
+        label_qry[chunk_start:(chunk_start + chunk_size)] = (
+                D[chunk_start:(chunk_start + chunk_size), :, None] *
+                bias[G[chunk_start:(chunk_start + chunk_size)]]).sum(axis=1)
+
+    label_qry = pd.DataFrame(label_qry, columns=np.concatenate(columns))
+    result = {}
+    for xx, yy in zip(categorical_key + continuous_key, columns):
+        result[xx] = label_qry[yy]
+    return result
+
+
+def transform(data,
+              anchor_all,
+              ref,
+              qry,
+              npc=30,
+              k_weight=100,
+              sd=1,
+              chunk_size=50000,
+              random_state=0):
+    data_ref = np.concatenate(data[ref])
+    data_qry = np.concatenate(data[qry])
+    anchor, G, D, cum_qry = find_nearest_anchor(data=data,
+                                                anchor_all=anchor_all,
+                                                data_qry=data_qry,
+                                                ref=ref,
+                                                qry=qry,
+                                                npc=npc,
+                                                kweight=k_weight,
+                                                sd=sd,
+                                                random_state=random_state)
+
+    print('Transform data')
+    bias = data_ref[anchor[:, 0]] - data_qry[anchor[:, 1]]
+    data_prj = np.zeros(data_qry.shape)
+
     for chunk_start in np.arange(0, data_prj.shape[0], chunk_size):
-        data_prj[chunk_start:(chunk_start + chunk_size)] = data_qry[chunk_start:(chunk_start + chunk_size)] + (
-                D[chunk_start:(chunk_start + chunk_size), :, None] * bias[
-            G[chunk_start:(chunk_start + chunk_size)]]).sum(axis=1)
+        data_prj[chunk_start:(
+                chunk_start +
+                chunk_size)] = data_qry[chunk_start:(chunk_start + chunk_size)] + (
+                D[chunk_start:(chunk_start + chunk_size), :, None] *
+                bias[G[chunk_start:(chunk_start + chunk_size)]]).sum(axis=1)
     for i, xx in enumerate(qry):
         data[xx] = data_prj[cum_qry[i]:cum_qry[i + 1]]
     return data
 
 
-def find_neighbor(cc1, cc2, k):
+def find_neighbor(cc1, cc2, k, random_state=0):
     """
     find all four way of neighbors for two datasets
 
@@ -217,10 +307,16 @@ def find_neighbor(cc1, cc2, k):
     -------
     11, 12, 21, 22 neighbor matrix in shape (n_cell, k)
     """
-    index = pynndescent.NNDescent(cc1, metric='euclidean', n_neighbors=k + 1, random_state=0)
+    index = pynndescent.NNDescent(cc1,
+                                  metric='euclidean',
+                                  n_neighbors=k + 1,
+                                  random_state=random_state)
     G11 = index.neighbor_graph[0][:, 1:k + 1]
     G21 = index.query(cc2, k=k)[0]
-    index = pynndescent.NNDescent(cc2, metric='euclidean', n_neighbors=k + 1, random_state=0)
+    index = pynndescent.NNDescent(cc2,
+                                  metric='euclidean',
+                                  n_neighbors=k + 1,
+                                  random_state=random_state)
     G22 = index.neighbor_graph[0][:, 1:k + 1]
     G12 = index.query(cc1, k=k)[0]
     return G11, G12, G21, G22
@@ -429,7 +525,6 @@ def integrate(adata_list,
                               anchor_all=anchor,
                               ref=xx[0],
                               qry=xx[1],
-                              key_correct=key_correct,
                               npc=npc,
                               k_weight=k_weight,
                               sd=sd)

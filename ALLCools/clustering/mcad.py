@@ -45,6 +45,27 @@ def remove_black_list_region(adata, black_list_path, f=0.2):
     return
 
 
+def remove_chromosomes(adata, exclude_chromosomes=None, include_chromosomes=None, chrom_col='chrom'):
+    """
+    Remove chromosomes from adata.var.
+    """
+    judge = None
+    if exclude_chromosomes is not None:
+        not_to_exclude = ~adata.var[chrom_col].isin(exclude_chromosomes)
+        judge = not_to_exclude
+    if include_chromosomes is not None:
+        include = adata.var[chrom_col].isin(include_chromosomes)
+        if judge is None:
+            judge = include
+        else:
+            judge &= include
+
+    if judge is not None:
+        adata._inplace_subset_var(judge)
+        print(f'{adata.shape[1]} regions remained.')
+    return
+
+
 def binarize_matrix(adata, cutoff=0.95):
     """
     Binarize adata.X with adata.X > cutoff
