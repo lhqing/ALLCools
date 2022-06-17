@@ -210,6 +210,7 @@ def transfer(adata_list,
              random_state=0):
     data_qry = np.concatenate(
         [normalize(adata_list[i].obsm[key_dist], axis=1) for i in qry])
+    data_qry_index = np.concatenate([adata_list[i].obs_names for i in qry])
     anchor, G, D, cum_qry = find_nearest_anchor(adata_list,
                                                 anchor_all,
                                                 data_qry,
@@ -247,7 +248,9 @@ def transfer(adata_list,
                 D[chunk_start:(chunk_start + chunk_size), :, None] *
                 bias[G[chunk_start:(chunk_start + chunk_size)]]).sum(axis=1)
 
-    label_qry = pd.DataFrame(label_qry, columns=np.concatenate(columns))
+    label_qry = pd.DataFrame(label_qry,
+                             index=data_qry_index,
+                             columns=np.concatenate(columns))
     result = {}
     for xx, yy in zip(categorical_key + continuous_key, columns):
         result[xx] = label_qry[yy]

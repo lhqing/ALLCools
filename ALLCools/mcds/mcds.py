@@ -817,26 +817,30 @@ class MCDS(xr.Dataset):
                         obs_dim=None,
                         var_dim=None,
                         sparse=True,
-                        loading_chunk=100000,
+                        loading_chunk=50000,
                         binarize_cutoff=None):
-        obs_dim = self._verify_dim(obs_dim, mode='obs')
-        var_dim = self._verify_dim(var_dim, mode='var')
-        da = self[da_name].transpose(obs_dim, var_dim)
+        with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+            obs_dim = self._verify_dim(obs_dim, mode='obs')
+            var_dim = self._verify_dim(var_dim, mode='var')
+            da = self[da_name].transpose(obs_dim, var_dim)
 
-        # load matrix by chunks
-        da_obs = da.get_index(obs_dim)
-        total_data = []
-        for chunk_start in range(0, da_obs.size, loading_chunk):
-            chunk_cells = da_obs[chunk_start:chunk_start + loading_chunk]
-            chunk_da = da.sel({obs_dim: chunk_cells})
-            if sparse:
-                chunk = ss.csr_matrix(chunk_da.values)
-            else:
-                chunk = chunk_da.values
-            # binarize the matrix to further reduce memory size
-            if binarize_cutoff is not None:
-                chunk = (chunk > binarize_cutoff).astype(np.int8)
-            total_data.append(chunk)
+            # load matrix by chunks
+            da_obs = da.get_index(obs_dim)
+            total_data = []
+            for chunk_start in range(0, da_obs.size, loading_chunk):
+                chunk_cells = da_obs[chunk_start:chunk_start + loading_chunk]
+                chunk_da = da.sel({obs_dim: chunk_cells})
+                if sparse:
+                    chunk = ss.csr_matrix(chunk_da.values)
+                else:
+                    chunk = chunk_da.values
+                # binarize the matrix to further reduce memory size
+                if binarize_cutoff is not None:
+                    chunk = (chunk > binarize_cutoff).astype(np.int8)
+                total_data.append(chunk)
+                print(f"Loading chunk {chunk_start}-{min(chunk_start+loading_chunk, da_obs.size)}"
+                      f"/{da_obs.size}")
+
         # concatenate all chunks
         if sparse:
             total_data = ss.vstack(total_data)
@@ -858,7 +862,7 @@ class MCDS(xr.Dataset):
                         obs_dim=None,
                         var_dim=None,
                         sparse=True,
-                        loading_chunk=100000,
+                        loading_chunk=50000,
                         binarize_cutoff=None):
         QUANT_TYPES = ['hypo-score', 'hyper-score']
         if quant_type.lower().startswith('hypo'):

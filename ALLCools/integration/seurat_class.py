@@ -546,6 +546,8 @@ class SeuratIntegration:
 
         data_qry = np.concatenate(
             [normalize(adata_list[i].obsm[key_dist], axis=1) for i in qry])
+        data_qry_index = np.concatenate([adata_list[i].obs_names for i in qry])
+
         anchor, G, D, cum_qry = find_nearest_anchor(data=adata_list,
                                                     all_anchor=self.anchor,
                                                     data_qry=data_qry,
@@ -595,7 +597,9 @@ class SeuratIntegration:
                     bias[G[chunk_start:(chunk_start + chunk_size)]]
             ).sum(axis=1)
 
-        label_qry = pd.DataFrame(label_qry, columns=np.concatenate(columns))
+        label_qry = pd.DataFrame(label_qry,
+                                 index=data_qry_index,
+                                 columns=np.concatenate(columns))
         result = {}
         for xx, yy in zip(categorical_key + continuous_key, columns):
             result[xx] = label_qry[yy]
@@ -621,3 +625,13 @@ class SeuratIntegration:
     @classmethod
     def load(cls, input_path):
         return joblib.load(input_path)
+
+    @classmethod
+    def save_transfer_results_to_adata(cls,
+                                       adata,
+                                       transfer_results,
+                                       new_label_suffix='_transfer'):
+        for key, df in transfer_results.items():
+            adata.obs[key + new_label_suffix] = adata.obs[key].copy()
+            adata.obs.loc[df.index, key + new_label_suffix] = df.idxmax(axis=1).values
+        return
