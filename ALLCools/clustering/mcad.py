@@ -103,7 +103,11 @@ def filter_regions(adata, hypo_percent=0.5, n_cell=None, zscore_abs_cutoff=None)
     -------
 
     """
-    feature_nnz_cell = (adata.X > 0).sum(axis=0).A1
+    _nnz = (adata.X > 0).sum(axis=0)
+    try:
+        feature_nnz_cell = _nnz.A1
+    except AttributeError:
+        feature_nnz_cell = _nnz.ravel()
 
     if n_cell is None:
         n_cell = int(adata.shape[0] * hypo_percent / 100)

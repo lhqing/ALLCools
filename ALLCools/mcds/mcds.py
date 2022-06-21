@@ -313,8 +313,33 @@ class MCDS(xr.Dataset):
 
         if chunks is not None:
             if chunks == 'auto':
-                chunks = {k: min(4096, max(v // 5, 1)) for k, v in ds.dims.items()}
-            ds = ds.chunk(chunks=chunks)
+                n_obs = ds.get_index(obs_dim).size
+                data_chunks = {}
+                for name, da in ds.data_vars.items():
+                    if 'chunks' in da.encoding:
+                        # if encoding exist, use the chunks in encoding
+                        data_chunks[name] = da.encoding['chunks']
+                    else:
+                        # else, use the default chunk setting
+                        chunks = {obs_dim: max(min(1000, max(n_obs // 10, 1)), 10),
+                                  # by default, no chunk on features
+                                  'mc_type': 1,
+                                  'count_type': 1}
+                        data_chunks[name] = tuple(chunks[k]
+                                                  if k in chunks else da.get_index(k).size
+                                                  for k in da.dims)
+                for name, da in ds.data_vars.items():
+                    if da.chunks is None:
+                        ds[name] = da.chunk(data_chunks[name])
+            else:
+                # user provide specific chunks
+                if isinstance(chunks, dict):
+                    _chunks = {dim: chunks[dim]
+                    if dim in chunks else ds.get_index(dim).size
+                               for dim in ds.dims}
+                    ds = ds.chunk(chunks=_chunks)
+                else:
+                    raise ValueError(f'chunks must be a dict or "auto", got {chunks}')
 
         return cls(ds, obs_dim=obs_dim, var_dim=var_dim).squeeze()
 
@@ -817,9 +842,11 @@ class MCDS(xr.Dataset):
                         obs_dim=None,
                         var_dim=None,
                         sparse=True,
-                        loading_chunk=50000,
-                        binarize_cutoff=None):
-        with dask.config.set(**{'array.slicing.split_large_chunks': True}):
+                        loading_chunk=10000,
+                        binarize_cutoff=None,
+                        use_vars=None,
+                        split_large_chunks=False):
+        with dask.config.set(**{'array.slicing.split_large_chunks': split_large_chunks}):
             obs_dim = self._verify_dim(obs_dim, mode='obs')
             var_dim = self._verify_dim(var_dim, mode='var')
             da = self[da_name].transpose(obs_dim, var_dim)
@@ -829,16 +856,21 @@ class MCDS(xr.Dataset):
             total_data = []
             for chunk_start in range(0, da_obs.size, loading_chunk):
                 chunk_cells = da_obs[chunk_start:chunk_start + loading_chunk]
-                chunk_da = da.sel({obs_dim: chunk_cells})
+                chunk_da = da.sel({obs_dim: chunk_cells}).load()
+
+                if use_vars is not None:
+                    chunk_da = chunk_da.sel({var_dim: use_vars})
+
                 if sparse:
                     chunk = ss.csr_matrix(chunk_da.values)
                 else:
                     chunk = chunk_da.values
+
                 # binarize the matrix to further reduce memory size
                 if binarize_cutoff is not None:
                     chunk = (chunk > binarize_cutoff).astype(np.int8)
                 total_data.append(chunk)
-                print(f"Loading chunk {chunk_start}-{min(chunk_start+loading_chunk, da_obs.size)}"
+                print(f"Loading chunk {chunk_start}-{min(chunk_start + loading_chunk, da_obs.size)}"
                       f"/{da_obs.size}")
 
         # concatenate all chunks
@@ -848,7 +880,7 @@ class MCDS(xr.Dataset):
             total_data = np.vstack(total_data)
 
         obs_df, var_df = make_obs_df_var_df(da, obs_dim, var_dim)
-        adata = anndata.AnnData(X=total_data, obs=obs_df, var=var_df)
+        adata = anndata.AnnData(X=total_data, obs=obs_df, var=var_df.loc[use_vars, :])
 
         if 'chrom' in adata.var:
             chroms = adata.var['chrom'].astype('category')
@@ -1035,13 +1067,12 @@ class MCDS(xr.Dataset):
         _region_ds = RegionDS(self, region_dim=region_dim)
         return _region_ds
 
-    def write_dataset(self,
-                      output_path,
+    def write_dataset(self, output_path,
                       mode='w-',
                       obs_dim=None,
                       var_dims: Union[str, list] = None,
                       use_obs=None,
-                      chunk_size=1000):
+                      chunks='auto'):
         """
         Write MCDS into an on-disk zarr dataset.
         Data arrays for each var_dim will be saved in separate sub-directories of output_path.
@@ -1060,13 +1091,29 @@ class MCDS(xr.Dataset):
             dimension name, or a list of dimension names of variables
         use_obs
             Select and order observations according to this parameter when wrote to output_path.
-        chunk_size
-            The load and write chunks, set this as large as possible based on available memory.
+        chunks
+            Zarr chunks on disk and in memory.
 
         Returns
         -------
         output_path
         """
+        with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+            self._write_dataset(output_path=output_path,
+                                mode=mode,
+                                obs_dim=obs_dim,
+                                var_dims=var_dims,
+                                use_obs=use_obs,
+                                chunks=chunks)
+        return
+
+    def _write_dataset(self,
+                       output_path,
+                       mode='w-',
+                       obs_dim=None,
+                       var_dims: Union[str, list] = None,
+                       use_obs=None,
+                       chunks='auto'):
         # save mcds to a location, if the location is a MCDS dataset, auto save to sub_dir and modify .ALLCools
         # deal with large save issue, load by chunk and write append
         obs_dim = self._verify_dim(obs_dim, mode='obs')
@@ -1110,6 +1157,19 @@ class MCDS(xr.Dataset):
                 raise IndexError(f'Not all obs id in use_obs parameter exist in MCDS '
                                  f'{self.obs_dim if obs_dim is None else obs_dim} dim')
 
+        # determine chunks
+        n_obs = obs_index.size
+        if (chunks == 'auto') or (chunks is None):
+            chunks = {obs_dim: max(min(1000, max(n_obs // 10, 1)), 10),
+                      'mc_type': 1,
+                      'count_type': 1}
+        full_chunks = {
+            dim: size
+            if ((dim not in chunks) or (chunks[dim] is None))
+            else chunks[dim]
+            for dim, size in self.dims.items()
+        }
+
         for var_dim, da_names in data_vars_dict.items():
             print(f'Saving {var_dim}')
             _this_output_path = f'{output_path}/{var_dim}'
@@ -1125,16 +1185,33 @@ class MCDS(xr.Dataset):
                 _mcds.attrs.pop('var_dim')
 
                 total_obs = obs_index.size if use_obs is None else use_obs.size
-                for i, chunk_start in enumerate(range(0, total_obs, chunk_size)):
+                obs_chunk_size = chunks[obs_dim]
+                for i, chunk_start in enumerate(range(0, total_obs, obs_chunk_size)):
+                    print(f'Saving chunk {i}: {chunk_start} - '
+                          f'{min(chunk_start + obs_chunk_size, total_obs)}')
                     if use_obs is None:
-                        _obs_chunk = obs_index[chunk_start:chunk_start + chunk_size]
+                        _obs_chunk = obs_index[chunk_start:chunk_start + obs_chunk_size]
                         _chunk_ds = _mcds.sel({obs_dim: _obs_chunk}).load()
                     else:
-                        _obs_chunk = use_obs[chunk_start:chunk_start + chunk_size]
+                        _obs_chunk = use_obs[chunk_start:chunk_start + obs_chunk_size]
                         # load first, order next, to prevent unordered index causing more chunks
                         _chunk_ds = _mcds.sel({obs_dim: obs_index.isin(_obs_chunk)}).load()
                         _chunk_ds = _chunk_ds.sel({obs_dim: _obs_chunk})
 
+                    # add chunk to encoding
+                    for var in _chunk_ds.variables:
+                        _chunk_ds[var].encoding['chunks'] = tuple(full_chunks[d]
+                                                                  for d in _chunk_ds[var].dims)
+                        if 'preferred_chunks' in _chunk_ds[var].encoding:
+                            _chunk_ds[var].encoding['preferred_chunks'] = {
+                                d: full_chunks[d]
+                                for d in _chunk_ds[var].dims
+                            }
+                        if 'compressor' in _chunk_ds[var].encoding:
+                            try:
+                                _chunk_ds[var].encoding['compressor'].clevel = 1
+                            except AttributeError:
+                                pass
                     if i == 0:
                         _chunk_ds.to_zarr(_this_output_path, mode='w')
                     else:
