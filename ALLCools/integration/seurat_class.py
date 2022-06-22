@@ -1,7 +1,11 @@
+import pathlib
+
+import anndata
 import joblib
 import pynndescent
 import numpy as np
 import pandas as pd
+from collections import OrderedDict
 from sklearn.preprocessing import normalize, OneHotEncoder
 from sklearn.decomposition import PCA
 from scipy.cluster.hierarchy import linkage
@@ -58,6 +62,7 @@ def find_neighbor(cc1, cc2, k, random_state=0):
         cc for dataset 2
     k
         number of neighbors
+    random_state
 
     Returns
     -------
@@ -198,102 +203,6 @@ def find_order(dist, ncell):
     return alignment
 
 
-def find_nearest_anchor(data,
-                        data_qry,
-                        all_anchor,
-                        ref,
-                        qry,
-                        key_correct='X_pca',
-                        npc=30,
-                        kweight=100,
-                        sd=1,
-                        random_state=0):
-    print('Initialize')
-    cum_ref, cum_qry = [0], [0]
-    for xx in ref:
-        cum_ref.append(cum_ref[-1] + data[xx].shape[0])
-    for xx in qry:
-        cum_qry.append(cum_qry[-1] + data[xx].shape[0])
-
-    anchor = []
-    for i, xx in enumerate(ref):
-        for j, yy in enumerate(qry):
-            if xx < yy:
-                tmp = all_anchor[(xx, yy)].copy()
-            else:
-                tmp = all_anchor[(yy, xx)].copy()
-                tmp[['x1', 'x2']] = tmp[['x2', 'x1']]
-            tmp['x1'] += cum_ref[i]
-            tmp['x2'] += cum_qry[j]
-            anchor.append(tmp)
-    anchor = pd.concat(anchor)
-    score = anchor['score'].values
-    anchor = anchor[['x1', 'x2']].values
-
-    if key_correct == 'X':
-        model = PCA(n_components=npc,
-                    svd_solver='arpack',
-                    random_state=random_state)
-        reduce_qry = model.fit_transform(data_qry)
-    else:
-        reduce_qry = data_qry
-
-    print('Find nearest anchors')
-    index = pynndescent.NNDescent(reduce_qry[anchor[:, 1]],
-                                  metric='euclidean',
-                                  n_neighbors=kweight,
-                                  random_state=random_state)
-    G, D = index.query(reduce_qry, k=kweight)
-
-    print('Normalize graph')
-    cell_filter = (D[:, -1] == 0)
-    D = (1 - D / D[:, -1][:, None]) * score[G]
-    D[cell_filter] = score[G[cell_filter]]
-    D = 1 - np.exp(-D * (sd ** 2) / 4)
-    D = D / (np.sum(D, axis=1) + 1e-6)[:, None]
-    return anchor, G, D, cum_qry
-
-
-def transform(data,
-              all_anchor,
-              ref,
-              qry,
-              npc=30,
-              k_weight=100,
-              sd=1,
-              chunk_size=50000,
-              random_state=0,
-              row_normalize=True, ):
-    data_ref = np.concatenate(data[ref])
-    data_qry = np.concatenate(data[qry])
-    anchor, G, D, cum_qry = find_nearest_anchor(
-        data=data,
-        data_qry=data_qry,
-        all_anchor=all_anchor,
-        ref=ref,
-        qry=qry,
-        npc=npc,
-        kweight=k_weight,
-        sd=sd,
-        random_state=random_state)
-
-    print('Transform data')
-    bias = data_ref[anchor[:, 0]] - data_qry[anchor[:, 1]]
-    data_prj = np.zeros(data_qry.shape)
-
-    for chunk_start in np.arange(0, data_prj.shape[0], chunk_size):
-        data_prj[chunk_start:(chunk_start + chunk_size)] = \
-            data_qry[chunk_start:(chunk_start + chunk_size)] + \
-            (D[chunk_start:(chunk_start + chunk_size), :, None] *
-             bias[G[chunk_start:(chunk_start + chunk_size)]]).sum(axis=1)
-    for i, xx in enumerate(qry):
-        _data = data_prj[cum_qry[i]:cum_qry[i + 1]]
-        if row_normalize:
-            _data = normalize(_data, axis=1)
-        data[xx] = _data
-    return data
-
-
 class SeuratIntegration:
     def __init__(self, random_state=0):
         # intra-dataset KNN graph
@@ -301,7 +210,7 @@ class SeuratIntegration:
         self.key_local = None
         self.local_knn = []
 
-        self.adata_list = []
+        self.adata_dict = OrderedDict()
         self.n_dataset = 0
         self.n_cells = []
         self.alignments = None
@@ -311,12 +220,9 @@ class SeuratIntegration:
         self.anchor = {}
         self.mutual_knn = {}
         self.raw_anchor = {}
+        self.label_transfer_results = {}
 
         self.random_state = random_state
-        pass
-
-    def __repr__(self):
-        # TODO
         pass
 
     def _calculate_local_knn(self):
@@ -326,14 +232,14 @@ class SeuratIntegration:
         """
         if self.k_local is not None:
             print('Find neighbors within datasets')
-            for adata in self.adata_list:
+            for adata in self.adata_dict.values():
                 index = pynndescent.NNDescent(adata.obsm[self.key_local],
                                               metric='euclidean',
                                               n_neighbors=self.k_local + 1,
                                               random_state=self.random_state)
                 self.local_knn.append(index.neighbor_graph[0][:, 1:])
         else:
-            self.local_knn = [None for _ in self.adata_list]
+            self.local_knn = [None for _ in self.adata_dict.values()]
 
     def _get_all_pairs(self):
         if self.alignments is not None:
@@ -350,7 +256,7 @@ class SeuratIntegration:
             self.all_pairs = np.array([])
 
     def _prepare_matrix(self, i, j, key_anchor):
-        adata_list = self.adata_list
+        adata_list = list(self.adata_dict.values())
 
         if key_anchor == 'X':
             # in case the adata var is not in the same order
@@ -384,6 +290,7 @@ class SeuratIntegration:
 
     def find_anchor(self,
                     adata_list,
+                    adata_names=None,
                     k_local=None,
                     key_local='X_pca',
                     key_anchor='X',
@@ -397,7 +304,14 @@ class SeuratIntegration:
                     k_anchor=5,
                     k_score=30,
                     alignments=None):
-        self.adata_list = adata_list
+        if adata_names is None:
+            adata_names = list(range(len(adata_list)))
+        try:
+            assert len(adata_names) == len(adata_list)
+        except AssertionError:
+            print(f'length of adata_names does not match length of adata_list')
+
+        self.adata_dict = {k: v for k, v in zip(adata_names, adata_list)}
         self.n_dataset = len(adata_list)
         self.n_cells = [adata.shape[0] for adata in adata_list]
 
@@ -485,6 +399,102 @@ class SeuratIntegration:
                 print(f'Identified {len(self.anchor[i, j])} anchors between datasets {i} and {j}.')
         return
 
+    def find_nearest_anchor(self,
+                            data,
+                            data_qry,
+                            ref,
+                            qry,
+                            key_correct='X_pca',
+                            npc=30,
+                            kweight=100,
+                            sd=1,
+                            random_state=0):
+        print('Initialize')
+        cum_ref, cum_qry = [0], [0]
+        for xx in ref:
+            cum_ref.append(cum_ref[-1] + data[xx].shape[0])
+        for xx in qry:
+            cum_qry.append(cum_qry[-1] + data[xx].shape[0])
+
+        anchor = []
+        for i, xx in enumerate(ref):
+            for j, yy in enumerate(qry):
+                if xx < yy:
+                    tmp = self.anchor[(xx, yy)].copy()
+                else:
+                    tmp = self.anchor[(yy, xx)].copy()
+                    tmp[['x1', 'x2']] = tmp[['x2', 'x1']]
+                tmp['x1'] += cum_ref[i]
+                tmp['x2'] += cum_qry[j]
+                anchor.append(tmp)
+        anchor = pd.concat(anchor)
+        score = anchor['score'].values
+        anchor = anchor[['x1', 'x2']].values
+
+        if key_correct == 'X':
+            model = PCA(n_components=npc,
+                        svd_solver='arpack',
+                        random_state=random_state)
+            reduce_qry = model.fit_transform(data_qry)
+        else:
+            reduce_qry = data_qry
+
+        print('Find nearest anchors')
+        index = pynndescent.NNDescent(reduce_qry[anchor[:, 1]],
+                                      metric='euclidean',
+                                      n_neighbors=kweight,
+                                      random_state=random_state)
+        G, D = index.query(reduce_qry, k=kweight)
+
+        print('Normalize graph')
+        cell_filter = (D[:, -1] == 0)
+        D = (1 - D / D[:, -1][:, None]) * score[G]
+        D[cell_filter] = score[G[cell_filter]]
+        D = 1 - np.exp(-D * (sd ** 2) / 4)
+        D = D / (np.sum(D, axis=1) + 1e-6)[:, None]
+        return anchor, G, D, cum_qry
+
+    def transform(self,
+                  data,
+                  ref,
+                  qry,
+                  key_correct,
+                  npc=30,
+                  k_weight=100,
+                  sd=1,
+                  chunk_size=50000,
+                  random_state=0,
+                  row_normalize=True):
+        data_ref = np.concatenate(data[ref])
+        data_qry = np.concatenate(data[qry])
+
+        anchor, G, D, cum_qry = self.find_nearest_anchor(
+            data=data,
+            data_qry=data_qry,
+            key_correct=key_correct,
+            ref=ref,
+            qry=qry,
+            npc=npc,
+            kweight=k_weight,
+            sd=sd,
+            random_state=random_state)
+
+        print('Transform data')
+        bias = data_ref[anchor[:, 0]] - data_qry[anchor[:, 1]]
+        data_prj = np.zeros(data_qry.shape)
+
+        for chunk_start in np.arange(0, data_prj.shape[0], chunk_size):
+            data_prj[chunk_start:(chunk_start + chunk_size)] = \
+                data_qry[chunk_start:(chunk_start + chunk_size)] + \
+                (D[chunk_start:(chunk_start + chunk_size), :, None] *
+                 bias[G[chunk_start:(chunk_start + chunk_size)]]).sum(axis=1)
+        for i, xx in enumerate(qry):
+            _data = data_prj[cum_qry[i]:cum_qry[i + 1]]
+            if row_normalize:
+                _data = normalize(_data, axis=1)
+            data[xx] = _data
+        return data
+
     def integrate(self,
                   key_correct,
                   row_normalize=True,
@@ -506,7 +516,7 @@ class SeuratIntegration:
             print(f'Alignments: {self.alignments}')
 
         print('Merge datasets')
-        adata_list = self.adata_list
+        adata_list = list(self.adata_dict.values())
 
         # initialize corrected with original data
         if key_correct == 'X':
@@ -520,15 +530,15 @@ class SeuratIntegration:
 
         for xx in self.alignments:
             print(xx)
-            corrected = transform(data=np.array(corrected),
-                                  all_anchor=self.anchor,
-                                  ref=xx[0],
-                                  qry=xx[1],
-                                  npc=n_components,
-                                  k_weight=k_weight,
-                                  sd=sd,
-                                  random_state=self.random_state,
-                                  row_normalize=row_normalize)
+            corrected = self.transform(data=np.array(corrected),
+                                       ref=xx[0],
+                                       qry=xx[1],
+                                       npc=n_components,
+                                       k_weight=k_weight,
+                                       sd=sd,
+                                       random_state=self.random_state,
+                                       row_normalize=row_normalize,
+                                       key_correct=key_correct)
         return corrected
 
     def label_transfer(self,
@@ -542,25 +552,26 @@ class SeuratIntegration:
                        sd=1,
                        chunk_size=50000,
                        random_state=0):
-        adata_list = self.adata_list
+        adata_list = list(self.adata_dict.values())
 
         data_qry = np.concatenate(
             [normalize(adata_list[i].obsm[key_dist], axis=1) for i in qry])
         data_qry_index = np.concatenate([adata_list[i].obs_names for i in qry])
 
-        anchor, G, D, cum_qry = find_nearest_anchor(data=adata_list,
-                                                    all_anchor=self.anchor,
-                                                    data_qry=data_qry,
-                                                    ref=ref,
-                                                    qry=qry,
-                                                    npc=npc,
-                                                    kweight=kweight,
-                                                    sd=sd,
-                                                    random_state=random_state)
-
+        anchor, G, D, cum_qry = self.find_nearest_anchor(data=adata_list,
+                                                         data_qry=data_qry,
+                                                         ref=ref,
+                                                         qry=qry,
+                                                         npc=npc,
+                                                         kweight=kweight,
+                                                         key_correct=key_dist,
+                                                         sd=sd,
+                                                         random_state=random_state)
+        # TODO fix col dup name bug
         print('Label transfer')
         label_ref = []
         columns = []
+        cat_counts = []
 
         if categorical_key is None:
             categorical_key = []
@@ -578,7 +589,9 @@ class SeuratIntegration:
                     tmp[categorical_key].values.astype(np.str_)
                 ).toarray()
             )
+            # add categorical key to make sure col is unique
             columns += enc.categories_
+            cat_counts.append(len(enc.categories_))
 
         if len(continuous_key) > 0:
             tmp = pd.concat([adata_list[i].obs[continuous_key]
@@ -586,6 +599,7 @@ class SeuratIntegration:
                             axis=0)
             label_ref.append(tmp[continuous_key].values)
             columns += [[xx] for xx in continuous_key]
+            cat_counts.append(1)
 
         label_ref = np.concatenate(label_ref, axis=1)
         label_qry = np.zeros((data_qry.shape[0], label_ref.shape[1]))
@@ -597,12 +611,16 @@ class SeuratIntegration:
                     bias[G[chunk_start:(chunk_start + chunk_size)]]
             ).sum(axis=1)
 
-        label_qry = pd.DataFrame(label_qry,
-                                 index=data_qry_index,
-                                 columns=np.concatenate(columns))
+        all_column_names = np.concatenate(columns)  # these column names might be duplicated
+        all_column_variables = np.repeat(categorical_key + continuous_key, cat_counts)
+        label_qry = pd.DataFrame(
+            label_qry,
+            index=data_qry_index,
+            columns=all_column_names
+        )
         result = {}
-        for xx, yy in zip(categorical_key + continuous_key, columns):
-            result[xx] = label_qry[yy]
+        for xx, yy in zip(categorical_key + continuous_key):
+            result[xx] = label_qry.iloc[:, all_column_variables == xx]
         return result
 
     def save(self,
@@ -610,7 +628,16 @@ class SeuratIntegration:
              save_local_knn=False,
              save_raw_anchor=False,
              save_mutual_knn=False):
-        self.adata_list = []
+        # save each adata in a separate dir
+        output_path = pathlib.Path(output_path)
+        output_path.mkdir(exist_ok=True, parents=True)
+
+        adata_dir = output_path / 'adata'
+        adata_dir.mkdir(exist_ok=True)
+        with open(f'{adata_dir}/order.txt', 'w') as f:
+            for k, v in self.adata_dict.items():
+                v.write_h5ad(f'{adata_dir}/{k}.h5ad')
+                f.write(k + '\n')
 
         if not save_local_knn:
             self.local_knn = []
@@ -619,12 +646,21 @@ class SeuratIntegration:
         if not save_mutual_knn:
             self.mutual_knn = {}
 
-        joblib.dump(self, output_path)
+        joblib.dump(self, f'{output_path}/model.lib')
         return
 
     @classmethod
     def load(cls, input_path):
-        return joblib.load(input_path)
+        adata_dir = f'{input_path}/adata'
+        model_path = f'{input_path}/model.lib'
+
+        obj = joblib.load(model_path)
+        orders = pd.read_csv(f'{adata_dir}/order.txt', header=None, index_col=0)
+        adata_dict = OrderedDict()
+        for k in orders:
+            adata_dict[k] = anndata.read_h5ad(f'{adata_dir}/{k}.h5ad')
+        obj.adata_dict = adata_dict
+        return obj
 
     @classmethod
     def save_transfer_results_to_adata(cls,
