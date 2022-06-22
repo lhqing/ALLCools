@@ -567,7 +567,6 @@ class SeuratIntegration:
                                                          key_correct=key_dist,
                                                          sd=sd,
                                                          random_state=random_state)
-        # TODO fix col dup name bug
         print('Label transfer')
         label_ref = []
         columns = []
@@ -591,7 +590,8 @@ class SeuratIntegration:
             )
             # add categorical key to make sure col is unique
             columns += enc.categories_
-            cat_counts.append(len(enc.categories_))
+            # enc.categories_ are a list of arrays, each array are categories in that categorical_key
+            cat_counts += [cats.size for cats in enc.categories_]
 
         if len(continuous_key) > 0:
             tmp = pd.concat([adata_list[i].obs[continuous_key]
@@ -599,7 +599,7 @@ class SeuratIntegration:
                             axis=0)
             label_ref.append(tmp[continuous_key].values)
             columns += [[xx] for xx in continuous_key]
-            cat_counts.append(1)
+            cat_counts += [1 for _ in continuous_key]
 
         label_ref = np.concatenate(label_ref, axis=1)
         label_qry = np.zeros((data_qry.shape[0], label_ref.shape[1]))
@@ -619,8 +619,8 @@ class SeuratIntegration:
             columns=all_column_names
         )
         result = {}
-        for xx, yy in zip(categorical_key + continuous_key):
-            result[xx] = label_qry.iloc[:, all_column_variables == xx]
+        for key in (categorical_key + continuous_key):
+            result[key] = label_qry.iloc[:, all_column_variables == key]
         return result
 
     def save(self,
