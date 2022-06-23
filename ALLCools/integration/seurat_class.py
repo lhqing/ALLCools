@@ -637,7 +637,7 @@ class SeuratIntegration:
         with open(f'{adata_dir}/order.txt', 'w') as f:
             for k, v in self.adata_dict.items():
                 v.write_h5ad(f'{adata_dir}/{k}.h5ad')
-                f.write(k + '\n')
+                f.write(f'{k}\n')
 
         if not save_local_knn:
             self.local_knn = []

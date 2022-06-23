@@ -189,6 +189,8 @@ def continuous_scatter(
             _data["text_anno"] = _take_data_series(data, text_anno)
         else:
             _data["text_anno"] = text_anno
+        if str(_data["text_anno"].dtype) == 'category':
+            _data["text_anno"] = _data["text_anno"].cat.remove_unused_categories()
 
         _text_anno_scatter(
             data=_data[["x", "y", "text_anno"]],
