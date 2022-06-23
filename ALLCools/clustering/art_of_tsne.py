@@ -188,5 +188,5 @@ def tsne(
         perplexity=perplexity,
         n_jobs=n_jobs,
     )
-    adata.obsm["X_tsne"] = Z
+    adata.obsm["X_tsne"] = np.array(Z)
     return
