@@ -880,7 +880,9 @@ class MCDS(xr.Dataset):
             total_data = np.vstack(total_data)
 
         obs_df, var_df = make_obs_df_var_df(da, obs_dim, var_dim)
-        adata = anndata.AnnData(X=total_data, obs=obs_df, var=var_df.loc[use_vars, :])
+        if use_vars is not None:
+            var_df = var_df.loc[use_vars, :].copy()
+        adata = anndata.AnnData(X=total_data, obs=obs_df, var=var_df)
 
         if 'chrom' in adata.var:
             chroms = adata.var['chrom'].astype('category')

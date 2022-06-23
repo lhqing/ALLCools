@@ -108,7 +108,7 @@ def continuous_scatter(
             rasterized = False
 
     # auto size if user didn't provide one
-    if s is 'auto':
+    if s == 'auto':
         s = _auto_size(ax, n_dots)
 
     # default scatter options
