@@ -1,15 +1,19 @@
+import multiprocessing
 import pathlib
+from collections import OrderedDict
 
 import anndata
 import joblib
-import pynndescent
 import numpy as np
 import pandas as pd
-from collections import OrderedDict
-from sklearn.preprocessing import normalize, OneHotEncoder
-from sklearn.decomposition import PCA
+import pynndescent
 from scipy.cluster.hierarchy import linkage
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import normalize, OneHotEncoder
+
 from .cca import cca, lsi_cca
+
+CPU_COUNT = multiprocessing.cpu_count()
 
 
 def top_features_idx(data, n_features):
@@ -50,7 +54,7 @@ def top_features_idx(data, n_features):
         return features_idx
 
 
-def find_neighbor(cc1, cc2, k, random_state=0):
+def find_neighbor(cc1, cc2, k, random_state=0, n_jobs=-1):
     """
     find all four way of neighbors for two datasets
 
@@ -71,13 +75,17 @@ def find_neighbor(cc1, cc2, k, random_state=0):
     index = pynndescent.NNDescent(cc1,
                                   metric='euclidean',
                                   n_neighbors=k + 1,
-                                  random_state=random_state)
+                                  random_state=random_state,
+                                  parallel_batch_queries=True,
+                                  n_jobs=n_jobs)
     G11 = index.neighbor_graph[0][:, 1:k + 1]
     G21 = index.query(cc2, k=k)[0]
     index = pynndescent.NNDescent(cc2,
                                   metric='euclidean',
                                   n_neighbors=k + 1,
-                                  random_state=random_state)
+                                  random_state=random_state,
+                                  parallel_batch_queries=True,
+                                  n_jobs=n_jobs)
     G22 = index.neighbor_graph[0][:, 1:k + 1]
     G12 = index.query(cc1, k=k)[0]
     return G11, G12, G21, G22
@@ -106,7 +114,8 @@ def filter_anchor(anchor,
                   adata_qry=None,
                   high_dim_feature=None,
                   k_filter=200,
-                  random_state=0):
+                  random_state=0,
+                  n_jobs=-1):
     """
     Check if an anchor is still an anchor when only
     using the high_dim_features to construct KNN graph.
@@ -117,7 +126,9 @@ def filter_anchor(anchor,
     index = pynndescent.NNDescent(ref_data,
                                   metric='euclidean',
                                   n_neighbors=k_filter,
-                                  random_state=random_state)
+                                  random_state=random_state,
+                                  parallel_batch_queries=True,
+                                  n_jobs=n_jobs)
     G = index.query(qry_data, k=k_filter)[0]
     input_anchors = anchor.shape[0]
     anchor = np.array([xx for xx in anchor if (xx[0] in G[xx[1]])])
@@ -204,7 +215,9 @@ def find_order(dist, ncell):
 
 
 class SeuratIntegration:
-    def __init__(self, random_state=0):
+    def __init__(self, n_jobs=-1, random_state=0):
+        self.n_jobs = n_jobs
+
         # intra-dataset KNN graph
         self.k_local = None
         self.key_local = None
@@ -236,7 +249,9 @@ class SeuratIntegration:
                 index = pynndescent.NNDescent(adata.obsm[self.key_local],
                                               metric='euclidean',
                                               n_neighbors=self.k_local + 1,
-                                              random_state=self.random_state)
+                                              random_state=self.random_state,
+                                              parallel_batch_queries=True,
+                                              n_jobs=self.n_jobs)
                 self.local_knn.append(index.neighbor_graph[0][:, 1:])
         else:
             self.local_knn = [None for _ in self.adata_dict.values()]
@@ -282,7 +297,7 @@ class SeuratIntegration:
         Calculate the mutual knn graph and raw anchors and
         save the results to self.mutual_knn and self.raw_anchor
         """
-        G11, G12, G21, G22 = find_neighbor(U, V, k=k)
+        G11, G12, G21, G22 = find_neighbor(U, V, k=k, n_jobs=self.n_jobs)
         raw_anchors = find_mnn(G12, G21, k_anchor)
         self.mutual_knn[(i, j)] = (G11, G12, G21, G22)
         self.raw_anchor[(i, j)] = raw_anchors
@@ -373,14 +388,16 @@ class SeuratIntegration:
                                                     adata_qry=adata_list[j],
                                                     high_dim_feature=high_dim_feature,
                                                     k_filter=k_filter,
-                                                    random_state=self.random_state)
+                                                    random_state=self.random_state,
+                                                    n_jobs=self.n_jobs)
                     else:
                         raw_anchors = filter_anchor(anchor=raw_anchors[:, ::-1],
                                                     adata_ref=adata_list[j],
                                                     adata_qry=adata_list[i],
                                                     high_dim_feature=high_dim_feature,
                                                     k_filter=k_filter,
-                                                    random_state=self.random_state)[:, ::-1]
+                                                    random_state=self.random_state,
+                                                    n_jobs=self.n_jobs)[:, ::-1]
 
                 # 6. score anchors with snn and local structure preservation
                 print('Score Anchors')
@@ -443,7 +460,9 @@ class SeuratIntegration:
         index = pynndescent.NNDescent(reduce_qry[anchor[:, 1]],
                                       metric='euclidean',
                                       n_neighbors=kweight,
-                                      random_state=random_state)
+                                      random_state=random_state,
+                                      parallel_batch_queries=True,
+                                      n_jobs=self.n_jobs)
         G, D = index.query(reduce_qry, k=kweight)
 
         print('Normalize graph')
