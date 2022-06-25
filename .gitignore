@@ -1,4 +1,5 @@
 docs/allcools/api/
+docs/allcools/data
 docs/allcools/_build/
 .idea/
 test/output/*

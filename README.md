@@ -1,3 +1,3 @@
 # ALLCools
 
-See documentation https://lhqing.github.io/ALLCools/intro.html
+Please see documentation https://lhqing.github.io/ALLCools/intro.html
