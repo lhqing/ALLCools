@@ -1,8 +1,14 @@
 import numpy as np
 import pandas as pd
+from warnings import warn
 
 
-def calculate_direct_confusion(left_part, right_part):
+def calculate_direct_confusion(*args, **kwargs):
+    warn('This function is deprecated. Call calculate_overlap_score instead', DeprecationWarning)
+    return calculate_overlap_score(*args, **kwargs)
+
+
+def calculate_overlap_score(left_part, right_part):
     """
     Given 2 dataframe for left/source and right/target dataset,
     calculate the direct confusion matrix based on co-cluster labels.

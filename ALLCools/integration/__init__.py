@@ -1,2 +1,2 @@
-from .confusion import calculate_direct_confusion
+from .confusion import calculate_direct_confusion, calculate_overlap_score
 from .seurat_class import SeuratIntegration
