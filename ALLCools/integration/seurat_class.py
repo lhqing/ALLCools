@@ -651,12 +651,15 @@ class SeuratIntegration:
         output_path = pathlib.Path(output_path)
         output_path.mkdir(exist_ok=True, parents=True)
 
+        # save adata and clear the self.adata_dict
         adata_dir = output_path / 'adata'
         adata_dir.mkdir(exist_ok=True)
         with open(f'{adata_dir}/order.txt', 'w') as f:
             for k, v in self.adata_dict.items():
                 v.write_h5ad(f'{adata_dir}/{k}.h5ad')
                 f.write(f'{k}\n')
+        # clear the adata in integrator
+        self.adata_dict = {}
 
         if not save_local_knn:
             self.local_knn = []
@@ -674,7 +677,8 @@ class SeuratIntegration:
         model_path = f'{input_path}/model.lib'
 
         obj = joblib.load(model_path)
-        orders = pd.read_csv(f'{adata_dir}/order.txt', header=None, index_col=0)
+
+        orders = pd.read_csv(f'{adata_dir}/order.txt', header=None, index_col=0).index
         adata_dict = OrderedDict()
         for k in orders:
             adata_dict[k] = anndata.read_h5ad(f'{adata_dir}/{k}.h5ad')
