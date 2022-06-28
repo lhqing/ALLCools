@@ -8,9 +8,9 @@ import anndata
 import dask
 import numpy as np
 import pandas as pd
+import scipy.sparse as ss
 import xarray as xr
 import yaml
-import scipy.sparse as ss
 from pybedtools import BedTool
 
 from .utilities import (
@@ -919,6 +919,24 @@ class MCDS(xr.Dataset):
                                      binarize_cutoff=binarize_cutoff)
         return adata
 
+    def add_feature_selection_column(self, feature_select, col_name='VAR_DIM_feature_select', var_dim=None):
+        if var_dim is None:
+            var_dim = self.var_dim
+        features = self.get_index(var_dim)
+
+        if isinstance(feature_select, list):
+            feature_select = np.array(feature_select)
+
+        if feature_select.dtype == 'bool':
+            feature_select = pd.Series(feature_select, index=features)
+        else:
+            feature_select = pd.Series(features.isin(feature_select), index=features)
+
+        if col_name.startswith('VAR_DIM'):
+            col_name = col_name.replace('VAR_DIM', var_dim)
+        self.coords[col_name] = feature_select
+        return
+
     def get_adata(
             self,
             mc_type=None,
@@ -970,9 +988,13 @@ class MCDS(xr.Dataset):
             frac_da = self[frac_da_name]
             if mc_type is None:
                 if select_hvf:
+                    if isinstance(select_hvf, str):
+                        col_name = select_hvf
+                    else:
+                        col_name = f"{var_dim}_feature_select"
                     try:
                         use_features = (
-                            self.coords[f"{var_dim}_feature_select"]
+                            self.coords[col_name]
                             .to_pandas()
                             .dropna()
                             .astype(bool)
@@ -981,7 +1003,7 @@ class MCDS(xr.Dataset):
                         use_data = frac_da.sel({var_dim: use_features}).squeeze()
                     except KeyError:
                         print(
-                            "select_hvf is True, but no highly variable feature results found, "
+                            f"select_hvf is {select_hvf}, but no highly variable feature results found, "
                             "use all features instead."
                         )
                         use_data = frac_da.squeeze()
@@ -989,9 +1011,13 @@ class MCDS(xr.Dataset):
                     use_data = frac_da.squeeze()
             else:
                 if select_hvf:
+                    if isinstance(select_hvf, str):
+                        col_name = select_hvf
+                    else:
+                        col_name = f"{var_dim}_{mc_type}_feature_select"
                     try:
                         use_features = (
-                            self.coords[f"{var_dim}_{mc_type}_feature_select"]
+                            self.coords[col_name]
                             .to_pandas()
                             .dropna()
                             .astype(bool)
@@ -1000,7 +1026,7 @@ class MCDS(xr.Dataset):
                         use_data = frac_da.sel({"mc_type": mc_type, var_dim: use_features}).squeeze()
                     except KeyError:
                         print(
-                            "select_hvf is True, but no highly variable feature results found, "
+                            f"select_hvf is {select_hvf}, but no highly variable feature results found, "
                             "use all features instead."
                         )
                         use_data = frac_da.sel({"mc_type": mc_type}).squeeze()
@@ -1010,7 +1036,7 @@ class MCDS(xr.Dataset):
             obs_df, var_df = make_obs_df_var_df(use_data, obs_dim, var_dim)
 
             adata = anndata.AnnData(
-                X=use_data.transpose(obs_dim, var_dim).values, obs=obs_df, var=var_df
+                X=use_data.astype('float32').transpose(obs_dim, var_dim).values, obs=obs_df, var=var_df
             )
         return adata
 
