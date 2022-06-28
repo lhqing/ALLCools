@@ -1,5 +1,10 @@
-import pandas as pd
 from warnings import warn
+
+import igraph as ig
+import leidenalg as la
+import networkx as nx
+import numpy as np
+import pandas as pd
 from numba import njit
 
 
@@ -71,3 +76,77 @@ def calculate_overlap_score(left_part, right_part):
     confusion_matrix = flat_confusion_matrix.set_index(
         [original_left_name, original_right_name]).squeeze().unstack()
     return confusion_matrix
+
+
+def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, seed=0):
+    """
+    Given a confusion matrix, bi-clustering the matrix using Leiden Algorithm.
+
+    Parameters
+    ----------
+    confusion_matrix :
+        A confusion matrix. Row is query, column is reference.
+    min_value :
+        minimum value to be used as an edge weight.
+    max_value :
+        maximum value to be used as an edge weight. Larger value will be capped to this value.
+
+    Returns
+    -------
+    query_group, ref_group, ordered confusion_matrix
+    """
+    # make sure confusion matrix index and columns are unique
+    try:
+        assert confusion_matrix.index.duplicated().sum() == 0
+        assert confusion_matrix.columns.duplicated().sum() == 0
+    except AssertionError:
+        raise ValueError("Confusion matrix index and columns should be unique")
+
+    confusion_matrix = confusion_matrix.copy()
+    # map id to int
+    # row is query, column is reference
+    query_idx_map = {c: i for i, c in enumerate(confusion_matrix.index)}
+    ref_idx_map = {
+        c: i + len(query_idx_map)
+        for i, c in enumerate(confusion_matrix.columns)
+    }
+    confusion_matrix.index = confusion_matrix.index.map(query_idx_map)
+    confusion_matrix.columns = confusion_matrix.columns.map(ref_idx_map)
+
+    # build a weighted graph from sig scores
+    edges = confusion_matrix.unstack()
+    edges = edges[edges > min_value].copy().reset_index()
+    edges.columns = ['ref', 'query', 'weight']
+    g = nx.Graph()
+    for _, (ref, query, weight) in edges.iterrows():
+        weight = min(max_value, weight)
+        g.add_edge(ref, query, weight=weight)
+        # convert to igraph to run leiden
+    h = ig.Graph.from_networkx(g)
+
+    # leiden clustering
+    partition = la.find_partition(h,
+                                  la.ModularityVertexPartition,
+                                  weights='weight',
+                                  seed=seed)
+    # store output into adata.obs
+    groups = np.array(partition.membership)
+    idx_to_group = {int(node): g for node, g in zip(g.nodes, groups)}
+
+    # map cluster back to original labels
+    # -1 means a ref or query cluster is not co-clustered with the other dataset,
+    # so the OS is very small and not included in the graph
+    query_group = pd.Series(query_idx_map).map(idx_to_group).fillna(-1).astype(int)
+    ref_group = pd.Series(ref_idx_map).map(idx_to_group).fillna(-1).astype(int)
+
+    # also make an ordered confusion matrix
+    confusion_matrix.index = confusion_matrix.index.map(
+        {v: k
+         for k, v in query_idx_map.items()})
+    confusion_matrix.columns = confusion_matrix.columns.map(
+        {v: k
+         for k, v in ref_idx_map.items()})
+    confusion_matrix = confusion_matrix.loc[
+        query_group.sort_values().index,
+        ref_group.sort_values().index].copy()
+    return query_group, ref_group, confusion_matrix
