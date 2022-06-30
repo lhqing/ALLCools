@@ -341,6 +341,10 @@ def bam_to_allc(
     tabix = True
 
     # Check fasta index
+    if not pathlib.Path(reference_fasta).exists():
+        raise FileNotFoundError(
+            f"Reference fasta not found at {reference_fasta}."
+        )
     if not pathlib.Path(reference_fasta + ".fai").exists():
         raise FileNotFoundError(
             "Reference fasta not indexed. Use samtools faidx to index it and run again."
