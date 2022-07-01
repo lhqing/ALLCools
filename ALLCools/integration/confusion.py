@@ -78,6 +78,36 @@ def calculate_overlap_score(left_part, right_part):
     return confusion_matrix
 
 
+def calculate_diagonal_score(confusion_matrix, col_group, row_group):
+    """
+    Given a confusion matrix, evaluate the overall integration performance with the diagonal score.
+
+    Parameters
+    ----------
+    confusion_matrix :
+        A confusion matrix.
+    col_group :
+        Integration group for the columns.
+    row_group :
+        Integration group for the rows.
+
+    Returns
+    -------
+    float
+    """
+    # group the confusion matrix by the col_group and row_group,
+    # then for each block, calculate the mean overlap score
+    group_overlap_score_mean = confusion_matrix.groupby(col_group, axis=1).apply(
+        lambda sub_df: sub_df.groupby(row_group, axis=0).mean().mean(axis=1))
+
+    # diagonal score is the ratio of the diagonal overlap score sum to the non-diagonal overlap score sum
+    diag_sum = np.diag(group_overlap_score_mean, 0).sum()
+    non_diag_sum = group_overlap_score_mean.values.sum() - diag_sum
+
+    ratio = diag_sum / non_diag_sum
+    return ratio
+
+
 def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, seed=0):
     """
     Given a confusion matrix, bi-clustering the matrix using Leiden Algorithm.
@@ -90,6 +120,8 @@ def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, se
         minimum value to be used as an edge weight.
     max_value :
         maximum value to be used as an edge weight. Larger value will be capped to this value.
+    seed :
+        random seed for Leiden Algorithm.
 
     Returns
     -------
@@ -149,4 +181,7 @@ def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, se
     confusion_matrix = confusion_matrix.loc[
         query_group.sort_values().index,
         ref_group.sort_values().index].copy()
-    return query_group, ref_group, confusion_matrix
+
+    diag_score = diagonal_ratio(confusion_matrix, col_group=ref_group, row_group=query_group)
+
+    return query_group, ref_group, confusion_matrix, diag_score
