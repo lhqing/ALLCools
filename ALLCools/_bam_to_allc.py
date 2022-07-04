@@ -2,6 +2,34 @@
 This file is modified from methylpy https://github.com/yupenghe/methylpy
 
 Author: Yupeng He
+
+Notes added on 07/03/2022 - Difference between bismark and hisat-3n
+Read mpileup doc first: http://www.htslib.org/doc/samtools-mpileup.html
+
+For Bismark:
+Bismark converted the reads orientation based on their conversion type.
+C to T conversion reads are always map to the forward strand, regardless of the R1 R2
+G to A conversion reads are always map to the reverse strand, regardless of the R1 R2
+Therefore, in the original bam-to-allc function, we simply consider the strandness in
+the pileup format to distinguish which C needs to be counted.
+There are two situations:
+1. If the ref base is C, the read need to map to forward strand in order to be counted
+[.ATCGN] corresponding to the forward strand
+2. If the ref base is G, the read need to map to reverse strand in order to be counted
+[,atcgn] corresponding to the reverse strand
+
+For Hisat-3n:
+R1 R2 are mapped as their original orientation, therefore, for hisat-3n bam file,
+both the C to T and G to A conversion reads can have forward and reverse strand alignment.
+Therefore, we can not distinguish the conversion type by strand in hisat-3n input bam.
+Here I add a check using the YZ tag of hisat-3n BAM file
+If the YZ tag is "+", the read is C to T conversion, I change the flag to forward mapping
+no matter R1 or R2 by hisat_read.is_forward = True
+If the YZ tag is "-", the read is G to A conversion, I change the flag to reverse mapping
+no matter R1 or R2 by hisat_read.is_forward = False
+In this case, the read orientation is the same as bismark bam file, and the following base
+count code no need to change.
+
 """
 
 import logging
@@ -66,19 +94,19 @@ def _get_bam_chrom_index(bam_path):
 
 
 def _bam_to_allc_worker(
-    bam_path,
-    reference_fasta,
-    fai_df,
-    output_path,
-    region=None,
-    num_upstr_bases=0,
-    num_downstr_bases=2,
-    buffer_line_number=100000,
-    min_mapq=0,
-    min_base_quality=1,
-    compress_level=5,
-    tabix=True,
-    save_count_df=False,
+        bam_path,
+        reference_fasta,
+        fai_df,
+        output_path,
+        region=None,
+        num_upstr_bases=0,
+        num_downstr_bases=2,
+        buffer_line_number=100000,
+        min_mapq=0,
+        min_base_quality=1,
+        compress_level=5,
+        tabix=True,
+        save_count_df=False,
 ):
     """
     None parallel bam_to_allc worker function, call by bam_to_allc
@@ -148,7 +176,7 @@ def _bam_to_allc_worker(
         if fields[2] not in mc_sites:
             continue
 
-        # indels
+        # deal with indels
         read_bases = fields[4]
         incons_basecalls = read_bases.count("+") + read_bases.count("-")
         if incons_basecalls > 0:
@@ -184,9 +212,10 @@ def _bam_to_allc_worker(
 
         # count converted and unconverted bases
         if fields[2] == "C":
+            # mpileup pos is 1-based, turn into 0 based
             pos = int(fields[1]) - 1
             try:
-                context = seq[(pos - num_upstr_bases) : (pos + num_downstr_bases + 1)]
+                context = seq[(pos - num_upstr_bases): (pos + num_downstr_bases + 1)]
             except:  # complete context is not available, skip
                 continue
             unconverted_c = fields[4].count(".")
@@ -195,18 +224,18 @@ def _bam_to_allc_worker(
             if cov > 0 and len(context) == context_len:
                 line_counts += 1
                 data = (
-                    "\t".join(
-                        [
-                            cur_chrom,
-                            str(pos + 1),
-                            "+",
-                            context,
-                            str(unconverted_c),
-                            str(cov),
-                            "1",
-                        ]
-                    )
-                    + "\n"
+                        "\t".join(
+                            [
+                                cur_chrom,
+                                str(pos + 1),
+                                "+",
+                                context,
+                                str(unconverted_c),
+                                str(cov),
+                                "1",
+                            ]
+                        )
+                        + "\n"
                 )
                 cov_dict[context] += cov
                 mc_dict[context] += unconverted_c
@@ -220,8 +249,8 @@ def _bam_to_allc_worker(
                     [
                         complement[base]
                         for base in reversed(
-                            seq[(pos - num_downstr_bases) : (pos + num_upstr_bases + 1)]
-                        )
+                        seq[(pos - num_downstr_bases): (pos + num_upstr_bases + 1)]
+                    )
                     ]
                 )
             except:  # complete context is not available, skip
@@ -232,18 +261,18 @@ def _bam_to_allc_worker(
             if cov > 0 and len(context) == context_len:
                 line_counts += 1
                 data = (
-                    "\t".join(
-                        [
-                            cur_chrom,
-                            str(pos + 1),
-                            "-",
-                            context,
-                            str(unconverted_c),
-                            str(cov),
-                            "1",
-                        ]
-                    )
-                    + "\n"
+                        "\t".join(
+                            [
+                                cur_chrom,
+                                str(pos + 1),
+                                "-",
+                                context,
+                                str(unconverted_c),
+                                str(cov),
+                                "1",
+                            ]
+                        )
+                        + "\n"
                 )
                 cov_dict[context] += cov
                 mc_dict[context] += unconverted_c
@@ -291,16 +320,16 @@ def _aggregate_count_df(count_dfs):
     reference_fasta_doc=reference_fasta_doc,
 )
 def bam_to_allc(
-    bam_path,
-    reference_fasta,
-    output_path=None,
-    cpu=1,
-    num_upstr_bases=0,
-    num_downstr_bases=2,
-    min_mapq=10,
-    min_base_quality=20,
-    compress_level=5,
-    save_count_df=False,
+        bam_path,
+        reference_fasta,
+        output_path=None,
+        cpu=1,
+        num_upstr_bases=0,
+        num_downstr_bases=2,
+        min_mapq=10,
+        min_base_quality=20,
+        compress_level=5,
+        save_count_df=False,
 ):
     """\
     Generate 1 ALLC file from 1 position sorted BAM file via samtools mpileup.
@@ -393,7 +422,7 @@ def bam_to_allc(
         with ProcessPoolExecutor(max_workers=cpu) as executor:
             future_dict = {}
             for batch_id, (region, out_temp_path) in enumerate(
-                zip(regions, temp_out_paths)
+                    zip(regions, temp_out_paths)
             ):
                 _kwargs = dict(
                     bam_path=bam_path,
@@ -422,11 +451,11 @@ def bam_to_allc(
 
             # aggregate ALLC
             with open_allc(
-                output_path,
-                mode="w",
-                compresslevel=compress_level,
-                threads=1,
-                region=None,
+                    output_path,
+                    mode="w",
+                    compresslevel=compress_level,
+                    threads=1,
+                    region=None,
             ) as out_f:
                 # TODO: Parallel ALLC is overlapped,
                 #  the split by region strategy only split reads, but reads can overlap
