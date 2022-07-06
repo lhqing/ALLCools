@@ -218,6 +218,14 @@ def bam_to_allc_register_subparser(subparser):
     )
     parser.set_defaults(save_count_df=False)
 
+    parser.add_argument(
+        "--convert_bam_strandness",
+        dest="convert_bam_strandness",
+        action="store_true",
+        help=convert_bam_strandness_doc,
+    )
+    parser.set_defaults(convert_bam_strandness=False)
+
 
 def standardize_allc_register_subparser(subparser):
     parser = subparser.add_parser(

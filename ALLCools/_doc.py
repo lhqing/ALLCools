@@ -40,6 +40,11 @@ chrom_size_path_doc = (
     "ALLCools functions will not change or infer chromosome names."
 )
 
+convert_bam_strandness_doc = "Convert CT conversion reads into forward strand, " \
+                             "GA conversion reads into reverse strand. During call methylation, " \
+                             "we use strandness to parse the mpileup result." \
+                             "Set this parameter to True if you are doing PE mapping with bismark or hisat-3n."
+
 compress_level_doc = "Compression level for the output file"
 
 cov_cutoff_doc = "Max cov filter for a single site in ALLC. Sites with cov > cov_cutoff will be skipped."
