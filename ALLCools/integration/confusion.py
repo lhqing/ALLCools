@@ -182,6 +182,6 @@ def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, se
         query_group.sort_values().index,
         ref_group.sort_values().index].copy()
 
-    diag_score = diagonal_ratio(confusion_matrix, col_group=ref_group, row_group=query_group)
+    diag_score = calculate_diagonal_score(confusion_matrix, col_group=ref_group, row_group=query_group)
 
     return query_group, ref_group, confusion_matrix, diag_score
