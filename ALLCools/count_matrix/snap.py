@@ -1,9 +1,11 @@
-import h5py
+from typing import Union
+
 import anndata
-import pandas as pd
+import h5py
 import numpy as np
-import xarray as xr
+import pandas as pd
 import scipy.sparse as ss
+import xarray as xr
 
 SNAP_BD_FIELDS = {
     "TN": "TotalFrag",
@@ -19,7 +21,7 @@ SNAP_BD_FIELDS = {
 }
 
 
-def read_snap(file_path, bin_kind=5000):
+def read_snap(file_path, bin_kind: Union[int, str] = 5000):
     """Read snap hdf5 file into anndata.AnnData."""
     if bin_kind == "gene":
         return _read_snap_genes(file_path)
@@ -58,7 +60,10 @@ def _read_snap_genes(file_path):
         ).tocsc()
 
     adata = anndata.AnnData(
-        X=data, obs=cell_meta, var=pd.DataFrame(index=pd.Index(gene_id, name="gene"))
+        X=data,
+        obs=cell_meta,
+        var=pd.DataFrame(index=pd.Index(gene_id, name="gene")),
+        dtype=data.dtype
     )
     return adata
 
@@ -73,7 +78,7 @@ def _read_snap_bins(file_path, bin_size=5000):
         bin_chrom = np.array(f[f"/AM/{bin_size}/binChrom"]).astype(str)
         bin_start = np.array(f[f"/AM/{bin_size}/binStart"]) - 1  # 0 based bed format
         bin_end = (
-            np.array(f[f"/AM/{bin_size}/binStart"]) - 1 + bin_size
+                np.array(f[f"/AM/{bin_size}/binStart"]) - 1 + bin_size
         )  # 0 based bed format
         bin_id = np.core.defchararray.add(
             np.core.defchararray.add(bin_chrom, "-"), bin_start.astype(str)
@@ -91,6 +96,7 @@ def _read_snap_bins(file_path, bin_size=5000):
             {"chrom": bin_chrom, "start": bin_start, "end": bin_end},
             index=pd.Index(bin_id, name="chrom5k"),
         ),
+        dtype=data.dtype
     )
     return adata
 
@@ -109,6 +115,8 @@ def adata_to_df(adata, var_dim, obs_dim="cell", dtype=np.uint8):
 
 def snap_to_xarray(snap_path, bin_sizes=(5000,), gene=True, dtype=np.uint8):
     total_records = {}
+    if bin_sizes is None:
+        bin_sizes = []
     for bin_size in bin_sizes:
         adata = read_snap(snap_path, bin_kind=bin_size)
         var_dim = f"chrom{bin_size}".replace("000", "k")
@@ -123,12 +131,12 @@ def snap_to_xarray(snap_path, bin_sizes=(5000,), gene=True, dtype=np.uint8):
 
 
 def snap_to_zarr(
-    snap_path,
-    output_path,
-    bin_sizes=(5000,),
-    gene=True,
-    dtype=np.uint8,
-    index_prefix=None,
+        snap_path,
+        output_path,
+        bin_sizes=(5000,),
+        gene=True,
+        dtype=np.uint8,
+        index_prefix=None,
 ):
     ds = snap_to_xarray(snap_path, bin_sizes=bin_sizes, gene=gene, dtype=dtype)
     if index_prefix is not None:

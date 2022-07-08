@@ -1,14 +1,14 @@
-import subprocess
 import glob
+import json
 import logging
 import pathlib
+import subprocess
+import warnings
+from typing import Union
 
 import numpy as np
 import pandas as pd
 import xarray as xr
-import warnings
-from typing import Union
-
 import yaml
 
 log = logging.getLogger()
@@ -252,9 +252,9 @@ def highly_variable_methylation_feature(
     # save bin_count df, gather bins with more than bin_min_features features
     bin_count = (
         df.groupby(["mean_bin", "cov_bin"])
-            .apply(lambda i: i.shape[0])
-            .reset_index()
-            .sort_values(0, ascending=False)
+        .apply(lambda i: i.shape[0])
+        .reset_index()
+        .sort_values(0, ascending=False)
     )
     bin_count.head()
     bin_more_than = bin_count[bin_count[0] > bin_min_features]
@@ -475,4 +475,77 @@ def update_dataset_config(output_dir, add_ds_region_dim=None, change_region_dim=
 
     with open(f"{output_dir}/.ALLCools", "w") as f:
         yaml.dump(_config, f)
+    return
+
+
+def reduce_zarr_coords_chunks(ds_path, max_size=10000000):
+    ds = xr.open_zarr(ds_path)
+
+    # update coords encoding
+    new_coords_encoding = {}
+    for k, v in ds.coords.items():
+        encoding = v.encoding.copy()
+        chunks = []
+        preferred_chunks = {}
+        for dim in v.dims:
+            chunk_size = min(ds.get_index(dim).size, max_size)
+            chunks.append(chunk_size)
+            preferred_chunks[dim] = chunk_size
+        encoding['chunks'] = tuple(chunks)
+        encoding['preferred_chunks'] = preferred_chunks
+        try:
+            encoding['compressor'].clevel = 1
+        except KeyError:
+            pass
+        new_coords_encoding[k] = encoding
+
+    for k, encoding in new_coords_encoding.items():
+        ds.coords[k].encoding = encoding
+
+    # create a coords only dataset, save to temp zarr
+    coord_ds = xr.Dataset({}, coords=ds.coords).load()
+    temp_zarr_path = f'{ds_path}_temp.zarr'
+    coord_ds.to_zarr(temp_zarr_path)
+
+    # move previous coords and zmetadata
+    for coord in coord_ds.coords.keys():
+        subprocess.run(
+            ['mv', f'{ds_path}/{coord}', f'{temp_zarr_path}/{coord}_backup'],
+            check=True)
+    # move new coords
+    for coord in coord_ds.coords.keys():
+        subprocess.run(
+            ['mv', f'{temp_zarr_path}/{coord}', f'{ds_path}/{coord}'],
+            check=True)
+
+    # zmetadata path
+    old_zmetadata_path = f'{ds_path}/.zmetadata'
+    new_zmetadata_path = f'{temp_zarr_path}/.zmetadata'
+    # load both zmetadata
+    with open(old_zmetadata_path) as f:
+        zmeta_tmp = json.load(f)
+    with open(new_zmetadata_path) as f:
+        zmeta_coords = json.load(f)
+    # update coord zmetadata
+    z_format = zmeta_tmp['zarr_consolidated_format']
+    if z_format == 1:
+        update_meta = {
+            k: v
+            for k, v in zmeta_coords['metadata'].items()
+            if not k.startswith('.')
+        }
+        for k in zmeta_tmp['metadata'].keys():
+            if k in update_meta:
+                zmeta_tmp['metadata'][k] = update_meta[k]
+    else:
+        raise NotImplementedError(
+            f'parser of zarr_consolidated_format {z_format} not implemented'
+        )
+
+    # save the changes
+    with open(old_zmetadata_path, 'w') as f:
+        json.dump(zmeta_tmp, f)
+
+    # delete temp zarr
+    subprocess.run(['rm', '-rf', temp_zarr_path], check=True)
     return

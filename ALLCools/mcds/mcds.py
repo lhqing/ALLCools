@@ -882,7 +882,10 @@ class MCDS(xr.Dataset):
         obs_df, var_df = make_obs_df_var_df(da, obs_dim, var_dim)
         if use_vars is not None:
             var_df = var_df.loc[use_vars, :].copy()
-        adata = anndata.AnnData(X=total_data, obs=obs_df, var=var_df)
+        adata = anndata.AnnData(X=total_data,
+                                obs=obs_df,
+                                var=var_df,
+                                dtype=total_data.dtype)
 
         if 'chrom' in adata.var:
             chroms = adata.var['chrom'].astype('category')
@@ -1036,7 +1039,10 @@ class MCDS(xr.Dataset):
             obs_df, var_df = make_obs_df_var_df(use_data, obs_dim, var_dim)
 
             adata = anndata.AnnData(
-                X=use_data.astype('float32').transpose(obs_dim, var_dim).values, obs=obs_df, var=var_df
+                X=use_data.astype('float32').transpose(obs_dim, var_dim).values,
+                obs=obs_df,
+                var=var_df,
+                dtype='float32'
             )
         return adata
 
@@ -1255,3 +1261,115 @@ class MCDS(xr.Dataset):
                                                  for var_dim, da_list in data_vars_dict.items()
                                                  if len(da_list) > 0})
         return output_path
+
+    def save_feature_chunk_data(self,
+                                da_name,
+                                output_zarr_path,
+                                da_suffix='_fc',
+                                var_dim=None,
+                                loading_chunk=1000,
+                                var_chunk_size=1,
+                                obs_chunk_size=500000,
+                                compress_level=1,
+                                dtype=None):
+        """
+        Save a data array to zarr dataset, which is chunked along the var_dim.
+        This zarr dataset is useful when loading data from one or several specific
+        features, such as making a gene plot.
+
+        Parameters
+        ----------
+        da_name
+            Name of data array to save.
+        output_zarr_path
+            Path to output zarr dataset.
+        da_suffix
+            Suffix to add to the name of the data array.
+        var_dim
+            Name of var_dim. If None, use self.var_dim.
+        loading_chunk
+            Number of var to load at a time.
+        var_chunk_size
+            the var_dim chunk size of the output zarr dataset.
+        obs_chunk_size
+            the obs_dim chunk size of the output zarr dataset.
+        compress_level
+            the compress level of the output zarr dataset.
+        dtype
+            the dtype of the output zarr dataset.
+
+        Returns
+        -------
+
+        """
+        if var_dim is None:
+            var_dim = self.var_dim
+            var_names = self.var_names
+        else:
+            var_names = self.get_index(var_dim)
+        obs_dim = self.obs_dim
+
+        with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+            for chunk_start in range(0, var_names.size, loading_chunk):
+                use_vars = var_names[chunk_start:chunk_start + loading_chunk]
+                new_name = f'{da_name}{da_suffix}'
+                chunk_data = xr.Dataset({
+                    new_name: self[da_name].sel({var_dim: use_vars}).load()
+                })
+
+                # safely change dtype, prevent overflow
+                if dtype is not None:
+                    try:
+                        dtype_info = np.iinfo(dtype)
+                    except ValueError:
+                        dtype_info = np.finfo(dtype)
+                    max_val = dtype_info.max
+                    chunk_max = float(chunk_data[new_name].max())
+                    if chunk_max > max_val:
+                        print(f'{da_name} max value {chunk_max} is larger than {dtype_info.max}, '
+                              f'change dtype will set max value to {dtype_info.max}')
+                        chunk_data[new_name] = xr.where(chunk_max > max_val, max_val, chunk_data[new_name])
+
+                    min_val = dtype_info.min
+                    chunk_min = float(chunk_data[new_name].min())
+                    if chunk_min < min_val:
+                        print(f'{da_name} min value {chunk_min} is smaller than {dtype_info.min}, '
+                              f'change dtype will set min value to {dtype_info.min}')
+                        chunk_data[new_name] = xr.where(chunk_min < min_val, min_val, chunk_data[new_name])
+
+                    # finally, change dtype
+                    chunk_data[new_name] = chunk_data[new_name].astype(dtype)
+
+                # specify the chunks of the output zarr dataset
+                chunks = []
+                preferred_chunks = {}
+                for dim in chunk_data[new_name].dims:
+                    if dim == obs_dim:
+                        chunks.append(obs_chunk_size)
+                        preferred_chunks[dim] = obs_chunk_size
+                    elif dim == var_dim:
+                        chunks.append(var_chunk_size)
+                        preferred_chunks[dim] = var_chunk_size
+                    elif dim in ['mc_type', 'count_type']:
+                        chunks.append(1)
+                        preferred_chunks[dim] = 1
+                    else:
+                        dim_size = chunk_data.get_index(dim).size
+                        chunks.append(dim_size)
+                        preferred_chunks[dim] = dim_size
+                # change encoding to save the zarr in desired chunks
+                chunk_data[new_name].encoding['chunks'] = chunks
+                chunk_data[new_name].encoding['preferred_chunks'] = preferred_chunks
+
+                try:
+                    chunk_data[new_name].encoding['compressor'].clevel = compress_level
+                except KeyError:
+                    import zarr
+                    chunk_data[new_name].encoding['compressor'] = zarr.Blosc(clevel=1)
+
+                if chunk_start == 0:
+                    chunk_data.to_zarr(output_zarr_path, mode='w')
+                else:
+                    chunk_data.to_zarr(output_zarr_path, append_dim=var_dim)
+                print(f'Saved chunk {chunk_start}-{chunk_start + loading_chunk}/{var_names.size}')
+        return

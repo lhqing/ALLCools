@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+from matplotlib.colors import Normalize
 from matplotlib.lines import Line2D
 
 from .color import level_one_palette
@@ -11,6 +12,7 @@ from .utilities import (
     _extract_coords,
     _take_data_series,
     _auto_size,
+    tight_hue_range,
     zoom_ax,
 )
 
@@ -40,6 +42,7 @@ def categorical_scatter(
         size=None,
         sizes: dict = None,
         size_norm=None,
+        size_portion=0.95,
         # other
         axis_format="tiny",
         max_points=50000,
@@ -165,8 +168,23 @@ def categorical_scatter(
 
     # deal with size
     if size is not None:
+        if isinstance(size, str):
+            _data["size"] = _take_data_series(data, size).astype(float)
+        else:
+            _data["size"] = size.astype(float)
+        size = "size"
+
+        if size_norm is None:
+            # get the smallest range that include "size_portion" of data
+            size_norm = tight_hue_range(_data["size"], size_portion)
+
+            # snorm is the normalizer for size
+            size_norm = Normalize(vmin=size_norm[0], vmax=size_norm[1])
+
         # discard s from _scatter_kws and use size in sns.scatterplot
-        _scatter_kws.pop("s")
+        s = _scatter_kws.pop("s")
+        if sizes is None:
+            sizes = (min(s, 1), s)
 
     sns.scatterplot(
         x="x",

@@ -162,6 +162,7 @@ def continuous_scatter(
 
             # snorm is the normalizer for size
             size_norm = Normalize(vmin=size_norm[0], vmax=size_norm[1])
+
         # replace s with sizes
         s = _scatter_kws.pop("s")
         if sizes is None:
