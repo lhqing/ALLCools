@@ -914,8 +914,8 @@ class MCDS(xr.Dataset):
         if use_vars is not None:
             var_df = var_df.loc[use_vars, :].copy()
 
-        if dtype is not None:
-            dtype = dtype
+        if dtype is None:
+            dtype = total_data.dtype
 
         adata = anndata.AnnData(X=total_data,
                                 obs=obs_df,
