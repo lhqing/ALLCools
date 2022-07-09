@@ -844,8 +844,39 @@ class MCDS(xr.Dataset):
                         sparse=True,
                         loading_chunk=10000,
                         binarize_cutoff=None,
+                        dtype=None,
                         use_vars=None,
                         split_large_chunks=False):
+        """
+        Convert a cell-by-feature count dataarray to an adata object.
+
+        Parameters
+        ----------
+        da_name
+            Name of the dataarray
+        obs_dim
+            Name of observation
+        var_dim
+            Name of variable
+        sparse
+            If true, will adata.X convert to sparse matrix
+        loading_chunk
+            Chunk size to load data in memory
+        binarize_cutoff
+            If not None, will binarize the dataarray with values > binarize_cutoff as 1,
+            values <= binarize_cutoff as 0
+        dtype
+            The final dtype of the adata.X, if None, will use the dtype of the dataarray
+        use_vars
+            If not None, will use the specified variables as vars
+        split_large_chunks
+            dask array.slicing.split_large_chunks parameter
+
+        Returns
+        -------
+        anndata.AnnData
+        """
+
         with dask.config.set(**{'array.slicing.split_large_chunks': split_large_chunks}):
             obs_dim = self._verify_dim(obs_dim, mode='obs')
             var_dim = self._verify_dim(var_dim, mode='var')
@@ -882,10 +913,14 @@ class MCDS(xr.Dataset):
         obs_df, var_df = make_obs_df_var_df(da, obs_dim, var_dim)
         if use_vars is not None:
             var_df = var_df.loc[use_vars, :].copy()
+
+        if dtype is not None:
+            dtype = total_data.dtype
+
         adata = anndata.AnnData(X=total_data,
                                 obs=obs_df,
                                 var=var_df,
-                                dtype=total_data.dtype)
+                                dtype=dtype)
 
         if 'chrom' in adata.var:
             chroms = adata.var['chrom'].astype('category')
@@ -899,8 +934,37 @@ class MCDS(xr.Dataset):
                         obs_dim=None,
                         var_dim=None,
                         sparse=True,
+                        dtype=None,
                         loading_chunk=50000,
                         binarize_cutoff=None):
+        """
+        Convert a cell-by-feature methylation score dataarray to an adata object.
+
+        Parameters
+        ----------
+        mc_type
+            Name of the methylation type
+        quant_type
+            Name of the quantification type, can be "hypo-score" or "hyper-score"
+        obs_dim
+            Name of observation
+        var_dim
+            Name of variable
+        sparse
+            If true, will convert adata.X to sparse matrix
+        dtype
+            If not None, will use the dtype of the adata.X
+        loading_chunk
+            Chunk size to load data in memory
+        binarize_cutoff
+            If not None, will binarize the dataarray with values > binarize_cutoff as 1,
+            values <= binarize_cutoff as 0
+
+        Returns
+        -------
+        anndata.AnnData
+        """
+
         QUANT_TYPES = ['hypo-score', 'hyper-score']
         if quant_type.lower().startswith('hypo'):
             quant_type = 'hypo-score'
@@ -918,6 +982,7 @@ class MCDS(xr.Dataset):
                                      obs_dim=obs_dim,
                                      var_dim=var_dim,
                                      sparse=sparse,
+                                     dtype=dtype,
                                      loading_chunk=loading_chunk,
                                      binarize_cutoff=binarize_cutoff)
         return adata
