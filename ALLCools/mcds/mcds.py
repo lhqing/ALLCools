@@ -844,7 +844,7 @@ class MCDS(xr.Dataset):
                         sparse=True,
                         loading_chunk=10000,
                         binarize_cutoff=None,
-                        dtype=None,
+                        dtype='float32',
                         use_vars=None,
                         split_large_chunks=False):
         """
@@ -934,7 +934,7 @@ class MCDS(xr.Dataset):
                         obs_dim=None,
                         var_dim=None,
                         sparse=True,
-                        dtype=None,
+                        dtype='float32',
                         loading_chunk=50000,
                         binarize_cutoff=None):
         """
@@ -1012,6 +1012,7 @@ class MCDS(xr.Dataset):
             var_dim=None,
             da_suffix="frac",
             select_hvf=True,
+            dtype='float32',
             split_large_chunks=True
     ):
         """
@@ -1028,6 +1029,8 @@ class MCDS(xr.Dataset):
             Name of observation
         select_hvf
             Select HVF or not, if True, will use mcds.coords['{var_dim}_{mc_type}_feature_select'] to select HVFs
+        dtype
+            data type of adata.X
         split_large_chunks
             Whether split large chunks in dask config array.slicing.split_large_chunks
 
@@ -1104,10 +1107,10 @@ class MCDS(xr.Dataset):
             obs_df, var_df = make_obs_df_var_df(use_data, obs_dim, var_dim)
 
             adata = anndata.AnnData(
-                X=use_data.astype('float32').transpose(obs_dim, var_dim).values,
+                X=use_data.astype(dtype).transpose(obs_dim, var_dim).values,
                 obs=obs_df,
                 var=var_df,
-                dtype='float32'
+                dtype=dtype
             )
         return adata
 
