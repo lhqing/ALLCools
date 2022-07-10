@@ -3,16 +3,7 @@ import numpy as np
 from scipy.cluster.hierarchy import dendrogram
 import matplotlib.pyplot as plt
 import joblib
-
-
-def install_r_package(name):
-    from rpy2.robjects.vectors import StrVector
-    from rpy2.robjects.packages import importr, isinstalled
-
-    if not isinstalled(name):
-        utils = importr("utils")
-        utils.chooseCRANmirror(ind=1)
-        utils.install_packages(StrVector([name]))
+from .rutilities import install_r_package
 
 
 def _hclust_to_scipy_linkage(result, plot=True):
@@ -96,7 +87,7 @@ def _hclust_to_scipy_linkage(result, plot=True):
 
 class Dendrogram:
     def __init__(
-        self, nboot=1000, method_dist="correlation", method_hclust="average", n_jobs=-1
+            self, nboot=1000, method_dist="correlation", method_hclust="average", n_jobs=-1
     ):
         self.nboot = nboot
         self.method_dist = method_dist
