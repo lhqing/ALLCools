@@ -119,9 +119,9 @@ def _alignment_score(obsm_list,
     # number of knn from the same dataset
     num_same_dataset = (knn_dataset[:, [0]] == knn_dataset[:, 1:]).sum(axis=1)
 
-    # cell alignment score range [0, 2],
-    # 0 means all neighbor from the same dataset
-    # 2 means all neighbor from different dataset
+    # cell alignment score,
+    # smaller value means more neighbors from the same dataset
+    # larger value means more neighbors from different dataset
     alignment_per_cell = 1 - (num_same_dataset - k / n_ds) / (k - k / n_ds)
 
     # aggregate alignment per dataset
@@ -311,10 +311,10 @@ def calculate_kbet_accept_rate(adata, dataset_col, obsm_key, k=20, test_size=100
     data = np.concatenate(data)
     batch = np.concatenate(batch)
 
+    # run kBET R function
     test_size = min(test_size, int(data.shape[0] * 0.1))
     test_size = max(test_size, 25)
     k = min(k, test_size)
-
     summary, results, ave_pval, stats, params, outsider = kbet.kBET(
         data,
         batch,
@@ -331,6 +331,8 @@ def calculate_kbet_accept_rate(adata, dataset_col, obsm_key, k=20, test_size=100
         verbose=True,
         # adapt=TRUE
     )
+
+    # reformat kBET results
     summary = pd.DataFrame(summary)
     results = pd.DataFrame(results)
     stats = {k: np.array(v) for k, v in stats.items()}
@@ -343,6 +345,7 @@ def calculate_kbet_accept_rate(adata, dataset_col, obsm_key, k=20, test_size=100
                    'params': params,
                    'outsider': outsider}
 
+    # calculate average observed accept rate
     overall_accept_rate = 1 - stats['kBET.observed'].mean()
     adata.uns['kbet'] = {'overall_accept_rate': overall_accept_rate,
                          'dataset_col': dataset_col,
