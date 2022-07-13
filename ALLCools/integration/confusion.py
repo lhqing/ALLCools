@@ -74,7 +74,7 @@ def calculate_overlap_score(left_part, right_part):
         records,
         columns=[original_left_name, original_right_name, "overlap_value"])
     confusion_matrix = flat_confusion_matrix.set_index(
-        [original_left_name, original_right_name]).squeeze().unstack()
+        [original_left_name, original_right_name]).unstack()
     return confusion_matrix
 
 
