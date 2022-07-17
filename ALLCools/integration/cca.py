@@ -1,5 +1,4 @@
 import numpy as np
-# from dask_ml.decomposition import IncrementalPCA as dIPCA
 from sklearn.decomposition import TruncatedSVD
 from sklearn.utils.extmath import safe_sparse_dot
 from ..clustering.lsi import tf_idf
@@ -14,7 +13,8 @@ def cca(data1,
         n_components=50,
         max_cc_cell=20000,
         chunk_size=50000,
-        random_state=0):
+        random_state=0,
+        svd_algorithm='randomized'):
     np.random.seed(random_state)
 
     # downsample cells
@@ -57,7 +57,7 @@ def cca(data1,
 
     # CCA decomposition
     model = TruncatedSVD(n_components=n_components,
-                         algorithm='arpack',
+                         algorithm=svd_algorithm,
                          random_state=random_state)
     U = model.fit_transform(tf_data1.dot(tf_data2.T))
 
@@ -179,6 +179,7 @@ def lsi_cca(data1,
             n_components=50,
             max_cc_cell=20000,
             chunk_size=50000,
+            svd_algorithm='randomized',
             min_cov_filter=5):
     np.random.seed(0)
 
@@ -218,7 +219,7 @@ def lsi_cca(data1,
 
     # CCA part
     model = TruncatedSVD(n_components=n_components,
-                         algorithm='arpack',
+                         algorithm=svd_algorithm,
                          random_state=0)
     tf = tf1.dot(tf2.T)
     U = model.fit_transform(tf)

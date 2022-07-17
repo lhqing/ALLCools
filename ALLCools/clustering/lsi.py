@@ -3,30 +3,40 @@ import numpy as np
 import pandas as pd
 from sklearn.utils.validation import check_is_fitted
 from anndata import AnnData
+from scipy.sparse import issparse
+import joblib
 
 
 def tf_idf(data, scale_factor=100000, idf=None):
+    sparse_input = issparse(data)
+
     if idf is None:
         # add small value in case downsample creates empty feature
         _col_sum = data.sum(axis=0)
-        try:
+        if sparse_input:
             col_sum = _col_sum.A1.astype(np.float32) + 0.00001
-        except AttributeError:
+        else:
             col_sum = _col_sum.ravel().astype(np.float32) + 0.00001
         idf = np.log(1 + data.shape[0] / col_sum).astype(np.float32)
     else:
         idf = idf.astype(np.float32)
 
     _row_sum = data.sum(axis=1)
-    try:
+    if sparse_input:
         row_sum = _row_sum.A1.astype(np.float32) + 0.00001
-    except AttributeError:
+    else:
         row_sum = _row_sum.ravel().astype(np.float32) + 0.00001
 
     tf = data.astype(np.float32)
-    tf.data = tf.data / np.repeat(row_sum, row_sum.astype(int))
-    tf.data = np.log1p(np.multiply(tf.data, scale_factor, dtype='float32'))
-    tf = tf.multiply(idf)
+
+    if sparse_input:
+        tf.data = tf.data / np.repeat(row_sum, row_sum.astype(int))
+        tf.data = np.log1p(np.multiply(tf.data, scale_factor, dtype='float32'))
+        tf = tf.multiply(idf)
+    else:
+        tf = tf / row_sum[:, np.newaxis]
+        tf = np.log1p(np.multiply(tf, scale_factor, dtype='float32'))
+        tf = tf * idf
     return tf, idf
 
 
@@ -177,3 +187,6 @@ class LSI:
             data.obsm[obsm_name] = tf_reduce
         else:
             return tf_reduce
+
+    def save(self, path):
+        joblib.dump(self, path)

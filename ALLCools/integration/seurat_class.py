@@ -310,6 +310,7 @@ class SeuratIntegration:
                     key_local='X_pca',
                     key_anchor='X',
                     dim_red='pca',
+                    svd_algorithm='randomized',
                     scale1=False,
                     scale2=False,
                     k_filter=None,
@@ -351,9 +352,11 @@ class SeuratIntegration:
                 # 2. run cca between datasets
                 print('Run CCA')
                 if dim_red == 'pca':
-                    U, V = cca(U, V, scale1=scale1, scale2=scale2, n_components=n_components)
+                    U, V = cca(U, V, scale1=scale1, scale2=scale2, n_components=n_components,
+                               svd_algorithm=svd_algorithm)
                 elif dim_red == 'lsi':
-                    U, V = lsi_cca(U, V, n_components=n_components, max_cc_cell=max_cc_cells)
+                    U, V = lsi_cca(U, V, n_components=n_components, max_cc_cell=max_cc_cells,
+                                   svd_algorithm=svd_algorithm)
                     # U.shape = (self.n_cells[i], n_components)
                     # V.shape = (self.n_cells[j], n_components)
 

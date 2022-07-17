@@ -73,9 +73,10 @@ def calculate_overlap_score(left_part, right_part):
     flat_confusion_matrix = pd.DataFrame(
         records,
         columns=[original_left_name, original_right_name, "overlap_value"])
-        
-    confusion_matrix = flat_confusion_matrix.pivot(index = original_left_name, 
-                                    columns = original_right_name, values= 'overlap_value')
+
+    confusion_matrix = flat_confusion_matrix.pivot(index=original_left_name,
+                                                   columns=original_right_name,
+                                                   values='overlap_value')
     return confusion_matrix
 
 
