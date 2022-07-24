@@ -322,7 +322,8 @@ class ReproduciblePCA:
             )
 
         # add hvf info into mcds
-        hvf_judge = mcds.get_index(self.var_dim).isin(self.pc_vars)
+        hvf_judge = mcds.get_index(self.var_dim)
+        hvf_judge = pd.Series(hvf_judge.isin(self.pc_vars), index=hvf_judge)
         mcds.coords[f"{self.var_dim}_{self.mc_type}_feature_select"] = hvf_judge
 
         # adata only contains self.pc_vars
@@ -331,7 +332,7 @@ class ReproduciblePCA:
             var_dim=self.var_dim,
             da_suffix="frac",
             obs_dim="cell",
-            select_hvf=True,
+            select_hvf=f"{self.var_dim}_{self.mc_type}_feature_select",
             split_large_chunks=True,
         )
         return adata
