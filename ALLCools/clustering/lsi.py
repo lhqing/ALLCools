@@ -30,7 +30,7 @@ def tf_idf(data, scale_factor=100000, idf=None):
     tf = data.astype(np.float32)
 
     if sparse_input:
-        tf.data = tf.data / np.repeat(row_sum, row_sum.astype(int))
+        tf.data = tf.data / np.repeat(row_sum, tf.getnnz(axis=1))
         tf.data = np.log1p(np.multiply(tf.data, scale_factor, dtype='float32'))
         tf = tf.multiply(idf)
     else:
