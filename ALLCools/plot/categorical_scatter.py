@@ -27,6 +27,7 @@ def categorical_scatter(
         # color
         hue=None,
         palette="auto",
+        color=None,
         # text annotation
         text_anno=None,
         text_anno_kws=None,
@@ -72,12 +73,14 @@ def categorical_scatter(
         coords name, if provided, will automatically search for x and y
     x
         x coord name
-    y
+    y: str
         y coord name
     hue
-        categorical col name or series for color hue
-    palette
+        categorical col name or series for color hue.
+    palette: str
         palette of the hue, str or dict
+    color: str
+        specify single color for all the dots
     text_anno
         categorical col name or series for text annotation
     text_anno_kws
@@ -141,6 +144,10 @@ def categorical_scatter(
                     "legend": None,
                     "palette": palette,
                     'rasterized': rasterized}
+    if color is not None:
+        if hue is not None:
+            raise ValueError("Only one of color and hue can be provided")
+        _scatter_kws["color"] = color
     if scatter_kws is not None:
         _scatter_kws.update(scatter_kws)
 

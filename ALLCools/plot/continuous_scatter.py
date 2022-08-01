@@ -55,6 +55,7 @@ def continuous_scatter(
         hue=None,
         hue_norm=None,
         hue_portion=0.95,
+        color=None,
         cmap="viridis",
         colorbar=True,
         colorbar_label_kws=None,
@@ -116,6 +117,10 @@ def continuous_scatter(
                     "s": s,
                     "legend": None,
                     'rasterized': rasterized}
+    if color is not None:
+        if hue is not None:
+            raise ValueError("Only one of color and hue can be provided")
+        _scatter_kws["color"] = color
     if scatter_kws is not None:
         _scatter_kws.update(scatter_kws)
 
