@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.colors import Normalize
 from matplotlib.lines import Line2D
+import xarray as xr
 
 from .color import level_one_palette
 from .contour import density_contour
@@ -161,16 +162,21 @@ def categorical_scatter(
         hue = "hue"
         _data["hue"] = _data["hue"].astype("category").cat.remove_unused_categories()
 
-        # deal with color palette
+        # if the object has get_palette method, use it (AnnotZarr)
         palette = _scatter_kws["palette"]
-        if isinstance(palette, str) or isinstance(palette, list):
-            palette_dict = level_one_palette(_data["hue"], order=None, palette=palette)
-        elif isinstance(palette, dict):
-            palette_dict = palette
-        else:
-            raise TypeError(
-                f"Palette can only be str, list or dict, " f"got {type(palette)}"
-            )
+        if hasattr(_data, 'get_palette'):
+            palette_dict = _data.get_palette(hue)
+
+        # deal with other color palette
+        if palette_dict is None:
+            if isinstance(palette, str) or isinstance(palette, list):
+                palette_dict = level_one_palette(_data["hue"], order=None, palette=palette)
+            elif isinstance(palette, dict):
+                palette_dict = palette
+            else:
+                raise TypeError(
+                    f"Palette can only be str, list or dict, " f"got {type(palette)}"
+                )
         _scatter_kws["palette"] = palette_dict
 
     # deal with size
