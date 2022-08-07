@@ -55,7 +55,7 @@ class MCDS(xr.Dataset):
 
     __slots__ = ()
 
-    def __init__(self, dataset, obs_dim=None, var_dim=None):
+    def __init__(self, dataset, coords=None, attrs=None, obs_dim=None, var_dim=None):
         """
         Init MCDS
 
@@ -63,8 +63,14 @@ class MCDS(xr.Dataset):
         ----------
         dataset
         """
+        if isinstance(dataset, xr.Dataset):
+            data_vars = dataset.data_vars
+            coords = dataset.coords if coords is None else coords
+            attrs = dataset.attrs if attrs is None else attrs
+        else:
+            data_vars = dataset
         super().__init__(
-            data_vars=dataset.data_vars, coords=dataset.coords, attrs=dataset.attrs
+            data_vars=data_vars, coords=coords, attrs=attrs
         )
         self.obs_dim = obs_dim
         self.var_dim = var_dim
@@ -149,13 +155,30 @@ class MCDS(xr.Dataset):
             return dim
 
     @classmethod
+    def get_var_dims(cls, mcds_paths):
+        """
+        Get var_dim from MCDS files
+        """
+        _var_dims = set()
+        if isinstance(mcds_paths, (str, pathlib.Path)):
+            mcds_paths = [mcds_paths]
+        for mcds_path in mcds_paths:
+            config_path = pathlib.Path(f'{mcds_path}/.ALLCools')
+            if config_path.exists():
+                with open(config_path, 'r') as f:
+                    config = yaml.safe_load(f)
+                    for dim in config['ds_region_dim'].values():
+                        _var_dims.add(dim)
+        return list(_var_dims)
+
+    @classmethod
     def open(cls,
              mcds_paths,
              obs_dim="cell",
              use_obs=None,
              var_dim=None,
              chunks='auto',
-             split_large_chunks=True,
+             split_large_chunks=False,
              obj_to_str=True,
              engine=None,
              coords='minimal',
@@ -366,18 +389,24 @@ class MCDS(xr.Dataset):
             reset larger values in the normalized mC rate data array to this
         da_suffix
             name suffix appended to the calculated mC rate data array
-        Returns
-        -------
-
         """
-        var_dim = self._verify_dim(dim=var_dim, mode='var')
-
         if da is None:
             da = f"{var_dim}_da"
         if da not in self.data_vars:
             raise KeyError(f"{da} is not in this dataset")
         if var_dim not in self[da].dims:
             raise KeyError(f"{var_dim} is not a dimension of {da}")
+
+        frac = self._calculate_frac(var_dim=var_dim,
+                                    da=da,
+                                    normalize_per_cell=normalize_per_cell,
+                                    clip_norm_value=clip_norm_value)
+        self[da + "_" + da_suffix] = frac
+        return
+
+    def _calculate_frac(self, var_dim, da, normalize_per_cell, clip_norm_value):
+        """Helper function to calculate mC rate data array for certain feature type (var_dim)."""
+        var_dim = self._verify_dim(dim=var_dim, mode='var')
 
         da_mc = self[da].sel(count_type="mc")
         da_cov = self[da].sel(count_type="cov")
@@ -388,7 +417,33 @@ class MCDS(xr.Dataset):
             normalize_per_cell=normalize_per_cell,
             clip_norm_value=clip_norm_value,
         )
-        self[da + "_" + da_suffix] = frac
+        return frac
+
+    def add_m_value(self,
+                    var_dim=None,
+                    da=None,
+                    alpha=0.01,
+                    normalize_per_cell=True,
+                    da_suffix="mvalue"):
+        if da is None:
+            da = f"{var_dim}_da"
+        if da not in self.data_vars:
+            raise KeyError(f"{da} is not in this dataset")
+        if var_dim not in self[da].dims:
+            raise KeyError(f"{var_dim} is not a dimension of {da}")
+
+        frac = self._calculate_frac(var_dim=var_dim,
+                                    da=da,
+                                    normalize_per_cell=False,
+                                    clip_norm_value=None)
+
+        m_value = np.log2((frac + alpha) / (1 - frac + alpha))
+
+        if normalize_per_cell:
+            m_value = m_value / m_value.mean(dim=var_dim)
+
+        self[da + "_" + da_suffix] = m_value
+        return
 
     def add_mc_rate(self, *args, **kwargs):
         warnings.warn(
@@ -397,7 +452,7 @@ class MCDS(xr.Dataset):
         )
         self.add_mc_frac(*args, **kwargs)
 
-    def add_feature_cov_mean(self, obs_dim=None, var_dim=None, plot=True):
+    def add_feature_cov_mean(self, obs_dim=None, var_dim=None, plot=True, da_name=None):
         """
         Add feature cov mean across obs_dim.
 
@@ -409,12 +464,14 @@ class MCDS(xr.Dataset):
             Name of obs dimension
         plot
             If true, plot the distribution of feature cov mean
-        Returns
-        -------
-        None
+        da_name
+            Name of the calculated data array, if None, will use f'{var_dim}_da'
         """
         obs_dim = self._verify_dim(obs_dim, mode='obs')
         var_dim = self._verify_dim(var_dim, mode='var')
+
+        if da_name is None:
+            da_name = f'{var_dim}_da'
 
         cov_mean_key = f"{var_dim}_cov_mean"
         if cov_mean_key in self.coords:
@@ -422,7 +479,7 @@ class MCDS(xr.Dataset):
                   f'existing results by `del mcds.coords["{cov_mean_key}"]` and recalculate.')
             feature_cov_mean = self.coords[cov_mean_key].to_pandas()
         else:
-            _da = self[f"{var_dim}_da"]
+            _da = self[da_name]
             if 'mc_type' in _da.dims:
                 feature_cov_mean = _da.sel(count_type="cov").sum(dim="mc_type").mean(dim=obs_dim).squeeze().to_pandas()
             else:
@@ -606,8 +663,8 @@ class MCDS(xr.Dataset):
             var_dim=None,
             obs_dim=None,
             n_top_feature=5000,
-            da_suffix="frac",
             da_name=None,
+            da_suffix="frac",
             plot=True
     ):
         from sklearn.svm import SVR
@@ -616,11 +673,13 @@ class MCDS(xr.Dataset):
         var_dim = self._verify_dim(var_dim, mode='var')
 
         if da_name is None:
+            da_name = f'{var_dim}_da'
             frac_da_name = self._get_da_name(var_dim, da_suffix)
         else:
-            frac_da_name = da_name
+            frac_da_name = f'{da_name}_{da_suffix}'
+
         frac_da = self[frac_da_name]
-        count_da = self[f"{var_dim}_da"]
+        count_da = self[da_name]
         if 'mc_type' in self.dims:
             if mc_type is None:
                 mc_types = self.get_index('mc_type')
@@ -739,6 +798,7 @@ class MCDS(xr.Dataset):
             bin_min_features=5,
             mean_binsize=0.05,
             cov_binsize=100,
+            da_name=None,
             da_suffix="frac",
             plot=True
     ):
@@ -771,6 +831,8 @@ class MCDS(xr.Dataset):
             bin size to separate features across mean
         cov_binsize
             bin size to separate features across coverage
+        da_name
+            Name of da to use, default is None, infer from var_dim and da_suffix
         da_suffix
             Suffix to add to the name of the dataarray
         plot
@@ -783,7 +845,11 @@ class MCDS(xr.Dataset):
         obs_dim = self._verify_dim(obs_dim, mode='obs')
         var_dim = self._verify_dim(var_dim, mode='var')
 
-        frac_da_name = self._get_da_name(var_dim, da_suffix)
+        if da_name is None:
+            frac_da_name = self._get_da_name(var_dim, da_suffix)
+        else:
+            frac_da_name = f'{da_name}_{da_suffix}'
+
         frac_da = self[frac_da_name]
         if 'mc_type' in self.dims:
             if mc_type is None:
@@ -1010,10 +1076,11 @@ class MCDS(xr.Dataset):
             mc_type=None,
             obs_dim=None,
             var_dim=None,
+            da_name=None,
             da_suffix="frac",
             select_hvf=True,
             dtype='float32',
-            split_large_chunks=True
+            split_large_chunks=False
     ):
         """
         Get anndata from MCDS mC rate matrix
@@ -1052,10 +1119,14 @@ class MCDS(xr.Dataset):
         else:
             mc_type = None
 
+        if da_name is None:
+            frac_da_name = self._get_da_name(var_dim, da_suffix)
+        else:
+            frac_da_name = f'{da_name}_{da_suffix}'
+
         with dask.config.set(
                 **{"array.slicing.split_large_chunks": split_large_chunks}
         ):
-            frac_da_name = self._get_da_name(var_dim, da_suffix)
             frac_da = self[frac_da_name]
             if mc_type is None:
                 if select_hvf:
@@ -1130,7 +1201,7 @@ class MCDS(xr.Dataset):
             self.coords[cluster_col.name] = cluster_col
             cluster_col = cluster_col.name
 
-        with dask.config.set(**{"array.slicing.split_large_chunks": True}):
+        with dask.config.set(**{"array.slicing.split_large_chunks": False}):
             cluster_mcds = self.groupby(cluster_col).sum(dim=obs_dim).load()
             cluster_mcds = MCDS(cluster_mcds)
 

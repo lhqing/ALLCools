@@ -174,16 +174,17 @@ def calculate_gch_rate(mcds, var_dim="chrom100k"):
 def get_mean_dispersion(x, obs_dim):
     # mean
     mean = x.mean(dim=obs_dim).load()
+    abs_mean = np.abs(mean)
 
     # var
     # enforce R convention (unbiased estimator) for variance
     mean_sq = (x * x).mean(dim=obs_dim).load()
-    var = (mean_sq - mean ** 2) * (x.sizes[obs_dim] / (x.sizes[obs_dim] - 1))
+    var = (mean_sq - abs_mean ** 2) * (x.sizes[obs_dim] / (x.sizes[obs_dim] - 1))
 
     # now actually compute the dispersion
-    mean.where(mean > 1e-12, 1e-12)  # set entries equal to zero to small value
+    abs_mean.where(abs_mean > 1e-12, 1e-12)  # set entries equal to zero to small value
     # raw dispersion is the variance normalized by mean
-    dispersion = var / mean
+    dispersion = var / abs_mean
     return mean, dispersion
 
 
@@ -237,9 +238,9 @@ def highly_variable_methylation_feature(
     cov = feature_mean_cov
 
     mean, dispersion = get_mean_dispersion(x, obs_dim=obs_dim)
-    dispersion = np.log(dispersion)
+    dispersion = np.log(dispersion + 1e-12)
 
-    # all of the following quantities are "per-feature" here
+    # all the following quantities are "per-feature" here
     df = pd.DataFrame(index=cell_by_feature_matrix.get_index(var_dim))
     df["mean"] = mean.to_pandas().copy()
     df["dispersion"] = dispersion.to_pandas().copy()
@@ -479,6 +480,7 @@ def update_dataset_config(output_dir, add_ds_region_dim=None, change_region_dim=
 
 
 def reduce_zarr_coords_chunks(ds_path, max_size=10000000):
+    """Reduce zarr dataset coordinates chunks to speed up coordinate loading."""
     ds = xr.open_zarr(ds_path)
 
     # update coords encoding
