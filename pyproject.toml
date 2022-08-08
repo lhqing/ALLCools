@@ -1,5 +1,109 @@
-[build-system]
-requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=3.4"]
+[project]
+name = "allcools"
+description = "Toolkit for single-cell DNA methylome and multiomic data analysis."
+authors = [
+    { name = "Hanqing Liu" },
+]
+maintainers = [
+    { name = "Hanqing Liu", email = "hanliu@salk.edu" },
+    { name = "Jingtian Zhou", email = "jzhou@salk.edu" },
+    { name = "Wei Tian", email = "wtian@salk.edu" }
+]
+urls.Documentation = "https://lhqing.github.io/ALLCools/intro.html"
+urls.Source = "https://github.com/lhqing/ALLCools"
+urls.Home-page = "https://github.com/lhqing/ALLCools"
+version = "1.0.0"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+readme = "README.md"
+dependencies = [
+    "anndata",
+    "numpy",
+    'matplotlib',
+    "natsort",
+    "pandas",
+    "pybedtools",
+    "pyBigWig",
+    "pysam",
+    'seaborn',
+    "xarray",
+    "pyyaml",
+]
 
-[tool.setuptools_scm]
-write_to = 'ALLCools/_version.py'
+[project.optional-dependencies]
+dev = [
+    # dev version generation
+    "bump2version",
+    "pre-commit"
+]
+analysis = [
+    "biopython",
+    "dask",
+    "numba",
+    "imblearn",
+    "leidenalg",
+    "networkx",
+    "opentsne",
+    "plotly",
+    "pynndescent",
+    "scanpy",
+    "scikit-learn",
+    "statsmodels",
+    "rpy2",
+    "tpot"
+]
+doc = [
+    "jupyter-book",
+    "ghp-import"
+]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+
+[tool.coverage.run]
+source = ["allcools"]
+omit = [
+    "**/test_*.py",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+xfail_strict = true
+addopts = [
+    "--import-mode=importlib", # allow using tests files with same name
+]
+
+[tool.isort]
+include_trailing_comma = true
+multi_line_output = 3
+profile = "black"
+skip_glob = ["docs/*"]
+
+[tool.black]
+line-length = 120
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''
+
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = [
+    "flit_core >=3.4,<4",
+    "importlib_metadata>=0.7; python_version < '3.8'",
+]

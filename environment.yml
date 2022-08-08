@@ -15,7 +15,6 @@ dependencies:
   - jupyter_contrib_nbextensions
   - leidenalg
   - natsort
-  - netCDF4
   - networkx
   - opentsne
   - plotly
