@@ -4,15 +4,17 @@ import xarray as xr
 from Bio import SeqIO
 
 
-def prepare_motif_scan_snakemake(output_dir,
-                                 fasta_path,
-                                 region_dim,
-                                 motif_dim='motif',
-                                 motif_set_path=None,
-                                 chunk_size=100000,
-                                 combine_cluster=True,
-                                 fnr_fpr_fold=1000,
-                                 cpu=10):
+def prepare_motif_scan_snakemake(
+    output_dir,
+    fasta_path,
+    region_dim,
+    motif_dim="motif",
+    motif_set_path=None,
+    chunk_size=100000,
+    combine_cluster=True,
+    fnr_fpr_fold=1000,
+    cpu=10,
+):
     output_dir = pathlib.Path(output_dir)
     output_dir.mkdir(exist_ok=True)
 
@@ -22,21 +24,21 @@ def prepare_motif_scan_snakemake(output_dir,
         for i, seq in enumerate(SeqIO.parse(fasta, "fasta")):
             seqs.append(seq)
             if (i + 1) % chunk_size == 0:
-                motif_chunk_dir = output_dir / f'chunk_{i // chunk_size:06d}'
+                motif_chunk_dir = output_dir / f"chunk_{i // chunk_size:06d}"
                 motif_chunk_dir.mkdir(exist_ok=True)
-                with open(motif_chunk_dir / f'regions.fasta', 'w') as out_f:
-                    SeqIO.write(seqs, out_f, 'fasta')
+                with open(motif_chunk_dir / "regions.fasta", "w") as out_f:
+                    SeqIO.write(seqs, out_f, "fasta")
                 seqs = []
 
         if len(seqs) > 0:
-            motif_chunk_dir = output_dir / f'chunk_{i // chunk_size:06d}'
+            motif_chunk_dir = output_dir / f"chunk_{i // chunk_size:06d}"
             motif_chunk_dir.mkdir(exist_ok=True)
-            with open(motif_chunk_dir / f'regions.fasta', 'w') as out_f:
-                SeqIO.write(seqs, out_f, 'fasta')
+            with open(motif_chunk_dir / "regions.fasta", "w") as out_f:
+                SeqIO.write(seqs, out_f, "fasta")
 
     # make snakefile
     snakemake_cmds = []
-    for motif_chunk_dir in output_dir.glob('chunk_*'):
+    for motif_chunk_dir in output_dir.glob("chunk_*"):
         snakemake_string = f"""
 region_dim = '{region_dim}'
 cpu = {cpu}
@@ -79,21 +81,21 @@ rule run_scan:
         with open('Success', 'w') as f:
             f.write('42')
 """
-        with open(motif_chunk_dir / 'Snakefile', 'w') as f:
+        with open(motif_chunk_dir / "Snakefile", "w") as f:
             f.write(snakemake_string)
             motif_chunk_dir = motif_chunk_dir.absolute()
-            snakemake_cmd = f'snakemake -d {motif_chunk_dir} -s {motif_chunk_dir}/Snakefile -j 1'
+            snakemake_cmd = f"snakemake -d {motif_chunk_dir} -s {motif_chunk_dir}/Snakefile -j 1"
             snakemake_cmds.append(snakemake_cmd)
 
-    with open(f'{output_dir}/snakemake_cmds.txt', 'w') as f:
-        f.write('\n'.join(snakemake_cmds))
+    with open(f"{output_dir}/snakemake_cmds.txt", "w") as f:
+        f.write("\n".join(snakemake_cmds))
 
-    with open(f'{output_dir}/status', 'w') as f:
-        f.write('prepared')
+    with open(f"{output_dir}/status", "w") as f:
+        f.write("prepared")
 
-    print('Snakemake files generated for motif scan.')
-    print(f'Snakemake commands are listed in\n{output_dir}/snakemake_cmds.txt')
-    print('Execute the snakemake commands via proper scheduler or work station.')
+    print("Snakemake files generated for motif scan.")
+    print(f"Snakemake commands are listed in\n{output_dir}/snakemake_cmds.txt")
+    print("Execute the snakemake commands via proper scheduler or work station.")
     return
 
 
@@ -101,8 +103,8 @@ def check_snakemake_success(output_dir):
     output_dir = pathlib.Path(output_dir)
     all_success = True
     na_paths = []
-    for chunk_dir in output_dir.glob('chunk_*'):
-        success_flag = chunk_dir / 'Success'
+    for chunk_dir in output_dir.glob("chunk_*"):
+        success_flag = chunk_dir / "Success"
         if not success_flag.exists():
             all_success = False
             na_paths.append(str(chunk_dir))
@@ -110,25 +112,22 @@ def check_snakemake_success(output_dir):
         return True
     else:
         path_str = "\n".join(na_paths)
-        print(f'These chunks have not been executed successfully:')
+        print("These chunks have not been executed successfully:")
         print(path_str)
         return False
 
 
 def save_motif_chunks(motif_chunk_dir, region_dim, output_path, is_motif_cluster):
     if is_motif_cluster:
-        chunk_list = sorted(pathlib.Path(motif_chunk_dir).glob('chunk_*/dmr_motif-cluster'))
+        chunk_list = sorted(pathlib.Path(motif_chunk_dir).glob("chunk_*/dmr_motif-cluster"))
     else:
-        chunk_list = sorted(pathlib.Path(motif_chunk_dir).glob('chunk_*/dmr_motif'))
+        chunk_list = sorted(pathlib.Path(motif_chunk_dir).glob("chunk_*/dmr_motif"))
 
     # load all chunks, determine coordinate dtypes
-    total_ds = xr.open_mfdataset(chunk_list,
-                                 engine='zarr',
-                                 concat_dim=region_dim,
-                                 combine='nested')
+    total_ds = xr.open_mfdataset(chunk_list, engine="zarr", concat_dim=region_dim, combine="nested")
     coord_dtypes = {
         # specifically deal with string dtype
-        k: v.dtype if v.dtype != 'O' else v.astype(str).dtype
+        k: v.dtype if v.dtype != "O" else v.astype(str).dtype
         for k, v in total_ds.coords.items()
     }
 
@@ -141,7 +140,7 @@ def save_motif_chunks(motif_chunk_dir, region_dim, output_path, is_motif_cluster
                 chunk_ds.coords[k] = chunk_ds.coords[k].astype(coord_dtypes[k])
 
         if i == 0:
-            chunk_ds.to_zarr(output_path, mode='w')
+            chunk_ds.to_zarr(output_path, mode="w")
         else:
             chunk_ds.to_zarr(output_path, append_dim=region_dim)
     return

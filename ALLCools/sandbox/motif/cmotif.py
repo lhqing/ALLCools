@@ -5,13 +5,13 @@ from collections import defaultdict
 import msgpack
 import pandas as pd
 
-from .fimo import _scan_motif_over_fasta, _aggregate_motif_beds
-from ..dmr.get_fasta import get_fasta
 from ..._bam_to_allc import _get_chromosome_sequence_upper, _read_faidx
+from ..dmr.get_fasta import get_fasta
+from .fimo import _aggregate_motif_beds, _scan_motif_over_fasta
 
 
 def _generate_c_motif_database(motif_bed, fasta_path, output_dir, bin_size=10000000):
-    fai_path = f'{fasta_path}.fai'
+    fai_path = f"{fasta_path}.fai"
     fai_df = _read_faidx(fai_path)
 
     output_dir = pathlib.Path(output_dir).absolute()
@@ -21,11 +21,11 @@ def _generate_c_motif_database(motif_bed, fasta_path, output_dir, bin_size=10000
     motif_names = {}
     chrom_file_paths = []
     with open(motif_bed) as f:
-        cur_chrom = ''
-        full_chrom_seq = ''
+        cur_chrom = ""
+        full_chrom_seq = ""
         record_dict = defaultdict(list)
         for line in f:
-            chrom, start, end, name, strand = line.strip('\n').split('\t')
+            chrom, start, end, name, strand = line.strip("\n").split("\t")
             try:
                 motif_int_id = motif_names[name]
             except KeyError:
@@ -41,17 +41,17 @@ def _generate_c_motif_database(motif_bed, fasta_path, output_dir, bin_size=10000
                 except KeyError:
                     continue
                 # dump records and init
-                if cur_chrom != '':
-                    file_path = output_dir / f'{cur_chrom}.c_motif.msg'
+                if cur_chrom != "":
+                    file_path = output_dir / f"{cur_chrom}.c_motif.msg"
                     chrom_file_paths.append(file_path)
-                    with open(file_path, 'wb') as chr_f:
+                    with open(file_path, "wb") as chr_f:
                         msgpack.dump(record_dict, chr_f)
                 cur_chrom = chrom
                 print(chrom)
                 record_dict = defaultdict(list)
 
             motif = full_chrom_seq[start:end]
-            if strand == '+':
+            if strand == "+":
                 c_prefix = 1  # for forward strand
                 g_prefix = 0  # for reverse strand
             else:
@@ -59,64 +59,68 @@ def _generate_c_motif_database(motif_bed, fasta_path, output_dir, bin_size=10000
                 g_prefix = 1
             for i_base, base in enumerate(motif):
                 pos = start + i_base + 1
-                if base == 'C':
+                if base == "C":
                     record_dict[pos].append((c_prefix, motif_int_id))
-                elif base == 'G':
+                elif base == "G":
                     record_dict[pos].append((g_prefix, motif_int_id))
 
         # dump records and init
-        if cur_chrom != '':
-            file_path = output_dir / f'{cur_chrom}.c_motif.msg'
+        if cur_chrom != "":
+            file_path = output_dir / f"{cur_chrom}.c_motif.msg"
             chrom_file_paths.append(file_path)
-            with open(file_path, 'wb') as chr_f:
+            with open(file_path, "wb") as chr_f:
                 msgpack.dump(record_dict, chr_f)
-    with open(output_dir / 'MOTIF_NAMES.msg', 'wb') as f:
+    with open(output_dir / "MOTIF_NAMES.msg", "wb") as f:
         msgpack.dump(motif_names, f)
 
     # split msg into chrom bins
     bin_paths = []
     for path in chrom_file_paths:
         bin_dict = defaultdict(dict)
-        chrom = path.name.split('.')[0]
+        chrom = path.name.split(".")[0]
         print(chrom)
-        with open(path, 'rb') as f:
+        with open(path, "rb") as f:
             d = msgpack.unpackb(f.read(), raw=True, use_list=False)
             for k, v in d.items():
                 nbin = k // bin_size
                 bin_dict[nbin][k] = v
         for nbin, data in bin_dict.items():
-            bin_path = output_dir / f'{chrom}.{int(nbin) * bin_size}-{int(nbin + 1) * bin_size}.c_motif.msg'
+            bin_path = output_dir / f"{chrom}.{int(nbin) * bin_size}-{int(nbin + 1) * bin_size}.c_motif.msg"
             bin_paths.append(bin_path)
-            with open(bin_path, 'wb') as f:
+            with open(bin_path, "wb") as f:
                 msgpack.dump(data, f)
-        subprocess.run(['rm', '-f', path])
+        subprocess.run(["rm", "-f", path])
 
     # make lookup table
     records = []
     for path in bin_paths:
-        record = {'file_name': path.name,
-                  'chrom': path.name.split('.')[0],
-                  'start': int(path.name.split('.')[1].split('-')[0]),
-                  'end': int(path.name.split('.')[1].split('-')[1])}
+        record = {
+            "file_name": path.name,
+            "chrom": path.name.split(".")[0],
+            "start": int(path.name.split(".")[1].split("-")[0]),
+            "end": int(path.name.split(".")[1].split("-")[1]),
+        }
         records.append(record)
-    df = pd.DataFrame(records)[['chrom', 'start', 'end', 'file_name']]
-    df.to_hdf(output_dir / 'LOOKUP_TABLE.hdf', key='data')
+    df = pd.DataFrame(records)[["chrom", "start", "end", "file_name"]]
+    df.to_hdf(output_dir / "LOOKUP_TABLE.hdf", key="data")
     return
 
 
-def generate_cmotif_database(bed_file_paths,
-                             reference_fasta,
-                             motif_files,
-                             output_dir,
-                             slop_b=None,
-                             chrom_size_path=None,
-                             cpu=1,
-                             sort_mem_gbs=5,
-                             path_to_fimo='',
-                             raw_score_thresh=8.,
-                             raw_p_value_thresh=2e-4,
-                             top_n=300000,
-                             cmotif_bin_size=10000000):
+def generate_cmotif_database(
+    bed_file_paths,
+    reference_fasta,
+    motif_files,
+    output_dir,
+    slop_b=None,
+    chrom_size_path=None,
+    cpu=1,
+    sort_mem_gbs=5,
+    path_to_fimo="",
+    raw_score_thresh=8.0,
+    raw_p_value_thresh=2e-4,
+    top_n=300000,
+    cmotif_bin_size=10000000,
+):
     """\
     Generate lookup table for motifs all the cytosines belongs to.
     BED files are used to limit cytosine scan in certain regions.
@@ -158,29 +162,32 @@ def generate_cmotif_database(bed_file_paths,
 
     """
     try:
-        if path_to_fimo != '':
-            path_to_fimo = path_to_fimo.rstrip('/') + '/'
-        subprocess.run([f'{path_to_fimo}fimo', '--version'], check=True)
+        if path_to_fimo != "":
+            path_to_fimo = path_to_fimo.rstrip("/") + "/"
+        subprocess.run([f"{path_to_fimo}fimo", "--version"], check=True)
     except subprocess.CalledProcessError as e:
-        print('Test fimo failed. Make sure fimo (MEME suite) is installed and path_to_fimo set correctly.')
+        print("Test fimo failed. Make sure fimo (MEME suite) is installed and path_to_fimo set correctly.")
         raise e
 
     temp_paths = []
 
     output_dir = pathlib.Path(output_dir).absolute()
-    bed_fasta_path = str(output_dir) + '.fa'
+    bed_fasta_path = str(output_dir) + ".fa"
     temp_paths.append(bed_fasta_path)
 
     # step 1: Merge all bed files, get fasta file from the merged bed file.
-    get_fasta(bed_file_paths=bed_file_paths,
-              fasta_path=reference_fasta,
-              output_path=bed_fasta_path,
-              slop_b=slop_b,
-              chrom_size_path=chrom_size_path,
-              cpu=cpu, sort_mem_gbs=sort_mem_gbs)
+    get_fasta(
+        bed_file_paths=bed_file_paths,
+        fasta_path=reference_fasta,
+        output_path=bed_fasta_path,
+        slop_b=slop_b,
+        chrom_size_path=chrom_size_path,
+        cpu=cpu,
+        sort_mem_gbs=sort_mem_gbs,
+    )
 
     # step 2: scan motif over bed_fasta
-    motif_scan_dir = str(output_dir) + '.motif_scan'
+    motif_scan_dir = str(output_dir) + ".motif_scan"
     temp_paths.append(motif_scan_dir)
 
     _scan_motif_over_fasta(
@@ -192,36 +199,37 @@ def generate_cmotif_database(bed_file_paths,
         raw_score_thresh=raw_score_thresh,
         raw_p_value_thresh=raw_p_value_thresh,
         top_n=top_n,
-        is_genome_fasta=False)
+        is_genome_fasta=False,
+    )
 
     # step 3: aggregate motif bed
-    total_motif_bed = str(output_dir) + '.total_motif.bed'
-    lookup_table = pd.read_hdf(f'{motif_scan_dir}/LOOKUP_TABLE.hdf')
-    bed_file_paths = lookup_table['output_file_path'].tolist()
+    total_motif_bed = str(output_dir) + ".total_motif.bed"
+    lookup_table = pd.read_hdf(f"{motif_scan_dir}/LOOKUP_TABLE.hdf")
+    bed_file_paths = lookup_table["output_file_path"].tolist()
     if len(bed_file_paths) == 0:
-        print('None of the motif have any match in the current setting. Nothing to continue.'
-              'Does the region to small or the threshold too stringent?')
+        print(
+            "None of the motif have any match in the current setting. Nothing to continue."
+            "Does the region to small or the threshold too stringent?"
+        )
         return
-    _aggregate_motif_beds(bed_file_paths=bed_file_paths,
-                          output_path=total_motif_bed,
-                          cpu=cpu,
-                          sort_mem_gbs=sort_mem_gbs)
+    _aggregate_motif_beds(
+        bed_file_paths=bed_file_paths, output_path=total_motif_bed, cpu=cpu, sort_mem_gbs=sort_mem_gbs
+    )
 
     # step 4: generate cmotif dataset
-    _generate_c_motif_database(motif_bed=total_motif_bed,
-                               fasta_path=reference_fasta,
-                               output_dir=output_dir,
-                               bin_size=cmotif_bin_size)
+    _generate_c_motif_database(
+        motif_bed=total_motif_bed, fasta_path=reference_fasta, output_dir=output_dir, bin_size=cmotif_bin_size
+    )
 
     # step 5: cleaning
     for path in temp_paths:
-        subprocess.run(['rm', '-rf', path])
+        subprocess.run(["rm", "-rf", path])
     # not delete this file, but gzip it.
-    subprocess.run(['bgzip', total_motif_bed])
+    subprocess.run(["bgzip", total_motif_bed])
     # save motif files into output_dir
-    motif_file_dir = output_dir / 'MOTIF_FILE'
+    motif_file_dir = output_dir / "MOTIF_FILE"
     motif_file_dir.mkdir(exist_ok=True)
     for motif_file in motif_files:
         new_path = motif_file_dir / pathlib.Path(motif_file).name
-        subprocess.run(['cp', motif_file, new_path], check=True)
+        subprocess.run(["cp", motif_file, new_path], check=True)
     return

@@ -1,6 +1,6 @@
 import numpy as np
-
 from sklearn.neighbors import LocalOutlierFactor
+
 from .utilities import zoom_min_max
 
 
@@ -25,9 +25,7 @@ def density_contour(
     else:
         _data["groupby"] = "one group"
 
-    _contour_kws = dict(
-        linewidths=linewidth, levels=(-single_contour_pad,), linestyles="dashed"
-    )
+    _contour_kws = dict(linewidths=linewidth, levels=(-single_contour_pad,), linestyles="dashed")
     _lof_kws = dict(n_neighbors=25, novelty=True, contamination="auto")
 
     xmin, ymin = _data[[x, y]].min()

@@ -1,13 +1,14 @@
-import numpy as np
-from sklearn.decomposition import PCA
-from ALLCools.mcds.utilities import calculate_posterior_mc_frac
-from scipy.stats import ks_2samp
-from pynndescent import NNDescent
-from sklearn.metrics import roc_curve
-import pandas as pd
-import xarray as xr
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import seaborn as sns
+import xarray as xr
+from pynndescent import NNDescent
+from scipy.stats import ks_2samp
+from sklearn.decomposition import PCA
+from sklearn.metrics import roc_curve
+
+from ALLCools.mcds.utilities import calculate_posterior_mc_frac
 
 
 class MethylScrublet:
@@ -74,9 +75,7 @@ class MethylScrublet:
         if self.n_neighbors is None:
             self.n_neighbors = min(50, int(round(0.5 * np.sqrt(self._mc_obs.shape[0]))))
         print("Calculating mC frac of observations...")
-        self._frac_obs = calculate_posterior_mc_frac(
-            mc_da=self._mc_obs, cov_da=self._cov_obs
-        )
+        self._frac_obs = calculate_posterior_mc_frac(mc_da=self._mc_obs, cov_da=self._cov_obs)
 
         print("Simulating doublets...")
         self.simulate_doublets()
@@ -126,9 +125,7 @@ class MethylScrublet:
         return
 
     def get_knn_graph(self, data):
-        nn = NNDescent(
-            data, metric="euclidean", n_jobs=self.n_jobs, random_state=self.random_state
-        )
+        nn = NNDescent(data, metric="euclidean", n_jobs=self.n_jobs, random_state=self.random_state)
         indices, distances = nn.query(data, k=self.n_neighbors + 1)
         knn = indices[:, 1:]
         return knn
@@ -146,9 +143,7 @@ class MethylScrublet:
         knn = self.get_knn_graph(total_pcs)
 
         # Calculate doublet score based on ratio of simulated cell neighbors vs. observed cell neighbors
-        doublet_neighbor_mask = (
-            doublet_labels[knn] == 1
-        )  # get the identities of neighbors
+        doublet_neighbor_mask = doublet_labels[knn] == 1  # get the identities of neighbors
         n_sim_neigh = doublet_neighbor_mask.sum(1)
 
         rho = self.expected_doublet_rate
@@ -182,7 +177,7 @@ class MethylScrublet:
             y_score = np.concatenate([ld_obs, ld_sim])
             y_true = np.concatenate([np.ones_like(ld_obs), np.zeros_like(ld_sim)])
             fpr, tpr, thresholds = roc_curve(y_true, y_score)
-            threshold = thresholds[np.argmin(tpr ** 2 + (1 - fpr) ** 2)]
+            threshold = thresholds[np.argmin(tpr**2 + (1 - fpr) ** 2)]
             print(f"Automatically set threshold to {threshold:.2f}")
 
         se_obs = self.doublet_errors_obs_
@@ -191,17 +186,11 @@ class MethylScrublet:
         self.z_scores_ = z
         self.threshold_ = threshold
         self.detected_doublet_rate_ = (ld_obs > threshold).sum() / len(ld_obs)  # FPR
-        self.detectable_doublet_fraction_ = (ld_sim > threshold).sum() / len(
-            ld_sim
-        )  # TPR
-        self.overall_doublet_rate_ = (
-            self.detected_doublet_rate_ / self.detectable_doublet_fraction_
-        )
+        self.detectable_doublet_fraction_ = (ld_sim > threshold).sum() / len(ld_sim)  # TPR
+        self.overall_doublet_rate_ = self.detected_doublet_rate_ / self.detectable_doublet_fraction_
 
         print(f"Detected doublet rate = {100 * self.detected_doublet_rate_:.1f}%")
-        print(
-            f"Estimated detectable doublet fraction = {100 * self.detectable_doublet_fraction_:.1f}%"
-        )
+        print(f"Estimated detectable doublet fraction = {100 * self.detectable_doublet_fraction_:.1f}%")
         print("Overall doublet rate:")
         print(f"\tExpected   = {100 * self.expected_doublet_rate:.1f}%")
         print(f"\tEstimated  = {100 * self.overall_doublet_rate_:.1f}%")
@@ -235,9 +224,7 @@ class MethylScrublet:
         ax.set(xlabel="TPR", ylabel="FPR", title="ROC")
 
         ax = ax_hist
-        sns.histplot(
-            self.doublet_scores_obs_, color="steelblue", ax=ax, label="Observed"
-        )
+        sns.histplot(self.doublet_scores_obs_, color="steelblue", ax=ax, label="Observed")
         sns.histplot(self.doublet_scores_sim_, color="gray", ax=ax, label="Simulated")
         ax.set(yticks=[], ylabel="", xlabel="Doublet Score")
         ax.legend()
@@ -257,9 +244,7 @@ class MethylScrublet:
             }
         )
         fig, ax = plt.subplots(figsize=(6, 2), dpi=300)
-        sns.violinplot(
-            data=plot_data, x="groups", y="Doublet Score", linewidth=0, scale="width"
-        )
+        sns.violinplot(data=plot_data, x="groups", y="Doublet Score", linewidth=0, scale="width")
         sns.stripplot(
             data=plot_data,
             x="groups",
@@ -271,7 +256,5 @@ class MethylScrublet:
         xmin, xmax = ax.get_xlim()
         ax.legend_.remove()
         ax.xaxis.set_tick_params(rotation=90)
-        ax.hlines(
-            self.threshold_, xmin, xmax, linestyle="--", linewidth=1, color="gray"
-        )
+        ax.hlines(self.threshold_, xmin, xmax, linestyle="--", linewidth=1, color="gray")
         sns.despine(ax=ax)

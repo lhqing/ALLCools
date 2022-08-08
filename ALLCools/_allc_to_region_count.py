@@ -13,12 +13,12 @@ from ._doc import *
 from ._extract_allc import extract_allc
 from ._open import open_gz
 from .utilities import (
-    check_tbi_chroms,
-    parse_chrom_size,
-    chrom_dict_to_id_index,
-    get_bin_id,
     _transfer_bin_size,
+    check_tbi_chroms,
+    chrom_dict_to_id_index,
     generate_chrom_bin_bed_dataframe,
+    get_bin_id,
+    parse_chrom_size,
 )
 
 
@@ -117,12 +117,7 @@ def _map_to_sparse_chrom_bin(site_bed, out_bed, chrom_size_path, bin_size=500):
                 temp_cov += cov
         # write last piece
         if temp_cov > 0:
-            out_handle.write(
-                "\t".join(
-                    map(str, [cur_chrom, bin_start, bin_end, bin_id, temp_mc, temp_cov])
-                )
-                + "\n"
-            )
+            out_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, bin_id, temp_mc, temp_cov])) + "\n")
     return out_bed
 
 
@@ -205,9 +200,7 @@ def allc_to_region_count(
     # 1. bgzip and tabix
     # 2. order of chrom should be the same as order of chrom_size_path
     if region_bed_paths is not None:
-        if (region_bed_names is None) or (
-            len(region_bed_names) != len(region_bed_paths)
-        ):
+        if (region_bed_names is None) or (len(region_bed_names) != len(region_bed_paths)):
             raise ValueError("Different number of bed names and paths provided")
         for region_name, region_bed_path in zip(region_bed_names, region_bed_paths):
             if not check_tbi_chroms(region_bed_path, genome_dict):
@@ -250,8 +243,7 @@ def allc_to_region_count(
                         _bedtools_map,
                         region_bed=region_bed_path,
                         site_bed=site_bed_path,
-                        out_bed=output_prefix + f".{region_name}"
-                        f"_{info_type}.{save_flag}.bed.gz",
+                        out_bed=output_prefix + f".{region_name}" f"_{info_type}.{save_flag}.bed.gz",
                         chrom_size_path=chrom_size_path,
                         save_zero_cov=save_zero_cov,
                     )
@@ -264,8 +256,7 @@ def allc_to_region_count(
                     future = executor.submit(
                         _map_to_sparse_chrom_bin,
                         site_bed=site_bed_path,
-                        out_bed=output_prefix + f".chrom{_transfer_bin_size(bin_size)}"
-                        f"_{info_type}.sparse.bed.gz",
+                        out_bed=output_prefix + f".chrom{_transfer_bin_size(bin_size)}" f"_{info_type}.sparse.bed.gz",
                         chrom_size_path=chrom_size_path,
                         bin_size=bin_size,
                     )
@@ -309,11 +300,7 @@ def batch_allc_to_region_count(
             bed_df = pd.read_csv(region_bed_path, sep="\t", header=None)
             chrom_size = parse_chrom_size(chrom_size_path)
             bed_df = bed_df[bed_df.iloc[:, 0].isin(chrom_size.keys())].copy()
-            bed_sorted_df = (
-                pybedtools.BedTool.from_dataframe(bed_df)
-                .sort(g=chrom_size_path)
-                .to_dataframe()
-            )
+            bed_sorted_df = pybedtools.BedTool.from_dataframe(bed_df).sort(g=chrom_size_path).to_dataframe()
             new_path = str(output_dir / f"{region_bed_name}.bed")
             bed_sorted_df.to_csv(new_path, sep="\t", index=None, header=None)
             subprocess.run(["bgzip", "-f", new_path], check=True)
@@ -326,12 +313,8 @@ def batch_allc_to_region_count(
             bed_df.columns = ["chrom", "start", "end"]
             bed_df.index.name = region_bed_name
             bed_df["int_id"] = list(range(0, bed_df.shape[0]))
-            bed_df["int_id"].to_hdf(
-                output_dir / f"REGION_ID_{region_bed_name}.hdf", key="data"
-            )
-            bed_df.iloc[:, :3].to_hdf(
-                output_dir / f"REGION_BED_{region_bed_name}.hdf", key="data"
-            )
+            bed_df["int_id"].to_hdf(output_dir / f"REGION_ID_{region_bed_name}.hdf", key="data")
+            bed_df.iloc[:, :3].to_hdf(output_dir / f"REGION_BED_{region_bed_name}.hdf", key="data")
         region_bed_paths = new_paths
 
     if bin_sizes is not None:
@@ -344,12 +327,8 @@ def batch_allc_to_region_count(
                 step_size=bin_size,
             )
             bed_df["int_id"] = list(range(0, bed_df.shape[0]))
-            bed_df["int_id"].to_hdf(
-                output_dir / f"REGION_ID_{region_name}.hdf", key="data"
-            )
-            bed_df.iloc[:, :3].to_hdf(
-                output_dir / f"REGION_BED_chrom{bin_size_chr}.hdf", key="data"
-            )
+            bed_df["int_id"].to_hdf(output_dir / f"REGION_ID_{region_name}.hdf", key="data")
+            bed_df.iloc[:, :3].to_hdf(output_dir / f"REGION_BED_chrom{bin_size_chr}.hdf", key="data")
 
     with ProcessPoolExecutor(cpu) as executor:
         futures = {}
@@ -391,9 +370,7 @@ def batch_allc_to_region_count(
         for path in out_paths:
             file_name = pathlib.Path(path).name
             *_, region_mc_type_strand, _, _, _ = file_name.split(".")
-            region_name, mc_type, strandness = region_mc_type_strand.replace(
-                "_", "-"
-            ).split("-")
+            region_name, mc_type, strandness = region_mc_type_strand.replace("_", "-").split("-")
             path_dict = {
                 "region_name": region_name,
                 "mc_type": mc_type,

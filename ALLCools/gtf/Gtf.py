@@ -1,6 +1,6 @@
+import pathlib
 from collections import defaultdict
 from copy import copy
-import pathlib
 
 import pandas as pd
 from gffutils import FeatureDB, create_db
@@ -9,23 +9,21 @@ from gffutils.exceptions import FeatureNotFoundError
 from ALLCools.utilities import parse_chrom_size
 
 
-def create_gtf_db(gtf_path,
-                  disable_infer_genes=True,
-                  disable_infer_transcripts=True):
+def create_gtf_db(gtf_path, disable_infer_genes=True, disable_infer_transcripts=True):
     create_db(
-        gtf_path, f'{gtf_path}.db',
+        gtf_path,
+        f"{gtf_path}.db",
         disable_infer_genes=disable_infer_genes,
-        disable_infer_transcripts=disable_infer_transcripts
+        disable_infer_transcripts=disable_infer_transcripts,
     )
     return
 
 
 class Gtf(FeatureDB):
     def __init__(self, *args, **kwargs):
-        super(Gtf, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
-        self._gene_id_to_name = {g.id: g['gene_name'][0]
-                                 for g in self.all_features(featuretype='gene')}
+        self._gene_id_to_name = {g.id: g["gene_name"][0] for g in self.all_features(featuretype="gene")}
         self.gene_ids = set(self._gene_id_to_name.keys())
 
         # gene name may not be unique
@@ -35,7 +33,7 @@ class Gtf(FeatureDB):
         return
 
     def get_gene_name(self, feature_id):
-        return self[feature_id].attributes['gene_name'][0]
+        return self[feature_id].attributes["gene_name"][0]
 
     def _select_longest_id(self, id_list):
         feature_and_length = {}
@@ -59,9 +57,11 @@ class Gtf(FeatureDB):
             if select_longest:
                 gene_id = self._select_longest_id(gene_id_list)
             else:
-                raise ValueError(f'gene_name {gene_name} corresponding to {len(gene_id_list)} '
-                                 f'{len(gene_id_list)} transcripts: {gene_id_list}. But '
-                                 f'select_longest=False.')
+                raise ValueError(
+                    f"gene_name {gene_name} corresponding to {len(gene_id_list)} "
+                    f"{len(gene_id_list)} transcripts: {gene_id_list}. But "
+                    f"select_longest=False."
+                )
         return gene_id
 
     def _convert_to_id(self, name):
@@ -80,32 +80,32 @@ class Gtf(FeatureDB):
         length = feature.end - feature.start
         return length
 
-    def get_gene_transcripts(self, gene, featuretype='transcript'):
+    def get_gene_transcripts(self, gene, featuretype="transcript"):
         gene_id = self._convert_to_id(gene)
         transcripts = self.children(gene_id, featuretype=featuretype)
         return transcripts
 
-    def get_gene_exons(self, gene, featuretype='exon'):
+    def get_gene_exons(self, gene, featuretype="exon"):
         gene_id = self._convert_to_id(gene)
         exons = self.children(gene_id, featuretype=featuretype)
         return exons
 
-    def get_gene_tss(self, gene, transcript_featuretype='transcript'):
+    def get_gene_tss(self, gene, transcript_featuretype="transcript"):
         transcripts = self.get_gene_transcripts(gene, featuretype=transcript_featuretype)
 
         # gtf is 1 based
         tss_list = []
         for t in transcripts:
             tss = copy(t)
-            if t.strand == '+':
+            if t.strand == "+":
                 tss.end = tss.start
             else:
                 tss.start = tss.end
-            tss.featuretype = 'TSS'
+            tss.featuretype = "TSS"
             tss_list.append(tss)
         return tss_list
 
-    def get_gene_promoter(self, gene, chrom_sizes_path, slop=500, transcript_featuretype='transcript'):
+    def get_gene_promoter(self, gene, chrom_sizes_path, slop=500, transcript_featuretype="transcript"):
         tss_list = self.get_gene_tss(gene, transcript_featuretype=transcript_featuretype)
 
         chrom_sizes = parse_chrom_size(chrom_sizes_path)
@@ -118,22 +118,24 @@ class Gtf(FeatureDB):
             promoter.start = max(promoter.start - slop, 0)
             promoter.end = max(promoter.end + slop, chrom_sizes[promoter.chrom])
 
-            promoter.featuretype = 'promoter'
+            promoter.featuretype = "promoter"
             promoter_list.append(promoter)
         return promoter_list
 
-    def subset_db(self,
-                  output_path,
-                  genes=None,
-                  region_bed=None,
-                  span=500000,
-                  disable_infer_genes=True,
-                  disable_infer_transcripts=True):
+    def subset_db(
+        self,
+        output_path,
+        genes=None,
+        region_bed=None,
+        span=500000,
+        disable_infer_genes=True,
+        disable_infer_transcripts=True,
+    ):
         all_features = {}
 
         if region_bed is not None:
             if isinstance(region_bed, (str, pathlib.Path)):
-                region_bed = pd.read_csv(region_bed, sep='\t', index_col=0, header=None)
+                region_bed = pd.read_csv(region_bed, sep="\t", index_col=0, header=None)
 
             for _, (chrom, start, end) in region_bed.iterrows:
                 start = max(start - span, 0)
@@ -152,11 +154,13 @@ class Gtf(FeatureDB):
                     all_features[f.id] = f
 
         if len(all_features) == 0:
-            print('No features selected.')
+            print("No features selected.")
             return
         else:
-            create_db(list(all_features.values()),
-                      dbfn=output_path,
-                      disable_infer_genes=disable_infer_genes,
-                      disable_infer_transcripts=disable_infer_transcripts)
+            create_db(
+                list(all_features.values()),
+                dbfn=output_path,
+                disable_infer_genes=disable_infer_genes,
+                disable_infer_transcripts=disable_infer_transcripts,
+            )
         return

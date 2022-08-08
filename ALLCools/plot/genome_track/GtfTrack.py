@@ -11,44 +11,56 @@ import numpy as np
 from matplotlib import font_manager
 from pygenometracks.tracks.BedTrack import BedTrack
 from pygenometracks.tracks.GenomeTrack import GenomeTrack
-from pygenometracks.utilities import temp_file_from_intersect, InputError
+from pygenometracks.utilities import InputError, temp_file_from_intersect
 
-DEFAULT_BED_COLOR = '#1f78b4'
-DISPLAY_BED_VALID = ['collapsed', 'triangles', 'interleaved', 'stacked']
-DISPLAY_BED_SYNONYMOUS = {'interlaced': 'interleaved', 'domain': 'interleaved'}
-DEFAULT_DISPLAY_BED = 'stacked'
+DEFAULT_BED_COLOR = "#1f78b4"
+DISPLAY_BED_VALID = ["collapsed", "triangles", "interleaved", "stacked"]
+DISPLAY_BED_SYNONYMOUS = {"interlaced": "interleaved", "domain": "interleaved"}
+DEFAULT_DISPLAY_BED = "stacked"
 AROUND_REGION = 100000
 
 
 def _is_sqlite3(path):
-    with open(path, 'rb') as f:
+    with open(path, "rb") as f:
         head = f.read(16)
-        if head.decode('utf8').startswith('SQLite format'):
+        if head.decode("utf8").startswith("SQLite format"):
             return True
         else:
             return False
 
 
-warnings.filterwarnings("ignore", message="It appears you have a gene feature"
-                                          " in your GTF file. You may want to use the "
-                                          "`disable_infer_genes` option to speed up database "
-                                          "creation")
-warnings.filterwarnings("ignore", message="It appears you have a transcript "
-                                          "feature in your GTF file. You may want to use the "
-                                          "`disable_infer_transcripts` option to speed up "
-                                          "database creation")
+warnings.filterwarnings(
+    "ignore",
+    message="It appears you have a gene feature"
+    " in your GTF file. You may want to use the "
+    "`disable_infer_genes` option to speed up database "
+    "creation",
+)
+warnings.filterwarnings(
+    "ignore",
+    message="It appears you have a transcript "
+    "feature in your GTF file. You may want to use the "
+    "`disable_infer_transcripts` option to speed up "
+    "database creation",
+)
 # In gffutils v0.10 they changed the error message:
-warnings.filterwarnings("ignore", message="It appears you have a gene feature"
-                                          " in your GTF file. You may want to use the "
-                                          "`disable_infer_genes=True` option to speed up database "
-                                          "creation")
-warnings.filterwarnings("ignore", message="It appears you have a transcript "
-                                          "feature in your GTF file. You may want to use the "
-                                          "`disable_infer_transcripts=True` option to speed up "
-                                          "database creation")
+warnings.filterwarnings(
+    "ignore",
+    message="It appears you have a gene feature"
+    " in your GTF file. You may want to use the "
+    "`disable_infer_genes=True` option to speed up database "
+    "creation",
+)
+warnings.filterwarnings(
+    "ignore",
+    message="It appears you have a transcript "
+    "feature in your GTF file. You may want to use the "
+    "`disable_infer_transcripts=True` option to speed up "
+    "database creation",
+)
 
 
-class ReadGtf(object):
+class ReadGtf:
     """
     Reads a gtf file.
 
@@ -59,23 +71,31 @@ class ReadGtf(object):
 
     """
 
-    def __init__(self, file_path, prefered_name="transcript_name",
-                 merge_transcripts=True):
+    def __init__(self, file_path, prefered_name="transcript_name", merge_transcripts=True):
         """
         :param file_path: the path of the gtf file
         :return:
         """
 
-        self.file_type = 'bed12'
+        self.file_type = "bed12"
 
         # list of bed fields
-        self.fields = ['chromosome', 'start', 'end',
-                       'name', 'score', 'strand',
-                       'thick_start', 'thick_end',
-                       'rgb', 'block_count',
-                       'block_sizes', 'block_starts']
+        self.fields = [
+            "chromosome",
+            "start",
+            "end",
+            "name",
+            "score",
+            "strand",
+            "thick_start",
+            "thick_end",
+            "rgb",
+            "block_count",
+            "block_sizes",
+            "block_starts",
+        ]
 
-        self.BedInterval = collections.namedtuple('BedInterval', self.fields)
+        self.BedInterval = collections.namedtuple("BedInterval", self.fields)
         # I think the name which should be written
         # should be the transcript_name
         # But we can change it to gene_name
@@ -88,22 +108,20 @@ class ReadGtf(object):
             if _is_sqlite3(file_path):
                 self.db = gffutils.FeatureDB(file_path)
             else:
-                self.db = gffutils.create_db(file_path, ':memory:')
+                self.db = gffutils.create_db(file_path, ":memory:")
         except ValueError as ve:
             if "No lines parsed" in str(ve):
                 self.length = 0
-                self.all_transcripts = open(file_path, 'r')
+                self.all_transcripts = open(file_path)
             else:
                 raise InputError("This is not a gtf file.")
         else:
             if self.merge_transcripts:
                 self.length = len([i for i in self.db.features_of_type("gene")])
-                self.all_transcripts = self.db.features_of_type("gene",
-                                                                order_by='start')
+                self.all_transcripts = self.db.features_of_type("gene", order_by="start")
             else:
                 self.length = len([i for i in self.db.features_of_type("transcript")])
-                self.all_transcripts = self.db.features_of_type("transcript",
-                                                                order_by='start')
+                self.all_transcripts = self.db.features_of_type("transcript", order_by="start")
 
     def __iter__(self):
         return self
@@ -129,11 +147,10 @@ class ReadGtf(object):
         except KeyError:
             # Else try to guess the prefered_name from exons:
             try:
-                trName = set([e.attributes[self.prefered_name][0]
-                              for e in
-                              self.db.children(tr,
-                                               featuretype='exon',
-                                               order_by='start')]).pop()
+                trName = {
+                    e.attributes[self.prefered_name][0]
+                    for e in self.db.children(tr, featuretype="exon", order_by="start")
+                }.pop()
             except KeyError:
                 # Else take the transcript id
                 trName = tr.id
@@ -143,12 +160,8 @@ class ReadGtf(object):
         # and bed are 0-based half-open so:
         # I need to remove one from each start
         try:
-            cds_start = next(self.db.children(tr,
-                                              featuretype='CDS',
-                                              order_by='start')).start - 1
-            cds_end = next(self.db.children(tr,
-                                            featuretype='CDS',
-                                            order_by='-start')).end
+            cds_start = next(self.db.children(tr, featuretype="CDS", order_by="start")).start - 1
+            cds_end = next(self.db.children(tr, featuretype="CDS", order_by="-start")).end
         except StopIteration:
             # If the CDS is not defined, then it is set to the start
             # as proposed here:
@@ -156,26 +169,33 @@ class ReadGtf(object):
             cds_start = tr.start - 1
             cds_end = tr.start - 1
         # Get all exons starts and end to get lengths
-        exons_starts = [e.start - 1
-                        for e in self.db.children(tr,
-                                                  featuretype='exon',
-                                                  order_by='start')]
-        exons_ends = [e.end
-                      for e in self.db.children(tr,
-                                                featuretype='exon',
-                                                order_by='start')]
+        exons_starts = [e.start - 1 for e in self.db.children(tr, featuretype="exon", order_by="start")]
+        exons_ends = [e.end for e in self.db.children(tr, featuretype="exon", order_by="start")]
         exons_length = [e - s for s, e in zip(exons_starts, exons_ends)]
         relative_exons_starts = [s - (tr.start - 1) for s in exons_starts]
-        line_values = [tr.chrom, tr.start - 1, tr.end, trName, 0, tr.strand,
-                       cds_start, cds_end, "0", len(exons_starts),
-                       exons_length, relative_exons_starts]
+        line_values = [
+            tr.chrom,
+            tr.start - 1,
+            tr.end,
+            trName,
+            0,
+            tr.strand,
+            cds_start,
+            cds_end,
+            "0",
+            len(exons_starts),
+            exons_length,
+            relative_exons_starts,
+        ]
         return self.BedInterval._make(line_values)
 
 
 class GtfTrack(BedTrack):
-    SUPPORTED_ENDINGS = ['gtf', 'gtf.gz', 'gtf.db']
-    TRACK_TYPE = 'gtf'
-    OPTIONS_TXT = GenomeTrack.OPTIONS_TXT + f"""
+    SUPPORTED_ENDINGS = ["gtf", "gtf.gz", "gtf.db"]
+    TRACK_TYPE = "gtf"
+    OPTIONS_TXT = (
+        GenomeTrack.OPTIONS_TXT
+        + f"""
 # By default the transcript_name is used.
 # If you want to use the gene_name:
 # prefered_name = gene_name
@@ -247,82 +267,94 @@ fontsize = 10
 # optional. If not given is guessed from the file ending.
 file_type = {TRACK_TYPE}
     """
+    )
 
-    DEFAULTS_PROPERTIES = {'fontsize': 12,
-                           'orientation': None,
-                           'color': DEFAULT_BED_COLOR,
-                           'border_color': 'black',
-                           'labels': True,
-                           'style': 'flybase',
-                           'display': DEFAULT_DISPLAY_BED,
-                           'line_width': 0.5,
-                           'max_labels': 60,
-                           'prefered_name': 'transcript_name',
-                           'merge_transcripts': False,
-                           'global_max_row': False,
-                           'gene_rows': None,
-                           'arrow_interval': 2,
-                           'arrowhead_included': False,
-                           'color_utr': 'grey',
-                           'height_utr': 1,
-                           'arrow_length': None,
-                           'region': None,  # Cannot be set manually but is set by tracksClass
-                           'all_labels_inside': False,
-                           'labels_in_margin': False}
-    NECESSARY_PROPERTIES = ['file']
-    SYNONYMOUS_PROPERTIES = {'display': DISPLAY_BED_SYNONYMOUS}
-    POSSIBLE_PROPERTIES = {'orientation': [None, 'inverted'],
-                           'style': ['flybase', 'UCSC', 'tssarrow'],
-                           'display': DISPLAY_BED_VALID}
-    BOOLEAN_PROPERTIES = ['labels', 'merge_transcripts', 'global_max_row',
-                          'arrowhead_included', 'all_labels_inside',
-                          'labels_in_margin']
-    STRING_PROPERTIES = ['prefered_name', 'file', 'file_type',
-                         'overlay_previous', 'orientation',
-                         'title', 'style', 'color', 'border_color',
-                         'color_utr', 'display']
-    FLOAT_PROPERTIES = {'fontsize': [0, np.inf],
-                        'line_width': [0, np.inf],
-                        'height': [0, np.inf],
-                        'height_utr': [0, 1]}
-    INTEGER_PROPERTIES = {'gene_rows': [0, np.inf],
-                          'max_labels': [0, np.inf],
-                          'arrow_interval': [1, np.inf],
-                          'arrow_length': [0, np.inf]}
+    DEFAULTS_PROPERTIES = {
+        "fontsize": 12,
+        "orientation": None,
+        "color": DEFAULT_BED_COLOR,
+        "border_color": "black",
+        "labels": True,
+        "style": "flybase",
+        "display": DEFAULT_DISPLAY_BED,
+        "line_width": 0.5,
+        "max_labels": 60,
+        "prefered_name": "transcript_name",
+        "merge_transcripts": False,
+        "global_max_row": False,
+        "gene_rows": None,
+        "arrow_interval": 2,
+        "arrowhead_included": False,
+        "color_utr": "grey",
+        "height_utr": 1,
+        "arrow_length": None,
+        "region": None,  # Cannot be set manually but is set by tracksClass
+        "all_labels_inside": False,
+        "labels_in_margin": False,
+    }
+    NECESSARY_PROPERTIES = ["file"]
+    SYNONYMOUS_PROPERTIES = {"display": DISPLAY_BED_SYNONYMOUS}
+    POSSIBLE_PROPERTIES = {
+        "orientation": [None, "inverted"],
+        "style": ["flybase", "UCSC", "tssarrow"],
+        "display": DISPLAY_BED_VALID,
+    }
+    BOOLEAN_PROPERTIES = [
+        "labels",
+        "merge_transcripts",
+        "global_max_row",
+        "arrowhead_included",
+        "all_labels_inside",
+        "labels_in_margin",
+    ]
+    STRING_PROPERTIES = [
+        "prefered_name",
+        "file",
+        "file_type",
+        "overlay_previous",
+        "orientation",
+        "title",
+        "style",
+        "color",
+        "border_color",
+        "color_utr",
+        "display",
+    ]
+    FLOAT_PROPERTIES = {"fontsize": [0, np.inf], "line_width": [0, np.inf], "height": [0, np.inf], "height_utr": [0, 1]}
+    INTEGER_PROPERTIES = {
+        "gene_rows": [0, np.inf],
+        "max_labels": [0, np.inf],
+        "arrow_interval": [1, np.inf],
+        "arrow_length": [0, np.inf],
+    }
 
     def set_properties_defaults(self):
         super(BedTrack, self).set_properties_defaults()
-        self.fp = font_manager.FontProperties(size=self.properties['fontsize'])
+        self.fp = font_manager.FontProperties(size=self.properties["fontsize"])
         self.colormap = None
         # check if the color given is a color map
         # Contrary to bed it cannot be a colormap
-        self.process_color('color', colormap_possible=False,
-                           bed_rgb_possible=False,
-                           default_value_is_colormap=False)
+        self.process_color("color", colormap_possible=False, bed_rgb_possible=False, default_value_is_colormap=False)
 
         # check if border_color and color_utr are colors
         # if they are part of self.properties
         # (for example, TADsTracks do not have color_utr)
-        for param in [p for p in ['border_color', 'color_utr']
-                      if p in self.properties]:
+        for param in [p for p in ["border_color", "color_utr"] if p in self.properties]:
             self.process_color(param, bed_rgb_possible=False)
 
         # to set the distance between rows
         self.row_scale = 2.3
 
     def get_bed_handler(self, plot_regions=None):
-        file_to_open = self.properties['file']
-        if not self.properties['global_max_row']:
+        file_to_open = self.properties["file"]
+        if not self.properties["global_max_row"]:
             if plot_regions is not None:
-                if _is_sqlite3(self.properties['file']):
-                    print('global_max_row not supported when gtf is provided as SQLite3 db')
+                if _is_sqlite3(self.properties["file"]):
+                    print("global_max_row not supported when gtf is provided as SQLite3 db")
                 else:
                     # I do the intersection:
-                    file_to_open = temp_file_from_intersect(self.properties['file'],
-                                                            plot_regions, AROUND_REGION)
+                    file_to_open = temp_file_from_intersect(self.properties["file"], plot_regions, AROUND_REGION)
 
-        gtf_db = ReadGtf(file_to_open,
-                         self.properties['prefered_name'],
-                         self.properties['merge_transcripts'])
+        gtf_db = ReadGtf(file_to_open, self.properties["prefered_name"], self.properties["merge_transcripts"])
         total_length = gtf_db.length
         return gtf_db, total_length

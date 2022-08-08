@@ -5,7 +5,7 @@ from ._extract_allc import extract_allc
 from ._merge_allc import merge_allc_files
 from ._open import open_allc
 from .count_matrix.mcds import generate_mcds
-from .utilities import profile_allc, tabix_allc, standardize_allc
+from .utilities import profile_allc, standardize_allc, tabix_allc
 
 _ = allc_to_bigwig.__doc__
 _ = allc_to_region_count.__doc__

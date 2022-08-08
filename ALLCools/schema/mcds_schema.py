@@ -11,9 +11,7 @@ def check_custom_dim_name_and_return(dim_name):
     if dim_name in PRESERVED_DIMS:
         raise ValueError(f"Dimension name {dim_name} is preserved, try another name.")
     if dim_name.startswith("chrom"):
-        raise ValueError(
-            f'Dimension name start with "chrom" is preserved, try another name.'
-        )
+        raise ValueError(f'Dimension name start with "chrom" is preserved, try another name.')
     if "-" in dim_name:
         _dim_name = dim_name
         dim_name = dim_name.replace("-", "")

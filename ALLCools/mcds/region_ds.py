@@ -9,14 +9,20 @@ import dask
 import joblib
 import numpy as np
 import pandas as pd
-import pyBigWig
 import pybedtools
+import pyBigWig
 import xarray as xr
 import yaml
 from pybedtools import BedTool
 
 from ALLCools.utilities import parse_chrom_size
-from .utilities import determine_engine, obj_to_str, write_ordered_chunks, update_dataset_config
+
+from .utilities import (
+    determine_engine,
+    obj_to_str,
+    update_dataset_config,
+    write_ordered_chunks,
+)
 
 os.environ["NUMEXPR_MAX_THREADS"] = "16"
 
@@ -58,9 +64,7 @@ def _bed_intersection(bed: pybedtools.BedTool, path, g, region_index, bed_sorted
         warnings.simplefilter("ignore")
         query_bed = _region_bed_sorted(path, g, bed_sorted)
         try:
-            df = bed.intersect(
-                query_bed, wa=True, f=fraction, g=g, sorted=True
-            ).to_dataframe()
+            df = bed.intersect(query_bed, wa=True, f=fraction, g=g, sorted=True).to_dataframe()
             if df.shape[0] == 0:
                 regions_idx = pd.Series([])
             else:
@@ -75,35 +79,29 @@ def _bed_intersection(bed: pybedtools.BedTool, path, g, region_index, bed_sorted
 
 
 def _annotate_by_bigwigs_worker(
-        dataset_path,
-        region_dim,
-        chrom_size_path,
-        track_paths,
-        output_path,
-        dim,
-        slop,
-        value_type,
-        dtype,
-        **kwargs,
+    dataset_path,
+    region_dim,
+    chrom_size_path,
+    track_paths,
+    output_path,
+    dim,
+    slop,
+    value_type,
+    dtype,
+    **kwargs,
 ):
     len(kwargs)
     # set dask scheduler to allow multiprocessing
     with dask.config.set(scheduler="sync"):
         # Open region ds again inside the worker function
-        region_ds = RegionDS.open(
-            path=dataset_path, region_dim=region_dim, chrom_size_path=chrom_size_path
-        )
+        region_ds = RegionDS.open(path=dataset_path, region_dim=region_dim, chrom_size_path=chrom_size_path)
 
         # get dmr region bed and bigwig files
-        dmr_bed = region_ds.get_bed(
-            with_id=False, bedtools=False, slop=slop, chrom_size_path=chrom_size_path
-        )
+        dmr_bed = region_ds.get_bed(with_id=False, bedtools=False, slop=slop, chrom_size_path=chrom_size_path)
         # iterate each bigwig
         total_values = {}
         for sample, bigwig_path in track_paths.items():
-            values = _bigwig_over_bed(
-                bed=dmr_bed, path=bigwig_path, value_type=value_type, dtype=dtype
-            )
+            values = _bigwig_over_bed(bed=dmr_bed, path=bigwig_path, value_type=value_type, dtype=dtype)
             total_values[sample] = values
         total_values = pd.DataFrame(total_values)
         total_values.columns.name = dim
@@ -115,31 +113,29 @@ def _annotate_by_bigwigs_worker(
 
 
 def _annotate_by_beds_worker(
-        dataset_path,
-        region_dim,
-        chrom_size_path,
-        slop,
-        track_paths,
-        dtype,
-        dim,
-        output_path,
-        bed_sorted,
-        fraction=0.2,
-        **kwargs,
+    dataset_path,
+    region_dim,
+    chrom_size_path,
+    slop,
+    track_paths,
+    dtype,
+    dim,
+    output_path,
+    bed_sorted,
+    fraction=0.2,
+    **kwargs,
 ):
     len(kwargs)
 
     # set dask scheduler to allow multiprocessing
     with dask.config.set(scheduler="sync"):
         # Open region ds again inside the worker function
-        region_ds = RegionDS.open(
-            path=dataset_path, region_dim=region_dim, chrom_size_path=chrom_size_path
-        )
+        region_ds = RegionDS.open(path=dataset_path, region_dim=region_dim, chrom_size_path=chrom_size_path)
 
         # get dmr region bed
-        dmr_bed = region_ds.get_bed(
-            with_id=True, bedtools=True, slop=slop, chrom_size_path=chrom_size_path
-        ).sort(g=chrom_size_path)
+        dmr_bed = region_ds.get_bed(with_id=True, bedtools=True, slop=slop, chrom_size_path=chrom_size_path).sort(
+            g=chrom_size_path
+        )
 
         total_values = {}
         for sample, bed_path in track_paths.items():
@@ -149,7 +145,7 @@ def _annotate_by_beds_worker(
                 bed_sorted=bed_sorted,
                 g=chrom_size_path,
                 region_index=region_ds.get_index(region_ds.region_dim),
-                fraction=fraction
+                fraction=fraction,
             )
             total_values[sample] = values.astype(dtype)
         total_values = pd.DataFrame(total_values)
@@ -174,9 +170,7 @@ class RegionDS(xr.Dataset):
     __slots__ = ()
 
     def __init__(self, dataset, region_dim=None, location=None, chrom_size_path=None):
-        super().__init__(
-            data_vars=dataset.data_vars, coords=dataset.coords, attrs=dataset.attrs
-        )
+        super().__init__(data_vars=dataset.data_vars, coords=dataset.coords, attrs=dataset.attrs)
         self.region_dim = region_dim
         self.location = location
         self.chrom_size_path = chrom_size_path
@@ -190,9 +184,7 @@ class RegionDS(xr.Dataset):
     def region_dim(self, region_dim):
         if region_dim is not None:
             if region_dim not in self.dims:
-                raise KeyError(
-                    f"{region_dim} does not occur in dimension names: {list(self.dims.keys())}"
-                )
+                raise KeyError(f"{region_dim} does not occur in dimension names: {list(self.dims.keys())}")
             self.attrs["region_dim"] = region_dim
         else:
             return
@@ -225,9 +217,7 @@ class RegionDS(xr.Dataset):
             return
 
     @classmethod
-    def from_bed(
-            cls, bed, location, chrom_size_path, region_dim="region", sort_bed=True
-    ):
+    def from_bed(cls, bed, location, chrom_size_path, region_dim="region", sort_bed=True):
         """
         Create empty RegionDS from a bed file.
 
@@ -260,8 +250,7 @@ class RegionDS(xr.Dataset):
             bed.set_index(bed.columns[3], inplace=True)
         else:
             raise ValueError(
-                "bed file need to be either 3 columns (chrom, start, end) "
-                "or 4 columns (chrom, start, end, name)"
+                "bed file need to be either 3 columns (chrom, start, end) " "or 4 columns (chrom, start, end, name)"
             )
         bed.index.name = region_dim
         bed.columns = ["chrom", "start", "end"]
@@ -287,15 +276,15 @@ class RegionDS(xr.Dataset):
 
     @classmethod
     def open(
-            cls,
-            path,
-            region_dim=None,
-            use_regions=None,
-            split_large_chunks=True,
-            chrom_size_path=None,
-            select_dir=None,
-            chunks='auto',
-            engine="zarr",
+        cls,
+        path,
+        region_dim=None,
+        use_regions=None,
+        split_large_chunks=True,
+        chrom_size_path=None,
+        select_dir=None,
+        chunks="auto",
+        engine="zarr",
     ):
         if isinstance(path, (str, pathlib.PosixPath)):
             _path = pathlib.Path(path).absolute()
@@ -312,11 +301,7 @@ class RegionDS(xr.Dataset):
                         # only open datasets having the region_dim
                         # other datasets will not be opened
                         # e.g, when region_dim == 'dmr', dms dataset will not be opened.
-                        exclude_dir_name = [
-                            k
-                            for k, v in region_ds_config["ds_region_dim"].items()
-                            if v != region_dim
-                        ]
+                        exclude_dir_name = [k for k, v in region_ds_config["ds_region_dim"].items() if v != region_dim]
 
                     # add output_dir
                     region_ds_location = pathlib.Path(path).absolute()
@@ -394,23 +379,23 @@ class RegionDS(xr.Dataset):
             # change object dtype to string
             if obj_to_str:
                 for k in region_ds.coords.keys():
-                    if region_ds.coords[k].dtype == 'O':
+                    if region_ds.coords[k].dtype == "O":
                         region_ds.coords[k] = region_ds.coords[k].astype(str)
 
-            if chunks == 'auto':
+            if chunks == "auto":
                 chunks = {k: min(4096, max(v // 5, 1)) for k, v in region_ds.dims.items()}
             region_ds = region_ds.chunk(chunks=chunks)
         return region_ds
 
     @classmethod
     def _open_single_dataset(
-            cls,
-            path,
-            region_dim,
-            split_large_chunks=True,
-            chrom_size_path=None,
-            location=None,
-            engine=None,
+        cls,
+        path,
+        region_dim,
+        split_large_chunks=True,
+        chrom_size_path=None,
+        location=None,
+        engine=None,
     ):
         """
         Take one or multiple RegionDS file paths and create single RegionDS concatenated on region_dim
@@ -429,9 +414,7 @@ class RegionDS(xr.Dataset):
         """
         # print('opening', path)
         if region_dim is None:
-            raise ValueError(
-                "Please specify a region_dim name when open a normal xr.Dataset with RegionDS."
-            )
+            raise ValueError("Please specify a region_dim name when open a normal xr.Dataset with RegionDS.")
 
         if engine is None:
             engine = determine_engine(path)
@@ -440,18 +423,14 @@ class RegionDS(xr.Dataset):
         # else:
         #     print(f'Open RegionDS with {engine} engine.')
         try:
-            if (isinstance(path, str) and "*" not in path) or isinstance(
-                    path, pathlib.PosixPath
-            ):
+            if (isinstance(path, str) and "*" not in path) or isinstance(path, pathlib.PosixPath):
                 ds = xr.open_dataset(path, engine=engine)
             else:
-                with dask.config.set(
-                        **{"array.slicing.split_large_chunks": split_large_chunks}
-                ):
+                with dask.config.set(**{"array.slicing.split_large_chunks": split_large_chunks}):
                     if isinstance(path, str):
                         import glob
 
-                        path = sorted([p for p in glob.glob(path)])
+                        path = sorted(p for p in glob.glob(path))
                     ds = xr.open_mfdataset(
                         path,
                         parallel=False,
@@ -477,7 +456,7 @@ class RegionDS(xr.Dataset):
 
         index = self.get_index(dim)
         for chunk_start in range(0, index.size, chunk_size):
-            use_index = index[chunk_start: chunk_start + chunk_size]
+            use_index = index[chunk_start : chunk_start + chunk_size]
             yield use_index
 
     def iter_array(self, chunk_size=100000, dim=None, da=None, load=False):
@@ -491,8 +470,8 @@ class RegionDS(xr.Dataset):
         try:
             assert dim in _da.dims
         except AssertionError as e:
-            print('dim', dim)
-            print('_da.dims', _da.dims)
+            print("dim", dim)
+            print("_da.dims", _da.dims)
             raise e
 
         for _index in self.iter_index(chunk_size=chunk_size, dim=dim):
@@ -502,12 +481,12 @@ class RegionDS(xr.Dataset):
             yield use_da
 
     def get_fasta(
-            self,
-            genome_fasta,
-            output_path,
-            slop=None,
-            chrom_size_path=None,
-            standardize_length=None,
+        self,
+        genome_fasta,
+        output_path,
+        slop=None,
+        chrom_size_path=None,
+        standardize_length=None,
     ):
         bed = self.get_bed(
             with_id=True,
@@ -520,12 +499,12 @@ class RegionDS(xr.Dataset):
         return
 
     def get_bed(
-            self,
-            with_id=True,
-            bedtools=False,
-            slop=None,
-            chrom_size_path=None,
-            standardize_length=None,
+        self,
+        with_id=True,
+        bedtools=False,
+        slop=None,
+        chrom_size_path=None,
+        standardize_length=None,
     ):
         if chrom_size_path is None:
             chrom_size_path = self.chrom_size_path  # will be none if not exist
@@ -546,9 +525,7 @@ class RegionDS(xr.Dataset):
             region_center = bed_df["start"] + (bed_df["end"] - bed_df["start"]) // 2
             bed_df["start"] = region_center - 1
             bed_df["end"] = region_center
-            slop = (
-                    standardize_length // 2
-            )  # use the bedtools slop to extend the center to standard length
+            slop = standardize_length // 2  # use the bedtools slop to extend the center to standard length
 
         if with_id:
             bed_df["name"] = self.get_index(region_dim).tolist()
@@ -611,9 +588,7 @@ class RegionDS(xr.Dataset):
             for i, chunk_start in enumerate(range(0, n_features, chunk_size)):
                 output_path = f"{chunk_dir_path}/chunk_{i}.zarr"
                 kwargs["output_path"] = output_path
-                kwargs["track_paths"] = track_paths[
-                                        chunk_start: chunk_start + chunk_size
-                                        ]
+                kwargs["track_paths"] = track_paths[chunk_start : chunk_start + chunk_size]
                 future = exe.submit(annotation_function, **kwargs)
                 futures[future] = i
                 # time.sleep(1)
@@ -650,29 +625,25 @@ class RegionDS(xr.Dataset):
         return
 
     def annotate_by_bigwigs(
-            self,
-            bigwig_table,
-            dim,
-            slop=100,
-            chrom_size_path=None,
-            value_type="mean",
-            chunk_size="auto",
-            dtype="float32",
-            cpu=1,
-            save=True,
+        self,
+        bigwig_table,
+        dim,
+        slop=100,
+        chrom_size_path=None,
+        value_type="mean",
+        chunk_size="auto",
+        dtype="float32",
+        cpu=1,
+        save=True,
     ):
         if isinstance(bigwig_table, dict):
             track_paths = pd.Series(bigwig_table)
         elif isinstance(bigwig_table, pd.Series):
             track_paths = bigwig_table
         elif isinstance(bigwig_table, str) and bigwig_table.endswith("csv"):
-            track_paths = pd.read_csv(
-                bigwig_table, index_col=0, squeeze=True, header=None
-            )
+            track_paths = pd.read_csv(bigwig_table, index_col=0, squeeze=True, header=None)
         else:
-            track_paths = pd.read_csv(
-                bigwig_table, sep="\t", index_col=0, squeeze=True, header=None
-            )
+            track_paths = pd.read_csv(bigwig_table, sep="\t", index_col=0, squeeze=True, header=None)
 
         kwargs = dict(
             track_paths=track_paths,
@@ -683,27 +654,23 @@ class RegionDS(xr.Dataset):
             chunk_size=chunk_size,
             dtype=dtype,
         )
-        self._chunk_annotation_executor(
-            _annotate_by_bigwigs_worker, cpu=cpu, save=save, **kwargs
-        )
+        self._chunk_annotation_executor(_annotate_by_bigwigs_worker, cpu=cpu, save=save, **kwargs)
         return
 
     def annotate_by_beds(
-            self,
-            bed_table,
-            dim,
-            slop=100,
-            chrom_size_path=None,
-            chunk_size="auto",
-            dtype="bool",
-            bed_sorted=True,
-            cpu=1,
-            fraction=0.2,
-            save=True,
+        self,
+        bed_table,
+        dim,
+        slop=100,
+        chrom_size_path=None,
+        chunk_size="auto",
+        dtype="bool",
+        bed_sorted=True,
+        cpu=1,
+        fraction=0.2,
+        save=True,
     ):
-        bed_tmp = pathlib.Path(
-            f"./pybedtools_tmp_{np.random.randint(0, 100000)}"
-        ).absolute()
+        bed_tmp = pathlib.Path(f"./pybedtools_tmp_{np.random.randint(0, 100000)}").absolute()
         bed_tmp.mkdir(exist_ok=True)
         default_tmp = pybedtools.helpers.get_tempdir()
         pybedtools.helpers.set_tempdir(str(bed_tmp))
@@ -715,9 +682,7 @@ class RegionDS(xr.Dataset):
         elif isinstance(bed_table, str) and bed_table.endswith("csv"):
             track_paths = pd.read_csv(bed_table, index_col=0, squeeze=True, header=None)
         else:
-            track_paths = pd.read_csv(
-                bed_table, sep="\t", index_col=0, squeeze=True, header=None
-            )
+            track_paths = pd.read_csv(bed_table, sep="\t", index_col=0, squeeze=True, header=None)
 
         kwargs = dict(
             track_paths=track_paths,
@@ -727,11 +692,9 @@ class RegionDS(xr.Dataset):
             chunk_size=chunk_size,
             dtype=dtype,
             bed_sorted=bed_sorted,
-            fraction=fraction
+            fraction=fraction,
         )
-        self._chunk_annotation_executor(
-            _annotate_by_beds_worker, cpu=cpu, save=save, **kwargs
-        )
+        self._chunk_annotation_executor(_annotate_by_beds_worker, cpu=cpu, save=save, **kwargs)
 
         subprocess.run(f"rm -rf {bed_tmp}", shell=True)
         # pybedtools actually changed tempfile.tempdir
@@ -755,17 +718,17 @@ class RegionDS(xr.Dataset):
         return data
 
     def scan_motifs(
-            self,
-            genome_fasta,
-            cpu=1,
-            standardize_length=500,
-            motif_set_path=None,
-            chrom_size_path=None,
-            combine_cluster=True,
-            fnr_fpr_fold=1000,
-            chunk_size=None,
-            motif_dim="motif",
-            snakemake=False
+        self,
+        genome_fasta,
+        cpu=1,
+        standardize_length=500,
+        motif_set_path=None,
+        chrom_size_path=None,
+        combine_cluster=True,
+        fnr_fpr_fold=1000,
+        chunk_size=None,
+        motif_dim="motif",
+        snakemake=False,
     ):
         region_ds_path = self.location
         if region_ds_path is None:
@@ -794,7 +757,7 @@ class RegionDS(xr.Dataset):
                 combine_cluster=combine_cluster,
                 motif_set_path=motif_set_path,
                 fnr_fpr_fold=fnr_fpr_fold,
-                chunk_size=chunk_size
+                chunk_size=chunk_size,
             )
         else:
             # directly scan motif under current process
@@ -805,20 +768,21 @@ class RegionDS(xr.Dataset):
                 combine_cluster=combine_cluster,
                 fnr_fpr_fold=fnr_fpr_fold,
                 chunk_size=chunk_size,
-                motif_dim=motif_dim
+                motif_dim=motif_dim,
             )
 
     def _scan_motif_local(
-            self,
-            fasta_path,
-            cpu=1,
-            motif_set_path=None,
-            combine_cluster=True,
-            fnr_fpr_fold=1000,
-            chunk_size=None,
-            motif_dim="motif"
+        self,
+        fasta_path,
+        cpu=1,
+        motif_set_path=None,
+        combine_cluster=True,
+        fnr_fpr_fold=1000,
+        chunk_size=None,
+        motif_dim="motif",
     ):
         from ..motif import MotifSet
+
         if motif_set_path is not None:
             motif_set: MotifSet = joblib.load(motif_set_path)
         else:
@@ -828,9 +792,7 @@ class RegionDS(xr.Dataset):
             motif_set = get_default_motif_set()
 
         if fnr_fpr_fold != 1000:
-            motif_set.calculate_threshold(
-                cpu=cpu, method="balance", threshold_value=fnr_fpr_fold
-            )
+            motif_set.calculate_threshold(cpu=cpu, method="balance", threshold_value=fnr_fpr_fold)
 
         region_dim = self.region_dim
         region_ds_path = self.location
@@ -844,100 +806,110 @@ class RegionDS(xr.Dataset):
             motif_dim=motif_dim,
             chunk_size=chunk_size,
         )
-        new_dataset_dim = {f'{region_dim}_{motif_dim}': region_dim}
+        new_dataset_dim = {f"{region_dim}_{motif_dim}": region_dim}
         if combine_cluster:
-            new_dataset_dim[f'{region_dim}_{motif_dim}-cluster'] = region_dim
+            new_dataset_dim[f"{region_dim}_{motif_dim}-cluster"] = region_dim
         update_dataset_config(self.location, add_ds_region_dim=new_dataset_dim)
         self.update(motif_ds)
         return
 
     def _scan_motifs_snakemake(
-            self,
-            fasta_path,
-            output_dir,
-            cpu,
-            motif_dim="motif",
-            combine_cluster=True,
-            motif_set_path=None,
-            fnr_fpr_fold=1000,
-            chunk_size=50000
+        self,
+        fasta_path,
+        output_dir,
+        cpu,
+        motif_dim="motif",
+        combine_cluster=True,
+        motif_set_path=None,
+        fnr_fpr_fold=1000,
+        chunk_size=50000,
     ):
         if chunk_size is None:
             chunk_size = 50000
 
         from ALLCools.motif.snakemake import (
-            prepare_motif_scan_snakemake,
             check_snakemake_success,
-            save_motif_chunks
+            prepare_motif_scan_snakemake,
+            save_motif_chunks,
         )
 
         region_ds_path = output_dir
-        snakemake_temp_dir = f'{region_ds_path}/motif_scan_snakemake'
+        snakemake_temp_dir = f"{region_ds_path}/motif_scan_snakemake"
         output_dir = snakemake_temp_dir
 
         region_dim = self.region_dim
 
-        status_path = f'{output_dir}/status'
+        status_path = f"{output_dir}/status"
         if pathlib.Path(status_path).exists():
             # check if all dir is executed successfully
             all_success = check_snakemake_success(output_dir)
             if all_success:
-                print('Motif scan finished, merge chunks into RegionDS.')
-                save_motif_chunks(motif_chunk_dir=output_dir,
-                                  region_dim=region_dim,
-                                  output_path=f'{region_ds_path}/{region_dim}_{motif_dim}',
-                                  is_motif_cluster=False)
+                print("Motif scan finished, merge chunks into RegionDS.")
+                save_motif_chunks(
+                    motif_chunk_dir=output_dir,
+                    region_dim=region_dim,
+                    output_path=f"{region_ds_path}/{region_dim}_{motif_dim}",
+                    is_motif_cluster=False,
+                )
 
                 if combine_cluster:
-                    save_motif_chunks(motif_chunk_dir=output_dir,
-                                      region_dim=region_dim,
-                                      output_path=f'{region_ds_path}/{region_dim}_{motif_dim}-cluster',
-                                      is_motif_cluster=True)
+                    save_motif_chunks(
+                        motif_chunk_dir=output_dir,
+                        region_dim=region_dim,
+                        output_path=f"{region_ds_path}/{region_dim}_{motif_dim}-cluster",
+                        is_motif_cluster=True,
+                    )
 
                 # update config
-                new_dataset_dim = {f'{region_dim}_{motif_dim}': region_dim}
+                new_dataset_dim = {f"{region_dim}_{motif_dim}": region_dim}
                 if combine_cluster:
-                    new_dataset_dim[f'{region_dim}_{motif_dim}-cluster'] = region_dim
+                    new_dataset_dim[f"{region_dim}_{motif_dim}-cluster"] = region_dim
                 update_dataset_config(self.location, add_ds_region_dim=new_dataset_dim)
 
                 # load to current obj
-                motif_ds = xr.open_zarr(f'{region_ds_path}/{region_dim}_{motif_dim}')
+                motif_ds = xr.open_zarr(f"{region_ds_path}/{region_dim}_{motif_dim}")
                 self.update(motif_ds)
                 if combine_cluster:
-                    motif_ds = xr.open_zarr(f'{region_ds_path}/{region_dim}_{motif_dim}-cluster')
+                    motif_ds = xr.open_zarr(f"{region_ds_path}/{region_dim}_{motif_dim}-cluster")
                     self.update(motif_ds)
 
                 # finally, delete chunks
                 shutil.rmtree(output_dir)
                 return
             else:
-                print('You can keep the success ones and '
-                      'rerun this function once the remaining chunks are executed successfully')
+                print(
+                    "You can keep the success ones and "
+                    "rerun this function once the remaining chunks are executed successfully"
+                )
                 return
         else:
             # prepare snakemake dir
-            prepare_motif_scan_snakemake(output_dir=output_dir,
-                                         fasta_path=fasta_path,
-                                         region_dim=self.region_dim,
-                                         motif_dim=motif_dim,
-                                         motif_set_path=motif_set_path,
-                                         chunk_size=chunk_size,
-                                         combine_cluster=combine_cluster,
-                                         fnr_fpr_fold=fnr_fpr_fold,
-                                         cpu=cpu)
-            print('Snakemake files are prepared, '
-                  'please execute snakemake commands for the actual motif scan. '
-                  'Once you executed everything, you may rerun this function with exact parameters to '
-                  'resume and store final results to RegionDS.')
+            prepare_motif_scan_snakemake(
+                output_dir=output_dir,
+                fasta_path=fasta_path,
+                region_dim=self.region_dim,
+                motif_dim=motif_dim,
+                motif_set_path=motif_set_path,
+                chunk_size=chunk_size,
+                combine_cluster=combine_cluster,
+                fnr_fpr_fold=fnr_fpr_fold,
+                cpu=cpu,
+            )
+            print(
+                "Snakemake files are prepared, "
+                "please execute snakemake commands for the actual motif scan. "
+                "Once you executed everything, you may rerun this function with exact parameters to "
+                "resume and store final results to RegionDS."
+            )
         return
 
     def get_hypo_hyper_index(
-            self,
-            a,
-            region_dim=None,
-            region_state_da=None,
-            sample_dim="sample",
-            use_collapsed=True,
+        self,
+        a,
+        region_dim=None,
+        region_state_da=None,
+        sample_dim="sample",
+        use_collapsed=True,
     ):
         if region_state_da is None:
             if region_dim is None:
@@ -966,14 +938,14 @@ class RegionDS(xr.Dataset):
         return hypo_dmr, hyper_dmr
 
     def get_pairwise_differential_index(
-            self,
-            a,
-            b,
-            dmr_type="hypo",
-            region_dim=None,
-            region_state_da=None,
-            sample_dim="sample",
-            use_collapsed=True,
+        self,
+        a,
+        b,
+        dmr_type="hypo",
+        region_dim=None,
+        region_state_da=None,
+        sample_dim="sample",
+        use_collapsed=True,
     ):
         a_hypo, a_hyper = self.get_hypo_hyper_index(
             a,
@@ -1006,40 +978,32 @@ class RegionDS(xr.Dataset):
         return a_not_b, a_and_b, b_not_a
 
     def motif_enrichment(
-            self,
-            true_regions,
-            background_regions,
-            region_dim=None,
-            motif_dim="motif-cluster",
-            motif_da=None,
-            alternative="two-sided",
+        self,
+        true_regions,
+        background_regions,
+        region_dim=None,
+        motif_dim="motif-cluster",
+        motif_da=None,
+        alternative="two-sided",
     ):
         if region_dim is None:
             region_dim = self.region_dim
         if motif_da is None:
             motif_da = f"{region_dim}_{motif_dim}_da"
-        true_motif = self[motif_da].sel(
-            {"motif_value": "n_motifs", region_dim: true_regions}
-        )
+        true_motif = self[motif_da].sel({"motif_value": "n_motifs", region_dim: true_regions})
         true_motif = (true_motif > 0).sum(dim=region_dim).to_pandas()
         true_no_motif = true_regions.size - true_motif
 
-        bkg_motif = self[motif_da].sel(
-            {"motif_value": "n_motifs", region_dim: background_regions}
-        )
+        bkg_motif = self[motif_da].sel({"motif_value": "n_motifs", region_dim: background_regions})
         bkg_motif = (bkg_motif > 0).sum(dim=region_dim).to_pandas()
         bkg_no_motif = background_regions.size - bkg_motif
 
-        contingency_tables = pd.DataFrame(
-            {"tp": true_motif, "tn": true_no_motif, "fp": bkg_motif, "fn": bkg_no_motif}
-        )
+        contingency_tables = pd.DataFrame({"tp": true_motif, "tn": true_no_motif, "fp": bkg_motif, "fn": bkg_no_motif})
 
         # add pseudo count
         contingency_tables += 1
 
-        test_results = contingency_tables.apply(
-            _fisher_exact, axis=1, alternative=alternative
-        )
+        test_results = contingency_tables.apply(_fisher_exact, axis=1, alternative=alternative)
         from statsmodels.stats.multitest import multipletests
 
         _, q, *_ = multipletests(test_results["p"], method="fdr_bh")
@@ -1051,15 +1015,15 @@ class RegionDS(xr.Dataset):
         return test_results
 
     def sample_dmr_motif_enrichment(
-            self,
-            sample,
-            region_dim=None,
-            sample_dim="sample",
-            motif_dim="motif-cluster",
-            region_state_da=None,
-            motif_da=None,
-            alternative="two-sided",
-            use_collapsed=True,
+        self,
+        sample,
+        region_dim=None,
+        sample_dim="sample",
+        motif_dim="motif-cluster",
+        region_state_da=None,
+        motif_da=None,
+        alternative="two-sided",
+        use_collapsed=True,
     ):
         hypo_region, hyper_region = self.get_hypo_hyper_index(
             sample,
@@ -1079,16 +1043,16 @@ class RegionDS(xr.Dataset):
         return test_results
 
     def pairwise_dmr_motif_enrichment(
-            self,
-            a,
-            b,
-            dmr_type="hypo",
-            region_dim=None,
-            region_state_da=None,
-            sample_dim="sample",
-            motif_dim="motif-cluster",
-            motif_da=None,
-            alternative="two-sided",
+        self,
+        a,
+        b,
+        dmr_type="hypo",
+        region_dim=None,
+        region_state_da=None,
+        sample_dim="sample",
+        motif_dim="motif-cluster",
+        motif_da=None,
+        alternative="two-sided",
     ):
         a_not_b, _, b_not_a = self.get_pairwise_differential_index(
             a,
@@ -1119,8 +1083,11 @@ class RegionDS(xr.Dataset):
             pathlib.Path(self.location).mkdir(parents=True, exist_ok=True)
 
             output_path = f"{self.location}/{self.region_dim}"
-            update_dataset_config(self.location, add_ds_region_dim={self.region_dim: self.region_dim},
-                                  change_region_dim=self.region_dim if change_region_dim else None)
+            update_dataset_config(
+                self.location,
+                add_ds_region_dim={self.region_dim: self.region_dim},
+                change_region_dim=self.region_dim if change_region_dim else None,
+            )
 
         # turn object coords to fix length string dtype before saving to zarr
         if da_name is None:

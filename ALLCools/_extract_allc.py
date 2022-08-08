@@ -1,18 +1,18 @@
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from subprocess import run
-from typing import Union, Tuple, Callable
+from typing import Callable, Tuple, Union
 
 import pandas as pd
 
 from ._doc import *
 from ._open import open_allc, open_gz
 from .utilities import (
-    tabix_allc,
-    parse_mc_pattern,
-    parse_chrom_size,
-    genome_region_chunks,
     binary_count,
+    genome_region_chunks,
+    parse_chrom_size,
+    parse_mc_pattern,
+    tabix_allc,
 )
 
 
@@ -37,10 +37,7 @@ def _merge_cg_strand(in_path, out_path):
                 continue
             else:
                 # pos should be continuous, strand should be reverse
-                if (
-                    int(prev_line[1]) + 1 == int(cur_line[1])
-                    and prev_line[2] != cur_line[2]
-                ):
+                if int(prev_line[1]) + 1 == int(cur_line[1]) and prev_line[2] != cur_line[2]:
                     new_line = prev_line[:4] + [
                         str(int(prev_line[4]) + int(cur_line[4])),
                         str(int(prev_line[5]) + int(cur_line[5])),
@@ -76,25 +73,19 @@ def _check_strandness_parameter(strandness) -> str:
         raise ValueError(f"Unknown value for strandness: {strandness}")
 
 
-def _check_out_format_parameter(
-    out_format, binarize=False
-) -> Tuple[str, Callable[[list], str]]:
+def _check_out_format_parameter(out_format, binarize=False) -> Tuple[str, Callable[[list], str]]:
     if binarize:
 
         def _extract_allc_format(allc_line_list):
             # keep allc format
             # mc and cov is binarized
-            allc_line_list[4], allc_line_list[5] = binary_count(
-                int(allc_line_list[4]), int(allc_line_list[5])
-            )
+            allc_line_list[4], allc_line_list[5] = binary_count(int(allc_line_list[4]), int(allc_line_list[5]))
             return "\t".join(map(str, allc_line_list))
 
         def _extract_bed5_format(allc_line_list):
             # only chrom, pos, pos, mc, cov
             # mc and cov is binarized
-            allc_line_list[4], allc_line_list[5] = binary_count(
-                int(allc_line_list[4]), int(allc_line_list[5])
-            )
+            allc_line_list[4], allc_line_list[5] = binary_count(int(allc_line_list[4]), int(allc_line_list[5]))
             allc_line_list = [allc_line_list[i] for i in [0, 1, 1, 4, 5]]
             return "\t".join(map(str, allc_line_list)) + "\n"
 
@@ -151,9 +142,7 @@ def _extract_allc_parallel(
     Don't use this on small files
     """
     output_prefix = output_prefix.rstrip(".")
-    regions = genome_region_chunks(
-        chrom_size_path=chrom_size_path, bin_length=chunk_size, combine_small=True
-    )
+    regions = genome_region_chunks(chrom_size_path=chrom_size_path, bin_length=chunk_size, combine_small=True)
     future_dict = {}
     with ProcessPoolExecutor(cpu) as executor:
         for chunk_id, region in enumerate(regions):
@@ -203,9 +192,7 @@ def _extract_allc_parallel(
 
             if tabix and "allc" in out_suffix:
                 need_tabix.append(real_file_path)
-            future = merge_executor.submit(
-                _merge_gz_files, file_list=ordered_file_list, output_path=real_file_path
-            )
+            future = merge_executor.submit(_merge_gz_files, file_list=ordered_file_list, output_path=real_file_path)
             futures.append(future)
         for future in as_completed(futures):
             future.result()
@@ -300,9 +287,7 @@ def extract_allc(
         mc_contexts = mc_contexts.split(" ")
     mc_contexts = list(set(mc_contexts))
     strandness = _check_strandness_parameter(strandness)
-    out_suffix, line_func = _check_out_format_parameter(
-        output_format, binarize=binarize
-    )
+    out_suffix, line_func = _check_out_format_parameter(output_format, binarize=binarize)
 
     # because mc_contexts can overlap (e.g. CHN, CAN)
     # each context may associate to multiple handle
@@ -369,10 +354,7 @@ def extract_allc(
                     continue
                 try:
                     # key is (context, strand)
-                    [
-                        h.write(line_func(cur_line))
-                        for h in context_handle[(cur_line[3], cur_line[2])]
-                    ]
+                    [h.write(line_func(cur_line)) for h in context_handle[(cur_line[3], cur_line[2])]]
                 except KeyError:
                     continue
         else:

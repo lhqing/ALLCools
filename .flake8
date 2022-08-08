@@ -38,7 +38,11 @@ ignore =
     E203
     # format string does contain unindexed parameters
     P101
+    # Name may be undefined, or defined from star imports
+    F405
 exclude = .git,__pycache__,build,docs/_build,dist
 per-file-ignores =
     tests/*: D
     */__init__.py: F401
+    ALLCools/sandbox/*: D
+    ALLCools/clustering/ClusterMerging.py: B023

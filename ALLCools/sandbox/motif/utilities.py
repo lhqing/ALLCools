@@ -1,7 +1,8 @@
+import re
+
 import logomaker
 import numpy as np
 import pandas as pd
-import re
 
 
 def meme_to_homer(meme_path, homer_path, score_power=0.85):
@@ -18,42 +19,43 @@ def meme_to_homer(meme_path, homer_path, score_power=0.85):
         Output path in homer format
     score_power
         Log odds detection threshold = max_score ** score_power
+
     Returns
     -------
 
     """
 
     if score_power >= 1:
-        raise ValueError('score_power must < 1')
+        raise ValueError("score_power must < 1")
 
     in_motif = False
     records = []
     with open(meme_path) as f:
         for line in f:
-            if line.startswith('MOTIF'):
+            if line.startswith("MOTIF"):
                 if in_motif:
                     records.append(cur_char)
-                    cur_char = ''
+                    cur_char = ""
                 else:
                     in_motif = True
-                    cur_char = ''
+                    cur_char = ""
             if not in_motif:
                 continue
             else:
                 cur_char += line
 
-    with open(homer_path, 'w') as f:
+    with open(homer_path, "w") as f:
         for record in records:
-            lines = record.split('\n')
+            lines = record.split("\n")
             head_line = lines[0]
             matrix_line = []
             enter_matrix = False
             for line in lines:
-                if line.startswith('letter-probability matrix'):
+                if line.startswith("letter-probability matrix"):
                     enter_matrix = True
                     continue
 
-                ll = line.strip().split('  ')
+                ll = line.strip().split("  ")
                 ll = [i.strip() for i in ll]
                 if enter_matrix and len(ll) == 4:
                     matrix_line.append(ll)
@@ -61,9 +63,9 @@ def meme_to_homer(meme_path, homer_path, score_power=0.85):
                     continue
             matrix = np.array(matrix_line).astype(float)
             best_score = np.log(matrix.max(axis=1) / 0.25).sum()
-            uid = head_line.split(' ')[1]
-            homer_head_line = f'>\t{uid}\t{best_score ** score_power}\n'
-            matrix_line = '\n'.join(['\t'.join(line) for line in matrix_line]) + '\n'
+            uid = head_line.split(" ")[1]
+            homer_head_line = f">\t{uid}\t{best_score ** score_power}\n"
+            matrix_line = "\n".join(["\t".join(line) for line in matrix_line]) + "\n"
             f.write(homer_head_line + matrix_line)
     return
 
@@ -77,28 +79,30 @@ def meme_motif_file_to_dict(meme_motif_paths):
     for meme_motif_path in meme_motif_paths:
         with open(meme_motif_path) as f:
             first_line = f.readline()
-            if not first_line.startswith('MEME version'):
-                raise ValueError('Input file need to be MEME motif format.')
+            if not first_line.startswith("MEME version"):
+                raise ValueError("Input file need to be MEME motif format.")
 
             f.seek(0)
             header = True
-            header_text = ''
-            motif_tmp_text = ''
+            header_text = ""
+            motif_tmp_text = ""
             for line in f:
-                if line.startswith('MOTIF'):
+                if line.startswith("MOTIF"):
                     # save the previous one first
-                    if motif_tmp_text != '':
+                    if motif_tmp_text != "":
                         records[(uid, name)] = header_text + motif_tmp_text
                     motif_tmp_text = line
 
                     try:
-                        _, uid, name = line.strip('\n').split(' ')
+                        _, uid, name = line.strip("\n").split(" ")
                     except ValueError:
-                        _, uid = line.strip('\n').split(' ')
-                        name = ''
+                        _, uid = line.strip("\n").split(" ")
+                        name = ""
                     if uid in uid_set:
-                        raise ValueError(f'Found duplicate motif uid {uid} in file {meme_motif_path}. '
-                                         f'Motif uid should be unique across all meme files provided.')
+                        raise ValueError(
+                            f"Found duplicate motif uid {uid} in file {meme_motif_path}. "
+                            f"Motif uid should be unique across all meme files provided."
+                        )
                     else:
                         uid_set.add(uid)
                     header = False
@@ -106,26 +110,26 @@ def meme_motif_file_to_dict(meme_motif_paths):
                     header_text += line
                 else:
                     motif_tmp_text += line
-            if motif_tmp_text != '':
+            if motif_tmp_text != "":
                 records[(uid, name)] = header_text + motif_tmp_text
     return records
 
 
 def single_meme_txt_to_pfm_df(text, bits_scale=True):
-    sep = re.compile(r'[01].[0-9]+')
+    sep = re.compile(r"[01].[0-9]+")
     enter = False
     pfm_rows = []
-    for row in text.split('\n'):
+    for row in text.split("\n"):
         if enter:
-            if row.startswith(' '):
+            if row.startswith(" "):
                 numbers = sep.findall(row)
                 if len(numbers) == 4:
                     pfm_rows.append(list(map(float, numbers)))
         else:
-            if row.startswith('letter-probability'):
+            if row.startswith("letter-probability"):
                 enter = True
             continue
-    pfm = pd.DataFrame(pfm_rows, columns=['A', 'C', 'G', 'T'])
+    pfm = pd.DataFrame(pfm_rows, columns=["A", "C", "G", "T"])
 
     if bits_scale:
         information_content = (pfm * np.log2(pfm / 0.25)).sum(axis=1)
@@ -142,11 +146,7 @@ def meme_to_pfm_dict(meme_motif_paths, bits_scale=True):
 
 
 def plot_pfm(pfm, ax=None, logo_kws=None):
-    _logo_kws = dict(font_name='helvetica',
-                     color_scheme=None,
-                     vpad=.1,
-                     ax=ax,
-                     width=.8)
+    _logo_kws = dict(font_name="helvetica", color_scheme=None, vpad=0.1, ax=ax, width=0.8)
     if logo_kws is not None:
         _logo_kws.update(logo_kws)
     logo = logomaker.Logo(pfm, **_logo_kws)
@@ -171,8 +171,8 @@ def split_meme_motif_file(meme_motif_paths, output_dir):
 
     motif_file_records = []
     for (uid, name), text in records.items():
-        motif_file_path = output_dir / f'{uid}.meme'
+        motif_file_path = output_dir / f"{uid}.meme"
         motif_file_records.append([uid, name, motif_file_path])
-        with open(motif_file_path, 'w') as f:
+        with open(motif_file_path, "w") as f:
             f.write(text)
     return motif_file_records

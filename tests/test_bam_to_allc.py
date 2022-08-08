@@ -1,7 +1,8 @@
 import gzip
 
 from ALLCools.api import bam_to_allc
-from .utilities import *
+
+from .utilities import REFERENCE_FASTA, data_file_path, output_path, run_command
 
 
 def test_bam_to_allc_api():

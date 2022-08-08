@@ -14,10 +14,10 @@ from imblearn.ensemble import BalancedRandomForestClassifier
 from natsort import natsorted
 from scanpy.neighbors import Neighbors
 from sklearn.metrics import (
+    adjusted_rand_score,
+    balanced_accuracy_score,
     confusion_matrix,
     pairwise_distances,
-    balanced_accuracy_score,
-    adjusted_rand_score,
 )
 from sklearn.model_selection import cross_val_predict
 
@@ -25,10 +25,9 @@ from ..plot import categorical_scatter
 
 
 def _adata_to_coord_data(adata, coord_base):
-    coord_data = pd.DataFrame({
-        f'{coord_base}_0': adata.obsm[f'X_{coord_base}'][:, 0],
-        f'{coord_base}_1': adata.obsm[f'X_{coord_base}'][:, 1]
-    })
+    coord_data = pd.DataFrame(
+        {f"{coord_base}_0": adata.obsm[f"X_{coord_base}"][:, 0], f"{coord_base}_1": adata.obsm[f"X_{coord_base}"][:, 1]}
+    )
     return coord_data
 
 
@@ -95,9 +94,7 @@ def _leiden_runner(g, random_states, partition_type, **partition_kwargs):
     return all clusters as a pd.DataFrame"""
     results = []
     for seed in random_states:
-        part = leidenalg.find_partition(
-            g, partition_type, seed=seed, **partition_kwargs
-        )
+        part = leidenalg.find_partition(g, partition_type, seed=seed, **partition_kwargs)
         groups = np.array(part.membership)
         groups = pd.Categorical(
             values=groups.astype("U"),
@@ -105,7 +102,7 @@ def _leiden_runner(g, random_states, partition_type, **partition_kwargs):
         )
         results.append(groups)
     with warnings.catch_warnings():
-        warnings.filterwarnings('ignore')
+        warnings.filterwarnings("ignore")
         result_df = pd.DataFrame(results, columns=random_states)
     return result_df
 
@@ -122,9 +119,7 @@ def _split_train_test_per_group(x, y, frac, max_train, random_state):
             outlier_idx += sub_series.index.tolist()
         else:
             n_train = max(1, min(max_train, int(sub_series.size * frac)))
-            is_train = sub_series.index.isin(
-                sub_series.sample(n_train, random_state=random_state).index
-            )
+            is_train = sub_series.index.isin(sub_series.sample(n_train, random_state=random_state).index)
             train_idx += sub_series.index[is_train].tolist()
             test_idx += sub_series.index[~is_train].tolist()
     x_train = x[train_idx]
@@ -134,9 +129,7 @@ def _split_train_test_per_group(x, y, frac, max_train, random_state):
     return x_train, y_train, x_test, y_test
 
 
-def single_supervise_evaluation(
-        clf, x_train, y_train, x_test, y_test, r1_norm_step=0.05, r2_norm_step=0.05
-):
+def single_supervise_evaluation(clf, x_train, y_train, x_test, y_test, r1_norm_step=0.05, r2_norm_step=0.05):
     """A single fit and merge cluster step"""
     # fit model
     clf.fit(x_train, y_train)
@@ -182,20 +175,20 @@ def single_supervise_evaluation(
 
 class ConsensusClustering:
     def __init__(
-            self,
-            model=None,
-            n_neighbors=25,
-            metric="euclidean",
-            min_cluster_size=10,
-            leiden_repeats=200,
-            leiden_resolution=1,
-            target_accuracy=0.95,
-            consensus_rate=0.7,
-            random_state=0,
-            train_frac=0.5,
-            train_max_n=500,
-            max_iter=50,
-            n_jobs=-1,
+        self,
+        model=None,
+        n_neighbors=25,
+        metric="euclidean",
+        min_cluster_size=10,
+        leiden_repeats=200,
+        leiden_resolution=1,
+        target_accuracy=0.95,
+        consensus_rate=0.7,
+        random_state=0,
+        train_frac=0.5,
+        train_max_n=500,
+        max_iter=50,
+        n_jobs=-1,
     ):
         """
         Perform consensus clustering by multi-leiden clustering + supervised model evaluation.
@@ -313,17 +306,15 @@ class ConsensusClustering:
         return
 
     def multi_leiden_clustering(
-            self,
-            partition_type=None,
-            partition_kwargs=None,
-            use_weights=True,
-            n_iterations=-1,
+        self,
+        partition_type=None,
+        partition_kwargs=None,
+        use_weights=True,
+        n_iterations=-1,
     ):
         """Modified from scanpy, perform Leiden clustering multiple times with different random states"""
         if self._neighbors is None:
-            raise ValueError(
-                "Run compute_neighbors first before multi_leiden_clustering"
-            )
+            raise ValueError("Run compute_neighbors first before multi_leiden_clustering")
 
         # convert neighbors to igraph
         g = self._neighbors.to_igraph()
@@ -332,14 +323,9 @@ class ConsensusClustering:
         np.random.seed(self.random_state)
         leiden_repeats = self.leiden_repeats
         n_jobs = self.n_jobs
-        random_states = np.random.choice(
-            range(99999), size=leiden_repeats, replace=False
-        )
+        random_states = np.random.choice(range(99999), size=leiden_repeats, replace=False)
         step = max(int(leiden_repeats / n_jobs), 10)
-        random_state_chunks = [
-            random_states[i: min(i + step, leiden_repeats)]
-            for i in range(0, leiden_repeats, step)
-        ]
+        random_state_chunks = [random_states[i : min(i + step, leiden_repeats)] for i in range(0, leiden_repeats, step)]
 
         results = []
         print(f"Repeating leiden clustering {leiden_repeats} times")
@@ -356,14 +342,10 @@ class ConsensusClustering:
                     partition_kwargs = {}
                 else:
                     if "seed" in partition_kwargs:
-                        print(
-                            "Warning: seed in the partition_kwargs will be ignored, use seed instead."
-                        )
+                        print("Warning: seed in the partition_kwargs will be ignored, use seed instead.")
                         del partition_kwargs["seed"]
                 if use_weights:
-                    partition_kwargs["weights"] = np.array(g.es["weight"]).astype(
-                        np.float64
-                    )
+                    partition_kwargs["weights"] = np.array(g.es["weight"]).astype(np.float64)
                 partition_kwargs["n_iterations"] = n_iterations
                 partition_kwargs["resolution_parameter"] = self.leiden_resolution
                 # clustering proper
@@ -408,9 +390,7 @@ class ConsensusClustering:
         clusters = {}
         while data.shape[1] > 1:
             seed_cell = data.pop(data.columns[0])
-            distance = pairwise_distances(
-                X=data.T, Y=seed_cell.values[None, :], metric="hamming"
-            ).ravel()
+            distance = pairwise_distances(X=data.T, Y=seed_cell.values[None, :], metric="hamming").ravel()
 
             judge = distance < (1 - self.consensus_rate)
             this_cluster_cells = [seed_cell.name] + data.columns[judge].to_list()
@@ -432,9 +412,7 @@ class ConsensusClustering:
         small_clusters = counts[counts < self.min_cluster_size].index
         clusters[clusters.isin(small_clusters)] = -1
 
-        print(
-            f"{(clusters != -1).sum()} cells assigned to {clusters.unique().size - 1} raw clusters"
-        )
+        print(f"{(clusters != -1).sum()} cells assigned to {clusters.unique().size - 1} raw clusters")
         print(f"{(clusters == -1).sum()} cells are multi-leiden outliers")
         self._multi_leiden_clusters = clusters.values
         return
@@ -467,17 +445,12 @@ class ConsensusClustering:
         """Perform supervised learning and cluster merge process"""
         if self._multi_leiden_clusters is None:
             raise ValueError(
-                "Run multi_leiden_clustering first to get a "
-                "clustering assignment before run supervise_learning."
+                "Run multi_leiden_clustering first to get a " "clustering assignment before run supervise_learning."
             )
 
-        n_cluster = np.unique(
-            self._multi_leiden_clusters[self._multi_leiden_clusters != -1]
-        ).size
+        n_cluster = np.unique(self._multi_leiden_clusters[self._multi_leiden_clusters != -1]).size
         if n_cluster == 1:
-            print(
-                "There is only one cluster except for outliers, can not train supervise model on that."
-            )
+            print("There is only one cluster except for outliers, can not train supervise model on that.")
             self.label = np.zeros(self.n_obs, dtype=int)
             return
         print(f"\n=== Start supervise model training and cluster merging ===")
@@ -508,14 +481,7 @@ class ConsensusClustering:
                 random_state=self.random_state + cur_iter,
                 # every time train-test split got a different random state
             )
-            (
-                clf,
-                score,
-                cluster_map,
-                cmat,
-                r1_cmat,
-                r2_cmat,
-            ) = single_supervise_evaluation(
+            (clf, score, cluster_map, cmat, r1_cmat, r2_cmat,) = single_supervise_evaluation(
                 clf,
                 x_train,
                 y_train,
@@ -547,18 +513,10 @@ class ConsensusClustering:
             # judge results
             if len(cluster_map) > 0:
                 print(f"Merging {len(cluster_map)} clusters.")
-                cur_y = pd.Series(cur_y).apply(
-                    lambda i: cluster_map[i] if i in cluster_map else i
-                )
+                cur_y = pd.Series(cur_y).apply(lambda i: cluster_map[i] if i in cluster_map else i)
                 # renumber labels from large to small
-                ordered_map = {
-                    c: i for i, c in enumerate(cur_y[cur_y != -1].value_counts().index)
-                }
-                cur_y = (
-                    pd.Series(cur_y)
-                        .apply(lambda i: ordered_map[i] if i in ordered_map else i)
-                        .values
-                )
+                ordered_map = {c: i for i, c in enumerate(cur_y[cur_y != -1].value_counts().index)}
+                cur_y = pd.Series(cur_y).apply(lambda i: ordered_map[i] if i in ordered_map else i).values
             else:
                 print("Stop iteration because there is no cluster to merge")
                 break
@@ -577,9 +535,7 @@ class ConsensusClustering:
         # skip if there is only one cluster
         n_cluster = len(set(self.label[self.label != -1]))
         if n_cluster < 2:
-            print(
-                f"Skip final evaluation because only {n_cluster} cluster label exist."
-            )
+            print(f"Skip final evaluation because only {n_cluster} cluster label exist.")
             # name all cluster as c0
             self.label = np.zeros(self.label.size, dtype=int)
             self.cv_predicted_label = [f"c{label}" for label in self.label]
@@ -590,9 +546,7 @@ class ConsensusClustering:
             outlier_x = self.X[self.label == -1]
             outlier_idx = np.where(self.label == -1)[0]
             if len(outlier_idx) != 0:
-                outlier_predict = pd.Series(
-                    self.supervise_model.predict(outlier_x), index=outlier_idx
-                )
+                outlier_predict = pd.Series(self.supervise_model.predict(outlier_x), index=outlier_idx)
                 for cell, pred_label in outlier_predict.items():
                     self.label[cell] = pred_label
             print(
@@ -625,9 +579,7 @@ class ConsensusClustering:
         """Save the model"""
         joblib.dump(self, output_path)
 
-    def plot_leiden_cases(
-            self, coord_data, coord_base="umap", plot_size=3, dpi=300, plot_n_cases=4, s=3
-    ):
+    def plot_leiden_cases(self, coord_data, coord_base="umap", plot_size=3, dpi=300, plot_n_cases=4, s=3):
         """Show some leiden runs with the biggest different as measured by ARI"""
         if isinstance(coord_data, anndata.AnnData):
             coord_data = _adata_to_coord_data(coord_data, coord_base)
@@ -642,8 +594,8 @@ class ConsensusClustering:
                 index=use_df.index,
                 columns=use_df.index,
             )
-                .unstack()
-                .sort_values()
+            .unstack()
+            .sort_values()
         )
         plot_cases = set()
         for pairs in rand_index_rank[:10].index:
@@ -655,15 +607,11 @@ class ConsensusClustering:
 
         # plot
         plot_data = coord_data.copy()
-        fig, axes = plt.subplots(
-            figsize=(plot_n_cases * plot_size, plot_size), ncols=plot_n_cases, dpi=dpi
-        )
+        fig, axes = plt.subplots(figsize=(plot_n_cases * plot_size, plot_size), ncols=plot_n_cases, dpi=dpi)
 
         for case, ax in zip(plot_cases, axes):
             plot_data[f"Leiden {case}"] = self.leiden_result_df[case].values
-            categorical_scatter(
-                ax=ax, data=plot_data, coord_base=coord_base, hue=f"Leiden {case}", s=s
-            )
+            categorical_scatter(ax=ax, data=plot_data, coord_base=coord_base, hue=f"Leiden {case}", s=s)
         return fig, axes
 
     def plot_before_after(self, coord_data, coord_base="umap", plot_size=3, dpi=300):
@@ -712,9 +660,7 @@ class ConsensusClustering:
             plot_data = _adata_to_coord_data(coord_data, coord_base)
         else:
             plot_data = coord_data.copy()
-        self.plot_before_after(
-            coord_data, coord_base=coord_base, plot_size=plot_size, dpi=dpi
-        )
+        self.plot_before_after(coord_data, coord_base=coord_base, plot_size=plot_size, dpi=dpi)
 
         # initial clusters
         for i, step in enumerate(sorted(self.step_data.keys())):
@@ -727,9 +673,7 @@ class ConsensusClustering:
                 score,
                 step_size,
             ) = self.step_data[step]
-            fig, axes = plt.subplots(
-                figsize=(4 * plot_size, plot_size), ncols=4, dpi=dpi
-            )
+            fig, axes = plt.subplots(figsize=(4 * plot_size, plot_size), ncols=4, dpi=dpi)
             ax = axes[0]
             sns.heatmap(ax=ax, data=cmat, cbar=None, cmap="Reds")
             ax.set(title="Confusion Matrix", ylabel=f"Step {step}")
@@ -741,9 +685,7 @@ class ConsensusClustering:
             ax.set(title="R2 Norm.")
             ax = axes[3]
             if len(cluster_map) > 0:
-                involved_clusters = set(
-                    list(cluster_map.keys()) + list(cluster_map.values())
-                )
+                involved_clusters = set(list(cluster_map.keys()) + list(cluster_map.values()))
                 cur_y = pd.Series(cur_y, index=plot_data.index)
                 cur_y = cur_y.apply(lambda i: cluster_map[i] if i in cluster_map else i)
                 # if not involved, mark as -1
@@ -751,10 +693,7 @@ class ConsensusClustering:
                 plot_data["cur_y"] = cur_y
                 n_color = cur_y.unique().size
                 colors = list(sns.color_palette("tab10", n_color))
-                cmap = {
-                    c: colors.pop() if c != -1 else (0.9, 0.9, 0.9)
-                    for c in cur_y.unique()
-                }
+                cmap = {c: colors.pop() if c != -1 else (0.9, 0.9, 0.9) for c in cur_y.unique()}
                 categorical_scatter(
                     ax=ax,
                     data=plot_data,
@@ -776,9 +715,7 @@ class ConsensusClustering:
         plot_data = []
         for step, (cur_y, *_, score, _) in self.step_data.items():
             cur_n_cluster = len(set(cur_y)) - 1
-            plot_data.append(
-                {"Step": step, "# of clusters": cur_n_cluster, "Score": score}
-            )
+            plot_data.append({"Step": step, "# of clusters": cur_n_cluster, "Score": score})
         plot_data = pd.DataFrame(plot_data)
 
         fig, axes = plt.subplots(
@@ -792,9 +729,7 @@ class ConsensusClustering:
         ax = axes[1]
         sns.lineplot(ax=ax, data=plot_data, x="Step", y="Score", color="gray")
         ax.axhline(y=self.target_accuracy, color="red", linewidth=0.8, linestyle="--")
-        ax.set(
-            ylim=(plot_data["Score"].min() - 0.03, min(1, self.target_accuracy + 0.01))
-        )
+        ax.set(ylim=(plot_data["Score"].min() - 0.03, min(1, self.target_accuracy + 0.01)))
         return
 
 
@@ -814,9 +749,7 @@ def select_confusion_pairs(true_label, predicted_label, ratio_cutoff=0.001):
         list of cluster pair tuples
     """
     labels = pd.DataFrame({"true": true_label, "pred": predicted_label})
-    confusion_matrix = (
-        labels.groupby("true")["pred"].value_counts().unstack().fillna(0).astype(int)
-    )
+    confusion_matrix = labels.groupby("true")["pred"].value_counts().unstack().fillna(0).astype(int)
 
     row_sum = confusion_matrix.sum(axis=1)
     row_norm = (confusion_matrix / row_sum.values[:, None]).unstack()

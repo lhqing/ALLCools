@@ -2,70 +2,72 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.colors import Normalize
 from matplotlib.lines import Line2D
-import xarray as xr
 
 from .color import level_one_palette
 from .contour import density_contour
 from .text_anno_scatter import _text_anno_scatter
 from .utilities import (
-    _make_tiny_axis_label,
+    _auto_size,
     _density_based_sample,
     _extract_coords,
+    _make_tiny_axis_label,
     _take_data_series,
-    _auto_size,
     tight_hue_range,
     zoom_ax,
 )
 
 
 def categorical_scatter(
-        data,
-        ax=None,
-        # coords
-        coord_base="umap",
-        x=None,
-        y=None,
-        # color
-        hue=None,
-        palette="auto",
-        color=None,
-        # text annotation
-        text_anno=None,
-        text_anno_kws=None,
-        text_anno_palette=None,
-        text_transform=None,
-        dodge_text=False,
-        dodge_kws=None,
-        # legend
-        show_legend=False,
-        legend_kws=None,
-        # size
-        s='auto',
-        size=None,
-        sizes: dict = None,
-        size_norm=None,
-        size_portion=0.95,
-        # other
-        axis_format="tiny",
-        max_points=50000,
-        labelsize=4,
-        linewidth=0,
-        zoomxy=1.05,
-        outline=None,
-        outline_pad=3,
-        outline_kws=None,
-        scatter_kws=None,
-        return_fig=False,
-        rasterized='auto',
+    data,
+    ax=None,
+    # coords
+    coord_base="umap",
+    x=None,
+    y=None,
+    # color
+    hue=None,
+    palette="auto",
+    color=None,
+    # text annotation
+    text_anno=None,
+    text_anno_kws=None,
+    text_anno_palette=None,
+    text_transform=None,
+    dodge_text=False,
+    dodge_kws=None,
+    # legend
+    show_legend=False,
+    legend_kws=None,
+    # size
+    s="auto",
+    size=None,
+    sizes: dict = None,
+    size_norm=None,
+    size_portion=0.95,
+    # other
+    axis_format="tiny",
+    max_points=50000,
+    labelsize=4,
+    linewidth=0,
+    zoomxy=1.05,
+    outline=None,
+    outline_pad=3,
+    outline_kws=None,
+    scatter_kws=None,
+    return_fig=False,
+    rasterized="auto",
 ):
     """
-    Plot scatter plot with these options:
-        - Color by a categorical variable, and generate legend of the variable if needed
-        - Add text annotation using a categorical variable
-        - Circle categories with outlines
+    Plot categorical scatter plot with versatile options.
 
     Parameters
     ----------
+    rasterized
+        Whether to rasterize the figure.
+    return_fig
+        Whether to return the figure.
+    size_portion
+        The portion of the figure to be used for the size norm.
     data
         Dataframe that contains coordinates and categorical variables
     ax
@@ -74,41 +76,61 @@ def categorical_scatter(
         coords name, if provided, will automatically search for x and y
     x
         x coord name
-    y: str
+    y
         y coord name
-    hue
+    hue : str
         categorical col name or series for color hue.
-    palette: str
-        palette of the hue, str or dict
-    color: str
+    palette : str or dict
+        palette for color hue.
+    color
         specify single color for all the dots
     text_anno
-        categorical col name or series for text annotation
+        categorical col name or series for text annotation.
     text_anno_kws
+        kwargs for text annotation.
     text_anno_palette
+        palette for text annotation.
     text_transform
+        transform for text annotation.
     dodge_text
+        whether to dodge text annotation.
     dodge_kws
+        kwargs for dodge text annotation.
     show_legend
+        whether to show legend.
     legend_kws
+        kwargs for legend.
     s
+        single size value of all the dots.
     size
+        mappable size of the dots.
     sizes
+        mapping size to the sizes value.
     size_norm
+        normalize size range for mapping.
     axis_format
+        axis format.
     max_points
+        maximum number of points to plot.
     labelsize
+        label size pass to `ax.text`
     linewidth
+        line width pass to `ax.scatter`
     zoomxy
+        zoom factor for x and y-axis.
     outline
+        categorical col name or series for outline.
     outline_pad
+        outline padding.
     outline_kws
+        kwargs for outline.
     scatter_kws
-        kws dict pass to sns.scatterplot
+        kwargs for scatter.
 
     Returns
     -------
-
+    if return_fig is True, return the figure and axes.
+    else, return None.
     """
     # init figure if not provided
     if ax is None:
@@ -123,28 +145,22 @@ def categorical_scatter(
     # down sample plot data if needed.
     if max_points is not None:
         if _data.shape[0] > max_points:
-            _data = _density_based_sample(
-                _data, seed=1, size=max_points, coords=["x", "y"]
-            )
+            _data = _density_based_sample(_data, seed=1, size=max_points, coords=["x", "y"])
     n_dots = _data.shape[0]
 
     # determine rasterized
-    if rasterized == 'auto':
+    if rasterized == "auto":
         if n_dots > 200:
             rasterized = True
         else:
             rasterized = False
 
     # auto size if user didn't provide one
-    if s == 'auto':
+    if s == "auto":
         s = _auto_size(ax, n_dots)
 
     # default scatter options
-    _scatter_kws = {"linewidth": 0,
-                    "s": s,
-                    "legend": None,
-                    "palette": palette,
-                    'rasterized': rasterized}
+    _scatter_kws = {"linewidth": 0, "s": s, "legend": None, "palette": palette, "rasterized": rasterized}
     if color is not None:
         if hue is not None:
             raise ValueError("Only one of color and hue can be provided")
@@ -164,7 +180,7 @@ def categorical_scatter(
 
         # if the object has get_palette method, use it (AnnotZarr)
         palette = _scatter_kws["palette"]
-        if hasattr(_data, 'get_palette'):
+        if hasattr(_data, "get_palette"):
             palette_dict = _data.get_palette(hue)
 
         # deal with other color palette
@@ -174,9 +190,7 @@ def categorical_scatter(
             elif isinstance(palette, dict):
                 palette_dict = palette
             else:
-                raise TypeError(
-                    f"Palette can only be str, list or dict, " f"got {type(palette)}"
-                )
+                raise TypeError(f"Palette can only be str, list or dict, " f"got {type(palette)}")
         _scatter_kws["palette"] = palette_dict
 
     # deal with size
@@ -217,7 +231,7 @@ def categorical_scatter(
             _data["text_anno"] = _take_data_series(data, text_anno)
         else:
             _data["text_anno"] = text_anno.copy()
-        if str(_data["text_anno"].dtype) == 'category':
+        if str(_data["text_anno"].dtype) == "category":
             _data["text_anno"] = _data["text_anno"].cat.remove_unused_categories()
 
         _text_anno_scatter(
@@ -248,9 +262,7 @@ def categorical_scatter(
         }
         if outline_kws is not None:
             _outline_kws.update(outline_kws)
-        density_contour(
-            ax=ax, data=_data, x="x", y="y", groupby="outline", **_outline_kws
-        )
+        density_contour(ax=ax, data=_data, x="x", y="y", groupby="outline", **_outline_kws)
 
     # clean axis
     if axis_format == "tiny":
@@ -264,13 +276,13 @@ def categorical_scatter(
     # deal with legend
     if show_legend and (hue is not None):
         n_hue = len(palette_dict)
-        _legend_kws = dict(
-            ncol=(1 if n_hue <= 20 else 2 if n_hue <= 40 else 3),
-            fontsize=labelsize,
-            bbox_to_anchor=(1.05, 1),
-            loc="upper left",
-            borderaxespad=0.0,
-        )
+        _legend_kws = {
+            "ncol": (1 if n_hue <= 20 else 2 if n_hue <= 40 else 3),
+            "fontsize": labelsize,
+            "bbox_to_anchor": (1.05, 1),
+            "loc": "upper left",
+            "borderaxespad": 0.0,
+        }
         if legend_kws is not None:
             _legend_kws.update(legend_kws)
 

@@ -9,12 +9,13 @@ import operator
 import random
 import sys
 import warnings
-import pandas as pd
+
 import numpy as np
+import pandas as pd
 import scipy
 from annoy import AnnoyIndex
-from intervaltree import IntervalTree
 from fbpca import pca
+from intervaltree import IntervalTree
 from scipy.sparse import csc_matrix, csr_matrix, vstack
 from sklearn.metrics.pairwise import rbf_kernel
 from sklearn.neighbors import NearestNeighbors
@@ -86,9 +87,7 @@ def batch_correct_pc(
         indexes.extend(sub_df.index.tolist())
 
     if correct:
-        integrated, corrected = correct_scanpy(
-            adata_list, return_dimred=True, **scanorama_kws
-        )
+        integrated, corrected = correct_scanpy(adata_list, return_dimred=True, **scanorama_kws)
         adata.X = np.vstack([ann.X.toarray() for ann in corrected])
     else:
         integrated = integrate_scanpy(adata_list, **scanorama_kws)
@@ -176,9 +175,7 @@ def correct(
 
     datasets_full = check_datasets(datasets_full)
 
-    datasets, genes = merge_datasets(
-        datasets_full, genes_list, ds_names=ds_names, union=union
-    )
+    datasets, genes = merge_datasets(datasets_full, genes_list, ds_names=ds_names, union=union)
     datasets_dimred, genes = process_data(datasets, genes, hvg=hvg, dimred=dimred)
 
     datasets_dimred = assemble(
@@ -268,9 +265,7 @@ def integrate(
 
     datasets_full = check_datasets(datasets_full)
 
-    datasets, genes = merge_datasets(
-        datasets_full, genes_list, ds_names=ds_names, union=union
-    )
+    datasets, genes = merge_datasets(datasets_full, genes_list, ds_names=ds_names, union=union)
     datasets_dimred, genes = process_data(datasets, genes, hvg=hvg, dimred=dimred)
 
     for _ in range(n_iter):
@@ -330,7 +325,7 @@ def correct_scanpy(adatas, **kwargs):
     from anndata import AnnData
 
     new_adatas = []
-    for i in range(len((adatas))):
+    for i in range(len(adatas)):
         adata = AnnData(datasets[i])
         adata.var_names = genes
         new_adatas.append(adata)
@@ -387,18 +382,18 @@ def merge_datasets(datasets, genes, ds_names=None, verbose=True, union=False):
         else:
             keep_genes &= set(gene_list)
         if not union and not ds_names is None and verbose:
-            print("After {}: {} genes".format(ds_names[idx], len(keep_genes)))
+            print(f"After {ds_names[idx]}: {len(keep_genes)} genes")
         if len(keep_genes) == 0:
             print("Error: No genes found in all datasets, exiting...")
             exit(1)
     if verbose:
-        print("Found {} genes among all datasets".format(len(keep_genes)))
+        print(f"Found {len(keep_genes)} genes among all datasets")
 
     if union:
         union_genes = sorted(keep_genes)
         for i in range(len(datasets)):
             if verbose:
-                print("Processing data set {}".format(i))
+                print(f"Processing data set {i}")
             X_new = np.zeros((datasets[i].shape[0], len(union_genes)))
             X_old = csc_matrix(datasets[i])
             gene_to_idx = {gene: idx for idx, gene in enumerate(genes[i])}
@@ -549,9 +544,7 @@ def nn_approx(ds1, ds2, knn=KNN, metric="manhattan", n_trees=10):
 
 # Populate a table (in place) that stores mutual nearest neighbors
 # between datasets.
-def fill_table(
-    table, i, curr_ds, datasets, base_ds=0, knn=KNN, approx=APPROX, metric="manhattan"
-):
+def fill_table(table, i, curr_ds, datasets, base_ds=0, knn=KNN, approx=APPROX, metric="manhattan"):
     curr_ref = np.concatenate(datasets)
     if approx:
         match = nn_approx(curr_ds, curr_ref, knn=knn, metric=metric)
@@ -638,14 +631,12 @@ def find_alignments_table(
             if not (i, j) in table or not (j, i) in table:
                 continue
             match_ij = table[(i, j)]
-            match_ji = set([(b, a) for a, b in table[(j, i)]])
+            match_ji = {(b, a) for a, b in table[(j, i)]}
             matches[(i, j)] = match_ij & match_ji
 
             table1[(i, j)] = max(
-                float(len(set([idx for idx, _ in matches[(i, j)]])))
-                / datasets[i].shape[0],
-                float(len(set([idx for _, idx in matches[(i, j)]])))
-                / datasets[j].shape[0],
+                float(len({idx for idx, _ in matches[(i, j)]})) / datasets[i].shape[0],
+                float(len({idx for _, idx in matches[(i, j)]})) / datasets[j].shape[0],
             )
             if verbose > 1:
                 table_print[i, j] += table1[(i, j)]
@@ -653,9 +644,7 @@ def find_alignments_table(
             if geosketch:
                 # Translate matches within geometric sketches to original indices.
                 matches_mnn = matches[(i, j)]
-                matches[(i, j)] = [
-                    (gs_idxs[i][a], gs_idxs[j][b]) for a, b in matches_mnn
-                ]
+                matches[(i, j)] = [(gs_idxs[i][a], gs_idxs[j][b]) for a, b in matches_mnn]
 
     if verbose > 1:
         print(table_print)
@@ -687,19 +676,13 @@ def find_alignments(
         metric=metric,
     )
 
-    alignments = [
-        (i, j)
-        for (i, j), val in reversed(sorted(table1.items(), key=operator.itemgetter(1)))
-        if val > alpha
-    ]
+    alignments = [(i, j) for (i, j), val in reversed(sorted(table1.items(), key=operator.itemgetter(1))) if val > alpha]
 
     return alignments, matches
 
 
 # Find connections between datasets to identify panoramas.
-def connect(
-    datasets, knn=KNN, approx=APPROX, alpha=ALPHA, verbose=VERBOSE, metric="manhattan"
-):
+def connect(datasets, knn=KNN, approx=APPROX, alpha=ALPHA, verbose=VERBOSE, metric="manhattan"):
     # Find alignments.
     alignments, _ = find_alignments(
         datasets,
@@ -787,9 +770,7 @@ def batch_bias(curr_ds, match_ds, bias, batch_size=None, sigma=SIGMA):
 
 # Compute nonlinear translation vectors between dataset
 # and a reference.
-def transform(
-    curr_ds, curr_ref, ds_ind, ref_ind, sigma=SIGMA, cn=False, batch_size=None
-):
+def transform(curr_ds, curr_ref, ds_ind, ref_ind, sigma=SIGMA, cn=False, batch_size=None):
     # Compute the matching.
     match_ds = curr_ds[ds_ind, :]
     match_ref = curr_ref[ref_ind, :]
@@ -802,26 +783,19 @@ def transform(
     with warnings.catch_warnings():
         warnings.filterwarnings("error")
         try:
-            avg_bias = batch_bias(
-                curr_ds, match_ds, bias, sigma=sigma, batch_size=batch_size
-            )
+            avg_bias = batch_bias(curr_ds, match_ds, bias, sigma=sigma, batch_size=batch_size)
         except RuntimeWarning:
             sys.stderr.write(
-                "WARNING: Oversmoothing detected, refusing to batch "
-                "correct, consider lowering sigma value.\n"
+                "WARNING: Oversmoothing detected, refusing to batch " "correct, consider lowering sigma value.\n"
             )
             return csr_matrix(curr_ds.shape, dtype=float)
         except MemoryError:
             if batch_size is None:
                 sys.stderr.write(
-                    "WARNING: Out of memory, consider turning on "
-                    "batched computation with batch_size parameter.\n"
+                    "WARNING: Out of memory, consider turning on " "batched computation with batch_size parameter.\n"
                 )
             else:
-                sys.stderr.write(
-                    "WARNING: Out of memory, consider lowering "
-                    "the batch_size parameter.\n"
-                )
+                sys.stderr.write("WARNING: Out of memory, consider lowering " "the batch_size parameter.\n")
             return csr_matrix(curr_ds.shape, dtype=float)
 
     if cn:
@@ -869,9 +843,9 @@ def assemble(
     for i, j in alignments:
         if verbose:
             if ds_names is None:
-                print("Processing datasets {}".format((i, j)))
+                print(f"Processing datasets {(i, j)}")
             else:
-                print("Processing datasets {} <=> {}".format(ds_names[i], ds_names[j]))
+                print(f"Processing datasets {ds_names[i]} <=> {ds_names[j]}")
 
         # Only consider a dataset a fixed amount of times.
         if not i in ds_assembled:
@@ -912,9 +886,7 @@ def assemble(
             ds_ind = [a for a, _ in match]
             ref_ind = [b for _, b in match]
 
-            bias = transform(
-                curr_ds, curr_ref, ds_ind, ref_ind, sigma=sigma, batch_size=batch_size
-            )
+            bias = transform(curr_ds, curr_ref, ds_ind, ref_ind, sigma=sigma, batch_size=batch_size)
             datasets[i] = curr_ds + bias
 
             if expr_datasets:
@@ -950,9 +922,7 @@ def assemble(
             ds_ind = [a for a, _ in match]
             ref_ind = [b for _, b in match]
 
-            bias = transform(
-                curr_ds, curr_ref, ds_ind, ref_ind, sigma=sigma, batch_size=batch_size
-            )
+            bias = transform(curr_ds, curr_ref, ds_ind, ref_ind, sigma=sigma, batch_size=batch_size)
             datasets[j] = curr_ds + bias
 
             if expr_datasets:
@@ -1009,9 +979,7 @@ def assemble(
             ref_ind = [b for _, b in match]
 
             # Apply transformation to entire panorama.
-            bias = transform(
-                curr_ds, curr_ref, ds_ind, ref_ind, sigma=sigma, batch_size=batch_size
-            )
+            bias = transform(curr_ds, curr_ref, ds_ind, ref_ind, sigma=sigma, batch_size=batch_size)
             curr_ds += bias
             base = 0
             for p in panoramas_i[0]:
@@ -1059,9 +1027,7 @@ def interpret_alignments(
     if n_permutations is None:
         n_permutations = float(len(genes) * 30)
 
-    alignments, matches = find_alignments(
-        datasets, knn=knn, approx=approx, alpha=alpha, verbose=verbose, metric=metric
-    )
+    alignments, matches = find_alignments(datasets, knn=knn, approx=approx, alpha=alpha, verbose=verbose, metric=metric)
 
     for i, j in alignments:
         # Compute average bias vector that aligns two datasets together.
@@ -1092,6 +1058,6 @@ def interpret_alignments(
             + 1
         ) / (n_permutations + 1)
 
-        print(">>>> Stats for alignment {}".format((i, j)))
+        print(f">>>> Stats for alignment {(i, j)}")
         for k in range(len(p)):
-            print("{}\t{}".format(genes[k], p[k]))
+            print(f"{genes[k]}\t{p[k]}")

@@ -4,14 +4,13 @@ import pandas as pd
 
 
 def read_gtf(gtf_path):
-    gtf = pd.read_csv(gtf_path,
-                      comment='#',
-                      sep='\t',
-                      header=None,
-                      names=[
-                          'chrom', 'source', 'feature', 'start', 'end',
-                          'score', 'strand', 'phase', 'annotation'
-                      ])
+    gtf = pd.read_csv(
+        gtf_path,
+        comment="#",
+        sep="\t",
+        header=None,
+        names=["chrom", "source", "feature", "start", "end", "score", "strand", "phase", "annotation"],
+    )
     return gtf
 
 
@@ -24,12 +23,12 @@ def subset_gtf(gtf, regions, output_path=None, select_feature=None):
         regions = [regions]
 
     if select_feature is not None:
-        gtf = gtf[gtf['feature'].isin(select_feature)].copy()
+        gtf = gtf[gtf["feature"].isin(select_feature)].copy()
 
     use_rows = None
     for region in regions:
         chrom, start, end = region
-        judge = (gtf['chrom'] == chrom) & (gtf['start'] < end) & (gtf['end'] > start)
+        judge = (gtf["chrom"] == chrom) & (gtf["start"] < end) & (gtf["end"] > start)
         if use_rows is None:
             use_rows = judge
         else:
@@ -37,6 +36,6 @@ def subset_gtf(gtf, regions, output_path=None, select_feature=None):
     gtf_sub = gtf[use_rows]
 
     if output_path is not None:
-        gtf_sub.to_csv(output_path, sep='\t', index=None, header=None)
+        gtf_sub.to_csv(output_path, sep="\t", index=None, header=None)
 
     return gtf_sub

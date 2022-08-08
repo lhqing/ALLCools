@@ -3,7 +3,7 @@ import copy
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-from matplotlib.cm import get_cmap, ScalarMappable
+from matplotlib.cm import ScalarMappable, get_cmap
 from matplotlib.colors import Normalize
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
@@ -11,11 +11,11 @@ from .color import plot_colorbar
 from .contour import density_contour
 from .text_anno_scatter import _text_anno_scatter
 from .utilities import (
+    _auto_size,
     _density_based_sample,
     _extract_coords,
     _make_tiny_axis_label,
     _take_data_series,
-    _auto_size,
     zoom_ax,
 )
 
@@ -25,9 +25,7 @@ def tight_hue_range(hue_data, portion):
     hue_data = hue_data[np.isfinite(hue_data)]
     hue_quantile = hue_data.quantile(q=np.arange(0, 1, 0.01))
     min_window_right = (
-        hue_quantile.rolling(window=int(portion * 100))
-            .apply(lambda i: i.max() - i.min(), raw=True)
-            .idxmin()
+        hue_quantile.rolling(window=int(portion * 100)).apply(lambda i: i.max() - i.min(), raw=True).idxmin()
     )
     min_window_left = max(0, min_window_right - portion)
     vmin, vmax = tuple(hue_data.quantile(q=[min_window_left, min_window_right]))
@@ -46,42 +44,42 @@ def tight_hue_range(hue_data, portion):
 
 
 def continuous_scatter(
-        data,
-        ax=None,
-        coord_base="umap",
-        x=None,
-        y=None,
-        scatter_kws=None,
-        hue=None,
-        hue_norm=None,
-        hue_portion=0.95,
-        color=None,
-        cmap="viridis",
-        colorbar=True,
-        colorbar_label_kws=None,
-        size=None,
-        size_norm=None,
-        size_portion=0.95,
-        sizes=None,
-        sizebar=True,
-        text_anno=None,
-        dodge_text=False,
-        dodge_kws=None,
-        text_anno_kws=None,
-        text_anno_palette=None,
-        text_transform=None,
-        axis_format="tiny",
-        max_points=50000,
-        s='auto',
-        labelsize=4,
-        linewidth=0.5,
-        cax=None,
-        zoomxy=1.05,
-        outline=None,
-        outline_kws=None,
-        outline_pad=2,
-        return_fig=False,
-        rasterized='auto',
+    data,
+    ax=None,
+    coord_base="umap",
+    x=None,
+    y=None,
+    scatter_kws=None,
+    hue=None,
+    hue_norm=None,
+    hue_portion=0.95,
+    color=None,
+    cmap="viridis",
+    colorbar=True,
+    colorbar_label_kws=None,
+    size=None,
+    size_norm=None,
+    size_portion=0.95,
+    sizes=None,
+    sizebar=True,
+    text_anno=None,
+    dodge_text=False,
+    dodge_kws=None,
+    text_anno_kws=None,
+    text_anno_palette=None,
+    text_transform=None,
+    axis_format="tiny",
+    max_points=50000,
+    s="auto",
+    labelsize=4,
+    linewidth=0.5,
+    cax=None,
+    zoomxy=1.05,
+    outline=None,
+    outline_kws=None,
+    outline_pad=2,
+    return_fig=False,
+    rasterized="auto",
 ):
     # init figure if not provided
     if ax is None:
@@ -96,27 +94,22 @@ def continuous_scatter(
     # down sample plot data if needed.
     if max_points is not None:
         if _data.shape[0] > max_points:
-            _data = _density_based_sample(
-                _data, seed=1, size=max_points, coords=["x", "y"]
-            )
+            _data = _density_based_sample(_data, seed=1, size=max_points, coords=["x", "y"])
     n_dots = _data.shape[0]
 
     # determine rasterized
-    if rasterized == 'auto':
+    if rasterized == "auto":
         if n_dots > 200:
             rasterized = True
         else:
             rasterized = False
 
     # auto size if user didn't provide one
-    if s == 'auto':
+    if s == "auto":
         s = _auto_size(ax, n_dots)
 
     # default scatter options
-    _scatter_kws = {"linewidth": 0,
-                    "s": s,
-                    "legend": None,
-                    'rasterized': rasterized}
+    _scatter_kws = {"linewidth": 0, "s": s, "legend": None, "rasterized": rasterized}
     if color is not None:
         if hue is not None:
             raise ValueError("Only one of color and hue can be provided")
@@ -145,9 +138,7 @@ def continuous_scatter(
             cmap.set_bad(color=(0.5, 0.5, 0.5, 0.5))
         else:
             if not isinstance(cmap, ScalarMappable):
-                raise TypeError(
-                    f"cmap can only be str or ScalarMappable, got {type(cmap)}"
-                )
+                raise TypeError(f"cmap can only be str or ScalarMappable, got {type(cmap)}")
     else:
         hue_norm = None
         cnorm = None
@@ -195,7 +186,7 @@ def continuous_scatter(
             _data["text_anno"] = _take_data_series(data, text_anno)
         else:
             _data["text_anno"] = text_anno
-        if str(_data["text_anno"].dtype) == 'category':
+        if str(_data["text_anno"].dtype) == "category":
             _data["text_anno"] = _data["text_anno"].cat.remove_unused_categories()
 
         _text_anno_scatter(
@@ -226,9 +217,7 @@ def continuous_scatter(
         }
         if outline_kws is not None:
             _outline_kws.update(outline_kws)
-        density_contour(
-            ax=ax, data=_data, x="x", y="y", groupby="outline", **_outline_kws
-        )
+        density_contour(ax=ax, data=_data, x="x", y="y", groupby="outline", **_outline_kws)
 
     # clean axis
     if axis_format == "tiny":
@@ -243,17 +232,13 @@ def continuous_scatter(
 
     # make color bar
     if colorbar and (hue is not None):
-        _colorbar_label_kws = dict(
-            fontsize=labelsize, label=hue, labelpad=10, rotation=270
-        )
+        _colorbar_label_kws = dict(fontsize=labelsize, label=hue, labelpad=10, rotation=270)
         if colorbar_label_kws is not None:
             _colorbar_label_kws.update(colorbar_label_kws)
 
         # small ax for colorbar
         if cax is None:
-            cax = inset_axes(
-                ax, width="3%", height="25%", loc="lower right", borderpad=0
-            )
+            cax = inset_axes(ax, width="3%", height="25%", loc="lower right", borderpad=0)
         cax = plot_colorbar(
             cax=cax,
             cmap=cmap,

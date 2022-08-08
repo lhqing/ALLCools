@@ -1,7 +1,7 @@
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-import matplotlib as mpl
 
 
 def plot_decomp_scatters(
@@ -17,9 +17,7 @@ def plot_decomp_scatters(
 ):
     available_comps = adata.obsm[obsm_name].shape[1]
     nrows = min(nrows, available_comps // 2 // ncols + 1)
-    fig, axes = plt.subplots(
-        figsize=(ncols * 3, nrows * 3), nrows=nrows, ncols=ncols, dpi=150
-    )
+    fig, axes = plt.subplots(figsize=(ncols * 3, nrows * 3), nrows=nrows, ncols=ncols, dpi=150)
     vmin = None
     vmax = None
     for i, ax in enumerate(axes.ravel()):

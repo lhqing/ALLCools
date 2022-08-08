@@ -7,7 +7,8 @@ These session file is not in a stable API, use it cross IGV version do cause pro
 """
 
 from xml.etree.ElementTree import Element
-from .defaults import *
+
+from .defaults import DATARANGE_DEFAULT, TRACK_REQUIRED_KEYS
 
 
 class Resources(Element):
@@ -53,7 +54,7 @@ class PanelLayout(Element):
     def __init__(self, dividerFractions=0.9):
         _tag = "PanelLayout"
         # Default track parameters
-        _attrib = dict(dividerFractions=str(dividerFractions))
+        _attrib = {"dividerFractions": str(dividerFractions)}
         super().__init__(_tag, attrib=_attrib)
 
 

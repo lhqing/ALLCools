@@ -1,5 +1,5 @@
 import logging
-from typing import Tuple, Any
+from typing import Any, Tuple
 
 import numpy as np
 from numba import jit
@@ -56,9 +56,7 @@ def jensen_shannon_distance(pk: np.ndarray, qk: np.ndarray) -> float:
 
 
 @jit(nopython=True)
-def balance_knn_loop(
-    dsi: np.ndarray, dist: np.ndarray, lsi: np.ndarray, maxl: int, k: int
-) -> Tuple:
+def balance_knn_loop(dsi: np.ndarray, dist: np.ndarray, lsi: np.ndarray, maxl: int, k: int) -> Tuple:
     """Fast and greedy algorythm to balance a K-NN graph so that no node is the NN to more than maxl other nodes
     Arguments
     ---------
@@ -138,9 +136,7 @@ def knn_balance(
         l[i] is the number of connections from other samples to the sample i
     """
     l = np.bincount(dsi.flat[:], minlength=dsi.shape[0])  # degree of connectivity
-    lsi = np.argsort(l, kind="mergesort")[
-        ::-1
-    ]  # element index sorted by descending degree of connectivity
+    lsi = np.argsort(l, kind="mergesort")[::-1]  # element index sorted by descending degree of connectivity
     return balance_knn_loop(dsi, dist, lsi, maxl, k)
 
 
@@ -208,9 +204,7 @@ class NearestNeighbors:
         self.data = data
         if sight_k is not None:
             self.sight_k = sight_k
-        logging.debug(
-            f"First search the {self.sight_k} nearest neighbours for {self.n_samples}"
-        )
+        logging.debug(f"First search the {self.sight_k} nearest neighbours for {self.n_samples}")
         np.random.seed(13)
         if self.metric == "correlation":
             self._nn = _NearestNeighbors(
@@ -273,9 +267,7 @@ class NearestNeighbors:
             if self.metric == "js":
                 self.dsi, self.dist = self._nn.query(self.data, k=self.sight_k + 1)
             else:
-                self.dist, self.dsi = self._nn.kneighbors(
-                    self.data, return_distance=True
-                )
+                self.dist, self.dsi = self._nn.kneighbors(self.data, return_distance=True)
         else:
             if self.metric == "js":
                 self.dsi, _ = self._nn.query(self.data, k=self.sight_k + 1)
@@ -284,17 +276,12 @@ class NearestNeighbors:
             self.dist = np.ones_like(self.dsi, dtype="float64")
             self.dist[:, 0] = 0
         logging.debug(
-            f"Using the initialization network to find a {self.k}-NN "
-            f"graph with maximum connectivity of {self.maxl}"
+            f"Using the initialization network to find a {self.k}-NN " f"graph with maximum connectivity of {self.maxl}"
         )
-        self.dist, self.dsi, self.l = knn_balance(
-            self.dsi, self.dist, maxl=self.maxl, k=self.k
-        )
+        self.dist, self.dsi, self.l = knn_balance(self.dsi, self.dist, maxl=self.maxl, k=self.k)
         return self.dist, self.dsi, self.l
 
-    def kneighbors_graph(
-        self, X: np.ndarray = None, maxl: int = None, mode: str = "distance"
-    ) -> sparse.csr_matrix:
+    def kneighbors_graph(self, X: np.ndarray = None, maxl: int = None, mode: str = "distance") -> sparse.csr_matrix:
         """Retrun the K-neighbors graph as a sparse csr matrix
         Parameters
         ----------
@@ -318,9 +305,7 @@ class NearestNeighbors:
             (
                 np.ravel(dist_new),
                 np.ravel(dsi_new),
-                np.arange(
-                    0, dist_new.shape[0] * dist_new.shape[1] + 1, dist_new.shape[1]
-                ),
+                np.arange(0, dist_new.shape[0] * dist_new.shape[1] + 1, dist_new.shape[1]),
             ),
             (self.n_samples, self.n_samples),
         )

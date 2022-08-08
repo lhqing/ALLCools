@@ -12,7 +12,7 @@ import xarray as xr
 from .._allc_to_region_count import batch_allc_to_region_count
 from .._doc import *
 from ..schema.mcds_schema import *
-from ..utilities import parse_file_paths, parse_dtype
+from ..utilities import parse_dtype, parse_file_paths
 
 DEFAULT_MCDS_DTYPE = np.uint32
 
@@ -33,11 +33,11 @@ def clip_too_large_cov(data_df, machine_max):
 
 
 def _region_count_table_to_csr_npz(
-        region_count_tables,
-        region_id_map,
-        output_prefix,
-        compression=True,
-        dtype=DEFAULT_MCDS_DTYPE,
+    region_count_tables,
+    region_id_map,
+    output_prefix,
+    compression=True,
+    dtype=DEFAULT_MCDS_DTYPE,
 ):
     """
     helper func of _aggregate_region_count_to_mcds
@@ -118,9 +118,7 @@ def _region_count_table_to_csr_npz(
     return mc_path, cov_path
 
 
-def _csr_matrix_to_dataarray(
-        matrix_table, row_name, row_index, col_name, col_index, other_dim_info
-):
+def _csr_matrix_to_dataarray(matrix_table, row_name, row_index, col_name, col_index, other_dim_info):
     """
     helper func of _aggregate_region_count_to_mcds
 
@@ -128,12 +126,8 @@ def _csr_matrix_to_dataarray(
     combining cell chunks, mc/cov count type together.
     The matrix_table provide all file paths, each row is for a cell chunk, with mc and cov matrix path separately.
     """
-    total_mc_matrix = ss.vstack(
-        [ss.load_npz(path) for path in matrix_table["mc"]]
-    ).todense()
-    total_cov_matrix = ss.vstack(
-        [ss.load_npz(path) for path in matrix_table["cov"]]
-    ).todense()
+    total_mc_matrix = ss.vstack([ss.load_npz(path) for path in matrix_table["mc"]]).todense()
+    total_cov_matrix = ss.vstack([ss.load_npz(path) for path in matrix_table["cov"]]).todense()
 
     data_arrays = []
     for count_type, matrix in zip(["mc", "cov"], [total_mc_matrix, total_cov_matrix]):
@@ -156,12 +150,12 @@ def _csr_matrix_to_dataarray(
 
 
 def _aggregate_region_count_to_mcds(
-        output_dir,
-        dataset_name,
-        chunk_size=100,
-        row_name="cell",
-        cpu=1,
-        dtype=DEFAULT_MCDS_DTYPE,
+    output_dir,
+    dataset_name,
+    chunk_size=100,
+    row_name="cell",
+    cpu=1,
+    dtype=DEFAULT_MCDS_DTYPE,
 ):
     """
     This function aggregate all the region count table into a single mcds
@@ -177,13 +171,11 @@ def _aggregate_region_count_to_mcds(
         # aggregate count table into 2D sparse array, parallel in cell chunks
         future_dict = {}
         for (mc_type, region_name, strandness), sub_summary_df in summary_df.groupby(
-                ["mc_type", "region_name", "strandness"]
+            ["mc_type", "region_name", "strandness"]
         ):
             sub_summary_df = sub_summary_df.set_index("file_id")
             if region_name not in region_index_dict:
-                region_index = pd.read_hdf(
-                    output_dir / f"REGION_ID_{region_name}.hdf"
-                ).index
+                region_index = pd.read_hdf(output_dir / f"REGION_ID_{region_name}.hdf").index
                 region_index.name = region_name
                 region_index_dict[region_name] = region_index
 
@@ -193,18 +185,15 @@ def _aggregate_region_count_to_mcds(
                     value.index.name = region_name
                     additional_coords[_col] = value
 
-            for chunk_id, chunk_start in enumerate(
-                    range(0, file_uids.size, chunk_size)
-            ):
-                file_id_chunk = file_uids[chunk_start: chunk_start + chunk_size]
+            for chunk_id, chunk_start in enumerate(range(0, file_uids.size, chunk_size)):
+                file_id_chunk = file_uids[chunk_start : chunk_start + chunk_size]
                 file_paths = sub_summary_df.loc[file_id_chunk]["file_path"].tolist()
                 future = executor.submit(
                     _region_count_table_to_csr_npz,
                     region_count_tables=file_paths,
                     region_id_map=str(output_dir / f"REGION_ID_{region_name}.hdf"),
                     output_prefix=str(
-                        output_dir / f"{dataset_name}_{region_name}_"
-                                     f"{mc_type}_{strandness}_{chunk_id}"
+                        output_dir / f"{dataset_name}_{region_name}_" f"{mc_type}_{strandness}_{chunk_id}"
                     ),
                     compression=True,
                     dtype=dtype,
@@ -216,9 +205,7 @@ def _aggregate_region_count_to_mcds(
             mc_type, region_name, strandness, chunk_id = future_dict[future]
             try:
                 mc_path, cov_path = future.result()
-                records[(mc_type, region_name, strandness)].append(
-                    {"mc": mc_path, "cov": cov_path, "index": chunk_id}
-                )
+                records[(mc_type, region_name, strandness)].append({"mc": mc_path, "cov": cov_path, "index": chunk_id})
             except Exception as e:
                 print(
                     f"Error when calculating mc-{mc_type} region-{region_name} "
@@ -227,10 +214,7 @@ def _aggregate_region_count_to_mcds(
                 raise e
 
         # IMPORTANT order csr_matrix_records by chunk_id
-        csr_matrix_records = {
-            k: pd.DataFrame(v).set_index("index").sort_index()
-            for k, v in records.items()
-        }
+        csr_matrix_records = {k: pd.DataFrame(v).set_index("index").sort_index() for k, v in records.items()}
 
     # aggregate all the sparse array into a single mcds, this step load everything and need large memory
     region_da_records = {}
@@ -259,9 +243,7 @@ def _aggregate_region_count_to_mcds(
                 strand_da_records.append(dataarray)
             mc_type_da = xr.concat(strand_da_records, dim="strand_type")
             mc_type_da_records.append(mc_type_da)
-        region_da_records[region_name + "_da"] = xr.concat(
-            mc_type_da_records, dim="mc_type"
-        )
+        region_da_records[region_name + "_da"] = xr.concat(mc_type_da_records, dim="mc_type")
 
     total_ds = xr.Dataset(region_da_records)
     total_ds.coords.update(additional_coords)
@@ -283,23 +265,23 @@ def _aggregate_region_count_to_mcds(
     binarize_doc=binarize_doc,
 )
 def generate_mcds(
-        allc_table,
-        output_prefix,
-        chrom_size_path,
-        mc_contexts,
-        rna_table=None,
-        split_strand=False,
-        bin_sizes=None,
-        region_bed_paths=None,
-        region_bed_names=None,
-        cov_cutoff=9999,
-        cpu=1,
-        remove_tmp=True,
-        max_per_mcds=3072,
-        cell_chunk_size=100,
-        dtype=DEFAULT_MCDS_DTYPE,
-        binarize=False,
-        engine='zarr'
+    allc_table,
+    output_prefix,
+    chrom_size_path,
+    mc_contexts,
+    rna_table=None,
+    split_strand=False,
+    bin_sizes=None,
+    region_bed_paths=None,
+    region_bed_names=None,
+    cov_cutoff=9999,
+    cpu=1,
+    remove_tmp=True,
+    max_per_mcds=3072,
+    cell_chunk_size=100,
+    dtype=DEFAULT_MCDS_DTYPE,
+    binarize=False,
+    engine="zarr",
 ):
     """\
     Generate MCDS from a list of ALLC file provided with file id.
@@ -349,19 +331,15 @@ def generate_mcds(
     -------
 
     """
-    if engine not in ['zarr', 'netcdf']:
+    if engine not in ["zarr", "netcdf"]:
         raise ValueError(f'engine need to be "zarr" or "netcdf", got {engine}')
     # TODO region bed should have unique id, check before generate mcds
     dtype = parse_dtype(dtype)
 
     if isinstance(allc_table, str):
-        allc_series = pd.read_csv(
-            allc_table, header=None, index_col=0, squeeze=True, sep="\t"
-        )
+        allc_series = pd.read_csv(allc_table, header=None, index_col=0, squeeze=True, sep="\t")
         if not isinstance(allc_series, pd.Series):
-            raise ValueError(
-                "allc_table malformed, should only have 2 columns, 1. file_uid, 2. file_path"
-            )
+            raise ValueError("allc_table malformed, should only have 2 columns, 1. file_uid, 2. file_path")
     else:
         allc_series = allc_table.dropna()
     if allc_series.index.duplicated().sum() != 0:
@@ -370,13 +348,9 @@ def generate_mcds(
     rna_series = pd.Series([])
     if rna_table is not None:
         if isinstance(rna_table, str):
-            rna_series = pd.read_csv(
-                rna_table, header=None, index_col=0, squeeze=True, sep="\t"
-            )
+            rna_series = pd.read_csv(rna_table, header=None, index_col=0, squeeze=True, sep="\t")
             if not isinstance(rna_series, pd.Series):
-                raise ValueError(
-                    "rna_table malformed, should only have 2 columns, 1. file_uid, 2. file_path"
-                )
+                raise ValueError("rna_table malformed, should only have 2 columns, 1. file_uid, 2. file_path")
         else:
             rna_series = rna_table.dropna()
         if rna_series.index.duplicated().sum() != 0:
@@ -394,13 +368,9 @@ def generate_mcds(
             )
         else:
             if n_matched < rna_series.size:
-                print(
-                    f"{rna_series.size - n_matched} file_uid in RNA table do not exist in ALLC table"
-                )
+                print(f"{rna_series.size - n_matched} file_uid in RNA table do not exist in ALLC table")
             if n_matched < allc_series.size:
-                print(
-                    f"{allc_series.size - n_matched} file_uid in ALLC table do not exist in RNA table"
-                )
+                print(f"{allc_series.size - n_matched} file_uid in ALLC table do not exist in RNA table")
 
         # reindex allc and rna series, this may create NaN, will be dropped
         union_index = rna_series.index | allc_series.index
@@ -412,12 +382,12 @@ def generate_mcds(
         mcds_n_chunk = ceil(allc_series.size / max_per_mcds)
         chunk_size = ceil(allc_series.size / mcds_n_chunk)
         allc_series_chunks = [
-            allc_series[chunk_start: chunk_start + chunk_size]
+            allc_series[chunk_start : chunk_start + chunk_size]
             for chunk_start in range(0, allc_series.size, chunk_size)
         ]
         if rna_table is not None:
             rna_series_chunks = [
-                rna_series[chunk_start: chunk_start + chunk_size]
+                rna_series[chunk_start : chunk_start + chunk_size]
                 for chunk_start in range(0, rna_series.size, chunk_size)
             ]
         print(f"Number of file_uids {allc_series.size} > max_per_mcds {max_per_mcds}, ")
@@ -446,15 +416,13 @@ def generate_mcds(
                 cell_chunk_size=cell_chunk_size,
                 dtype=dtype,
                 binarize=binarize,
-                engine=engine
+                engine=engine,
             )
         return
 
     # check region bed names
     if region_bed_names is not None:
-        region_bed_names = [
-            check_custom_dim_name_and_return(name) for name in region_bed_names
-        ]
+        region_bed_names = [check_custom_dim_name_and_return(name) for name in region_bed_names]
 
     output_prefix = output_prefix.rstrip(".")
     output_dir = pathlib.Path(output_prefix + ".tmp_dir")
@@ -493,9 +461,9 @@ def generate_mcds(
     else:
         output_path = output_prefix
 
-    if engine == 'zarr':
+    if engine == "zarr":
         total_ds.to_zarr(output_path)
-    elif engine == 'netcdf':
+    elif engine == "netcdf":
         total_ds.to_netcdf(output_path)
     else:
         raise ValueError

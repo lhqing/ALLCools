@@ -9,17 +9,15 @@ import scipy.sparse as ss
 from anndata import AnnData
 
 from ..utilities import (
-    parse_file_paths,
-    parse_chrom_size,
     chrom_dict_to_id_index,
-    get_bin_id,
     generate_chrom_bin_bed_dataframe,
+    get_bin_id,
+    parse_chrom_size,
+    parse_file_paths,
 )
 
 
-def _bin_count_table_to_csr_npz(
-    bin_count_tables, bin_size, chrom_size_path, output_prefix, compression=True
-):
+def _bin_count_table_to_csr_npz(bin_count_tables, bin_size, chrom_size_path, output_prefix, compression=True):
     output_prefix = output_prefix.rstrip(".")
     mc_path = output_prefix + ".mc.npz"
     cov_path = output_prefix + ".cov.npz"
@@ -128,9 +126,7 @@ def aggregate_region_count_to_paired_anndata(
     if file_uids is not None:
         file_uids = parse_file_paths(file_uids)
     else:
-        file_uids = [
-            pathlib.Path(i).name.rstrip(".sparse.bed.gz") for i in count_tables
-        ]
+        file_uids = [pathlib.Path(i).name.rstrip(".sparse.bed.gz") for i in count_tables]
     if len(file_uids) != len(count_tables):
         raise ValueError("Length of file_uids do not match length of count_tables.")
 
@@ -265,9 +261,7 @@ def _transform_single_h5ad(
     Resize non-overlap chrom bin count adata
     """
     if (step_size % bin_size != 0) or (window_size % bin_size != 0):
-        raise ValueError(
-            "step_size and window_size need to be integral multiple of bin_size"
-        )
+        raise ValueError("step_size and window_size need to be integral multiple of bin_size")
     n = step_size // bin_size
     m = window_size // bin_size
 
@@ -282,8 +276,7 @@ def _transform_single_h5ad(
     for chrom in chrom_dict.keys():
         chrom_csc_data = csc_data[:, chrom_idx == chrom]
         chunk_generator = (
-            ss.csc_matrix(chrom_csc_data[:, i : i + m].sum(axis=1))
-            for i in range(0, chrom_csc_data.shape[1], n)
+            ss.csc_matrix(chrom_csc_data[:, i : i + m].sum(axis=1)) for i in range(0, chrom_csc_data.shape[1], n)
         )
         chrom_data = ss.hstack(list(chunk_generator))
         chrom_data_list.append(chrom_data)
@@ -293,12 +286,8 @@ def _transform_single_h5ad(
     adata = anndata.AnnData(
         X=total_data,
         obs=adata.obs,
-        var=generate_chrom_bin_bed_dataframe(
-            chrom_size_path, window_size=window_size, step_size=step_size
-        ),
-        uns=dict(
-            bin_size=window_size, step_size=step_size, chrom_size_path=chrom_size_path
-        ),
+        var=generate_chrom_bin_bed_dataframe(chrom_size_path, window_size=window_size, step_size=step_size),
+        uns=dict(bin_size=window_size, step_size=step_size, chrom_size_path=chrom_size_path),
     )
 
     adata.write(filename=output_path, compression=compression)

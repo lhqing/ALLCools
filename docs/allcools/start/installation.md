@@ -46,41 +46,41 @@ Create a file called `allcools_env.yaml` by yourself, copy paste the following c
 ```yaml
 name: allcools
 channels:
-  - conda-forge
-  - bioconda
-  - defaults
+    - conda-forge
+    - bioconda
+    - defaults
 dependencies:
-  - python=3.8
-  - pip
-  - anndata
-  - biopython
-  - dask
-  - numba
-  - htslib>=1.9
-  - jupyter
-  - jupyter_contrib_nbextensions
-  - leidenalg
-  - natsort
-  - netCDF4
-  - networkx
-  - opentsne
-  - plotly
-  - pybedtools
-  - pyBigWig
-  - pynndescent
-  - pysam
-  - pytables
-  - scanpy
-  - scikit-learn
-  - seaborn
-  - statsmodels
-  - xarray
-  - yaml
-  - zarr
-  - pip:
-      - papermill
-      - imblearn
-      - allcools
+    - python=3.8
+    - pip
+    - anndata
+    - biopython
+    - dask
+    - numba
+    - htslib>=1.9
+    - jupyter
+    - jupyter_contrib_nbextensions
+    - leidenalg
+    - natsort
+    - netCDF4
+    - networkx
+    - opentsne
+    - plotly
+    - pybedtools
+    - pyBigWig
+    - pynndescent
+    - pysam
+    - pytables
+    - scanpy
+    - scikit-learn
+    - seaborn
+    - statsmodels
+    - xarray
+    - yaml
+    - zarr
+    - pip:
+          - papermill
+          - imblearn
+          - allcools
 ```
 
 Then, you can use the following command to create a conda environment called "allcools" and install all the required packages for you.
@@ -95,7 +95,7 @@ mamba env create -f allcools_env.yaml
 ```
 
 ````{tip}
-[mamba](https://mamba.readthedocs.io/en/latest/installation.html) is a CLI tool to manage conda environments. mamba can be installed alongside `conda` and it can provide faster sovles for big environments.  
+[mamba](https://mamba.readthedocs.io/en/latest/installation.html) is a CLI tool to manage conda environments. mamba can be installed alongside `conda` and it can provide faster sovles for big environments.
 
 We highly recommend you to use mamba for installing packages. If you don't want to use mamba or somehow have trouble with mamba, here is the conda command that achieves the same goal:
 ```shell
@@ -123,17 +123,17 @@ conda deactivate
 
 Here are some optional packages which might be hard to install on some old systems.
 
-- `rpy2` (R and the R package pvclust) is used for the cluster dendrogram.
-- `tpot` is used in REPTILE model.
+-   `rpy2` (R and the R package pvclust) is used for the cluster dendrogram.
+-   `tpot` is used in REPTILE model.
 
 ```shell
 mamba install -n allcools rpy2
 mamba install -n allcools tpot xgboost dask-ml scikit-mdr skrebate
 ```
 
-````{note}
-If you cannot install rpy2, you can instead calculate a normal dendrogram with scipy function. In addition, if you cannot install tpot, REPTILE will automatically resort to the sklearn model. Note that `conda install` also works, but much slower than mamba. 
-````
+```{note}
+If you cannot install rpy2, you can instead calculate a normal dendrogram with scipy function. In addition, if you cannot install tpot, REPTILE will automatically resort to the sklearn model. Note that `conda install` also works, but much slower than mamba.
+```
 
 ## Update
 

@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import IncrementalPCA as _IncrementalPCA
+from sklearn.preprocessing import StandardScaler
+
 from ..count_matrix.zarr import dataset_to_array
 
 
@@ -116,9 +117,7 @@ class IncrementalPCA:
 
             # normalize cell counts
             if self.normalize_per_cell:
-                _chunk_matrix = _normalize_per_cell(
-                    matrix=_chunk_matrix, cell_sum=_chunk_cell_sum
-                )
+                _chunk_matrix = _normalize_per_cell(matrix=_chunk_matrix, cell_sum=_chunk_cell_sum)
 
             # log transfer
             if self.log1p:
@@ -177,9 +176,7 @@ class IncrementalPCA:
 
             # normalize cell counts
             if self.normalize_per_cell:
-                _chunk_matrix = _normalize_per_cell(
-                    matrix=_chunk_matrix, cell_sum=_chunk_cell_sum
-                )
+                _chunk_matrix = _normalize_per_cell(matrix=_chunk_matrix, cell_sum=_chunk_cell_sum)
 
             # log transfer
             if self.log1p:

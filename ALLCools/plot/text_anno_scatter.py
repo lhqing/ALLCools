@@ -19,12 +19,12 @@ def _text_anno_scatter(
 ):
     """Add text annotation to a scatter plot"""
     # prepare kws
-    _text_anno_kws = dict(
-        fontsize=labelsize,
-        fontweight="black",
-        horizontalalignment="center",
-        verticalalignment="center",
-    )
+    _text_anno_kws = {
+        "fontsize": labelsize,
+        "fontweight": "black",
+        "horizontalalignment": "center",
+        "verticalalignment": "center",
+    }
     if text_anno_kws is not None:
         _text_anno_kws.update(text_anno_kws)
 
@@ -48,7 +48,7 @@ def _text_anno_scatter(
             _y,
             text,
             fontdict=_text_anno_kws,
-            bbox=dict(boxstyle="round", ec=edge_color, fc=_fc, linewidth=linewidth),
+            bbox={"boxstyle": "round", "ec": edge_color, "fc": _fc, "linewidth": linewidth},
         )
         text_list.append(text)
 
@@ -56,22 +56,20 @@ def _text_anno_scatter(
         try:
             from adjustText import adjust_text
 
-            _dodge_parms = dict(
-                force_points=(0.02, 0.05),
-                arrowprops=dict(
-                    arrowstyle="->",
-                    fc=edge_color,
-                    ec="none",
-                    connectionstyle="angle,angleA=-90,angleB=180,rad=5",
-                ),
-                autoalign="xy",
-            )
+            _dodge_parms = {
+                "force_points": (0.02, 0.05),
+                "arrowprops": {
+                    "arrowstyle": "->",
+                    "fc": edge_color,
+                    "ec": "none",
+                    "connectionstyle": "angle,angleA=-90,angleB=180,rad=5",
+                },
+                "autoalign": "xy",
+            }
             if dodge_kws is not None:
                 _dodge_parms.update(dodge_kws)
             adjust_text(text_list, x=data["x"], y=data["y"], **_dodge_parms)
         except ModuleNotFoundError:
-            print(
-                "Install adjustText package to dodge text, see its github page for help"
-            )
+            print("Install adjustText package to dodge text, see its github page for help")
 
     return

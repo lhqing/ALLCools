@@ -10,21 +10,20 @@ import numpy as np
 import pandas as pd
 import scanpy as sc
 import xarray as xr
-from sklearn.metrics import pairwise_distances
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import pairwise_distances, roc_auc_score
 
 from ..mcds import MCDS
 
 
 def _single_pairwise_dmg(
-        cluster_l,
-        cluster_r,
-        top_n,
-        adj_p_cutoff,
-        delta_rate_cutoff,
-        auroc_cutoff,
-        adata_dir,
-        dmg_dir,
+    cluster_l,
+    cluster_r,
+    top_n,
+    adj_p_cutoff,
+    delta_rate_cutoff,
+    auroc_cutoff,
+    adata_dir,
+    dmg_dir,
 ):
     """Calculate DMG between a pair of adata file"""
     output_path = f"{dmg_dir}/{cluster_l}-{cluster_r}.hdf"
@@ -38,7 +37,7 @@ def _single_pairwise_dmg(
     # generate single adata for DMG
     adata = adata_l.concatenate(adata_r, batch_key="groups", index_unique=None)
     adata.obs = pd.concat([adata_l.obs, adata_r.obs])
-    adata.obs['groups'] = adata.obs['groups'].astype('category')
+    adata.obs["groups"] = adata.obs["groups"].astype("category")
     try:
         assert adata.obs_names.duplicated().sum() == 0
     except AssertionError as e:
@@ -51,14 +50,10 @@ def _single_pairwise_dmg(
     # calc DMG
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        sc.tl.rank_genes_groups(
-            adata, groupby="groups", n_genes=top_n, method="wilcoxon"
-        )
+        sc.tl.rank_genes_groups(adata, groupby="groups", n_genes=top_n, method="wilcoxon")
     dmg_result = pd.DataFrame(
         {
-            data_key: pd.DataFrame(
-                adata.uns["rank_genes_groups"][data_key], columns=[cluster_r, cluster_l]
-            ).stack()
+            data_key: pd.DataFrame(adata.uns["rank_genes_groups"][data_key], columns=[cluster_r, cluster_l]).stack()
             for data_key in ["names", "pvals_adj"]
         }
     )
@@ -74,15 +69,10 @@ def _single_pairwise_dmg(
 
     # filter
     dmg_result = dmg_result[
-        (dmg_result["pvals_adj"] < adj_p_cutoff)
-        & (dmg_result["delta"].abs() > delta_rate_cutoff)
-        ].copy()
-    dmg_result["hypo_in"] = dmg_result["delta"].apply(
-        lambda i: cluster_l if i < 0 else cluster_r
-    )
-    dmg_result["hyper_in"] = dmg_result["delta"].apply(
-        lambda i: cluster_r if i < 0 else cluster_l
-    )
+        (dmg_result["pvals_adj"] < adj_p_cutoff) & (dmg_result["delta"].abs() > delta_rate_cutoff)
+    ].copy()
+    dmg_result["hypo_in"] = dmg_result["delta"].apply(lambda i: cluster_l if i < 0 else cluster_r)
+    dmg_result["hyper_in"] = dmg_result["delta"].apply(lambda i: cluster_r if i < 0 else cluster_l)
     dmg_result = dmg_result.set_index("names").drop_duplicates()
 
     # add AUROC and filter again
@@ -103,15 +93,15 @@ def _single_pairwise_dmg(
 
 class PairwiseDMG:
     def __init__(
-            self,
-            max_cell_per_group=1000,
-            top_n=10000,
-            adj_p_cutoff=0.001,
-            delta_rate_cutoff=0.3,
-            auroc_cutoff=0.9,
-            random_state=0,
-            n_jobs=1,
-            verbose=True,
+        self,
+        max_cell_per_group=1000,
+        top_n=10000,
+        adj_p_cutoff=0.001,
+        delta_rate_cutoff=0.3,
+        auroc_cutoff=0.9,
+        random_state=0,
+        n_jobs=1,
+        verbose=True,
     ):
         """
         Calculate pairwise DMGs. After calculation, results saved in self.dmg_table
@@ -156,14 +146,14 @@ class PairwiseDMG:
         self._dmg_dir = "_dmg_results"
 
     def fit_predict(
-            self,
-            x,
-            groups,
-            var_dim,
-            obs_dim="cell",
-            outlier="Outlier",
-            cleanup=True,
-            selected_pairs: List[tuple] = None,
+        self,
+        x,
+        groups,
+        var_dim,
+        obs_dim="cell",
+        outlier="Outlier",
+        cleanup=True,
+        selected_pairs: List[tuple] = None,
     ):
         """
         provide data and perform the pairwise DMG
@@ -191,9 +181,7 @@ class PairwiseDMG:
 
         """
         if (len(x.shape) != 2) or not isinstance(x, xr.DataArray):
-            raise ValueError(
-                "Expect an cell-by-feature 2D xr.DataArray as input matrix."
-            )
+            raise ValueError("Expect an cell-by-feature 2D xr.DataArray as input matrix.")
         self._obs_dim = obs_dim
         self._var_dim = var_dim
         self._outlier_label = outlier
@@ -242,13 +230,9 @@ class PairwiseDMG:
                 continue
             sub_series = sub_series.cat.remove_unused_categories()
             if sub_series.size > self.max_cell_per_group:
-                sub_series = sub_series.sample(
-                    self.max_cell_per_group, random_state=self.random_state
-                )
+                sub_series = sub_series.sample(self.max_cell_per_group, random_state=self.random_state)
             cluster_adata = anndata.AnnData(
-                X=self.X.sel(
-                    {self._obs_dim: total_cells.intersection(sub_series.index)}
-                ).values,
+                X=self.X.sel({self._obs_dim: total_cells.intersection(sub_series.index)}).values,
                 obs=pd.DataFrame({"groups": sub_series.astype("category")}),
                 var=pd.DataFrame([], index=self.X.get_index(self._var_dim)),
             )
@@ -261,11 +245,7 @@ class PairwiseDMG:
         dmg_dir.mkdir(exist_ok=True)
 
         if self.selected_pairs is None:
-            pairs = [
-                i
-                for i in combinations(sorted(self.groups.unique()), 2)
-                if self._outlier_label not in i
-            ]
+            pairs = [i for i in combinations(sorted(self.groups.unique()), 2) if self._outlier_label not in i]
         else:
             if self.verbose:
                 print("Using user provided gene pairs")
@@ -296,14 +276,12 @@ class PairwiseDMG:
                     print(f"{i + 1}/{n_pairs} finished")
 
         # summarize
-        self.dmg_table = pd.concat((pd.read_hdf(p) for p in dmg_dir.glob("*.hdf")))
+        self.dmg_table = pd.concat(pd.read_hdf(p) for p in dmg_dir.glob("*.hdf"))
         return
 
     def _cleanup(self):
         """Delete group adata files"""
-        subprocess.run(
-            ["rm", "-rf", str(self._adata_dir), str(self._dmg_dir)], check=True
-        )
+        subprocess.run(["rm", "-rf", str(self._adata_dir), str(self._dmg_dir)], check=True)
 
     def aggregate_pairwise_dmg(self, adata, groupby, obsm="X_pca"):
         """
@@ -323,71 +301,53 @@ class PairwiseDMG:
         """
         # using the cluster centroids in PC space to calculate dendrogram
         pc_matrix = adata.obsm[obsm]
-        pc_center = (
-            pd.DataFrame(pc_matrix, index=adata.obs_names)
-                .groupby(adata.obs[groupby])
-                .median()
-        )
+        pc_center = pd.DataFrame(pc_matrix, index=adata.obs_names).groupby(adata.obs[groupby]).median()
         # calculate cluster pairwise similarity
         cluster_dist = pairwise_distances(pc_center)
-        cluster_dist = pd.DataFrame(
-            cluster_dist, index=pc_center.index, columns=pc_center.index
-        )
+        cluster_dist = pd.DataFrame(cluster_dist, index=pc_center.index, columns=pc_center.index)
         cluster_dist_norm = cluster_dist / cluster_dist.values.max()
         cluster_sim = 1 - cluster_dist_norm
-        cluster_pair_sim_dict = {
-            f"{a}-{b}": value for (a, b), value in cluster_sim.unstack().iteritems()
-        }
-        self.dmg_table["similarity"] = self.dmg_table["left-right"].map(
-            cluster_pair_sim_dict
-        )
+        cluster_pair_sim_dict = {f"{a}-{b}": value for (a, b), value in cluster_sim.unstack().iteritems()}
+        self.dmg_table["similarity"] = self.dmg_table["left-right"].map(cluster_pair_sim_dict)
 
         # aggregate pairwise DMG to get the cluster level DMG, use the similarity to normalize AUROC
         cluster_dmgs = {}
         for cluster, sub_df in self.dmg_table.groupby("hypo_in"):
             values = sub_df["AUROC"] * sub_df["similarity"]
-            cluster_dmg_order = (
-                values.groupby(values.index).sum().sort_values(ascending=False)
-            )
+            cluster_dmg_order = values.groupby(values.index).sum().sort_values(ascending=False)
             cluster_dmgs[cluster] = cluster_dmg_order
         return cluster_dmgs
 
 
 def _single_ovr_dmg(
-        cell_label,
-        mcds,
-        obs_dim,
-        var_dim,
-        mc_type,
-        top_n,
-        adj_p_cutoff,
-        fc_cutoff,
-        auroc_cutoff,
+    cell_label,
+    mcds,
+    obs_dim,
+    var_dim,
+    mc_type,
+    top_n,
+    adj_p_cutoff,
+    fc_cutoff,
+    auroc_cutoff,
 ):
     """single one vs rest DMG runner"""
     # get adata
     cell_judge = mcds.get_index(obs_dim).isin(cell_label.index)
-    adata = mcds.sel({obs_dim: cell_judge}).get_adata(
-        mc_type=mc_type, var_dim=var_dim, select_hvf=False
-    )
+    adata = mcds.sel({obs_dim: cell_judge}).get_adata(mc_type=mc_type, var_dim=var_dim, select_hvf=False)
     adata.var = pd.DataFrame([], index=adata.var_names)
     adata.obs["groups"] = cell_label.astype("category")
 
     # calc DMG
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        sc.tl.rank_genes_groups(
-            adata, groupby="groups", n_genes=top_n, method="wilcoxon"
-        )
+        sc.tl.rank_genes_groups(adata, groupby="groups", n_genes=top_n, method="wilcoxon")
     dmg_result = pd.DataFrame(
         {
             data_key: pd.DataFrame(adata.uns["rank_genes_groups"][data_key]).stack()
             for data_key in ["names", "pvals_adj"]
         }
     )
-    dmg_result = dmg_result[
-        dmg_result.index.get_level_values(1).astype(bool)
-    ].reset_index(drop=True)
+    dmg_result = dmg_result[dmg_result.index.get_level_values(1).astype(bool)].reset_index(drop=True)
     # add fold change
     in_cells_mean = adata.X[
         adata.obs["groups"].astype(bool),
@@ -398,9 +358,7 @@ def _single_ovr_dmg(
     fc = pd.Series(in_cells_mean / out_cells_mean, index=adata.var_names)
     dmg_result["fc"] = dmg_result["names"].map(fc)
     # filter
-    dmg_result = dmg_result[
-        (dmg_result["pvals_adj"] < adj_p_cutoff) & (dmg_result["fc"] < fc_cutoff)
-        ].copy()
+    dmg_result = dmg_result[(dmg_result["pvals_adj"] < adj_p_cutoff) & (dmg_result["fc"] < fc_cutoff)].copy()
     dmg_result = dmg_result.set_index("names").drop_duplicates()
 
     # add AUROC and filter again
@@ -417,20 +375,20 @@ def _single_ovr_dmg(
 
 
 def _one_vs_rest_dmr_runner(
-        cell_meta,
-        group,
-        cluster,
-        max_cluster_cells,
-        max_other_fold,
-        mcds_paths,
-        obs_dim,
-        var_dim,
-        mc_type,
-        top_n,
-        adj_p_cutoff,
-        fc_cutoff,
-        auroc_cutoff,
-        verbose=True,
+    cell_meta,
+    group,
+    cluster,
+    max_cluster_cells,
+    max_other_fold,
+    mcds_paths,
+    obs_dim,
+    var_dim,
+    mc_type,
+    top_n,
+    adj_p_cutoff,
+    fc_cutoff,
+    auroc_cutoff,
+    verbose=True,
 ):
     """one vs rest DMG runner"""
     if verbose:
@@ -464,21 +422,21 @@ def _one_vs_rest_dmr_runner(
 
 
 def one_vs_rest_dmg(
-        cell_meta,
-        group,
-        mcds=None,
-        mcds_paths=None,
-        obs_dim="cell",
-        var_dim="gene",
-        mc_type="CHN",
-        top_n=1000,
-        adj_p_cutoff=0.01,
-        fc_cutoff=0.8,
-        auroc_cutoff=0.8,
-        max_cluster_cells=2000,
-        max_other_fold=5,
-        cpu=1,
-        verbose=True,
+    cell_meta,
+    group,
+    mcds=None,
+    mcds_paths=None,
+    obs_dim="cell",
+    var_dim="gene",
+    mc_type="CHN",
+    top_n=1000,
+    adj_p_cutoff=0.01,
+    fc_cutoff=0.8,
+    auroc_cutoff=0.8,
+    max_cluster_cells=2000,
+    max_other_fold=5,
+    cpu=1,
+    verbose=True,
 ):
     """
     Calculating cluster marker genes using one-vs-rest strategy.
@@ -522,7 +480,7 @@ def one_vs_rest_dmg(
     if mcds_paths is not None:
         tmp_created = False
     elif mcds is not None:
-        tmp = 'tmp_one_vs_rest.mcds'
+        tmp = "tmp_one_vs_rest.mcds"
         mcds.to_zarr(tmp)
         mcds_paths = tmp
         tmp_created = True
@@ -563,6 +521,7 @@ def one_vs_rest_dmg(
 
     if tmp_created:
         import shutil
+
         shutil.rmtree(tmp)
 
     return dmg_table

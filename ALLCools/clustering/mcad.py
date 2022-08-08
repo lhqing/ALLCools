@@ -1,6 +1,7 @@
+import warnings
+
 import numpy as np
 import pandas as pd
-import warnings
 from pybedtools import BedTool
 
 
@@ -26,9 +27,7 @@ def remove_black_list_region(adata, black_list_path, f=0.2):
         black_list_bed = BedTool(black_list_path)
         black_feature = feature_bed.intersect(black_list_bed, f=f, wa=True)
         try:
-            black_feature_index = (
-                black_feature.to_dataframe().set_index(["chrom", "start", "end"]).index
-            )
+            black_feature_index = black_feature.to_dataframe().set_index(["chrom", "start", "end"]).index
             black_feature_id = pd.Index(
                 feature_bed_df.reset_index()
                 .set_index(["chrom", "start", "end"])
@@ -45,7 +44,7 @@ def remove_black_list_region(adata, black_list_path, f=0.2):
     return
 
 
-def remove_chromosomes(adata, exclude_chromosomes=None, include_chromosomes=None, chrom_col='chrom'):
+def remove_chromosomes(adata, exclude_chromosomes=None, include_chromosomes=None, chrom_col="chrom"):
     """
     Remove chromosomes from adata.var.
     """
@@ -62,7 +61,7 @@ def remove_chromosomes(adata, exclude_chromosomes=None, include_chromosomes=None
 
     if judge is not None:
         adata._inplace_subset_var(judge)
-        print(f'{adata.shape[1]} regions remained.')
+        print(f"{adata.shape[1]} regions remained.")
     return
 
 
@@ -117,10 +116,9 @@ def filter_regions(adata, hypo_percent=0.5, n_cell=None, zscore_abs_cutoff=None)
 
     if zscore_abs_cutoff is not None:
         from scipy.stats import zscore
+
         zscore_judge = np.abs(zscore(np.log2(feature_nnz_cell))) < zscore_abs_cutoff
         adata._inplace_subset_var(zscore_judge)
 
-    print(f'{adata.shape[1]} regions remained.')
+    print(f"{adata.shape[1]} regions remained.")
     return
-
-

@@ -34,8 +34,7 @@ def calculate_residual(table):
     residual = (table - e) / np.sqrt(
         np.multiply(
             e,
-            (1 - e.sum(axis=1) / m).reshape(n, 1)
-            * (1 - e.sum(axis=0) / m).reshape(1, 2),
+            (1 - e.sum(axis=1) / m).reshape(n, 1) * (1 - e.sum(axis=0) / m).reshape(1, 2),
         )
     )
     return residual
@@ -82,6 +81,4 @@ def _downsample_sample_count(a, max_count):
 
 def downsample_table(table, max_row_count):
     """Downsample high count rows to max_row_count"""
-    return np.apply_along_axis(
-        _downsample_sample_count, axis=1, arr=table, max_count=max_row_count
-    )
+    return np.apply_along_axis(_downsample_sample_count, axis=1, arr=table, max_count=max_row_count)

@@ -1,4 +1,4 @@
-from .BaseClass import Track, DataRange
+from .BaseClass import DataRange, Track
 from .defaults import *
 
 

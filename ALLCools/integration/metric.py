@@ -1,7 +1,8 @@
-import pandas as pd
-import numpy as np
-import pynndescent
 from math import floor
+
+import numpy as np
+import pandas as pd
+import pynndescent
 from sklearn.metrics import adjusted_rand_score
 
 
@@ -32,9 +33,9 @@ def calculate_purity(adata, label1, label2):
     """
     p = _purity(label1=adata.obs[label1], label2=adata.obs[label2])
     try:
-        adata.uns['purity'][f'{label1}-{label2}'] = p
+        adata.uns["purity"][f"{label1}-{label2}"] = p
     except KeyError:
-        adata.uns['purity'] = {f'{label1}-{label2}': p}
+        adata.uns["purity"] = {f"{label1}-{label2}": p}
     return p
 
 
@@ -57,29 +58,25 @@ def calculate_adjust_rand_index(adata, label1, label2):
     """
     ari = adjusted_rand_score(adata.obs[label1].values, adata.obs[label2].values)
     try:
-        adata.uns['ARI'][f'{label1}-{label2}'] = ari
+        adata.uns["ARI"][f"{label1}-{label2}"] = ari
     except KeyError:
-        adata.uns['ARI'] = {f'{label1}-{label2}': ari}
+        adata.uns["ARI"] = {f"{label1}-{label2}": ari}
     return ari
 
 
-def _alignment_score(obsm_list,
-                     k=20,
-                     random_state=0,
-                     downsample_obs=None,
-                     n_jobs=-1):
+def _alignment_score(obsm_list, k=20, random_state=0, downsample_obs=None, n_jobs=-1):
     """
     Calculate alignment score of multiple datasets.
     """
     n_ds = len(obsm_list)
     if n_ds == 0:
-        raise ValueError('Empty obsm_list provided.')
+        raise ValueError("Empty obsm_list provided.")
     if n_ds == 1:
         # only one dataset
         return 0, np.array([0])
 
     # downsample datasets to the same size
-    min_obs = min([obsm.shape[0] for obsm in obsm_list])
+    min_obs = min(obsm.shape[0] for obsm in obsm_list)
     if downsample_obs is not None:
         min_obs = min(min_obs, downsample_obs)
     downsample_obsm_list = []
@@ -87,8 +84,7 @@ def _alignment_score(obsm_list,
         if obsm.shape[0] == min_obs:
             downsample_obsm_list.append(obsm)
         else:
-            use_obs = np.sort(
-                np.random.choice(range(obsm.shape[0]), min_obs, replace=False))
+            use_obs = np.sort(np.random.choice(range(obsm.shape[0]), min_obs, replace=False))
             downsample_obsm_list.append(obsm[use_obs, :].copy())
     obsm_list = downsample_obsm_list
 
@@ -104,12 +100,14 @@ def _alignment_score(obsm_list,
         k = min(k, max_k)
 
     # build KNN
-    index = pynndescent.NNDescent(np.concatenate(obsm_list),
-                                  metric='euclidean',
-                                  n_neighbors=k + 1,
-                                  random_state=random_state,
-                                  parallel_batch_queries=True,
-                                  n_jobs=n_jobs)
+    index = pynndescent.NNDescent(
+        np.concatenate(obsm_list),
+        metric="euclidean",
+        n_neighbors=k + 1,
+        random_state=random_state,
+        parallel_batch_queries=True,
+        n_jobs=n_jobs,
+    )
     knn, _ = index.neighbor_graph
 
     # because each dataset has the same number of obs
@@ -126,20 +124,13 @@ def _alignment_score(obsm_list,
 
     # aggregate alignment per dataset
     alignment_per_cell = pd.Series(alignment_per_cell)
-    alignment_per_dataset = alignment_per_cell.groupby(
-        alignment_per_cell.index // min_obs).mean()
+    alignment_per_dataset = alignment_per_cell.groupby(alignment_per_cell.index // min_obs).mean()
 
     overall_alignment = alignment_per_cell.mean()
     return overall_alignment, alignment_per_dataset.values
 
 
-def calculate_alignment_score(adata,
-                              dataset_col,
-                              obsm_key,
-                              downsample_obs=None,
-                              k=20,
-                              random_state=0,
-                              n_jobs=-1):
+def calculate_alignment_score(adata, dataset_col, obsm_key, downsample_obs=None, k=20, random_state=0, n_jobs=-1):
     """
     Calculate alignment score of multiple datasets.
 
@@ -171,32 +162,18 @@ def calculate_alignment_score(adata,
         obsm_list.append(ds_obsm)
 
     overall_alignment, alignment_per_dataset = _alignment_score(
-        obsm_list=obsm_list,
-        k=k,
-        random_state=random_state,
-        downsample_obs=downsample_obs,
-        n_jobs=n_jobs)
-    alignment_per_dataset = {
-        ds: score
-        for ds, score in zip(datasets, alignment_per_dataset)
-    }
+        obsm_list=obsm_list, k=k, random_state=random_state, downsample_obs=downsample_obs, n_jobs=n_jobs
+    )
+    alignment_per_dataset = {ds: score for ds, score in zip(datasets, alignment_per_dataset)}
 
     # save result to adata.uns
-    adata.uns['alignment_score'] = {
-        'overall': overall_alignment,
-        'overall_per_dataset': alignment_per_dataset
-    }
+    adata.uns["alignment_score"] = {"overall": overall_alignment, "overall_per_dataset": alignment_per_dataset}
     return overall_alignment, pd.Series(alignment_per_dataset)
 
 
-def calculate_cluster_alignment_score(adata,
-                                      cluster_col,
-                                      dataset_col,
-                                      obsm_key,
-                                      downsample_obs=None,
-                                      k=20,
-                                      random_state=0,
-                                      n_jobs=-1):
+def calculate_cluster_alignment_score(
+    adata, cluster_col, dataset_col, obsm_key, downsample_obs=None, k=20, random_state=0, n_jobs=-1
+):
     """
     Calculate alignment score of multiple datasets for each cluster.
 
@@ -235,22 +212,16 @@ def calculate_cluster_alignment_score(adata,
             obsm_list.append(ds_obsm)
 
         overall_alignment, alignment_per_dataset = _alignment_score(
-            obsm_list=obsm_list,
-            k=k,
-            random_state=random_state,
-            downsample_obs=downsample_obs,
-            n_jobs=n_jobs)
-        alignment_per_dataset = {
-            ds: score
-            for ds, score in zip(datasets, alignment_per_dataset)
-        }
+            obsm_list=obsm_list, k=k, random_state=random_state, downsample_obs=downsample_obs, n_jobs=n_jobs
+        )
+        alignment_per_dataset = {ds: score for ds, score in zip(datasets, alignment_per_dataset)}
         cluster_overall[cluster] = overall_alignment
         cluster_per_ds[cluster] = alignment_per_dataset
 
     # save result to adata.uns
-    adata.uns['alignment_score'] = {
-        f'{cluster_col}_overall': cluster_overall,
-        f'{cluster_col}_overall_per_dataset': cluster_per_ds
+    adata.uns["alignment_score"] = {
+        f"{cluster_col}_overall": cluster_overall,
+        f"{cluster_col}_overall_per_dataset": cluster_per_ds,
     }
 
     # prepare return
@@ -290,11 +261,13 @@ def calculate_kbet_accept_rate(adata, dataset_col, obsm_key, k=20, test_size=100
     # prepare R package
     import rpy2.robjects.numpy2ri
     from rpy2.robjects.packages import importr
+
     rpy2.robjects.numpy2ri.activate()
 
     from ..clustering.rutilities import install_github_r_package
-    install_github_r_package('theislab/kBET')
-    kbet = importr('kBET')
+
+    install_github_r_package("theislab/kBET")
+    kbet = importr("kBET")
 
     # prepare kBET input, downsample obs
     data = []
@@ -338,16 +311,16 @@ def calculate_kbet_accept_rate(adata, dataset_col, obsm_key, k=20, test_size=100
     stats = {k: np.array(v) for k, v in stats.items()}
     params = {k: np.array(v) for k, v in params.items()}
     outsider = {k: np.array(v) for k, v in outsider.items()}
-    kbet_result = {'summary': summary,
-                   'results': results,
-                   'ave_pval': ave_pval,
-                   'stats': stats,
-                   'params': params,
-                   'outsider': outsider}
+    kbet_result = {
+        "summary": summary,
+        "results": results,
+        "ave_pval": ave_pval,
+        "stats": stats,
+        "params": params,
+        "outsider": outsider,
+    }
 
     # calculate average observed accept rate
-    overall_accept_rate = 1 - stats['kBET.observed'].mean()
-    adata.uns['kbet'] = {'overall_accept_rate': overall_accept_rate,
-                         'dataset_col': dataset_col,
-                         'obsm_key': obsm_key}
+    overall_accept_rate = 1 - stats["kBET.observed"].mean()
+    adata.uns["kbet"] = {"overall_accept_rate": overall_accept_rate, "dataset_col": dataset_col, "obsm_key": obsm_key}
     return overall_accept_rate, kbet_result

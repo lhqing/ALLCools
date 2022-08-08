@@ -4,14 +4,15 @@ See here https://stackoverflow.com/questions/52371329/fast-spearman-correlation-
 Calculate correlation between two matrix, row by row
 """
 
-from numba import njit
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
+import anndata
 import numpy as np
 import pandas as pd
-from scipy.sparse import coo_matrix
-from concurrent.futures import ProcessPoolExecutor, as_completed
-import anndata
 import scanpy as sc
 import xarray as xr
+from numba import njit
+from scipy.sparse import coo_matrix
 from sklearn.impute import SimpleImputer
 
 
@@ -92,7 +93,7 @@ def _corr_preprocess(da, sample_mch, sample_mcg, cpu=1):
         sc.pp.regress_out(adata, keys=["sample_mch", "sample_mcg"], n_jobs=cpu)
         sc.pp.scale(adata)
     else:
-        print('All features are removed due to 0 std')
+        print("All features are removed due to 0 std")
     return adata
 
 
@@ -119,18 +120,11 @@ def corr(
         _adata_a = _adata_a[_adata_b.obs_names, :]
 
     # create mask
-    mask = coo_matrix(
-        np.abs(
-            (_adata_a.var["pos"].values[:, None] - _adata_b.var["pos"].values[None, :])
-        )
-        < max_dist
-    )
+    mask = coo_matrix(np.abs(_adata_a.var["pos"].values[:, None] - _adata_b.var["pos"].values[None, :]) < max_dist)
 
     # this is used when calculating null, downsample corr call to save time
     if (calculate_n is not None) and (calculate_n < mask.data.size):
-        rand_loc = np.random.choice(
-            range(mask.data.size), size=int(calculate_n), replace=False
-        )
+        rand_loc = np.random.choice(range(mask.data.size), size=int(calculate_n), replace=False)
         rand_loc = sorted(rand_loc)
         mask = coo_matrix(
             (mask.data[rand_loc], (mask.row[rand_loc], mask.col[rand_loc])),
@@ -174,9 +168,7 @@ def corr(
 
     if len(total_data) != 0:
         mask.data = np.concatenate([total_data[k] for k in sorted(total_data.keys())])
-    result = anndata.AnnData(
-        X=mask.astype(np.float32).tocsr(), obs=_adata_a.var, var=_adata_b.var
-    )
+    result = anndata.AnnData(X=mask.astype(np.float32).tocsr(), obs=_adata_a.var, var=_adata_b.var)
     return result
 
 
@@ -234,15 +226,11 @@ def region_correlation(
     for chrom_a, chrom_da_a in data_a.groupby(f"{region_dim_a}_chrom"):
         if (chroms is not None) and (chrom_a not in chroms):
             continue
-        adata_a = _corr_preprocess(
-            da=chrom_da_a, sample_mch=sample_mch, sample_mcg=sample_mcg, cpu=cpu
-        )
+        adata_a = _corr_preprocess(da=chrom_da_a, sample_mch=sample_mch, sample_mcg=sample_mcg, cpu=cpu)
         for chrom_b, chrom_da_b in data_b.groupby(f"{region_dim_b}_chrom"):
             if (chroms is not None) and (chrom_b not in chroms):
                 continue
-            adata_b = _corr_preprocess(
-                da=chrom_da_b, sample_mch=sample_mch, sample_mcg=sample_mcg, cpu=cpu
-            )
+            adata_b = _corr_preprocess(da=chrom_da_b, sample_mch=sample_mch, sample_mcg=sample_mcg, cpu=cpu)
 
             # we use trans chroms to calculate region null
             if chrom_a != chrom_b:
@@ -289,9 +277,7 @@ def region_correlation(
                     null_results.append(null_corr_matrix.X.data)
     true_results = anndata.concat(total_results, join="outer")
     # anndata somehow do not concat var and the var order is also changed
-    true_results.var = pd.concat([adata.var for adata in total_results]).loc[
-        true_results.var_names
-    ]
+    true_results.var = pd.concat([adata.var for adata in total_results]).loc[true_results.var_names]
     null_results = np.concatenate(null_results)
     return true_results, null_results
 
@@ -332,9 +318,7 @@ def _select_corr_cutoff(true: np.ndarray, null: np.ndarray, alpha=0.05, directio
     return cur_corr
 
 
-def get_corr_table(
-    total_results, null_results, region_dim_a, region_dim_b, direction="-", alpha=0.05
-):
+def get_corr_table(total_results, null_results, region_dim_a, region_dim_b, direction="-", alpha=0.05):
     true = total_results.X.data
     null = null_results
     total_results.X = total_results.X.tocoo()
@@ -348,35 +332,21 @@ def get_corr_table(
         selected = total_results.X.data < cutoff
         print(f"Correlation cutoff corr < {cutoff}")
     elif direction == "both":
-        pos_cutoff, neg_cutoff = _select_corr_cutoff(
-            true, null, alpha=alpha, direction="both"
-        )
-        selected = (total_results.X.data > pos_cutoff) | (
-            total_results.X.data < neg_cutoff
-        )
+        pos_cutoff, neg_cutoff = _select_corr_cutoff(true, null, alpha=alpha, direction="both")
+        selected = (total_results.X.data > pos_cutoff) | (total_results.X.data < neg_cutoff)
         print(f"Correlation cutoff (corr > {pos_cutoff}) | (corr < {neg_cutoff})")
     else:
-        raise ValueError(
-            f'direction need to be in ["+", "-", "both"], got {direction}.'
-        )
+        raise ValueError(f'direction need to be in ["+", "-", "both"], got {direction}.')
 
     print(f"{sum(selected)} correlation pairs selected.")
 
     corr_table = pd.DataFrame(
         {
-            region_dim_a: pd.Series(total_results.obs_names)
-            .iloc[total_results.X.row[selected]]
-            .values,
-            region_dim_b: pd.Series(total_results.var_names)
-            .iloc[total_results.X.col[selected]]
-            .values,
+            region_dim_a: pd.Series(total_results.obs_names).iloc[total_results.X.row[selected]].values,
+            region_dim_b: pd.Series(total_results.var_names).iloc[total_results.X.col[selected]].values,
             "corr": total_results.X.data[selected],
         }
     )
-    corr_table[f"{region_dim_a}_pos"] = corr_table[region_dim_a].map(
-        total_results.obs["pos"]
-    )
-    corr_table[f"{region_dim_b}_pos"] = corr_table[region_dim_b].map(
-        total_results.var["pos"]
-    )
+    corr_table[f"{region_dim_a}_pos"] = corr_table[region_dim_a].map(total_results.obs["pos"])
+    corr_table[f"{region_dim_b}_pos"] = corr_table[region_dim_b].map(total_results.var["pos"])
     return corr_table

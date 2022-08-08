@@ -1,8 +1,9 @@
+import copy
+
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 import seaborn as sns
-import copy
 from matplotlib.cm import get_cmap
 from matplotlib.colorbar import ColorbarBase
 from matplotlib.colors import ListedColormap, Normalize
@@ -62,13 +63,9 @@ def level_one_palette(name_list, order=None, palette="auto"):
     return color_palette
 
 
-def level_two_palette(
-    major_color, major_sub_dict, major_order=None, palette="auto", skip_border_color=2
-):
+def level_two_palette(major_color, major_sub_dict, major_order=None, palette="auto", skip_border_color=2):
     if isinstance(major_color, list):
-        major_color_dict = level_one_palette(
-            major_color, palette=palette, order=major_order
-        )
+        major_color_dict = level_one_palette(major_color, palette=palette, order=major_order)
     else:
         major_color_dict = major_color
 
@@ -143,9 +140,7 @@ def plot_color_legend(palette, ax, order=None, interpolation=None, transpose=Fal
     data = np.arange(n).reshape(1, n)
     if transpose:
         data = data.T
-    ax.imshow(
-        data, interpolation=interpolation, aspect="auto", cmap=ListedColormap(colors)
-    )
+    ax.imshow(data, interpolation=interpolation, aspect="auto", cmap=ListedColormap(colors))
     if not transpose:
         ax.set(xticklabels=list(order), xticks=range(0, n), yticks=[])
         ax.xaxis.set_tick_params(labelrotation=90)

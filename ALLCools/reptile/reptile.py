@@ -8,25 +8,21 @@ import dask
 import joblib
 import numpy as np
 import pandas as pd
-import pyBigWig
 import pybedtools
+import pyBigWig
 import xarray as xr
 from sklearn.model_selection import train_test_split
 
 from ALLCools.mcds import RegionDS
-from ALLCools.mcds.utilities import write_ordered_chunks, update_dataset_config
+from ALLCools.mcds.utilities import update_dataset_config, write_ordered_chunks
 
 
 def _create_train_region_ds(reptile):
     # train regions
-    train_regions_bed = pybedtools.BedTool(reptile.train_regions).sort(
-        g=reptile.chrom_size_path
-    )
+    train_regions_bed = pybedtools.BedTool(reptile.train_regions).sort(g=reptile.chrom_size_path)
 
     # train region labels
-    train_label = pd.read_csv(
-        reptile.train_region_labels, sep="\t", index_col=0, squeeze=True
-    )
+    train_label = pd.read_csv(reptile.train_region_labels, sep="\t", index_col=0, squeeze=True)
     train_label.index.name = "train-region"
     train_regions_bed_df = train_regions_bed.to_dataframe()
 
@@ -45,9 +41,7 @@ def _create_train_region_ds(reptile):
 
 def _create_train_dmr_ds(reptile, train_regions_bed, train_label):
     # total DMRs
-    dmr_regions_bed = pybedtools.BedTool(reptile.dmr_regions).sort(
-        g=reptile.chrom_size_path
-    )
+    dmr_regions_bed = pybedtools.BedTool(reptile.dmr_regions).sort(g=reptile.chrom_size_path)
     dmr_regions_bed_df = dmr_regions_bed.to_dataframe()
 
     # train DMRs and train DMR labels
@@ -74,10 +68,7 @@ def _create_train_dmr_ds(reptile, train_regions_bed, train_label):
     dmr_label.index.name = "train-dmr"
 
     train_dmr_regions_bed_df = (
-        dmr_regions_bed_df.set_index("name")
-            .loc[dmr_label.index]
-            .reset_index()
-            .iloc[:, [1, 2, 3, 0]]
+        dmr_regions_bed_df.set_index("name").loc[dmr_label.index].reset_index().iloc[:, [1, 2, 3, 0]]
     )
 
     # train DMR RegionDS
@@ -94,9 +85,9 @@ def _create_train_dmr_ds(reptile, train_regions_bed, train_label):
 
 
 def _create_query_region_ds(reptile):
-    pybedtools.BedTool().makewindows(
-        g=reptile.chrom_size_path, s=reptile.step_size, w=reptile.window_size
-    ).saveas(f"{reptile.output_path}/query_region.bed")
+    pybedtools.BedTool().makewindows(g=reptile.chrom_size_path, s=reptile.step_size, w=reptile.window_size).saveas(
+        f"{reptile.output_path}/query_region.bed"
+    )
 
     query_region_ds = RegionDS.from_bed(
         f"{reptile.output_path}/query_region.bed",
@@ -150,14 +141,14 @@ def _get_data_and_label(region_ds, modalities, sample, fillna_by_zero_list):
 
 
 def _predict_sample(
-        region_ds_path,
-        region_dim,
-        modalities,
-        fillna_by_zero,
-        sample,
-        output_path,
-        mask_cutoff=0.3,
-        chunk_size=100000,
+    region_ds_path,
+    region_dim,
+    modalities,
+    fillna_by_zero,
+    sample,
+    output_path,
+    mask_cutoff=0.3,
+    chunk_size=100000,
 ):
     # set dask scheduler to allow multiprocessing
     with dask.config.set(scheduler="sync"):
@@ -166,9 +157,7 @@ def _predict_sample(
         elif region_dim == "query-dmr":
             model = joblib.load(f"{region_ds_path}/model/train-dmr_model.lib")
         else:
-            raise ValueError(
-                f'Only accept ["query-region", "query-dmr"], got {region_dim}'
-            )
+            raise ValueError(f'Only accept ["query-region", "query-dmr"], got {region_dim}')
 
         # for query, we don't filter nan, but drop the nan value in final data table
         region_ds = RegionDS.open(region_ds_path, region_dim=region_dim)
@@ -176,7 +165,7 @@ def _predict_sample(
 
         total_proba = []
         for chunk_start in range(0, region_ids.size, chunk_size):
-            use_regions = region_ids[chunk_start: chunk_start + chunk_size]
+            use_regions = region_ids[chunk_start : chunk_start + chunk_size]
             _region_ds = region_ds.sel({region_dim: use_regions})
             data, _ = _get_data_and_label(
                 region_ds=_region_ds,
@@ -192,9 +181,7 @@ def _predict_sample(
 
             # predict
             proba = model.predict_proba(data.astype(np.float64))
-            enhancer_proba = pd.Series(proba[:, 1], index=data.index).reindex(
-                total_index
-            )
+            enhancer_proba = pd.Series(proba[:, 1], index=data.index).reindex(total_index)
             # NA value has 0 proba
             enhancer_proba.fillna(0, inplace=True)
             total_proba.append(enhancer_proba)
@@ -242,38 +229,41 @@ def _call_enhancer_region(bw_path, dmr_bed, threshold, merge_dist, chrom_size_pa
             if cur_start is not None:
                 high_score_regions.append([chrom, cur_start, cur_end])
 
-        high_score_regions = pd.DataFrame(high_score_regions, columns=['chrom', 'start', 'end'])
+        high_score_regions = pd.DataFrame(high_score_regions, columns=["chrom", "start", "end"])
         # merge close enhancers, annotate DMR ids
-        high_score_regions = pybedtools.BedTool \
-            .from_dataframe(high_score_regions) \
-            .sort(g=chrom_size_path) \
-            .merge(d=merge_dist) \
-            .map(b=dmr_bed, c=4, o='collapse', g=chrom_size_path) \
+        high_score_regions = (
+            pybedtools.BedTool.from_dataframe(high_score_regions)
+            .sort(g=chrom_size_path)
+            .merge(d=merge_dist)
+            .map(b=dmr_bed, c=4, o="collapse", g=chrom_size_path)
             .to_dataframe()
+        )
     return high_score_regions
 
 
 class REPTILE:
     def __init__(
-            self,
-            output_path,
-            train_regions,
-            dmr_regions,
-            train_region_labels,
-            train_sample,
-            bigwig_table,
-            chrom_size_path,
-            window_size=2000,
-            step_size=200,
-            dmr_slop=150,
-            fillna_by_zero=None,
+        self,
+        output_path,
+        train_regions,
+        dmr_regions,
+        train_region_labels,
+        train_sample,
+        bigwig_table,
+        chrom_size_path,
+        window_size=2000,
+        step_size=200,
+        dmr_slop=150,
+        fillna_by_zero=None,
     ):
         try:
-            from tpot import TPOTClassifier
+            pass
         except ImportError:
-            raise ImportError('Got tpot import error, install the tpot package: \n'
-                              'conda install -c conda-forge tpot xgboost dask dask-ml scikit-mdr skrebate \n'
-                              'See also https://epistasislab.github.io/tpot/')
+            raise ImportError(
+                "Got tpot import error, install the tpot package: \n"
+                "conda install -c conda-forge tpot xgboost dask dask-ml scikit-mdr skrebate \n"
+                "See also https://epistasislab.github.io/tpot/"
+            )
         self.output_path = output_path
         pathlib.Path(self.output_path).mkdir(exist_ok=True)
         # for reptile model
@@ -314,12 +304,8 @@ class REPTILE:
         print(f"Got {self.modalities.size} modalities from bigwig_table: ", end="")
         print(", ".join(self.modalities))
         if train_sample not in self.bigwig_table.index:
-            raise KeyError(
-                f"train_sample {train_sample} does not exist in the index of bigwig_table"
-            )
-        self.samples = pd.Index(
-            [s for s in self.bigwig_table.index if s != train_sample]
-        )
+            raise KeyError(f"train_sample {train_sample} does not exist in the index of bigwig_table")
+        self.samples = pd.Index([s for s in self.bigwig_table.index if s != train_sample])
         print("Training sample:", self.train_sample)
         print("Other samples:", ", ".join(self.samples))
 
@@ -353,9 +339,7 @@ class REPTILE:
         # step 1. Create training region RegionDS
         train_regions_bed, train_label = _create_train_region_ds(self)
         # step 2. Create DMR RegionDS overlapping with training regions
-        dmr_regions_bed_df = _create_train_dmr_ds(
-            self, train_regions_bed=train_regions_bed, train_label=train_label
-        )
+        dmr_regions_bed_df = _create_train_dmr_ds(self, train_regions_bed=train_regions_bed, train_label=train_label)
 
         # RegionDS for query
         # step 3. Create all DMR RegionDS for query
@@ -367,25 +351,19 @@ class REPTILE:
     @property
     def train_region_ds(self):
         if self._train_region_ds is None:
-            self._train_region_ds = RegionDS.open(
-                self.output_path, region_dim="train-region", engine="zarr"
-            )
+            self._train_region_ds = RegionDS.open(self.output_path, region_dim="train-region", engine="zarr")
         return self._train_region_ds
 
     @property
     def train_dmr_ds(self):
         if self._train_dmr_ds is None:
-            self._train_dmr_ds = RegionDS.open(
-                self.output_path, region_dim="train-dmr", engine="zarr"
-            )
+            self._train_dmr_ds = RegionDS.open(self.output_path, region_dim="train-dmr", engine="zarr")
         return self._train_dmr_ds
 
     @property
     def query_region_ds(self):
         if self._query_region_ds is None:
-            self._query_region_ds = RegionDS.open(
-                self.output_path, region_dim="query-region", engine="zarr"
-            )
+            self._query_region_ds = RegionDS.open(self.output_path, region_dim="query-region", engine="zarr")
         return self._query_region_ds
 
     @property
@@ -398,13 +376,9 @@ class REPTILE:
     def region_model(self):
         if self._region_model is None:
             try:
-                self._region_model = joblib.load(
-                    f"{self.model_dir}/train-region_model.lib"
-                )
+                self._region_model = joblib.load(f"{self.model_dir}/train-region_model.lib")
             except FileNotFoundError:
-                print(
-                    "Region model not found, make sure you train the model before prediction"
-                )
+                print("Region model not found, make sure you train the model before prediction")
         return self._region_model
 
     @property
@@ -413,9 +387,7 @@ class REPTILE:
             try:
                 self._dmr_model = joblib.load(f"{self.model_dir}/train-dmr_model.lib")
             except FileNotFoundError:
-                print(
-                    "DNR model not found, make sure you train the model before prediction"
-                )
+                print("DNR model not found, make sure you train the model before prediction")
         return self._dmr_model
 
     def _validate_region_name(self, name):
@@ -446,21 +418,13 @@ class REPTILE:
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
                 region_ds.coords[f"{modality}_mean"] = (
-                    region_ds[da_name]
-                        .sel({modality: self.samples})
-                        .mean(dim=modality, skipna=True)
-                        .load()
+                    region_ds[da_name].sel({modality: self.samples}).mean(dim=modality, skipna=True).load()
                 )
                 region_ds.coords[f"{modality}_std"] = (
-                    region_ds[da_name]
-                        .sel({modality: self.samples})
-                        .std(dim=modality, skipna=True)
-                        .load()
+                    region_ds[da_name].sel({modality: self.samples}).std(dim=modality, skipna=True).load()
                 )
                 region_ds.coords[f"{modality}_nan_count"] = (
-                    np.isnan(region_ds[da_name].sel({modality: self.samples}))
-                        .sum(dim=modality)
-                        .load()
+                    np.isnan(region_ds[da_name].sel({modality: self.samples})).sum(dim=modality).load()
                 )
         # save the annotated region_ds to self.{output_dir}/{region_dim}
         region_ds.attrs["reptile_annotate"] = True
@@ -503,9 +467,7 @@ class REPTILE:
         if len(judges) > 0:
             remove_feature = np.any(judges, axis=0)
             region_ds = region_ds.sel({region_ds.region_dim: ~remove_feature})
-            print(
-                f"{(~remove_feature).sum()} features remained after filter NaN for {name}"
-            )
+            print(f"{(~remove_feature).sum()} features remained after filter NaN for {name}")
         else:
             # this means all modality NaN filled by 0
             pass
@@ -516,9 +478,7 @@ class REPTILE:
             raise ValueError(f'Only accept ["train-region", "train-dmr"], got {name}')
 
         # get the RegionDS that with NaN values filtered (see self._filter_na)
-        region_ds = self._filter_na_train(
-            name=name, sample=self.train_sample, max_na_rate=0.5
-        )
+        region_ds = self._filter_na_train(name=name, sample=self.train_sample, max_na_rate=0.5)
         data, label = _get_data_and_label(
             region_ds=region_ds,
             modalities=self.modalities,
@@ -529,15 +489,15 @@ class REPTILE:
 
     @staticmethod
     def auto_ml(
-            data,
-            label,
-            output_path,
-            train_size=0.75,
-            random_state=42,
-            cpu=1,
-            tpot_generations=5,
-            tpot_max_time_mins=60,
-            **tpot_kwargs,
+        data,
+        label,
+        output_path,
+        train_size=0.75,
+        random_state=42,
+        cpu=1,
+        tpot_generations=5,
+        tpot_max_time_mins=60,
+        **tpot_kwargs,
     ):
         print("Training model with these parameters:")
         print(f"cpu={cpu}")
@@ -557,6 +517,7 @@ class REPTILE:
         )
 
         from tpot import TPOTClassifier
+
         _tpot = TPOTClassifier(
             generations=tpot_generations,
             max_time_mins=tpot_max_time_mins,
@@ -662,8 +623,11 @@ class REPTILE:
 
         final_da = xr.open_zarr(final_dir)
         subprocess.run(f"rm -rf {chunk_dir}", shell=True)
-        update_dataset_config(output_dir=self.output_path, add_ds_region_dim={f"{region_dim}_prediction": region_dim},
-                              change_region_dim=None)
+        update_dataset_config(
+            output_dir=self.output_path,
+            add_ds_region_dim={f"{region_dim}_prediction": region_dim},
+            change_region_dim=None,
+        )
 
         if region_dim == "query-region":
             self._region_prediction = final_da
@@ -691,9 +655,7 @@ class REPTILE:
 
             # save DMR prediction proba
             dmr_bed_df = dmr_pred.get_bed(with_id=False)
-            dmr_value = dmr_pred.get_feature(
-                sample, dim="sample", da_name="query-dmr_prediction"
-            )
+            dmr_value = dmr_pred.get_feature(sample, dim="sample", da_name="query-dmr_prediction")
             dmr_bed_df["score"] = dmr_value
             dmr_bed_df = dmr_bed_df[dmr_bed_df["score"] > mask_cutoff].copy()
             dmr_bed_df.sort_values(["chrom", "start"], inplace=True)
@@ -706,9 +668,7 @@ class REPTILE:
 
             # save region prediction proba
             region_bed_df = region_pred.get_bed(with_id=False)
-            region_value = region_pred.get_feature(
-                sample, dim="sample", da_name="query-region_prediction"
-            )
+            region_value = region_pred.get_feature(sample, dim="sample", da_name="query-region_prediction")
             region_bed_df["score"] = region_value
             region_bed_df = region_bed_df[region_bed_df["score"] > mask_cutoff].copy()
             region_bed_df.sort_values(["chrom", "start"], inplace=True)
@@ -726,11 +686,10 @@ class REPTILE:
                 f"{self.bigwig_dir}/{sample}_region_pred.bg > "
                 f"{self.bigwig_dir}/{sample}_unionbedg.tsv",
                 shell=True,
-                check=True)
+                check=True,
+            )
 
-            union_table = pd.read_csv(f'{self.bigwig_dir}/{sample}_unionbedg.tsv',
-                                      sep='\t',
-                                      header=None)
+            union_table = pd.read_csv(f"{self.bigwig_dir}/{sample}_unionbedg.tsv", sep="\t", header=None)
 
             bw_path = f"{self.bigwig_dir}/{sample}_reptile_score.bw"
             with pyBigWig.open(bw_path, "w") as bw:
@@ -742,9 +701,7 @@ class REPTILE:
                     squeeze=True,
                 ).sort_index()
 
-                bw.addHeader(
-                    [(k, v) for k, v in chrom_sizes.items()]
-                )
+                bw.addHeader([(k, v) for k, v in chrom_sizes.items()])
 
                 for chrom in chrom_sizes.index:
                     cur_bin = 0
@@ -787,9 +744,7 @@ class REPTILE:
                     mean_score = sum(cur_scores) / len(cur_scores)
                     try:
                         if mean_score > 0.01:
-                            bw.addEntries(
-                                chrom, [cur_pos], values=[mean_score], span=bw_bin_size
-                            )
+                            bw.addEntries(chrom, [cur_pos], values=[mean_score], span=bw_bin_size)
                     except RuntimeError as e:
                         print(chrom, cur_pos, mean_score, bw_bin_size)
                         raise e
@@ -803,10 +758,7 @@ class REPTILE:
         return bw_path
 
     def dump_bigwigs(self, cpu, mask_cutoff, bw_bin_size):
-        print(
-            f"Save prediction results to bigwig files: \n"
-            f"bin size {bw_bin_size}, minimum score {mask_cutoff}."
-        )
+        print(f"Save prediction results to bigwig files: \n" f"bin size {bw_bin_size}, minimum score {mask_cutoff}.")
         with ProcessPoolExecutor(cpu) as exe:
             futures = {}
             for sample in self.samples:
@@ -829,17 +781,19 @@ class REPTILE:
         if merge_dist is None:
             merge_dist = self.step_size
 
-        print(f'Call final enhancer with threshold {threshold}, merge enhancer within {merge_dist}bp')
+        print(f"Call final enhancer with threshold {threshold}, merge enhancer within {merge_dist}bp")
         dmr_bed = pybedtools.BedTool(self.dmr_regions).sort(g=self.chrom_size_path)
 
         for sample in self.samples:
             bw_path = f"{self.bigwig_dir}/{sample}_reptile_score.bw"
-            enhancer_df = _call_enhancer_region(bw_path=bw_path,
-                                                dmr_bed=dmr_bed,
-                                                threshold=threshold,
-                                                merge_dist=merge_dist,
-                                                chrom_size_path=self.chrom_size_path)
+            enhancer_df = _call_enhancer_region(
+                bw_path=bw_path,
+                dmr_bed=dmr_bed,
+                threshold=threshold,
+                merge_dist=merge_dist,
+                chrom_size_path=self.chrom_size_path,
+            )
             sample_out_path = f"{self.enhancer_dir}/{sample}_enhancer.bed"
-            enhancer_df.to_csv(sample_out_path, sep='\t', index=None, header=None)
-            print(f'Sample {sample} has {enhancer_df.shape[0]} enhancers.')
+            enhancer_df.to_csv(sample_out_path, sep="\t", index=None, header=None)
+            print(f"Sample {sample} has {enhancer_df.shape[0]} enhancers.")
         return

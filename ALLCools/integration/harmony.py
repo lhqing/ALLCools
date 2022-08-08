@@ -15,12 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import pandas as pd
-import numpy as np
-from scipy.cluster.vq import kmeans
 import logging
+
 import anndata
+import numpy as np
+import pandas as pd
 import scanpy as sc
+from scipy.cluster.vq import kmeans
 
 # create logger
 logger = logging.getLogger("harmonypy")
@@ -74,9 +75,7 @@ def run_harmony(
     if data_mat.shape[1] != N:
         data_mat = data_mat.T
 
-    assert (
-        data_mat.shape[1] == N
-    ), "data_mat and meta_data do not have the same number of cells"
+    assert data_mat.shape[1] == N, "data_mat and meta_data do not have the same number of cells"
 
     if nclust is None:
         nclust = np.min([np.round(N / 30.0), 100]).astype(int)
@@ -149,7 +148,7 @@ def run_harmony(
     return ho
 
 
-class Harmony(object):
+class Harmony:
     def __init__(
         self,
         Z,
@@ -283,7 +282,7 @@ class Harmony(object):
         converged = False
         for i in range(1, iter_harmony + 1):
             if verbose:
-                logger.info("Iteration {} of {}".format(i, iter_harmony))
+                logger.info(f"Iteration {i} of {iter_harmony}")
             # STEP 1: Clustering
             self.cluster()
             # STEP 2: Regress out covariates
@@ -303,9 +302,7 @@ class Harmony(object):
             converged = self.check_convergence(1)
             if converged:
                 if verbose:
-                    logger.info(
-                        "Converged after {} iteration{}".format(i, "s" if i > 1 else "")
-                    )
+                    logger.info("Converged after {} iteration{}".format(i, "s" if i > 1 else ""))
                 break
         if verbose and not converged:
             logger.info("Stopped before convergence")
@@ -353,9 +350,7 @@ class Harmony(object):
             self.R[:, b] = self._scale_dist[:, b]
             self.R[:, b] = np.multiply(
                 self.R[:, b],
-                np.dot(
-                    np.power((self.E + 1) / (self.O + 1), self.theta), self.Phi[:, b]
-                ),
+                np.dot(np.power((self.E + 1) / (self.O + 1), self.theta), self.Phi[:, b]),
             )
             self.R[:, b] = self.R[:, b] / np.linalg.norm(self.R[:, b], ord=1, axis=0)
             # STEP 3: Put cells back

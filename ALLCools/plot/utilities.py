@@ -1,15 +1,14 @@
 from decimal import Decimal
+
 import anndata
-import xarray as xr
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import xarray as xr
 from sklearn.neighbors import LocalOutlierFactor
 
 
-def _density_based_sample(
-    data: pd.DataFrame, coords: list, portion=None, size=None, seed=None
-):
+def _density_based_sample(data: pd.DataFrame, coords: list, portion=None, size=None, seed=None):
     """down sample data based on density, to prevent overplot in dense region and decrease plotting time"""
     clf = LocalOutlierFactor(
         n_neighbors=20,
@@ -68,9 +67,7 @@ def _make_tiny_axis_label(ax, x, y, arrow_kws=None, fontsize=5):
         0.06,
         0.03,
         _translate_coord_name(x),
-        fontdict=dict(
-            fontsize=fontsize, horizontalalignment="left", verticalalignment="center"
-        ),
+        fontdict=dict(fontsize=fontsize, horizontalalignment="left", verticalalignment="center"),
         transform=ax.transAxes,
     )
     ax.text(
@@ -108,12 +105,12 @@ def _extract_coords(data, coord_base, x, y):
     elif isinstance(data, xr.Dataset):
         ds = data
         if coord_base not in ds.dims:
-            raise KeyError(f'xr.Dataset do not contain {coord_base} dim')
-        data_var = set(i for i in ds.data_vars.keys() if i.startswith(coord_base)).pop()
+            raise KeyError(f"xr.Dataset do not contain {coord_base} dim")
+        data_var = {i for i in ds.data_vars.keys() if i.startswith(coord_base)}.pop()
         _data = pd.DataFrame(
             {
-                "x": ds[data_var].sel({coord_base: f'{coord_base}_0'}).to_pandas(),
-                "y": ds[data_var].sel({coord_base: f'{coord_base}_1'}).to_pandas()
+                "x": ds[data_var].sel({coord_base: f"{coord_base}_0"}).to_pandas(),
+                "y": ds[data_var].sel({coord_base: f"{coord_base}_1"}).to_pandas(),
             }
         )
     else:
@@ -182,9 +179,7 @@ def tight_hue_range(hue_data, portion):
     hue_data = hue_data[np.isfinite(hue_data)]
     hue_quantiles = hue_data.quantile(q=np.arange(0, 1, 0.01))
     min_window_right = (
-        hue_quantiles.rolling(window=int(portion * 100))
-        .apply(lambda i: i.max() - i.min(), raw=True)
-        .idxmin()
+        hue_quantiles.rolling(window=int(portion * 100)).apply(lambda i: i.max() - i.min(), raw=True).idxmin()
     )
     min_window_left = max(0, min_window_right - portion)
     vmin, vmax = tuple(hue_data.quantile(q=[min_window_left, min_window_right]))

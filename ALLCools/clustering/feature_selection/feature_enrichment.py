@@ -12,10 +12,8 @@ def _calculate_enrichment_score(raw_adata, labels):
     Assuming the methylation value is posterior frac calculated by MCDS.add_mc_frac)
     """
     n_cells = raw_adata.shape[0]
-    total_hypo_n = pd.Series(np.ravel((raw_adata.X < 1).sum(axis=0)).copy(),
-                             index=raw_adata.var_names)
-    total_sum = pd.Series(np.ravel(raw_adata.X.sum(axis=0).copy()),
-                          index=raw_adata.var_names)
+    total_hypo_n = pd.Series(np.ravel((raw_adata.X < 1).sum(axis=0)).copy(), index=raw_adata.var_names)
+    total_sum = pd.Series(np.ravel(raw_adata.X.sum(axis=0).copy()), index=raw_adata.var_names)
 
     enrichment = []
     label_orders = []
@@ -27,18 +25,16 @@ def _calculate_enrichment_score(raw_adata, labels):
 
         label_orders.append(label)
         # hypo-methylated cells in the cluster
-        in_hypo_n = pd.Series(np.ravel(
-            (raw_adata[sub_df.index, :].X < 1).sum(axis=0)).copy(),
-                              index=raw_adata.var_names)
+        in_hypo_n = pd.Series(
+            np.ravel((raw_adata[sub_df.index, :].X < 1).sum(axis=0)).copy(), index=raw_adata.var_names
+        )
         in_hypo_frac = in_hypo_n / in_cells
         # hypo-methylated cells not in the cluster
         out_hypo_n = total_hypo_n - in_hypo_n
         out_hypo_frac = out_hypo_n / out_cells
 
         # mean of cells in the cluster
-        in_mean = pd.Series(np.ravel(
-            raw_adata[sub_df.index, :].X.mean(axis=0)).copy(),
-                            index=raw_adata.var_names)
+        in_mean = pd.Series(np.ravel(raw_adata[sub_df.index, :].X.mean(axis=0)).copy(), index=raw_adata.var_names)
         # mean of cells not in the cluster
         out_mean = (total_sum - in_mean * in_cells) / out_cells
 
@@ -46,13 +42,11 @@ def _calculate_enrichment_score(raw_adata, labels):
         # In Zeisel et al., the frac and mean change on the same direction,
         # but in the mc frac case, larger fraction means smaller mean
         # so the fraction part is reversed
-        e = ((in_hypo_frac + 0.1) / (out_hypo_frac + 0.1) *
-             (out_mean + 0.01) / (in_mean + 0.01))
+        e = (in_hypo_frac + 0.1) / (out_hypo_frac + 0.1) * (out_mean + 0.01) / (in_mean + 0.01)
         enrichment.append(e)
         # enrichment > 1, the gene is hypo-methylated in that cluster, the larger the better
 
-    enrichment = pd.DataFrame(enrichment,
-                              index=label_orders).loc[:, raw_adata.var_names].copy()
+    enrichment = pd.DataFrame(enrichment, index=label_orders).loc[:, raw_adata.var_names].copy()
     return enrichment
 
 
@@ -84,8 +78,7 @@ def _calculate_enrichment_score_cytograph(adata, labels):
         # Mean value per cluster
         this_mean = np.ravel(adata[is_in_cluster, :].X.mean(axis=0))
         means.append(this_mean)
-        other_mean = (total_sum - this_mean * this_cells) / \
-                     (total_cells - this_cells)
+        other_mean = (total_sum - this_mean * this_cells) / (total_cells - this_cells)
         means_other.append(other_mean)
     nnz = np.vstack(nnz).astype(np.float64)
     nnz_other = np.vstack(nnz_other).astype(np.float64)
@@ -99,11 +92,8 @@ def _calculate_enrichment_score_cytograph(adata, labels):
     nnz /= _sizes
     nnz_other /= _sizes_other
 
-    enrichment = ((nnz + 0.1) / (nnz_other + 0.1) * (means + 0.01) /
-                  (means_other + 0.01))
-    enrichment = pd.DataFrame(enrichment,
-                              index=clusters,
-                              columns=adata.var_names)
+    enrichment = (nnz + 0.1) / (nnz_other + 0.1) * (means + 0.01) / (means_other + 0.01)
+    enrichment = pd.DataFrame(enrichment, index=clusters, columns=adata.var_names)
     return enrichment
 
 
@@ -121,20 +111,17 @@ def _plot_enrichment_result(qvals, enrichment, null_enrichment, alpha):
     # plot q_value
     ax = q_ax
     sns.histplot(np.ravel(qvals), ax=ax, bins=50)
-    ax.set(yticks=[],
-           ylabel="",
-           xlabel="q value",
-           title="q value distribution")
+    ax.set(yticks=[], ylabel="", xlabel="q value", title="q value distribution")
     sns.despine(ax=ax, left=True)
 
     # plot enrichment distribution
     ax = e_ax
-    plot_data = pd.DataFrame({
-        "enrichment":
-            enrichment.unstack().reset_index(drop=True),
-        "null":
-            null_enrichment.unstack().reset_index(drop=True),
-    })
+    plot_data = pd.DataFrame(
+        {
+            "enrichment": enrichment.unstack().reset_index(drop=True),
+            "null": null_enrichment.unstack().reset_index(drop=True),
+        }
+    )
     plot_data = plot_data.unstack().reset_index()
     plot_data.columns = ["Type", "_", "Enrichment Score"]
     sns.histplot(
@@ -157,8 +144,7 @@ def _aggregate_enrichment(adata, enrichment, top_n, alpha, qvals, cluster_col):
     # calculate use_features without qvals
     use_features_no_q = []
     for _, row in enrichment.iterrows():
-        use_features_no_q.append(
-            row.sort_values(ascending=False)[:top_n].dropna())
+        use_features_no_q.append(row.sort_values(ascending=False)[:top_n].dropna())
     use_features_no_q = pd.concat(use_features_no_q).index.unique()
 
     # mask non-sig enrichment scores, calculate again
@@ -169,8 +155,7 @@ def _aggregate_enrichment(adata, enrichment, top_n, alpha, qvals, cluster_col):
     use_features = pd.concat(use_features).index.unique()
     print(f"Selected {use_features.size} unique features")
     if len(use_features) == 0:
-        print(f"No features found significantly enriched, "
-              f"use top enriched features that did not pass q<{alpha}")
+        print(f"No features found significantly enriched, " f"use top enriched features that did not pass q<{alpha}")
         use_features = use_features_no_q
 
     adata.uns[f"{cluster_col}_feature_enrichment"] = {
@@ -181,12 +166,9 @@ def _aggregate_enrichment(adata, enrichment, top_n, alpha, qvals, cluster_col):
     return use_features
 
 
-def cluster_enriched_features(adata: anndata.AnnData,
-                              cluster_col: str,
-                              top_n=200,
-                              alpha=0.05,
-                              stat_plot=True,
-                              method="mc"):
+def cluster_enriched_features(
+    adata: anndata.AnnData, cluster_col: str, top_n=200, alpha=0.05, stat_plot=True, method="mc"
+):
     """
     Calculate top Cluster Enriched Features (CEF) from per-cell normalized dataset.
     An post-clustering feature selection step adapted from :cite:p:`Zeisel2018,La_Manno2021`
@@ -234,9 +216,7 @@ def cluster_enriched_features(adata: anndata.AnnData,
         use_func = _calculate_enrichment_score_cytograph
     else:
         use_func = _calculate_enrichment_score_cytograph
-        print(
-            f'method needs to be in ["mc", "rna", "atac"], got {method}. Using the algorithm for RNA.'
-        )
+        print(f'method needs to be in ["mc", "rna", "atac"], got {method}. Using the algorithm for RNA.')
 
     if n_labels == 1:
         print("No clusters detected, returning all features")
@@ -245,8 +225,7 @@ def cluster_enriched_features(adata: anndata.AnnData,
         print("Computing enrichment score")
         enrichment = use_func(adata, adata.obs[cluster_col])
         # shuffle cluster label to calculate null dist
-        null_label = adata.obs[cluster_col].sample(n=adata.shape[0],
-                                                   replace=False)
+        null_label = adata.obs[cluster_col].sample(n=adata.shape[0], replace=False)
         null_label.index = adata.obs_names
         null_enrichment = use_func(adata, null_label)
 
@@ -259,9 +238,7 @@ def cluster_enriched_features(adata: anndata.AnnData,
             pvals = 1 - np.searchsorted(null_values, values) / values.shape[0]
             (_, q, _, _) = multipletests(pvals, alpha, method="fdr_bh")
             qvals[row, :] = q
-        qvals = pd.DataFrame(qvals,
-                             index=enrichment.index,
-                             columns=enrichment.columns)
+        qvals = pd.DataFrame(qvals, index=enrichment.index, columns=enrichment.columns)
 
         if stat_plot:
             _plot_enrichment_result(
@@ -281,6 +258,5 @@ def cluster_enriched_features(adata: anndata.AnnData,
         )
 
     # save the calculated results in the input adata
-    adata.var[f"{cluster_col}_enriched_features"] = adata.var_names.isin(
-        use_features)
+    adata.var[f"{cluster_col}_enriched_features"] = adata.var_names.isin(use_features)
     return

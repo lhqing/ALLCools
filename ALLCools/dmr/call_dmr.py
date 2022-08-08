@@ -1,10 +1,12 @@
-import xarray as xr
-import numpy as np
-import pandas as pd
-from ..mcds import RegionDS
-from ..mcds.utilities import write_ordered_chunks, update_dataset_config
 import subprocess
 from concurrent.futures import ProcessPoolExecutor, as_completed
+
+import numpy as np
+import pandas as pd
+import xarray as xr
+
+from ..mcds import RegionDS
+from ..mcds.utilities import update_dataset_config, write_ordered_chunks
 
 
 def _call_dmr_single_chrom(
@@ -24,17 +26,11 @@ def _call_dmr_single_chrom(
 
     # open DMS dataset and select single chromosome, significant, large delta DMS
     p_value_judge = ds.coords["dms_p-values"] < p_value_cutoff
-    frac_delta = ds["dms_da_frac"].max(dim="sample") - ds["dms_da_frac"].min(
-        dim="sample"
-    )
+    frac_delta = ds["dms_da_frac"].max(dim="sample") - ds["dms_da_frac"].min(dim="sample")
     frac_delta_judge = frac_delta > frac_delta_cutoff
     chrom_judge = ds["dms_chrom"] == chrom
     # has to use load(scheduler='sync') when this function is called from multiprocess
-    final_judge = (
-        (p_value_judge & frac_delta_judge & chrom_judge)
-        .load(scheduler="sync")
-        .to_pandas()
-    )
+    final_judge = (p_value_judge & frac_delta_judge & chrom_judge).load(scheduler="sync").to_pandas()
     if final_judge.sum() == 0:
         # No DMS remain
         return
@@ -126,16 +122,10 @@ def _call_dmr_single_chrom(
     dmr_ds.coords["start"] = ds["dms_pos"].groupby(ds["dmr"]).min().to_pandas() - 1
     dmr_ds.coords["end"] = ds["dms_pos"].groupby(ds["dmr"]).max().to_pandas() + 1
     dmr_ds.coords["length"] = dmr_ds.coords["end"] - dmr_ds.coords["start"]
-    dmr_ds.coords["dmr"] = (
-        dmr_ds["chrom"].to_pandas().astype(str)
-        + "-"
-        + dmr_ds["dmr"].to_pandas().astype(str)
-    )
+    dmr_ds.coords["dmr"] = dmr_ds["chrom"].to_pandas().astype(str) + "-" + dmr_ds["dmr"].to_pandas().astype(str)
 
     # rename none dimensional coords to prevent collision when merge with other ds
-    dmr_ds = dmr_ds.rename(
-        {k: f"dmr_{k}" for k in dmr_ds.coords.keys() if k not in dmr_ds.dims}
-    )
+    dmr_ds = dmr_ds.rename({k: f"dmr_{k}" for k in dmr_ds.coords.keys() if k not in dmr_ds.dims})
 
     output_path = f"{output_dir}/{chrom}.zarr"
     dmr_ds.to_zarr(output_path)
@@ -169,10 +159,6 @@ def call_dmr(
     dms_ratio
     cpu
     chrom
-
-    Returns
-    -------
-
     """
     if chrom is None:
         chrom_size_path = f"{output_dir}/chrom_sizes.txt"
@@ -220,9 +206,7 @@ def call_dmr(
     )
     subprocess.run(f"rm -rf {chunk_dir}", shell=True)
 
-    update_dataset_config(output_dir=output_dir,
-                          add_ds_region_dim={"dmr": "dmr"},
-                          change_region_dim="dmr")
+    update_dataset_config(output_dir=output_dir, add_ds_region_dim={"dmr": "dmr"}, change_region_dim="dmr")
 
     if replicate_label is not None:
         collapse_replicates(output_dir, replicate_label)
@@ -247,9 +231,7 @@ def collapse_replicates(region_ds, replicate_label, state_da="dmr_state"):
     for rep, sub_da in region_ds[state_da].groupby(replicate_label_name):
         std = sub_da.std(dim=sample_dim)
         # std == 0 means all replicates having same state
-        reduced_da = xr.where(
-            std == 0, sub_da.sel({sample_dim: sub_da[sample_dim][0]}), 0
-        ).to_pandas()
+        reduced_da = xr.where(std == 0, sub_da.sel({sample_dim: sub_da[sample_dim][0]}), 0).to_pandas()
         collapsed[rep] = reduced_da
     collapsed = pd.DataFrame(collapsed)
     collapsed.columns.name = f"{sample_dim}_collapsed"
@@ -257,8 +239,6 @@ def collapse_replicates(region_ds, replicate_label, state_da="dmr_state"):
 
     region_ds[f"{state_da}_collapsed"] = collapsed
     if region_ds.location is not None:
-        region_ds[[f"{state_da}_collapsed"]].to_zarr(
-            f"{region_ds.location}/{region_ds.region_dim}/", mode="a"
-        )
+        region_ds[[f"{state_da}_collapsed"]].to_zarr(f"{region_ds.location}/{region_ds.region_dim}/", mode="a")
         print(f"Collapsed sample state added in exist RegionDS at {region_ds.location}")
     return

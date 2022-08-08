@@ -1,4 +1,5 @@
 from ALLCools.api import allc_to_region_count
+
 from .utilities import *
 
 
@@ -7,9 +8,7 @@ def test_allc_to_region_count():
         for save_zero_cov in [True, False]:
             allc_to_region_count(
                 allc_path=data_file_path("Cell01.allc.tsv.gz"),
-                output_prefix=output_path(
-                    f"Cell01.allc.count.split{split_strand}.full{save_zero_cov}"
-                ),
+                output_prefix=output_path(f"Cell01.allc.count.split{split_strand}.full{save_zero_cov}"),
                 chrom_size_path=CHROM_SIZE_PATH,
                 mc_contexts=["CGN", "CHN"],
                 split_strand=split_strand,

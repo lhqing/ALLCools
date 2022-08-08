@@ -1,8 +1,9 @@
-import pandas as pd
-import numpy as np
-from scipy.cluster.hierarchy import dendrogram
-import matplotlib.pyplot as plt
 import joblib
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from scipy.cluster.hierarchy import dendrogram
+
 from .rutilities import install_r_package
 
 
@@ -46,12 +47,8 @@ def _hclust_to_scipy_linkage(result, plot=True):
                 cluster_dict[cur_cluster_id]["right"].add(right)
             else:
                 # node are cluster
-                cluster_dict[cur_cluster_id]["right"].update(
-                    cluster_dict[right]["left"]
-                )
-                cluster_dict[cur_cluster_id]["right"].update(
-                    cluster_dict[right]["right"]
-                )
+                cluster_dict[cur_cluster_id]["right"].update(cluster_dict[right]["left"])
+                cluster_dict[cur_cluster_id]["right"].update(cluster_dict[right]["right"])
         cur_cluster_id += 1
 
     cluster_records = {}
@@ -66,29 +63,19 @@ def _hclust_to_scipy_linkage(result, plot=True):
     # correct order of the final dendrogram
     r_order = [labels[i - 1] for i in orders]
     dendro = dendrogram(scipy_linkage.values, no_plot=True)
-    python_order = (
-        pd.Series({a: b for a, b in zip(dendro["leaves"], r_order)})
-        .sort_index()
-        .tolist()
-    )
+    python_order = pd.Series({a: b for a, b in zip(dendro["leaves"], r_order)}).sort_index().tolist()
     # python_order = [i[1:] for i in python_order]
     if plot:
         fig, ax = plt.subplots(dpi=300)
-        dendro = dendrogram(
-            scipy_linkage.values, labels=tuple(python_order), no_plot=False, ax=ax
-        )
+        dendro = dendrogram(scipy_linkage.values, labels=tuple(python_order), no_plot=False, ax=ax)
         ax.xaxis.set_tick_params(rotation=90)
     else:
-        dendro = dendrogram(
-            scipy_linkage.values, labels=tuple(python_order), no_plot=True
-        )
+        dendro = dendrogram(scipy_linkage.values, labels=tuple(python_order), no_plot=True)
     return scipy_linkage, python_order, dendro
 
 
 class Dendrogram:
-    def __init__(
-            self, nboot=1000, method_dist="correlation", method_hclust="average", n_jobs=-1
-    ):
+    def __init__(self, nboot=1000, method_dist="correlation", method_hclust="average", n_jobs=-1):
         self.nboot = nboot
         self.method_dist = method_dist
         self.method_hclust = method_hclust
@@ -117,8 +104,10 @@ class Dendrogram:
             from rpy2.robjects.conversion import localconverter
             from rpy2.robjects.packages import importr
         except ImportError:
-            raise ImportError('Got rpy2 import error, please make sure R, rpy2 and their dependencies are installed. '
-                              'If not, use conda or mamba to install rpy2')
+            raise ImportError(
+                "Got rpy2 import error, please make sure R, rpy2 and their dependencies are installed. "
+                "If not, use conda or mamba to install rpy2"
+            )
         importr("base")
         install_r_package("pvclust")
         pvclust = importr("pvclust")

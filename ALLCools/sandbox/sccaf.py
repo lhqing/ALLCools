@@ -1,40 +1,23 @@
-import pandas as pd
-import numpy as np
-from scipy.sparse import issparse
-from pandas.api.types import is_categorical_dtype
-from collections import defaultdict
 import louvain
-import scipy
-import seaborn as sns
-import patsy
-
-from scanpy import settings as sett
-from scanpy import logging as logg
-
+import numpy as np
+import pandas as pd
 import scanpy as sc
+import scipy
 
 # for color
 from scanpy.plotting.palettes import *
-
-import matplotlib.pyplot as plt
-from matplotlib import rcParams
+from sklearn import metrics
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.linear_model import LogisticRegression, SGDClassifier
+from sklearn.metrics.pairwise import euclidean_distances, pairwise_distances
 
 # for reading/saving clf model
 from sklearn.mixture import BayesianGaussianMixture
-from sklearn import metrics
-from sklearn.metrics.pairwise import euclidean_distances, pairwise_distances
-from sklearn.model_selection import (
-    cross_val_score,
-    cross_val_predict,
-    cross_validate,
-    train_test_split,
-)
-from sklearn.linear_model import LogisticRegression, SGDClassifier
+from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.naive_bayes import GaussianNB
-from sklearn.gaussian_process import GaussianProcessClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
 
 color_long = [
     "#e6194b",
@@ -234,14 +217,10 @@ def normalize_confmat1(cmat, mod="1"):
     xmat = np.zeros([dim, dim])
     for i in range(dim):
         for j in range(i + 1, dim):
-            if mod is "1":
-                xmat[i, j] = xmat[j, i] = max(
-                    dmat[i, j] / smat[j], dmat[j, i] / smat[i]
-                )
+            if mod == "1":
+                xmat[i, j] = xmat[j, i] = max(dmat[i, j] / smat[j], dmat[j, i] / smat[i])
             else:
-                xmat[i, j] = xmat[j, i] = max(
-                    dmat[i, j] / smat[i], dmat[j, i] / smat[j]
-                )
+                xmat[i, j] = xmat[j, i] = max(dmat[i, j] / smat[i], dmat[j, i] / smat[j])
     return xmat
 
 
@@ -289,9 +268,7 @@ def cluster_adjmat(xmat, resolution=1, cutoff=0.1):
     """
     g = sc._utils.get_igraph_from_adjacency((xmat > cutoff).astype(int), directed=False)
     print(g)
-    part = louvain.find_partition(
-        g, louvain.RBConfigurationVertexPartition, resolution_parameter=resolution
-    )
+    part = louvain.find_partition(g, louvain.RBConfigurationVertexPartition, resolution_parameter=resolution)
     groups = np.array(part.membership)
     return groups
 
@@ -342,11 +319,7 @@ def train_test_split_per_type(X, y, n=100, frac=0.8):
     df = pd.DataFrame(y)
     df.index = np.arange(len(y))
     df.columns = ["class"]
-    c_idx = (
-        df.groupby("class")
-        .apply(lambda x: msample(x, n=n, frac=frac))
-        .index.get_level_values(None)
-    )
+    c_idx = df.groupby("class").apply(lambda x: msample(x, n=n, frac=frac)).index.get_level_values(None)
     d_idx = ~np.isin(np.arange(len(y)), c_idx)
     return X[c_idx, :], X[d_idx, :], y[c_idx], y[d_idx]
 
@@ -417,9 +390,7 @@ def self_projection(
     """
     # split the data into training and testing
     if n > 0:
-        X_train, X_test, y_train, y_test = train_test_split_per_type(
-            X, cell_types, n=n, frac=(1 - fraction)
-        )
+        X_train, X_test, y_train, y_test = train_test_split_per_type(X, cell_types, n=n, frac=(1 - fraction))
     else:
         X_train, X_test, y_train, y_test = train_test_split(
             X, cell_types, stratify=cell_types, test_size=fraction
@@ -451,9 +422,7 @@ def self_projection(
     # mean cross validation score
     cvsm = 0
     if cv > 0:
-        cvs = cross_val_score(
-            clf, X_train, np.array(y_train), cv=cv, scoring="accuracy", n_jobs=n_jobs
-        )
+        cvs = cross_val_score(clf, X_train, np.array(y_train), cv=cv, scoring="accuracy", n_jobs=n_jobs)
         cvsm = cvs.mean()
         print("Mean CV accuracy: %.4f" % cvsm)
     # accuracy on cross validation and on test set
@@ -514,9 +483,7 @@ def confusion_matrix(y_test, y_pred, clf, labels=None):
     """
     if labels is None:
         labels = clf.classes_
-    df = pd.DataFrame.from_records(
-        metrics.confusion_matrix(y_test, y_pred, labels=labels)
-    )
+    df = pd.DataFrame.from_records(metrics.confusion_matrix(y_test, y_pred, labels=labels))
     df.index = labels
     df.columns = labels
     df.index.name = "Real"
@@ -626,7 +593,7 @@ def eu_distance(X, gp1, gp2, cell):
     df = pd.concat([df1, df2])
     m1 = d1.mean()
     m2 = d2.mean()
-    print("%f - %f" % (m1, m2))
+    print(f"{m1:f} - {m2:f}")
     return df
 
 
@@ -746,9 +713,7 @@ def SCCAF_optimize_all(
     prefix = start_groups
     cur_iter = 0
     if not (start_groups in adata.obs.keys()):
-        raise ValueError(
-            f"`adata.obs['{start_groups}']` doesn't exist. Please assign the initial clustering first."
-        )
+        raise ValueError(f"`adata.obs['{start_groups}']` doesn't exist. Please assign the initial clustering first.")
     adata.obs[f"{prefix}_Round{cur_iter}"] = adata.obs[start_groups]
 
     old_n_cluster = len(adata.obs[f"{prefix}_Round{cur_iter}"].unique())
@@ -898,9 +863,7 @@ def SCCAF_optimize(
         X = ad.raw.X
     elif use == "pca":
         if "X_pca" not in ad.obsm.keys():
-            raise ValueError(
-                "`adata.obsm['X_pca']` doesn't exist. Run `sc.pp.pca` first."
-            )
+            raise ValueError("`adata.obsm['X_pca']` doesn't exist. Run `sc.pp.pca` first.")
         X = ad.obsm["X_pca"]
     else:
         X = ad[:, ad.var["highly_variable"]].X
@@ -970,15 +933,11 @@ def SCCAF_optimize(
             groups = cluster_adjmat(R2mat, cutoff=r2_norm_cutoff)
         else:
             if not low_res is None:
-                conn_mat = get_connection_matrix(
-                    ad_obs=ad.obs, key1=low_res, key2=old_id
-                )
+                conn_mat = get_connection_matrix(ad_obs=ad.obs, key1=low_res, key2=old_id)
                 zmat = np.minimum.reduce([(R1mat > r1_norm_cutoff), conn_mat.values])
                 groups = cluster_adjmat(zmat, cutoff=0)
             else:
-                zmat = np.maximum.reduce(
-                    [(R1mat > r1_norm_cutoff), (R2mat > r2_norm_cutoff)]
-                )
+                zmat = np.maximum.reduce([(R1mat > r1_norm_cutoff), (R2mat > r2_norm_cutoff)])
                 groups = cluster_adjmat(zmat, cutoff=0)
 
         if len(np.unique(groups)) == len(ad.obs[old_id].unique()):

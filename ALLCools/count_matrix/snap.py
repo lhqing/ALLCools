@@ -55,15 +55,10 @@ def _read_snap_genes(file_path):
         gene_id = np.array(f[f"/GM/name"]).astype(str)
 
         cell_meta, cell_barcode = _read_snap_meta(f)
-        data = ss.coo_matrix(
-            (data, (idx, idy)), shape=(cell_barcode.size, gene_id.size), dtype=np.uint8
-        ).tocsc()
+        data = ss.coo_matrix((data, (idx, idy)), shape=(cell_barcode.size, gene_id.size), dtype=np.uint8).tocsc()
 
     adata = anndata.AnnData(
-        X=data,
-        obs=cell_meta,
-        var=pd.DataFrame(index=pd.Index(gene_id, name="gene")),
-        dtype=data.dtype
+        X=data, obs=cell_meta, var=pd.DataFrame(index=pd.Index(gene_id, name="gene")), dtype=data.dtype
     )
     return adata
 
@@ -77,17 +72,11 @@ def _read_snap_bins(file_path, bin_size=5000):
 
         bin_chrom = np.array(f[f"/AM/{bin_size}/binChrom"]).astype(str)
         bin_start = np.array(f[f"/AM/{bin_size}/binStart"]) - 1  # 0 based bed format
-        bin_end = (
-                np.array(f[f"/AM/{bin_size}/binStart"]) - 1 + bin_size
-        )  # 0 based bed format
-        bin_id = np.core.defchararray.add(
-            np.core.defchararray.add(bin_chrom, "-"), bin_start.astype(str)
-        )
+        bin_end = np.array(f[f"/AM/{bin_size}/binStart"]) - 1 + bin_size  # 0 based bed format
+        bin_id = np.core.defchararray.add(np.core.defchararray.add(bin_chrom, "-"), bin_start.astype(str))
 
         cell_meta, cell_barcode = _read_snap_meta(f)
-        data = ss.coo_matrix(
-            (data, (idx, idy)), shape=(cell_barcode.size, bin_id.size), dtype=np.uint8
-        ).tocsc()
+        data = ss.coo_matrix((data, (idx, idy)), shape=(cell_barcode.size, bin_id.size), dtype=np.uint8).tocsc()
 
     adata = anndata.AnnData(
         X=data,
@@ -96,7 +85,7 @@ def _read_snap_bins(file_path, bin_size=5000):
             {"chrom": bin_chrom, "start": bin_start, "end": bin_end},
             index=pd.Index(bin_id, name="chrom5k"),
         ),
-        dtype=data.dtype
+        dtype=data.dtype,
     )
     return adata
 
@@ -131,12 +120,12 @@ def snap_to_xarray(snap_path, bin_sizes=(5000,), gene=True, dtype=np.uint8):
 
 
 def snap_to_zarr(
-        snap_path,
-        output_path,
-        bin_sizes=(5000,),
-        gene=True,
-        dtype=np.uint8,
-        index_prefix=None,
+    snap_path,
+    output_path,
+    bin_sizes=(5000,),
+    gene=True,
+    dtype=np.uint8,
+    index_prefix=None,
 ):
     ds = snap_to_xarray(snap_path, bin_sizes=bin_sizes, gene=gene, dtype=dtype)
     if index_prefix is not None:

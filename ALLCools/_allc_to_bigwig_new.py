@@ -1,8 +1,10 @@
+from collections import defaultdict
+
 import pyBigWig
 import pysam
-from collections import defaultdict
+
 from ._doc import *
-from .utilities import parse_mc_pattern, parse_chrom_size
+from .utilities import parse_chrom_size, parse_mc_pattern
 
 
 class ContextCounter:
@@ -26,18 +28,10 @@ class ContextCounter:
 
 class StrandContextCounter:
     def __init__(self, mc_contexts):
-        self.mc_watson_counts = defaultdict(
-            float
-        )  # key is context pattern like CHN, CGN
-        self.cov_watson_counts = defaultdict(
-            float
-        )  # key is context pattern like CHN, CGN
-        self.mc_crick_counts = defaultdict(
-            float
-        )  # key is context pattern like CHN, CGN
-        self.cov_crick_counts = defaultdict(
-            float
-        )  # key is context pattern like CHN, CGN
+        self.mc_watson_counts = defaultdict(float)  # key is context pattern like CHN, CGN
+        self.cov_watson_counts = defaultdict(float)  # key is context pattern like CHN, CGN
+        self.mc_crick_counts = defaultdict(float)  # key is context pattern like CHN, CGN
+        self.cov_crick_counts = defaultdict(float)  # key is context pattern like CHN, CGN
         # key is each single context like CCC, CGC, value is a list of context pattern this context belong to.
         # A single context may belong to multiple patterns
         self.context_map = defaultdict(list)
@@ -57,9 +51,7 @@ class StrandContextCounter:
                 self.cov_crick_counts[c] += cov
 
 
-def write_entry(
-    counter, context_handle, mc_contexts, strandness, chrom, bin_start, bin_size
-):
+def write_entry(counter, context_handle, mc_contexts, strandness, chrom, bin_start, bin_size):
     if strandness == "split":
         for context in mc_contexts:
             # Watson strand
@@ -68,13 +60,9 @@ def write_entry(
             if cov != 0:
                 frac = mc / cov
                 frac_handle = context_handle[context, "+", "frac"]
-                frac_handle.addEntries(
-                    chrom, starts=[bin_start], values=[frac], span=bin_size
-                )
+                frac_handle.addEntries(chrom, starts=[bin_start], values=[frac], span=bin_size)
                 cov_handle = context_handle[context, "+", "cov"]
-                cov_handle.addEntries(
-                    chrom, starts=[bin_start], values=[cov], span=bin_size
-                )
+                cov_handle.addEntries(chrom, starts=[bin_start], values=[cov], span=bin_size)
 
             # Crick strand
             mc = counter.mc_crick_counts[context]
@@ -82,13 +70,9 @@ def write_entry(
             if cov != 0:
                 frac = mc / cov
                 frac_handle = context_handle[context, "-", "frac"]
-                frac_handle.addEntries(
-                    chrom, starts=[bin_start], values=[frac], span=bin_size
-                )
+                frac_handle.addEntries(chrom, starts=[bin_start], values=[frac], span=bin_size)
                 cov_handle = context_handle[context, "-", "cov"]
-                cov_handle.addEntries(
-                    chrom, starts=[bin_start], values=[cov], span=bin_size
-                )
+                cov_handle.addEntries(chrom, starts=[bin_start], values=[cov], span=bin_size)
     else:
         for context in mc_contexts:
             # Both strand
@@ -97,13 +81,9 @@ def write_entry(
             if cov != 0:
                 frac = mc / cov
                 frac_handle = context_handle[context, "frac"]
-                frac_handle.addEntries(
-                    chrom, starts=[bin_start], values=[frac], span=bin_size
-                )
+                frac_handle.addEntries(chrom, starts=[bin_start], values=[frac], span=bin_size)
                 cov_handle = context_handle[context, "cov"]
-                cov_handle.addEntries(
-                    chrom, starts=[bin_start], values=[cov], span=bin_size
-                )
+                cov_handle.addEntries(chrom, starts=[bin_start], values=[cov], span=bin_size)
     return
 
 
@@ -114,9 +94,7 @@ def write_entry(
     strandness_doc=strandness_doc,
     bw_bin_sizes_doc=bw_bin_sizes_doc,
 )
-def allc_to_bigwig(
-    allc_path, output_prefix, bin_size, mc_contexts, chrom_size_path, strandness
-):
+def allc_to_bigwig(allc_path, output_prefix, bin_size, mc_contexts, chrom_size_path, strandness):
     """\
     Generate BigWig files from one ALLC file.
 

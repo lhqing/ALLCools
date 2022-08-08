@@ -95,11 +95,9 @@ class Session(Element):
         self[_panel].append(track)
         # id is track path, checked key existence in Track.__init__
         self.__add_resource(track_kws["id"])
-        pass
 
     def add_feature_track(self, track_kws, panel="Feature"):
         _panel = get_panel_int(panel)
         track = FeatureTrack(**track_kws)
         self[_panel].append(track)
         self.__add_resource(track_kws["id"])
-        pass

@@ -1,12 +1,12 @@
+import matplotlib as mpl
 import seaborn as sns
 from matplotlib.cm import get_cmap
 from matplotlib.colors import Normalize
 from scipy.cluster.hierarchy import dendrogram as _dendrogram
-import matplotlib as mpl
 
 
 def straight_branch(ax, a, b, plot_kws):
-    """Draw link line between a and b"""
+    """Draw link line between a and b."""
     a_x, ay = a
     bx, by = b
     branch_x = [a_x, bx, bx]
@@ -42,6 +42,7 @@ def plot_dendrogram(
     marker_color="lightblue",
 ):
     """
+    Plot a dendrogram with customizations.
 
     Parameters
     ----------
@@ -71,16 +72,17 @@ def plot_dendrogram(
 
     Returns
     -------
-
+    dendro
+        dendrogram object
+    node_pos
+        node position
     """
     if plot_kws is None:
         plot_kws = {}
 
     if dendro is None:
         if labels is None or linkage_df is None:
-            raise ValueError(
-                "linkage_df and labels must be provided to calculate dendrogram."
-            )
+            raise ValueError("linkage_df and labels must be provided to calculate dendrogram.")
         print("Computing dendrogram")
         _dendro_kws = dict(no_plot=True)
         if dendro_kws is not None:
@@ -111,10 +113,7 @@ def plot_dendrogram(
     nan_color = "#D3D3D3" if marker_color is None else marker_color
     if isinstance(node_palette, dict):
         # categorical node color
-        node_colors = {
-            node: node_palette[node] if (node in node_palette) else nan_color
-            for node in node_pos.keys()
-        }
+        node_colors = {node: node_palette[node] if (node in node_palette) else nan_color for node in node_pos.keys()}
     else:
         # continous node color
         if node_hue is not None:
@@ -142,10 +141,7 @@ def plot_dendrogram(
             def node_cmap(_):
                 return nan_color
 
-        node_colors = {
-            node: node_cmap(node_hue[node]) if (node in node_hue) else nan_color
-            for node in node_pos.keys()
-        }
+        node_colors = {node: node_cmap(node_hue[node]) if (node in node_hue) else nan_color for node in node_pos.keys()}
 
     # node sizes
     nan_size = marker_size
@@ -170,10 +166,7 @@ def plot_dendrogram(
         def node_smap(_):
             return nan_size
 
-    node_sizes = {
-        node: node_smap(node_size[node]) if (node in node_size) else nan_size
-        for node in node_pos.keys()
-    }
+    node_sizes = {node: node_smap(node_size[node]) if (node in node_size) else nan_size for node in node_pos.keys()}
     # plot nodes
     for node_id, (node_x, node_y) in node_pos.items():
         if (node_id > len(dendro["leaves"]) - 1) and not plot_non_singleton:
@@ -207,10 +200,7 @@ def plot_dendrogram(
         def line_cmap(_):
             return nan_color
 
-    line_colors = {
-        node: line_cmap(line_hue[node]) if (node in line_hue) else nan_color
-        for node in node_pos.keys()
-    }
+    line_colors = {node: line_cmap(line_hue[node]) if (node in line_hue) else nan_color for node in node_pos.keys()}
 
     ymax = 0
     for node_id, (node_x, node_y) in node_pos.items():
@@ -248,18 +238,14 @@ def plot_dendrogram(
                 ax,
                 (node_x, node_y),
                 node_pos[left_child],
-                plot_kws=dict(
-                    c=line_colors[left_child], linewidth=linewidth, clip_on=False
-                ),
+                plot_kws=dict(c=line_colors[left_child], linewidth=linewidth, clip_on=False),
             )
             # plot right branch
             straight_branch(
                 ax,
                 (node_x, node_y),
                 node_pos[right_child],
-                plot_kws=dict(
-                    c=line_colors[right_child], linewidth=linewidth, clip_on=False
-                ),
+                plot_kws=dict(c=line_colors[right_child], linewidth=linewidth, clip_on=False),
             )
 
     ax.set_ylim(0, ymax)

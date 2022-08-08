@@ -5,13 +5,15 @@
 - Output: IGV session XML
 """
 
-from itertools import product
-from .Session import Session
-import pandas as pd
-from .defaults import *
-import xml.etree.ElementTree as ET
 import pathlib
+import xml.etree.ElementTree as ET
+from itertools import product
 from urllib.request import urlopen
+
+import pandas as pd
+
+from .defaults import *
+from .Session import Session
 
 
 def hex_to_rgb_text(color_code):
@@ -21,9 +23,7 @@ def hex_to_rgb_text(color_code):
 
 def sort_df_by_order_dict(df, order_dict):
     df = (
-        df.set_index(list(order_dict.keys()))
-        .reindex(list(product(*order_dict.values())))
-        .reset_index()
+        df.set_index(list(order_dict.keys())).reindex(list(product(*order_dict.values()))).reset_index()
     )  # sort by product of all order list
     return df
 
@@ -50,9 +50,7 @@ def make_session(
 
     if hue is not None:
         if palette is not None:
-            track_df["color"] = track_df[hue].apply(
-                lambda i: hex_to_rgb_text(palette[i])
-            )
+            track_df["color"] = track_df[hue].apply(lambda i: hex_to_rgb_text(palette[i]))
         else:
             raise ValueError("Provide palette together with hue.")
 
@@ -92,16 +90,12 @@ def make_session(
             else:
                 data_range_kws[k] = v
             if (range_key_col is not None) and (row[range_key_col] in data_range_dict):
-                data_range_kws["minimum"], data_range_kws["maximum"] = map(
-                    str, data_range_dict[row[range_key_col]]
-                )
+                data_range_kws["minimum"], data_range_kws["maximum"] = map(str, data_range_dict[row[range_key_col]])
 
         if track_type == "Feature":
             session.add_feature_track(track_kws=track_kws, panel=panel)
         else:
-            session.add_data_track(
-                track_kws=track_kws, data_range_kws=data_range_kws, panel=panel
-            )
+            session.add_data_track(track_kws=track_kws, data_range_kws=data_range_kws, panel=panel)
 
     with open(output_xml_path, "w") as f:
         f.write(ET.tostring(session, encoding="utf8").decode("utf8"))
