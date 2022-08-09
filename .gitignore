@@ -2,7 +2,7 @@ docs/allcools/api/
 docs/allcools/data
 docs/allcools/_build/
 .idea/
-test/output/*
+tests/output/*
 *.icloud
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -41,7 +41,7 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+# Unit tests / coverage reports
 htmlcov/
 .tox/
 .nox/
@@ -118,8 +118,29 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-test/file/.DS_Store
+tests/file/.DS_Store
 .DS_Store
 ALLCools/_version.py
 /docs/allcools/cell_level/dmg/geneslop2k_frac.mcds/
 /docs/allcools/cell_level/dmg/gene_frac/
+# Temp files
+*~
+
+# Distribution / packaging
+/build/
+/dist/
+/*.egg-info/
+
+# Tests and coverage
+/.pytest_cache/
+/.cache/
+/data/
+
+# docs
+/docs/generated/
+/docs/_build/
+
+# IDEs
+/.idea/
+/.vscode/
+ALLCools/dataset/DummyDataset

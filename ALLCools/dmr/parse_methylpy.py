@@ -1,7 +1,8 @@
+import pathlib
+
+import numpy as np
 import pandas as pd
 import xarray as xr
-import numpy as np
-import pathlib
 import yaml
 from scipy.sparse import coo_matrix
 
@@ -17,14 +18,13 @@ def _make_hypo_hyper_matrix(series, dmr_values):
             rows.append(i)
             cols.append(sample_int[sample])
             datas.append(1)
-    matrix = coo_matrix(
-        (datas, (rows, cols)), shape=dmr_values.shape, dtype=np.int16
-    ).toarray()
+    matrix = coo_matrix((datas, (rows, cols)), shape=dmr_values.shape, dtype=np.int16).toarray()
     matrix = pd.DataFrame(matrix, index=dmr_values.index, columns=dmr_values.columns)
     return matrix
 
 
 def methylpy_to_region_ds(dmr_path, output_dir):
+    """Parse methylpy output to RegionDS dataset."""
     pathlib.Path(output_dir).mkdir(parents=True)
     with open(f"{output_dir}/.ALLCools", "w") as f:
         config = {"region_dim": "dmr", "ds_region_dim": {"dmr": "dmr"}}
@@ -42,16 +42,10 @@ def methylpy_to_region_ds(dmr_path, output_dir):
     dmr_values = methylpy_dmr.iloc[:, 6:]
     dmr_values.columns = dmr_values.columns.map(lambda i: "_".join(i.split("_")[2:]))
 
-    hyper_matrix = _make_hypo_hyper_matrix(
-        dmr_infos["hypermethylated_samples"], dmr_values
-    )
-    hypo_matrix = _make_hypo_hyper_matrix(
-        dmr_infos["hypomethylated_samples"], dmr_values
-    )
+    hyper_matrix = _make_hypo_hyper_matrix(dmr_infos["hypermethylated_samples"], dmr_values)
+    hypo_matrix = _make_hypo_hyper_matrix(dmr_infos["hypomethylated_samples"], dmr_values)
     dmr_state = hyper_matrix - hypo_matrix
-    dmr_ds = xr.Dataset(
-        {"dmr_state": dmr_state, "dmr_da_frac": xr.DataArray(dmr_values)}
-    )
+    dmr_ds = xr.Dataset({"dmr_state": dmr_state, "dmr_da_frac": xr.DataArray(dmr_values)})
 
     dmr_ds.coords.update(
         {

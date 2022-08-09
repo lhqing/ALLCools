@@ -1,5 +1,5 @@
 """
-Some of the functions are modified from methylpy https://github.com/yupenghe/methylpy
+Some of the functions are modified from methylpy https://github.com/yupenghe/methylpy.
 
 Original Author: Yupeng He
 """
@@ -16,9 +16,10 @@ import numpy as np
 import psutil
 from pysam import TabixFile
 from pysam.libctabix import TabixIterator
+
 from ._doc import *
 from ._open import open_allc
-from .utilities import parse_chrom_size, genome_region_chunks, parse_file_paths
+from .utilities import genome_region_chunks, parse_chrom_size, parse_file_paths
 
 # logger
 log = logging.getLogger(__name__)
@@ -47,6 +48,8 @@ class _ALLC:
 
 def _increase_soft_fd_limit():
     """
+    Increase the soft limit of file handle.
+
     Increase soft file descriptor limit to hard limit,
     this is the maximum a process can do
     Use this in merge_allc, because for single cell, a lot of file need to be opened
@@ -59,17 +62,11 @@ def _increase_soft_fd_limit():
     resource.setrlimit(resource.RLIMIT_NOFILE, (HARD, HARD))
 
 
-def _batch_merge_allc_files_tabix(
-    allc_files, out_file, chrom_size_file, bin_length, cpu=10, binarize=False, snp=False
-):
-    regions = genome_region_chunks(
-        chrom_size_file, bin_length=bin_length, combine_small=False
-    )
+def _batch_merge_allc_files_tabix(allc_files, out_file, chrom_size_file, bin_length, cpu=10, binarize=False, snp=False):
+    regions = genome_region_chunks(chrom_size_file, bin_length=bin_length, combine_small=False)
     log.info(f"Merge ALLC files with {cpu} processes")
     log.info(f"Split genome into {len(regions)} regions, each is {bin_length}bp")
-    log.info(
-        f"{len(allc_files)} to merge, the default ALLC file handel in 1 run is {DEFAULT_MAX_ALLC}"
-    )
+    log.info(f"{len(allc_files)} to merge, the default ALLC file handel in 1 run is {DEFAULT_MAX_ALLC}")
     log.info(f"Process FH soft limit {SOFT}, hard limit {HARD}")
 
     _increase_soft_fd_limit()
@@ -100,14 +97,8 @@ def _batch_merge_allc_files_tabix(
     else:
         merge_func = _merge_allc_files_tabix
 
-    for batch_num, (allc_files, out_file) in enumerate(
-        zip(allc_files_batches, out_paths)
-    ):
-        log.info(
-            f"Run batch {batch_num}, "
-            f"{len(allc_files)} allc files, "
-            f"output to {out_file}"
-        )
+    for batch_num, (allc_files, out_file) in enumerate(zip(allc_files_batches, out_paths)):
+        log.info(f"Run batch {batch_num}, " f"{len(allc_files)} allc files, " f"output to {out_file}")
         with open_allc(out_file, "w", threads=3) as out_handle:
             # as_complete don't release, run total regions in sections to prevent too large memory
             parallel_section = cpu
@@ -138,7 +129,7 @@ def _batch_merge_allc_files_tabix(
                         try:
                             temp_dict[region_id] = future.result()
                         except Exception as exc:
-                            log.info("%r generated an exception: %s" % (region_id, exc))
+                            log.info(f"{region_id!r} generated an exception: {exc}")
                         else:
                             try:
                                 while len(temp_dict) > 0:
@@ -195,9 +186,7 @@ def _merge_allc_files_tabix(
     if query_region is not None:
         if not isinstance(query_region, str):
             exit("query_region must be str or None")
-        region_chroms = set(
-            [region.split(":")[0] for region in query_region.split(" ")]
-        )
+        region_chroms = {region.split(":")[0] for region in query_region.split(" ")}
         all_chroms = [chrom for chrom in all_chroms if chrom in region_chroms]
     processing_chrom = all_chroms.pop(0)
 
@@ -217,7 +206,7 @@ def _merge_allc_files_tabix(
     file_reading = np.array([True for _ in range(len(allc_files))])
 
     # init
-    for index, allc_file in enumerate(allc_files):
+    for index in range(len(allc_files)):
         try:
             line = file_handles[index].readline()
             fields = line.split("\t")
@@ -228,9 +217,7 @@ def _merge_allc_files_tabix(
             # file handle read nothing, the file is empty
             file_reading[index] = False
 
-    active_handle = np.array(
-        [True if chrom == processing_chrom else False for chrom in cur_chrom]
-    )
+    active_handle = np.array([True if chrom == processing_chrom else False for chrom in cur_chrom])
 
     # merge
     line_count = 0
@@ -238,9 +225,7 @@ def _merge_allc_files_tabix(
         mc, cov = 0, 0
         genome_info = None
         # select index whose cur_pos is smallest among all active handle
-        for index in np.where(
-            (cur_pos == np.nanmin(cur_pos[active_handle])) & active_handle
-        )[0]:
+        for index in np.where((cur_pos == np.nanmin(cur_pos[active_handle])) & active_handle)[0]:
             mc += int(cur_fields[index][4])
             cov += int(cur_fields[index][5])
             # TODO fix binarize ALLC problem
@@ -283,12 +268,7 @@ def _merge_allc_files_tabix(
                         break
                     processing_chrom = all_chroms.pop(0)
                     # and re-judge active handle
-                    active_handle = np.array(
-                        [
-                            True if chrom == processing_chrom else False
-                            for chrom in cur_chrom
-                        ]
-                    )
+                    active_handle = np.array([True if chrom == processing_chrom else False for chrom in cur_chrom])
 
         # output
         out += "\t".join(genome_info) + f"\t{mc}\t{cov}\t1\n"
@@ -333,9 +313,7 @@ def _merge_allc_files_tabix_with_snp_info(
     if query_region is not None:
         if not isinstance(query_region, str):
             exit("query_region must be str or None")
-        region_chroms = set(
-            [region.split(":")[0] for region in query_region.split(" ")]
-        )
+        region_chroms = {region.split(":")[0] for region in query_region.split(" ")}
         all_chroms = [chrom for chrom in all_chroms if chrom in region_chroms]
     processing_chrom = all_chroms.pop(0)
 
@@ -355,7 +333,7 @@ def _merge_allc_files_tabix_with_snp_info(
     file_reading = np.array([True for _ in range(len(allc_files))])
 
     # init
-    for index, allc_file in enumerate(allc_files):
+    for index in range(len(allc_files)):
         line = file_handles[index].readline()
         if line:
             fields = line.split("\t")
@@ -366,9 +344,7 @@ def _merge_allc_files_tabix_with_snp_info(
             # file handle read nothing, the file is empty
             file_reading[index] = False
 
-    active_handle = np.array(
-        [True if chrom == processing_chrom else False for chrom in cur_chrom]
-    )
+    active_handle = np.array([True if chrom == processing_chrom else False for chrom in cur_chrom])
 
     # merge
     line_count = 0
@@ -378,20 +354,14 @@ def _merge_allc_files_tabix_with_snp_info(
         snp_match, snp_mismatch = [0, 0, 0], [0, 0, 0]
         genome_info = None
         # select index whose cur_pos is smallest among all active handle
-        for index in np.where(
-            (cur_pos == np.nanmin(cur_pos[active_handle])) & active_handle
-        )[0]:
+        for index in np.where((cur_pos == np.nanmin(cur_pos[active_handle])) & active_handle)[0]:
             mc += int(cur_fields[index][4])
             cov += int(cur_fields[index][5])
 
             # snp specific
             # col 7 is match, col 8 is mismatch
-            snp_match = list(
-                map(sum, zip(snp_match, map(int, cur_fields[index][7].split(","))))
-            )
-            snp_mismatch = list(
-                map(sum, zip(snp_mismatch, map(int, cur_fields[index][8].split(","))))
-            )
+            snp_match = list(map(sum, zip(snp_match, map(int, cur_fields[index][7].split(",")))))
+            snp_mismatch = list(map(sum, zip(snp_mismatch, map(int, cur_fields[index][8].split(",")))))
 
             # TODO fix binarize ALLC problem
             # if binarize:
@@ -433,12 +403,7 @@ def _merge_allc_files_tabix_with_snp_info(
                         break
                     processing_chrom = all_chroms.pop(0)
                     # and re-judge active handle
-                    active_handle = np.array(
-                        [
-                            True if chrom == processing_chrom else False
-                            for chrom in cur_chrom
-                        ]
-                    )
+                    active_handle = np.array([True if chrom == processing_chrom else False for chrom in cur_chrom])
 
         # output
         out += (
@@ -503,29 +468,22 @@ def merge_allc_files(
         {binarize_doc}
     snp
         {snp_doc}
-    Returns
-    -------
-
     """
     # TODO binarize do not work because when merge batch allc, the previous batch merged allc is not single cell
     # can not treat that as binarize, need to reimplement merge ALLC to support binarize in merge allc
-    log.info(
-        "Right now binarize is not used, need fix this in merge ALLC fiction, set binarize=False"
-    )
+    log.info("Right now binarize is not used, need fix this in merge ALLC fiction, set binarize=False")
     binarize = False
 
     # TODO write test
     # a list of str, contain all absolute non-soft-link paths
     allc_files: list = parse_file_paths(allc_paths)
     if len(allc_files) < 2:
-        raise ValueError(
-            "There is less than 2 files after parsing the provided allc_paths."
-        )
+        raise ValueError("There is less than 2 files after parsing the provided allc_paths.")
 
     try:
         with open(output_path, "w"):
             pass
-    except IOError:
+    except OSError:
         log.info("Can't create output_path")
 
     try:

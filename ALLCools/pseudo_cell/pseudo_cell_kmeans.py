@@ -1,8 +1,8 @@
-import pandas as pd
-import numpy as np
-from sklearn.cluster import MiniBatchKMeans
-from scipy.sparse import issparse, csr_matrix, vstack
 import anndata
+import numpy as np
+import pandas as pd
+from scipy.sparse import csr_matrix, issparse, vstack
+from sklearn.cluster import MiniBatchKMeans
 
 
 def _kmeans_division(matrix, cells, max_pseudo_size, max_k=50):
@@ -45,9 +45,7 @@ def _kmeans_division(matrix, cells, max_pseudo_size, max_k=50):
     return labels
 
 
-def _calculate_pseudo_group(
-    clusters, total_matrix, cluster_size_cutoff=100, max_pseudo_size=25
-):
+def _calculate_pseudo_group(clusters, total_matrix, cluster_size_cutoff=100, max_pseudo_size=25):
     cluster_cells = clusters.value_counts()
     max_pseudo_sizes = (cluster_cells // cluster_size_cutoff + 1).astype(int)
     max_pseudo_sizes[max_pseudo_sizes > max_pseudo_size] = max_pseudo_size
@@ -95,18 +93,14 @@ def _merge_pseudo_cell(adata, aggregate_func, pseudo_group_key):
                 except AttributeError:
                     group_data = np.array(adata[cell, :].X).ravel()
             else:
-                raise ValueError(
-                    f'aggregate_func can only be ["sum", "mean", "median"], got "{aggregate_func}"'
-                )
+                raise ValueError(f'aggregate_func can only be ["sum", "mean", "median"], got "{aggregate_func}"')
         balanced_matrix.append(csr_matrix(group_data))
         obs[group] = {"n_cells": n_cells}
     balanced_matrix = vstack(balanced_matrix)
     if not is_sparse:
         balanced_matrix = balanced_matrix.toarray()
 
-    pseudo_cell_adata = anndata.AnnData(
-        balanced_matrix, obs=pd.DataFrame(obs).T, var=adata.var.copy()
-    )
+    pseudo_cell_adata = anndata.AnnData(balanced_matrix, obs=pd.DataFrame(obs).T, var=adata.var.copy())
     return pseudo_cell_adata
 
 
@@ -120,6 +114,7 @@ def generate_pseudo_cells(
 ):
     """
     Balance the clusters by merge or downsample cells within each cluster.
+
     We first group the data by pre-defined clusters (cluster_col),
     then run k-means clustering iteratively on clusters with size > cluster_size_cutoff,
     the k-means clusters are called cell groups, and the maximum cell group size < max_pseudo_size,
@@ -142,10 +137,6 @@ def generate_pseudo_cells(
         'sum' means sum up all values in a pseudo-cell group
         'mean' means take the average of each feature in a pseudo-cell group
         'median' means take the median of each feature in a pseudo-cell group
-
-    Returns
-    -------
-
     """
     pseudo_group_key = "pseudo_group"
 
@@ -164,7 +155,5 @@ def generate_pseudo_cells(
         aggregate_func=aggregate_func,
         pseudo_group_key=pseudo_group_key,
     )
-    pseudo_cell_adata.obs[cluster_col] = (
-        pseudo_cell_adata.obs_names.str.split("::").str[:-1].str.join("::")
-    )
+    pseudo_cell_adata.obs[cluster_col] = pseudo_cell_adata.obs_names.str.split("::").str[:-1].str.join("::")
     return pseudo_cell_adata

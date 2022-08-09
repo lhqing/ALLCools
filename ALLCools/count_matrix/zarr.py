@@ -1,7 +1,7 @@
+import anndata
 import dask
 import numpy as np
 import pandas as pd
-import anndata
 import xarray as xr
 from scipy.sparse import csr_matrix, vstack
 
@@ -37,9 +37,7 @@ def dataset_to_array(
     for chunk_start in range(0, use_cells.size, chunk):
         _chunk_cells = use_cells[chunk_start : chunk_start + chunk]
         with dask.config.set(**{"array.slicing.split_large_chunks": True}):
-            _chunk_ds = ds[f"{var_dim}_da"].sel(
-                {obs_dim: _chunk_cells, var_dim: use_genes}
-            )
+            _chunk_ds = ds[f"{var_dim}_da"].sel({obs_dim: _chunk_cells, var_dim: use_genes})
         if sparse:
             data.append(csr_matrix(_chunk_ds.values))
         else:

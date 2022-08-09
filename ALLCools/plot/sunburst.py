@@ -3,8 +3,7 @@ from collections import OrderedDict
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib import cm
-from matplotlib import colors
+from matplotlib import cm, colors
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 from .color import plot_colorbar
@@ -32,34 +31,7 @@ def sunbrust(
     uniform_section=False,
     order_dict=None,
 ):
-    """
-    Parameters
-    ----------
-    pie_data
-        Tidy dataframe
-    ax
-    hue
-    hue_portion
-    cmap
-    colorbar
-    colorbar_kws
-    inner_radius
-    outer_radius
-    anno_col
-    text_anno
-    anno_layer_size
-    col_color_dict
-    startangle
-    anno_ang_min
-    anno_border
-    text_expend
-    uniform_section
-    order_dict
-
-    Returns
-    -------
-
-    """
+    """Plot a sunburst diagram."""
     return_axes = [ax]
     if order_dict is None:
         order_dict = {}
@@ -82,9 +54,7 @@ def sunbrust(
         col_color_dict = {}
         for col_name, col in pie_data.iteritems():
             reduce_col_data = hue_data.groupby(col).mean()
-            col_color_dict[col_name] = {
-                k: mapper.to_rgba(v) for k, v in reduce_col_data.iteritems()
-            }
+            col_color_dict[col_name] = {k: mapper.to_rgba(v) for k, v in reduce_col_data.iteritems()}
 
         # make colorbar
         if colorbar:
@@ -118,11 +88,7 @@ def sunbrust(
 
     # prepare data
     if uniform_section:
-        dedup_groups = (
-            pie_data.reset_index()
-            .set_index(pie_data.columns.tolist())
-            .index.drop_duplicates()
-        )
+        dedup_groups = pie_data.reset_index().set_index(pie_data.columns.tolist()).index.drop_duplicates()
         dedup_groups = pd.DataFrame(dedup_groups.tolist(), columns=pie_data.columns)
         pie_data = dedup_groups
 
@@ -157,14 +123,8 @@ def sunbrust(
             else:
                 records = []
                 for section in previous_order.index:
-                    section_subs = pie_data[pie_data.iloc[:, col - 1] == section][
-                        col_name
-                    ].unique()
-                    records.append(
-                        col_pie_data.reindex(pd.Index(section_subs)).sort_values(
-                            ascending=False
-                        )
-                    )
+                    section_subs = pie_data[pie_data.iloc[:, col - 1] == section][col_name].unique()
+                    records.append(col_pie_data.reindex(pd.Index(section_subs)).sort_values(ascending=False))
                 _ordered_data = pd.concat(records)
                 previous_order = _ordered_data
 
@@ -177,7 +137,7 @@ def sunbrust(
             radius=cur_radius,
             colors=pie_color,
             startangle=startangle,
-            wedgeprops=dict(width=layer_size, edgecolor="w"),
+            wedgeprops={"width": layer_size, "edgecolor": "w"},
         )
 
         # plot an additional thin layer to anchor anno label
@@ -187,7 +147,7 @@ def sunbrust(
                 radius=outer_radius + anno_layer_size,
                 colors=pie_color,
                 startangle=startangle,
-                wedgeprops=dict(width=anno_layer_size, edgecolor="w"),
+                wedgeprops={"width": anno_layer_size, "edgecolor": "w"},
             )
             if text_anno:
                 anno_wedges = wedges
@@ -204,17 +164,15 @@ def sunbrust(
 
         if text_anno == "anno_box":
             # wedges annotation
-            bbox_props = dict(
-                boxstyle="round,pad=0.2", fc="#FFFFFF88", ec="#00000022", lw=0.72
-            )
-            kw = dict(
-                xycoords="data",
-                textcoords="data",
-                arrowprops=dict(arrowstyle="-", color="#00000055"),
-                bbox=bbox_props,
-                zorder=0,
-                va="center",
-            )
+            bbox_props = {"boxstyle": "round,pad=0.2", "fc": "#FFFFFF88", "ec": "#00000022", "lw": 0.72}
+            kw = {
+                "xycoords": "data",
+                "textcoords": "data",
+                "arrowprops": {"arrowstyle": "-", "color": "#00000055"},
+                "bbox": bbox_props,
+                "zorder": 0,
+                "va": "center",
+            }
             # separate all y
             y_niche = np.arange(-anno_border, anno_border, anno_border / 10)
             allow_y_niche = OrderedDict(enumerate(y_niche))
@@ -223,9 +181,7 @@ def sunbrust(
             connectionstyle = f"angle,angleA=0,angleB={ang},rad=5"
             kw["arrowprops"].update({"connectionstyle": connectionstyle})
 
-            suitable_niche = np.abs(
-                np.array(list(allow_y_niche.values())) - anno_border * y
-            ).argmin()
+            suitable_niche = np.abs(np.array(list(allow_y_niche.values())) - anno_border * y).argmin()
             suitable_niche = list(allow_y_niche.keys())[suitable_niche]
             y_niche = allow_y_niche.pop(suitable_niche)
             ax.annotate(
@@ -258,9 +214,7 @@ def sunbrust(
         elif text_anno is None:
             pass
         else:
-            raise ValueError(
-                f'text_anno can only be "text", "anno_box" or None, got {text_anno}'
-            )
+            raise ValueError(f'text_anno can only be "text", "anno_box" or None, got {text_anno}')
 
     if len(return_axes) == 1:
         return ax

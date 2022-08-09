@@ -2,112 +2,99 @@ format: jb-book
 root: intro
 
 parts:
-  - caption: GET STARTED
-    chapters:
-      - file: start/installation
-      - file: start/input_files
-      - file: start/analysis_steps
-      - file: start/interactive
+    - caption: GET STARTED
+      chapters:
+          - file: start/installation
+          - file: start/input_files
+          - file: start/analysis_steps
+          - file: start/interactive
 
-  - caption: CELLULAR ANALYSIS
-    chapters:
-      - file: cell_level/basic/intro_basic_clustering
-        sections:
-          - file: cell_level/basic/mch_mcg_100k_basic
-          - file: cell_level/basic/mcg_5kb_basic
-
-      - file: cell_level/step_by_step/intro_step_by_step_clustering
-        sections:
-          - file: cell_level/step_by_step/100kb/intro_100kb
+    - caption: CELLULAR ANALYSIS
+      chapters:
+          - file: cell_level/basic/intro_basic_clustering
             sections:
-              - file: cell_level/step_by_step/100kb/01-CellBasicFiltering
-              - file: cell_level/step_by_step/100kb/02-BasicFeatureFiltering
-              - file: cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection
-              - file: cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH
-              - file: cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG
-              - file: cell_level/step_by_step/100kb/05-DecompositionAndEmbedding
-              - file: cell_level/step_by_step/100kb/06-Clustering
-          - file: cell_level/step_by_step/5kb/intro_5kb
+                - file: cell_level/basic/mch_mcg_100k_basic
+                - file: cell_level/basic/mcg_5kb_basic
+
+          - file: cell_level/step_by_step/intro_step_by_step_clustering
             sections:
-              - file: cell_level/step_by_step/5kb/01-CellBasicFiltering
-              - file: cell_level/step_by_step/5kb/02-DecompositionAndEmbedding
-              - file: cell_level/step_by_step/5kb/03-Clustering
+                - file: cell_level/step_by_step/100kb/intro_100kb
+                  sections:
+                      - file: cell_level/step_by_step/100kb/01-CellBasicFiltering
+                      - file: cell_level/step_by_step/100kb/02-BasicFeatureFiltering
+                      - file: cell_level/step_by_step/100kb/03-HighlyVariableFeatureSelection
+                      - file: cell_level/step_by_step/100kb/04a-PreclusteringAndClusterEnrichedFeatures-mCH
+                      - file: cell_level/step_by_step/100kb/04b-PreclusteringAndClusterEnrichedFeatures-mCG
+                      - file: cell_level/step_by_step/100kb/05-DecompositionAndEmbedding
+                      - file: cell_level/step_by_step/100kb/06-Clustering
+                - file: cell_level/step_by_step/5kb/intro_5kb
+                  sections:
+                      # use the 01 step from the 100kb section
+                      # - file: cell_level/step_by_step/5kb/01-CellBasicFiltering
+                      - file: cell_level/step_by_step/5kb/02-DecompositionAndEmbedding
+                      - file: cell_level/step_by_step/5kb/03-Clustering
 
-      - file: cell_level/dmg/intro_dmg
-        sections:
-          - file: cell_level/dmg/01-AddGenemCFractions
-          - file: cell_level/dmg/02-DifferentiallyMethylatedGenes
-          - file: cell_level/dmg/03-PlotClusterDMGs
-          - file: cell_level/dmg/04-PairwiseDMG
+          - file: cell_level/dmg/intro_dmg
+            sections:
+                - file: cell_level/dmg/01-AddGenemCFractions
+                - file: cell_level/dmg/02-DifferentiallyMethylatedGenes
+                - file: cell_level/dmg/03-PlotClusterDMGs
+                - file: cell_level/dmg/04-PairwiseDMG
 
-      - file: cell_level/integration/intro_integration
-        sections:
-          - file: cell_level/integration/multi_modalities/Neurons/01-preprocess_10x
-          - file: cell_level/integration/multi_modalities/Neurons/02-preprocess_SMART
-          - file: cell_level/integration/multi_modalities/Neurons/03-preprocess_snATAC
-          - file: cell_level/integration/multi_modalities/Neurons/04-integration
+          - file: cell_level/integration/intro_integration
+            sections:
+                - file: cell_level/integration/multi_modalities/Neurons/01-preprocess_10x
+                - file: cell_level/integration/multi_modalities/Neurons/02-preprocess_SMART
+                - file: cell_level/integration/multi_modalities/Neurons/03-preprocess_snATAC
+                - file: cell_level/integration/multi_modalities/Neurons/04-integration
 
-      - file: cell_level/doublets/intro_doublets
-        sections:
-          - file: cell_level/doublets/doublet_score_chrom100k
+          - file: cell_level/doublets/intro_doublets
+            sections:
+                - file: cell_level/doublets/doublet_score_chrom100k
 
+    - caption: GENOMIC ANALYSIS
+      chapters:
+          - file: cluster_level/intro
+            sections:
+                - file: cluster_level/RegionDS/01a.call_dmr
+                - file: cluster_level/RegionDS/01b.other_option_to_init_region_ds
+                - file: cluster_level/RegionDS/02.annotation
+                - file: cluster_level/RegionDS/03.filter_dmr
+          - file: cluster_level/RegionDS/intro_motif
+            sections:
+                - file: cluster_level/RegionDS/04.motif_scan
+                - file: cluster_level/RegionDS/05.motif_enrichment
+          - file: cluster_level/Correlation/intro_corr
+            sections:
+                - file: cluster_level/Correlation/01.mc_cluster_profile
+                - file: cluster_level/Correlation/02.dmr_gene_corr
+          - file: cluster_level/REPTILE/intro_reptile
+            sections:
+                - file: cluster_level/REPTILE/01.prepare_input
+                - file: cluster_level/REPTILE/02.run_reptile
 
-  - caption: GENOMIC ANALYSIS
-    chapters:
-      - file: cluster_level/intro
-        sections:
-          - file: cluster_level/RegionDS/01a.call_dmr
-          - file: cluster_level/RegionDS/01b.other_option_to_init_region_ds
-          - file: cluster_level/RegionDS/02.annotation
-          - file: cluster_level/RegionDS/03.filter_dmr
-      - file: cluster_level/RegionDS/intro_motif
-        sections:
-          - file: cluster_level/RegionDS/04.motif_scan
-          - file: cluster_level/RegionDS/05.motif_enrichment
-      - file: cluster_level/Correlation/intro_corr
-        sections:
-          - file: cluster_level/Correlation/01.mc_cluster_profile
-          - file: cluster_level/Correlation/02.dmr_gene_corr
-      - file: cluster_level/REPTILE/intro_reptile
-        sections:
-          - file: cluster_level/REPTILE/01.prepare_input
-          - file: cluster_level/REPTILE/02.run_reptile
+    - caption: COMMAND LINE TOOLS
+      chapters:
+          - file: command_line/allcools
+          - file: command_line/allcools_allc
+          - file: command_line/allcools_standard
+          - file: command_line/allcools_profile
+          - file: command_line/allcools_tbi
+          - file: command_line/allcools_merge
+          - file: command_line/allcools_extract
+          - file: command_line/allcools_bw
+          - file: command_line/allcools_region
+          - file: command_line/allcools_dataset
+          - file: command_line/allcools_mcds
+          - file: command_line/allcools_mcad
+          - file: command_line/allcools_table_to_allc
 
-  - caption: COMMAND LINE TOOLS
-    chapters:
-      - file: command_line/allcools
-      - file: command_line/allcools_allc
-      - file: command_line/allcools_standard
-      - file: command_line/allcools_profile
-      - file: command_line/allcools_tbi
-      - file: command_line/allcools_merge
-      - file: command_line/allcools_extract
-      - file: command_line/allcools_bw
-      - file: command_line/allcools_region
-      - file: command_line/allcools_dataset
-      - file: command_line/allcools_mcds
-      - file: command_line/allcools_mcad
-      - file: command_line/allcools_table_to_allc
+    - caption: API
+      chapters:
+          - file: api/ALLCools/index
 
-
-#  - caption: VISUALIZATION
-#    chapters:
-#      - file: visualization/intro
-
-
-#  - caption: DISCUSSION
-#    chapters:
-#      - file: discuss/intro
-#      - file: discuss/dmr_benchmark
-
-
-  - caption: API
-    chapters:
-      - file: api/ALLCools/index
-
-
-  - caption: PROJECT INFO
-    chapters:
-      - file: project_info/citation
-      - url: https://github.com/lhqing/ALLCools/releases
-        title: Changelog
+    - caption: PROJECT INFO
+      chapters:
+          - file: project_info/citation
+          - url: https://github.com/lhqing/ALLCools/releases
+            title: Changelog

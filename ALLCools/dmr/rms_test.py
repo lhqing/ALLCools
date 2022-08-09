@@ -28,14 +28,14 @@ def _make_permutation_table(p, n, m):
 
 @njit
 def calculate_residual(table):
+    """Calculate residual of the table."""
     n = table.shape[0]
     m = table.sum()
     e = _get_e(table, n, m)
     residual = (table - e) / np.sqrt(
         np.multiply(
             e,
-            (1 - e.sum(axis=1) / m).reshape(n, 1)
-            * (1 - e.sum(axis=0) / m).reshape(1, 2),
+            (1 - e.sum(axis=1) / m).reshape(n, 1) * (1 - e.sum(axis=0) / m).reshape(1, 2),
         )
     )
     return residual
@@ -43,6 +43,7 @@ def calculate_residual(table):
 
 @njit
 def permute_root_mean_square_test(table, n_permute=3000, min_pvalue=0.034):
+    """Permute root-mean-square test."""
     # calculate real goodness-of-fit s
     n = table.shape[0]
     m = table.sum()
@@ -81,7 +82,5 @@ def _downsample_sample_count(a, max_count):
 
 
 def downsample_table(table, max_row_count):
-    """Downsample high count rows to max_row_count"""
-    return np.apply_along_axis(
-        _downsample_sample_count, axis=1, arr=table, max_count=max_row_count
-    )
+    """Downsample high count rows to max_row_count."""
+    return np.apply_along_axis(_downsample_sample_count, axis=1, arr=table, max_count=max_row_count)

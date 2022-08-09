@@ -8,7 +8,7 @@ import pandas as pd
 
 
 def calculate_direct_confusion(*args, **kwargs):
-    warn('This function is deprecated. Call calculate_overlap_score instead', DeprecationWarning)
+    warn("This function is deprecated. Call calculate_overlap_score instead", DeprecationWarning)
     return calculate_overlap_score(*args, **kwargs)
 
 
@@ -22,19 +22,18 @@ def _get_overlap_score(left_values, right_values):
 
 def calculate_overlap_score(left_part, right_part):
     """
-    Given 2 dataframe for left/source and right/target dataset,
-    calculate the direct confusion matrix based on co-cluster labels.
+    Calculate the overlap score between intra-dataset clusters using co-cluster information.
+
+    Input are 2 dataframes for left/source and right/target dataset,
     Each dataframe only contain 2 columns, first is original cluster, second is co-cluster.
     The returned confusion matrix will be the form of source-cluster by target-cluster.
 
     Parameters
     ----------
     left_part
+        Dataframe for left/source dataset.
     right_part
-
-    Returns
-    -------
-
+        Dataframe for right/target dataset.
     """
     left_part = left_part.astype(str)
     original_left_name = left_part.columns[0]
@@ -49,32 +48,24 @@ def calculate_overlap_score(left_part, right_part):
     left_confusion = left_part.groupby("cluster")["co_cluster"].value_counts().unstack()
     right_confusion = right_part.groupby("cluster")["co_cluster"].value_counts().unstack()
 
-    left_confusion_portion = left_confusion.divide(
-        left_confusion.sum(axis=1), axis=0).fillna(0)
-    right_confusion_portion = right_confusion.divide(
-        right_confusion.sum(axis=1), axis=0).fillna(0)
+    left_confusion_portion = left_confusion.divide(left_confusion.sum(axis=1), axis=0).fillna(0)
+    right_confusion_portion = right_confusion.divide(right_confusion.sum(axis=1), axis=0).fillna(0)
 
-    union_index = left_confusion_portion.columns.intersection(
-        right_confusion_portion.columns)
-    left_confusion_portion = left_confusion_portion.reindex(
-        columns=union_index).fillna(0)
-    right_confusion_portion = right_confusion_portion.reindex(
-        columns=union_index).fillna(0)
+    union_index = left_confusion_portion.columns.intersection(right_confusion_portion.columns)
+    left_confusion_portion = left_confusion_portion.reindex(columns=union_index).fillna(0)
+    right_confusion_portion = right_confusion_portion.reindex(columns=union_index).fillna(0)
 
     records = []
     for left_cluster, left_row in left_confusion_portion.iterrows():
         for right_cluster, right_row in right_confusion_portion.iterrows():
-            overlap_value = _get_overlap_score(left_row.values,
-                                               right_row.values)
+            overlap_value = _get_overlap_score(left_row.values, right_row.values)
             records.append([left_cluster, right_cluster, overlap_value])
 
-    flat_confusion_matrix = pd.DataFrame(
-        records,
-        columns=[original_left_name, original_right_name, "overlap_value"])
+    flat_confusion_matrix = pd.DataFrame(records, columns=[original_left_name, original_right_name, "overlap_value"])
 
-    confusion_matrix = flat_confusion_matrix.pivot(index=original_left_name,
-                                                   columns=original_right_name,
-                                                   values='overlap_value')
+    confusion_matrix = flat_confusion_matrix.pivot(
+        index=original_left_name, columns=original_right_name, values="overlap_value"
+    )
     return confusion_matrix
 
 
@@ -98,7 +89,8 @@ def calculate_diagonal_score(confusion_matrix, col_group, row_group):
     # group the confusion matrix by the col_group and row_group,
     # then for each block, calculate the mean overlap score
     group_overlap_score_mean = confusion_matrix.groupby(col_group, axis=1).apply(
-        lambda sub_df: sub_df.groupby(row_group, axis=0).mean().mean(axis=1))
+        lambda sub_df: sub_df.groupby(row_group, axis=0).mean().mean(axis=1)
+    )
 
     # diagonal score is the ratio of the diagonal overlap score sum to the non-diagonal overlap score sum
     diag_sum = np.diag(group_overlap_score_mean, 0).sum()
@@ -138,17 +130,14 @@ def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, se
     # map id to int
     # row is query, column is reference
     query_idx_map = {c: i for i, c in enumerate(confusion_matrix.index)}
-    ref_idx_map = {
-        c: i + len(query_idx_map)
-        for i, c in enumerate(confusion_matrix.columns)
-    }
+    ref_idx_map = {c: i + len(query_idx_map) for i, c in enumerate(confusion_matrix.columns)}
     confusion_matrix.index = confusion_matrix.index.map(query_idx_map)
     confusion_matrix.columns = confusion_matrix.columns.map(ref_idx_map)
 
     # build a weighted graph from sig scores
     edges = confusion_matrix.unstack()
     edges = edges[edges > min_value].copy().reset_index()
-    edges.columns = ['ref', 'query', 'weight']
+    edges.columns = ["ref", "query", "weight"]
     g = nx.Graph()
     for _, (ref, query, weight) in edges.iterrows():
         weight = min(max_value, weight)
@@ -157,10 +146,7 @@ def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, se
     h = ig.Graph.from_networkx(g)
 
     # leiden clustering
-    partition = la.find_partition(h,
-                                  la.ModularityVertexPartition,
-                                  weights='weight',
-                                  seed=seed)
+    partition = la.find_partition(h, la.ModularityVertexPartition, weights="weight", seed=seed)
     # store output into adata.obs
     groups = np.array(partition.membership)
     idx_to_group = {int(node): g for node, g in zip(g.nodes, groups)}
@@ -172,15 +158,9 @@ def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, se
     ref_group = pd.Series(ref_idx_map).map(idx_to_group).fillna(-1).astype(int)
 
     # also make an ordered confusion matrix
-    confusion_matrix.index = confusion_matrix.index.map(
-        {v: k
-         for k, v in query_idx_map.items()})
-    confusion_matrix.columns = confusion_matrix.columns.map(
-        {v: k
-         for k, v in ref_idx_map.items()})
-    confusion_matrix = confusion_matrix.loc[
-        query_group.sort_values().index,
-        ref_group.sort_values().index].copy()
+    confusion_matrix.index = confusion_matrix.index.map({v: k for k, v in query_idx_map.items()})
+    confusion_matrix.columns = confusion_matrix.columns.map({v: k for k, v in ref_idx_map.items()})
+    confusion_matrix = confusion_matrix.loc[query_group.sort_values().index, ref_group.sort_values().index].copy()
 
     diag_score = calculate_diagonal_score(confusion_matrix, col_group=ref_group, row_group=query_group)
 

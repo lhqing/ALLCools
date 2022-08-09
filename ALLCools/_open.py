@@ -1,4 +1,6 @@
 """
+I/O Classes for ALLC and BAM files
+
 - read and write allc file
 - parallel writing
 - read region from allc
@@ -34,23 +36,25 @@ import os
 import pathlib
 import sys
 import time
-from subprocess import Popen, PIPE, run
+from subprocess import PIPE, Popen, run
 
 try:
-    run(["pigz", "--version"], stdout=PIPE, stderr=PIPE)
+    run(["pigz", "--version"], capture_output=True)
     PIGZ = True
 except OSError:
     PIGZ = False
 
 try:
-    run(["bgzip", "--version"], stdout=PIPE, stderr=PIPE)
+    run(["bgzip", "--version"], capture_output=True)
     BGZIP = True
 except OSError:
     BGZIP = False
 
 
-class Closing(object):
+class Closing:
     """
+    Closeable class
+
     Inherit from this class and implement a close() method to offer context
     manager functionality.
     """
@@ -73,6 +77,8 @@ class Closing(object):
 
 class PipedGzipWriter(Closing):
     """
+    Piped Gzip Writer.
+
     Write gzip-compressed files by running an external gzip or pigz process and
     piping into it. On Python 2, this is faster than using gzip.open(). On
     Python 3, it allows to run the compression in a separate process and can
@@ -81,23 +87,21 @@ class PipedGzipWriter(Closing):
 
     def __init__(self, path, mode="wt", compresslevel=6, threads=1):
         """
+        Pipe a file to an external gzip or pigz process.
+
         mode -- one of 'w', 'wt', 'wb', 'a', 'at', 'ab'
         compresslevel -- gzip compression level
         threads (int) -- number of pigz threads (None means to let pigz decide)
         """
         if mode not in ("w", "wt", "wb", "a", "at", "ab"):
-            raise ValueError(
-                "Mode is '{0}', but it must be 'w', 'wt', 'wb', 'a', 'at' or 'ab'".format(
-                    mode
-                )
-            )
+            raise ValueError(f"Mode is '{mode}', but it must be 'w', 'wt', 'wb', 'a', 'at' or 'ab'")
 
         self.outfile = open(path, mode)
         self.devnull = open(os.devnull, mode)
         self.closed = False
         self.name = path
 
-        kwargs = dict(stdin=PIPE, stdout=self.outfile, stderr=self.devnull)
+        kwargs = {"stdin": PIPE, "stdout": self.outfile, "stderr": self.devnull}
         # Setting close_fds to True in the Popen arguments is necessary due to
         # <http://bugs.python.org/issue12786>.
         # However, close_fds is not supported on Windows. See
@@ -150,9 +154,7 @@ class PipedGzipWriter(Closing):
         self.outfile.close()
         self.devnull.close()
         if return_code != 0:
-            raise IOError(
-                f"Output {self.program} process terminated with exit code {return_code}"
-            )
+            raise OSError(f"Output {self.program} process terminated with exit code {return_code}")
 
 
 class PipedGzipReader(Closing):
@@ -166,9 +168,7 @@ class PipedGzipReader(Closing):
             encoding = None
 
         if region is None:
-            self.process = Popen(
-                ["gzip", "-cd", path], stdout=PIPE, stderr=PIPE, encoding=encoding
-            )
+            self.process = Popen(["gzip", "-cd", path], stdout=PIPE, stderr=PIPE, encoding=encoding)
         else:
             self.process = Popen(
                 ["tabix", path] + region.split(" "),
@@ -195,8 +195,7 @@ class PipedGzipReader(Closing):
         self._raise_if_error()
 
     def __iter__(self):
-        for line in self._file:
-            yield line
+        yield from self._file
         self.process.wait()
         self._raise_if_error()
 
@@ -205,13 +204,15 @@ class PipedGzipReader(Closing):
 
     def _raise_if_error(self):
         """
+        Raise an exception if the gzip process has exited with an error.
+
         Raise IOError if process is not running anymore and the
         exit code is nonzero.
         """
         return_code = self.process.poll()
         if return_code is not None and return_code != 0:
             message = self._stderr.read().strip()
-            raise IOError(message)
+            raise OSError(message)
 
     def read(self, *args):
         data = self._file.read(*args)
@@ -224,9 +225,7 @@ class PipedGzipReader(Closing):
 
 class PipedBamReader(Closing):
     # decompression can't be parallel even in pigz, so there is not thread/cpu parameter
-    def __init__(
-        self, path, region=None, mode="r", include_header=True, samtools_parms_str=None
-    ):
+    def __init__(self, path, region=None, mode="r", include_header=True, samtools_parms_str=None):
         if mode not in ("r", "rt", "rb"):
             raise ValueError(f"Mode is {mode}, but it must be 'r', 'rt' or 'rb'")
         if "b" not in mode:
@@ -241,9 +240,7 @@ class PipedBamReader(Closing):
             command_list.extend(samtools_parms_str.split(" "))
 
         if region is None:
-            self.process = Popen(
-                command_list + [path], stdout=PIPE, stderr=PIPE, encoding=encoding
-            )
+            self.process = Popen(command_list + [path], stdout=PIPE, stderr=PIPE, encoding=encoding)
         else:
             self.process = Popen(
                 command_list + [path] + region.split(" "),
@@ -270,8 +267,7 @@ class PipedBamReader(Closing):
         self._raise_if_error()
 
     def __iter__(self):
-        for line in self.file:
-            yield line
+        yield from self.file
         self.process.wait()
         self._raise_if_error()
 
@@ -279,14 +275,11 @@ class PipedBamReader(Closing):
         return self.file.readline()
 
     def _raise_if_error(self):
-        """
-        Raise IOError if process is not running anymore and the
-        exit code is nonzero.
-        """
+        """Raise IOError if process is not running anymore and the exit code is nonzero."""
         return_code = self.process.poll()
         if return_code is not None and return_code != 0:
             message = self._stderr.read().strip()
-            raise IOError(message)
+            raise OSError(message)
 
     def read(self, *args):
         data = self.file.read(*args)
@@ -300,22 +293,20 @@ class PipedBamReader(Closing):
 class PipedBamWriter(Closing):
     def __init__(self, path, mode="wt", threads=1):
         """
+        Open a pipe to samtools view, which will write to the given path.
+
         mode -- one of 'w', 'wt', 'wb', 'a', 'at', 'ab'
         threads (int) -- number of samtools threads
         """
         if mode not in ("w", "wt", "wb", "a", "at", "ab"):
-            raise ValueError(
-                "Mode is '{0}', but it must be 'w', 'wt', 'wb', 'a', 'at' or 'ab'".format(
-                    mode
-                )
-            )
+            raise ValueError(f"Mode is '{mode}', but it must be 'w', 'wt', 'wb', 'a', 'at' or 'ab'")
 
         self.outfile = open(path, mode)
         self.devnull = open(os.devnull, mode)
         self.closed = False
         self.name = path
 
-        kwargs = dict(stdin=PIPE, stdout=self.outfile, stderr=self.devnull)
+        kwargs = {"stdin": PIPE, "stdout": self.outfile, "stderr": self.devnull}
         # Setting close_fds to True in the Popen arguments is necessary due to
         # <http://bugs.python.org/issue12786>.
         # However, close_fds is not supported on Windows. See
@@ -344,9 +335,7 @@ class PipedBamWriter(Closing):
         self.outfile.close()
         self.devnull.close()
         if return_code != 0:
-            raise IOError(
-                f"Output {self.program} process terminated with exit code {return_code}"
-            )
+            raise OSError(f"Output {self.program} process terminated with exit code {return_code}")
 
 
 def open_bam(
@@ -360,9 +349,7 @@ def open_bam(
     if "r" in mode:
         if region is not None:
             if not has_bai(file_path):
-                raise FileNotFoundError(
-                    f".bai index file not found for {file_path}. Index before region query."
-                )
+                raise FileNotFoundError(f".bai index file not found for {file_path}. Index before region query.")
         try:
             return PipedBamReader(
                 file_path,
@@ -397,6 +384,8 @@ def open_gz(file_path, mode="r", compresslevel=3, threads=1, region=None):
 
 def open_allc(file_path, mode="r", compresslevel=3, threads=1, region=None):
     """
+    Open a .allc file.
+
     A replacement for the "open" function that can also open files that have
     been compressed with gzip, bzip2 or xz. If the file_path is '-', standard
     output (mode 'w') or input (mode 'r') is returned.
@@ -430,20 +419,17 @@ def open_allc(file_path, mode="r", compresslevel=3, threads=1, region=None):
     if mode in ("r", "w", "a"):
         mode += "t"
     if mode not in ("rt", "rb", "wt", "wb", "at", "ab"):
-        raise ValueError("mode '{0}' not supported".format(mode))
+        raise ValueError(f"mode '{mode}' not supported")
     if compresslevel not in range(1, 10):
         raise ValueError("compresslevel must be between 1 and 9")
     if region is not None:
         # unzipped file
         if not file_path.endswith("gz"):
-            raise ValueError(
-                f"File must be compressed by bgzip to use region query. File path {file_path}"
-            )
+            raise ValueError(f"File must be compressed by bgzip to use region query. File path {file_path}")
         # normal gzipped file
         if not has_tabix(file_path):
             raise ValueError(
-                f"Tried inspect {file_path}, "
-                "File is compressed by normal gzip, but region query only apply to bgzip"
+                f"Tried inspect {file_path}, " "File is compressed by normal gzip, but region query only apply to bgzip"
             )
 
         if not os.path.exists(file_path + ".tbi"):

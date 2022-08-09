@@ -57,8 +57,8 @@ matched coverage.
 
 The above test can be performed on
 
-1) Balanced coverage: cluster A and cluster B has the same coverage;
-2) imbalanced coverage: cluster A and cluster B has very different coverage.
+1. Balanced coverage: cluster A and cluster B has the same coverage;
+2. imbalanced coverage: cluster A and cluster B has very different coverage.
 
 ## Multi-group DMR calling
 

@@ -1,16 +1,17 @@
-import pysam
-import pandas as pd
-import numpy as np
-from scipy import stats
-from scipy.sparse import csr_matrix
 import pathlib
-import anndata
 import subprocess
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from ..utilities import parse_mc_pattern
 from functools import lru_cache
 
+import anndata
+import numpy as np
+import pandas as pd
+import pysam
+from scipy import stats
+from scipy.sparse import csr_matrix
+
 from .._doc import *
+from ..utilities import parse_mc_pattern
 
 
 def _read_region_bed(bed_path):
@@ -29,16 +30,14 @@ def bin_sf(cov, mc, p):
         return 0
 
 
-def _count_single_allc(
-    allc_path, bed_path, mc_pattern, output_dir, cutoff=0.9, reverse_value=False
-):
+def _count_single_allc(allc_path, bed_path, mc_pattern, output_dir, cutoff=0.9, reverse_value=False):
     patterns = parse_mc_pattern(mc_pattern)
     region_bed = _read_region_bed(bed_path)
 
     # bin raw counts
     with pysam.TabixFile(allc_path, "r") as allc:
         records = []  # list of [mc, cov, region_idx]
-        for idx, (region_id, (chrom, start, end)) in enumerate(region_bed.iterrows()):
+        for idx, (_, (chrom, start, end)) in enumerate(region_bed.iterrows()):
             total_mc = 0
             total_cov = 0
             try:
@@ -54,16 +53,12 @@ def _count_single_allc(
                     total_cov += int(cov)
             if total_cov > 0:
                 records.append([idx, total_mc, total_cov])
-        bin_counts = pd.DataFrame(records, columns=["idx", "mc", "cov"]).set_index(
-            "idx"
-        )
+        bin_counts = pd.DataFrame(records, columns=["idx", "mc", "cov"]).set_index("idx")
 
     # calculate binom sf (1-cdf) value, hypo bins are close to 1, hyper bins are close to 0
     mc_sum, cov_sum = bin_counts.sum()
     p = mc_sum / (cov_sum + 0.000001)  # prevent empty allc error
-    pv = bin_counts.apply(lambda x: bin_sf(x["cov"], x["mc"], p), axis=1).astype(
-        "float16"
-    )
+    pv = bin_counts.apply(lambda x: bin_sf(x["cov"], x["mc"], p), axis=1).astype("float16")
     if reverse_value:
         # use cdf instead of sf when looking for hyper methylation
         pv = 1 - pv
@@ -89,6 +84,7 @@ def generate_mcad(
     reverse_value=False,
 ):
     """
+    Generate MCAD from ALLC files.
 
     Parameters
     ----------
@@ -108,18 +104,13 @@ def generate_mcad(
         Values smaller than cutoff will be stored as 0, which reduces the file size
     reverse_value
         If true, use cdf instead of sf to make hyper-methylation events having higher values
-    Returns
-    -------
-
     """
     # validate
     if (cutoff < 0) or (cutoff > 1):
         raise ValueError(f"Cutoff must between 0 to 1, got {cutoff}.")
 
     # allc table has 2 columns: cell_id \t allc_path
-    allc_paths = pd.read_csv(
-        allc_table, sep="\t", index_col=0, header=None, squeeze=True
-    )
+    allc_paths = pd.read_csv(allc_table, sep="\t", index_col=0, header=None, squeeze=True)
     allc_paths.index.name = "cell"
 
     # temp dir
@@ -177,9 +168,7 @@ def generate_mcad(
     )
 
     # save the data as anndata
-    adata = anndata.AnnData(
-        _data, obs=pd.DataFrame([], index=allc_paths.index), var=region_bed
-    )
+    adata = anndata.AnnData(_data, obs=pd.DataFrame([], index=allc_paths.index), var=region_bed)
     adata.X = adata.X.astype("float16")
     if str(output_prefix)[-5:] in {".mcad", ".h5ad"}:
         output_h5ad_path = output_prefix
@@ -191,4 +180,3 @@ def generate_mcad(
     if cleanup:
         subprocess.run(["rm", "-rf", str(temp_dir)])
     return
-

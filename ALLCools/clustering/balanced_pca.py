@@ -1,21 +1,20 @@
 """
-Perform Balanced PCA as well as
-Reproducible PCA (A class allow user provide fitted model and just transform MCDS to adata with PCs)
+Perform Balanced PCA as well as Reproducible PCA.
+
+A class allow user provide fitted model and just transform MCDS to adata with PCs.
 """
 import anndata
 import joblib
-from sklearn.preprocessing import StandardScaler, RobustScaler
-import scanpy as sc
 import numpy as np
-from scipy.stats import ks_2samp
 import pandas as pd
+import scanpy as sc
+from scipy.stats import ks_2samp
+from sklearn.preprocessing import RobustScaler, StandardScaler
 
 
-def log_scale(
-        adata, method="standard", with_mean=False, with_std=True, max_value=10, scaler=None
-):
+def log_scale(adata, method="standard", with_mean=False, with_std=True, max_value=10, scaler=None):
     """
-    Perform log transform and then scale the cell-by-feature matrix
+    Perform log transform and then scale the cell-by-feature matrix.
 
     Parameters
     ----------
@@ -78,13 +77,11 @@ def log_scale(
         return scaler
 
 
-def significant_pc_test(
-        adata: anndata.AnnData,
-        p_cutoff=0.1, update=True, obsm="X_pca", downsample=50000
-):
+def significant_pc_test(adata: anndata.AnnData, p_cutoff=0.1, update=True, obsm="X_pca", downsample=50000):
     """
-    Perform two-sample Kolmogorov-Smirnov test for goodness of fit on two adjacent PCs,
-    select top PCs based on the `p_cutoff`. Top PCs have significantly different distributions, while
+    Perform two-sample Kolmogorov-Smirnov test for goodness of fit on two adjacent PCs.
+
+    Select top PCs based on the `p_cutoff`. Top PCs have significantly different distributions, while
     later PCs only capturing random noise will have larger p-values. An idea from :cite:p:`Zeisel2018`.
 
     Parameters
@@ -107,9 +104,7 @@ def significant_pc_test(
     """
     pcs = adata.obsm[obsm]
     if pcs.shape[0] > downsample:
-        print(
-            f"Downsample PC matrix to {downsample} cells to calculate significant PC components"
-        )
+        print(f"Downsample PC matrix to {downsample} cells to calculate significant PC components")
         use_pcs = pd.DataFrame(pcs).sample(downsample).values
     else:
         use_pcs = pcs
@@ -123,23 +118,23 @@ def significant_pc_test(
     n_components = min(i + 1, use_pcs.shape[1])
     min_pc = min(4, use_pcs.shape[1])
     if n_components < min_pc:
-        print(f'only {n_components} passed the P cutoff, '
-              f'in order to proceed following analysis, will use first {min_pc} PCs')
+        print(
+            f"only {n_components} passed the P cutoff, "
+            f"in order to proceed following analysis, will use first {min_pc} PCs"
+        )
         n_components = min_pc
     else:
         print(f"{n_components} components passed P cutoff of {p_cutoff}.")
     if update:
         adata.obsm[obsm] = pcs[:, :n_components]
-        print(
-            f"Changing adata.obsm['X_pca'] from shape {pcs.shape} to {adata.obsm[obsm].shape}"
-        )
+        print(f"Changing adata.obsm['X_pca'] from shape {pcs.shape} to {adata.obsm[obsm].shape}")
     return n_components
 
 
-def balanced_pca(
-        adata: anndata.AnnData, groups: str = "pre_clusters", max_cell_prop=0.1, n_comps=100, scale=False
-):
+def balanced_pca(adata: anndata.AnnData, groups: str = "pre_clusters", max_cell_prop=0.1, n_comps=100, scale=False):
     """
+    Perform Balanced PCA on the data.
+
     Given a categorical variable (e.g., a pre-clustering label), perform balanced PCA by downsample
     cells in the large categories to make the overall population more balanced, so the PCs are expected
     to represent more variance among small categories.
@@ -164,11 +159,9 @@ def balanced_pca(
     # downsample large clusters
     use_cells = []
     size_to_downsample = max(int(adata.shape[0] * max_cell_prop), 50)
-    for cluster, sub_df in adata.obs.groupby(groups):
+    for _, sub_df in adata.obs.groupby(groups):
         if sub_df.shape[0] > size_to_downsample:
-            use_cells += sub_df.sample(
-                size_to_downsample, random_state=0
-            ).index.tolist()
+            use_cells += sub_df.sample(size_to_downsample, random_state=0).index.tolist()
         else:
             use_cells += sub_df.index.tolist()
 
@@ -217,12 +210,9 @@ def balanced_pca(
     return adata
 
 
-def get_pc_centers(adata: anndata.AnnData,
-                   group: str,
-                   outlier_label=None,
-                   obsm="X_pca"):
+def get_pc_centers(adata: anndata.AnnData, group: str, outlier_label=None, obsm="X_pca"):
     """
-    Get the cluster centroids of the PC matrix
+    Get the cluster centroids of the PC matrix.
 
     Parameters
     ----------
@@ -241,29 +231,27 @@ def get_pc_centers(adata: anndata.AnnData,
         a dataframe for cluster centroids by PC
     """
     pc_matrix = adata.obsm[obsm]
-    pc_center = (
-        pd.DataFrame(pc_matrix, index=adata.obs_names)
-            .groupby(adata.obs[group])
-            .median()
-    )
+    pc_center = pd.DataFrame(pc_matrix, index=adata.obs_names).groupby(adata.obs[group]).median()
     if outlier_label is not None:
         pc_center = pc_center[pc_center.index != outlier_label]
     return pc_center
 
 
 class ReproduciblePCA:
+    """Make reproducible PCA by saving features, scaling, and PCA Loadings."""
+
     def __init__(
-            self,
-            scaler,
-            mc_type,
-            adata=None,
-            pca_obj=None,
-            pc_loading=None,
-            var_names=None,
-            max_value=10,
+        self,
+        scaler,
+        mc_type,
+        adata=None,
+        pca_obj=None,
+        pc_loading=None,
+        var_names=None,
+        max_value=10,
     ):
         """
-        Perform preprocessing, feature selection and PCA using fitted scaler and PC transform
+        Perform preprocessing, feature selection and PCA using fitted scaler and PC transform.
 
         Parameters
         ----------
@@ -275,7 +263,7 @@ class ReproduciblePCA:
         adata :
             If anndata is provided, will take the PC loading from adata, otherwise, pca_obj or pc_loading is needed
         pca_obj :
-            fitted sklearn PCA model, will take the pc_loading from the pca_obj.components_
+            fitted sklearn PCA model, will take the pc_loading from the `pca_obj.components_`
         pc_loading :
             or you can directly provide the pc_loading matrix
         var_names :
@@ -304,7 +292,7 @@ class ReproduciblePCA:
 
     def mcds_to_adata(self, mcds):
         """
-        Get adata from MCDS with only selected features
+        Get adata from MCDS with only selected features.
 
         Parameters
         ----------
@@ -317,9 +305,7 @@ class ReproduciblePCA:
         """
         if f"{self.var_dim}_da_frac" not in mcds:
             # adding mC frac and normalize per cell should be done separately for every cell/dataset
-            mcds.add_mc_frac(
-                var_dim=self.var_dim, normalize_per_cell=True, clip_norm_value=10
-            )
+            mcds.add_mc_frac(var_dim=self.var_dim, normalize_per_cell=True, clip_norm_value=10)
 
         # add hvf info into mcds
         hvf_judge = mcds.get_index(self.var_dim)
@@ -339,7 +325,7 @@ class ReproduciblePCA:
 
     def scale(self, adata):
         """
-        Perform {func}`log_scale <ALLCools.clustering.balanced_pca.log_scale>` with fitted scaler
+        Perform {func}`log_scale <ALLCools.clustering.balanced_pca.log_scale>` with fitted scaler.
 
         Parameters
         ----------
@@ -361,13 +347,16 @@ class ReproduciblePCA:
 
     def pc_transform(self, adata):
         """
-        calculate the PC from adata.X and PC loading, store PCs in adata.obsm["X_pca"] and
-        loadings in adata.varm["PCs"]
+        Perform PCA transform with fitted PCA model.
+
+        Calculate the PC from adata.X and PC loading,
+        store PCs in adata.obsm["X_pca"] and loadings in adata.varm["PCs"].
 
         Parameters
         ----------
         adata :
             Adata with log_scale transformed mC fraction and selected features
+
         Returns
         -------
         PC information stored in adata.obsm and varm
@@ -378,6 +367,8 @@ class ReproduciblePCA:
 
     def mcds_to_adata_with_pc(self, mcds):
         """
+        Get adata from MCDS with PC.
+
         From raw count MCDS to adata object with PCs using fitted scaler and PC loadings.
         Steps include select features, calculate per-cell normalized mC fractions,
         log_scale transform the data with fitted scaler, and finally add PC matrix.
@@ -399,7 +390,5 @@ class ReproduciblePCA:
         return adata
 
     def dump(self, path):
-        """
-        Save the ReproduciblePCA to path
-        """
+        """Save the ReproduciblePCA to path."""
         joblib.dump(self, path)

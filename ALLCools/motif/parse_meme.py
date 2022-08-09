@@ -1,7 +1,10 @@
 import re
+
 import numpy as np
 import pandas as pd
+
 import ALLCools
+
 from .motifs import Motif, MotifSet
 
 PACKAGE_DIR = ALLCools.__path__[0]
@@ -11,7 +14,7 @@ N_SITES_PATTERN = re.compile(r"(?<=nsites= )\d+")
 SPACE_PATTERN = re.compile(r"[ \t]")
 
 
-def parse_header_lines(lines):
+def _parse_header_lines(lines):
     _alphabet = None
     for _line in lines:
         if _line.startswith("ALPHABET"):
@@ -37,7 +40,7 @@ def parse_header_lines(lines):
     return _alphabet, _background
 
 
-def parse_motif(lines, alphabet, background):
+def _parse_motif(lines, alphabet, background):
     motif_name = lines[0][5:].strip()
 
     txt = lines[1].split(":")[1].strip()
@@ -68,7 +71,7 @@ def parse_motif(lines, alphabet, background):
     return _motif
 
 
-def parse_meme_database(meme_path, meta_path):
+def _parse_meme_database(meme_path, meta_path):
     total_motifs = {}
     header = True
     header_lines = []
@@ -78,7 +81,7 @@ def parse_meme_database(meme_path, meta_path):
     with open(meme_path) as f:
         for line in f:
             if line[:5].upper() == "MOTIF":
-                alphabet, background = parse_header_lines(header_lines)
+                alphabet, background = _parse_header_lines(header_lines)
                 header = False
             if header:
                 header_lines.append(line)
@@ -89,9 +92,7 @@ def parse_meme_database(meme_path, meta_path):
 
             if (not header) and line[:5].upper() == "MOTIF":
                 if len(motif_lines) > 0:
-                    motif = parse_motif(
-                        motif_lines, alphabet=alphabet, background=background
-                    )
+                    motif = _parse_motif(motif_lines, alphabet=alphabet, background=background)
                     if motif.name in total_motifs:
                         raise ValueError
                     else:
@@ -104,7 +105,7 @@ def parse_meme_database(meme_path, meta_path):
 
         # last motif
         if len(motif_lines) > 1:
-            motif = parse_motif(motif_lines, alphabet=alphabet, background=background)
+            motif = _parse_motif(motif_lines, alphabet=alphabet, background=background)
             if motif.name in total_motifs:
                 raise ValueError
             else:
@@ -116,8 +117,9 @@ def parse_meme_database(meme_path, meta_path):
 
 
 def get_default_motif_set(database="three_databases"):
+    """Get motif set from pre-defined motif database."""
     if database == "three_databases":
-        motif_set = parse_meme_database(
+        motif_set = _parse_meme_database(
             f"{DEFAULT_MOTIF_DIR}/JASPAR2018HOCOMOCOv11Jolma2013.meme",
             f"{DEFAULT_MOTIF_DIR}/JASPAR2018HOCOMOCOv11Jolma2013.metadata.csv",
         )

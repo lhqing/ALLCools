@@ -7,8 +7,8 @@ import pathlib
 import shlex
 from collections import defaultdict
 from functools import partial
-from subprocess import run, PIPE, CalledProcessError
-from typing import Union, List
+from subprocess import PIPE, CalledProcessError, run
+from typing import List, Union
 
 import numpy as np
 import pandas as pd
@@ -49,15 +49,16 @@ COMPLIMENT_BASE = {
 
 
 def reverse_complement(seq):
-    return "".join(map(lambda i: COMPLIMENT_BASE[i], seq[::-1]))
+    """Get reverse complement of a DNA sequence."""
+    return "".join([COMPLIMENT_BASE[base] for base in reversed(seq)])
 
 
 def get_allc_chroms(allc_path):
+    """Get all chromosomes in allc file."""
     p = run(
         ["tabix", "-l", allc_path],
         check=True,
-        stderr=PIPE,
-        stdout=PIPE,
+        capture_output=True,
         encoding="utf8",
     )
     return p.stdout.strip("\n").split("\n")
@@ -65,9 +66,7 @@ def get_allc_chroms(allc_path):
 
 @functools.lru_cache(maxsize=100)
 def parse_mc_pattern(pattern: str) -> set:
-    """
-    parse mC context pattern
-    """
+    """Parse mC context pattern."""
     # IUPAC DNA abbr. table
     all_pos_list = []
     pattern = pattern.upper()
@@ -76,16 +75,16 @@ def parse_mc_pattern(pattern: str) -> set:
             all_pos_list.append(IUPAC_TABLE[base])
         except KeyError:
             raise KeyError(f"Base {base} is not in IUPAC table.")
-    context_set = set(["".join(i) for i in itertools.product(*all_pos_list)])
+    context_set = {"".join(i) for i in itertools.product(*all_pos_list)}
     return context_set
 
 
 @functools.lru_cache(maxsize=10)
 def parse_chrom_size(path, remove_chr_list=None):
     """
-    support simple UCSC chrom size file, or .fai format (1st and 2nd columns same as chrom size file)
+    Parse UCSC chrom size file.
 
-    return chrom:length dict
+    Support simple UCSC chrom size file, or .fai format (1st and 2nd columns same as chrom size file)
     """
     if remove_chr_list is None:
         remove_chr_list = []
@@ -102,6 +101,7 @@ def parse_chrom_size(path, remove_chr_list=None):
 
 
 def chrom_dict_to_id_index(chrom_dict, bin_size):
+    """Chrom dict to bin id index."""
     sum_id = 0
     index_dict = {}
     for chrom, chrom_length in chrom_dict.items():
@@ -111,16 +111,15 @@ def chrom_dict_to_id_index(chrom_dict, bin_size):
 
 
 def get_bin_id(chrom, chrom_index_dict, bin_start, bin_size) -> int:
+    """Get bin id from chrom, bin start and bin size."""
     chrom_index_start = chrom_index_dict[chrom]
     n_bin = bin_start // bin_size
     return chrom_index_start + n_bin
 
 
-def genome_region_chunks(
-    chrom_size_path: str, bin_length: int = 10000000, combine_small: bool = True
-) -> List[str]:
+def genome_region_chunks(chrom_size_path: str, bin_length: int = 10000000, combine_small: bool = True) -> List[str]:
     """
-    Split the whole genome into bins, where each bin is {bin_length} bp. Used for tabix region query
+    Split the whole genome into bins, where each bin is {bin_length} bp. Used for tabix region query.
 
     Parameters
     ----------
@@ -172,6 +171,7 @@ def genome_region_chunks(
 
 
 def parse_file_paths(input_file_paths: Union[str, list]) -> list:
+    """Parse input file paths."""
     if isinstance(input_file_paths, list) and (len(input_file_paths) == 1):
         input_file_paths = input_file_paths[0]
 
@@ -201,14 +201,14 @@ def parse_file_paths(input_file_paths: Union[str, list]) -> list:
 
 
 def get_md5(file_path):
-    file_md5 = run(
-        shlex.split(f"md5sum {file_path}"), stdout=PIPE, encoding="utf8", check=True
-    ).stdout
+    """Get md5 of a file."""
+    file_md5 = run(shlex.split(f"md5sum {file_path}"), stdout=PIPE, encoding="utf8", check=True).stdout
     file_md5 = file_md5.split(" ")[0]
     return file_md5
 
 
 def check_tbi_chroms(file_path, genome_dict, same_order=False):
+    """Check tbi chroms."""
     file_tabix_path = pathlib.Path(str(file_path) + ".tbi")
     if not file_tabix_path.exists():
         print(f"{file_path} do not have .tbi index. Use tabix to index it.")
@@ -221,11 +221,7 @@ def check_tbi_chroms(file_path, genome_dict, same_order=False):
         return False
 
     try:
-        chroms = (
-            run(["tabix", "-l", file_path], stdout=PIPE, encoding="utf8", check=True)
-            .stdout.strip()
-            .split("\n")
-        )
+        chroms = run(["tabix", "-l", file_path], stdout=PIPE, encoding="utf8", check=True).stdout.strip().split("\n")
         if len(set(chroms) - genome_dict.keys()) != 0:
             return False
 
@@ -243,11 +239,10 @@ def check_tbi_chroms(file_path, genome_dict, same_order=False):
     return True
 
 
-def generate_chrom_bin_bed_dataframe(
-    chrom_size_path: str, window_size: int, step_size: int = None
-) -> pd.DataFrame:
+def generate_chrom_bin_bed_dataframe(chrom_size_path: str, window_size: int, step_size: int = None) -> pd.DataFrame:
     """
-    Generate BED format dataframe based on UCSC chrom size file and window_size
+    Generate BED format dataframe based on UCSC chrom size file and window_size.
+
     return dataframe contain 3 columns: chrom, start, end. The index is 0 based continue bin index.
     """
     if step_size is None:
@@ -258,12 +253,10 @@ def generate_chrom_bin_bed_dataframe(
         bin_start = np.array(list(range(0, chrom_length, step_size)))
         bin_end = bin_start + window_size
         bin_end[np.where(bin_end > chrom_length)] = chrom_length
-        chrom_df = pd.DataFrame(dict(bin_start=bin_start, bin_end=bin_end))
+        chrom_df = pd.DataFrame({"bin_start": bin_start, "bin_end": bin_end})
         chrom_df["chrom"] = chrom
         records.append(chrom_df)
-    total_df = pd.concat(records)[["chrom", "bin_start", "bin_end"]].reset_index(
-        drop=True
-    )
+    total_df = pd.concat(records)[["chrom", "bin_start", "bin_end"]].reset_index(drop=True)
     return total_df
 
 
@@ -271,6 +264,7 @@ def generate_chrom_bin_bed_dataframe(
 def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
     """\
     Generate some summary statistics of 1 ALLC.
+
     1e8 rows finish in about 5 min.
 
     Parameters
@@ -285,9 +279,6 @@ def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
         The default number is usually sufficient to get pretty precise assumption.
     output_path
         Path of the output file. If None, will save the profile next to input ALLC file.
-    Returns
-    -------
-
     """
     # Find best default value
     if "gz" in allc_path:
@@ -315,7 +306,7 @@ def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
             # raw base rate
             rate = int(mc) / int(cov)
             rate_sum_dict[context] += rate
-            rate_sum2_dict[context] += rate ** 2
+            rate_sum2_dict[context] += rate**2
             # count context finally
             context_count_dict[context] += 1
             n += 1
@@ -343,17 +334,15 @@ def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
     rate_sum_series = pd.Series(rate_sum_dict)
     rate_sum2_series = pd.Series(rate_sum2_dict)
     profile_df["base_rate_mean"] = rate_sum_series / profile_df["base_count"]
-    profile_df["base_rate_var"] = (
-        rate_sum2_series / profile_df["base_count"]
-    ) - profile_df["base_rate_mean"] ** 2
+    profile_df["base_rate_var"] = (rate_sum2_series / profile_df["base_count"]) - profile_df["base_rate_mean"] ** 2
 
     # based on beta distribution mean, var
     # a / (a + b) = base_rate_mean
     # a * b / ((a + b) ^ 2 * (a + b + 1)) = base_rate_var
     # we have:
-    a = (1 - profile_df["base_rate_mean"]) * (
-        profile_df["base_rate_mean"] ** 2
-    ) / profile_df["base_rate_var"] - profile_df["base_rate_mean"]
+    a = (1 - profile_df["base_rate_mean"]) * (profile_df["base_rate_mean"] ** 2) / profile_df[
+        "base_rate_var"
+    ] - profile_df["base_rate_mean"]
     b = a * (1 / profile_df["base_rate_mean"] - 1)
     profile_df["base_beta_a"] = a
     profile_df["base_beta_b"] = b
@@ -367,17 +356,20 @@ def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
 
 def is_gz_file(filepath):
     """
-    Check if a file is gzip file, bgzip also return True
+    Check if a file is gzip file, bgzip also return True.
+
     Learnt from here: https://stackoverflow.com/questions/3703276/how-to-tell-if-a-file-is-gzip-compressed
     """
-    with open(filepath, 'rb') as test_f:
-        return test_f.read(2) == b'\x1f\x8b'
+    with open(filepath, "rb") as test_f:
+        return test_f.read(2) == b"\x1f\x8b"
 
 
 @doc_params(allc_path_doc=allc_path_doc)
 def tabix_allc(allc_path, reindex=False):
     """
-    a simple wrapper of tabix command to index 1 ALLC file
+    Tabix ALLC file.
+
+    A simple wrapper of tabix command to index 1 ALLC file.
 
     Parameters
     ----------
@@ -385,15 +377,14 @@ def tabix_allc(allc_path, reindex=False):
         {allc_path_doc}
     reindex
         If True, will force regenerate the ALLC index.
-    Returns
-    -------
-
     """
     if not is_gz_file(allc_path):
-        raise ValueError(f'{allc_path} does not appears to be a bgzip compressed file. '
-                         f'Please make sure the ALLC file is compressed by bgzip and '
-                         f'have an tabix index ".tbi" associated with it. If not, you may run bgzip/tabix by yourself '
-                         f'or use "allcools standard" command to check, compress, and tabix your file.')
+        raise ValueError(
+            f"{allc_path} does not appears to be a bgzip compressed file. "
+            f"Please make sure the ALLC file is compressed by bgzip and "
+            f'have an tabix index ".tbi" associated with it. If not, you may run bgzip/tabix by yourself '
+            f'or use "allcools standard" command to check, compress, and tabix your file.'
+        )
 
     if os.path.exists(f"{allc_path}.tbi") and not reindex:
         return
@@ -407,16 +398,16 @@ def tabix_allc(allc_path, reindex=False):
     compress_level_doc=compress_level_doc,
     remove_additional_chrom_doc=remove_additional_chrom_doc,
 )
-def standardize_allc(
-    allc_path, chrom_size_path, compress_level=5, remove_additional_chrom=False
-):
+def standardize_allc(allc_path, chrom_size_path, compress_level=5, remove_additional_chrom=False):
     """\
+    Standardize ALLC file.
+
     Standardize 1 ALLC file by checking:
-        1. No header in the ALLC file;
-        2. Chromosome names in ALLC must be same as those in the chrom_size_path file, including "chr";
-        3. Output file will be bgzipped with .tbi index
-        4. Remove additional chromosome (remove_additional_chrom=True) or
-           raise KeyError if unknown chromosome found (default)
+    1. No header in the ALLC file;
+    2. Chromosome names in ALLC must be same as those in the chrom_size_path file, including "chr";
+    3. Output file will be bgzipped with .tbi index;
+    4. Remove additional chromosome (remove_additional_chrom=True) or
+    raise KeyError if unknown chromosome found (default).
 
     Parameters
     ----------
@@ -428,9 +419,6 @@ def standardize_allc(
         {compress_level_doc}
     remove_additional_chrom
         {remove_additional_chrom_doc}
-    Returns
-    -------
-
     """
     # first check allc tabix and chrom order
     genome_dict = parse_chrom_size(chrom_size_path)
@@ -451,9 +439,7 @@ def standardize_allc(
         raw_add_chr = True
     else:
         raw_add_chr = False
-    with open_allc(allc_path) as f, open_allc(
-        allc_path + ".tmp.gz", mode="w", compresslevel=compress_level
-    ) as wf:
+    with open_allc(allc_path) as f, open_allc(allc_path + ".tmp.gz", mode="w", compresslevel=compress_level) as wf:
         cur_chrom = "TOTALLY_NOT_A_CHROM"
         cur_start = cur_chrom + "\t"
         cur_pointer = 0
@@ -512,15 +498,11 @@ def _transfer_bin_size(bin_size: int) -> str:
     """Get proper str for a large bin_size"""
     if bin_size > 1000000:
         bin_size_mode = bin_size % 1000000
-        bin_size_mode = (
-            f"{bin_size_mode / 1000000:.1f}"[1:] if bin_size_mode >= 100000 else ""
-        )
+        bin_size_mode = f"{bin_size_mode / 1000000:.1f}"[1:] if bin_size_mode >= 100000 else ""
         bin_size_str = f"{bin_size // 1000000}{bin_size_mode}m"
     elif bin_size > 1000:
         bin_size_mode = bin_size % 1000
-        bin_size_mode = (
-            f"{bin_size_mode / 1000:.1f}"[1:] if bin_size_mode >= 100 else ""
-        )
+        bin_size_mode = f"{bin_size_mode / 1000:.1f}"[1:] if bin_size_mode >= 100 else ""
         bin_size_str = f"{bin_size // 1000}{bin_size_mode}k"
     else:
         bin_size_str = f"{bin_size}"

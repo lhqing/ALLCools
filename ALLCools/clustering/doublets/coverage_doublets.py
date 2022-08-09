@@ -1,12 +1,28 @@
-import pandas as pd
-from collections import defaultdict
-import pysam
-import pathlib
+"""
+This script implements the AMULET algorithm for doublet detection on snmC like data.
+
+The AMULET algorithm consider coverage information of each cell to predict doublets.
+It is complementary to the Scrublet like algorithm that uses molecular information.
+This algorithm is only suitable for DNA based sequencing data (and where input genome DNA copy is certain).
+
+Reference:
+Thibodeau, Asa, Alper Eroglu, Christopher S. McGinnis, Nathan Lawlor, Djamel Nehar-Belaid, Romy Kursawe,
+Radu Marches, et al. 2021. “AMULET: A Novel Read Count-Based Method for Effective Multiplet Detection from
+Single Nucleus ATAC-Seq Data.” Genome Biology 22 (1): 252.
+
+"""
+
+
 import json
+import pathlib
+from collections import defaultdict
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
 import numpy as np
+import pandas as pd
+import pysam
 from scipy.stats import poisson
 from statsmodels.stats.multitest import multipletests
-from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
 def _calculate_cell_record(allc_path, output_path, cov_cutoff=2, resolution=100):
@@ -16,10 +32,9 @@ def _calculate_cell_record(allc_path, output_path, cov_cutoff=2, resolution=100)
     cov_high_cutoff = int(cov_cutoff * 2)
 
     cell_records = {}
-    i = 0
     with pysam.TabixFile(allc_path) as allc:
-        for i, line in enumerate(allc.fetch()):
-            chrom, pos, *_, cov, _ = line.split('\t')
+        for _i, line in enumerate(allc.fetch()):
+            chrom, pos, *_, cov, _ = line.split("\t")
             cov = int(cov)
             if cov_cutoff < cov <= cov_high_cutoff:
                 bin_id = int(pos) // resolution
@@ -28,16 +43,12 @@ def _calculate_cell_record(allc_path, output_path, cov_cutoff=2, resolution=100)
                 except KeyError:
                     cell_records[chrom] = defaultdict(int)
                     cell_records[chrom][bin_id] += 1
-
-    cell_total_c = i + 1
-    cell_records = {
-        chrom: list(values.keys())
-        for chrom, values in cell_records.items()
-    }
+    cell_total_c = _i + 1
+    cell_records = {chrom: list(values.keys()) for chrom, values in cell_records.items()}
     # final output to disk
-    total_records = {'total_c': cell_total_c, 'bins': cell_records}
+    total_records = {"total_c": cell_total_c, "bins": cell_records}
 
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         json.dump(total_records, f)
     return output_path
 
@@ -47,19 +58,19 @@ def calculate_blacklist_region(region_records, alpha=0.01):
     # calculate region poisson mu
     sum_of_bin = 0
     n_bin = 0
-    for chrom, chrom_values in region_records.items():
+    for chrom_values in region_records.values():
         sum_of_bin += sum(chrom_values.values())
         n_bin += len(chrom_values)
     mu = sum_of_bin / n_bin
 
     # calculate region FDR p cutoff
     total_p = []
-    for chrom, chrom_values in region_records.items():
+    for chrom_values in region_records.values():
         chrom_values = pd.Series(chrom_values)
         p_values = poisson.sf(chrom_values.values, mu)
         total_p.append(p_values)
     total_p = np.concatenate(total_p)
-    judge, *_ = multipletests(total_p, alpha=alpha, method='fdr_bh')
+    judge, *_ = multipletests(total_p, alpha=alpha, method="fdr_bh")
     p_max = total_p[judge].max()
     del total_p, judge
 
@@ -77,18 +88,20 @@ def _calculate_cell_final_values(output_path, region_blacklist):
     with open(output_path) as f:
         cell_record = json.load(f)
         total_n = 0
-        for chrom, bins in cell_record['bins'].items():
+        for chrom, bins in cell_record["bins"].items():
             total_n += len(set(bins) - region_blacklist[chrom])
-    return total_n, cell_record['total_c']
+    return total_n, cell_record["total_c"]
 
 
-def coverage_doublets(allc_dict: dict,
-                      resolution: int = 100,
-                      cov_cutoff=2,
-                      region_alpha=0.01,
-                      tmp_dir='doublets_temp_dir',
-                      cpu=1,
-                      keep_tmp=False):
+def coverage_doublets(
+    allc_dict: dict,
+    resolution: int = 100,
+    cov_cutoff=2,
+    region_alpha=0.01,
+    tmp_dir="doublets_temp_dir",
+    cpu=1,
+    keep_tmp=False,
+):
     """
     Quantify cell high coverage bins for doublets evaluation
 
@@ -108,10 +121,6 @@ def coverage_doublets(allc_dict: dict,
         number of cpu to use
     keep_tmp
         Whether save the tem_dir for debugging
-
-    Returns
-    -------
-
     """
     tmp_dir = pathlib.Path(tmp_dir)
     tmp_dir.mkdir(exist_ok=True)
@@ -122,7 +131,7 @@ def coverage_doublets(allc_dict: dict,
     def _sum_region(p):
         with open(p) as cr:
             cell_record = json.load(cr)
-            for chrom, chrom_bins in cell_record['bins'].items():
+            for chrom, chrom_bins in cell_record["bins"].items():
                 if chrom not in region_records:
                     region_records[chrom] = defaultdict(int)
                 for bin_id in chrom_bins:
@@ -139,11 +148,13 @@ def coverage_doublets(allc_dict: dict,
                 _sum_region(output_path)
                 cell_paths[cell_id] = output_path
                 continue
-            future = exe.submit(_calculate_cell_record,
-                                allc_path=path,
-                                output_path=output_path,
-                                resolution=resolution,
-                                cov_cutoff=cov_cutoff)
+            future = exe.submit(
+                _calculate_cell_record,
+                allc_path=path,
+                output_path=output_path,
+                resolution=resolution,
+                cov_cutoff=cov_cutoff,
+            )
             futures[future] = cell_id
 
         # during calculating the cell records, also summarize region records
@@ -155,7 +166,7 @@ def coverage_doublets(allc_dict: dict,
 
     # calculate dataset specific region blacklist
     region_blacklist = calculate_blacklist_region(region_records, alpha=region_alpha)
-    with open(f'{tmp_dir}/region_blacklist.json', 'w') as f:
+    with open(f"{tmp_dir}/region_blacklist.json", "w") as f:
         json.dump(region_blacklist, f)
     # list to set, dump don't support set
     region_blacklist = {k: set(v) for k, v in region_blacklist.items()}
@@ -167,12 +178,13 @@ def coverage_doublets(allc_dict: dict,
         cell_values = _calculate_cell_final_values(output_path, region_blacklist)
         total_values.append(cell_values)
         cells.append(cell_id)
-    total_values = pd.DataFrame(total_values, index=cells, columns=['TotalHCB', 'TotalC'])
+    total_values = pd.DataFrame(total_values, index=cells, columns=["TotalHCB", "TotalC"])
     # this value don't have specific mathematical meaning, for plotting
-    total_values['HCBRatio'] = total_values['TotalHCB'] * resolution / total_values['TotalC']
+    total_values["HCBRatio"] = total_values["TotalHCB"] * resolution / total_values["TotalC"]
 
     if not keep_tmp:
         import os
+
         os.rmdir(tmp_dir)
 
     return total_values

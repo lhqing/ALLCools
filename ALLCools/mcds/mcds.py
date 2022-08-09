@@ -13,15 +13,15 @@ import xarray as xr
 import yaml
 from pybedtools import BedTool
 
+from ..plot.qc_plots import cutoff_vs_cell_remain, plot_dispersion
 from .utilities import (
-    highly_variable_methylation_feature,
     calculate_posterior_mc_frac,
     determine_engine,
+    highly_variable_methylation_feature,
 )
-from ..plot.qc_plots import cutoff_vs_cell_remain, plot_dispersion
 
 
-def make_obs_df_var_df(use_data, obs_dim, var_dim):
+def _make_obs_df_var_df(use_data, obs_dim, var_dim):
     obs_df = pd.DataFrame([], index=use_data.get_index(obs_dim).astype(str))
     var_df = pd.DataFrame([], index=use_data.get_index(var_dim).astype(str))
     coord_prefix = re.compile(f"({obs_dim}|{var_dim})_")
@@ -49,78 +49,68 @@ def make_obs_df_var_df(use_data, obs_dim, var_dim):
 
 
 class MCDS(xr.Dataset):
-    """
-    MCDS Class
-    """
+    """The MCDS Class."""
 
     __slots__ = ()
 
     def __init__(self, dataset, coords=None, attrs=None, obs_dim=None, var_dim=None):
-        """
-        Init MCDS
-
-        Parameters
-        ----------
-        dataset
-        """
         if isinstance(dataset, xr.Dataset):
             data_vars = dataset.data_vars
             coords = dataset.coords if coords is None else coords
             attrs = dataset.attrs if attrs is None else attrs
         else:
             data_vars = dataset
-        super().__init__(
-            data_vars=data_vars, coords=coords, attrs=attrs
-        )
+        super().__init__(data_vars=data_vars, coords=coords, attrs=attrs)
         self.obs_dim = obs_dim
         self.var_dim = var_dim
 
         if self.obs_dim is not None:
             # validate obs_dim is unique
             if self.obs_names.duplicated().sum() != 0:
-                print('Warning: obs_names are not unique.')
+                print("Warning: obs_names are not unique.")
         return
 
     @property
     def var_dim(self):
-        if self.attrs['var_dim'] == 'null':
+        """Name of the feature dimension."""
+        if self.attrs["var_dim"] == "null":
             return None
         else:
-            return self.attrs['var_dim']
+            return self.attrs["var_dim"]
 
     @var_dim.setter
     def var_dim(self, var_dim):
+        """Set var_dim."""
         if var_dim is not None:
             if var_dim not in self.dims:
-                raise KeyError(
-                    f"{var_dim} does not occur in dimension names: {list(self.dims.keys())}"
-                )
+                raise KeyError(f"{var_dim} does not occur in dimension names: {list(self.dims.keys())}")
         else:
-            var_dim = 'null'
-        self.attrs['var_dim'] = var_dim
+            var_dim = "null"
+        self.attrs["var_dim"] = var_dim
         return
 
     @property
     def obs_dim(self):
-        if self.attrs['obs_dim'] == 'null':
+        """Name of the observation dimension."""
+        if self.attrs["obs_dim"] == "null":
             return None
         else:
-            return self.attrs['obs_dim']
+            return self.attrs["obs_dim"]
 
     @obs_dim.setter
     def obs_dim(self, obs_dim):
+        """Set obs_dim."""
         if obs_dim is not None:
             if obs_dim not in self.dims:
-                raise KeyError(
-                    f"{obs_dim} does not occur in dimension names: {list(self.dims.keys())}"
-                )
+                raise KeyError(f"{obs_dim} does not occur in dimension names: {list(self.dims.keys())}")
         else:
-            obs_dim = 'null'
-        self.attrs['obs_dim'] = obs_dim
+            obs_dim = "null"
+        self.attrs["obs_dim"] = obs_dim
         return
 
     @property
     def obs_names(self):
+        """Get obs_names."""
         if self.obs_dim is None:
             return None
         else:
@@ -129,6 +119,7 @@ class MCDS(xr.Dataset):
 
     @property
     def var_names(self):
+        """Get var_names."""
         if self.var_dim is None:
             return None
         else:
@@ -137,55 +128,53 @@ class MCDS(xr.Dataset):
 
     def _verify_dim(self, dim, mode):
         if dim is None:
-            if mode == 'var':
+            if mode == "var":
                 if self.var_dim is None:
-                    raise ValueError('MCDS does not have var_dim set, please provide the name of var_dim')
+                    raise ValueError("MCDS does not have var_dim set, please provide the name of var_dim")
                 else:
                     return self.var_dim
             else:
                 if self.obs_dim is None:
-                    raise ValueError('MCDS does not have obs_dim set, please provide the name of obs_dim')
+                    raise ValueError("MCDS does not have obs_dim set, please provide the name of obs_dim")
                 else:
                     return self.obs_dim
         else:
             if dim not in self.dims:
-                raise KeyError(
-                    f"{dim} does not occur in dimension names: {list(self.dims.keys())}"
-                )
+                raise KeyError(f"{dim} does not occur in dimension names: {list(self.dims.keys())}")
             return dim
 
     @classmethod
     def get_var_dims(cls, mcds_paths):
-        """
-        Get var_dim from MCDS files
-        """
+        """Get var_dim from MCDS files."""
         _var_dims = set()
         if isinstance(mcds_paths, (str, pathlib.Path)):
             mcds_paths = [mcds_paths]
         for mcds_path in mcds_paths:
-            config_path = pathlib.Path(f'{mcds_path}/.ALLCools')
+            config_path = pathlib.Path(f"{mcds_path}/.ALLCools")
             if config_path.exists():
-                with open(config_path, 'r') as f:
+                with open(config_path) as f:
                     config = yaml.safe_load(f)
-                    for dim in config['ds_region_dim'].values():
+                    for dim in config["ds_region_dim"].values():
                         _var_dims.add(dim)
         return list(_var_dims)
 
     @classmethod
-    def open(cls,
-             mcds_paths,
-             obs_dim="cell",
-             use_obs=None,
-             var_dim=None,
-             chunks='auto',
-             split_large_chunks=False,
-             obj_to_str=True,
-             engine=None,
-             coords='minimal',
-             compat='override',
-             **kwargs):
+    def open(
+        cls,
+        mcds_paths,
+        obs_dim="cell",
+        use_obs=None,
+        var_dim=None,
+        chunks="auto",
+        split_large_chunks=False,
+        obj_to_str=True,
+        engine=None,
+        coords="minimal",
+        compat="override",
+        **kwargs,
+    ):
         """
-        Take one or multiple MCDS file paths and create single MCDS concatenated on obs_dim
+        Take one or multiple MCDS file paths and create single MCDS concatenated on obs_dim.
 
         Parameters
         ----------
@@ -213,9 +202,9 @@ class MCDS(xr.Dataset):
         compat
             the compat parameter of :py:func:`xarray.open_mfdataset` function,
             default is "override", means skip comparing variables with the same name and pick variable from first MCDS.
-        **kwargs
-            Additional arguments passed on to :py:func:`xarray.open_dataset` or
-            :py:func:`xarray.open_mfdataset` function.
+        kwargs
+            Additional arguments passed on to :py:func:`xarray.open_dataset`
+            or :py:func:`xarray.open_mfdataset` function.
 
         Returns
         -------
@@ -227,7 +216,7 @@ class MCDS(xr.Dataset):
         _flat_mcds_paths = []
         for path in mcds_paths:
             if isinstance(path, str):
-                if '*' in path:
+                if "*" in path:
                     _flat_mcds_paths += list(glob.glob(path))
                 else:
                     _flat_mcds_paths.append(path)
@@ -238,14 +227,16 @@ class MCDS(xr.Dataset):
         if isinstance(var_dim, list):
             ds_list = []
             for _var_dim in var_dim:
-                ds = cls.open(_flat_mcds_paths,
-                              obs_dim=obs_dim,
-                              use_obs=use_obs,
-                              var_dim=_var_dim,
-                              chunks=chunks,
-                              split_large_chunks=split_large_chunks,
-                              engine=engine,
-                              **kwargs)
+                ds = cls.open(
+                    _flat_mcds_paths,
+                    obs_dim=obs_dim,
+                    use_obs=use_obs,
+                    var_dim=_var_dim,
+                    chunks=chunks,
+                    split_large_chunks=split_large_chunks,
+                    engine=engine,
+                    **kwargs,
+                )
                 ds_list.append(ds)
             ds = xr.merge(ds_list)
             return cls(ds, obs_dim=obs_dim, var_dim=None).squeeze()
@@ -255,44 +246,44 @@ class MCDS(xr.Dataset):
         _final_paths = []
         has_dataset = False
         for path in _flat_mcds_paths:
-            config_path = pathlib.Path(f'{path}/.ALLCools')
+            config_path = pathlib.Path(f"{path}/.ALLCools")
             if config_path.exists():
                 has_dataset = True
                 with open(config_path) as f:
                     config = yaml.safe_load(f)
                     if var_dim is None:
-                        if config['region_dim'] is None:
+                        if config["region_dim"] is None:
                             # try to infer if there is only one region
-                            if len(config['ds_region_dim']) == 1:
-                                _ds_var_dim = list(config['ds_region_dim'].values())[0]
+                            if len(config["ds_region_dim"]) == 1:
+                                _ds_var_dim = list(config["ds_region_dim"].values())[0]
                                 _var_dims.add(_ds_var_dim)
                             else:
                                 raise ValueError(
-                                    f'MCDS paths containing multiple datasets '
+                                    f"MCDS paths containing multiple datasets "
                                     f'{list(config["ds_region_dim"].keys())}, '
                                     'please specify one or multiple names with the "var_dim" parameter.'
                                 )
                         else:
-                            _ds_var_dim = config['region_dim']
-                            _var_dims.add(config['region_dim'])
-                        _final_paths.append(f'{path}/{_ds_var_dim}')
+                            _ds_var_dim = config["region_dim"]
+                            _var_dims.add(config["region_dim"])
+                        _final_paths.append(f"{path}/{_ds_var_dim}")
                     else:
-                        if var_dim not in config['ds_region_dim'].keys():
-                            raise KeyError(f'{path} do not have {var_dim}')
+                        if var_dim not in config["ds_region_dim"].keys():
+                            raise KeyError(f"{path} do not have {var_dim}")
                         _var_dims.add(var_dim)
-                        _final_paths.append(f'{path}/{var_dim}')
+                        _final_paths.append(f"{path}/{var_dim}")
             else:
                 # single netcdf or zarr file
                 _final_paths.append(path)
 
         if has_dataset:
             if len(_var_dims) != 1:
-                raise ValueError(f'Some MCDS dataset has multiple var_dim, please specify var_dim parameter.')
+                raise ValueError("Some MCDS dataset has multiple var_dim, please specify var_dim parameter.")
             else:
                 var_dim = _var_dims.pop()
         for path in _final_paths:
             if not pathlib.Path(path).exists():
-                raise FileNotFoundError(f'{path} does not exist.')
+                raise FileNotFoundError(f"{path} does not exist.")
 
         # determine engine
         if engine is None:
@@ -306,10 +297,9 @@ class MCDS(xr.Dataset):
                 # chunks=chunks  # do not apply chunks parameter here, apply in the end
             )
         else:
-            with dask.config.set(
-                    **{"array.slicing.split_large_chunks": split_large_chunks}):
-                kwargs['coords'] = coords
-                kwargs['compat'] = compat
+            with dask.config.set(**{"array.slicing.split_large_chunks": split_large_chunks}):
+                kwargs["coords"] = coords
+                kwargs["compat"] = compat
                 ds = xr.open_mfdataset(
                     _final_paths,
                     parallel=False,
@@ -317,49 +307,46 @@ class MCDS(xr.Dataset):
                     concat_dim=obs_dim,
                     # chunks=chunks,  # do not apply chunks parameter here, apply in the end
                     engine=engine,
-                    **kwargs
+                    **kwargs,
                 )
 
         if use_obs is not None:
-            with dask.config.set(
-                    **{"array.slicing.split_large_chunks": split_large_chunks}):
+            with dask.config.set(**{"array.slicing.split_large_chunks": split_large_chunks}):
                 use_obs_bool = ds.get_index(obs_dim).isin(use_obs)
                 ds = ds.sel({obs_dim: use_obs_bool})
 
         # change object dtype to fix-sized string dtype
         if obj_to_str:
             for k in ds.coords.keys():
-                if ds.coords[k].dtype == 'O':
+                if ds.coords[k].dtype == "O":
                     # must load then convert dtype,
                     # otherwise the size somehow not converted correctly
                     ds.coords[k] = ds.coords[k].load().astype(str)
 
         if chunks is not None:
-            if chunks == 'auto':
+            if chunks == "auto":
                 n_obs = ds.get_index(obs_dim).size
                 data_chunks = {}
                 for name, da in ds.data_vars.items():
-                    if 'chunks' in da.encoding:
+                    if "chunks" in da.encoding:
                         # if encoding exist, use the chunks in encoding
-                        data_chunks[name] = da.encoding['chunks']
+                        data_chunks[name] = da.encoding["chunks"]
                     else:
                         # else, use the default chunk setting
-                        chunks = {obs_dim: max(min(1000, max(n_obs // 10, 1)), 10),
-                                  # by default, no chunk on features
-                                  'mc_type': 1,
-                                  'count_type': 1}
-                        data_chunks[name] = tuple(chunks[k]
-                                                  if k in chunks else da.get_index(k).size
-                                                  for k in da.dims)
+                        chunks = {
+                            obs_dim: max(min(1000, max(n_obs // 10, 1)), 10),
+                            # by default, no chunk on features
+                            "mc_type": 1,
+                            "count_type": 1,
+                        }
+                        data_chunks[name] = tuple(chunks[k] if k in chunks else da.get_index(k).size for k in da.dims)
                 for name, da in ds.data_vars.items():
                     if da.chunks is None:
                         ds[name] = da.chunk(data_chunks[name])
             else:
                 # user provide specific chunks
                 if isinstance(chunks, dict):
-                    _chunks = {dim: chunks[dim]
-                    if dim in chunks else ds.get_index(dim).size
-                               for dim in ds.dims}
+                    _chunks = {dim: chunks[dim] if dim in chunks else ds.get_index(dim).size for dim in ds.dims}
                     ds = ds.chunk(chunks=_chunks)
                 else:
                     raise ValueError(f'chunks must be a dict or "auto", got {chunks}')
@@ -367,12 +354,12 @@ class MCDS(xr.Dataset):
         return cls(ds, obs_dim=obs_dim, var_dim=var_dim).squeeze()
 
     def add_mc_frac(
-            self,
-            var_dim=None,
-            da=None,
-            normalize_per_cell=True,
-            clip_norm_value=10,
-            da_suffix="frac",
+        self,
+        var_dim=None,
+        da=None,
+        normalize_per_cell=True,
+        clip_norm_value=10,
+        da_suffix="frac",
     ):
         """
         Add posterior mC rate data array for certain feature type (var_dim).
@@ -390,23 +377,27 @@ class MCDS(xr.Dataset):
         da_suffix
             name suffix appended to the calculated mC rate data array
         """
+        var_dim = self._verify_dim(var_dim, mode="var")
+
         if da is None:
+            if var_dim is None:
+                raise ValueError("Both da and var_dim are not specified")
             da = f"{var_dim}_da"
+
         if da not in self.data_vars:
             raise KeyError(f"{da} is not in this dataset")
         if var_dim not in self[da].dims:
             raise KeyError(f"{var_dim} is not a dimension of {da}")
 
-        frac = self._calculate_frac(var_dim=var_dim,
-                                    da=da,
-                                    normalize_per_cell=normalize_per_cell,
-                                    clip_norm_value=clip_norm_value)
+        frac = self._calculate_frac(
+            var_dim=var_dim, da=da, normalize_per_cell=normalize_per_cell, clip_norm_value=clip_norm_value
+        )
         self[da + "_" + da_suffix] = frac
         return
 
     def _calculate_frac(self, var_dim, da, normalize_per_cell, clip_norm_value):
-        """Helper function to calculate mC rate data array for certain feature type (var_dim)."""
-        var_dim = self._verify_dim(dim=var_dim, mode='var')
+        """Calculate mC frac data array for certain feature type (var_dim)."""
+        var_dim = self._verify_dim(dim=var_dim, mode="var")
 
         da_mc = self[da].sel(count_type="mc")
         da_cov = self[da].sel(count_type="cov")
@@ -419,12 +410,26 @@ class MCDS(xr.Dataset):
         )
         return frac
 
-    def add_m_value(self,
-                    var_dim=None,
-                    da=None,
-                    alpha=0.01,
-                    normalize_per_cell=True,
-                    da_suffix="mvalue"):
+    def add_m_value(self, var_dim=None, da=None, alpha=0.01, normalize_per_cell=True, da_suffix="mvalue"):
+        """
+        Add m value data array for certain feature type (var_dim).
+
+        M-Value is a transformation of the posterior mC fraction data array to a log ratio scale.
+        M = np.log2((frac + alpha) / (1 - frac + alpha)).
+
+        Parameters
+        ----------
+        var_dim :
+            Name of the feature type
+        da :
+            DataArray name. if None, will use f'{var_dim}_da'
+        alpha :
+            alpha value for the transformation regularization
+        normalize_per_cell :
+            if True, will normalize the mC rate data array per cell
+        da_suffix :
+            name suffix appended to the calculated mC rate data array
+        """
         if da is None:
             da = f"{var_dim}_da"
         if da not in self.data_vars:
@@ -432,10 +437,7 @@ class MCDS(xr.Dataset):
         if var_dim not in self[da].dims:
             raise KeyError(f"{var_dim} is not a dimension of {da}")
 
-        frac = self._calculate_frac(var_dim=var_dim,
-                                    da=da,
-                                    normalize_per_cell=False,
-                                    clip_norm_value=None)
+        frac = self._calculate_frac(var_dim=var_dim, da=da, normalize_per_cell=False, clip_norm_value=None)
 
         m_value = np.log2((frac + alpha) / (1 - frac + alpha))
 
@@ -446,6 +448,7 @@ class MCDS(xr.Dataset):
         return
 
     def add_mc_rate(self, *args, **kwargs):
+        """Add mC fraction data array (Deprecated)."""
         warnings.warn(
             'MCDS.add_mc_rate is renamed to MCDS.add_mc_frac, the default suffix also changed from "rate" to "frac"',
             DeprecationWarning,
@@ -467,33 +470,34 @@ class MCDS(xr.Dataset):
         da_name
             Name of the calculated data array, if None, will use f'{var_dim}_da'
         """
-        obs_dim = self._verify_dim(obs_dim, mode='obs')
-        var_dim = self._verify_dim(var_dim, mode='var')
+        obs_dim = self._verify_dim(obs_dim, mode="obs")
+        var_dim = self._verify_dim(var_dim, mode="var")
 
         if da_name is None:
-            da_name = f'{var_dim}_da'
+            da_name = f"{var_dim}_da"
 
         cov_mean_key = f"{var_dim}_cov_mean"
         if cov_mean_key in self.coords:
-            print(f'Using existing {cov_mean_key} in MCDS.coords, if this is not desired, delete the '
-                  f'existing results by `del mcds.coords["{cov_mean_key}"]` and recalculate.')
+            print(
+                f"Using existing {cov_mean_key} in MCDS.coords, if this is not desired, delete the "
+                f'existing results by `del mcds.coords["{cov_mean_key}"]` and recalculate.'
+            )
             feature_cov_mean = self.coords[cov_mean_key].to_pandas()
         else:
             _da = self[da_name]
-            if 'mc_type' in _da.dims:
+            if "mc_type" in _da.dims:
                 feature_cov_mean = _da.sel(count_type="cov").sum(dim="mc_type").mean(dim=obs_dim).squeeze().to_pandas()
             else:
                 feature_cov_mean = _da.sel(count_type="cov").mean(dim=obs_dim).squeeze().to_pandas()
             self.coords[cov_mean_key] = feature_cov_mean
-            print(
-                f"Feature {var_dim} mean cov across cells added in MCDS.coords['{cov_mean_key}']."
-            )
+            print(f"Feature {var_dim} mean cov across cells added in MCDS.coords['{cov_mean_key}'].")
         if plot:
             cutoff_vs_cell_remain(feature_cov_mean, name=f"{var_dim}_cov_mean")
         return
 
     def add_cell_metadata(self, metadata, obs_dim=None):
-        obs_dim = self._verify_dim(obs_dim, mode='obs')
+        """Add cell metadata table to the MCDS."""
+        obs_dim = self._verify_dim(obs_dim, mode="obs")
         metadata.index.name = obs_dim
         mcds_index = self.get_index(obs_dim)
         for name, col in metadata.reindex(mcds_index).items():
@@ -502,7 +506,7 @@ class MCDS(xr.Dataset):
 
     def filter_feature_by_cov_mean(self, var_dim=None, min_cov=0, max_cov=999999):
         """
-        filter MCDS by feature cov mean. add_feature_cov_mean() must be called before this function.
+        Filter MCDS by feature cov mean. add_feature_cov_mean() must be called before this function.
 
         Parameters
         ----------
@@ -512,18 +516,17 @@ class MCDS(xr.Dataset):
             Minimum cov cutoff
         max_cov
             Maximum cov cutoff
+
         Returns
         -------
         MCDS
         """
-        var_dim = self._verify_dim(var_dim, mode='var')
+        var_dim = self._verify_dim(var_dim, mode="var")
 
         try:
             feature_cov_mean = self.coords[f"{var_dim}_cov_mean"].to_pandas()
         except KeyError:
-            raise KeyError(
-                f"{var_dim}_cov_mean not found in the coords, run add_feature_cov_mean() first."
-            )
+            raise KeyError(f"{var_dim}_cov_mean not found in the coords, run add_feature_cov_mean() first.")
 
         judge: pd.Series = (feature_cov_mean > min_cov) & (feature_cov_mean < max_cov)
         with dask.config.set(**{"array.slicing.split_large_chunks": False}):
@@ -537,35 +540,36 @@ class MCDS(xr.Dataset):
 
     def get_feature_bed(self, var_dim=None):
         """
-        Get a bed format data frame of the var_dim
+        Get a bed format data frame of the var_dim.
 
         Parameters
         ----------
         var_dim
             Name of var_dim
+
         Returns
         -------
         pd.DataFrame
         """
-        var_dim = self._verify_dim(var_dim, mode='var')
-        if f"{var_dim}_bin_start" in self.coords:
+        var_dim = self._verify_dim(var_dim, mode="var")
+        if f"{var_dim}_bin_start" in self:
             start_name = f"{var_dim}_bin_start"
-        elif f"{var_dim}_start" in self.coords:
+        elif f"{var_dim}_start" in self:
             start_name = f"{var_dim}_start"
         else:
-            raise KeyError(f'Neither {var_dim}_bin_start nor {var_dim}_start exists in MCDS.coords')
-        if f"{var_dim}_bin_end" in self.coords:
+            raise KeyError(f"Neither {var_dim}_bin_start nor {var_dim}_start exists in MCDS")
+        if f"{var_dim}_bin_end" in self:
             end_name = f"{var_dim}_bin_end"
-        elif f"{var_dim}_end" in self.coords:
+        elif f"{var_dim}_end" in self:
             end_name = f"{var_dim}_end"
         else:
-            raise KeyError(f'Neither {var_dim}_bin_end nor {var_dim}_end exists in MCDS.coords')
+            raise KeyError(f"Neither {var_dim}_bin_end nor {var_dim}_end exists in MCDS")
 
         bed_df = pd.DataFrame(
             [
-                self.coords[f"{var_dim}_chrom"].to_pandas(),
-                self.coords[start_name].to_pandas(),
-                self.coords[end_name].to_pandas(),
+                self.get(f"{var_dim}_chrom").to_pandas(),
+                self.get(start_name).to_pandas(),
+                self.get(end_name).to_pandas(),
             ],
             index=["chrom", "start", "end"],
             columns=self.get_index(var_dim),
@@ -574,7 +578,7 @@ class MCDS(xr.Dataset):
 
     def remove_black_list_region(self, black_list_path, var_dim=None, f=0.2):
         """
-        Remove regions overlap (bedtools intersect -f {f}) with regions in the black_list_path
+        Remove regions overlap (bedtools intersect -f {f}) with regions in the black_list_path.
 
         Parameters
         ----------
@@ -584,11 +588,12 @@ class MCDS(xr.Dataset):
             Path to the black list bed file
         f
             Fraction of overlap when calling bedtools intersect
+
         Returns
         -------
         MCDS
         """
-        var_dim = self._verify_dim(var_dim, mode='var')
+        var_dim = self._verify_dim(var_dim, mode="var")
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -597,18 +602,12 @@ class MCDS(xr.Dataset):
             black_list_bed = BedTool(black_list_path)
             black_feature = feature_bed.intersect(black_list_bed, f=f, wa=True)
             try:
-                black_feature_index = (
-                    black_feature.to_dataframe()
-                    .set_index(["chrom", "start", "end"])
-                    .index
-                )
+                black_feature_index = black_feature.to_dataframe().set_index(["chrom", "start", "end"]).index
             except pd.errors.EmptyDataError:
                 print("No feature overlapping the black list bed file.")
                 return self
         black_feature_id = pd.Index(
-            feature_bed_df.reset_index()
-            .set_index(["chrom", "start", "end"])
-            .loc[black_feature_index][var_dim]
+            feature_bed_df.reset_index().set_index(["chrom", "start", "end"]).loc[black_feature_index][var_dim]
         )
 
         print(
@@ -621,7 +620,7 @@ class MCDS(xr.Dataset):
 
     def remove_chromosome(self, exclude_chromosome=None, include_chromosome=None, var_dim=None):
         """
-        Remove regions in specific chromosome
+        Remove regions in specific chromosome.
 
         Parameters
         ----------
@@ -631,18 +630,19 @@ class MCDS(xr.Dataset):
             if provided, only these chromosomes will be removed
         include_chromosome
             if provided, only these chromosomes will be kept
+
         Returns
         -------
         MCDS (xr.Dataset)
         """
-        var_dim = self._verify_dim(var_dim, mode='var')
+        var_dim = self._verify_dim(var_dim, mode="var")
         if exclude_chromosome is not None:
-            judge = self.coords[f"{var_dim}_chrom"].isin(exclude_chromosome)
+            judge = self.get(f"{var_dim}_chrom").isin(exclude_chromosome)
             print(f"{int(judge.sum())} {var_dim} features in {exclude_chromosome} removed.")
             with dask.config.set(**{"array.slicing.split_large_chunks": False}):
                 mcds = self.sel({var_dim: ~judge})
         if include_chromosome is not None:
-            judge = self.coords[f"{var_dim}_chrom"].isin(include_chromosome)
+            judge = self.get(f"{var_dim}_chrom").isin(include_chromosome)
             print(f"{int(judge.sum())} {var_dim} features in {include_chromosome} kept.")
             with dask.config.set(**{"array.slicing.split_large_chunks": False}):
                 mcds = self.sel({var_dim: judge})
@@ -658,34 +658,28 @@ class MCDS(xr.Dataset):
         raise KeyError(f"{name1} or {name2} not found in MCDS.")
 
     def calculate_hvf_svr(
-            self,
-            mc_type=None,
-            var_dim=None,
-            obs_dim=None,
-            n_top_feature=5000,
-            da_name=None,
-            da_suffix="frac",
-            plot=True
+        self, mc_type=None, var_dim=None, obs_dim=None, n_top_feature=5000, da_name=None, da_suffix="frac", plot=True
     ):
-        from sklearn.svm import SVR
+        """Calculate the highly variable features (hvf) with the Support Vector Regression model."""
         import plotly.graph_objects as go
-        obs_dim = self._verify_dim(obs_dim, mode='obs')
-        var_dim = self._verify_dim(var_dim, mode='var')
+        from sklearn.svm import SVR
+
+        obs_dim = self._verify_dim(obs_dim, mode="obs")
+        var_dim = self._verify_dim(var_dim, mode="var")
 
         if da_name is None:
-            da_name = f'{var_dim}_da'
+            da_name = f"{var_dim}_da"
             frac_da_name = self._get_da_name(var_dim, da_suffix)
         else:
-            frac_da_name = f'{da_name}_{da_suffix}'
+            frac_da_name = f"{da_name}_{da_suffix}"
 
         frac_da = self[frac_da_name]
         count_da = self[da_name]
-        if 'mc_type' in self.dims:
+        if "mc_type" in self.dims:
             if mc_type is None:
-                mc_types = self.get_index('mc_type')
+                mc_types = self.get_index("mc_type")
                 if mc_types.size > 1:
-                    raise ValueError(f'Data array has multiple mc_types, '
-                                     f'please specify mc_type parameter.')
+                    raise ValueError("Data array has multiple mc_types, please specify mc_type parameter.")
                 else:
                     mc_type = mc_types[0]
             feature_mc_frac_mean = frac_da.sel(mc_type=mc_type).mean(dim=obs_dim).to_pandas()
@@ -700,13 +694,9 @@ class MCDS(xr.Dataset):
         judge = (feature_mc_frac_mean > 0) & (feature_std > 0) & (feature_cov_mean > 0)
         if n_top_feature >= judge.size:
             n_top_feature = judge.size
-            print(
-                "n_top_feature is than total number of features, will use all features"
-            )
+            print("n_top_feature is than total number of features, will use all features")
         feature_mc_frac_mean = feature_mc_frac_mean[judge]
-        feature_var = (
-                feature_std[judge] ** 2
-        )  # to be consistent with previous bin-based method, use var here
+        feature_var = feature_std[judge] ** 2  # to be consistent with previous bin-based method, use var here
         feature_cov_mean = feature_cov_mean[judge]
 
         # prepare data
@@ -758,23 +748,21 @@ class MCDS(xr.Dataset):
                         z=np.log2(plot_data["dispersion"]),
                         mode="markers",
                         hoverinfo="none",
-                        marker=dict(
-                            size=2,
-                            color=plot_data["feature_select"]
-                            .map({True: "red", False: "gray"})
-                            .tolist(),  # set color to an array/list of desired values
-                            opacity=0.8,
-                        ),
+                        marker={
+                            "size": 2,
+                            "color": plot_data["feature_select"].map({True: "red", False: "gray"}).tolist(),
+                            "opacity": 0.8,
+                        },
                     )
                 ]
             )
             fig.update_layout(
-                scene=dict(
-                    xaxis_title="mC Frac. Mean",
-                    yaxis_title="Coverage Mean",
-                    zaxis_title="log2(Dispersion)",
-                ),
-                margin=dict(r=0, b=0, l=0, t=0),
+                scene={
+                    "xaxis_title": "mC Frac. Mean",
+                    "yaxis_title": "Coverage Mean",
+                    "zaxis_title": "log2(Dispersion)",
+                },
+                margin={"r": 0, "b": 0, "l": 0, "t": 0},
             )
             fig.show()
 
@@ -786,21 +774,21 @@ class MCDS(xr.Dataset):
         return hvf_df
 
     def calculate_hvf(
-            self,
-            mc_type=None,
-            var_dim=None,
-            obs_dim=None,
-            min_disp=0.5,
-            max_disp=None,
-            min_mean=0,
-            max_mean=5,
-            n_top_feature=5000,
-            bin_min_features=5,
-            mean_binsize=0.05,
-            cov_binsize=100,
-            da_name=None,
-            da_suffix="frac",
-            plot=True
+        self,
+        mc_type=None,
+        var_dim=None,
+        obs_dim=None,
+        min_disp=0.5,
+        max_disp=None,
+        min_mean=0,
+        max_mean=5,
+        n_top_feature=5000,
+        bin_min_features=5,
+        mean_binsize=0.05,
+        cov_binsize=100,
+        da_name=None,
+        da_suffix="frac",
+        plot=True,
     ):
         """
         Calculate normalized dispersion to select highly variable features.
@@ -842,21 +830,20 @@ class MCDS(xr.Dataset):
         -------
         pd.DataFrame
         """
-        obs_dim = self._verify_dim(obs_dim, mode='obs')
-        var_dim = self._verify_dim(var_dim, mode='var')
+        obs_dim = self._verify_dim(obs_dim, mode="obs")
+        var_dim = self._verify_dim(var_dim, mode="var")
 
         if da_name is None:
             frac_da_name = self._get_da_name(var_dim, da_suffix)
         else:
-            frac_da_name = f'{da_name}_{da_suffix}'
+            frac_da_name = f"{da_name}_{da_suffix}"
 
         frac_da = self[frac_da_name]
-        if 'mc_type' in self.dims:
+        if "mc_type" in self.dims:
             if mc_type is None:
-                mc_types = self.get_index('mc_type')
+                mc_types = self.get_index("mc_type")
                 if mc_types.size > 1:
-                    raise ValueError(f'Data array has multiple mc_types, '
-                                     f'please specify mc_type parameter.')
+                    raise ValueError("Data array has multiple mc_types, please specify mc_type parameter.")
                 else:
                     mc_type = mc_types[0]
             matrix = frac_da.sel(mc_type=mc_type).squeeze()
@@ -882,9 +869,7 @@ class MCDS(xr.Dataset):
 
         selection = hvf_df["feature_select"]
         print(f"Total Feature Number:     {selection.size}")
-        print(
-            f"Highly Variable Feature:  {selection.sum()} ({(selection.sum() / selection.size * 100):.1f}%)"
-        )
+        print(f"Highly Variable Feature:  {selection.sum()} ({(selection.sum() / selection.size * 100):.1f}%)")
 
         if plot:
             plot_dispersion(
@@ -903,16 +888,18 @@ class MCDS(xr.Dataset):
                 self.coords[f"{var_dim}_{mc_type}_{name}"] = column
         return hvf_df
 
-    def get_count_adata(self,
-                        da_name,
-                        obs_dim=None,
-                        var_dim=None,
-                        sparse=True,
-                        loading_chunk=10000,
-                        binarize_cutoff=None,
-                        dtype='float32',
-                        use_vars=None,
-                        split_large_chunks=False):
+    def get_count_adata(
+        self,
+        da_name,
+        obs_dim=None,
+        var_dim=None,
+        sparse=True,
+        loading_chunk=10000,
+        binarize_cutoff=None,
+        dtype="float32",
+        use_vars=None,
+        split_large_chunks=False,
+    ):
         """
         Convert a cell-by-feature count dataarray to an adata object.
 
@@ -942,17 +929,16 @@ class MCDS(xr.Dataset):
         -------
         anndata.AnnData
         """
-
-        with dask.config.set(**{'array.slicing.split_large_chunks': split_large_chunks}):
-            obs_dim = self._verify_dim(obs_dim, mode='obs')
-            var_dim = self._verify_dim(var_dim, mode='var')
+        with dask.config.set(**{"array.slicing.split_large_chunks": split_large_chunks}):
+            obs_dim = self._verify_dim(obs_dim, mode="obs")
+            var_dim = self._verify_dim(var_dim, mode="var")
             da = self[da_name].transpose(obs_dim, var_dim)
 
             # load matrix by chunks
             da_obs = da.get_index(obs_dim)
             total_data = []
             for chunk_start in range(0, da_obs.size, loading_chunk):
-                chunk_cells = da_obs[chunk_start:chunk_start + loading_chunk]
+                chunk_cells = da_obs[chunk_start : chunk_start + loading_chunk]
                 chunk_da = da.sel({obs_dim: chunk_cells}).load()
 
                 if use_vars is not None:
@@ -967,8 +953,7 @@ class MCDS(xr.Dataset):
                 if binarize_cutoff is not None:
                     chunk = (chunk > binarize_cutoff).astype(np.int8)
                 total_data.append(chunk)
-                print(f"Loading chunk {chunk_start}-{min(chunk_start + loading_chunk, da_obs.size)}"
-                      f"/{da_obs.size}")
+                print(f"Loading chunk {chunk_start}-{min(chunk_start + loading_chunk, da_obs.size)}" f"/{da_obs.size}")
 
         # concatenate all chunks
         if sparse:
@@ -976,33 +961,33 @@ class MCDS(xr.Dataset):
         else:
             total_data = np.vstack(total_data)
 
-        obs_df, var_df = make_obs_df_var_df(da, obs_dim, var_dim)
+        obs_df, var_df = _make_obs_df_var_df(da, obs_dim, var_dim)
         if use_vars is not None:
             var_df = var_df.loc[use_vars, :].copy()
 
         if dtype is None:
             dtype = total_data.dtype
 
-        adata = anndata.AnnData(X=total_data,
-                                obs=obs_df,
-                                var=var_df,
-                                dtype=dtype)
+        adata = anndata.AnnData(X=total_data, obs=obs_df, var=var_df, dtype=dtype)
 
-        if 'chrom' in adata.var:
-            chroms = adata.var['chrom'].astype('category')
+        if "chrom" in adata.var:
+            chroms = adata.var["chrom"].astype("category")
             from natsort import natsorted
-            adata.var['chrom'] = chroms.cat.reorder_categories(natsorted(chroms.cat.categories))
+
+            adata.var["chrom"] = chroms.cat.reorder_categories(natsorted(chroms.cat.categories))
         return adata
 
-    def get_score_adata(self,
-                        mc_type,
-                        quant_type,
-                        obs_dim=None,
-                        var_dim=None,
-                        sparse=True,
-                        dtype='float32',
-                        loading_chunk=50000,
-                        binarize_cutoff=None):
+    def get_score_adata(
+        self,
+        mc_type,
+        quant_type,
+        obs_dim=None,
+        var_dim=None,
+        sparse=True,
+        dtype="float32",
+        loading_chunk=50000,
+        binarize_cutoff=None,
+    ):
         """
         Convert a cell-by-feature methylation score dataarray to an adata object.
 
@@ -1030,30 +1015,32 @@ class MCDS(xr.Dataset):
         -------
         anndata.AnnData
         """
-
-        QUANT_TYPES = ['hypo-score', 'hyper-score']
-        if quant_type.lower().startswith('hypo'):
-            quant_type = 'hypo-score'
-        elif quant_type.lower().startswith('hyper'):
-            quant_type = 'hyper_score'
+        QUANT_TYPES = ["hypo-score", "hyper-score"]
+        if quant_type.lower().startswith("hypo"):
+            quant_type = "hypo-score"
+        elif quant_type.lower().startswith("hyper"):
+            quant_type = "hyper_score"
         else:
             pass
         if quant_type not in QUANT_TYPES:
-            raise ValueError(f'quant_type need to be in {QUANT_TYPES}, got {quant_type}.')
+            raise ValueError(f"quant_type need to be in {QUANT_TYPES}, got {quant_type}.")
 
-        obs_dim = self._verify_dim(obs_dim, mode='obs')
-        var_dim = self._verify_dim(var_dim, mode='var')
-        da_name = f'{var_dim}_da_{mc_type}-{quant_type}'
-        adata = self.get_count_adata(da_name=da_name,
-                                     obs_dim=obs_dim,
-                                     var_dim=var_dim,
-                                     sparse=sparse,
-                                     dtype=dtype,
-                                     loading_chunk=loading_chunk,
-                                     binarize_cutoff=binarize_cutoff)
+        obs_dim = self._verify_dim(obs_dim, mode="obs")
+        var_dim = self._verify_dim(var_dim, mode="var")
+        da_name = f"{var_dim}_da_{mc_type}-{quant_type}"
+        adata = self.get_count_adata(
+            da_name=da_name,
+            obs_dim=obs_dim,
+            var_dim=var_dim,
+            sparse=sparse,
+            dtype=dtype,
+            loading_chunk=loading_chunk,
+            binarize_cutoff=binarize_cutoff,
+        )
         return adata
 
-    def add_feature_selection_column(self, feature_select, col_name='VAR_DIM_feature_select', var_dim=None):
+    def add_feature_selection_column(self, feature_select, col_name="VAR_DIM_feature_select", var_dim=None):
+        """Manually add a feature selection column to the MCDS."""
         if var_dim is None:
             var_dim = self.var_dim
         features = self.get_index(var_dim)
@@ -1061,29 +1048,30 @@ class MCDS(xr.Dataset):
         if isinstance(feature_select, list):
             feature_select = np.array(feature_select)
 
-        if feature_select.dtype == 'bool':
+        if feature_select.dtype == "bool":
             feature_select = pd.Series(feature_select, index=features)
         else:
             feature_select = pd.Series(features.isin(feature_select), index=features)
 
-        if col_name.startswith('VAR_DIM'):
-            col_name = col_name.replace('VAR_DIM', var_dim)
+        if col_name.startswith("VAR_DIM"):
+            col_name = col_name.replace("VAR_DIM", var_dim)
         self.coords[col_name] = feature_select
         return
 
     def get_adata(
-            self,
-            mc_type=None,
-            obs_dim=None,
-            var_dim=None,
-            da_name=None,
-            da_suffix="frac",
-            select_hvf=True,
-            dtype='float32',
-            split_large_chunks=False
+        self,
+        mc_type=None,
+        obs_dim=None,
+        var_dim=None,
+        da_name=None,
+        da_suffix="frac",
+        select_hvf=True,
+        dtype="float32",
+        split_large_chunks=False,
     ):
         """
-        Get anndata from MCDS mC rate matrix
+        Get anndata from MCDS mC rate matrix.
+
         Parameters
         ----------
         mc_type
@@ -1105,15 +1093,14 @@ class MCDS(xr.Dataset):
         -------
         anndata.Anndata
         """
-        obs_dim = self._verify_dim(obs_dim, mode='obs')
-        var_dim = self._verify_dim(var_dim, mode='var')
+        obs_dim = self._verify_dim(obs_dim, mode="obs")
+        var_dim = self._verify_dim(var_dim, mode="var")
 
-        if 'mc_type' in self.dims:
+        if "mc_type" in self.dims:
             if mc_type is None:
-                mc_types = self.get_index('mc_type')
+                mc_types = self.get_index("mc_type")
                 if mc_types.size > 1:
-                    raise ValueError(f'Data array has multiple mc_types, '
-                                     f'please specify mc_type parameter.')
+                    raise ValueError("Data array has multiple mc_types, please specify mc_type parameter.")
                 else:
                     mc_type = mc_types[0]
         else:
@@ -1122,11 +1109,9 @@ class MCDS(xr.Dataset):
         if da_name is None:
             frac_da_name = self._get_da_name(var_dim, da_suffix)
         else:
-            frac_da_name = f'{da_name}_{da_suffix}'
+            frac_da_name = f"{da_name}_{da_suffix}"
 
-        with dask.config.set(
-                **{"array.slicing.split_large_chunks": split_large_chunks}
-        ):
+        with dask.config.set(**{"array.slicing.split_large_chunks": split_large_chunks}):
             frac_da = self[frac_da_name]
             if mc_type is None:
                 if select_hvf:
@@ -1135,12 +1120,7 @@ class MCDS(xr.Dataset):
                     else:
                         col_name = f"{var_dim}_feature_select"
                     try:
-                        use_features = (
-                            self.coords[col_name]
-                            .to_pandas()
-                            .dropna()
-                            .astype(bool)
-                        )
+                        use_features = self.coords[col_name].to_pandas().dropna().astype(bool)
                         use_features = use_features[use_features].index
                         use_data = frac_da.sel({var_dim: use_features}).squeeze()
                     except KeyError:
@@ -1158,12 +1138,7 @@ class MCDS(xr.Dataset):
                     else:
                         col_name = f"{var_dim}_{mc_type}_feature_select"
                     try:
-                        use_features = (
-                            self.coords[col_name]
-                            .to_pandas()
-                            .dropna()
-                            .astype(bool)
-                        )
+                        use_features = self.coords[col_name].to_pandas().dropna().astype(bool)
                         use_features = use_features[use_features].index
                         use_data = frac_da.sel({"mc_type": mc_type, var_dim: use_features}).squeeze()
                     except KeyError:
@@ -1175,25 +1150,18 @@ class MCDS(xr.Dataset):
                 else:
                     use_data = frac_da.sel({"mc_type": mc_type}).squeeze()
 
-            obs_df, var_df = make_obs_df_var_df(use_data, obs_dim, var_dim)
+            obs_df, var_df = _make_obs_df_var_df(use_data, obs_dim, var_dim)
 
             adata = anndata.AnnData(
-                X=use_data.astype(dtype).transpose(obs_dim, var_dim).values,
-                obs=obs_df,
-                var=var_df,
-                dtype=dtype
+                X=use_data.astype(dtype).transpose(obs_dim, var_dim).values, obs=obs_df, var=var_df, dtype=dtype
             )
         return adata
 
     def merge_cluster(
-            self,
-            cluster_col,
-            obs_dim=None,
-            add_mc_frac=True,
-            add_overall_mc=True,
-            overall_mc_da="chrom100k_da"
+        self, cluster_col, obs_dim=None, add_mc_frac=True, add_overall_mc=True, overall_mc_da="chrom100k_da"
     ):
-        obs_dim = self._verify_dim(obs_dim, mode='obs')
+        """Merge cell MCDS into cluster MCDS by sum on the obs_dim."""
+        obs_dim = self._verify_dim(obs_dim, mode="obs")
 
         if isinstance(cluster_col, str):
             cluster_col = cluster_col
@@ -1211,19 +1179,11 @@ class MCDS(xr.Dataset):
                         cluster_mcds.add_mc_frac(var_dim=name[:-3])
 
             if add_overall_mc:
-                if 'mc_type' in cluster_mcds.dims:
+                if "mc_type" in cluster_mcds.dims:
                     for mc_type in cluster_mcds.get_index("mc_type"):
                         overall_mc_dim = overall_mc_da[:-3]
-                        mc = (
-                            cluster_mcds[overall_mc_da]
-                            .sel(mc_type=mc_type, count_type="mc")
-                            .sum(dim=overall_mc_dim)
-                        )
-                        cov = (
-                            cluster_mcds[overall_mc_da]
-                            .sel(mc_type=mc_type, count_type="cov")
-                            .sum(dim=overall_mc_dim)
-                        )
+                        mc = cluster_mcds[overall_mc_da].sel(mc_type=mc_type, count_type="mc").sum(dim=overall_mc_dim)
+                        cov = cluster_mcds[overall_mc_da].sel(mc_type=mc_type, count_type="cov").sum(dim=overall_mc_dim)
                         cluster_mcds.coords[f"{cluster_col}_{mc_type}_overall"] = mc / cov
                 else:
                     overall_mc_dim = overall_mc_da[:-3]
@@ -1234,20 +1194,20 @@ class MCDS(xr.Dataset):
         return cluster_mcds
 
     def to_region_ds(self, region_dim=None):
-        region_dim = self._verify_dim(region_dim, mode='var')
+        """Turn the MCDS into a RegionDS."""
+        region_dim = self._verify_dim(region_dim, mode="var")
 
         from .region_ds import RegionDS
+
         _region_ds = RegionDS(self, region_dim=region_dim)
         return _region_ds
 
-    def write_dataset(self, output_path,
-                      mode='w-',
-                      obs_dim=None,
-                      var_dims: Union[str, list] = None,
-                      use_obs=None,
-                      chunks='auto'):
+    def write_dataset(
+        self, output_path, mode="w-", obs_dim=None, var_dims: Union[str, list] = None, use_obs=None, chunks="auto"
+    ):
         """
         Write MCDS into an on-disk zarr dataset.
+
         Data arrays for each var_dim will be saved in separate sub-directories of output_path.
         The use_obs can be used to select and order observation accordingly.
 
@@ -1271,27 +1231,20 @@ class MCDS(xr.Dataset):
         -------
         output_path
         """
-        with dask.config.set(**{'array.slicing.split_large_chunks': False}):
-            self._write_dataset(output_path=output_path,
-                                mode=mode,
-                                obs_dim=obs_dim,
-                                var_dims=var_dims,
-                                use_obs=use_obs,
-                                chunks=chunks)
+        with dask.config.set(**{"array.slicing.split_large_chunks": False}):
+            self._write_dataset(
+                output_path=output_path, mode=mode, obs_dim=obs_dim, var_dims=var_dims, use_obs=use_obs, chunks=chunks
+            )
         return
 
-    def _write_dataset(self,
-                       output_path,
-                       mode='w-',
-                       obs_dim=None,
-                       var_dims: Union[str, list] = None,
-                       use_obs=None,
-                       chunks='auto'):
+    def _write_dataset(
+        self, output_path, mode="w-", obs_dim=None, var_dims: Union[str, list] = None, use_obs=None, chunks="auto"
+    ):
         # save mcds to a location, if the location is a MCDS dataset, auto save to sub_dir and modify .ALLCools
         # deal with large save issue, load by chunk and write append
-        obs_dim = self._verify_dim(obs_dim, mode='obs')
+        obs_dim = self._verify_dim(obs_dim, mode="obs")
         if var_dims is None:
-            var_dims = [self._verify_dim(None, mode='var')]
+            var_dims = [self._verify_dim(None, mode="var")]
         else:
             if isinstance(var_dims, str):
                 var_dims = [var_dims]
@@ -1300,14 +1253,17 @@ class MCDS(xr.Dataset):
 
         # determine output_path type
         output_path = pathlib.Path(output_path)
-        config_path = pathlib.Path(f'{output_path}/.ALLCools')
+        config_path = pathlib.Path(f"{output_path}/.ALLCools")
         if config_path.exists():
-            if mode == 'w-':
-                raise FileExistsError(f'{output_path} already exist. Use mode="a" '
-                                      f'if you want to add additional data array to exist dataset. '
-                                      f'Or use mode="w" to overwrite existing dataset')
+            if mode == "w-":
+                raise FileExistsError(
+                    f'{output_path} already exist. Use mode="a" '
+                    f"if you want to add additional data array to exist dataset. "
+                    f'Or use mode="w" to overwrite existing dataset'
+                )
             else:
                 import shutil
+
                 shutil.rmtree(output_path)
 
         # separate data_vars by var_dim
@@ -1320,99 +1276,111 @@ class MCDS(xr.Dataset):
                     if var_dim_count == 1:
                         data_vars_dict[var_dim].append(da_name)
                     else:
-                        raise ValueError(f'{da_name} contain more then one var_dim. '
-                                         f'Dims of {da_name} is {da.dims}')
+                        raise ValueError(f"{da_name} contain more then one var_dim. " f"Dims of {da_name} is {da.dims}")
+
+        # separate coordinates by var_dim
+        # coords_dict = {k: [] for k in var_dims}
+        # for coord_name, coord in self.coords.items():
+        #     var_dim_count = 0
+        #     for var_dim in var_dims:
+        #         if var_dim in coord.dims:
+        #             var_dim_count += 1
+        #             if var_dim_count == 1:
+        #                 coords_dict[var_dim].append(coord_name)
+        #             else:
+        #                 raise ValueError(f"{coord_name} contain more then one var_dim. "
+        #                                  f"Dims of {coord_name} is {coord.dims}")
 
         obs_index = self.get_index(obs_dim)
         if use_obs is not None:
             # check use_obs first
             if (~use_obs.isin(obs_index)).sum() > 0:
-                raise IndexError(f'Not all obs id in use_obs parameter exist in MCDS '
-                                 f'{self.obs_dim if obs_dim is None else obs_dim} dim')
+                raise IndexError(
+                    f"Not all obs id in use_obs parameter exist in MCDS "
+                    f"{self.obs_dim if obs_dim is None else obs_dim} dim"
+                )
 
         # determine chunks
         n_obs = obs_index.size
-        if (chunks == 'auto') or (chunks is None):
-            chunks = {obs_dim: max(min(1000, max(n_obs // 10, 1)), 10),
-                      'mc_type': 1,
-                      'count_type': 1}
+        if (chunks == "auto") or (chunks is None):
+            chunks = {obs_dim: min(10000, max(n_obs // 10, 1000)), "mc_type": 1, "count_type": 1}
         full_chunks = {
-            dim: size
-            if ((dim not in chunks) or (chunks[dim] is None))
-            else chunks[dim]
+            dim: size if ((dim not in chunks) or (chunks[dim] is None)) else chunks[dim]
             for dim, size in self.dims.items()
         }
 
         for var_dim, da_names in data_vars_dict.items():
-            print(f'Saving {var_dim}')
-            _this_output_path = f'{output_path}/{var_dim}'
+            print(f"Saving {var_dim}")
+            _this_output_path = f"{output_path}/{var_dim}"
             if pathlib.Path(_this_output_path).exists():
-                print(f'{output_path}/{var_dim} will be overwrote by new data array')
+                print(f"{output_path}/{var_dim} will be overwrote by new data array")
 
             if len(da_names) == 0:
-                print(f'No data for var_dim {var_dim}.')
+                print(f"No data for var_dim {var_dim}.")
             else:
                 _mcds = self[da_names]
+                # for coord_names in coords_dict.values():
+                #     _mcds = _mcds.assign_coords(**{k: self.coords[k] for k in coord_names})
+
                 # pop out obs_dim and var_dim from attrs, do not save these to dataset
-                _mcds.attrs.pop('obs_dim')
-                _mcds.attrs.pop('var_dim')
+                _mcds.attrs.pop("obs_dim")
+                _mcds.attrs.pop("var_dim")
 
                 total_obs = obs_index.size if use_obs is None else use_obs.size
                 obs_chunk_size = chunks[obs_dim]
                 for i, chunk_start in enumerate(range(0, total_obs, obs_chunk_size)):
-                    print(f'Saving chunk {i}: {chunk_start} - '
-                          f'{min(chunk_start + obs_chunk_size, total_obs)}')
+                    print(f"Saving chunk {i}: {chunk_start} - " f"{min(chunk_start + obs_chunk_size, total_obs)}")
                     if use_obs is None:
-                        _obs_chunk = obs_index[chunk_start:chunk_start + obs_chunk_size]
+                        _obs_chunk = obs_index[chunk_start : chunk_start + obs_chunk_size]
                         _chunk_ds = _mcds.sel({obs_dim: _obs_chunk}).load()
                     else:
-                        _obs_chunk = use_obs[chunk_start:chunk_start + obs_chunk_size]
+                        _obs_chunk = use_obs[chunk_start : chunk_start + obs_chunk_size]
                         # load first, order next, to prevent unordered index causing more chunks
                         _chunk_ds = _mcds.sel({obs_dim: obs_index.isin(_obs_chunk)}).load()
                         _chunk_ds = _chunk_ds.sel({obs_dim: _obs_chunk})
 
                     # add chunk to encoding
                     for var in _chunk_ds.variables:
-                        _chunk_ds[var].encoding['chunks'] = tuple(full_chunks[d]
-                                                                  for d in _chunk_ds[var].dims)
-                        if 'preferred_chunks' in _chunk_ds[var].encoding:
-                            _chunk_ds[var].encoding['preferred_chunks'] = {
-                                d: full_chunks[d]
-                                for d in _chunk_ds[var].dims
+                        _chunk_ds[var].encoding["chunks"] = tuple(full_chunks[d] for d in _chunk_ds[var].dims)
+                        if "preferred_chunks" in _chunk_ds[var].encoding:
+                            _chunk_ds[var].encoding["preferred_chunks"] = {
+                                d: full_chunks[d] for d in _chunk_ds[var].dims
                             }
-                        if 'compressor' in _chunk_ds[var].encoding:
+                        if "compressor" in _chunk_ds[var].encoding:
                             try:
-                                _chunk_ds[var].encoding['compressor'].clevel = 1
+                                _chunk_ds[var].encoding["compressor"].clevel = 1
                             except AttributeError:
                                 pass
                     if i == 0:
-                        _chunk_ds.to_zarr(_this_output_path, mode='w')
+                        _chunk_ds.to_zarr(_this_output_path, mode="w")
                     else:
                         _chunk_ds.to_zarr(_this_output_path, append_dim=obs_dim)
 
         # write config
         from .utilities import update_dataset_config
-        update_dataset_config(output_path,
-                              add_ds_region_dim={var_dim: var_dim
-                                                 for var_dim, da_list in data_vars_dict.items()
-                                                 if len(da_list) > 0},
-                              add_ds_sample_dim={var_dim: obs_dim
-                                                 for var_dim, da_list in data_vars_dict.items()
-                                                 if len(da_list) > 0})
+
+        update_dataset_config(
+            output_path,
+            add_ds_region_dim={var_dim: var_dim for var_dim, da_list in data_vars_dict.items() if len(da_list) > 0},
+            add_ds_sample_dim={var_dim: obs_dim for var_dim, da_list in data_vars_dict.items() if len(da_list) > 0},
+        )
         return output_path
 
-    def save_feature_chunk_data(self,
-                                da_name,
-                                output_zarr_path,
-                                da_suffix='_fc',
-                                var_dim=None,
-                                loading_chunk=1000,
-                                var_chunk_size=1,
-                                obs_chunk_size=500000,
-                                compress_level=1,
-                                dtype=None):
+    def save_feature_chunk_data(
+        self,
+        da_name,
+        output_zarr_path,
+        da_suffix="_fc",
+        var_dim=None,
+        loading_chunk=1000,
+        var_chunk_size=1,
+        obs_chunk_size=500000,
+        compress_level=1,
+        dtype=None,
+    ):
         """
         Save a data array to zarr dataset, which is chunked along the var_dim.
+
         This zarr dataset is useful when loading data from one or several specific
         features, such as making a gene plot.
 
@@ -1436,10 +1404,6 @@ class MCDS(xr.Dataset):
             the compress level of the output zarr dataset.
         dtype
             the dtype of the output zarr dataset.
-
-        Returns
-        -------
-
         """
         if var_dim is None:
             var_dim = self.var_dim
@@ -1448,13 +1412,11 @@ class MCDS(xr.Dataset):
             var_names = self.get_index(var_dim)
         obs_dim = self.obs_dim
 
-        with dask.config.set(**{'array.slicing.split_large_chunks': False}):
+        with dask.config.set(**{"array.slicing.split_large_chunks": False}):
             for chunk_start in range(0, var_names.size, loading_chunk):
-                use_vars = var_names[chunk_start:chunk_start + loading_chunk]
-                new_name = f'{da_name}{da_suffix}'
-                chunk_data = xr.Dataset({
-                    new_name: self[da_name].sel({var_dim: use_vars}).load()
-                })
+                use_vars = var_names[chunk_start : chunk_start + loading_chunk]
+                new_name = f"{da_name}{da_suffix}"
+                chunk_data = xr.Dataset({new_name: self[da_name].sel({var_dim: use_vars}).load()})
 
                 # safely change dtype, prevent overflow
                 if dtype is not None:
@@ -1465,15 +1427,19 @@ class MCDS(xr.Dataset):
                     max_val = dtype_info.max
                     chunk_max = float(chunk_data[new_name].max())
                     if chunk_max > max_val:
-                        print(f'{da_name} max value {chunk_max} is larger than {dtype_info.max}, '
-                              f'change dtype will set max value to {dtype_info.max}')
+                        print(
+                            f"{da_name} max value {chunk_max} is larger than {dtype_info.max}, "
+                            f"change dtype will set max value to {dtype_info.max}"
+                        )
                         chunk_data[new_name] = xr.where(chunk_max > max_val, max_val, chunk_data[new_name])
 
                     min_val = dtype_info.min
                     chunk_min = float(chunk_data[new_name].min())
                     if chunk_min < min_val:
-                        print(f'{da_name} min value {chunk_min} is smaller than {dtype_info.min}, '
-                              f'change dtype will set min value to {dtype_info.min}')
+                        print(
+                            f"{da_name} min value {chunk_min} is smaller than {dtype_info.min}, "
+                            f"change dtype will set min value to {dtype_info.min}"
+                        )
                         chunk_data[new_name] = xr.where(chunk_min < min_val, min_val, chunk_data[new_name])
 
                     # finally, change dtype
@@ -1489,7 +1455,7 @@ class MCDS(xr.Dataset):
                     elif dim == var_dim:
                         chunks.append(var_chunk_size)
                         preferred_chunks[dim] = var_chunk_size
-                    elif dim in ['mc_type', 'count_type']:
+                    elif dim in ["mc_type", "count_type"]:
                         chunks.append(1)
                         preferred_chunks[dim] = 1
                     else:
@@ -1497,18 +1463,19 @@ class MCDS(xr.Dataset):
                         chunks.append(dim_size)
                         preferred_chunks[dim] = dim_size
                 # change encoding to save the zarr in desired chunks
-                chunk_data[new_name].encoding['chunks'] = chunks
-                chunk_data[new_name].encoding['preferred_chunks'] = preferred_chunks
+                chunk_data[new_name].encoding["chunks"] = chunks
+                chunk_data[new_name].encoding["preferred_chunks"] = preferred_chunks
 
                 try:
-                    chunk_data[new_name].encoding['compressor'].clevel = compress_level
+                    chunk_data[new_name].encoding["compressor"].clevel = compress_level
                 except KeyError:
                     import zarr
-                    chunk_data[new_name].encoding['compressor'] = zarr.Blosc(clevel=1)
+
+                    chunk_data[new_name].encoding["compressor"] = zarr.Blosc(clevel=1)
 
                 if chunk_start == 0:
-                    chunk_data.to_zarr(output_zarr_path, mode='w')
+                    chunk_data.to_zarr(output_zarr_path, mode="w")
                 else:
                     chunk_data.to_zarr(output_zarr_path, append_dim=var_dim)
-                print(f'Saved chunk {chunk_start}-{chunk_start + loading_chunk}/{var_names.size}')
+                print(f"Saved chunk {chunk_start}-{chunk_start + loading_chunk}/{var_names.size}")
         return

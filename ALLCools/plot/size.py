@@ -5,6 +5,7 @@ from .utilities import smart_number_format
 
 
 def plot_sizebar(size_norm, sizes, ax):
+    """Plot a sizebar."""
     ticks = [0, 0.33, 0.66, 1]
     n_dots = len(ticks)
 
