@@ -2,9 +2,9 @@ name: Check Build
 
 on:
     push:
-        branches: ["*"]
+        branches: ["master"]
     pull_request:
-        branches: ["*"]
+        branches: ["master"]
 
 jobs:
     package:
