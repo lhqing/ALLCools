@@ -18,6 +18,8 @@ Module Contents
 
 .. py:function:: generate_mcad(allc_table, bed_path, output_prefix, mc_context, cpu=1, cleanup=True, cutoff=0.9, reverse_value=False)
 
+   Generate MCAD from ALLC files.
+
    :param allc_table: {allc_table_doc}
    :param bed_path: {bed_path_doc}
    :param cpu: {cpu_doc}

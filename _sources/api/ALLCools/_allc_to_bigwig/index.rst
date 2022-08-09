@@ -5,7 +5,7 @@
 
 .. autoapi-nested-parse::
 
-   This file is modified from methylpy https://github.com/yupenghe/methylpy
+   This file is modified from methylpy https://github.com/yupenghe/methylpy.
 
 
 

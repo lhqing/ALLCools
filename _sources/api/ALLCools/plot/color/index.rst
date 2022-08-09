@@ -9,6 +9,8 @@ Module Contents
 
 .. py:function:: _continuous_color_palette(color, n, skip_border=1)
 
+   Generate a continuous color palette.
+
    This function concatenate the result of both sns.light_palette
    and sns.dark_palette to get a wider color range
 

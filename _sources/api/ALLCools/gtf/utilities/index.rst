@@ -9,7 +9,11 @@ Module Contents
 
 .. py:function:: read_gtf(gtf_path)
 
+   Read GTF file.
+
 
 .. py:function:: subset_gtf(gtf, regions, output_path=None, select_feature=None)
+
+   Subset GTF file by genomic regions.
 
 

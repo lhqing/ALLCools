@@ -6,39 +6,43 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Prepare REPTILE</title>
-<link href="../../_static/css/theme.css" rel="stylesheet"/>
-<link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet"/>
+<!-- Loaded before other Sphinx assets -->
+<link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet"/>
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet"/>
 <link href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css" rel="stylesheet"/>
 <link as="font" crossorigin="" href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2" rel="preload" type="font/woff2"/>
 <link as="font" crossorigin="" href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2" rel="preload" type="font/woff2"/>
 <link href="../../_static/pygments.css" rel="stylesheet" type="text/css">
-<link href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" rel="stylesheet" type="text/css">
+<link href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" rel="stylesheet" type="text/css">
 <link href="../../_static/togglebutton.css" rel="stylesheet" type="text/css">
 <link href="../../_static/copybutton.css" rel="stylesheet" type="text/css">
 <link href="../../_static/mystnb.css" rel="stylesheet" type="text/css">
 <link href="../../_static/sphinx-thebe.css" rel="stylesheet" type="text/css"/>
 <link href="../../_static/graphviz.css" rel="stylesheet" type="text/css"/>
 <link href="../../_static/sphinx-codeautolink.css" rel="stylesheet" type="text/css"/>
-<link href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" rel="stylesheet" type="text/css"/>
-<link href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" rel="stylesheet" type="text/css"/>
-<link as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js" rel="preload"/>
+<link href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" rel="stylesheet" type="text/css"/>
+<!-- Pre-loaded scripts that we'll load fully later -->
+<link as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf" rel="preload"/>
 <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
 <script src="../../_static/jquery.js"></script>
 <script src="../../_static/underscore.js"></script>
 <script src="../../_static/doctools.js"></script>
-<script src="../../_static/togglebutton.js"></script>
 <script src="../../_static/clipboard.min.js"></script>
 <script src="../../_static/copybutton.js"></script>
-<script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-<script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-<script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-<script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-<script async="async" src="../../_static/sphinx-thebe.js"></script>
+<script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+<script>let toggleHintShow = 'Click to show';</script>
+<script>let toggleHintHide = 'Click to hide';</script>
+<script>let toggleOpenOnPrint = 'true';</script>
+<script src="../../_static/togglebutton.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+<script src="../../_static/design-tabs.js"></script>
+<script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+<script async="async" src="../../_static/sphinx-thebe.js"></script>
 <link href="../../_static/allcools_favicon.png" rel="shortcut icon">
 <link href="../../genindex.html" rel="index" title="Index"/>
 <link href="../../search.html" rel="search" title="Search"/>
@@ -55,12 +59,27 @@
                     gtag('config', 'G-4F8CRF0GK9');
                 </script>
 </link></link></link></link></link></link></head>
-<body data-offset="80" data-spy="scroll" data-target="#bd-toc-nav">
+<body data-offset="60" data-spy="scroll" data-target="#bd-toc-nav">
+<!-- Checkboxes to toggle the left sidebar -->
+<input aria-label="Toggle navigation sidebar" class="sidebar-toggle" id="__navigation" name="__navigation" type="checkbox"/>
+<label class="overlay overlay-navbar" for="__navigation">
+<div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input aria-label="Toggle in-page Table of Contents" class="sidebar-toggle" id="__page-toc" name="__page-toc" type="checkbox"/>
+<label class="overlay overlay-pagetoc" for="__page-toc">
+<div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
 <div class="container-fluid" id="banner"></div>
 <div class="container-xl">
 <div class="row">
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-<div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+<div class="bd-sidebar__content">
+<div class="bd-sidebar__top"><div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../../index.html">
 <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
 <img alt="logo" class="logo" src="../../_static/allcools_logo.png"/>
@@ -70,11 +89,11 @@
 <input aria-label="Search this book..." autocomplete="off" class="form-control" id="search-input" name="q" placeholder="Search this book..." type="search"/>
 </form><nav aria-label="Main" class="bd-links" id="bd-docs-nav">
 <div class="bd-toc-item active">
-<ul class="nav bd-sidenav">
+<ul class="nav bd-sidenav bd-sidenav__home-link">
 <li class="toctree-l1">
 <a class="reference internal" href="../../intro.html">
-   ALLCools: ALL methyl-Cytosine tools
-  </a>
+                    ALLCools: ALL methyl-Cytosine tools
+                </a>
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -136,7 +155,7 @@
 <a class="reference internal" href="../../cell_level/step_by_step/intro_step_by_step_clustering.html">
    Step-by-step Clustering Analysis
   </a>
-<input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+<input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox">
 <label for="toctree-checkbox-2">
 <i class="fas fa-chevron-down">
 </i>
@@ -146,7 +165,7 @@
 <a class="reference internal" href="../../cell_level/step_by_step/100kb/intro_100kb.html">
      Step-by-step Clustering Using 100Kb bins
     </a>
-<input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+<input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox">
 <label for="toctree-checkbox-3">
 <i class="fas fa-chevron-down">
 </i>
@@ -188,7 +207,7 @@
       </a>
 </li>
 </ul>
-</li>
+</input></li>
 <li class="toctree-l2 has-children">
 <a class="reference internal" href="../../cell_level/step_by_step/5kb/intro_5kb.html">
      Step-by-step Clustering using mCG-5Kb Input
@@ -199,11 +218,6 @@
 </i>
 </label>
 <ul>
-<li class="toctree-l3">
-<a class="reference internal" href="../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
-       Cell Basic Filtering
-      </a>
-</li>
 <li class="toctree-l3">
 <a class="reference internal" href="../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
        Decomposition Using mCG-5Kb Bins
@@ -217,7 +231,7 @@
 </ul>
 </li>
 </ul>
-</li>
+</input></li>
 <li class="toctree-l1 has-children">
 <a class="reference internal" href="../../cell_level/dmg/intro_dmg.html">
    Differential Methylated Genes Analysis
@@ -555,7 +569,7 @@
      allcools
     </span>
 <span class="pre">
-     tbi
+     table-to-allc
     </span>
 </code>
 </a>
@@ -725,6 +739,15 @@
 </a>
 </li>
 <li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/chromatin_conformation/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.clustering.chromatin_conformation
+        </span>
+</code>
+</a>
+</li>
+<li class="toctree-l3">
 <a class="reference internal" href="../../api/ALLCools/clustering/dmg/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
@@ -743,6 +766,15 @@
 </a>
 </li>
 <li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/lsi/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.clustering.lsi
+        </span>
+</code>
+</a>
+</li>
+<li class="toctree-l3">
 <a class="reference internal" href="../../api/ALLCools/clustering/mcad/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
@@ -756,6 +788,15 @@
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
          ALLCools.clustering.pvclust
+        </span>
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/rutilities/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.clustering.rutilities
         </span>
 </code>
 </a>
@@ -842,6 +883,40 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/dataset/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+       ALLCools.dataset
+      </span>
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+<label for="toctree-checkbox-18">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/dataset/directory_structure/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.dataset.directory_structure
+        </span>
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/dataset/entry_point/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.dataset.entry_point
+        </span>
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
 <a class="reference internal" href="../../api/ALLCools/dmr/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
@@ -849,8 +924,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-<label for="toctree-checkbox-18">
+<input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+<label for="toctree-checkbox-19">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -901,8 +976,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-<label for="toctree-checkbox-19">
+<input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+<label for="toctree-checkbox-20">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -935,8 +1010,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-<label for="toctree-checkbox-20">
+<input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+<label for="toctree-checkbox-21">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -960,10 +1035,19 @@
 </a>
 </li>
 <li class="toctree-l3">
-<a class="reference internal" href="../../api/ALLCools/integration/harmony/index.html">
+<a class="reference internal" href="../../api/ALLCools/integration/metric/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
-         ALLCools.integration.harmony
+         ALLCools.integration.metric
+        </span>
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/integration/seurat_class/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.integration.seurat_class
         </span>
 </code>
 </a>
@@ -978,8 +1062,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-<label for="toctree-checkbox-21">
+<input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+<label for="toctree-checkbox-22">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1030,8 +1114,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-<label for="toctree-checkbox-22">
+<input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+<label for="toctree-checkbox-23">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1082,8 +1166,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-<label for="toctree-checkbox-23">
+<input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+<label for="toctree-checkbox-24">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1096,8 +1180,8 @@
         </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
-<label for="toctree-checkbox-24">
+<input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+<label for="toctree-checkbox-25">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1249,8 +1333,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
-<label for="toctree-checkbox-25">
+<input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+<label for="toctree-checkbox-26">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1283,8 +1367,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
-<label for="toctree-checkbox-26">
+<input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+<label for="toctree-checkbox-27">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1301,171 +1385,6 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children">
-<a class="reference internal" href="../../api/ALLCools/sandbox/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-       ALLCools.sandbox
-      </span>
-</code>
-</a>
-<input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
-<label for="toctree-checkbox-27">
-<i class="fas fa-chevron-down">
-</i>
-</label>
-<ul>
-<li class="toctree-l3 has-children">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-         ALLCools.sandbox.igv
-        </span>
-</code>
-</a>
-<input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
-<label for="toctree-checkbox-28">
-<i class="fas fa-chevron-down">
-</i>
-</label>
-<ul>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/BaseClass/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.igv.BaseClass
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/Session/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.igv.Session
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/Track/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.igv.Track
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/defaults/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.igv.defaults
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/make_session/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.igv.make_session
-          </span>
-</code>
-</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3 has-children">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-         ALLCools.sandbox.motif
-        </span>
-</code>
-</a>
-<input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
-<label for="toctree-checkbox-29">
-<i class="fas fa-chevron-down">
-</i>
-</label>
-<ul>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/ame/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.motif.ame
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/cmotif/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.motif.cmotif
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/fimo/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.motif.fimo
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/motif_scan/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.motif.motif_scan
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/utilities/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.motif.utilities
-          </span>
-</code>
-</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3">
-<a class="reference internal" href="../../api/ALLCools/sandbox/balanced_knn/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-         ALLCools.sandbox.balanced_knn
-        </span>
-</code>
-</a>
-</li>
-<li class="toctree-l3">
-<a class="reference internal" href="../../api/ALLCools/sandbox/scanorama/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-         ALLCools.sandbox.scanorama
-        </span>
-</code>
-</a>
-</li>
-<li class="toctree-l3">
-<a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-         ALLCools.sandbox.sccaf
-        </span>
-</code>
-</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l2 has-children">
 <a class="reference internal" href="../../api/ALLCools/schema/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
@@ -1473,8 +1392,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/>
-<label for="toctree-checkbox-30">
+<input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
+<label for="toctree-checkbox-28">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1572,15 +1491,6 @@
 </a>
 </li>
 <li class="toctree-l2">
-<a class="reference internal" href="../../api/ALLCools/_version/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-       ALLCools._version
-      </span>
-</code>
-</a>
-</li>
-<li class="toctree-l2">
 <a class="reference internal" href="../../api/ALLCools/api/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
@@ -1628,49 +1538,114 @@
 </li>
 </ul>
 </div>
-</nav> <!-- To handle the deprecated key -->
+</nav></div>
+<div class="bd-sidebar__bottom">
+<!-- To handle the deprecated key -->
 <div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
 </div>
 </div>
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-<div class="topbar container-xl fixed-top">
-<div class="topbar-contents row">
-<div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-<div class="col pl-md-4 topbar-main">
-<button aria-controls="site-navigation" aria-expanded="true" aria-label="Toggle navigation" class="navbar-toggler ml-0" data-placement="left" data-target=".site-navigation" data-toggle="tooltip" id="navbar-toggler" title="Toggle navigation" type="button">
+</div>
+<div id="rtd-footer-container"></div>
+</div>
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+<div class="header-article row sticky-top noprint">
+<div class="col py-1 d-flex header-article-main">
+<div class="header-article__left">
+<label class="headerbtn" data-placement="right" data-toggle="tooltip" for="__navigation" title="Toggle navigation">
+<span class="headerbtn__icon-container">
 <i class="fas fa-bars"></i>
-<i class="fas fa-arrow-left"></i>
-<i class="fas fa-arrow-up"></i>
+</span>
+</label>
+</div>
+<div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+<button aria-label="Launch interactive content" class="headerbtn menu-dropdown__trigger">
+<i class="fas fa-rocket"></i>
 </button>
-<div class="dropdown-buttons-trigger">
-<button aria-label="Download this page" class="btn btn-secondary topbarbtn" id="dropdown-buttons-trigger"><i class="fas fa-download"></i></button>
-<div class="dropdown-buttons">
-<!-- ipynb file if we had a myst markdown file -->
-<!-- Download raw file -->
-<a class="dropdown-buttons" href="../../_sources/cluster_level/REPTILE/01.prepare_input.ipynb"><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Download source file" type="button">.ipynb</button></a>
-<!-- Download PDF via print -->
-<button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" id="download-print" onclick="printPdf(this)" title="Print to PDF" type="button">.pdf</button>
+<div class="menu-dropdown__content">
+<ul>
+</ul>
 </div>
 </div>
-<!-- Source interaction buttons -->
-<div class="dropdown-buttons-trigger">
-<button aria-label="Connect with source repository" class="btn btn-secondary topbarbtn" id="dropdown-buttons-trigger"><i class="fab fa-github"></i></button>
-<div class="dropdown-buttons sourcebuttons">
-<a class="repository-button" href="https://github.com/lhqing/ALLCools"><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Source repository" type="button"><i class="fab fa-github"></i>repository</button></a>
-<a class="issues-button" href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fcluster_level/REPTILE/01.prepare_input.html&amp;body=Your%20issue%20content%20here."><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Open an issue" type="button"><i class="fas fa-lightbulb"></i>open issue</button></a>
-<a class="edit-button" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/cluster_level/REPTILE/01.prepare_input.ipynb"><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Edit this page" type="button"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+<button class="headerbtn" data-placement="bottom" data-toggle="tooltip" onclick="toggleFullScreen()" title="Fullscreen mode">
+<span class="headerbtn__icon-container">
+<i class="fas fa-expand"></i>
+</span>
+</button>
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+<button aria-label="Source repositories" class="headerbtn menu-dropdown__trigger">
+<i class="fab fa-github"></i>
+</button>
+<div class="menu-dropdown__content">
+<ul>
+<li>
+<a class="headerbtn" data-placement="left" data-toggle="tooltip" href="https://github.com/lhqing/ALLCools" title="Source repository">
+<span class="headerbtn__icon-container">
+<i class="fab fa-github"></i>
+</span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+</li>
+<li>
+<a class="headerbtn" data-placement="left" data-toggle="tooltip" href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fcluster_level/REPTILE/01.prepare_input.html&amp;body=Your%20issue%20content%20here." title="Open an issue">
+<span class="headerbtn__icon-container">
+<i class="fas fa-lightbulb"></i>
+</span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+</li>
+<li>
+<a class="headerbtn" data-placement="left" data-toggle="tooltip" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/cluster_level/REPTILE/01.prepare_input.ipynb" title="Edit this page">
+<span class="headerbtn__icon-container">
+<i class="fas fa-pencil-alt"></i>
+</span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+</li>
+</ul>
 </div>
 </div>
-<!-- Full screen (wrap in <a> to have style consistency -->
-<a class="full-screen-button"><button aria-label="Fullscreen mode" class="btn btn-secondary topbarbtn" data-placement="bottom" data-toggle="tooltip" onclick="toggleFullScreen()" title="Fullscreen mode" type="button"><i class="fas fa-expand"></i></button></a>
-<!-- Launch buttons -->
+<div class="menu-dropdown menu-dropdown-download-buttons">
+<button aria-label="Download this page" class="headerbtn menu-dropdown__trigger">
+<i class="fas fa-download"></i>
+</button>
+<div class="menu-dropdown__content">
+<ul>
+<li>
+<a class="headerbtn" data-placement="left" data-toggle="tooltip" href="../../_sources/cluster_level/REPTILE/01.prepare_input.ipynb" title="Download source file">
+<span class="headerbtn__icon-container">
+<i class="fas fa-file"></i>
+</span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+</li>
+<li>
+<button class="headerbtn" data-placement="left" data-toggle="tooltip" onclick="printPdf(this)" title="Print to PDF">
+<span class="headerbtn__icon-container">
+<i class="fas fa-file-pdf"></i>
+</span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+</li>
+</ul>
+</div>
+</div>
+<label class="headerbtn headerbtn-page-toc" for="__page-toc">
+<span class="headerbtn__icon-container">
+<i class="fas fa-list"></i>
+</span>
+</label>
+</div>
 </div>
 <!-- Table of contents -->
-<div class="d-none d-md-block col-md-2 bd-toc show noprint">
+<div class="col-md-3 bd-toc show noprint">
 <div class="tocsection onthispage pt-5 pb-3">
 <i class="fas fa-list"></i> Contents
-            </div>
+    </div>
 <nav aria-label="Page" id="bd-toc-nav">
 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry">
@@ -1687,9 +1662,8 @@
 </nav>
 </div>
 </div>
-</div>
-<div class="row" id="main-content">
-<div class="col-12 col-md-9 pl-md-3 pr-md-0">
+<div class="article row">
+<div class="col pl-md-3 pl-lg-5 content-container">
 <!-- Table of contents that is only displayed when printing the page -->
 <div class="onlyprint" id="jb-print-docs-body">
 <h1>Prepare REPTILE</h1>
@@ -1716,9 +1690,10 @@
 </div>
 </div>
 </div>
+<main id="main-content" role="main">
 <div>
 <div class="tex2jax_ignore mathjax_ignore section" id="prepare-reptile">
-<h1>Prepare REPTILE<a class="headerlink" href="#prepare-reptile" title="Permalink to this headline">¶</a></h1>
+<h1>Prepare REPTILE<a class="headerlink" href="#prepare-reptile" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/pathlib.html#module-pathlib" title="pathlib"><span class="nn">pathlib</span></a>
@@ -1729,7 +1704,7 @@
 </div>
 </div>
 <div class="section" id="prepare-files">
-<h2>Prepare Files<a class="headerlink" href="#prepare-files" title="Permalink to this headline">¶</a></h2>
+<h2>Prepare Files<a class="headerlink" href="#prepare-files" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save DMR bed</span>
@@ -1748,7 +1723,7 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save bigwig table</span>
 <span class="n">mc_table</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'_'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'_'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">(</span><span class="n">p</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span>
         <span class="s1">'/home/hanliu/project/allcools_doc/data/HIPBulk/mc_bulk/'</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span>
             <span class="s1">'snmC_*/snmC_*.CGN-both.frac.bw'</span><span class="p">)</span>
@@ -1756,7 +1731,7 @@
 <span class="n">mc_table</span><span class="p">[</span><span class="s1">'mESC'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'/home/hanliu/project/allcools_doc/data/REPTILE/mESC_Meth.bw'</span>
 
 <span class="n">atac_table</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'_'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'_'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">(</span><span class="n">p</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span>
         <span class="s1">'/home/hanliu/project/allcools_doc/data/HIPBulk/atac_bulk/'</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span>
             <span class="s1">'HIP_snATAC_*.bw'</span><span class="p">)</span>
@@ -1853,10 +1828,10 @@
 </div>
 </div>
 <div class="section" id="final-parameters-user-needs-to-provide">
-<h2>Final Parameters User Needs to Provide<a class="headerlink" href="#final-parameters-user-needs-to-provide" title="Permalink to this headline">¶</a></h2>
+<h2>Final Parameters User Needs to Provide<a class="headerlink" href="#final-parameters-user-needs-to-provide" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#dict" title="dict"><span class="nb">dict</span></a><span class="p">(</span>
     <span class="n">output_path</span><span class="o">=</span>
     <span class="s1">'/home/hanliu/project/allcools_doc/cluster_level/REPTILE/REPTILE'</span><span class="p">,</span>
     <span class="c1"># four column bed file, last column is id</span>
@@ -1879,7 +1854,7 @@
     <span class="n">dmr_slop</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
 
 <span class="kn">import</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/json.html#module-json" title="json"><span class="nn">json</span></a>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'parameters.json'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#open" title="open"><span class="nb">open</span></a><span class="p">(</span><span class="s1">'parameters.json'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/json.html#json.dump" title="json.dump"><span class="n">json</span><span class="o">.</span><span class="n">dump</span></a><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1907,6 +1882,8 @@
     </script>
 <script>kernelName = 'python3'</script>
 </div>
+</main>
+<footer class="footer-article noprint">
 <!-- Previous / next buttons -->
 <div class="prev-next-area">
 <a class="left-prev" href="intro_reptile.html" id="prev-link" title="previous page">
@@ -1924,19 +1901,22 @@
 <i class="fas fa-angle-right"></i>
 </a>
 </div>
+</footer>
 </div>
 </div>
-<footer class="footer">
-<p>
-    
-      By Hanqing Liu<br/>
-    
-        © Copyright 2019 - 2022.<br/>
+<div class="footer-content row">
+<footer class="col footer"><p>
+  
+    By Hanqing Liu<br/>
+  
+      © Copyright 2019 - 2022.<br/>
 </p>
 </footer>
-</main>
 </div>
 </div>
-<script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+</div>
+</div>
+<!-- Scripts loaded after <body> so the DOM is not blocked -->
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 </body>
 </html>

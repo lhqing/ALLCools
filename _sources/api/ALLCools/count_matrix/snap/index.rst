@@ -12,7 +12,7 @@ Module Contents
 
    
 
-.. py:function:: read_snap(file_path, bin_kind=5000)
+.. py:function:: read_snap(file_path, bin_kind: Union[int, str] = 5000)
 
    Read snap hdf5 file into anndata.AnnData.
 
@@ -22,7 +22,7 @@ Module Contents
 
 .. py:function:: _read_snap_genes(file_path)
 
-   Read gene data from snap hdf5 file into anndata.AnnData
+   Read gene data from snap hdf5 file into anndata.AnnData.
 
 
 .. py:function:: _read_snap_bins(file_path, bin_size=5000)

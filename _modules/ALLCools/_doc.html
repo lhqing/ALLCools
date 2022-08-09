@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ALLCools._doc</title>
     
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,33 +19,39 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-codeautolink.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="shortcut icon" href="../../_static/allcools_favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -63,7 +70,21 @@
                 </script>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -72,9 +93,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -90,14 +112,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro.html">
-   ALLCools: ALL methyl-Cytosine tools
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    ALLCools: ALL methyl-Cytosine tools
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   GET STARTED
  </span>
@@ -219,11 +242,6 @@
      </i>
     </label>
     <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
-       Cell Basic Filtering
-      </a>
-     </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
        Decomposition Using mCG-5Kb Bins
@@ -745,6 +763,15 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/chromatin_conformation/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.chromatin_conformation
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../api/ALLCools/clustering/dmg/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -763,6 +790,15 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/lsi/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.lsi
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../api/ALLCools/clustering/mcad/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -776,6 +812,15 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/clustering/rutilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.rutilities
         </span>
        </code>
       </a>
@@ -862,6 +907,40 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../api/ALLCools/dataset/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.dataset
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/dataset/directory_structure/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dataset.directory_structure
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/dataset/entry_point/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dataset.entry_point
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/dmr/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -869,8 +948,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -921,8 +1000,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -955,8 +1034,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -980,10 +1059,19 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/integration/harmony/index.html">
+      <a class="reference internal" href="../../api/ALLCools/integration/metric/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
-         ALLCools.integration.harmony
+         ALLCools.integration.metric
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../api/ALLCools/integration/seurat_class/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.integration.seurat_class
         </span>
        </code>
       </a>
@@ -998,8 +1086,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1050,8 +1138,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1102,8 +1190,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1116,8 +1204,8 @@
         </span>
        </code>
       </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
-      <label for="toctree-checkbox-24">
+      <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+      <label for="toctree-checkbox-25">
        <i class="fas fa-chevron-down">
        </i>
       </label>
@@ -1269,8 +1357,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
-    <label for="toctree-checkbox-25">
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1303,8 +1391,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
-    <label for="toctree-checkbox-26">
+    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+    <label for="toctree-checkbox-27">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1321,171 +1409,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../api/ALLCools/sandbox/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.sandbox
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
-    <label for="toctree-checkbox-27">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../api/ALLCools/sandbox/igv/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.igv
-        </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
-      <label for="toctree-checkbox-28">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/BaseClass/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.BaseClass
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Session/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.Session
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/Track/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.Track
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/defaults/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.defaults
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/igv/make_session/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.make_session
-          </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../api/ALLCools/sandbox/motif/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.motif
-        </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
-      <label for="toctree-checkbox-29">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/motif/ame/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.ame
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/motif/cmotif/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.cmotif
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/motif/fimo/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.fimo
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/motif/motif_scan/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.motif_scan
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../api/ALLCools/sandbox/motif/utilities/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.utilities
-          </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/sandbox/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/sandbox/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.sccaf
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1493,8 +1416,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/>
-    <label for="toctree-checkbox-30">
+    <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
+    <label for="toctree-checkbox-28">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1592,15 +1515,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../api/ALLCools/_version/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools._version
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../api/ALLCools/api/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1649,12 +1563,17 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
 </div>
 
 
@@ -1662,60 +1581,104 @@
 
 
           
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
     
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-            <!-- Source interaction buttons -->
+    <div class="header-article row sticky-top noprint">
+        
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2F_modules/ALLCools/_doc.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
         
     </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/lhqing/ALLCools"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2F_modules/ALLCools/_doc.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
 </div>
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-        </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1></h1>
@@ -1726,51 +1689,58 @@
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
   <h1>Source code for ALLCools._doc</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">dedent</span>
 
 <div class="viewcode-block" id="idx_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.idx_doc">[docs]</a><span class="n">idx_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;If true, save an methylpy chromosome index for back compatibility. &quot;</span></div>
+    <span class="s2">&quot;If true, save an methylpy chromosome index for back compatibility. &quot;</span>
     <span class="s2">&quot;If you only use methylpy to call DMR, this don&#39;t need to be True.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="allc_path_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.allc_path_doc">[docs]</a><span class="n">allc_path_doc</span> <span class="o">=</span> <span class="s2">&quot;Path to 1 ALLC file&quot;</span></div>
 
 <div class="viewcode-block" id="allc_paths_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.allc_paths_doc">[docs]</a><span class="n">allc_paths_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Single ALLC path contain wildcard OR multiple space separated ALLC paths &quot;</span></div>
+    <span class="s2">&quot;Single ALLC path contain wildcard OR multiple space separated ALLC paths &quot;</span>
     <span class="s2">&quot;OR a file contains 1 ALLC path in each row.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="allc_table_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.allc_table_doc">[docs]</a><span class="n">allc_table_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Contain all the ALLC file information in two tab-separated columns: &quot;</span></div>
-    <span class="s2">&quot;1. file_uid, 2. file_path. No header&quot;</span>
-<span class="p">)</span>
+    <span class="s2">&quot;Contain all the ALLC file information in two tab-separated columns: &quot;</span> <span class="s2">&quot;1. file_uid, 2. file_path. No header&quot;</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="binarize_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.binarize_doc">[docs]</a><span class="n">binarize_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;If set, binarize each single site in each individual ALLC file. &quot;</span></div>
+    <span class="s2">&quot;If set, binarize each single site in each individual ALLC file. &quot;</span>
     <span class="s2">&quot;This means each cytosine will only contribute at most 1 cov and 0/1 mc, &quot;</span>
     <span class="s2">&quot;this is suitable to account for single cell ALLC R1 R2 overlap issue, &quot;</span>
     <span class="s2">&quot;Only use this on single cell ALLC, not bulk ALLC.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="bin_sizes_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.bin_sizes_doc">[docs]</a><span class="n">bin_sizes_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Fix-size genomic bins can be defined by bin_sizes and chrom_size_path. &quot;</span></div>
+    <span class="s2">&quot;Fix-size genomic bins can be defined by bin_sizes and chrom_size_path. &quot;</span>
     <span class="s2">&quot;Space separated sizes of genome bins, each size will be count separately.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="bw_bin_sizes_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.bw_bin_sizes_doc">[docs]</a><span class="n">bw_bin_sizes_doc</span> <span class="o">=</span> <span class="s2">&quot;Bin size of the BigWig files.&quot;</span></div>
 
 <div class="viewcode-block" id="chrom_size_path_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.chrom_size_path_doc">[docs]</a><span class="n">chrom_size_path_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Path to UCSC chrom size file. &quot;</span></div>
+    <span class="s2">&quot;Path to UCSC chrom size file. &quot;</span>
     <span class="s2">&quot;This can be generated from the genome fasta or downloaded via UCSC fetchChromSizes tools. &quot;</span>
     <span class="s2">&quot;All ALLCools functions will refer to this file whenever possible to check for &quot;</span>
     <span class="s2">&quot;chromosome names and lengths, so it is crucial to use a chrom size file consistent &quot;</span>
     <span class="s2">&quot;to the reference fasta file ever since mapping. &quot;</span>
     <span class="s2">&quot;ALLCools functions will not change or infer chromosome names.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
+
+<div class="viewcode-block" id="convert_bam_strandness_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.convert_bam_strandness_doc">[docs]</a><span class="n">convert_bam_strandness_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Convert CT conversion reads into forward strand, &quot;</span>
+    <span class="s2">&quot;GA conversion reads into reverse strand. During call methylation, &quot;</span>
+    <span class="s2">&quot;we use strandness to parse the mpileup result.&quot;</span>
+    <span class="s2">&quot;Set this parameter to True if you are doing PE mapping with bismark or hisat-3n.&quot;</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="compress_level_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.compress_level_doc">[docs]</a><span class="n">compress_level_doc</span> <span class="o">=</span> <span class="s2">&quot;Compression level for the output file&quot;</span></div>
 
@@ -1779,141 +1749,140 @@
 <div class="viewcode-block" id="cpu_basic_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.cpu_basic_doc">[docs]</a><span class="n">cpu_basic_doc</span> <span class="o">=</span> <span class="s2">&quot;Number of processes to use in parallel.&quot;</span></div>
 
 <div class="viewcode-block" id="mc_contexts_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.mc_contexts_doc">[docs]</a><span class="n">mc_contexts_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Space separated mC context patterns to extract from ALLC. &quot;</span></div>
+    <span class="s2">&quot;Space separated mC context patterns to extract from ALLC. &quot;</span>
     <span class="s2">&quot;The context length should be the same as ALLC file context. &quot;</span>
     <span class="s2">&quot;Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="mc_context_mcad_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.mc_context_mcad_doc">[docs]</a><span class="n">mc_context_mcad_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;mC context pattern to extract from ALLC. &quot;</span></div>
+    <span class="s2">&quot;mC context pattern to extract from ALLC. &quot;</span>
     <span class="s2">&quot;Context pattern follows IUPAC nucleotide code, e.g. N for ATCG, H for ATC, Y for CT.&quot;</span>
     <span class="s2">&quot;Note that generate_mcad only take one mC context&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="reference_fasta_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.reference_fasta_doc">[docs]</a><span class="n">reference_fasta_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Path to 1 genome reference FASTA file (the one used for mapping), &quot;</span></div>
+    <span class="s2">&quot;Path to 1 genome reference FASTA file (the one used for mapping), &quot;</span>
     <span class="s2">&quot;use samtools fadix to build .fai index first. Do not compress that file.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
-<div class="viewcode-block" id="region_bed_names_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_bed_names_doc">[docs]</a><span class="n">region_bed_names_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Space separated names for each BED file provided in region_bed_paths.&quot;</span></div>
-<span class="p">)</span>
+<div class="viewcode-block" id="region_bed_names_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_bed_names_doc">[docs]</a><span class="n">region_bed_names_doc</span> <span class="o">=</span> <span class="s2">&quot;Space separated names for each BED file provided in region_bed_paths.&quot;</span></div>
 
 <div class="viewcode-block" id="region_bed_paths_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_bed_paths_doc">[docs]</a><span class="n">region_bed_paths_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Arbitrary genomic regions can be defined in several BED files to count on. &quot;</span></div>
+    <span class="s2">&quot;Arbitrary genomic regions can be defined in several BED files to count on. &quot;</span>
     <span class="s2">&quot;Space separated paths to each BED files, &quot;</span>
     <span class="s2">&quot;The fourth column of the BED file should be unique id of the regions.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="region_bed_path_mcad_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_bed_path_mcad_doc">[docs]</a><span class="n">region_bed_path_mcad_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Arbitrary genomic regions can be defined in one BED file to count on. &quot;</span></div>
+    <span class="s2">&quot;Arbitrary genomic regions can be defined in one BED file to count on. &quot;</span>
     <span class="s2">&quot;The fourth column of the BED file should be unique id of the regions.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="region_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.region_doc">[docs]</a><span class="n">region_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Only extract records from certain genome region(s) via tabix, &quot;</span></div>
+    <span class="s2">&quot;Only extract records from certain genome region(s) via tabix, &quot;</span>
     <span class="s2">&quot;multiple region can be provided in tabix form. If region is not None, will not run in parallel&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
-<div class="viewcode-block" id="remove_additional_chrom_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.remove_additional_chrom_doc">[docs]</a><span class="n">remove_additional_chrom_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Whether to remove rows with unknown chromosome instead of raising KeyError&quot;</span></div>
-<span class="p">)</span>
+<div class="viewcode-block" id="remove_additional_chrom_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.remove_additional_chrom_doc">[docs]</a><span class="n">remove_additional_chrom_doc</span> <span class="o">=</span> <span class="s2">&quot;Whether to remove rows with unknown chromosome instead of raising KeyError&quot;</span></div>
 
 <div class="viewcode-block" id="rna_table_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.rna_table_doc">[docs]</a><span class="n">rna_table_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;This is only for mCT data when we have RNA BAM file for each single cell. &quot;</span></div>
+    <span class="s2">&quot;This is only for mCT data when we have RNA BAM file for each single cell. &quot;</span>
     <span class="s2">&quot;Contain all the RNA BAM file information in 2 columns: 1. file_uid, 2. file_path. No header.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="snp_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.snp_doc">[docs]</a><span class="n">snp_doc</span> <span class="o">=</span> <span class="s2">&quot;If true, means the input allc contain snp information, and the allc processing will take care that.&quot;</span></div>
 
 <div class="viewcode-block" id="split_strand_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.split_strand_doc">[docs]</a><span class="n">split_strand_doc</span> <span class="o">=</span> <span class="s2">&quot;If true, Watson (+) and Crick (-) strands will be count separately&quot;</span></div>
 
 <div class="viewcode-block" id="strandness_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.strandness_doc">[docs]</a><span class="n">strandness_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;What to do with strand information, possible values are: &quot;</span></div>
+    <span class="s2">&quot;What to do with strand information, possible values are: &quot;</span>
     <span class="s2">&quot;1. both: save +/- strand together in one file; &quot;</span>
     <span class="s2">&quot;2. split: save +/- strand into two separate files, with suffix contain Watson (+) and Crick (-); &quot;</span>
     <span class="s2">&quot;3. merge: This will only merge the count on adjacent CpG in +/- strands, &quot;</span>
     <span class="s2">&quot;only work for CpG like context. For non-CG context, its the same as both.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="generate_dataset_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.generate_dataset_doc">[docs]</a><span class="n">generate_dataset_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;Generate MCDS dataset from a list of ALLC files (recorded in the allc_table). &quot;</span></div>
+    <span class="s2">&quot;Generate MCDS dataset from a list of ALLC files (recorded in the allc_table). &quot;</span>
     <span class="s2">&quot;Multiple region sets, methylation contexts and quantification types can be included in one command.&quot;</span>
-<span class="p">)</span>
+<span class="p">)</span></div>
 
-<div class="viewcode-block" id="generate_dataset_obs_dim_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.generate_dataset_obs_dim_doc">[docs]</a><span class="n">generate_dataset_obs_dim_doc</span> <span class="o">=</span> <span class="s1">&#39;Name of the observation dimension.&#39;</span></div>
+<div class="viewcode-block" id="generate_dataset_obs_dim_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.generate_dataset_obs_dim_doc">[docs]</a><span class="n">generate_dataset_obs_dim_doc</span> <span class="o">=</span> <span class="s2">&quot;Name of the observation dimension.&quot;</span></div>
 
-<div class="viewcode-block" id="generate_dataset_chunk_size_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.generate_dataset_chunk_size_doc">[docs]</a><span class="n">generate_dataset_chunk_size_doc</span> <span class="o">=</span> <span class="s1">&#39;Chunk allc_table with chunk_size when generate dataset in parallel&#39;</span></div>
+<div class="viewcode-block" id="generate_dataset_chunk_size_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.generate_dataset_chunk_size_doc">[docs]</a><span class="n">generate_dataset_chunk_size_doc</span> <span class="o">=</span> <span class="s2">&quot;Chunk allc_table with chunk_size when generate dataset in parallel&quot;</span></div>
 
 <div class="viewcode-block" id="generate_dataset_regions_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.generate_dataset_regions_doc">[docs]</a><span class="n">generate_dataset_regions_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s1">&#39;Definition of genomic regions in the form of &quot;--regions </span><span class="si">{region_name}</span><span class="s1"> </span><span class="si">{region_definition}</span><span class="s1">&quot;. &#39;</span></div>
-    <span class="s1">&#39;This parameter can be specified multiple times, to allow quantification of multiple region sets &#39;</span>
-    <span class="s1">&#39;in the same MCDS dataset. Several cases are allowed: &#39;</span>
-    <span class="s1">&#39;1) a integer number means fix-sized genomic bins, region bed and region id will be generated &#39;</span>
+    <span class="s1">&#39;Definition of genomic regions in the form of &quot;--regions </span><span class="si">{region_name}</span><span class="s1"> </span><span class="si">{region_definition}</span><span class="s1">&quot;. &#39;</span>
+    <span class="s2">&quot;This parameter can be specified multiple times, to allow quantification of multiple region sets &quot;</span>
+    <span class="s2">&quot;in the same MCDS dataset. Several cases are allowed: &quot;</span>
+    <span class="s2">&quot;1) a integer number means fix-sized genomic bins, region bed and region id will be generated &quot;</span>
     <span class="s1">&#39;automatically based on the chrom_size_path parameter (e.g., &quot;--regions chrom100k 100000&quot;); &#39;</span>
-    <span class="s1">&#39;2) a path to a three-column bed file, in this case, &#39;</span>
-    <span class="s1">&#39;a forth column containing region id in the form of </span><span class="si">{region_name}</span><span class="s1">_</span><span class="si">{i}</span><span class="s1"> will be added automatically &#39;</span>
+    <span class="s2">&quot;2) a path to a three-column bed file, in this case, &quot;</span>
+    <span class="s2">&quot;a forth column containing region id in the form of </span><span class="si">{region_name}</span><span class="s2">_</span><span class="si">{i}</span><span class="s2"> will be added automatically &quot;</span>
     <span class="s1">&#39;(e.g., &quot;--regions gene /path/to/gene_bed_no_id.bed&quot;, &#39;</span>
-    <span class="s1">&#39;where the bed file only has chrom, start, end columns); &#39;</span>
-    <span class="s1">&#39;3) a path to a four-column bed file, in this case, the forth column will be treated as region id &#39;</span>
+    <span class="s2">&quot;where the bed file only has chrom, start, end columns); &quot;</span>
+    <span class="s2">&quot;3) a path to a four-column bed file, in this case, the forth column will be treated as region id &quot;</span>
     <span class="s1">&#39;and the region ids must be UNIQUE. (e.g., &quot;--regions gene /path/to/gene_bed_with_id.bed&quot;, &#39;</span>
-    <span class="s1">&#39;where the bed file has chrom, start, end, id columns).&#39;</span>
-<span class="p">)</span>
+    <span class="s2">&quot;where the bed file has chrom, start, end, id columns).&quot;</span>
+<span class="p">)</span></div>
 
 <div class="viewcode-block" id="generate_dataset_quantifiers_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.generate_dataset_quantifiers_doc">[docs]</a><span class="n">generate_dataset_quantifiers_doc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s1">&#39;Definition of genome region quantifiers in the form of &#39;</span></div>
+    <span class="s2">&quot;Definition of genome region quantifiers in the form of &quot;</span>
     <span class="s1">&#39;&quot;--quantifiers </span><span class="si">{region_name}</span><span class="s1"> </span><span class="si">{quant_type}</span><span class="s1"> </span><span class="si">{mc_contexts}</span><span class="s1"> </span><span class="si">{optional_parameter}</span><span class="s1">&quot;. &#39;</span>
-    <span class="s1">&#39;The region_name determines which region set this quantifier applies to, &#39;</span>
+    <span class="s2">&quot;The region_name determines which region set this quantifier applies to, &quot;</span>
     <span class="s1">&#39;region_name must be defined by &quot;--regions&quot; parameter. &#39;</span>
     <span class="s1">&#39;The quant_type specify which quantifiers, it must be in [&quot;count&quot;, &quot;hypo-score&quot;, &quot;hyper-score&quot;]. &#39;</span>
-    <span class="s1">&#39;The mc_contexts specify a comma separated mC context list, &#39;</span>
-    <span class="s1">&#39;it must be the same size as the ALLC table, and uses IUPAC base abbreviation. &#39;</span>
-    <span class="s1">&#39;--quantifiers parameter can be specified multiple times, &#39;</span>
-    <span class="s1">&#39;to allow different quantification for different region sets, &#39;</span>
-    <span class="s1">&#39;or multiple quantification for the same region set. &#39;</span>
-    <span class="s1">&#39;Some examples: &#39;</span>
-    <span class="s1">&#39;1) To quantify raw counts of a region set in mCG and mCH context: &#39;</span>
+    <span class="s2">&quot;The mc_contexts specify a comma separated mC context list, &quot;</span>
+    <span class="s2">&quot;it must be the same size as the ALLC table, and uses IUPAC base abbreviation. &quot;</span>
+    <span class="s2">&quot;--quantifiers parameter can be specified multiple times, &quot;</span>
+    <span class="s2">&quot;to allow different quantification for different region sets, &quot;</span>
+    <span class="s2">&quot;or multiple quantification for the same region set. &quot;</span>
+    <span class="s2">&quot;Some examples: &quot;</span>
+    <span class="s2">&quot;1) To quantify raw counts of a region set in mCG and mCH context: &quot;</span>
     <span class="s1">&#39;&quot;--quantifiers gene count CGN,CHN&quot; &#39;</span>
-    <span class="s1">&#39;2) To quantify the mCG hypo-methylation score of chrom 5Kb bins: &#39;</span>
+    <span class="s2">&quot;2) To quantify the mCG hypo-methylation score of chrom 5Kb bins: &quot;</span>
     <span class="s1">&#39;&quot;--quantifiers chrom5k hypo-score CGN cutoff=0.9&quot;, &#39;</span>
-    <span class="s1">&#39;by default, cutoff=0.9, so the last part is optional. &#39;</span>
-    <span class="s1">&#39;3) To ALSO quantify the mCG raw counts of chrom 5Kb bins in the same MCDS, &#39;</span>
-    <span class="s1">&#39;just specify another quantifiers in the same command: &#39;</span>
+    <span class="s2">&quot;by default, cutoff=0.9, so the last part is optional. &quot;</span>
+    <span class="s2">&quot;3) To ALSO quantify the mCG raw counts of chrom 5Kb bins in the same MCDS, &quot;</span>
+    <span class="s2">&quot;just specify another quantifiers in the same command: &quot;</span>
     <span class="s1">&#39;&quot;--quantifiers chrom5k count CGN&quot;, note the count matrix of chrom5k will be large. &#39;</span>
-    <span class="s1">&#39;Its not usually needed, but you have the option if needed.&#39;</span>
-<span class="p">)</span>
+    <span class="s2">&quot;Its not usually needed, but you have the option if needed.&quot;</span>
+<span class="p">)</span></div>
 
-<div class="viewcode-block" id="table_to_allc_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_doc">[docs]</a><span class="n">table_to_allc_doc</span> <span class="o">=</span> <span class="s1">&#39;Convert different kinds of methylation table into ALLC format. &#39;</span> \</div>
-                    <span class="s1">&#39;Currently, only plain text table is accepted.&#39;</span>
-<div class="viewcode-block" id="table_to_allc_input_path"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_input_path">[docs]</a><span class="n">table_to_allc_input_path</span> <span class="o">=</span> <span class="s1">&#39;input path of the table&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_output_prefix"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_output_prefix">[docs]</a><span class="n">table_to_allc_output_prefix</span> <span class="o">=</span> <span class="s1">&#39;output prefix of the ALLC table&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_sep"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_sep">[docs]</a><span class="n">table_to_allc_sep</span> <span class="o">=</span> <span class="s1">&#39;character to separate columns in the table&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_header"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_header">[docs]</a><span class="n">table_to_allc_header</span> <span class="o">=</span> <span class="s1">&#39;Whether the table contains header line or not&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_chunk_size"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_chunk_size">[docs]</a><span class="n">table_to_allc_chunk_size</span> <span class="o">=</span> <span class="s1">&#39;chunk_size to perform conversion&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_chrom"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_chrom">[docs]</a><span class="n">table_to_allc_chrom</span> <span class="o">=</span> <span class="s1">&#39;the chromosome column number, 0-based index&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_pos"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_pos">[docs]</a><span class="n">table_to_allc_pos</span> <span class="o">=</span> <span class="s1">&#39;the position column number, 0-based index&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_strand"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_strand">[docs]</a><span class="n">table_to_allc_strand</span> <span class="o">=</span> <span class="s1">&#39;the strand column number, 0-based index. &#39;</span> \</div>
-                       <span class="s1">&#39;If not provided, will infer automatically based on the fasta_path&#39;</span>
-<div class="viewcode-block" id="table_to_allc_context"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_context">[docs]</a><span class="n">table_to_allc_context</span> <span class="o">=</span> <span class="s1">&#39;the cytosine context column number, 0-based index. &#39;</span> \</div>
-                        <span class="s1">&#39;If not provided, will inter automatically based on the fasta_path&#39;</span>
-<div class="viewcode-block" id="table_to_allc_mc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_mc">[docs]</a><span class="n">table_to_allc_mc</span> <span class="o">=</span> <span class="s1">&#39;the methylated cytosine count column number, 0-based index.&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_uc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_uc">[docs]</a><span class="n">table_to_allc_uc</span> <span class="o">=</span> <span class="s1">&#39;the unmethylated cytosine count column number, 0-based index.&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_cov"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_cov">[docs]</a><span class="n">table_to_allc_cov</span> <span class="o">=</span> <span class="s1">&#39;the total cytosine coverage count column number, 0-based index.&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_mc_frac"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_mc_frac">[docs]</a><span class="n">table_to_allc_mc_frac</span> <span class="o">=</span> <span class="s1">&#39;the methylation fraction column number, 0-based index.&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_pseudo_count"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_pseudo_count">[docs]</a><span class="n">table_to_allc_pseudo_count</span> <span class="o">=</span> <span class="s1">&#39;Use this pseudo_count number as the total cytosine coverage count, &#39;</span> \</div>
-                             <span class="s1">&#39;if the &quot;cov&quot; column is missing and &quot;mc_frac&quot; column is provided.&#39;</span>
-<div class="viewcode-block" id="table_to_allc_fasta_path"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_fasta_path">[docs]</a><span class="n">table_to_allc_fasta_path</span> <span class="o">=</span> <span class="s1">&#39;the genome FASTA file path, &#39;</span> \</div>
-                           <span class="s1">&#39;required if either &quot;strand&quot; or &quot;context&quot; column is missing.&#39;</span>
-<div class="viewcode-block" id="table_to_allc_num_upstream_bases"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_num_upstream_bases">[docs]</a><span class="n">table_to_allc_num_upstream_bases</span> <span class="o">=</span> <span class="s1">&#39;number of up stream bases to include when get cytosine context.&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_num_downstream_bases"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_num_downstream_bases">[docs]</a><span class="n">table_to_allc_num_downstream_bases</span> <span class="o">=</span> <span class="s1">&#39;number of down stream bases to include when get cytosine context.&#39;</span></div>
+<div class="viewcode-block" id="table_to_allc_doc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_doc">[docs]</a><span class="n">table_to_allc_doc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Convert different kinds of methylation table into ALLC format. &quot;</span> <span class="s2">&quot;Currently, only plain text table is accepted.&quot;</span>
+<span class="p">)</span></div>
+<div class="viewcode-block" id="table_to_allc_input_path"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_input_path">[docs]</a><span class="n">table_to_allc_input_path</span> <span class="o">=</span> <span class="s2">&quot;input path of the table&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_output_prefix"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_output_prefix">[docs]</a><span class="n">table_to_allc_output_prefix</span> <span class="o">=</span> <span class="s2">&quot;output prefix of the ALLC table&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_sep"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_sep">[docs]</a><span class="n">table_to_allc_sep</span> <span class="o">=</span> <span class="s2">&quot;character to separate columns in the table&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_header"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_header">[docs]</a><span class="n">table_to_allc_header</span> <span class="o">=</span> <span class="s2">&quot;Whether the table contains header line or not&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_chunk_size"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_chunk_size">[docs]</a><span class="n">table_to_allc_chunk_size</span> <span class="o">=</span> <span class="s2">&quot;chunk_size to perform conversion&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_chrom"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_chrom">[docs]</a><span class="n">table_to_allc_chrom</span> <span class="o">=</span> <span class="s2">&quot;the chromosome column number, 0-based index&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_pos"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_pos">[docs]</a><span class="n">table_to_allc_pos</span> <span class="o">=</span> <span class="s2">&quot;the position column number, 0-based index&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_strand"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_strand">[docs]</a><span class="n">table_to_allc_strand</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;the strand column number, 0-based index. &quot;</span> <span class="s2">&quot;If not provided, will infer automatically based on the fasta_path&quot;</span>
+<span class="p">)</span></div>
+<div class="viewcode-block" id="table_to_allc_context"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_context">[docs]</a><span class="n">table_to_allc_context</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;the cytosine context column number, 0-based index. &quot;</span>
+    <span class="s2">&quot;If not provided, will inter automatically based on the fasta_path&quot;</span>
+<span class="p">)</span></div>
+<div class="viewcode-block" id="table_to_allc_mc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_mc">[docs]</a><span class="n">table_to_allc_mc</span> <span class="o">=</span> <span class="s2">&quot;the methylated cytosine count column number, 0-based index.&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_uc"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_uc">[docs]</a><span class="n">table_to_allc_uc</span> <span class="o">=</span> <span class="s2">&quot;the unmethylated cytosine count column number, 0-based index.&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_cov"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_cov">[docs]</a><span class="n">table_to_allc_cov</span> <span class="o">=</span> <span class="s2">&quot;the total cytosine coverage count column number, 0-based index.&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_mc_frac"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_mc_frac">[docs]</a><span class="n">table_to_allc_mc_frac</span> <span class="o">=</span> <span class="s2">&quot;the methylation fraction column number, 0-based index.&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_pseudo_count"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_pseudo_count">[docs]</a><span class="n">table_to_allc_pseudo_count</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Use this pseudo_count number as the total cytosine coverage count, &quot;</span>
+    <span class="s1">&#39;if the &quot;cov&quot; column is missing and &quot;mc_frac&quot; column is provided.&#39;</span>
+<span class="p">)</span></div>
+<div class="viewcode-block" id="table_to_allc_fasta_path"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_fasta_path">[docs]</a><span class="n">table_to_allc_fasta_path</span> <span class="o">=</span> <span class="s2">&quot;the genome FASTA file path, &quot;</span> <span class="s1">&#39;required if either &quot;strand&quot; or &quot;context&quot; column is missing.&#39;</span></div>
+<div class="viewcode-block" id="table_to_allc_num_upstream_bases"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_num_upstream_bases">[docs]</a><span class="n">table_to_allc_num_upstream_bases</span> <span class="o">=</span> <span class="s2">&quot;number of up stream bases to include when get cytosine context.&quot;</span></div>
+<div class="viewcode-block" id="table_to_allc_num_downstream_bases"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_num_downstream_bases">[docs]</a><span class="n">table_to_allc_num_downstream_bases</span> <span class="o">=</span> <span class="s2">&quot;number of down stream bases to include when get cytosine context.&quot;</span></div>
 <div class="viewcode-block" id="table_to_allc_add_chr"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_add_chr">[docs]</a><span class="n">table_to_allc_add_chr</span> <span class="o">=</span> <span class="s1">&#39;whether add &quot;chr&quot; before the chromosome name.&#39;</span></div>
-<div class="viewcode-block" id="table_to_allc_sort"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_sort">[docs]</a><span class="n">table_to_allc_sort</span> <span class="o">=</span> <span class="s1">&#39;whether sort the ALLC table after conversion.&#39;</span></div>
+<div class="viewcode-block" id="table_to_allc_sort"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.table_to_allc_sort">[docs]</a><span class="n">table_to_allc_sort</span> <span class="o">=</span> <span class="s2">&quot;whether sort the ALLC table after conversion.&quot;</span></div>
 
 
 <div class="viewcode-block" id="doc_params"><a class="viewcode-back" href="../../api/ALLCools/_doc/index.html#ALLCools._doc.doc_params">[docs]</a><span class="k">def</span> <span class="nf">doc_params</span><span class="p">(</span><span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;\</span>
-<span class="sd">    Docstrings should start with &quot;\&quot; in the first line for proper formatting.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Docstrings should start with &quot;\&quot; in the first line for proper formatting.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">dec</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
         <span class="n">obj</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
@@ -1924,28 +1893,34 @@
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Hanqing Liu<br/>
+  
+      &copy; Copyright 2019 - 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By Hanqing Liu<br/>
-    
-        &copy; Copyright 2019 - 2022.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

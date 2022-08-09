@@ -19,4 +19,6 @@ Module Contents
 
 .. py:function:: check_custom_dim_name_and_return(dim_name)
 
+   Check MCDS dimension name and return dim_name if valid.
+
 

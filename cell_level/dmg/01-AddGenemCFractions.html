@@ -6,39 +6,43 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Calculate Gene mC Fractions</title>
-<link href="../../_static/css/theme.css" rel="stylesheet"/>
-<link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet"/>
+<!-- Loaded before other Sphinx assets -->
+<link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet"/>
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet"/>
 <link href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css" rel="stylesheet"/>
 <link as="font" crossorigin="" href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2" rel="preload" type="font/woff2"/>
 <link as="font" crossorigin="" href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2" rel="preload" type="font/woff2"/>
 <link href="../../_static/pygments.css" rel="stylesheet" type="text/css">
-<link href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" rel="stylesheet" type="text/css">
+<link href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" rel="stylesheet" type="text/css">
 <link href="../../_static/togglebutton.css" rel="stylesheet" type="text/css">
 <link href="../../_static/copybutton.css" rel="stylesheet" type="text/css">
 <link href="../../_static/mystnb.css" rel="stylesheet" type="text/css">
 <link href="../../_static/sphinx-thebe.css" rel="stylesheet" type="text/css"/>
 <link href="../../_static/graphviz.css" rel="stylesheet" type="text/css"/>
 <link href="../../_static/sphinx-codeautolink.css" rel="stylesheet" type="text/css"/>
-<link href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" rel="stylesheet" type="text/css"/>
-<link href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" rel="stylesheet" type="text/css"/>
-<link as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js" rel="preload"/>
+<link href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" rel="stylesheet" type="text/css"/>
+<!-- Pre-loaded scripts that we'll load fully later -->
+<link as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf" rel="preload"/>
 <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
 <script src="../../_static/jquery.js"></script>
 <script src="../../_static/underscore.js"></script>
 <script src="../../_static/doctools.js"></script>
-<script src="../../_static/togglebutton.js"></script>
 <script src="../../_static/clipboard.min.js"></script>
 <script src="../../_static/copybutton.js"></script>
-<script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-<script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-<script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-<script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-<script async="async" src="../../_static/sphinx-thebe.js"></script>
+<script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+<script>let toggleHintShow = 'Click to show';</script>
+<script>let toggleHintHide = 'Click to hide';</script>
+<script>let toggleOpenOnPrint = 'true';</script>
+<script src="../../_static/togglebutton.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+<script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+<script src="../../_static/design-tabs.js"></script>
+<script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+<script async="async" src="../../_static/sphinx-thebe.js"></script>
 <link href="../../_static/allcools_favicon.png" rel="shortcut icon">
 <link href="../../genindex.html" rel="index" title="Index"/>
 <link href="../../search.html" rel="search" title="Search"/>
@@ -55,12 +59,27 @@
                     gtag('config', 'G-4F8CRF0GK9');
                 </script>
 </link></link></link></link></link></link></head>
-<body data-offset="80" data-spy="scroll" data-target="#bd-toc-nav">
+<body data-offset="60" data-spy="scroll" data-target="#bd-toc-nav">
+<!-- Checkboxes to toggle the left sidebar -->
+<input aria-label="Toggle navigation sidebar" class="sidebar-toggle" id="__navigation" name="__navigation" type="checkbox"/>
+<label class="overlay overlay-navbar" for="__navigation">
+<div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input aria-label="Toggle in-page Table of Contents" class="sidebar-toggle" id="__page-toc" name="__page-toc" type="checkbox"/>
+<label class="overlay overlay-pagetoc" for="__page-toc">
+<div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
 <div class="container-fluid" id="banner"></div>
 <div class="container-xl">
 <div class="row">
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-<div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+<div class="bd-sidebar__content">
+<div class="bd-sidebar__top"><div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../../index.html">
 <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
 <img alt="logo" class="logo" src="../../_static/allcools_logo.png"/>
@@ -70,11 +89,11 @@
 <input aria-label="Search this book..." autocomplete="off" class="form-control" id="search-input" name="q" placeholder="Search this book..." type="search"/>
 </form><nav aria-label="Main" class="bd-links" id="bd-docs-nav">
 <div class="bd-toc-item active">
-<ul class="nav bd-sidenav">
+<ul class="nav bd-sidenav bd-sidenav__home-link">
 <li class="toctree-l1">
 <a class="reference internal" href="../../intro.html">
-   ALLCools: ALL methyl-Cytosine tools
-  </a>
+                    ALLCools: ALL methyl-Cytosine tools
+                </a>
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -136,7 +155,7 @@
 <a class="reference internal" href="../step_by_step/intro_step_by_step_clustering.html">
    Step-by-step Clustering Analysis
   </a>
-<input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+<input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox">
 <label for="toctree-checkbox-2">
 <i class="fas fa-chevron-down">
 </i>
@@ -146,7 +165,7 @@
 <a class="reference internal" href="../step_by_step/100kb/intro_100kb.html">
      Step-by-step Clustering Using 100Kb bins
     </a>
-<input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+<input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox">
 <label for="toctree-checkbox-3">
 <i class="fas fa-chevron-down">
 </i>
@@ -188,7 +207,7 @@
       </a>
 </li>
 </ul>
-</li>
+</input></li>
 <li class="toctree-l2 has-children">
 <a class="reference internal" href="../step_by_step/5kb/intro_5kb.html">
      Step-by-step Clustering using mCG-5Kb Input
@@ -199,11 +218,6 @@
 </i>
 </label>
 <ul>
-<li class="toctree-l3">
-<a class="reference internal" href="../step_by_step/5kb/01-CellBasicFiltering.html">
-       Cell Basic Filtering
-      </a>
-</li>
 <li class="toctree-l3">
 <a class="reference internal" href="../step_by_step/5kb/02-DecompositionAndEmbedding.html">
        Decomposition Using mCG-5Kb Bins
@@ -217,7 +231,7 @@
 </ul>
 </li>
 </ul>
-</li>
+</input></li>
 <li class="toctree-l1 current active has-children">
 <a class="reference internal" href="intro_dmg.html">
    Differential Methylated Genes Analysis
@@ -555,7 +569,7 @@
      allcools
     </span>
 <span class="pre">
-     tbi
+     table-to-allc
     </span>
 </code>
 </a>
@@ -725,6 +739,15 @@
 </a>
 </li>
 <li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/chromatin_conformation/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.clustering.chromatin_conformation
+        </span>
+</code>
+</a>
+</li>
+<li class="toctree-l3">
 <a class="reference internal" href="../../api/ALLCools/clustering/dmg/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
@@ -743,6 +766,15 @@
 </a>
 </li>
 <li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/lsi/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.clustering.lsi
+        </span>
+</code>
+</a>
+</li>
+<li class="toctree-l3">
 <a class="reference internal" href="../../api/ALLCools/clustering/mcad/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
@@ -756,6 +788,15 @@
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
          ALLCools.clustering.pvclust
+        </span>
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/clustering/rutilities/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.clustering.rutilities
         </span>
 </code>
 </a>
@@ -842,6 +883,40 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children">
+<a class="reference internal" href="../../api/ALLCools/dataset/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+       ALLCools.dataset
+      </span>
+</code>
+</a>
+<input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+<label for="toctree-checkbox-18">
+<i class="fas fa-chevron-down">
+</i>
+</label>
+<ul>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/dataset/directory_structure/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.dataset.directory_structure
+        </span>
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/dataset/entry_point/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.dataset.entry_point
+        </span>
+</code>
+</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children">
 <a class="reference internal" href="../../api/ALLCools/dmr/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
@@ -849,8 +924,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-<label for="toctree-checkbox-18">
+<input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+<label for="toctree-checkbox-19">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -901,8 +976,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-<label for="toctree-checkbox-19">
+<input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+<label for="toctree-checkbox-20">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -935,8 +1010,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-<label for="toctree-checkbox-20">
+<input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+<label for="toctree-checkbox-21">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -960,10 +1035,19 @@
 </a>
 </li>
 <li class="toctree-l3">
-<a class="reference internal" href="../../api/ALLCools/integration/harmony/index.html">
+<a class="reference internal" href="../../api/ALLCools/integration/metric/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
-         ALLCools.integration.harmony
+         ALLCools.integration.metric
+        </span>
+</code>
+</a>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="../../api/ALLCools/integration/seurat_class/index.html">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">
+         ALLCools.integration.seurat_class
         </span>
 </code>
 </a>
@@ -978,8 +1062,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-<label for="toctree-checkbox-21">
+<input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+<label for="toctree-checkbox-22">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1030,8 +1114,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-<label for="toctree-checkbox-22">
+<input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+<label for="toctree-checkbox-23">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1082,8 +1166,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-<label for="toctree-checkbox-23">
+<input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+<label for="toctree-checkbox-24">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1096,8 +1180,8 @@
         </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
-<label for="toctree-checkbox-24">
+<input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+<label for="toctree-checkbox-25">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1249,8 +1333,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
-<label for="toctree-checkbox-25">
+<input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+<label for="toctree-checkbox-26">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1283,8 +1367,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
-<label for="toctree-checkbox-26">
+<input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+<label for="toctree-checkbox-27">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1301,171 +1385,6 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children">
-<a class="reference internal" href="../../api/ALLCools/sandbox/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-       ALLCools.sandbox
-      </span>
-</code>
-</a>
-<input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
-<label for="toctree-checkbox-27">
-<i class="fas fa-chevron-down">
-</i>
-</label>
-<ul>
-<li class="toctree-l3 has-children">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-         ALLCools.sandbox.igv
-        </span>
-</code>
-</a>
-<input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
-<label for="toctree-checkbox-28">
-<i class="fas fa-chevron-down">
-</i>
-</label>
-<ul>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/BaseClass/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.igv.BaseClass
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/Session/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.igv.Session
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/Track/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.igv.Track
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/defaults/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.igv.defaults
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/igv/make_session/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.igv.make_session
-          </span>
-</code>
-</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3 has-children">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-         ALLCools.sandbox.motif
-        </span>
-</code>
-</a>
-<input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
-<label for="toctree-checkbox-29">
-<i class="fas fa-chevron-down">
-</i>
-</label>
-<ul>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/ame/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.motif.ame
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/cmotif/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.motif.cmotif
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/fimo/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.motif.fimo
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/motif_scan/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.motif.motif_scan
-          </span>
-</code>
-</a>
-</li>
-<li class="toctree-l4">
-<a class="reference internal" href="../../api/ALLCools/sandbox/motif/utilities/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-           ALLCools.sandbox.motif.utilities
-          </span>
-</code>
-</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3">
-<a class="reference internal" href="../../api/ALLCools/sandbox/balanced_knn/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-         ALLCools.sandbox.balanced_knn
-        </span>
-</code>
-</a>
-</li>
-<li class="toctree-l3">
-<a class="reference internal" href="../../api/ALLCools/sandbox/scanorama/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-         ALLCools.sandbox.scanorama
-        </span>
-</code>
-</a>
-</li>
-<li class="toctree-l3">
-<a class="reference internal" href="../../api/ALLCools/sandbox/sccaf/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-         ALLCools.sandbox.sccaf
-        </span>
-</code>
-</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l2 has-children">
 <a class="reference internal" href="../../api/ALLCools/schema/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
@@ -1473,8 +1392,8 @@
       </span>
 </code>
 </a>
-<input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/>
-<label for="toctree-checkbox-30">
+<input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
+<label for="toctree-checkbox-28">
 <i class="fas fa-chevron-down">
 </i>
 </label>
@@ -1572,15 +1491,6 @@
 </a>
 </li>
 <li class="toctree-l2">
-<a class="reference internal" href="../../api/ALLCools/_version/index.html">
-<code class="xref py py-mod docutils literal notranslate">
-<span class="pre">
-       ALLCools._version
-      </span>
-</code>
-</a>
-</li>
-<li class="toctree-l2">
 <a class="reference internal" href="../../api/ALLCools/api/index.html">
 <code class="xref py py-mod docutils literal notranslate">
 <span class="pre">
@@ -1628,59 +1538,119 @@
 </li>
 </ul>
 </div>
-</nav> <!-- To handle the deprecated key -->
+</nav></div>
+<div class="bd-sidebar__bottom">
+<!-- To handle the deprecated key -->
 <div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
 </div>
 </div>
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-<div class="topbar container-xl fixed-top">
-<div class="topbar-contents row">
-<div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-<div class="col pl-md-4 topbar-main">
-<button aria-controls="site-navigation" aria-expanded="true" aria-label="Toggle navigation" class="navbar-toggler ml-0" data-placement="left" data-target=".site-navigation" data-toggle="tooltip" id="navbar-toggler" title="Toggle navigation" type="button">
+</div>
+<div id="rtd-footer-container"></div>
+</div>
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+<div class="header-article row sticky-top noprint">
+<div class="col py-1 d-flex header-article-main">
+<div class="header-article__left">
+<label class="headerbtn" data-placement="right" data-toggle="tooltip" for="__navigation" title="Toggle navigation">
+<span class="headerbtn__icon-container">
 <i class="fas fa-bars"></i>
-<i class="fas fa-arrow-left"></i>
-<i class="fas fa-arrow-up"></i>
+</span>
+</label>
+</div>
+<div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+<button aria-label="Launch interactive content" class="headerbtn menu-dropdown__trigger">
+<i class="fas fa-rocket"></i>
 </button>
-<div class="dropdown-buttons-trigger">
-<button aria-label="Download this page" class="btn btn-secondary topbarbtn" id="dropdown-buttons-trigger"><i class="fas fa-download"></i></button>
-<div class="dropdown-buttons">
-<!-- ipynb file if we had a myst markdown file -->
-<!-- Download raw file -->
-<a class="dropdown-buttons" href="../../_sources/cell_level/dmg/01-AddGenemCFractions.ipynb"><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Download source file" type="button">.ipynb</button></a>
-<!-- Download PDF via print -->
-<button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" id="download-print" onclick="printPdf(this)" title="Print to PDF" type="button">.pdf</button>
+<div class="menu-dropdown__content">
+<ul>
+</ul>
 </div>
 </div>
-<!-- Source interaction buttons -->
-<div class="dropdown-buttons-trigger">
-<button aria-label="Connect with source repository" class="btn btn-secondary topbarbtn" id="dropdown-buttons-trigger"><i class="fab fa-github"></i></button>
-<div class="dropdown-buttons sourcebuttons">
-<a class="repository-button" href="https://github.com/lhqing/ALLCools"><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Source repository" type="button"><i class="fab fa-github"></i>repository</button></a>
-<a class="issues-button" href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fcell_level/dmg/01-AddGenemCFractions.html&amp;body=Your%20issue%20content%20here."><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Open an issue" type="button"><i class="fas fa-lightbulb"></i>open issue</button></a>
-<a class="edit-button" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/cell_level/dmg/01-AddGenemCFractions.ipynb"><button class="btn btn-secondary topbarbtn" data-placement="left" data-toggle="tooltip" title="Edit this page" type="button"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+<button class="headerbtn" data-placement="bottom" data-toggle="tooltip" onclick="toggleFullScreen()" title="Fullscreen mode">
+<span class="headerbtn__icon-container">
+<i class="fas fa-expand"></i>
+</span>
+</button>
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+<button aria-label="Source repositories" class="headerbtn menu-dropdown__trigger">
+<i class="fab fa-github"></i>
+</button>
+<div class="menu-dropdown__content">
+<ul>
+<li>
+<a class="headerbtn" data-placement="left" data-toggle="tooltip" href="https://github.com/lhqing/ALLCools" title="Source repository">
+<span class="headerbtn__icon-container">
+<i class="fab fa-github"></i>
+</span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+</li>
+<li>
+<a class="headerbtn" data-placement="left" data-toggle="tooltip" href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2Fcell_level/dmg/01-AddGenemCFractions.html&amp;body=Your%20issue%20content%20here." title="Open an issue">
+<span class="headerbtn__icon-container">
+<i class="fas fa-lightbulb"></i>
+</span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+</li>
+<li>
+<a class="headerbtn" data-placement="left" data-toggle="tooltip" href="https://github.com/lhqing/ALLCools/edit/master/docs/allcools/cell_level/dmg/01-AddGenemCFractions.ipynb" title="Edit this page">
+<span class="headerbtn__icon-container">
+<i class="fas fa-pencil-alt"></i>
+</span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+</li>
+</ul>
 </div>
 </div>
-<!-- Full screen (wrap in <a> to have style consistency -->
-<a class="full-screen-button"><button aria-label="Fullscreen mode" class="btn btn-secondary topbarbtn" data-placement="bottom" data-toggle="tooltip" onclick="toggleFullScreen()" title="Fullscreen mode" type="button"><i class="fas fa-expand"></i></button></a>
-<!-- Launch buttons -->
+<div class="menu-dropdown menu-dropdown-download-buttons">
+<button aria-label="Download this page" class="headerbtn menu-dropdown__trigger">
+<i class="fas fa-download"></i>
+</button>
+<div class="menu-dropdown__content">
+<ul>
+<li>
+<a class="headerbtn" data-placement="left" data-toggle="tooltip" href="../../_sources/cell_level/dmg/01-AddGenemCFractions.ipynb" title="Download source file">
+<span class="headerbtn__icon-container">
+<i class="fas fa-file"></i>
+</span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+</li>
+<li>
+<button class="headerbtn" data-placement="left" data-toggle="tooltip" onclick="printPdf(this)" title="Print to PDF">
+<span class="headerbtn__icon-container">
+<i class="fas fa-file-pdf"></i>
+</span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+</li>
+</ul>
+</div>
+</div>
+<label class="headerbtn headerbtn-page-toc" for="__page-toc">
+<span class="headerbtn__icon-container">
+<i class="fas fa-list"></i>
+</span>
+</label>
+</div>
 </div>
 <!-- Table of contents -->
-<div class="d-none d-md-block col-md-2 bd-toc show noprint">
+<div class="col-md-3 bd-toc show noprint">
 <div class="tocsection onthispage pt-5 pb-3">
 <i class="fas fa-list"></i> Contents
-            </div>
+    </div>
 <nav aria-label="Page" id="bd-toc-nav">
 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry">
 <a class="reference internal nav-link" href="#load-metadata">
    Load metadata
-  </a>
-</li>
-<li class="toc-h2 nav-item toc-entry">
-<a class="reference internal nav-link" href="#filter-genes-by-overlap-and-chromosomes">
-   Filter genes by overlap and chromosomes
   </a>
 </li>
 <li class="toc-h2 nav-item toc-entry">
@@ -1702,9 +1672,8 @@
 </nav>
 </div>
 </div>
-</div>
-<div class="row" id="main-content">
-<div class="col-12 col-md-9 pl-md-3 pr-md-0">
+<div class="article row">
+<div class="col pl-md-3 pl-lg-5 content-container">
 <!-- Table of contents that is only displayed when printing the page -->
 <div class="onlyprint" id="jb-print-docs-body">
 <h1>Calculate Gene mC Fractions</h1>
@@ -1722,11 +1691,6 @@
   </a>
 </li>
 <li class="toc-h2 nav-item toc-entry">
-<a class="reference internal nav-link" href="#filter-genes-by-overlap-and-chromosomes">
-   Filter genes by overlap and chromosomes
-  </a>
-</li>
-<li class="toc-h2 nav-item toc-entry">
 <a class="reference internal nav-link" href="#filter-genes-by-cell-mean-coverage">
    Filter genes by cell mean coverage
   </a>
@@ -1746,129 +1710,89 @@
 </div>
 </div>
 </div>
+<main id="main-content" role="main">
 <div>
 <div class="tex2jax_ignore mathjax_ignore section" id="calculate-gene-mc-fractions">
-<h1>Calculate Gene mC Fractions<a class="headerlink" href="#calculate-gene-mc-fractions" title="Permalink to this headline">¶</a></h1>
+<h1>Calculate Gene mC Fractions<a class="headerlink" href="#calculate-gene-mc-fractions" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="https://pandas.pydata.org/pandas-docs/stable/index.html#module-pandas" title="pandas"><span class="nn">pandas</span></a> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">pybedtools</span>
 <span class="kn">from</span> <a class="sphinx-codeautolink-a" href="../../api/ALLCools/mcds/index.html#module-ALLCools.mcds" title="ALLCools.mcds"><span class="nn">ALLCools.mcds</span></a> <span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../../api/ALLCools/mcds/mcds/index.html#ALLCools.mcds.mcds.MCDS" title="ALLCools.mcds.mcds.MCDS"><span class="n">MCDS</span></a>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell tag_parameters docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gene_meta_path</span> <span class="o">=</span> <span class="s1">'../../data/genome/gencode.vM22.annotation.gene.flat.tsv.gz'</span>
-<span class="n">chrom_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'chrM'</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <a class="sphinx-codeautolink-a" href="../../api/ALLCools/dataset/index.html#module-ALLCools.dataset" title="ALLCools.dataset"><span class="nn">ALLCools.dataset</span></a> <span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../../api/ALLCools/dataset/entry_point/index.html#ALLCools.dataset.entry_point.ALLCoolsDataset" title="ALLCools.dataset.entry_point.ALLCoolsDataset"><span class="n">ALLCoolsDataset</span></a>
 
-<span class="c1"># change this to the path to your filtered metadata</span>
-<span class="n">metadata_path</span> <span class="o">=</span> <span class="s1">'../step_by_step/100kb/CellMetadata.PassQC.csv.gz'</span>
-
-<span class="c1"># change this to the paths to your MCDS files</span>
-<span class="n">mcds_path</span> <span class="o">=</span> <span class="s1">'../../data/Brain/snmC-seq2/Liu2021Nature.mcds/'</span><span class="p">,</span>
-<span class="n">obs_dim</span> <span class="o">=</span> <span class="s1">'cell'</span>
-<span class="n">var_dim</span> <span class="o">=</span> <span class="s1">'geneslop2k'</span>
-
-<span class="n">min_cov</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">brain_dataset</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../../api/ALLCools/dataset/entry_point/index.html#ALLCools.dataset.entry_point.ALLCoolsDataset" title="ALLCools.dataset.entry_point.ALLCoolsDataset"><span class="n">ALLCoolsDataset</span></a><span class="p">(</span><span class="s1">'/gale/netapp/cemba3c/projects/ALLCools/Brain/snmC-seq2/'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="load-metadata">
-<h2>Load metadata<a class="headerlink" href="#load-metadata" title="Permalink to this headline">¶</a></h2>
+<h2>Load metadata<a class="headerlink" href="#load-metadata" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gene_meta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">gene_meta_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">'gene_id'</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gene_meta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="n">brain_dataset</span><span class="o">.</span><span class="n">metadata_dir</span> <span class="o">/</span> <span class="s1">'modified_gencode.vM23.primary_assembly.annotation.gene.flat.tsv.gz'</span><span class="p">,</span>
+    <span class="n">index_col</span><span class="o">=</span><span class="s1">'gene_id'</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">metadata_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">brain_dataset</span><span class="o">.</span><span class="n">metadata_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">total_cells</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Metadata of </span><span class="si">{</span><span class="n">total_cells</span><span class="si">}</span><span class="s1"> cells'</span><span class="p">)</span>
+<a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#print" title="print"><span class="nb">print</span></a><span class="p">(</span><span class="sa">f</span><span class="s1">'Metadata of </span><span class="si">{</span><span class="n">total_cells</span><span class="si">}</span><span class="s1"> cells'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Metadata of 16985 cells
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="filter-genes-by-overlap-and-chromosomes">
-<h2>Filter genes by overlap and chromosomes<a class="headerlink" href="#filter-genes-by-overlap-and-chromosomes" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">genes_to_skip</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-
-<span class="c1"># skip smaller genes mostly covered by a larger gene, e.g., a miRNA within a protein coding gene.</span>
-<span class="c1"># F=0.9 means &gt; 90% of gene_b is overlapped with gene_a, in this case, we only keep gene_a for DMG test</span>
-<span class="n">gene_bed</span> <span class="o">=</span> <span class="n">pybedtools</span><span class="o">.</span><span class="n">BedTool</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span>
-    <span class="n">gene_meta</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[[</span><span class="s1">'chrom'</span><span class="p">,</span> <span class="s1">'start'</span><span class="p">,</span> <span class="s1">'end'</span><span class="p">,</span> <span class="s1">'gene_id'</span><span class="p">]])</span>
-<span class="n">mapped_bam</span> <span class="o">=</span> <span class="n">gene_bed</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">gene_bed</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="s1">'distinct'</span><span class="p">,</span> <span class="n">F</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">gene_a</span><span class="p">,</span> <span class="n">gene_b_str</span><span class="p">)</span> <span class="ow">in</span> <span class="n">mapped_bam</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-    <span class="k">for</span> <span class="n">gene_b</span> <span class="ow">in</span> <span class="n">gene_b_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">gene_b</span> <span class="o">!=</span> <span class="n">gene_a</span><span class="p">:</span>
-            <span class="n">genes_to_skip</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">gene_b</span><span class="p">)</span>
-
-<span class="c1"># remove certain chromosomes</span>
-<span class="n">genes_to_skip</span> <span class="o">|=</span> <span class="nb">set</span><span class="p">(</span><span class="n">gene_meta</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">gene_meta</span><span class="p">[</span><span class="s1">'chrom'</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">chrom_to_remove</span><span class="p">)])</span>
-<span class="n">use_features</span> <span class="o">=</span> <span class="n">gene_meta</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">~</span><span class="n">gene_meta</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">genes_to_skip</span><span class="p">)]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">use_features</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s1"> features remained'</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>41871 features remained
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Metadata of 4875 cells
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="filter-genes-by-cell-mean-coverage">
-<h2>Filter genes by cell mean coverage<a class="headerlink" href="#filter-genes-by-cell-mean-coverage" title="Permalink to this headline">¶</a></h2>
+<h2>Filter genes by cell mean coverage<a class="headerlink" href="#filter-genes-by-cell-mean-coverage" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mcds_path</span><span class="p">,</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var_dim</span> <span class="o">=</span> <span class="s1">'geneslop2k-vm23'</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span> <span class="o">=</span> <span class="n">MCDS</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">brain_dataset</span><span class="o">.</span><span class="n">mcds_paths</span><span class="p">,</span>
                  <span class="n">var_dim</span><span class="o">=</span><span class="n">var_dim</span><span class="p">,</span>
-                 <span class="n">use_obs</span><span class="o">=</span><span class="n">metadata</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">sel</span><span class="p">({</span><span class="n">var_dim</span><span class="p">:</span> <span class="n">use_features</span><span class="p">})</span>
+                 <span class="n">use_obs</span><span class="o">=</span><span class="n">metadata</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 <span class="n">mcds</span><span class="o">.</span><span class="n">add_feature_cov_mean</span><span class="p">()</span>
-
-<span class="n">feature_cov_mean</span> <span class="o">=</span> <span class="n">mcds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s1">_cov_mean'</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
-<span class="n">use_features</span> <span class="o">&amp;=</span> <span class="n">feature_cov_mean</span><span class="p">[</span><span class="n">feature_cov_mean</span> <span class="o">&gt;</span> <span class="n">min_cov</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">use_features</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s1"> features remained'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Feature geneslop2k mean cov across cells added in MCDS.coords['geneslop2k_cov_mean'].
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Feature geneslop2k-vm23 mean cov across cells added in MCDS.coords['geneslop2k-vm23_cov_mean'].
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_166231/2001998121.py:7: FutureWarning: Index.__and__ operating as a set operation is deprecated, in the future this will be a logical operation matching Series.__and__.  Use index.intersection(other) instead
-  use_features &amp;= feature_cov_mean[feature_cov_mean &gt; min_cov].index
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>40331 features remained
-</pre></div>
-</div>
-<img alt="../../_images/01-AddGenemCFractions_9_3.png" src="../../_images/01-AddGenemCFractions_9_3.png">
+<img alt="../../_images/01-AddGenemCFractions_8_1.png" src="../../_images/01-AddGenemCFractions_8_1.png">
 </img></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span><span class="o">.</span><span class="n">filter_feature_by_cov_mean</span><span class="p">(</span><span class="n">min_cov</span><span class="o">=</span><span class="n">min_cov</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span><span class="o">.</span><span class="n">filter_feature_by_cov_mean</span><span class="p">(</span><span class="n">min_cov</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">mcds</span><span class="o">.</span><span class="n">remove_chromosome</span><span class="p">(</span><span class="n">exclude_chromosome</span><span class="o">=</span><span class="p">[</span><span class="s1">'chrM'</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Before cov mean filter: 41871 geneslop2k
- After cov mean filter: 40331 geneslop2k 96.3%
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Before cov mean filter: 32208 geneslop2k-vm23
+ After cov mean filter: 31451 geneslop2k-vm23 97.6%
+13 geneslop2k-vm23 features in ['chrM'] removed.
 </pre></div>
 </div>
 <div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
@@ -1902,6 +1826,7 @@
 }
 
 html[theme=dark],
+body[data-theme=dark],
 body.vscode-dark {
   --xr-font-color0: rgba(255, 255, 255, 1);
   --xr-font-color2: rgba(255, 255, 255, 0.54);
@@ -2223,25 +2148,26 @@ dl.xr-attrs {
   fill: currentColor;
 }
 </style><pre class="xr-text-repr-fallback">&lt;xarray.MCDS&gt;
-Dimensions:              (cell: 16985, count_type: 2, geneslop2k: 40331, mc_type: 2)
+Dimensions:                   (geneslop2k-vm23: 32195, cell: 4875,
+                               count_type: 2, mc_type: 2)
 Coordinates:
-  * cell                 (cell) &lt;U10 '10E_M_207' '10E_M_338' ... '9J_M_2969'
-  * count_type           (count_type) &lt;U3 'mc' 'cov'
-  * geneslop2k           (geneslop2k) object 'ENSMUSG00000102693.1' ... 'ENSM...
-    geneslop2k_chrom     (geneslop2k) &lt;U5 dask.array&lt;chunksize=(40331,), meta=np.ndarray&gt;
-    geneslop2k_end       (geneslop2k) int64 dask.array&lt;chunksize=(40331,), meta=np.ndarray&gt;
-    geneslop2k_start     (geneslop2k) int64 dask.array&lt;chunksize=(40331,), meta=np.ndarray&gt;
-  * mc_type              (mc_type) &lt;U3 'CGN' 'CHN'
-    strand_type          &lt;U4 'both'
-    geneslop2k_cov_mean  (geneslop2k) float64 74.71 58.61 ... 40.27 1.367e+03
+  * geneslop2k-vm23           (geneslop2k-vm23) object 'ENSMUSG00000051951' ....
+  * cell                      (cell) &lt;U15 '8E_M_3022' ... '8J_M_2288'
+  * count_type                (count_type) &lt;U3 'mc' 'cov'
+  * mc_type                   (mc_type) &lt;U3 'CGN' 'CHN'
+    geneslop2k-vm23_cov_mean  (geneslop2k-vm23) float64 6.996e+03 ... 0.08287
 Data variables:
-    geneslop2k_da        (cell, geneslop2k, mc_type, count_type) uint16 dask.array&lt;chunksize=(3397, 2776, 2, 2), meta=np.ndarray&gt;
+    geneslop2k-vm23_chrom     (geneslop2k-vm23) &lt;U5 dask.array&lt;chunksize=(2000,), meta=np.ndarray&gt;
+    geneslop2k-vm23_da        (cell, geneslop2k-vm23, mc_type, count_type) uint16 dask.array&lt;chunksize=(1000, 2000, 2, 2), meta=np.ndarray&gt;
+    geneslop2k-vm23_end       (geneslop2k-vm23) int64 dask.array&lt;chunksize=(2000,), meta=np.ndarray&gt;
+    geneslop2k-vm23_start     (geneslop2k-vm23) int64 dask.array&lt;chunksize=(2000,), meta=np.ndarray&gt;
 Attributes:
     obs_dim:  cell
-    var_dim:  geneslop2k</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.MCDS</div></div><ul class="xr-sections"><li class="xr-section-item"><input class="xr-section-summary-in" disabled="" id="section-016d9f78-b208-4312-8fcc-764cd003cb10" type="checkbox"/><label class="xr-section-summary" for="section-016d9f78-b208-4312-8fcc-764cd003cb10" title="Expand/collapse section">Dimensions:</label><div class="xr-section-inline-details"><ul class="xr-dim-list"><li><span class="xr-has-index">cell</span>: 16985</li><li><span class="xr-has-index">count_type</span>: 2</li><li><span class="xr-has-index">geneslop2k</span>: 40331</li><li><span class="xr-has-index">mc_type</span>: 2</li></ul></div><div class="xr-section-details"></div></li><li class="xr-section-item"><input checked="" class="xr-section-summary-in" id="section-36832cbd-6e58-46dc-8b8b-466eae47f982" type="checkbox"/><label class="xr-section-summary" for="section-36832cbd-6e58-46dc-8b8b-466eae47f982">Coordinates: <span>(9)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">cell</span></div><div class="xr-var-dims">(cell)</div><div class="xr-var-dtype">&lt;U10</div><div class="xr-var-preview xr-preview">'10E_M_207' ... '9J_M_2969'</div><input class="xr-var-attrs-in" disabled="" id="attrs-391ae35f-27f0-400d-87b1-fb13d1acefdf" type="checkbox"/><label for="attrs-391ae35f-27f0-400d-87b1-fb13d1acefdf" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-52a4e13e-8820-4d88-b61b-fa4667b9171f" type="checkbox"/><label for="data-52a4e13e-8820-4d88-b61b-fa4667b9171f" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['10E_M_207', '10E_M_338', '10E_M_410', ..., '8J_M_590', '8J_M_1809',
-       '9J_M_2969'], dtype='&lt;U10')</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">count_type</span></div><div class="xr-var-dims">(count_type)</div><div class="xr-var-dtype">&lt;U3</div><div class="xr-var-preview xr-preview">'mc' 'cov'</div><input class="xr-var-attrs-in" disabled="" id="attrs-52e72f3d-da92-43ae-b8f5-2f6aaf1cbbff" type="checkbox"/><label for="attrs-52e72f3d-da92-43ae-b8f5-2f6aaf1cbbff" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-d0a86395-f202-436b-b774-6767c3a3bea0" type="checkbox"/><label for="data-d0a86395-f202-436b-b774-6767c3a3bea0" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['mc', 'cov'], dtype='&lt;U3')</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">geneslop2k</span></div><div class="xr-var-dims">(geneslop2k)</div><div class="xr-var-dtype">object</div><div class="xr-var-preview xr-preview">'ENSMUSG00000102693.1' ... 'ENSM...</div><input class="xr-var-attrs-in" disabled="" id="attrs-a9048bd2-1e50-4bae-9fb6-5f44c29fecf4" type="checkbox"/><label for="attrs-a9048bd2-1e50-4bae-9fb6-5f44c29fecf4" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-6426adb6-7fa2-4165-b7f4-430f63cd521e" type="checkbox"/><label for="data-6426adb6-7fa2-4165-b7f4-430f63cd521e" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['ENSMUSG00000102693.1', 'ENSMUSG00000064842.1', 'ENSMUSG00000051951.5',
-       ..., 'ENSMUSG00000100964.1', 'ENSMUSG00000095134.2',
-       'ENSMUSG00000096768.8'], dtype=object)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k_chrom</span></div><div class="xr-var-dims">(geneslop2k)</div><div class="xr-var-dtype">&lt;U5</div><div class="xr-var-preview xr-preview">dask.array&lt;chunksize=(40331,), meta=np.ndarray&gt;</div><input class="xr-var-attrs-in" disabled="" id="attrs-66d6d8e5-d6b4-42bb-9c71-93d2f158fda3" type="checkbox"/><label for="attrs-66d6d8e5-d6b4-42bb-9c71-93d2f158fda3" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-9a76e551-c7f8-4696-99ed-a12f304fee5c" type="checkbox"/><label for="data-9a76e551-c7f8-4696-99ed-a12f304fee5c" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><table>
+    var_dim:  geneslop2k-vm23</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.MCDS</div></div><ul class="xr-sections"><li class="xr-section-item"><input class="xr-section-summary-in" disabled="" id="section-8eb91294-e446-42a2-a8ef-1a8f3fa094ec" type="checkbox"/><label class="xr-section-summary" for="section-8eb91294-e446-42a2-a8ef-1a8f3fa094ec" title="Expand/collapse section">Dimensions:</label><div class="xr-section-inline-details"><ul class="xr-dim-list"><li><span class="xr-has-index">geneslop2k-vm23</span>: 32195</li><li><span class="xr-has-index">cell</span>: 4875</li><li><span class="xr-has-index">count_type</span>: 2</li><li><span class="xr-has-index">mc_type</span>: 2</li></ul></div><div class="xr-section-details"></div></li><li class="xr-section-item"><input checked="" class="xr-section-summary-in" id="section-d5500419-eaaa-4da2-9133-17c2358bbebe" type="checkbox"/><label class="xr-section-summary" for="section-d5500419-eaaa-4da2-9133-17c2358bbebe">Coordinates: <span>(5)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">geneslop2k-vm23</span></div><div class="xr-var-dims">(geneslop2k-vm23)</div><div class="xr-var-dtype">object</div><div class="xr-var-preview xr-preview">'ENSMUSG00000051951' ... 'ENSMUS...</div><input class="xr-var-attrs-in" disabled="" id="attrs-347f1192-eec5-43e6-9ba6-0f18a7eaefd1" type="checkbox"/><label for="attrs-347f1192-eec5-43e6-9ba6-0f18a7eaefd1" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-ee01198b-8cf4-42f8-b2ff-eb879be96a91" type="checkbox"/><label for="data-ee01198b-8cf4-42f8-b2ff-eb879be96a91" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['ENSMUSG00000051951', 'ENSMUSG00000089699', 'ENSMUSG00000102331', ...,
+       'ENSMUSG00000095366', 'ENSMUSG00000096768', 'ENSMUSG00000096850'],
+      dtype=object)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">cell</span></div><div class="xr-var-dims">(cell)</div><div class="xr-var-dtype">&lt;U15</div><div class="xr-var-preview xr-preview">'8E_M_3022' ... '8J_M_2288'</div><input class="xr-var-attrs-in" disabled="" id="attrs-c24a1dd2-13b7-4ced-856f-b4a05e73830b" type="checkbox"/><label for="attrs-c24a1dd2-13b7-4ced-856f-b4a05e73830b" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-4421ae2a-414d-44bb-ba1f-9c7a585406c4" type="checkbox"/><label for="data-4421ae2a-414d-44bb-ba1f-9c7a585406c4" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['8E_M_3022', '8E_M_2746', '8J_M_2510', ..., '8J_M_402', '8E_M_2398',
+       '8J_M_2288'], dtype='&lt;U15')</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">count_type</span></div><div class="xr-var-dims">(count_type)</div><div class="xr-var-dtype">&lt;U3</div><div class="xr-var-preview xr-preview">'mc' 'cov'</div><input class="xr-var-attrs-in" disabled="" id="attrs-588c518c-d0b3-4bf3-83f0-7867d4f68507" type="checkbox"/><label for="attrs-588c518c-d0b3-4bf3-83f0-7867d4f68507" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-a74b86b0-c0a3-4477-8e21-a1644638f884" type="checkbox"/><label for="data-a74b86b0-c0a3-4477-8e21-a1644638f884" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['mc', 'cov'], dtype='&lt;U3')</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">mc_type</span></div><div class="xr-var-dims">(mc_type)</div><div class="xr-var-dtype">&lt;U3</div><div class="xr-var-preview xr-preview">'CGN' 'CHN'</div><input class="xr-var-attrs-in" disabled="" id="attrs-6305099a-83ea-4a8d-806c-b1f5ac4d202d" type="checkbox"/><label for="attrs-6305099a-83ea-4a8d-806c-b1f5ac4d202d" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-52db8549-b01d-4359-89e2-888ce07ba4e5" type="checkbox"/><label for="data-52db8549-b01d-4359-89e2-888ce07ba4e5" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['CGN', 'CHN'], dtype='&lt;U3')</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k-vm23_cov_mean</span></div><div class="xr-var-dims">(geneslop2k-vm23)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">6.996e+03 758.2 ... 0.08287</div><input class="xr-var-attrs-in" disabled="" id="attrs-d4dfdcbb-3b54-408f-9dbb-0e4862212daf" type="checkbox"/><label for="attrs-d4dfdcbb-3b54-408f-9dbb-0e4862212daf" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-f25b8965-c0e9-4378-9241-5a783ae6770d" type="checkbox"/><label for="data-f25b8965-c0e9-4378-9241-5a783ae6770d" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([6.99578605e+03, 7.58184205e+02, 2.47196103e+02, ...,
+       1.16615385e+00, 1.41350585e+03, 8.28717949e-02])</pre></div></li></ul></div></li><li class="xr-section-item"><input checked="" class="xr-section-summary-in" id="section-24abce0d-b814-4151-9076-7a5253aafe32" type="checkbox"/><label class="xr-section-summary" for="section-24abce0d-b814-4151-9076-7a5253aafe32">Data variables: <span>(4)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k-vm23_chrom</span></div><div class="xr-var-dims">(geneslop2k-vm23)</div><div class="xr-var-dtype">&lt;U5</div><div class="xr-var-preview xr-preview">dask.array&lt;chunksize=(2000,), meta=np.ndarray&gt;</div><input class="xr-var-attrs-in" disabled="" id="attrs-bf76e0ea-3da2-4e0e-a8c6-ba915fb15284" type="checkbox"/><label for="attrs-bf76e0ea-3da2-4e0e-a8c6-ba915fb15284" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-00b389b7-d197-4b1f-b784-f973d4cf71de" type="checkbox"/><label for="data-00b389b7-d197-4b1f-b784-f973d4cf71de" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><table>
 <tr>
 <td>
 <table>
@@ -2255,18 +2181,18 @@ Attributes:
 <tbody>
 <tr>
 <th> Bytes </th>
-<td> 787.71 kiB </td>
-<td> 787.71 kiB </td>
+<td> 628.81 kiB </td>
+<td> 39.06 kiB </td>
 </tr>
 <tr>
 <th> Shape </th>
-<td> (40331,) </td>
-<td> (40331,) </td>
+<td> (32195,) </td>
+<td> (2000,) </td>
 </tr>
 <tr>
 <th> Count </th>
-<td> 3 Tasks </td>
-<td> 1 Chunks </td>
+<td> 35 Tasks </td>
+<td> 17 Chunks </td>
 </tr>
 <tr>
 <th> Type </th>
@@ -2283,16 +2209,32 @@ Attributes:
 <line style="stroke-width:2" x1="0" x2="120" y1="25" y2="25"></line>
 <!-- Vertical lines -->
 <line style="stroke-width:2" x1="0" x2="0" y1="0" y2="25"></line>
+<line x1="7" x2="7" y1="0" y2="25"></line>
+<line x1="14" x2="14" y1="0" y2="25"></line>
+<line x1="22" x2="22" y1="0" y2="25"></line>
+<line x1="29" x2="29" y1="0" y2="25"></line>
+<line x1="37" x2="37" y1="0" y2="25"></line>
+<line x1="44" x2="44" y1="0" y2="25"></line>
+<line x1="52" x2="52" y1="0" y2="25"></line>
+<line x1="59" x2="59" y1="0" y2="25"></line>
+<line x1="67" x2="67" y1="0" y2="25"></line>
+<line x1="74" x2="74" y1="0" y2="25"></line>
+<line x1="82" x2="82" y1="0" y2="25"></line>
+<line x1="89" x2="89" y1="0" y2="25"></line>
+<line x1="96" x2="96" y1="0" y2="25"></line>
+<line x1="104" x2="104" y1="0" y2="25"></line>
+<line x1="111" x2="111" y1="0" y2="25"></line>
+<line x1="119" x2="119" y1="0" y2="25"></line>
 <line style="stroke-width:2" x1="120" x2="120" y1="0" y2="25"></line>
 <!-- Colored Rectangle -->
 <polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"></polygon>
 <!-- Text -->
-<text font-size="1.0rem" font-weight="100" text-anchor="middle" x="60.000000" y="45.412617">40331</text>
+<text font-size="1.0rem" font-weight="100" text-anchor="middle" x="60.000000" y="45.412617">32195</text>
 <text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)" x="140.000000" y="12.706308">1</text>
 </svg>
 </td>
 </tr>
-</table></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k_end</span></div><div class="xr-var-dims">(geneslop2k)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">dask.array&lt;chunksize=(40331,), meta=np.ndarray&gt;</div><input class="xr-var-attrs-in" disabled="" id="attrs-dea45deb-955b-42c4-9319-f2bc1ab3e7ee" type="checkbox"/><label for="attrs-dea45deb-955b-42c4-9319-f2bc1ab3e7ee" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-694c2156-e134-4719-a089-f25d825dba14" type="checkbox"/><label for="data-694c2156-e134-4719-a089-f25d825dba14" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><table>
+</table></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k-vm23_da</span></div><div class="xr-var-dims">(cell, geneslop2k-vm23, mc_type, count_type)</div><div class="xr-var-dtype">uint16</div><div class="xr-var-preview xr-preview">dask.array&lt;chunksize=(1000, 2000, 2, 2), meta=np.ndarray&gt;</div><input class="xr-var-attrs-in" id="attrs-cc70d39a-8cfc-4737-9274-8b5fcb5bcea3" type="checkbox"/><label for="attrs-cc70d39a-8cfc-4737-9274-8b5fcb5bcea3" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-5152c15e-cfd7-4422-b3ae-b1bf6d997144" type="checkbox"/><label for="data-5152c15e-cfd7-4422-b3ae-b1bf6d997144" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>coordinates :</span></dt><dd>geneslop2k-vm23_end geneslop2k-vm23_start geneslop2k-vm23_cov_mean geneslop2k-vm23_chrom</dd></dl></div><div class="xr-var-data"><table>
 <tr>
 <td>
 <table>
@@ -2306,121 +2248,18 @@ Attributes:
 <tbody>
 <tr>
 <th> Bytes </th>
-<td> 315.09 kiB </td>
-<td> 315.09 kiB </td>
+<td> 1.17 GiB </td>
+<td> 15.26 MiB </td>
 </tr>
 <tr>
 <th> Shape </th>
-<td> (40331,) </td>
-<td> (40331,) </td>
+<td> (4875, 32195, 2, 2) </td>
+<td> (1000, 2000, 2, 2) </td>
 </tr>
 <tr>
 <th> Count </th>
-<td> 4 Tasks </td>
-<td> 1 Chunks </td>
-</tr>
-<tr>
-<th> Type </th>
-<td> int64 </td>
-<td> numpy.ndarray </td>
-</tr>
-</tbody>
-</table>
-</td>
-<td>
-<svg height="75" style="stroke:rgb(0,0,0);stroke-width:1" width="170">
-<!-- Horizontal lines -->
-<line style="stroke-width:2" x1="0" x2="120" y1="0" y2="0"></line>
-<line style="stroke-width:2" x1="0" x2="120" y1="25" y2="25"></line>
-<!-- Vertical lines -->
-<line style="stroke-width:2" x1="0" x2="0" y1="0" y2="25"></line>
-<line style="stroke-width:2" x1="120" x2="120" y1="0" y2="25"></line>
-<!-- Colored Rectangle -->
-<polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"></polygon>
-<!-- Text -->
-<text font-size="1.0rem" font-weight="100" text-anchor="middle" x="60.000000" y="45.412617">40331</text>
-<text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)" x="140.000000" y="12.706308">1</text>
-</svg>
-</td>
-</tr>
-</table></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k_start</span></div><div class="xr-var-dims">(geneslop2k)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">dask.array&lt;chunksize=(40331,), meta=np.ndarray&gt;</div><input class="xr-var-attrs-in" disabled="" id="attrs-347dce88-f881-49fb-8c3d-f4da41fb2855" type="checkbox"/><label for="attrs-347dce88-f881-49fb-8c3d-f4da41fb2855" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-80f45619-db66-4006-b3b1-462fdf622548" type="checkbox"/><label for="data-80f45619-db66-4006-b3b1-462fdf622548" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><table>
-<tr>
-<td>
-<table>
-<thead>
-<tr>
-<td> </td>
-<th> Array </th>
-<th> Chunk </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th> Bytes </th>
-<td> 315.09 kiB </td>
-<td> 315.09 kiB </td>
-</tr>
-<tr>
-<th> Shape </th>
-<td> (40331,) </td>
-<td> (40331,) </td>
-</tr>
-<tr>
-<th> Count </th>
-<td> 4 Tasks </td>
-<td> 1 Chunks </td>
-</tr>
-<tr>
-<th> Type </th>
-<td> int64 </td>
-<td> numpy.ndarray </td>
-</tr>
-</tbody>
-</table>
-</td>
-<td>
-<svg height="75" style="stroke:rgb(0,0,0);stroke-width:1" width="170">
-<!-- Horizontal lines -->
-<line style="stroke-width:2" x1="0" x2="120" y1="0" y2="0"></line>
-<line style="stroke-width:2" x1="0" x2="120" y1="25" y2="25"></line>
-<!-- Vertical lines -->
-<line style="stroke-width:2" x1="0" x2="0" y1="0" y2="25"></line>
-<line style="stroke-width:2" x1="120" x2="120" y1="0" y2="25"></line>
-<!-- Colored Rectangle -->
-<polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"></polygon>
-<!-- Text -->
-<text font-size="1.0rem" font-weight="100" text-anchor="middle" x="60.000000" y="45.412617">40331</text>
-<text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)" x="140.000000" y="12.706308">1</text>
-</svg>
-</td>
-</tr>
-</table></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">mc_type</span></div><div class="xr-var-dims">(mc_type)</div><div class="xr-var-dtype">&lt;U3</div><div class="xr-var-preview xr-preview">'CGN' 'CHN'</div><input class="xr-var-attrs-in" disabled="" id="attrs-f54481ce-9ea9-4d52-90ef-9a2d7df61299" type="checkbox"/><label for="attrs-f54481ce-9ea9-4d52-90ef-9a2d7df61299" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-5f7b796f-d363-4f29-933b-9fc9c5494883" type="checkbox"/><label for="data-5f7b796f-d363-4f29-933b-9fc9c5494883" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(['CGN', 'CHN'], dtype='&lt;U3')</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>strand_type</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">&lt;U4</div><div class="xr-var-preview xr-preview">'both'</div><input class="xr-var-attrs-in" disabled="" id="attrs-846763de-07c4-49be-a3a5-73f187c773e1" type="checkbox"/><label for="attrs-846763de-07c4-49be-a3a5-73f187c773e1" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-f634a05d-72ad-4c82-b7bd-00114b6d0d34" type="checkbox"/><label for="data-f634a05d-72ad-4c82-b7bd-00114b6d0d34" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array('both', dtype='&lt;U4')</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k_cov_mean</span></div><div class="xr-var-dims">(geneslop2k)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">74.71 58.61 ... 40.27 1.367e+03</div><input class="xr-var-attrs-in" disabled="" id="attrs-ddb71d99-febe-4f78-a45b-c00fb5131f39" type="checkbox"/><label for="attrs-ddb71d99-febe-4f78-a45b-c00fb5131f39" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-e2931c3c-45e2-43fe-8206-b3d0fdbfa01e" type="checkbox"/><label for="data-e2931c3c-45e2-43fe-8206-b3d0fdbfa01e" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([  74.71174566,   58.61242273, 6997.38098322, ...,   17.58098322,
-         40.26858993, 1367.07518399])</pre></div></li></ul></div></li><li class="xr-section-item"><input checked="" class="xr-section-summary-in" id="section-061b208f-6877-4455-a40d-121f44d86afd" type="checkbox"/><label class="xr-section-summary" for="section-061b208f-6877-4455-a40d-121f44d86afd">Data variables: <span>(1)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k_da</span></div><div class="xr-var-dims">(cell, geneslop2k, mc_type, count_type)</div><div class="xr-var-dtype">uint16</div><div class="xr-var-preview xr-preview">dask.array&lt;chunksize=(3397, 2776, 2, 2), meta=np.ndarray&gt;</div><input class="xr-var-attrs-in" disabled="" id="attrs-4d452a4d-9687-4d29-a38e-cd646bf11211" type="checkbox"/><label for="attrs-4d452a4d-9687-4d29-a38e-cd646bf11211" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-444af572-bd60-4336-a6ef-d907eed37fa9" type="checkbox"/><label for="data-444af572-bd60-4336-a6ef-d907eed37fa9" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><table>
-<tr>
-<td>
-<table>
-<thead>
-<tr>
-<td> </td>
-<th> Array </th>
-<th> Chunk </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th> Bytes </th>
-<td> 5.10 GiB </td>
-<td> 84.44 MiB </td>
-</tr>
-<tr>
-<th> Shape </th>
-<td> (16985, 40331, 2, 2) </td>
-<td> (3397, 3258, 2, 2) </td>
-</tr>
-<tr>
-<th> Count </th>
-<td> 211 Tasks </td>
-<td> 70 Chunks </td>
+<td> 171 Tasks </td>
+<td> 85 Chunks </td>
 </tr>
 <tr>
 <th> Type </th>
@@ -2431,84 +2270,224 @@ Attributes:
 </table>
 </td>
 <td>
-<svg height="146" style="stroke:rgb(0,0,0);stroke-width:1" width="386">
+<svg height="146" style="stroke:rgb(0,0,0);stroke-width:1" width="366">
 <!-- Horizontal lines -->
-<line style="stroke-width:2" x1="0" x2="50" y1="0" y2="0"></line>
-<line style="stroke-width:2" x1="0" x2="50" y1="25" y2="25"></line>
+<line style="stroke-width:2" x1="0" x2="40" y1="0" y2="0"></line>
+<line style="stroke-width:2" x1="0" x2="40" y1="25" y2="25"></line>
 <!-- Vertical lines -->
 <line style="stroke-width:2" x1="0" x2="0" y1="0" y2="25"></line>
-<line x1="10" x2="10" y1="0" y2="25"></line>
-<line x1="20" x2="20" y1="0" y2="25"></line>
-<line x1="30" x2="30" y1="0" y2="25"></line>
-<line x1="40" x2="40" y1="0" y2="25"></line>
-<line style="stroke-width:2" x1="50" x2="50" y1="0" y2="25"></line>
+<line x1="8" x2="8" y1="0" y2="25"></line>
+<line x1="16" x2="16" y1="0" y2="25"></line>
+<line x1="25" x2="25" y1="0" y2="25"></line>
+<line x1="33" x2="33" y1="0" y2="25"></line>
+<line style="stroke-width:2" x1="40" x2="40" y1="0" y2="25"></line>
 <!-- Colored Rectangle -->
-<polygon points="0.0,0.0 50.536807914507456,0.0 50.536807914507456,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"></polygon>
+<polygon points="0.0,0.0 40.75180449954915,0.0 40.75180449954915,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"></polygon>
 <!-- Text -->
-<text font-size="1.0rem" font-weight="100" text-anchor="middle" x="25.268404" y="45.412617">16985</text>
-<text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,70.536808,12.706308)" x="70.536808" y="12.706308">1</text>
+<text font-size="1.0rem" font-weight="100" text-anchor="middle" x="20.375902" y="45.412617">4875</text>
+<text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,60.751804,12.706308)" x="60.751804" y="12.706308">1</text>
 <!-- Horizontal lines -->
-<line style="stroke-width:2" x1="120" x2="190" y1="0" y2="70"></line>
-<line style="stroke-width:2" x1="120" x2="190" y1="25" y2="96"></line>
+<line style="stroke-width:2" x1="110" x2="180" y1="0" y2="70"></line>
+<line style="stroke-width:2" x1="110" x2="180" y1="25" y2="96"></line>
 <!-- Vertical lines -->
-<line style="stroke-width:2" x1="120" x2="120" y1="0" y2="25"></line>
-<line x1="124" x2="124" y1="4" y2="30"></line>
-<line x1="130" x2="130" y1="10" y2="35"></line>
-<line x1="135" x2="135" y1="15" y2="41"></line>
-<line x1="140" x2="140" y1="20" y2="46"></line>
-<line x1="146" x2="146" y1="26" y2="51"></line>
-<line x1="151" x2="151" y1="31" y2="56"></line>
-<line x1="156" x2="156" y1="36" y2="61"></line>
-<line x1="161" x2="161" y1="41" y2="66"></line>
-<line x1="166" x2="166" y1="46" y2="72"></line>
-<line x1="172" x2="172" y1="52" y2="77"></line>
-<line x1="177" x2="177" y1="57" y2="83"></line>
-<line x1="183" x2="183" y1="63" y2="88"></line>
-<line x1="188" x2="188" y1="68" y2="94"></line>
-<line style="stroke-width:2" x1="190" x2="190" y1="70" y2="96"></line>
+<line style="stroke-width:2" x1="110" x2="110" y1="0" y2="25"></line>
+<line x1="114" x2="114" y1="4" y2="29"></line>
+<line x1="118" x2="118" y1="8" y2="34"></line>
+<line x1="123" x2="123" y1="13" y2="38"></line>
+<line x1="127" x2="127" y1="17" y2="42"></line>
+<line x1="131" x2="131" y1="21" y2="47"></line>
+<line x1="136" x2="136" y1="26" y2="51"></line>
+<line x1="140" x2="140" y1="30" y2="56"></line>
+<line x1="145" x2="145" y1="35" y2="60"></line>
+<line x1="149" x2="149" y1="39" y2="64"></line>
+<line x1="153" x2="153" y1="43" y2="69"></line>
+<line x1="158" x2="158" y1="48" y2="73"></line>
+<line x1="162" x2="162" y1="52" y2="78"></line>
+<line x1="167" x2="167" y1="57" y2="82"></line>
+<line x1="171" x2="171" y1="61" y2="86"></line>
+<line x1="175" x2="175" y1="65" y2="91"></line>
+<line x1="180" x2="180" y1="70" y2="95"></line>
+<line style="stroke-width:2" x1="180" x2="180" y1="70" y2="96"></line>
 <!-- Colored Rectangle -->
-<polygon points="120.0,0.0 190.58823529411765,70.58823529411765 190.58823529411765,96.00085180870013 120.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"></polygon>
+<polygon points="110.0,0.0 180.58823529411765,70.58823529411765 180.58823529411765,96.00085180870013 110.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"></polygon>
 <!-- Horizontal lines -->
-<line style="stroke-width:2" x1="120" x2="145" y1="0" y2="0"></line>
-<line x1="124" x2="150" y1="4" y2="4"></line>
-<line x1="130" x2="155" y1="10" y2="10"></line>
-<line x1="135" x2="161" y1="15" y2="15"></line>
-<line x1="140" x2="166" y1="20" y2="20"></line>
-<line x1="146" x2="171" y1="26" y2="26"></line>
-<line x1="151" x2="176" y1="31" y2="31"></line>
-<line x1="156" x2="181" y1="36" y2="36"></line>
-<line x1="161" x2="186" y1="41" y2="41"></line>
-<line x1="166" x2="192" y1="46" y2="46"></line>
-<line x1="172" x2="197" y1="52" y2="52"></line>
-<line x1="177" x2="203" y1="57" y2="57"></line>
-<line x1="183" x2="208" y1="63" y2="63"></line>
-<line x1="188" x2="214" y1="68" y2="68"></line>
-<line style="stroke-width:2" x1="190" x2="216" y1="70" y2="70"></line>
+<line style="stroke-width:2" x1="110" x2="135" y1="0" y2="0"></line>
+<line x1="114" x2="139" y1="4" y2="4"></line>
+<line x1="118" x2="144" y1="8" y2="8"></line>
+<line x1="123" x2="148" y1="13" y2="13"></line>
+<line x1="127" x2="152" y1="17" y2="17"></line>
+<line x1="131" x2="157" y1="21" y2="21"></line>
+<line x1="136" x2="161" y1="26" y2="26"></line>
+<line x1="140" x2="166" y1="30" y2="30"></line>
+<line x1="145" x2="170" y1="35" y2="35"></line>
+<line x1="149" x2="174" y1="39" y2="39"></line>
+<line x1="153" x2="179" y1="43" y2="43"></line>
+<line x1="158" x2="183" y1="48" y2="48"></line>
+<line x1="162" x2="188" y1="52" y2="52"></line>
+<line x1="167" x2="192" y1="57" y2="57"></line>
+<line x1="171" x2="196" y1="61" y2="61"></line>
+<line x1="175" x2="201" y1="65" y2="65"></line>
+<line x1="180" x2="205" y1="70" y2="70"></line>
+<line style="stroke-width:2" x1="180" x2="206" y1="70" y2="70"></line>
 <!-- Vertical lines -->
-<line style="stroke-width:2" x1="120" x2="190" y1="0" y2="70"></line>
-<line style="stroke-width:2" x1="145" x2="216" y1="0" y2="70"></line>
+<line style="stroke-width:2" x1="110" x2="180" y1="0" y2="70"></line>
+<line style="stroke-width:2" x1="135" x2="206" y1="0" y2="70"></line>
 <!-- Colored Rectangle -->
-<polygon points="120.0,0.0 145.41261651458248,0.0 216.00085180870013,70.58823529411765 190.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"></polygon>
+<polygon points="110.0,0.0 135.41261651458248,0.0 206.00085180870013,70.58823529411765 180.58823529411765,70.58823529411765" style="fill:#ECB172A0;stroke-width:0"></polygon>
 <!-- Horizontal lines -->
-<line style="stroke-width:2" x1="190" x2="216" y1="70" y2="70"></line>
-<line style="stroke-width:2" x1="190" x2="216" y1="96" y2="96"></line>
+<line style="stroke-width:2" x1="180" x2="206" y1="70" y2="70"></line>
+<line style="stroke-width:2" x1="180" x2="206" y1="96" y2="96"></line>
 <!-- Vertical lines -->
-<line style="stroke-width:2" x1="190" x2="190" y1="70" y2="96"></line>
-<line style="stroke-width:2" x1="216" x2="216" y1="70" y2="96"></line>
+<line style="stroke-width:2" x1="180" x2="180" y1="70" y2="96"></line>
+<line style="stroke-width:2" x1="206" x2="206" y1="70" y2="96"></line>
 <!-- Colored Rectangle -->
-<polygon points="190.58823529411765,70.58823529411765 216.00085180870013,70.58823529411765 216.00085180870013,96.00085180870013 190.58823529411765,96.00085180870013" style="fill:#ECB172A0;stroke-width:0"></polygon>
+<polygon points="180.58823529411765,70.58823529411765 206.00085180870013,70.58823529411765 206.00085180870013,96.00085180870013 180.58823529411765,96.00085180870013" style="fill:#ECB172A0;stroke-width:0"></polygon>
 <!-- Text -->
-<text font-size="1.0rem" font-weight="100" text-anchor="middle" x="203.294544" y="116.000852">2</text>
-<text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,236.000852,83.294544)" x="236.000852" y="83.294544">2</text>
-<text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,145.294118,80.706734)" x="145.294118" y="80.706734">40331</text>
+<text font-size="1.0rem" font-weight="100" text-anchor="middle" x="193.294544" y="116.000852">2</text>
+<text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,226.000852,83.294544)" x="226.000852" y="83.294544">2</text>
+<text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,135.294118,80.706734)" x="135.294118" y="80.706734">32195</text>
 </svg>
 </td>
 </tr>
-</table></div></li></ul></div></li><li class="xr-section-item"><input checked="" class="xr-section-summary-in" id="section-766aeb91-73c5-4e47-9734-0503c2e2db89" type="checkbox"/><label class="xr-section-summary" for="section-766aeb91-73c5-4e47-9734-0503c2e2db89">Attributes: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>obs_dim :</span></dt><dd>cell</dd><dt><span>var_dim :</span></dt><dd>geneslop2k</dd></dl></div></li></ul></div></div></div></div>
+</table></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k-vm23_end</span></div><div class="xr-var-dims">(geneslop2k-vm23)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">dask.array&lt;chunksize=(2000,), meta=np.ndarray&gt;</div><input class="xr-var-attrs-in" disabled="" id="attrs-c2c8ffce-63f9-4813-bfe7-6baa60e39cd8" type="checkbox"/><label for="attrs-c2c8ffce-63f9-4813-bfe7-6baa60e39cd8" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-7263dfe5-cc46-405a-8c05-b57560df3b16" type="checkbox"/><label for="data-7263dfe5-cc46-405a-8c05-b57560df3b16" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><table>
+<tr>
+<td>
+<table>
+<thead>
+<tr>
+<td> </td>
+<th> Array </th>
+<th> Chunk </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th> Bytes </th>
+<td> 251.52 kiB </td>
+<td> 15.62 kiB </td>
+</tr>
+<tr>
+<th> Shape </th>
+<td> (32195,) </td>
+<td> (2000,) </td>
+</tr>
+<tr>
+<th> Count </th>
+<td> 35 Tasks </td>
+<td> 17 Chunks </td>
+</tr>
+<tr>
+<th> Type </th>
+<td> int64 </td>
+<td> numpy.ndarray </td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<svg height="75" style="stroke:rgb(0,0,0);stroke-width:1" width="170">
+<!-- Horizontal lines -->
+<line style="stroke-width:2" x1="0" x2="120" y1="0" y2="0"></line>
+<line style="stroke-width:2" x1="0" x2="120" y1="25" y2="25"></line>
+<!-- Vertical lines -->
+<line style="stroke-width:2" x1="0" x2="0" y1="0" y2="25"></line>
+<line x1="7" x2="7" y1="0" y2="25"></line>
+<line x1="14" x2="14" y1="0" y2="25"></line>
+<line x1="22" x2="22" y1="0" y2="25"></line>
+<line x1="29" x2="29" y1="0" y2="25"></line>
+<line x1="37" x2="37" y1="0" y2="25"></line>
+<line x1="44" x2="44" y1="0" y2="25"></line>
+<line x1="52" x2="52" y1="0" y2="25"></line>
+<line x1="59" x2="59" y1="0" y2="25"></line>
+<line x1="67" x2="67" y1="0" y2="25"></line>
+<line x1="74" x2="74" y1="0" y2="25"></line>
+<line x1="82" x2="82" y1="0" y2="25"></line>
+<line x1="89" x2="89" y1="0" y2="25"></line>
+<line x1="96" x2="96" y1="0" y2="25"></line>
+<line x1="104" x2="104" y1="0" y2="25"></line>
+<line x1="111" x2="111" y1="0" y2="25"></line>
+<line x1="119" x2="119" y1="0" y2="25"></line>
+<line style="stroke-width:2" x1="120" x2="120" y1="0" y2="25"></line>
+<!-- Colored Rectangle -->
+<polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"></polygon>
+<!-- Text -->
+<text font-size="1.0rem" font-weight="100" text-anchor="middle" x="60.000000" y="45.412617">32195</text>
+<text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)" x="140.000000" y="12.706308">1</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class="xr-var-item"><div class="xr-var-name"><span>geneslop2k-vm23_start</span></div><div class="xr-var-dims">(geneslop2k-vm23)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">dask.array&lt;chunksize=(2000,), meta=np.ndarray&gt;</div><input class="xr-var-attrs-in" disabled="" id="attrs-d28227c4-3f06-444a-b509-e9f6fbaa2017" type="checkbox"/><label for="attrs-d28227c4-3f06-444a-b509-e9f6fbaa2017" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use xlink:href="#icon-file-text2"></use></svg></label><input class="xr-var-data-in" id="data-cc120967-1548-407d-b7d3-a2307a76a25b" type="checkbox"/><label for="data-cc120967-1548-407d-b7d3-a2307a76a25b" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use xlink:href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><table>
+<tr>
+<td>
+<table>
+<thead>
+<tr>
+<td> </td>
+<th> Array </th>
+<th> Chunk </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th> Bytes </th>
+<td> 251.52 kiB </td>
+<td> 15.62 kiB </td>
+</tr>
+<tr>
+<th> Shape </th>
+<td> (32195,) </td>
+<td> (2000,) </td>
+</tr>
+<tr>
+<th> Count </th>
+<td> 35 Tasks </td>
+<td> 17 Chunks </td>
+</tr>
+<tr>
+<th> Type </th>
+<td> int64 </td>
+<td> numpy.ndarray </td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<svg height="75" style="stroke:rgb(0,0,0);stroke-width:1" width="170">
+<!-- Horizontal lines -->
+<line style="stroke-width:2" x1="0" x2="120" y1="0" y2="0"></line>
+<line style="stroke-width:2" x1="0" x2="120" y1="25" y2="25"></line>
+<!-- Vertical lines -->
+<line style="stroke-width:2" x1="0" x2="0" y1="0" y2="25"></line>
+<line x1="7" x2="7" y1="0" y2="25"></line>
+<line x1="14" x2="14" y1="0" y2="25"></line>
+<line x1="22" x2="22" y1="0" y2="25"></line>
+<line x1="29" x2="29" y1="0" y2="25"></line>
+<line x1="37" x2="37" y1="0" y2="25"></line>
+<line x1="44" x2="44" y1="0" y2="25"></line>
+<line x1="52" x2="52" y1="0" y2="25"></line>
+<line x1="59" x2="59" y1="0" y2="25"></line>
+<line x1="67" x2="67" y1="0" y2="25"></line>
+<line x1="74" x2="74" y1="0" y2="25"></line>
+<line x1="82" x2="82" y1="0" y2="25"></line>
+<line x1="89" x2="89" y1="0" y2="25"></line>
+<line x1="96" x2="96" y1="0" y2="25"></line>
+<line x1="104" x2="104" y1="0" y2="25"></line>
+<line x1="111" x2="111" y1="0" y2="25"></line>
+<line x1="119" x2="119" y1="0" y2="25"></line>
+<line style="stroke-width:2" x1="120" x2="120" y1="0" y2="25"></line>
+<!-- Colored Rectangle -->
+<polygon points="0.0,0.0 120.0,0.0 120.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"></polygon>
+<!-- Text -->
+<text font-size="1.0rem" font-weight="100" text-anchor="middle" x="60.000000" y="45.412617">32195</text>
+<text font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,12.706308)" x="140.000000" y="12.706308">1</text>
+</svg>
+</td>
+</tr>
+</table></div></li></ul></div></li><li class="xr-section-item"><input checked="" class="xr-section-summary-in" id="section-8ea35ef4-f539-4426-b396-460d6cd5cf20" type="checkbox"/><label class="xr-section-summary" for="section-8ea35ef4-f539-4426-b396-460d6cd5cf20">Attributes: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>obs_dim :</span></dt><dd>cell</dd><dt><span>var_dim :</span></dt><dd>geneslop2k-vm23</dd></dl></div></li></ul></div></div></div></div>
 </div>
 </div>
 <div class="section" id="calculate-and-save-gene-mc-fractions">
-<h2>Calculate and Save Gene mC Fractions<a class="headerlink" href="#calculate-and-save-gene-mc-fractions" title="Permalink to this headline">¶</a></h2>
+<h2>Calculate and Save Gene mC Fractions<a class="headerlink" href="#calculate-and-save-gene-mc-fractions" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span><span class="o">.</span><span class="n">add_mc_frac</span><span class="p">(</span><span class="n">normalize_per_cell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clip_norm_value</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -2519,34 +2498,66 @@ Attributes:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># only keep fraction for saving</span>
-<span class="n">mcds</span> <span class="o">=</span> <span class="n">mcds</span><span class="p">[[</span><span class="s1">'geneslop2k_da_frac'</span><span class="p">]]</span>
-<span class="n">mcds</span><span class="p">[</span><span class="s1">'geneslop2k_da_frac'</span><span class="p">]</span> <span class="o">=</span> <span class="n">mcds</span><span class="p">[</span><span class="s1">'geneslop2k_da_frac'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'float32'</span><span class="p">)</span>
+<span class="n">mcds</span> <span class="o">=</span> <span class="n">mcds</span><span class="p">[[</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s1">_da_frac'</span><span class="p">]]</span>
+<span class="n">mcds</span><span class="p">[</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s1">_da_frac'</span><span class="p">]</span> <span class="o">=</span> <span class="n">mcds</span><span class="p">[</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s1">_da_frac'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'float32'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span><span class="o">.</span><span class="n">write_dataset</span><span class="p">(</span><span class="s1">'geneslop2k_frac.mcds'</span><span class="p">,</span> <span class="n">var_dims</span><span class="o">=</span><span class="p">[</span><span class="s1">'geneslop2k'</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcds</span><span class="o">.</span><span class="n">write_dataset</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">var_dim</span><span class="si">}</span><span class="s1">_frac.mcds'</span><span class="p">,</span>
+                   <span class="n">var_dims</span><span class="o">=</span><span class="p">[</span><span class="n">var_dim</span><span class="p">],</span>
+                   <span class="n">mode</span><span class="o">=</span><span class="s1">'w'</span><span class="p">,</span>
+                   <span class="n">chunks</span><span class="o">=</span><span class="p">{</span><span class="s1">'cell'</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">:</span> <span class="mi">10000</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hanliu/miniconda3/envs/allcools_new/lib/python3.8/site-packages/dask/core.py:119: RuntimeWarning: invalid value encountered in true_divide
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving geneslop2k-vm23
+Saving chunk 0: 0 - 1000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hanliu/mambaforge/envs/wmb/lib/python3.8/site-packages/dask/core.py:119: RuntimeWarning: invalid value encountered in true_divide
   return func(*(_execute_task(a, cache) for a in args))
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PosixPath('geneslop2k_frac.mcds')
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving chunk 1: 1000 - 2000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hanliu/mambaforge/envs/wmb/lib/python3.8/site-packages/dask/core.py:119: RuntimeWarning: invalid value encountered in true_divide
+  return func(*(_execute_task(a, cache) for a in args))
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving chunk 2: 2000 - 3000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hanliu/mambaforge/envs/wmb/lib/python3.8/site-packages/dask/core.py:119: RuntimeWarning: invalid value encountered in true_divide
+  return func(*(_execute_task(a, cache) for a in args))
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving chunk 3: 3000 - 4000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hanliu/mambaforge/envs/wmb/lib/python3.8/site-packages/dask/core.py:119: RuntimeWarning: invalid value encountered in true_divide
+  return func(*(_execute_task(a, cache) for a in args))
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving chunk 4: 4000 - 4875
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hanliu/mambaforge/envs/wmb/lib/python3.8/site-packages/dask/core.py:119: RuntimeWarning: invalid value encountered in true_divide
+  return func(*(_execute_task(a, cache) for a in args))
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="save-gene-metadata-together-with-gene-fraction-files">
-<h2>Save gene metadata together with gene fraction files<a class="headerlink" href="#save-gene-metadata-together-with-gene-fraction-files" title="Permalink to this headline">¶</a></h2>
+<h2>Save gene metadata together with gene fraction files<a class="headerlink" href="#save-gene-metadata-together-with-gene-fraction-files" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">use_gene_meta</span> <span class="o">=</span> <span class="n">gene_meta</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">use_features</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">use_gene_meta</span> <span class="o">=</span> <span class="n">gene_meta</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mcds</span><span class="o">.</span><span class="n">var_names</span><span class="p">]</span>
 <span class="n">use_gene_meta</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'GeneMetadata.csv.gz'</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2574,6 +2585,8 @@ Attributes:
     </script>
 <script>kernelName = 'python3'</script>
 </div>
+</main>
+<footer class="footer-article noprint">
 <!-- Previous / next buttons -->
 <div class="prev-next-area">
 <a class="left-prev" href="intro_dmg.html" id="prev-link" title="previous page">
@@ -2591,19 +2604,22 @@ Attributes:
 <i class="fas fa-angle-right"></i>
 </a>
 </div>
+</footer>
 </div>
 </div>
-<footer class="footer">
-<p>
-    
-      By Hanqing Liu<br/>
-    
-        © Copyright 2019 - 2022.<br/>
+<div class="footer-content row">
+<footer class="col footer"><p>
+  
+    By Hanqing Liu<br/>
+  
+      © Copyright 2019 - 2022.<br/>
 </p>
 </footer>
-</main>
 </div>
 </div>
-<script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+</div>
+</div>
+<!-- Scripts loaded after <body> so the DOM is not blocked -->
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 </body>
 </html>

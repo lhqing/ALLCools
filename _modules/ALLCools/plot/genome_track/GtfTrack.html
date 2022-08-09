@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ALLCools.plot.genome_track.GtfTrack</title>
     
-  <link href="../../../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,33 +19,39 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-codeautolink.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
     <script src="../../../../_static/jquery.js"></script>
     <script src="../../../../_static/underscore.js"></script>
     <script src="../../../../_static/doctools.js"></script>
-    <script src="../../../../_static/togglebutton.js"></script>
     <script src="../../../../_static/clipboard.min.js"></script>
     <script src="../../../../_static/copybutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
     <link rel="shortcut icon" href="../../../../_static/allcools_favicon.png"/>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -63,7 +70,21 @@
                 </script>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -72,9 +93,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../../../../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -90,14 +112,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../../../intro.html">
-   ALLCools: ALL methyl-Cytosine tools
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    ALLCools: ALL methyl-Cytosine tools
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   GET STARTED
  </span>
@@ -219,11 +242,6 @@
      </i>
     </label>
     <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
-       Cell Basic Filtering
-      </a>
-     </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../../../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
        Decomposition Using mCG-5Kb Bins
@@ -745,6 +763,15 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/clustering/chromatin_conformation/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.chromatin_conformation
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../../api/ALLCools/clustering/dmg/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -763,6 +790,15 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/clustering/lsi/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.lsi
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../../api/ALLCools/clustering/mcad/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -776,6 +812,15 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/clustering/rutilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.rutilities
         </span>
        </code>
       </a>
@@ -862,6 +907,40 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../../api/ALLCools/dataset/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.dataset
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/dataset/directory_structure/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dataset.directory_structure
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/dataset/entry_point/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dataset.entry_point
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../../api/ALLCools/dmr/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -869,8 +948,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -921,8 +1000,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -955,8 +1034,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -980,10 +1059,19 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../api/ALLCools/integration/harmony/index.html">
+      <a class="reference internal" href="../../../../api/ALLCools/integration/metric/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
-         ALLCools.integration.harmony
+         ALLCools.integration.metric
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/integration/seurat_class/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.integration.seurat_class
         </span>
        </code>
       </a>
@@ -998,8 +1086,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1050,8 +1138,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1102,8 +1190,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1116,8 +1204,8 @@
         </span>
        </code>
       </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
-      <label for="toctree-checkbox-24">
+      <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+      <label for="toctree-checkbox-25">
        <i class="fas fa-chevron-down">
        </i>
       </label>
@@ -1269,8 +1357,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
-    <label for="toctree-checkbox-25">
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1303,8 +1391,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
-    <label for="toctree-checkbox-26">
+    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+    <label for="toctree-checkbox-27">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1321,171 +1409,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../../api/ALLCools/sandbox/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.sandbox
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
-    <label for="toctree-checkbox-27">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.igv
-        </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
-      <label for="toctree-checkbox-28">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.BaseClass
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/Session/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.Session
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/Track/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.Track
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/defaults/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.defaults
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/make_session/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.make_session
-          </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.motif
-        </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
-      <label for="toctree-checkbox-29">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/ame/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.ame
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/cmotif/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.cmotif
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/fimo/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.fimo
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/motif_scan/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.motif_scan
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/utilities/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.utilities
-          </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../../api/ALLCools/sandbox/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../../api/ALLCools/sandbox/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../../api/ALLCools/sandbox/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.sccaf
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1493,8 +1416,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/>
-    <label for="toctree-checkbox-30">
+    <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
+    <label for="toctree-checkbox-28">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1592,15 +1515,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../../../api/ALLCools/_version/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools._version
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../../../api/ALLCools/api/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1649,12 +1563,17 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
 </div>
 
 
@@ -1662,60 +1581,104 @@
 
 
           
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
     
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-            <!-- Source interaction buttons -->
+    <div class="header-article row sticky-top noprint">
+        
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2F_modules/ALLCools/plot/genome_track/GtfTrack.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
         
     </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/lhqing/ALLCools"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2F_modules/ALLCools/plot/genome_track/GtfTrack.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
 </div>
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-        </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1></h1>
@@ -1726,12 +1689,14 @@
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
   <h1>Source code for ALLCools.plot.genome_track.GtfTrack</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This GtfTrack class replaced the original pygenometracks class</span>
+<span class="sd">This GtfTrack class replaced the original pygenometracks class.</span>
+
 <span class="sd">It supports read-in a gffutils database, rather than parse very time</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -1743,71 +1708,78 @@
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">font_manager</span>
 <span class="kn">from</span> <span class="nn">pygenometracks.tracks.BedTrack</span> <span class="kn">import</span> <span class="n">BedTrack</span>
 <span class="kn">from</span> <span class="nn">pygenometracks.tracks.GenomeTrack</span> <span class="kn">import</span> <span class="n">GenomeTrack</span>
-<span class="kn">from</span> <span class="nn">pygenometracks.utilities</span> <span class="kn">import</span> <span class="n">temp_file_from_intersect</span><span class="p">,</span> <span class="n">InputError</span>
+<span class="kn">from</span> <span class="nn">pygenometracks.utilities</span> <span class="kn">import</span> <span class="n">InputError</span><span class="p">,</span> <span class="n">temp_file_from_intersect</span>
 
-<div class="viewcode-block" id="DEFAULT_BED_COLOR"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.DEFAULT_BED_COLOR">[docs]</a><span class="n">DEFAULT_BED_COLOR</span> <span class="o">=</span> <span class="s1">&#39;#1f78b4&#39;</span></div>
-<div class="viewcode-block" id="DISPLAY_BED_VALID"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.DISPLAY_BED_VALID">[docs]</a><span class="n">DISPLAY_BED_VALID</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;collapsed&#39;</span><span class="p">,</span> <span class="s1">&#39;triangles&#39;</span><span class="p">,</span> <span class="s1">&#39;interleaved&#39;</span><span class="p">,</span> <span class="s1">&#39;stacked&#39;</span><span class="p">]</span></div>
-<div class="viewcode-block" id="DISPLAY_BED_SYNONYMOUS"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.DISPLAY_BED_SYNONYMOUS">[docs]</a><span class="n">DISPLAY_BED_SYNONYMOUS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;interlaced&#39;</span><span class="p">:</span> <span class="s1">&#39;interleaved&#39;</span><span class="p">,</span> <span class="s1">&#39;domain&#39;</span><span class="p">:</span> <span class="s1">&#39;interleaved&#39;</span><span class="p">}</span></div>
-<div class="viewcode-block" id="DEFAULT_DISPLAY_BED"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.DEFAULT_DISPLAY_BED">[docs]</a><span class="n">DEFAULT_DISPLAY_BED</span> <span class="o">=</span> <span class="s1">&#39;stacked&#39;</span></div>
+<div class="viewcode-block" id="DEFAULT_BED_COLOR"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.DEFAULT_BED_COLOR">[docs]</a><span class="n">DEFAULT_BED_COLOR</span> <span class="o">=</span> <span class="s2">&quot;#1f78b4&quot;</span></div>
+<div class="viewcode-block" id="DISPLAY_BED_VALID"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.DISPLAY_BED_VALID">[docs]</a><span class="n">DISPLAY_BED_VALID</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;collapsed&quot;</span><span class="p">,</span> <span class="s2">&quot;triangles&quot;</span><span class="p">,</span> <span class="s2">&quot;interleaved&quot;</span><span class="p">,</span> <span class="s2">&quot;stacked&quot;</span><span class="p">]</span></div>
+<div class="viewcode-block" id="DISPLAY_BED_SYNONYMOUS"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.DISPLAY_BED_SYNONYMOUS">[docs]</a><span class="n">DISPLAY_BED_SYNONYMOUS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;interlaced&quot;</span><span class="p">:</span> <span class="s2">&quot;interleaved&quot;</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;interleaved&quot;</span><span class="p">}</span></div>
+<div class="viewcode-block" id="DEFAULT_DISPLAY_BED"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.DEFAULT_DISPLAY_BED">[docs]</a><span class="n">DEFAULT_DISPLAY_BED</span> <span class="o">=</span> <span class="s2">&quot;stacked&quot;</span></div>
 <div class="viewcode-block" id="AROUND_REGION"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.AROUND_REGION">[docs]</a><span class="n">AROUND_REGION</span> <span class="o">=</span> <span class="mi">100000</span></div>
 
 
 <div class="viewcode-block" id="_is_sqlite3"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack._is_sqlite3">[docs]</a><span class="k">def</span> <span class="nf">_is_sqlite3</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">head</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">head</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;SQLite format&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">head</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;SQLite format&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;It appears you have a gene feature&quot;</span>
-                                          <span class="s2">&quot; in your GTF file. You may want to use the &quot;</span>
-                                          <span class="s2">&quot;`disable_infer_genes` option to speed up database &quot;</span>
-                                          <span class="s2">&quot;creation&quot;</span><span class="p">)</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;It appears you have a transcript &quot;</span>
-                                          <span class="s2">&quot;feature in your GTF file. You may want to use the &quot;</span>
-                                          <span class="s2">&quot;`disable_infer_transcripts` option to speed up &quot;</span>
-                                          <span class="s2">&quot;database creation&quot;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;It appears you have a gene feature&quot;</span>
+    <span class="s2">&quot; in your GTF file. You may want to use the &quot;</span>
+    <span class="s2">&quot;`disable_infer_genes` option to speed up database &quot;</span>
+    <span class="s2">&quot;creation&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;It appears you have a transcript &quot;</span>
+    <span class="s2">&quot;feature in your GTF file. You may want to use the &quot;</span>
+    <span class="s2">&quot;`disable_infer_transcripts` option to speed up &quot;</span>
+    <span class="s2">&quot;database creation&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="c1"># In gffutils v0.10 they changed the error message:</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;It appears you have a gene feature&quot;</span>
-                                          <span class="s2">&quot; in your GTF file. You may want to use the &quot;</span>
-                                          <span class="s2">&quot;`disable_infer_genes=True` option to speed up database &quot;</span>
-                                          <span class="s2">&quot;creation&quot;</span><span class="p">)</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;It appears you have a transcript &quot;</span>
-                                          <span class="s2">&quot;feature in your GTF file. You may want to use the &quot;</span>
-                                          <span class="s2">&quot;`disable_infer_transcripts=True` option to speed up &quot;</span>
-                                          <span class="s2">&quot;database creation&quot;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;It appears you have a gene feature&quot;</span>
+    <span class="s2">&quot; in your GTF file. You may want to use the &quot;</span>
+    <span class="s2">&quot;`disable_infer_genes=True` option to speed up database &quot;</span>
+    <span class="s2">&quot;creation&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;It appears you have a transcript &quot;</span>
+    <span class="s2">&quot;feature in your GTF file. You may want to use the &quot;</span>
+    <span class="s2">&quot;`disable_infer_transcripts=True` option to speed up &quot;</span>
+    <span class="s2">&quot;database creation&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
 
-<div class="viewcode-block" id="ReadGtf"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.ReadGtf">[docs]</a><span class="k">class</span> <span class="nc">ReadGtf</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Reads a gtf file.</span>
+<div class="viewcode-block" id="ReadGtf"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.ReadGtf">[docs]</a><span class="k">class</span> <span class="nc">ReadGtf</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Read a gtf file.&quot;&quot;&quot;</span>
 
-<span class="sd">    Example:</span>
-<span class="sd">    gtf = ReadGtf(&quot;file.gtf&quot;)</span>
-<span class="sd">    for interval in gtf:</span>
-<span class="sd">        print interval.start</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">prefered_name</span><span class="o">=</span><span class="s2">&quot;transcript_name&quot;</span><span class="p">,</span>
-                 <span class="n">merge_transcripts</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param file_path: the path of the gtf file</span>
-<span class="sd">        :return:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_type</span> <span class="o">=</span> <span class="s1">&#39;bed12&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">prefered_name</span><span class="o">=</span><span class="s2">&quot;transcript_name&quot;</span><span class="p">,</span> <span class="n">merge_transcripts</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_type</span> <span class="o">=</span> <span class="s2">&quot;bed12&quot;</span>
 
         <span class="c1"># list of bed fields</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;chromosome&#39;</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">,</span>
-                       <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="s1">&#39;strand&#39;</span><span class="p">,</span>
-                       <span class="s1">&#39;thick_start&#39;</span><span class="p">,</span> <span class="s1">&#39;thick_end&#39;</span><span class="p">,</span>
-                       <span class="s1">&#39;rgb&#39;</span><span class="p">,</span> <span class="s1">&#39;block_count&#39;</span><span class="p">,</span>
-                       <span class="s1">&#39;block_sizes&#39;</span><span class="p">,</span> <span class="s1">&#39;block_starts&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;chromosome&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;start&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;score&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;strand&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;thick_start&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;thick_end&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;rgb&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;block_count&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;block_sizes&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;block_starts&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">BedInterval</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;BedInterval&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BedInterval</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;BedInterval&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">)</span>
         <span class="c1"># I think the name which should be written</span>
         <span class="c1"># should be the transcript_name</span>
         <span class="c1"># But we can change it to gene_name</span>
@@ -1820,39 +1792,35 @@
             <span class="k">if</span> <span class="n">_is_sqlite3</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">gffutils</span><span class="o">.</span><span class="n">FeatureDB</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">gffutils</span><span class="o">.</span><span class="n">create_db</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;:memory:&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">gffutils</span><span class="o">.</span><span class="n">create_db</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;:memory:&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">ve</span><span class="p">:</span>
             <span class="k">if</span> <span class="s2">&quot;No lines parsed&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">ve</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">all_transcripts</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_transcripts</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">InputError</span><span class="p">(</span><span class="s2">&quot;This is not a gtf file.&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_transcripts</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">features_of_type</span><span class="p">(</span><span class="s2">&quot;gene&quot;</span><span class="p">)])</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">all_transcripts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">features_of_type</span><span class="p">(</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span>
-                                                                <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">features_of_type</span><span class="p">(</span><span class="s2">&quot;gene&quot;</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_transcripts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">features_of_type</span><span class="p">(</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">features_of_type</span><span class="p">(</span><span class="s2">&quot;transcript&quot;</span><span class="p">)])</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">all_transcripts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">features_of_type</span><span class="p">(</span><span class="s2">&quot;transcript&quot;</span><span class="p">,</span>
-                                                                <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">features_of_type</span><span class="p">(</span><span class="s2">&quot;transcript&quot;</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_transcripts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">features_of_type</span><span class="p">(</span><span class="s2">&quot;transcript&quot;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ReadGtf.__iter__"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.ReadGtf.__iter__">[docs]</a>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="ReadGtf.__next__"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.ReadGtf.__next__">[docs]</a>    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :return: bedInterval object</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Get next bedInterval object.&quot;&quot;&quot;</span>
         <span class="n">bed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bed_interval</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">bed</span></div>
 
 <div class="viewcode-block" id="ReadGtf.get_bed_interval"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.ReadGtf.get_bed_interval">[docs]</a>    <span class="k">def</span> <span class="nf">get_bed_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Process a transcript from the database,</span>
-<span class="sd">        retrieve all the values and return</span>
-<span class="sd">        a namedtuple object</span>
+<span class="sd">        Get the bed interval.</span>
+
+<span class="sd">        Process a transcript from the database, retrieve all the values and return a namedtuple object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tr</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_transcripts</span><span class="p">)</span>
         <span class="c1"># The name would be the prefered_name if exists</span>
@@ -1861,11 +1829,10 @@
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="c1"># Else try to guess the prefered_name from exons:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">trName</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">e</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">prefered_name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-                              <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span>
-                              <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span>
-                                               <span class="n">featuretype</span><span class="o">=</span><span class="s1">&#39;exon&#39;</span><span class="p">,</span>
-                                               <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">)])</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">trName</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="n">e</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">prefered_name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">featuretype</span><span class="o">=</span><span class="s2">&quot;exon&quot;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
+                <span class="p">}</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                 <span class="c1"># Else take the transcript id</span>
                 <span class="n">trName</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">id</span>
@@ -1875,12 +1842,8 @@
         <span class="c1"># and bed are 0-based half-open so:</span>
         <span class="c1"># I need to remove one from each start</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">cds_start</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span>
-                                              <span class="n">featuretype</span><span class="o">=</span><span class="s1">&#39;CDS&#39;</span><span class="p">,</span>
-                                              <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span>
-            <span class="n">cds_end</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span>
-                                            <span class="n">featuretype</span><span class="o">=</span><span class="s1">&#39;CDS&#39;</span><span class="p">,</span>
-                                            <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;-start&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">end</span>
+            <span class="n">cds_start</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">featuretype</span><span class="o">=</span><span class="s2">&quot;CDS&quot;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">cds_end</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">featuretype</span><span class="o">=</span><span class="s2">&quot;CDS&quot;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;-start&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">end</span>
         <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
             <span class="c1"># If the CDS is not defined, then it is set to the start</span>
             <span class="c1"># as proposed here:</span>
@@ -1888,26 +1851,35 @@
             <span class="n">cds_start</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span>
             <span class="n">cds_end</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="c1"># Get all exons starts and end to get lengths</span>
-        <span class="n">exons_starts</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span>
-                        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span>
-                                                  <span class="n">featuretype</span><span class="o">=</span><span class="s1">&#39;exon&#39;</span><span class="p">,</span>
-                                                  <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">)]</span>
-        <span class="n">exons_ends</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">end</span>
-                      <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span>
-                                                <span class="n">featuretype</span><span class="o">=</span><span class="s1">&#39;exon&#39;</span><span class="p">,</span>
-                                                <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">)]</span>
+        <span class="n">exons_starts</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">featuretype</span><span class="o">=</span><span class="s2">&quot;exon&quot;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">)]</span>
+        <span class="n">exons_ends</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">end</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">featuretype</span><span class="o">=</span><span class="s2">&quot;exon&quot;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">)]</span>
         <span class="n">exons_length</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="o">-</span> <span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">exons_starts</span><span class="p">,</span> <span class="n">exons_ends</span><span class="p">)]</span>
         <span class="n">relative_exons_starts</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="o">-</span> <span class="p">(</span><span class="n">tr</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">exons_starts</span><span class="p">]</span>
-        <span class="n">line_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">tr</span><span class="o">.</span><span class="n">chrom</span><span class="p">,</span> <span class="n">tr</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tr</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">trName</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tr</span><span class="o">.</span><span class="n">strand</span><span class="p">,</span>
-                       <span class="n">cds_start</span><span class="p">,</span> <span class="n">cds_end</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">exons_starts</span><span class="p">),</span>
-                       <span class="n">exons_length</span><span class="p">,</span> <span class="n">relative_exons_starts</span><span class="p">]</span>
+        <span class="n">line_values</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">tr</span><span class="o">.</span><span class="n">chrom</span><span class="p">,</span>
+            <span class="n">tr</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">tr</span><span class="o">.</span><span class="n">end</span><span class="p">,</span>
+            <span class="n">trName</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">tr</span><span class="o">.</span><span class="n">strand</span><span class="p">,</span>
+            <span class="n">cds_start</span><span class="p">,</span>
+            <span class="n">cds_end</span><span class="p">,</span>
+            <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">exons_starts</span><span class="p">),</span>
+            <span class="n">exons_length</span><span class="p">,</span>
+            <span class="n">relative_exons_starts</span><span class="p">,</span>
+        <span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">BedInterval</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="n">line_values</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="GtfTrack"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack">[docs]</a><span class="k">class</span> <span class="nc">GtfTrack</span><span class="p">(</span><span class="n">BedTrack</span><span class="p">):</span>
-<div class="viewcode-block" id="GtfTrack.SUPPORTED_ENDINGS"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.SUPPORTED_ENDINGS">[docs]</a>    <span class="n">SUPPORTED_ENDINGS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gtf&#39;</span><span class="p">,</span> <span class="s1">&#39;gtf.gz&#39;</span><span class="p">,</span> <span class="s1">&#39;gtf.db&#39;</span><span class="p">]</span></div>
-<div class="viewcode-block" id="GtfTrack.TRACK_TYPE"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.TRACK_TYPE">[docs]</a>    <span class="n">TRACK_TYPE</span> <span class="o">=</span> <span class="s1">&#39;gtf&#39;</span></div>
-<div class="viewcode-block" id="GtfTrack.OPTIONS_TXT"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.OPTIONS_TXT">[docs]</a>    <span class="n">OPTIONS_TXT</span> <span class="o">=</span> <span class="n">GenomeTrack</span><span class="o">.</span><span class="n">OPTIONS_TXT</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;GTF track.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GtfTrack.SUPPORTED_ENDINGS"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.SUPPORTED_ENDINGS">[docs]</a>    <span class="n">SUPPORTED_ENDINGS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;gtf&quot;</span><span class="p">,</span> <span class="s2">&quot;gtf.gz&quot;</span><span class="p">,</span> <span class="s2">&quot;gtf.db&quot;</span><span class="p">]</span></div>
+<div class="viewcode-block" id="GtfTrack.TRACK_TYPE"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.TRACK_TYPE">[docs]</a>    <span class="n">TRACK_TYPE</span> <span class="o">=</span> <span class="s2">&quot;gtf&quot;</span></div>
+<div class="viewcode-block" id="GtfTrack.OPTIONS_TXT"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.OPTIONS_TXT">[docs]</a>    <span class="n">OPTIONS_TXT</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">GenomeTrack</span><span class="o">.</span><span class="n">OPTIONS_TXT</span>
+        <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2"># By default the transcript_name is used.</span>
 <span class="s2"># If you want to use the gene_name:</span>
 <span class="s2"># prefered_name = gene_name</span>
@@ -1979,111 +1951,131 @@
 <span class="s2"># optional. If not given is guessed from the file ending.</span>
 <span class="s2">file_type = </span><span class="si">{</span><span class="n">TRACK_TYPE</span><span class="si">}</span><span class="s2"></span>
 <span class="s2">    &quot;&quot;&quot;</span>
+    <span class="p">)</span></div>
 
-<div class="viewcode-block" id="GtfTrack.DEFAULTS_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.DEFAULTS_PROPERTIES">[docs]</a>    <span class="n">DEFAULTS_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
-                           <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                           <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">DEFAULT_BED_COLOR</span><span class="p">,</span>
-                           <span class="s1">&#39;border_color&#39;</span><span class="p">:</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                           <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="s1">&#39;flybase&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="n">DEFAULT_DISPLAY_BED</span><span class="p">,</span>
-                           <span class="s1">&#39;line_width&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-                           <span class="s1">&#39;max_labels&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
-                           <span class="s1">&#39;prefered_name&#39;</span><span class="p">:</span> <span class="s1">&#39;transcript_name&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;merge_transcripts&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                           <span class="s1">&#39;global_max_row&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                           <span class="s1">&#39;gene_rows&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                           <span class="s1">&#39;arrow_interval&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-                           <span class="s1">&#39;arrowhead_included&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                           <span class="s1">&#39;color_utr&#39;</span><span class="p">:</span> <span class="s1">&#39;grey&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;height_utr&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                           <span class="s1">&#39;arrow_length&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                           <span class="s1">&#39;region&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Cannot be set manually but is set by tracksClass</span>
-                           <span class="s1">&#39;all_labels_inside&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                           <span class="s1">&#39;labels_in_margin&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span></div>
-<div class="viewcode-block" id="GtfTrack.NECESSARY_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.NECESSARY_PROPERTIES">[docs]</a>    <span class="n">NECESSARY_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span></div>
-<div class="viewcode-block" id="GtfTrack.SYNONYMOUS_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.SYNONYMOUS_PROPERTIES">[docs]</a>    <span class="n">SYNONYMOUS_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="n">DISPLAY_BED_SYNONYMOUS</span><span class="p">}</span></div>
-<div class="viewcode-block" id="GtfTrack.POSSIBLE_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.POSSIBLE_PROPERTIES">[docs]</a>    <span class="n">POSSIBLE_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;inverted&#39;</span><span class="p">],</span>
-                           <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;flybase&#39;</span><span class="p">,</span> <span class="s1">&#39;UCSC&#39;</span><span class="p">,</span> <span class="s1">&#39;tssarrow&#39;</span><span class="p">],</span>
-                           <span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="n">DISPLAY_BED_VALID</span><span class="p">}</span></div>
-<div class="viewcode-block" id="GtfTrack.BOOLEAN_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.BOOLEAN_PROPERTIES">[docs]</a>    <span class="n">BOOLEAN_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">,</span> <span class="s1">&#39;merge_transcripts&#39;</span><span class="p">,</span> <span class="s1">&#39;global_max_row&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;arrowhead_included&#39;</span><span class="p">,</span> <span class="s1">&#39;all_labels_inside&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;labels_in_margin&#39;</span><span class="p">]</span></div>
-<div class="viewcode-block" id="GtfTrack.STRING_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.STRING_PROPERTIES">[docs]</a>    <span class="n">STRING_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;prefered_name&#39;</span><span class="p">,</span> <span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;file_type&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;overlay_previous&#39;</span><span class="p">,</span> <span class="s1">&#39;orientation&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;border_color&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;color_utr&#39;</span><span class="p">,</span> <span class="s1">&#39;display&#39;</span><span class="p">]</span></div>
-<div class="viewcode-block" id="GtfTrack.FLOAT_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.FLOAT_PROPERTIES">[docs]</a>    <span class="n">FLOAT_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-                        <span class="s1">&#39;line_width&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-                        <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-                        <span class="s1">&#39;height_utr&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}</span></div>
-<div class="viewcode-block" id="GtfTrack.INTEGER_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.INTEGER_PROPERTIES">[docs]</a>    <span class="n">INTEGER_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;gene_rows&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-                          <span class="s1">&#39;max_labels&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-                          <span class="s1">&#39;arrow_interval&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-                          <span class="s1">&#39;arrow_length&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]}</span></div>
+<div class="viewcode-block" id="GtfTrack.DEFAULTS_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.DEFAULTS_PROPERTIES">[docs]</a>    <span class="n">DEFAULTS_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="s2">&quot;orientation&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">DEFAULT_BED_COLOR</span><span class="p">,</span>
+        <span class="s2">&quot;border_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;flybase&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="n">DEFAULT_DISPLAY_BED</span><span class="p">,</span>
+        <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s2">&quot;max_labels&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+        <span class="s2">&quot;prefered_name&quot;</span><span class="p">:</span> <span class="s2">&quot;transcript_name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;merge_transcripts&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;global_max_row&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;gene_rows&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;arrow_interval&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;arrowhead_included&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;color_utr&quot;</span><span class="p">:</span> <span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;height_utr&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;arrow_length&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;region&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Cannot be set manually but is set by tracksClass</span>
+        <span class="s2">&quot;all_labels_inside&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;labels_in_margin&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">}</span></div>
+<div class="viewcode-block" id="GtfTrack.NECESSARY_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.NECESSARY_PROPERTIES">[docs]</a>    <span class="n">NECESSARY_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">]</span></div>
+<div class="viewcode-block" id="GtfTrack.SYNONYMOUS_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.SYNONYMOUS_PROPERTIES">[docs]</a>    <span class="n">SYNONYMOUS_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="n">DISPLAY_BED_SYNONYMOUS</span><span class="p">}</span></div>
+<div class="viewcode-block" id="GtfTrack.POSSIBLE_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.POSSIBLE_PROPERTIES">[docs]</a>    <span class="n">POSSIBLE_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;orientation&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;inverted&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;flybase&quot;</span><span class="p">,</span> <span class="s2">&quot;UCSC&quot;</span><span class="p">,</span> <span class="s2">&quot;tssarrow&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="n">DISPLAY_BED_VALID</span><span class="p">,</span>
+    <span class="p">}</span></div>
+<div class="viewcode-block" id="GtfTrack.BOOLEAN_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.BOOLEAN_PROPERTIES">[docs]</a>    <span class="n">BOOLEAN_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;labels&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;merge_transcripts&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;global_max_row&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;arrowhead_included&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;all_labels_inside&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;labels_in_margin&quot;</span><span class="p">,</span>
+    <span class="p">]</span></div>
+<div class="viewcode-block" id="GtfTrack.STRING_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.STRING_PROPERTIES">[docs]</a>    <span class="n">STRING_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;prefered_name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;file_type&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;overlay_previous&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;orientation&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;style&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;color&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;border_color&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;color_utr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;display&quot;</span><span class="p">,</span>
+    <span class="p">]</span></div>
+<div class="viewcode-block" id="GtfTrack.FLOAT_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.FLOAT_PROPERTIES">[docs]</a>    <span class="n">FLOAT_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span> <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span> <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span> <span class="s2">&quot;height_utr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}</span></div>
+<div class="viewcode-block" id="GtfTrack.INTEGER_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.INTEGER_PROPERTIES">[docs]</a>    <span class="n">INTEGER_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;gene_rows&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
+        <span class="s2">&quot;max_labels&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
+        <span class="s2">&quot;arrow_interval&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
+        <span class="s2">&quot;arrow_length&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
+    <span class="p">}</span></div>
 
 <div class="viewcode-block" id="GtfTrack.set_properties_defaults"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.set_properties_defaults">[docs]</a>    <span class="k">def</span> <span class="nf">set_properties_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the default values for the properties.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BedTrack</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">set_properties_defaults</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span> <span class="o">=</span> <span class="n">font_manager</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;fontsize&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span> <span class="o">=</span> <span class="n">font_manager</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;fontsize&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">colormap</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># check if the color given is a color map</span>
         <span class="c1"># Contrary to bed it cannot be a colormap</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">process_color</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">colormap_possible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                           <span class="n">bed_rgb_possible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                           <span class="n">default_value_is_colormap</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_color</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="n">colormap_possible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bed_rgb_possible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default_value_is_colormap</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># check if border_color and color_utr are colors</span>
         <span class="c1"># if they are part of self.properties</span>
         <span class="c1"># (for example, TADsTracks do not have color_utr)</span>
-        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;border_color&#39;</span><span class="p">,</span> <span class="s1">&#39;color_utr&#39;</span><span class="p">]</span>
-                      <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;border_color&quot;</span><span class="p">,</span> <span class="s2">&quot;color_utr&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_color</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">bed_rgb_possible</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># to set the distance between rows</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">row_scale</span> <span class="o">=</span> <span class="mf">2.3</span></div>
 
 <div class="viewcode-block" id="GtfTrack.get_bed_handler"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/GtfTrack/index.html#ALLCools.plot.genome_track.GtfTrack.GtfTrack.get_bed_handler">[docs]</a>    <span class="k">def</span> <span class="nf">get_bed_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_regions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">file_to_open</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;global_max_row&#39;</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Get the bed handler for the track.&quot;&quot;&quot;</span>
+        <span class="n">file_to_open</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;global_max_row&quot;</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">plot_regions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">_is_sqlite3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]):</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;global_max_row not supported when gtf is provided as SQLite3 db&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">_is_sqlite3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">]):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;global_max_row not supported when gtf is provided as SQLite3 db&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="c1"># I do the intersection:</span>
-                    <span class="n">file_to_open</span> <span class="o">=</span> <span class="n">temp_file_from_intersect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span>
-                                                            <span class="n">plot_regions</span><span class="p">,</span> <span class="n">AROUND_REGION</span><span class="p">)</span>
+                    <span class="n">file_to_open</span> <span class="o">=</span> <span class="n">temp_file_from_intersect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">],</span> <span class="n">plot_regions</span><span class="p">,</span> <span class="n">AROUND_REGION</span><span class="p">)</span>
 
-        <span class="n">gtf_db</span> <span class="o">=</span> <span class="n">ReadGtf</span><span class="p">(</span><span class="n">file_to_open</span><span class="p">,</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;prefered_name&#39;</span><span class="p">],</span>
-                         <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;merge_transcripts&#39;</span><span class="p">])</span>
+        <span class="n">gtf_db</span> <span class="o">=</span> <span class="n">ReadGtf</span><span class="p">(</span><span class="n">file_to_open</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;prefered_name&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;merge_transcripts&quot;</span><span class="p">])</span>
         <span class="n">total_length</span> <span class="o">=</span> <span class="n">gtf_db</span><span class="o">.</span><span class="n">length</span>
         <span class="k">return</span> <span class="n">gtf_db</span><span class="p">,</span> <span class="n">total_length</span></div></div>
 </pre></div>
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Hanqing Liu<br/>
+  
+      &copy; Copyright 2019 - 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By Hanqing Liu<br/>
-    
-        &copy; Copyright 2019 - 2022.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

@@ -13,6 +13,7 @@ Subpackages
    abc/index.rst
    clustering/index.rst
    count_matrix/index.rst
+   dataset/index.rst
    dmr/index.rst
    gtf/index.rst
    integration/index.rst
@@ -21,7 +22,6 @@ Subpackages
    plot/index.rst
    pseudo_cell/index.rst
    reptile/index.rst
-   sandbox/index.rst
    schema/index.rst
 
 
@@ -40,7 +40,6 @@ Submodules
    _extract_allc/index.rst
    _merge_allc/index.rst
    _open/index.rst
-   _version/index.rst
    api/index.rst
    table_to_allc/index.rst
    utilities/index.rst
@@ -50,7 +49,7 @@ Package Contents
 ----------------
 
 .. py:data:: __version__
-   :annotation: = 0.1.19.dev13+g658250d.d20220109
+   
 
    
 

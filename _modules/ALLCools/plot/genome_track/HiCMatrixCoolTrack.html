@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ALLCools.plot.genome_track.HiCMatrixCoolTrack</title>
     
-  <link href="../../../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,33 +19,39 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-codeautolink.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
     <script src="../../../../_static/jquery.js"></script>
     <script src="../../../../_static/underscore.js"></script>
     <script src="../../../../_static/doctools.js"></script>
-    <script src="../../../../_static/togglebutton.js"></script>
     <script src="../../../../_static/clipboard.min.js"></script>
     <script src="../../../../_static/copybutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
     <link rel="shortcut icon" href="../../../../_static/allcools_favicon.png"/>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
@@ -63,7 +70,21 @@
                 </script>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -72,9 +93,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../../../../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -90,14 +112,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../../../intro.html">
-   ALLCools: ALL methyl-Cytosine tools
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    ALLCools: ALL methyl-Cytosine tools
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   GET STARTED
  </span>
@@ -219,11 +242,6 @@
      </i>
     </label>
     <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
-       Cell Basic Filtering
-      </a>
-     </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../../../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
        Decomposition Using mCG-5Kb Bins
@@ -745,6 +763,15 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/clustering/chromatin_conformation/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.chromatin_conformation
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../../api/ALLCools/clustering/dmg/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -763,6 +790,15 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/clustering/lsi/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.lsi
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../../api/ALLCools/clustering/mcad/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -776,6 +812,15 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/clustering/rutilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.rutilities
         </span>
        </code>
       </a>
@@ -862,6 +907,40 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../../api/ALLCools/dataset/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.dataset
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/dataset/directory_structure/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dataset.directory_structure
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/dataset/entry_point/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dataset.entry_point
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../../api/ALLCools/dmr/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -869,8 +948,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -921,8 +1000,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -955,8 +1034,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -980,10 +1059,19 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../../api/ALLCools/integration/harmony/index.html">
+      <a class="reference internal" href="../../../../api/ALLCools/integration/metric/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
-         ALLCools.integration.harmony
+         ALLCools.integration.metric
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../api/ALLCools/integration/seurat_class/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.integration.seurat_class
         </span>
        </code>
       </a>
@@ -998,8 +1086,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1050,8 +1138,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1102,8 +1190,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1116,8 +1204,8 @@
         </span>
        </code>
       </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
-      <label for="toctree-checkbox-24">
+      <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+      <label for="toctree-checkbox-25">
        <i class="fas fa-chevron-down">
        </i>
       </label>
@@ -1269,8 +1357,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
-    <label for="toctree-checkbox-25">
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1303,8 +1391,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
-    <label for="toctree-checkbox-26">
+    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+    <label for="toctree-checkbox-27">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1321,171 +1409,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../../api/ALLCools/sandbox/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.sandbox
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
-    <label for="toctree-checkbox-27">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.igv
-        </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
-      <label for="toctree-checkbox-28">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.BaseClass
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/Session/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.Session
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/Track/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.Track
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/defaults/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.defaults
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/igv/make_session/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.make_session
-          </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.motif
-        </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
-      <label for="toctree-checkbox-29">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/ame/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.ame
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/cmotif/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.cmotif
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/fimo/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.fimo
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/motif_scan/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.motif_scan
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../../api/ALLCools/sandbox/motif/utilities/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.utilities
-          </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../../api/ALLCools/sandbox/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../../api/ALLCools/sandbox/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../../api/ALLCools/sandbox/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.sccaf
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1493,8 +1416,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/>
-    <label for="toctree-checkbox-30">
+    <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
+    <label for="toctree-checkbox-28">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1592,15 +1515,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../../../api/ALLCools/_version/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools._version
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../../../api/ALLCools/api/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1649,12 +1563,17 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
 </div>
 
 
@@ -1662,60 +1581,104 @@
 
 
           
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
     
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-            <!-- Source interaction buttons -->
+    <div class="header-article row sticky-top noprint">
+        
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2F_modules/ALLCools/plot/genome_track/HiCMatrixCoolTrack.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
         
     </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/lhqing/ALLCools"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2F_modules/ALLCools/plot/genome_track/HiCMatrixCoolTrack.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
 </div>
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-        </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1></h1>
@@ -1726,7 +1689,8 @@
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
   <h1>Source code for ALLCools.plot.genome_track.HiCMatrixCoolTrack</h1><div class="highlight"><pre>
@@ -1736,20 +1700,19 @@
 
 <span class="kn">import</span> <span class="nn">cooler</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span><span class="p">,</span> <span class="n">colors</span>
 <span class="kn">from</span> <span class="nn">pygenometracks.tracks.GenomeTrack</span> <span class="kn">import</span> <span class="n">GenomeTrack</span>
 <span class="kn">from</span> <span class="nn">pygenometracks.utilities</span> <span class="kn">import</span> <span class="n">change_chrom_names</span>
 
-<div class="viewcode-block" id="DEFAULT_MATRIX_COLORMAP"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.DEFAULT_MATRIX_COLORMAP">[docs]</a><span class="n">DEFAULT_MATRIX_COLORMAP</span> <span class="o">=</span> <span class="s1">&#39;RdYlBu_r&#39;</span></div>
+<div class="viewcode-block" id="DEFAULT_MATRIX_COLORMAP"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.DEFAULT_MATRIX_COLORMAP">[docs]</a><span class="n">DEFAULT_MATRIX_COLORMAP</span> <span class="o">=</span> <span class="s2">&quot;RdYlBu_r&quot;</span></div>
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
 <div class="viewcode-block" id="log"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.log">[docs]</a><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="HiCMatrixCoolTrack"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack">[docs]</a><span class="k">class</span> <span class="nc">HiCMatrixCoolTrack</span><span class="p">(</span><span class="n">GenomeTrack</span><span class="p">):</span>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.SUPPORTED_ENDINGS"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.SUPPORTED_ENDINGS">[docs]</a>    <span class="n">SUPPORTED_ENDINGS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.cool&#39;</span><span class="p">,</span> <span class="s1">&#39;.mcool&#39;</span><span class="p">]</span></div>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.TRACK_TYPE"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.TRACK_TYPE">[docs]</a>    <span class="n">TRACK_TYPE</span> <span class="o">=</span> <span class="s1">&#39;cooler&#39;</span></div>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.OPTIONS_TXT"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.OPTIONS_TXT">[docs]</a>    <span class="n">OPTIONS_TXT</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.SUPPORTED_ENDINGS"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.SUPPORTED_ENDINGS">[docs]</a>    <span class="n">SUPPORTED_ENDINGS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.cool&quot;</span><span class="p">,</span> <span class="s2">&quot;.mcool&quot;</span><span class="p">]</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.TRACK_TYPE"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.TRACK_TYPE">[docs]</a>    <span class="n">TRACK_TYPE</span> <span class="o">=</span> <span class="s2">&quot;cooler&quot;</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.OPTIONS_TXT"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.OPTIONS_TXT">[docs]</a>    <span class="n">OPTIONS_TXT</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2"># The different options for color maps can be found here:</span>
 <span class="s2"># https://matplotlib.org/users/colormaps.html</span>
 <span class="s2"># the default color map is RdYlBu_r (_r) stands for reverse</span>
@@ -1782,31 +1745,31 @@
 <span class="s2"># (only used if you use pdf or svg output format) by using:</span>
 <span class="s2"># rasterize = false</span>
 <span class="s2">file_type = </span><span class="si">{</span><span class="n">TRACK_TYPE</span><span class="si">}</span><span class="s2"></span>
-<span class="s2">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.DEFAULTS_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.DEFAULTS_PROPERTIES">[docs]</a>    <span class="n">DEFAULTS_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;region&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Cannot be set manually but is set by tracksClass</span>
-                           <span class="s1">&#39;depth&#39;</span><span class="p">:</span> <span class="mi">100000</span><span class="p">,</span>
-                           <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                           <span class="s1">&#39;show_masked_bins&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                           <span class="s1">&#39;scale_factor&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                           <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;max_value&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                           <span class="s1">&#39;min_value&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                           <span class="s1">&#39;rasterize&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                           <span class="s1">&#39;colormap&#39;</span><span class="p">:</span> <span class="n">DEFAULT_MATRIX_COLORMAP</span><span class="p">}</span></div>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.NECESSARY_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.NECESSARY_PROPERTIES">[docs]</a>    <span class="n">NECESSARY_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span></div>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.SYNONYMOUS_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.SYNONYMOUS_PROPERTIES">[docs]</a>    <span class="n">SYNONYMOUS_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_value&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;auto&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span>
-                             <span class="s1">&#39;min_value&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;auto&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}}</span></div>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.POSSIBLE_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.POSSIBLE_PROPERTIES">[docs]</a>    <span class="n">POSSIBLE_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;inverted&#39;</span><span class="p">],</span>
-                           <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="s1">&#39;log1p&#39;</span><span class="p">,</span> <span class="s1">&#39;-log&#39;</span><span class="p">]}</span></div>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.BOOLEAN_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.BOOLEAN_PROPERTIES">[docs]</a>    <span class="n">BOOLEAN_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;show_masked_bins&#39;</span><span class="p">,</span> <span class="s1">&#39;rasterize&#39;</span><span class="p">]</span></div>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.STRING_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.STRING_PROPERTIES">[docs]</a>    <span class="n">STRING_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;file_type&#39;</span><span class="p">,</span> <span class="s1">&#39;overlay_previous&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;orientation&#39;</span><span class="p">,</span> <span class="s1">&#39;transform&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;colormap&#39;</span><span class="p">]</span></div>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.FLOAT_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.FLOAT_PROPERTIES">[docs]</a>    <span class="n">FLOAT_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-                        <span class="s1">&#39;min_value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-                        <span class="s1">&#39;scale_factor&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
-                        <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]}</span></div>
-<div class="viewcode-block" id="HiCMatrixCoolTrack.INTEGER_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.INTEGER_PROPERTIES">[docs]</a>    <span class="n">INTEGER_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]}</span></div>
+<span class="s2">    &quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.DEFAULTS_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.DEFAULTS_PROPERTIES">[docs]</a>    <span class="n">DEFAULTS_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;region&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Cannot be set manually but is set by tracksClass</span>
+        <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="mi">100000</span><span class="p">,</span>
+        <span class="s2">&quot;orientation&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;show_masked_bins&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;scale_factor&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;transform&quot;</span><span class="p">:</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;max_value&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;min_value&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;rasterize&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;colormap&quot;</span><span class="p">:</span> <span class="n">DEFAULT_MATRIX_COLORMAP</span><span class="p">,</span>
+    <span class="p">}</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.NECESSARY_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.NECESSARY_PROPERTIES">[docs]</a>    <span class="n">NECESSARY_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">]</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.SYNONYMOUS_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.SYNONYMOUS_PROPERTIES">[docs]</a>    <span class="n">SYNONYMOUS_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;max_value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;auto&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">},</span> <span class="s2">&quot;min_value&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;auto&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}}</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.POSSIBLE_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.POSSIBLE_PROPERTIES">[docs]</a>    <span class="n">POSSIBLE_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;orientation&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;inverted&quot;</span><span class="p">],</span> <span class="s2">&quot;transform&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;no&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;log1p&quot;</span><span class="p">,</span> <span class="s2">&quot;-log&quot;</span><span class="p">]}</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.BOOLEAN_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.BOOLEAN_PROPERTIES">[docs]</a>    <span class="n">BOOLEAN_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;show_masked_bins&quot;</span><span class="p">,</span> <span class="s2">&quot;rasterize&quot;</span><span class="p">]</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.STRING_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.STRING_PROPERTIES">[docs]</a>    <span class="n">STRING_PROPERTIES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="s2">&quot;file_type&quot;</span><span class="p">,</span> <span class="s2">&quot;overlay_previous&quot;</span><span class="p">,</span> <span class="s2">&quot;orientation&quot;</span><span class="p">,</span> <span class="s2">&quot;transform&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;colormap&quot;</span><span class="p">]</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.FLOAT_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.FLOAT_PROPERTIES">[docs]</a>    <span class="n">FLOAT_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;max_value&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
+        <span class="s2">&quot;min_value&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
+        <span class="s2">&quot;scale_factor&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
+        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
+    <span class="p">}</span></div>
+<div class="viewcode-block" id="HiCMatrixCoolTrack.INTEGER_PROPERTIES"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.INTEGER_PROPERTIES">[docs]</a>    <span class="n">INTEGER_PROPERTIES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]}</span></div>
 
     <span class="c1"># The colormap can only be a colormap</span>
 
@@ -1818,88 +1781,90 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cmap</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">norm</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">HiCMatrixCoolTrack</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;FILE </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FILE </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HiCMatrixCoolTrack.set_properties_defaults"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.set_properties_defaults">[docs]</a>    <span class="k">def</span> <span class="nf">set_properties_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">HiCMatrixCoolTrack</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">set_properties_defaults</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_properties_defaults</span><span class="p">()</span>
         <span class="c1"># Put default img to None for y-axis</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">img</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hic_ma</span> <span class="o">=</span> <span class="n">cooler</span><span class="o">.</span><span class="n">Cooler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hic_ma</span> <span class="o">=</span> <span class="n">cooler</span><span class="o">.</span><span class="n">Cooler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">chrom_sizes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hic_ma</span><span class="o">.</span><span class="n">chromsizes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">binsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hic_ma</span><span class="o">.</span><span class="n">binsize</span>
 
-        <span class="n">max_depth_in_bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">binsize</span><span class="p">)</span>
+        <span class="n">max_depth_in_bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">binsize</span><span class="p">)</span>
         <span class="c1"># If the depth is smaller than the binsize. It will display an empty plot</span>
         <span class="k">if</span> <span class="n">max_depth_in_bins</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;*Warning*</span><span class="se">\n</span><span class="s2">The depth(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot; is smaller than binsize(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">binsize</span><span class="si">}</span><span class="s2">)&quot;</span>
-                             <span class="s2">&quot;This will generate an empty track!!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;*Warning*</span><span class="se">\n</span><span class="s2">The depth(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; is smaller than binsize(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">binsize</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="s2">&quot;This will generate an empty track!!</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
             <span class="k">return</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">process_color</span><span class="p">(</span><span class="s1">&#39;colormap&#39;</span><span class="p">,</span>
-                           <span class="n">colormap_possible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                           <span class="n">colormap_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                           <span class="n">default_value_is_colormap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cmap</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;colormap&#39;</span><span class="p">]))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_color</span><span class="p">(</span><span class="s2">&quot;colormap&quot;</span><span class="p">,</span> <span class="n">colormap_possible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">colormap_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default_value_is_colormap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmap</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;colormap&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="o">.</span><span class="n">set_bad</span><span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="HiCMatrixCoolTrack.plot"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">chrom_region</span><span class="p">,</span> <span class="n">region_start</span><span class="p">,</span> <span class="n">region_end</span><span class="p">):</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;chrom_region </span><span class="si">{</span><span class="n">chrom_region</span><span class="si">}</span><span class="s1">, region_start </span><span class="si">{</span><span class="n">region_start</span><span class="si">}</span><span class="s1">, region_end </span><span class="si">{</span><span class="n">region_end</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;chrom_region </span><span class="si">{</span><span class="n">chrom_region</span><span class="si">}</span><span class="s2">, region_start </span><span class="si">{</span><span class="n">region_start</span><span class="si">}</span><span class="s2">, region_end </span><span class="si">{</span><span class="n">region_end</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">chrom_region</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chrom_sizes</span><span class="p">:</span>
             <span class="n">chrom_region_before</span> <span class="o">=</span> <span class="n">chrom_region</span>
             <span class="n">chrom_region</span> <span class="o">=</span> <span class="n">change_chrom_names</span><span class="p">(</span><span class="n">chrom_region</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">chrom_region</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chrom_sizes</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;*Warning*</span><span class="se">\n</span><span class="s2">Neither </span><span class="si">{</span><span class="n">chrom_region_before</span><span class="si">}</span><span class="s2"> nor </span><span class="si">{</span><span class="n">chrom_region</span><span class="si">}</span><span class="s2"> exists as a &quot;</span>
-                                 <span class="sa">f</span><span class="s2">&quot;chromosome name on the matrix. This will generate an empty track!!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;*Warning*</span><span class="se">\n</span><span class="s2">Neither </span><span class="si">{</span><span class="n">chrom_region_before</span><span class="si">}</span><span class="s2"> nor </span><span class="si">{</span><span class="n">chrom_region</span><span class="si">}</span><span class="s2"> exists as a &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;chromosome name on the matrix. This will generate an empty track!!</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">img</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="k">return</span>
 
         <span class="n">chrom_region</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_chrom_str_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chrom_sizes</span><span class="p">,</span> <span class="n">chrom_region</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">region_end</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">chrom_sizes</span><span class="p">[</span><span class="n">chrom_region</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;*Warning*</span><span class="se">\n</span><span class="s2">The region to plot extends beyond the&quot;</span>
-                             <span class="s2">&quot; chromosome size. Please check.</span><span class="se">\n</span><span class="s2">&quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chrom_region</span><span class="si">}</span><span class="s2"> size: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chrom_sizes</span><span class="p">[</span><span class="n">chrom_region</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;. Region to plot </span><span class="si">{</span><span class="n">region_start</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">region_end</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;*Warning*</span><span class="se">\n</span><span class="s2">The region to plot extends beyond the&quot;</span>
+                <span class="s2">&quot; chromosome size. Please check.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chrom_region</span><span class="si">}</span><span class="s2"> size: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chrom_sizes</span><span class="p">[</span><span class="n">chrom_region</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;. Region to plot </span><span class="si">{</span><span class="n">region_start</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">region_end</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
         <span class="c1"># expand region to plus depth on both sides</span>
         <span class="c1"># to avoid a 45 degree &#39;cut&#39; on the edges</span>
 
         <span class="c1"># get bin id of start and end of region in given chromosome</span>
-        <span class="n">start_bp</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">region_start</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">])</span>
-        <span class="n">end_bp</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chrom_sizes</span><span class="p">[</span><span class="n">chrom_region</span><span class="p">],</span>
-                     <span class="n">region_end</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">])</span>
+        <span class="n">start_bp</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">region_start</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">])</span>
+        <span class="n">end_bp</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chrom_sizes</span><span class="p">[</span><span class="n">chrom_region</span><span class="p">],</span> <span class="n">region_end</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">])</span>
         <span class="n">p1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">start_bp</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">binsize</span><span class="p">))</span>
         <span class="n">p2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">end_bp</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">binsize</span><span class="p">))</span>
 
         <span class="c1"># start pos need to include the last end</span>
         <span class="n">start_pos</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">binsize</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
         <span class="c1"># select only relevant matrix part</span>
-        <span class="n">matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hic_ma</span> \
-            <span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">balance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
-            <span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">chrom_region</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">start_bp</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">end_bp</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hic_ma</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">balance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chrom_region</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">start_bp</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">end_bp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
 
         <span class="c1"># limit the &#39;depth&#39; based on the length of the region being viewed</span>
         <span class="n">region_len</span> <span class="o">=</span> <span class="n">region_end</span> <span class="o">-</span> <span class="n">region_start</span>
-        <span class="n">depth</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">region_len</span> <span class="o">*</span> <span class="mf">1.25</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The depth was set to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> which is more than 125%&quot;</span>
-                        <span class="s2">&quot; of the region plotted. The depth will be set &quot;</span>
-                        <span class="sa">f</span><span class="s2">&quot;to </span><span class="si">{</span><span class="n">depth</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">depth</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">region_len</span> <span class="o">*</span> <span class="mf">1.25</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">]:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The depth was set to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> which is more than 125%&quot;</span>
+                <span class="s2">&quot; of the region plotted. The depth will be set &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;to </span><span class="si">{</span><span class="n">depth</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
         <span class="c1"># Replace all nan values by 0.</span>
         <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">nan</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># scale</span>
-        <span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">]</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;scale_factor&quot;</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;log1p&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;transform&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;log1p&quot;</span><span class="p">:</span>
             <span class="n">matrix</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;-log&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;transform&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;-log&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">matrix</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;HiC Matrix contains negative value, can not perform log transform.&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;HiC Matrix contains negative value, can not perform log transform.&quot;</span><span class="p">)</span>
 
             <span class="c1"># We first replace 0 values by minimum values after 0</span>
             <span class="n">mask</span> <span class="o">=</span> <span class="n">matrix</span> <span class="o">==</span> <span class="mi">0</span>
@@ -1907,13 +1872,13 @@
                 <span class="n">matrix</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
                 <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;All values are 0, no log applied.&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;All values are 0, no log applied.&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;-log&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;transform&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-log&quot;</span><span class="p">:</span>
                     <span class="n">matrix</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;max_value&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">vmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;max_value&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;max_value&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">vmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;max_value&quot;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># try to use a &#39;aesthetically pleasant&#39; max value</span>
             <span class="k">try</span><span class="p">:</span>
@@ -1921,8 +1886,8 @@
             <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
                 <span class="n">vmax</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;min_value&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">vmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;min_value&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;min_value&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">vmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;min_value&quot;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">vmin</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
             <span class="c1"># if the region length is large with respect to the chromosome length, the diagonal may have</span>
@@ -1934,18 +1899,18 @@
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distant_diagonal_values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
                     <span class="k">break</span>
                 <span class="n">vmin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">distant_diagonal_values</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;setting min, max values for track &quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;section_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> to: &quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">vmin</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">vmax</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;log1p&#39;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;setting min, max values for track &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;section_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> to: &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">vmin</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">vmax</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;transform&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;log1p&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">norm</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">LogNorm</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">norm</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcolormesh_45deg</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">start_pos</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;rasterize&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;rasterize&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">set_rasterized</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;orientation&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;inverted&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;orientation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;inverted&quot;</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span></div>
@@ -1958,50 +1923,56 @@
 
 <div class="viewcode-block" id="HiCMatrixCoolTrack.pcolormesh_45deg"><a class="viewcode-back" href="../../../../api/ALLCools/plot/genome_track/HiCMatrixCoolTrack/index.html#ALLCools.plot.genome_track.HiCMatrixCoolTrack.HiCMatrixCoolTrack.pcolormesh_45deg">[docs]</a>    <span class="k">def</span> <span class="nf">pcolormesh_45deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">matrix_c</span><span class="p">,</span> <span class="n">start_pos_vector</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Turns the matrix 45 degrees and adjusts the</span>
-<span class="sd">        bins to match the actual start end positions.</span>
+<span class="sd">        Plot a 45 degree heatmap.</span>
+
+<span class="sd">        Turns the matrix 45 degrees and adjusts the bins to match the actual start end positions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># code for rotating the image 45 degrees</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">matrix_c</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="c1"># create rotation/scaling matrix</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
         <span class="c1"># create coordinate matrix and transform it</span>
-        <span class="n">matrix_a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">start_pos_vector</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-                                                               <span class="n">start_pos_vector</span><span class="p">)]),</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">matrix_a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">start_pos_vector</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">start_pos_vector</span><span class="p">)]),</span> <span class="n">t</span>
+        <span class="p">)</span>
         <span class="c1"># this is to convert the indices into bp ranges</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">matrix_a</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">matrix_a</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="c1"># plot</span>
-        <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">matrix_c</span><span class="p">),</span>
-                           <span class="n">cmap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">)</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">matrix_c</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">norm</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">im</span></div></div>
 </pre></div>
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Hanqing Liu<br/>
+  
+      &copy; Copyright 2019 - 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By Hanqing Liu<br/>
-    
-        &copy; Copyright 2019 - 2022.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

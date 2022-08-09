@@ -154,19 +154,25 @@ Module Contents
 
       
 
-   .. py:method:: region_dim(self)
+   .. py:method:: region_dim()
       :property:
 
+      Get the region dimension.
 
-   .. py:method:: chrom_size_path(self)
+
+   .. py:method:: chrom_size_path()
       :property:
 
+      Get the chrom size path.
 
-   .. py:method:: location(self)
+
+   .. py:method:: location()
       :property:
 
+      Get the disk location.
 
-   .. py:method:: from_bed(cls, bed, location, chrom_size_path, region_dim='region', sort_bed=True)
+
+   .. py:method:: from_bed(bed, location, chrom_size_path, region_dim='region', sort_bed=True)
       :classmethod:
 
       Create empty RegionDS from a bed file.
@@ -177,12 +183,16 @@ Module Contents
       :param chrom_size_path:
       :param sort_bed:
 
+      :rtype: RegionDS
 
-   .. py:method:: open(cls, path, region_dim=None, use_regions=None, split_large_chunks=True, chrom_size_path=None, select_dir=None, chunks='auto', engine='zarr')
+
+   .. py:method:: open(path, region_dim=None, use_regions=None, split_large_chunks=True, chrom_size_path=None, select_dir=None, chunks='auto', engine='zarr')
       :classmethod:
 
+      Open a RegionDS from a zarr file.
 
-   .. py:method:: _open_single_dataset(cls, path, region_dim, split_large_chunks=True, chrom_size_path=None, location=None, engine=None)
+
+   .. py:method:: _open_single_dataset(path, region_dim, split_large_chunks=True, chrom_size_path=None, location=None, engine=None)
       :classmethod:
 
       Take one or multiple RegionDS file paths and create single RegionDS concatenated on region_dim
@@ -191,65 +201,96 @@ Module Contents
       :param region_dim: Dimension name of regions
       :param split_large_chunks: Split large dask array chunks if true
 
-      :returns:
       :rtype: RegionDS
 
 
-   .. py:method:: iter_index(self, chunk_size=100000, dim=None)
+   .. py:method:: iter_index(chunk_size=100000, dim=None)
+
+      Iterate over the index of the dataset.
 
 
-   .. py:method:: iter_array(self, chunk_size=100000, dim=None, da=None, load=False)
+   .. py:method:: iter_array(chunk_size=100000, dim=None, da=None, load=False)
+
+      Iterate over the data array of the dataset along given dim.
 
 
-   .. py:method:: get_fasta(self, genome_fasta, output_path, slop=None, chrom_size_path=None, standardize_length=None)
+   .. py:method:: get_fasta(genome_fasta, output_path, slop=None, chrom_size_path=None, standardize_length=None)
+
+      Get fasta file for each region in the dataset.
 
 
-   .. py:method:: get_bed(self, with_id=True, bedtools=False, slop=None, chrom_size_path=None, standardize_length=None)
+   .. py:method:: get_bed(with_id=True, bedtools=False, slop=None, chrom_size_path=None, standardize_length=None)
+
+      Get bed file for each region in the dataset.
 
 
-   .. py:method:: _chunk_annotation_executor(self, annotation_function, cpu, save=True, **kwargs)
+   .. py:method:: _chunk_annotation_executor(annotation_function, cpu, save=True, **kwargs)
 
 
-   .. py:method:: annotate_by_bigwigs(self, bigwig_table, dim, slop=100, chrom_size_path=None, value_type='mean', chunk_size='auto', dtype='float32', cpu=1, save=True)
+   .. py:method:: annotate_by_bigwigs(bigwig_table, dim, slop=100, chrom_size_path=None, value_type='mean', chunk_size='auto', dtype='float32', cpu=1, save=True)
+
+      Annotate the region dataset by bigwigs.
 
 
-   .. py:method:: annotate_by_beds(self, bed_table, dim, slop=100, chrom_size_path=None, chunk_size='auto', dtype='bool', bed_sorted=True, cpu=1, fraction=0.2, save=True)
+   .. py:method:: annotate_by_beds(bed_table, dim, slop=100, chrom_size_path=None, chunk_size='auto', dtype='bool', bed_sorted=True, cpu=1, fraction=0.2, save=True)
+
+      Annotate the region dataset by beds.
 
 
-   .. py:method:: get_feature(self, feature_name, dim=None, da_name=None)
+   .. py:method:: get_feature(feature_name, dim=None, da_name=None)
+
+      Get a feature from the dataset.
 
 
-   .. py:method:: scan_motifs(self, genome_fasta, cpu=1, standardize_length=500, motif_set_path=None, chrom_size_path=None, combine_cluster=True, fnr_fpr_fold=1000, chunk_size=None, motif_dim='motif', snakemake=False)
+   .. py:method:: scan_motifs(genome_fasta, cpu=1, standardize_length=500, motif_set_path=None, chrom_size_path=None, combine_cluster=True, fnr_fpr_fold=1000, chunk_size=None, motif_dim='motif', snakemake=False)
+
+      Scan motifs in the region dataset.
 
 
-   .. py:method:: _scan_motif_local(self, fasta_path, cpu=1, motif_set_path=None, combine_cluster=True, fnr_fpr_fold=1000, chunk_size=None, motif_dim='motif')
+   .. py:method:: _scan_motif_local(fasta_path, cpu=1, motif_set_path=None, combine_cluster=True, fnr_fpr_fold=1000, chunk_size=None, motif_dim='motif')
 
 
-   .. py:method:: _scan_motifs_snakemake(self, fasta_path, output_dir, cpu, motif_dim='motif', combine_cluster=True, motif_set_path=None, fnr_fpr_fold=1000, chunk_size=50000)
+   .. py:method:: _scan_motifs_snakemake(fasta_path, output_dir, cpu, motif_dim='motif', combine_cluster=True, motif_set_path=None, fnr_fpr_fold=1000, chunk_size=50000)
 
 
-   .. py:method:: get_hypo_hyper_index(self, a, region_dim=None, region_state_da=None, sample_dim='sample', use_collapsed=True)
+   .. py:method:: get_hypo_hyper_index(a, region_dim=None, region_state_da=None, sample_dim='sample', use_collapsed=True)
+
+      Get the index of hypo and hyper DMR regions.
 
 
-   .. py:method:: get_pairwise_differential_index(self, a, b, dmr_type='hypo', region_dim=None, region_state_da=None, sample_dim='sample', use_collapsed=True)
+   .. py:method:: get_pairwise_differential_index(a, b, dmr_type='hypo', region_dim=None, region_state_da=None, sample_dim='sample', use_collapsed=True)
+
+      Get the index of pairwise differential DMR regions.
 
 
-   .. py:method:: motif_enrichment(self, true_regions, background_regions, region_dim=None, motif_dim='motif-cluster', motif_da=None, alternative='two-sided')
+   .. py:method:: motif_enrichment(true_regions, background_regions, region_dim=None, motif_dim='motif-cluster', motif_da=None, alternative='two-sided')
+
+      Run motif enrichment analysis on a RegionDS.
 
 
-   .. py:method:: sample_dmr_motif_enrichment(self, sample, region_dim=None, sample_dim='sample', motif_dim='motif-cluster', region_state_da=None, motif_da=None, alternative='two-sided', use_collapsed=True)
+   .. py:method:: sample_dmr_motif_enrichment(sample, region_dim=None, sample_dim='sample', motif_dim='motif-cluster', region_state_da=None, motif_da=None, alternative='two-sided', use_collapsed=True)
+
+      Run motif enrichment for a sample.
 
 
-   .. py:method:: pairwise_dmr_motif_enrichment(self, a, b, dmr_type='hypo', region_dim=None, region_state_da=None, sample_dim='sample', motif_dim='motif-cluster', motif_da=None, alternative='two-sided')
+   .. py:method:: pairwise_dmr_motif_enrichment(a, b, dmr_type='hypo', region_dim=None, region_state_da=None, sample_dim='sample', motif_dim='motif-cluster', motif_da=None, alternative='two-sided')
+
+      Perform pairwise differential motif enrichment analysis.
 
 
-   .. py:method:: object_coords_to_string(self, dtypes=None)
+   .. py:method:: object_coords_to_string(dtypes=None)
+
+      Turn object dtype into a string dtype.
 
 
-   .. py:method:: save(self, da_name=None, output_path=None, mode='w', change_region_dim=True)
+   .. py:method:: save(da_name=None, output_path=None, mode='w', change_region_dim=True)
+
+      Save the data array to a RegionDS zarr dataset.
 
 
-   .. py:method:: get_coords(self, name)
+   .. py:method:: get_coords(name)
+
+      Get the coordinates of a given variable.
 
 
 

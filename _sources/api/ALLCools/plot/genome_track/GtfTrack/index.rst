@@ -5,7 +5,8 @@
 
 .. autoapi-nested-parse::
 
-   This GtfTrack class replaced the original pygenometracks class
+   This GtfTrack class replaced the original pygenometracks class.
+
    It supports read-in a gffutils database, rather than parse very time
 
 
@@ -43,42 +44,29 @@ Module Contents
 
 .. py:class:: ReadGtf(file_path, prefered_name='transcript_name', merge_transcripts=True)
 
-   Bases: :py:obj:`object`
+   Read a gtf file.
 
-   Reads a gtf file.
-
-   Example:
-   gtf = ReadGtf("file.gtf")
-   for interval in gtf:
-       print interval.start
+   .. py:method:: __iter__()
 
 
-   .. py:method:: __iter__(self)
+   .. py:method:: __next__()
+
+      Get next bedInterval object.
 
 
-   .. py:method:: __next__(self)
+   .. py:method:: get_bed_interval()
 
-      :return: bedInterval object
+      Get the bed interval.
 
-
-   .. py:method:: get_bed_interval(self)
-
-      Process a transcript from the database,
-      retrieve all the values and return
-      a namedtuple object
+      Process a transcript from the database, retrieve all the values and return a namedtuple object.
 
 
 
-.. py:class:: GtfTrack(*args, **kwarg)
+.. py:class:: GtfTrack
 
    Bases: :py:obj:`pygenometracks.tracks.BedTrack.BedTrack`
 
-   The GenomeTrack object is a holder for all tracks that are to be plotted.
-   For example, to plot a bedgraph file a new class that extends GenomeTrack
-   should be created.
-
-   It is expected that all GenomeTrack objects have a plot method.
-
+   GTF track.
 
    .. py:attribute:: SUPPORTED_ENDINGS
       :annotation: = ['gtf', 'gtf.gz', 'gtf.db']
@@ -135,10 +123,14 @@ Module Contents
 
       
 
-   .. py:method:: set_properties_defaults(self)
+   .. py:method:: set_properties_defaults()
+
+      Set the default values for the properties.
 
 
-   .. py:method:: get_bed_handler(self, plot_regions=None)
+   .. py:method:: get_bed_handler(plot_regions=None)
+
+      Get the bed handler for the track.
 
 
 

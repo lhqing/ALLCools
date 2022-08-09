@@ -5,7 +5,7 @@
 
 .. autoapi-nested-parse::
 
-   Some of the functions are modified from methylpy https://github.com/yupenghe/methylpy
+   Some of the functions are modified from methylpy https://github.com/yupenghe/methylpy.
 
    Original Author: Yupeng He
 
@@ -31,14 +31,16 @@ Module Contents
 
 .. py:class:: _ALLC(path, region)
 
-   .. py:method:: readline(self)
+   .. py:method:: readline()
 
 
-   .. py:method:: close(self)
+   .. py:method:: close()
 
 
 
 .. py:function:: _increase_soft_fd_limit()
+
+   Increase the soft limit of file handle.
 
    Increase soft file descriptor limit to hard limit,
    this is the maximum a process can do

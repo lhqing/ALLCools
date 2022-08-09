@@ -5,7 +5,7 @@
 
 .. autoapi-nested-parse::
 
-   Basic Cellular Analysis Functions
+   Basic Cellular Analysis Functions.
 
 
 
@@ -29,76 +29,247 @@ Submodules
    ConsensusClustering/index.rst
    art_of_tsne/index.rst
    balanced_pca/index.rst
+   chromatin_conformation/index.rst
    dmg/index.rst
    incremental_pca/index.rst
+   lsi/index.rst
    mcad/index.rst
    pvclust/index.rst
+   rutilities/index.rst
 
 
 Package Contents
 ----------------
 
+.. py:function:: tsne(adata, obsm='X_pca', metric: Union[str, Callable] = 'euclidean', exaggeration: float = -1, perplexity: int = 30, n_jobs: int = -1)
+
+   Calculate T-SNE embedding with the openTSNE package.
+
+   Use the openTSNE package :cite:p:`Policar2019`
+   and parameter optimization strategy described in :cite:p:`Kobak2019`.
+
+   :param adata: adata object with principle components or equivalent matrix stored in .obsm
+   :param obsm: name of the matrix in .obsm that can be used as T-SNE input
+   :param metric: Any metric allowed by PyNNDescent (default: 'euclidean')
+   :param exaggeration: The exaggeration to use for the embedding
+   :param perplexity: The perplexity to use for the embedding
+   :param n_jobs: Number of CPUs to use
+
+   :rtype: T-SNE embedding will be stored at adata.obsm["X_tsne"]
+
+
+.. py:class:: ReproduciblePCA(scaler, mc_type, adata=None, pca_obj=None, pc_loading=None, var_names=None, max_value=10)
+
+   Make reproducible PCA by saving features, scaling, and PCA Loadings.
+
+   .. py:method:: mcds_to_adata(mcds)
+
+      Get adata from MCDS with only selected features.
+
+      :param mcds:
+      :type mcds: Input raw count MCDS object
+
+      :returns: Adata with per-cell normalized mC fraction and selected features
+      :rtype: adata
+
+
+   .. py:method:: scale(adata)
+
+      Perform {func}`log_scale <ALLCools.clustering.balanced_pca.log_scale>` with fitted scaler.
+
+      :param adata: Adata with per-cell normalized mC fraction and selected features
+
+      :rtype: adata.X is transformed in place
+
+
+   .. py:method:: pc_transform(adata)
+
+      Perform PCA transform with fitted PCA model.
+
+      Calculate the PC from adata.X and PC loading,
+      store PCs in adata.obsm["X_pca"] and loadings in adata.varm["PCs"].
+
+      :param adata: Adata with log_scale transformed mC fraction and selected features
+
+      :rtype: PC information stored in adata.obsm and varm
+
+
+   .. py:method:: mcds_to_adata_with_pc(mcds)
+
+      Get adata from MCDS with PC.
+
+      From raw count MCDS to adata object with PCs using fitted scaler and PC loadings.
+      Steps include select features, calculate per-cell normalized mC fractions,
+      log_scale transform the data with fitted scaler, and finally add PC matrix.
+
+      :param mcds: Raw count MCDS
+
+      :returns: anndata object with per-cell normalized, log scale transformed matrix in .X and PCs in
+                adata.obsm["X_pca"] and PC loadings in adata.varm["PCs"]. The scale and PC are done with fitted model.
+      :rtype: adata
+
+
+   .. py:method:: dump(path)
+
+      Save the ReproduciblePCA to path.
+
+
+
+.. py:function:: balanced_pca(adata: anndata.AnnData, groups: str = 'pre_clusters', max_cell_prop=0.1, n_comps=100, scale=False)
+
+   Perform Balanced PCA on the data.
+
+   Given a categorical variable (e.g., a pre-clustering label), perform balanced PCA by downsample
+   cells in the large categories to make the overall population more balanced, so the PCs are expected
+   to represent more variance among small categories.
+
+   :param adata: adata after preprocessing and feature selection steps
+   :param groups: the name of the categorical variable in adata.obsm
+   :param max_cell_prop: any single category with cells > `n_cell * max_cell_prop` will be downsampled to this number.
+   :param n_comps: Number of components in PCA
+   :param scale: whether to scale the input matrix before PCA
+
+   :rtype: adata with PC information stored in obsm, varm and uns like the :func:`scanpy.tl.pca` do.
+
+
+.. py:function:: get_pc_centers(adata: anndata.AnnData, group: str, outlier_label=None, obsm='X_pca')
+
+   Get the cluster centroids of the PC matrix.
+
+   :param adata: adata with cluster labels in obs and PC in obsm
+   :param group: the name of cluster labels in adata.obs
+   :param outlier_label: if there are outlier labels in obs, will exclude outliers before calculating centroids.
+   :param obsm: the key of PC matrix in obsm
+
+   :returns: a dataframe for cluster centroids by PC
+   :rtype: pc_center
+
+
+.. py:function:: log_scale(adata, method='standard', with_mean=False, with_std=True, max_value=10, scaler=None)
+
+   Perform log transform and then scale the cell-by-feature matrix.
+
+   :param adata: adata with normalized, unscaled cell-by-feature matrix
+   :param method: the type of scaler to use:
+                  'standard' for :class:`sklearn.preprocessing.StandardScaler`;
+                  'robust' for :class:`sklearn.preprocessing.RobustScaler`.
+   :param with_mean: Whether scale with mean center
+   :param with_std: Whether scale the std
+   :param max_value: Whether clip large values after scale
+   :param scaler: A fitted sklearn scaler, if provided, will only use it to transform the adata.
+
+   :rtype: adata.X is scaled in place, the fitted scaler object will be return if the `scaler` parameter is None.
+
+
+.. py:function:: significant_pc_test(adata: anndata.AnnData, p_cutoff=0.1, update=True, obsm='X_pca', downsample=50000)
+
+   Perform two-sample Kolmogorov-Smirnov test for goodness of fit on two adjacent PCs.
+
+   Select top PCs based on the `p_cutoff`. Top PCs have significantly different distributions, while
+   later PCs only capturing random noise will have larger p-values. An idea from :cite:p:`Zeisel2018`.
+
+   :param adata: adata with PC matrix calculated and stored in adata.obsm
+   :param p_cutoff: the p-value cutoff to select top PCs
+   :param update: Whether modify adata.obsm and only keep significant PCs
+   :param obsm: name of the PC matrix in adata.obsm
+   :param downsample: If the dataset is too large, downsample the cells before testing.
+
+   :returns: number of PCs selected
+   :rtype: n_components
+
+
+.. py:class:: ClusterMerge(merge_criterion, stop_criterion=None, stop_clusters=-1, n_cells=200, metric='euclidean', method='average', label_concat_str='::')
+
+   Perform cluster merge based on the given merge criterion.
+
+   .. py:method:: _construct_tree()
+
+
+   .. py:method:: _traverse(node, call_back)
+      :staticmethod:
+
+
+   .. py:method:: _merge_pair(pair, concat_str='::')
+
+
+   .. py:method:: fit_predict(data_for_tree, cell_to_type, gene_mcds)
+
+      Fit the model and predict the cluster merge.
+
+
+
+.. py:class:: PairwiseDMGCriterion(max_cell_per_group=100, top_n_markers=5, adj_p_cutoff=0.001, delta_rate_cutoff=0.3, auroc_cutoff=0.85, use_modality='either', random_state=0, n_jobs=10, verbose=False)
+
+   Perform pairwise DMG analysis to determine whether two clusters should be merged.
+
+   .. py:method:: predict(pair_labels, pair_cells, pair_cell_types, pair_mcds, da_name='gene_da_frac')
+
+      Predict whether two clusters should be merged.
+
+
+
 .. py:class:: ConsensusClustering(model=None, n_neighbors=25, metric='euclidean', min_cluster_size=10, leiden_repeats=200, leiden_resolution=1, target_accuracy=0.95, consensus_rate=0.7, random_state=0, train_frac=0.5, train_max_n=500, max_iter=50, n_jobs=-1)
 
-   .. py:method:: add_data(self, x)
+   .. py:method:: add_data(x)
 
 
-   .. py:method:: fit_predict(self, x, leiden_kwds=None)
+   .. py:method:: fit_predict(x, leiden_kwds=None)
 
 
-   .. py:method:: compute_neighbors(self)
+   .. py:method:: compute_neighbors()
 
       Calculate KNN graph
 
 
-   .. py:method:: multi_leiden_clustering(self, partition_type=None, partition_kwargs=None, use_weights=True, n_iterations=-1)
+   .. py:method:: multi_leiden_clustering(partition_type=None, partition_kwargs=None, use_weights=True, n_iterations=-1)
 
-      Modified from scanpy, perform Leiden clustering multiple times with different random states
+      Run multiple leiden clustering with different random seeds and summarize the results.
 
 
-   .. py:method:: _summarize_multi_leiden(self)
+   .. py:method:: _summarize_multi_leiden()
 
-      Summarize the multi_leiden results,
-      generate a raw cluster version simply based on the hamming distance
+      Summarize the multi_leiden results.
+
+      Generate a raw cluster version simply based on the hamming distance
       between cells and split cluster with cutoff (consensus_rate)
 
 
-   .. py:method:: _create_model(self, n_estimators=1000)
+   .. py:method:: _create_model(n_estimators=1000)
 
       Init default model
 
 
-   .. py:method:: supervise_learning(self)
+   .. py:method:: supervise_learning()
 
       Perform supervised learning and cluster merge process
 
 
-   .. py:method:: final_evaluation(self)
+   .. py:method:: final_evaluation()
 
-      Final evaluation of the model and assign outliers
+      Evaluate the final model
 
 
-   .. py:method:: save(self, output_path)
+   .. py:method:: save(output_path)
 
       Save the model
 
 
-   .. py:method:: plot_leiden_cases(self, coord_data, coord_base='umap', plot_size=3, dpi=300, plot_n_cases=4, s=3)
+   .. py:method:: plot_leiden_cases(coord_data, coord_base='umap', plot_size=3, dpi=300, plot_n_cases=4, s=3)
 
-      Show some leiden runs with biggest different as measured by ARI
+      Show some leiden runs with the biggest different as measured by ARI
 
 
-   .. py:method:: plot_before_after(self, coord_data, coord_base='umap', plot_size=3, dpi=300)
+   .. py:method:: plot_before_after(coord_data, coord_base='umap', plot_size=3, dpi=300)
 
       Plot the raw clusters from multi-leiden and final clusters after merge
 
 
-   .. py:method:: plot_steps(self, coord_data, coord_base='umap', plot_size=3, dpi=300)
+   .. py:method:: plot_steps(coord_data, coord_base='umap', plot_size=3, dpi=300)
 
       Plot the supervised learning and merge steps
 
 
-   .. py:method:: plot_merge_process(self, plot_size=3)
+   .. py:method:: plot_merge_process(plot_size=3)
 
       Plot the change of accuracy during merge
 
@@ -119,153 +290,11 @@ Package Contents
    :rtype: confused_pairs
 
 
-.. py:function:: tsne(adata, obsm='X_pca', metric: Union[str, Callable] = 'euclidean', exaggeration: float = -1, perplexity: int = 30, n_jobs: int = -1)
-
-   Calculating T-SNE embedding with the openTSNE package :cite:p:`Policar2019` and
-   parameter optimization strategy described in :cite:p:`Kobak2019`.
-
-   :param adata: adata object with principle components or equivalent matrix stored in .obsm
-   :param obsm: name of the matrix in .obsm that can be used as T-SNE input
-   :param metric: Any metric allowed by PyNNDescent (default: 'euclidean')
-   :param exaggeration: The exaggeration to use for the embedding
-   :param perplexity: The perplexity to use for the embedding
-   :param n_jobs: Number of CPUs to use
-
-   :returns:
-   :rtype: T-SNE embedding will be stored at adata.obsm["X_tsne"]
-
-
-.. py:function:: balanced_pca(adata: anndata.AnnData, groups: str = 'pre_clusters', max_cell_prop=0.1, n_comps=200, scale=False)
-
-   Given a categorical variable (e.g., a pre-clustering label), perform balanced PCA by downsample
-   cells in the large categories to make the overall population more balanced, so the PCs are expected
-   to represent more variance among small categories.
-
-   :param adata: adata after preprocessing and feature selection steps
-   :param groups: the name of the categorical variable in adata.obsm
-   :param max_cell_prop: any single category with cells > `n_cell * max_cell_prop` will be downsampled to this number.
-   :param n_comps: Number of components in PCA
-   :param scale: whether to scale the input matrix before PCA
-
-   :returns:
-   :rtype: adata with PC information stored in obsm, varm and uns like the :func:`scanpy.tl.pca` do.
-
-
-.. py:function:: significant_pc_test(adata: anndata.AnnData, p_cutoff=0.1, update=True, obsm='X_pca', downsample=50000)
-
-   Perform two-sample Kolmogorov-Smirnov test for goodness of fit on two adjacent PCs,
-   select top PCs based on the `p_cutoff`. Top PCs have significantly different distributions, while
-   later PCs only capturing random noise will have larger p-values. An idea from :cite:p:`Zeisel2018`.
-
-   :param adata: adata with PC matrix calculated and stored in adata.obsm
-   :param p_cutoff: the p-value cutoff to select top PCs
-   :param update: Whether modify adata.obsm and only keep significant PCs
-   :param obsm: name of the PC matrix in adata.obsm
-   :param downsample: If the dataset is too large, downsample the cells before testing.
-
-   :returns: number of PCs selected
-   :rtype: n_components
-
-
-.. py:function:: log_scale(adata, method='standard', with_mean=False, with_std=True, max_value=10, scaler=None)
-
-   Perform log transform and then scale the cell-by-feature matrix
-
-   :param adata: adata with normalized, unscaled cell-by-feature matrix
-   :param method: the type of scaler to use:
-                  'standard' for :class:`sklearn.preprocessing.StandardScaler`;
-                  'robust' for :class:`sklearn.preprocessing.RobustScaler`.
-   :param with_mean: Whether scale with mean center
-   :param with_std: Whether scale the std
-   :param max_value: Whether clip large values after scale
-   :param scaler: A fitted sklearn scaler, if provided, will only use it to transform the adata.
-
-   :returns:
-   :rtype: adata.X is scaled in place, the fitted scaler object will be return if the `scaler` parameter is None.
-
-
-.. py:function:: get_pc_centers(adata: anndata.AnnData, group: str, outlier_label=None, obsm='X_pca')
-
-   Get the cluster centroids of the PC matrix
-
-   :param adata: adata with cluster labels in obs and PC in obsm
-   :param group: the name of cluster labels in adata.obs
-   :param outlier_label: if there are outlier labels in obs, will exclude outliers before calculating centroids.
-   :param obsm: the key of PC matrix in obsm
-
-   :returns: a dataframe for cluster centroids by PC
-   :rtype: pc_center
-
-
-.. py:class:: ReproduciblePCA(scaler, mc_type, adata=None, pca_obj=None, pc_loading=None, var_names=None, max_value=10)
-
-   .. py:method:: mcds_to_adata(self, mcds)
-
-      Get adata from MCDS with only selected features
-
-      :param mcds:
-      :type mcds: Input raw count MCDS object
-
-      :returns: Adata with per-cell normalized mC fraction and selected features
-      :rtype: adata
-
-
-   .. py:method:: scale(self, adata)
-
-      Perform {func}`log_scale <ALLCools.clustering.balanced_pca.log_scale>` with fitted scaler
-
-      :param adata: Adata with per-cell normalized mC fraction and selected features
-
-      :returns:
-      :rtype: adata.X is transformed in place
-
-
-   .. py:method:: pc_transform(self, adata)
-
-      calculate the PC from adata.X and PC loading, store PCs in adata.obsm["X_pca"] and
-      loadings in adata.varm["PCs"]
-
-      :param adata: Adata with log_scale transformed mC fraction and selected features
-
-      :returns:
-      :rtype: PC information stored in adata.obsm and varm
-
-
-   .. py:method:: mcds_to_adata_with_pc(self, mcds)
-
-      From raw count MCDS to adata object with PCs using fitted scaler and PC loadings.
-      Steps include select features, calculate per-cell normalized mC fractions,
-      log_scale transform the data with fitted scaler, and finally add PC matrix.
-
-      :param mcds: Raw count MCDS
-
-      :returns: anndata object with per-cell normalized, log scale transformed matrix in .X and PCs in
-                adata.obsm["X_pca"] and PC loadings in adata.varm["PCs"]. The scale and PC are done with fitted model.
-      :rtype: adata
-
-
-   .. py:method:: dump(self, path)
-
-      Save the ReproduciblePCA to path
-
-
-
-.. py:class:: Dendrogram(nboot=1000, method_dist='correlation', method_hclust='average', n_jobs=-1)
-
-   .. py:method:: fit(self, data)
-
-      :param data: The data is in obs-by-var form, row is obs.
-
-
-   .. py:method:: save(self, output_path)
-
-
-
 .. py:class:: PairwiseDMG(max_cell_per_group=1000, top_n=10000, adj_p_cutoff=0.001, delta_rate_cutoff=0.3, auroc_cutoff=0.9, random_state=0, n_jobs=1, verbose=True)
 
-   .. py:method:: fit_predict(self, x, groups, var_dim, obs_dim='cell', outlier='Outlier', cleanup=True, selected_pairs: List[tuple] = None)
+   .. py:method:: fit_predict(x, groups, var_dim, obs_dim='cell', outlier='Outlier', cleanup=True, selected_pairs: List[tuple] = None)
 
-      provide data and perform the pairwise DMG
+      Provide data and perform the pairwise DMG
 
       :param x: 2D cell-by-feature xarray.DataArray
       :param groups: cluster labels
@@ -277,36 +306,41 @@ Package Contents
                              time consuming if the group number is large. With this parameter, you may provide a list of cluster pairs
 
 
-   .. py:method:: _save_cluster_adata(self)
+   .. py:method:: _save_cluster_adata()
 
       Save each group into separate adata, this way reduce the memory during parallel
 
 
-   .. py:method:: _pairwise_dmg(self)
+   .. py:method:: _pairwise_dmg()
 
-      pairwise DMG runner, result save to self.dmg_table
+      Run pairwise DMG, save results to self.dmg_table
 
 
-   .. py:method:: _cleanup(self)
+   .. py:method:: _cleanup()
 
       Delete group adata files
 
 
-   .. py:method:: aggregate_pairwise_dmg(self, adata, groupby, obsm='X_pca')
+   .. py:method:: aggregate_pairwise_dmg(adata, groupby, obsm='X_pca')
+
+      Aggregate pairwise DMG results to get ordered DMGs for each group
 
       Aggregate pairwise DMG results for each cluster, rank DMG for the cluster by the sum of
-      AUROC * cluster_pair_similarity
+      AUROC * cluster_pair_similarity.
       This way, the DMGs having large AUROC between similar clusters get more weights
 
-      :param adata:
-      :param groupby:
-      :param obsm:
+      :param adata: AnnData object
+      :param groupby: name of the groupby variable in adata.obs
+      :param obsm: name of the obsm variable in adata.obsm
+
+      :returns: **cluster_dmgs**
+      :rtype: dict
 
 
 
 .. py:function:: one_vs_rest_dmg(cell_meta, group, mcds=None, mcds_paths=None, obs_dim='cell', var_dim='gene', mc_type='CHN', top_n=1000, adj_p_cutoff=0.01, fc_cutoff=0.8, auroc_cutoff=0.8, max_cluster_cells=2000, max_other_fold=5, cpu=1, verbose=True)
 
-   Calculating cluster marker genes using one-vs-rest strategy.
+   Calculate cluster marker genes using one-vs-rest strategy.
 
    :param cell_meta: cell metadata containing cluster labels
    :param group: the name of the cluster label column
@@ -321,7 +355,8 @@ Package Contents
    :param auroc_cutoff: AUROC cutoff to report significant DMG
    :param max_cluster_cells: The maximum number of cells from a group, downsample large group to this number
    :param max_other_fold: The fold of other cell numbers comparing
-   :param cpu: number of cpus
+   :param cpu: number of CPUs to use
+   :param verbose: whether to print progress
 
    :returns: pandas Dataframe of the one-vs-rest DMGs
    :rtype: dmg_table
@@ -330,6 +365,7 @@ Package Contents
 .. py:function:: cluster_enriched_features(adata: anndata.AnnData, cluster_col: str, top_n=200, alpha=0.05, stat_plot=True, method='mc')
 
    Calculate top Cluster Enriched Features (CEF) from per-cell normalized dataset.
+
    An post-clustering feature selection step adapted from :cite:p:`Zeisel2018,La_Manno2021`
    and their great [cytograph2](https://github.com/linnarsson-lab/cytograph2) package.
    For details about CEF calculation, read the methods of :cite:p:`Zeisel2018`. Note that
@@ -355,24 +391,38 @@ Package Contents
              * *"cluster_order" (cluster order of the "qvals")*
 
 
-.. py:function:: filter_regions(adata, hypo_percent=0.5)
+.. py:class:: LSI(scale_factor=100000, n_components=100, algorithm='arpack', random_state=0, idf=None, model=None)
 
-   Filter regions based on % of cells having non-zero scores.
+   .. py:method:: _downsample_data(data, downsample)
 
-   :param adata:
-   :param hypo_percent: min % of cells that are non-zero in this region.
+
+   .. py:method:: _get_data(data)
+      :staticmethod:
+
+
+   .. py:method:: fit(data, downsample=None)
+
+
+   .. py:method:: fit_transform(data, downsample=None, obsm_name='X_lsi')
+
+
+   .. py:method:: transform(data, chunk_size=50000, obsm_name='X_lsi')
+
+
+   .. py:method:: save(path)
+
 
 
 .. py:function:: lsi(adata, scale_factor=100000, n_components=100, algorithm='arpack', obsm='X_pca', random_state=0, fit_size=None)
 
-   Run TF-IDF on the binarized adata.X, followed by TruncatedSVD and then scale the components by svd.singular_values_
+   Run TF-IDF on the binarized adata.X, followed by TruncatedSVD and then scale the components by singular values.
 
-   :param adata:
-   :param scale_factor:
-   :param n_components:
-   :param algorithm:
-   :param obsm:
-   :param random_state:
+   :param adata: AnnData object
+   :param scale_factor: scale factor for TF-IDF
+   :param n_components: number of components to keep
+   :param algorithm: algorithm to use for TruncatedSVD
+   :param obsm: key in adata.obsm to store the components in
+   :param random_state: random state for reproducibility
    :param fit_size: Ratio or absolute int value, use to downsample when fitting the SVD to speed up run time.
 
 
@@ -383,41 +433,43 @@ Package Contents
    :param adata: AnnData object whose X is survival function matrix
    :param cutoff: Cutoff to binarize the survival function
 
-   :returns:
    :rtype: None
+
+
+.. py:function:: filter_regions(adata, hypo_percent=0.5, n_cell=None, zscore_abs_cutoff=None)
+
+   Filter regions based on % of cells having non-zero scores.
+
+   :param adata: AnnData object
+   :param hypo_percent: min % of cells that are non-zero in this region. If n_cell is provided, this parameter will be ignored.
+   :param n_cell: number of cells that are non-zero in this region.
+   :param zscore_abs_cutoff: absolute feature non-zero cell count zscore cutoff to remove lowest and highest coverage features.
 
 
 .. py:function:: remove_black_list_region(adata, black_list_path, f=0.2)
 
-   Remove regions overlap (bedtools intersect -f {f}) with regions in the black_list_path
+   Remove regions overlap (bedtools intersect -f {f}) with regions in the black_list_path.
 
-   :param adata:
+   :param adata: AnnData object
    :param black_list_path: Path to the black list bed file
    :param f: Fraction of overlap when calling bedtools intersect
 
-   :returns:
-   :rtype: None
+
+.. py:function:: remove_chromosomes(adata, exclude_chromosomes=None, include_chromosomes=None, chrom_col='chrom')
+
+   Remove chromosomes from adata.var.
 
 
-.. py:class:: ClusterMerge(merge_criterion, stop_criterion=None, stop_clusters=-1, n_cells=200, metric='euclidean', method='average', label_concat_str='::')
+.. py:class:: Dendrogram(nboot=1000, method_dist='correlation', method_hclust='average', n_jobs=-1)
 
-   .. py:method:: _construct_tree(self)
+   .. py:method:: fit(data)
 
+      Fit the dendrogram model.
 
-   .. py:method:: _traverse(node, call_back)
-      :staticmethod:
-
-
-   .. py:method:: _merge_pair(self, pair, concat_str='::')
+      :param data: The data is in obs-by-var form, row is obs.
 
 
-   .. py:method:: fit_predict(self, data_for_tree, cell_to_type, gene_mcds)
-
-
-
-.. py:class:: PairwiseDMGCriterion(max_cell_per_group=100, top_n_markers=5, adj_p_cutoff=0.001, delta_rate_cutoff=0.3, auroc_cutoff=0.85, use_modality='either', random_state=0, n_jobs=10, verbose=False)
-
-   .. py:method:: predict(self, pair_labels, pair_cells, pair_cell_types, pair_mcds, da_name='gene_da_frac')
+   .. py:method:: save(output_path)
 
 
 

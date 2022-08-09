@@ -32,19 +32,19 @@ Module Contents
         :linenos:
 
         
-        The ALLCools command line toolkit contains multiple functions to manipulate the ALLC format, 
+        The ALLCools command line toolkit contains multiple functions to manipulate the ALLC format,
         a core file format that stores single base level methylation information.
-        Throughout this toolkit, we use bgzip/tabix to compress and index the ALLC file to allow 
+        Throughout this toolkit, we use bgzip/tabix to compress and index the ALLC file to allow
         flexible data query from the ALLC file.
 
         Current Tool List in ALLCools:
 
         [Generate ALLC]
-        bam-to-allc          - Generate 1 ALLC file from 1 position sorted BAM file via 
+        bam-to-allc          - Generate 1 ALLC file from 1 position sorted BAM file via
                                samtools mpileup.
 
         [Manipulate ALLC]
-        standardize-allc     - Validate 1 ALLC file format, standardize the chromosome names, 
+        standardize-allc     - Validate 1 ALLC file format, standardize the chromosome names,
                                compression format (bgzip) and index (tabix).
         tabix-allc           - A simple wrapper of tabix command to index 1 ALLC file.
         profile-allc         - Generate some summary statistics of 1 ALLC
@@ -52,14 +52,14 @@ Module Contents
         extract-allc         - Extract information (strand, context) from 1 ALLC file
 
         [Get Region Level]
-        allc-to-bigwig       - Generate coverage (cov) and ratio (mc/cov) bigwig track files 
+        allc-to-bigwig       - Generate coverage (cov) and ratio (mc/cov) bigwig track files
                                from 1 ALLC file
         allc-to-region-count - Count region level mc, cov by genome bins or provided BED files.
-        generate-mcds        - Generate methylation dataset (MCDS) for a group of ALLC file and 
-                               different region sets. This is a convenient wrapper function for 
-                               a bunch of allc-to-region-count and xarray integration codes. 
+        generate-mcds        - Generate methylation dataset (MCDS) for a group of ALLC file and
+                               different region sets. This is a convenient wrapper function for
+                               a bunch of allc-to-region-count and xarray integration codes.
                                MCDS is inherit from xarray.DataSet
-        generate-mcad        - Generate mCG hypo-methylation score AnnData dataset (MCAD) for 
+        generate-mcad        - Generate mCG hypo-methylation score AnnData dataset (MCAD) for
                                a group of ALLC file and one region set.
 
 
@@ -95,12 +95,13 @@ Module Contents
 
    Bases: :py:obj:`logging.Formatter`
 
-   From Cutadapt https://github.com/marcelm/cutadapt
+   From Cutadapt https://github.com/marcelm/cutadapt.
+
    Do not prefix "INFO:" to info-level log messages (but do it for all other
    levels).
-   Based on http://stackoverflow.com/a/9218261/715090 .
+   Based on http://stackoverflow.com/a/9218261/715090.
 
-   .. py:method:: format(self, record)
+   .. py:method:: format(record)
 
       Format the specified record as text.
 
@@ -119,6 +120,8 @@ Module Contents
 
 
 .. py:function:: setup_logging(stdout=False, quiet=False, debug=False)
+
+   Set up logging formats.
 
    From Cutadapt https://github.com/marcelm/cutadapt
    Attach handler to the global logger object

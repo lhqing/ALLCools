@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ALLCools.count_matrix.dataset</title>
     
-  <link href="../../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,33 +19,39 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-codeautolink.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/togglebutton.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
     <link rel="shortcut icon" href="../../../_static/allcools_favicon.png"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -63,7 +70,21 @@
                 </script>
 
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -72,9 +93,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../../../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -90,14 +112,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../../intro.html">
-   ALLCools: ALL methyl-Cytosine tools
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    ALLCools: ALL methyl-Cytosine tools
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   GET STARTED
  </span>
@@ -219,11 +242,6 @@
      </i>
     </label>
     <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../cell_level/step_by_step/5kb/01-CellBasicFiltering.html">
-       Cell Basic Filtering
-      </a>
-     </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../../../cell_level/step_by_step/5kb/02-DecompositionAndEmbedding.html">
        Decomposition Using mCG-5Kb Bins
@@ -745,6 +763,15 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/clustering/chromatin_conformation/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.chromatin_conformation
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/dmg/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -763,6 +790,15 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/clustering/lsi/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.lsi
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ALLCools/clustering/mcad/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
@@ -776,6 +812,15 @@
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
          ALLCools.clustering.pvclust
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/clustering/rutilities/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.clustering.rutilities
         </span>
        </code>
       </a>
@@ -862,6 +907,40 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ALLCools/dataset/index.html">
+     <code class="xref py py-mod docutils literal notranslate">
+      <span class="pre">
+       ALLCools.dataset
+      </span>
+     </code>
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label for="toctree-checkbox-18">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/dataset/directory_structure/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dataset.directory_structure
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/dataset/entry_point/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.dataset.entry_point
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/dmr/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -869,8 +948,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-    <label for="toctree-checkbox-18">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -921,8 +1000,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -955,8 +1034,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -980,10 +1059,19 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/integration/harmony/index.html">
+      <a class="reference internal" href="../../../api/ALLCools/integration/metric/index.html">
        <code class="xref py py-mod docutils literal notranslate">
         <span class="pre">
-         ALLCools.integration.harmony
+         ALLCools.integration.metric
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ALLCools/integration/seurat_class/index.html">
+       <code class="xref py py-mod docutils literal notranslate">
+        <span class="pre">
+         ALLCools.integration.seurat_class
         </span>
        </code>
       </a>
@@ -998,8 +1086,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1050,8 +1138,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
-    <label for="toctree-checkbox-22">
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1102,8 +1190,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
-    <label for="toctree-checkbox-23">
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1116,8 +1204,8 @@
         </span>
        </code>
       </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
-      <label for="toctree-checkbox-24">
+      <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+      <label for="toctree-checkbox-25">
        <i class="fas fa-chevron-down">
        </i>
       </label>
@@ -1269,8 +1357,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
-    <label for="toctree-checkbox-25">
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1303,8 +1391,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
-    <label for="toctree-checkbox-26">
+    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
+    <label for="toctree-checkbox-27">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1321,171 +1409,6 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ALLCools/sandbox/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools.sandbox
-      </span>
-     </code>
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/>
-    <label for="toctree-checkbox-27">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.igv
-        </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
-      <label for="toctree-checkbox-28">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/BaseClass/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.BaseClass
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Session/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.Session
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/Track/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.Track
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/defaults/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.defaults
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../api/ALLCools/sandbox/igv/make_session/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.igv.make_session
-          </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="../../../api/ALLCools/sandbox/motif/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.motif
-        </span>
-       </code>
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/>
-      <label for="toctree-checkbox-29">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../api/ALLCools/sandbox/motif/ame/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.ame
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../api/ALLCools/sandbox/motif/cmotif/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.cmotif
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../api/ALLCools/sandbox/motif/fimo/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.fimo
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../api/ALLCools/sandbox/motif/motif_scan/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.motif_scan
-          </span>
-         </code>
-        </a>
-       </li>
-       <li class="toctree-l4">
-        <a class="reference internal" href="../../../api/ALLCools/sandbox/motif/utilities/index.html">
-         <code class="xref py py-mod docutils literal notranslate">
-          <span class="pre">
-           ALLCools.sandbox.motif.utilities
-          </span>
-         </code>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/sandbox/balanced_knn/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.balanced_knn
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/sandbox/scanorama/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.scanorama
-        </span>
-       </code>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ALLCools/sandbox/sccaf/index.html">
-       <code class="xref py py-mod docutils literal notranslate">
-        <span class="pre">
-         ALLCools.sandbox.sccaf
-        </span>
-       </code>
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../../../api/ALLCools/schema/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1493,8 +1416,8 @@
       </span>
      </code>
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/>
-    <label for="toctree-checkbox-30">
+    <input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/>
+    <label for="toctree-checkbox-28">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -1592,15 +1515,6 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../../api/ALLCools/_version/index.html">
-     <code class="xref py py-mod docutils literal notranslate">
-      <span class="pre">
-       ALLCools._version
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../../../api/ALLCools/api/index.html">
      <code class="xref py py-mod docutils literal notranslate">
       <span class="pre">
@@ -1649,12 +1563,17 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
 </div>
 
 
@@ -1662,60 +1581,104 @@
 
 
           
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
     
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-            <!-- Source interaction buttons -->
+    <div class="header-article row sticky-top noprint">
+        
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/lhqing/ALLCools"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2F_modules/ALLCools/count_matrix/dataset.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
         
     </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/lhqing/ALLCools"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/lhqing/ALLCools/issues/new?title=Issue%20on%20page%20%2F_modules/ALLCools/count_matrix/dataset.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
 </div>
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-        </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1></h1>
@@ -1726,30 +1689,34 @@
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
   <h1>Source code for ALLCools.count_matrix.dataset</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">ALLCools.utilities</span> <span class="kn">import</span> <span class="n">parse_chrom_size</span><span class="p">,</span> <span class="n">parse_mc_pattern</span>
-<span class="kn">import</span> <span class="nn">pybedtools</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pysam</span>
+<span></span><span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">rmtree</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pybedtools</span>
+<span class="kn">import</span> <span class="nn">pysam</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="kn">from</span> <span class="nn">ALLCools.utilities</span> <span class="kn">import</span> <span class="n">parse_chrom_size</span><span class="p">,</span> <span class="n">parse_mc_pattern</span>
+
 <span class="kn">from</span> <span class="nn">.._doc</span> <span class="kn">import</span> <span class="o">*</span>
 
-<div class="viewcode-block" id="ALLOW_QUANT_TYPES"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.ALLOW_QUANT_TYPES">[docs]</a><span class="n">ALLOW_QUANT_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;hypo-score&#39;</span><span class="p">,</span> <span class="s1">&#39;hyper-score&#39;</span><span class="p">]</span></div>
+<div class="viewcode-block" id="ALLOW_QUANT_TYPES"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.ALLOW_QUANT_TYPES">[docs]</a><span class="n">ALLOW_QUANT_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="s2">&quot;hypo-score&quot;</span><span class="p">,</span> <span class="s2">&quot;hyper-score&quot;</span><span class="p">]</span></div>
 
 
 <span class="nd">@lru_cache</span><span class="p">(</span><span class="mi">99999</span><span class="p">)</span>
-<div class="viewcode-block" id="bin_sf"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.bin_sf">[docs]</a><span class="k">def</span> <span class="nf">bin_sf</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<div class="viewcode-block" id="_bin_sf"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset._bin_sf">[docs]</a><span class="k">def</span> <span class="nf">_bin_sf</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">cov</span> <span class="o">&gt;</span> <span class="n">mc</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">stats</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">mc</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1757,24 +1724,22 @@
         <span class="k">return</span> <span class="mi">0</span></div>
 
 
-<div class="viewcode-block" id="cell_sf"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.cell_sf">[docs]</a><span class="k">def</span> <span class="nf">cell_sf</span><span class="p">(</span><span class="n">cell_count_df</span><span class="p">):</span>
+<div class="viewcode-block" id="_cell_sf"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset._cell_sf">[docs]</a><span class="k">def</span> <span class="nf">_cell_sf</span><span class="p">(</span><span class="n">cell_count_df</span><span class="p">):</span>
     <span class="n">mc_sum</span><span class="p">,</span> <span class="n">cov_sum</span> <span class="o">=</span> <span class="n">cell_count_df</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">mc_sum</span> <span class="o">/</span> <span class="p">(</span><span class="n">cov_sum</span> <span class="o">+</span> <span class="mf">0.000001</span><span class="p">)</span>  <span class="c1"># prevent empty allc error</span>
-    <span class="n">pv</span> <span class="o">=</span> <span class="n">cell_count_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">bin_sf</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;cov&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;mc&quot;</span><span class="p">],</span> <span class="n">p</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
-        <span class="s2">&quot;float16&quot;</span>
-    <span class="p">)</span>
+    <span class="n">pv</span> <span class="o">=</span> <span class="n">cell_count_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">_bin_sf</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;cov&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;mc&quot;</span><span class="p">],</span> <span class="n">p</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float16&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pv</span></div>
 
 
-<div class="viewcode-block" id="Quant"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.Quant">[docs]</a><span class="k">class</span> <span class="nc">Quant</span><span class="p">:</span>
+<div class="viewcode-block" id="_Quant"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset._Quant">[docs]</a><span class="k">class</span> <span class="nc">_Quant</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mc_types</span><span class="p">,</span> <span class="n">quant_type</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mc_types</span> <span class="o">=</span> <span class="n">mc_types</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quant_type</span> <span class="o">=</span> <span class="n">quant_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
 
 
-<div class="viewcode-block" id="CountQuantifier"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.CountQuantifier">[docs]</a><span class="k">class</span> <span class="nc">CountQuantifier</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Sum count by mC type for single region in single ALLC&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="_CountQuantifier"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset._CountQuantifier">[docs]</a><span class="k">class</span> <span class="nc">_CountQuantifier</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Sum count by mC type for single region in single ALLC.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mc_types</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mc_types</span> <span class="o">=</span> <span class="n">mc_types</span>
@@ -1782,22 +1747,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cov_data</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
         <span class="k">return</span>
 
-<div class="viewcode-block" id="CountQuantifier.read_line"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.CountQuantifier.read_line">[docs]</a>    <span class="k">def</span> <span class="nf">read_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+<div class="viewcode-block" id="_CountQuantifier.read_line"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset._CountQuantifier.read_line">[docs]</a>    <span class="k">def</span> <span class="nf">read_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a line from an ALLC file.&quot;&quot;&quot;</span>
         <span class="n">chrom</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mc_data</span><span class="p">[</span><span class="n">context</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mc</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cov_data</span><span class="p">[</span><span class="n">context</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
         <span class="k">return</span></div>
 
-<div class="viewcode-block" id="CountQuantifier.summary"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.CountQuantifier.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="_CountQuantifier.summary"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset._CountQuantifier.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a summary of the data.&quot;&quot;&quot;</span>
         <span class="n">mc_type_data</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">mc_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mc_types</span><span class="p">:</span>
-            <span class="n">mc</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">mc_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">parse_mc_pattern</span><span class="p">(</span><span class="n">mc_type</span><span class="p">)))</span>
-            <span class="n">cov</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">cov_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">parse_mc_pattern</span><span class="p">(</span><span class="n">mc_type</span><span class="p">)))</span>
+            <span class="n">mc</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mc_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">parse_mc_pattern</span><span class="p">(</span><span class="n">mc_type</span><span class="p">))</span>
+            <span class="n">cov</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cov_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">parse_mc_pattern</span><span class="p">(</span><span class="n">mc_type</span><span class="p">))</span>
             <span class="n">mc_type_data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">mc</span><span class="p">,</span> <span class="n">cov</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">mc_type_data</span></div></div>
 
 
-<div class="viewcode-block" id="determine_datasets"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.determine_datasets">[docs]</a><span class="k">def</span> <span class="nf">determine_datasets</span><span class="p">(</span><span class="n">regions</span><span class="p">,</span> <span class="n">quantifiers</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">tmp_dir</span><span class="p">):</span>
+<div class="viewcode-block" id="_determine_datasets"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset._determine_datasets">[docs]</a><span class="k">def</span> <span class="nf">_determine_datasets</span><span class="p">(</span><span class="n">regions</span><span class="p">,</span> <span class="n">quantifiers</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">tmp_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Determine datasets for each region.&quot;&quot;&quot;</span>
     <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
     <span class="n">tmp_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -1805,95 +1773,88 @@
     <span class="n">datasets</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">regions</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Can not understand </span><span class="si">{</span><span class="n">pair</span><span class="si">}</span><span class="s1"> in regions parameter: </span><span class="si">{</span><span class="n">regions</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can not understand </span><span class="si">{</span><span class="n">pair</span><span class="si">}</span><span class="s2"> in regions parameter: </span><span class="si">{</span><span class="n">regions</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">name</span><span class="p">,</span> <span class="n">region_path</span> <span class="o">=</span> <span class="n">pair</span>
         <span class="c1"># prepare regions</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">region_path</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">))</span> \
-                <span class="ow">and</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">region_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="n">region_bed_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">region_path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">region_path</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">))</span> <span class="ow">and</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">region_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">region_bed_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">region_path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
             <span class="c1"># remove additional chroms that do not occur in chrom_sizes</span>
-            <span class="n">region_bed_df</span> <span class="o">=</span> <span class="n">region_bed_df</span><span class="p">[</span><span class="n">region_bed_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
-                <span class="n">chrom_sizes</span><span class="p">)]</span>
+            <span class="n">region_bed_df</span> <span class="o">=</span> <span class="n">region_bed_df</span><span class="p">[</span><span class="n">region_bed_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">chrom_sizes</span><span class="p">)]</span>
             <span class="c1"># sort chroms</span>
-            <span class="n">region_bed_df</span> <span class="o">=</span> <span class="n">pybedtools</span><span class="o">.</span><span class="n">BedTool</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span>
-                <span class="n">region_bed_df</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">)</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+            <span class="n">region_bed_df</span> <span class="o">=</span> <span class="n">pybedtools</span><span class="o">.</span><span class="n">BedTool</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">region_bed_df</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">)</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
 
             <span class="k">if</span> <span class="n">region_bed_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="c1"># add index</span>
                 <span class="nb">print</span><span class="p">(</span>
                     <span class="n">region_path</span><span class="p">,</span>
-                    <span class="s1">&#39;do not have index in its fourth column, adding it automatically. &#39;</span>
-                    <span class="s1">&#39;If this is not desired, add a fourth column containing UNIQUE IDs to the BED file.&#39;</span>
+                    <span class="s2">&quot;do not have index in its fourth column, adding it automatically. &quot;</span>
+                    <span class="s2">&quot;If this is not desired, add a fourth column containing UNIQUE IDs to the BED file.&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
-                <span class="n">region_bed_df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span>
-                                       <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">region_bed_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                <span class="n">region_bed_df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">region_bed_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
             <span class="c1"># check if name is unique()</span>
             <span class="k">if</span> <span class="n">region_bed_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s1">&#39;Region IDs in </span><span class="si">{</span><span class="n">region_path</span><span class="si">}</span><span class="s1"> (fourth column) are not unique.&#39;</span>
-                <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Region IDs in </span><span class="si">{</span><span class="n">region_path</span><span class="si">}</span><span class="s2"> (fourth column) are not unique.&quot;</span><span class="p">)</span>
             <span class="c1"># finally, set ID as index and only take the first three columns</span>
-            <span class="n">region_bed_df</span> <span class="o">=</span> <span class="n">region_bed_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
-                <span class="n">region_bed_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">region_bed_df</span> <span class="o">=</span> <span class="n">region_bed_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">region_bed_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="c1"># if region is int, generate chrom bins with bedtools</span>
                 <span class="n">region_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">region_path</span><span class="p">)</span>
-                <span class="n">region_bed_df</span> <span class="o">=</span> <span class="n">pybedtools</span><span class="o">.</span><span class="n">BedTool</span><span class="p">()</span><span class="o">.</span><span class="n">makewindows</span><span class="p">(</span>
-                    <span class="n">g</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">region_size</span><span class="p">,</span>
-                    <span class="n">s</span><span class="o">=</span><span class="n">region_size</span><span class="p">)</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+                <span class="n">region_bed_df</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">pybedtools</span><span class="o">.</span><span class="n">BedTool</span><span class="p">()</span><span class="o">.</span><span class="n">makewindows</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">region_size</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">region_size</span><span class="p">)</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+                <span class="p">)</span>
 
                 <span class="c1"># set region index</span>
                 <span class="n">_dfs</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">for</span> <span class="n">chrom</span><span class="p">,</span> <span class="n">chrom_df</span> <span class="ow">in</span> <span class="n">region_bed_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;chrom&#39;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">chrom</span><span class="p">,</span> <span class="n">chrom_df</span> <span class="ow">in</span> <span class="n">region_bed_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;chrom&quot;</span><span class="p">):</span>
                     <span class="n">chrom_df</span> <span class="o">=</span> <span class="n">chrom_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                    <span class="n">chrom_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">chrom_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">chrom</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+                    <span class="k">def</span> <span class="nf">_id</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">chrom</span><span class="p">):</span>
+                        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+
+                    <span class="n">chrom_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">chrom_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_id</span><span class="p">)</span>
                     <span class="n">_dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chrom_df</span><span class="p">)</span>
                 <span class="n">region_bed_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">_dfs</span><span class="p">)</span>
 
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s1">&#39;Can not understand region specification </span><span class="si">{</span><span class="n">region_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="n">region_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tmp_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.regions.csv&#39;</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can not understand region specification </span><span class="si">{</span><span class="n">region_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">region_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tmp_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.regions.csv&quot;</span>
         <span class="n">region_bed_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">region_path</span><span class="p">)</span>
-        <span class="n">datasets</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;regions&#39;</span><span class="p">:</span> <span class="n">region_path</span><span class="p">,</span> <span class="s1">&#39;quant&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="n">datasets</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;regions&quot;</span><span class="p">:</span> <span class="n">region_path</span><span class="p">,</span> <span class="s2">&quot;quant&quot;</span><span class="p">:</span> <span class="p">[]}</span>
 
     <span class="k">for</span> <span class="n">quantifier</span> <span class="ow">in</span> <span class="n">quantifiers</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">quantifier</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;Quantifier must have three parts, including &#39;</span>
+                <span class="sa">f</span><span class="s2">&quot;Quantifier must have three parts, including &quot;</span>
                 <span class="sa">f</span><span class="s1">&#39;[&quot;NAME&quot;, &quot;QUANT_TYPE&quot;, &quot;MC_TYPE&quot;, &quot;OTHER_KWARGS&quot;], &#39;</span>
                 <span class="sa">f</span><span class="s1">&#39;where the &quot;OTHER_KWARGS&quot; are optional. &#39;</span>
-                <span class="sa">f</span><span class="s1">&#39;Got </span><span class="si">{</span><span class="n">quantifier</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="n">quantifier</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
         <span class="n">name</span><span class="p">,</span> <span class="n">quant_type</span><span class="p">,</span> <span class="n">mc_types</span><span class="p">,</span> <span class="o">*</span><span class="n">other_kwargs</span> <span class="o">=</span> <span class="n">quantifier</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;Name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1"> occur in quantifiers, but not found in regions.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> occur in quantifiers, but not found in regions.&quot;</span><span class="p">)</span>
         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">kv</span> <span class="ow">in</span> <span class="n">other_kwargs</span><span class="p">:</span>
-            <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">kv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+            <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">kv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
 
         <span class="c1"># prepare mc_types</span>
-        <span class="n">mc_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mc_types</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+        <span class="n">mc_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mc_types</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)]</span>
         <span class="c1"># prepare quant_types</span>
 
         <span class="k">if</span> <span class="n">quant_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ALLOW_QUANT_TYPES</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;QUANT_TYPE need to be in </span><span class="si">{</span><span class="n">ALLOW_QUANT_TYPES</span><span class="si">}</span><span class="s1">, got </span><span class="si">{</span><span class="n">quant_type</span><span class="si">}</span><span class="s1"> in </span><span class="si">{</span><span class="n">quantifier</span><span class="si">}</span><span class="s1">.&#39;</span>
-            <span class="p">)</span>
-        <span class="n">datasets</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;quant&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">Quant</span><span class="p">(</span><span class="n">mc_types</span><span class="o">=</span><span class="n">mc_types</span><span class="p">,</span> <span class="n">quant_type</span><span class="o">=</span><span class="n">quant_type</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;QUANT_TYPE need to be in </span><span class="si">{</span><span class="n">ALLOW_QUANT_TYPES</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">quant_type</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">quantifier</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="n">datasets</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;quant&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_Quant</span><span class="p">(</span><span class="n">mc_types</span><span class="o">=</span><span class="n">mc_types</span><span class="p">,</span> <span class="n">quant_type</span><span class="o">=</span><span class="n">quant_type</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">datasets</span></div>
 
 
-<div class="viewcode-block" id="count_single_region_set"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.count_single_region_set">[docs]</a><span class="k">def</span> <span class="nf">count_single_region_set</span><span class="p">(</span><span class="n">allc_table</span><span class="p">,</span> <span class="n">region_config</span><span class="p">,</span> <span class="n">obs_dim</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get cell-by-region-by-mc_types count matrix, save to zarr&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="_count_single_region_set"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset._count_single_region_set">[docs]</a><span class="k">def</span> <span class="nf">_count_single_region_set</span><span class="p">(</span><span class="n">allc_table</span><span class="p">,</span> <span class="n">region_config</span><span class="p">,</span> <span class="n">obs_dim</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get cell-by-region-by-mc_types count matrix, save to zarr.&quot;&quot;&quot;</span>
     <span class="n">total_mc_types</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">quant</span> <span class="ow">in</span> <span class="n">region_config</span><span class="p">[</span><span class="s1">&#39;quant&#39;</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">quant</span> <span class="ow">in</span> <span class="n">region_config</span><span class="p">[</span><span class="s2">&quot;quant&quot;</span><span class="p">]:</span>
         <span class="n">total_mc_types</span> <span class="o">+=</span> <span class="n">quant</span><span class="o">.</span><span class="n">mc_types</span>
     <span class="n">total_mc_types</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">total_mc_types</span><span class="p">))</span>
 
@@ -1902,13 +1863,11 @@
         <span class="k">with</span> <span class="n">pysam</span><span class="o">.</span><span class="n">TabixFile</span><span class="p">(</span><span class="n">allc_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">allc</span><span class="p">:</span>
             <span class="n">region_ids</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">sample_data</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">region_chunks</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">region_config</span><span class="p">[</span><span class="s1">&#39;regions&#39;</span><span class="p">],</span>
-                                        <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                                        <span class="n">chunksize</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+            <span class="n">region_chunks</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">region_config</span><span class="p">[</span><span class="s2">&quot;regions&quot;</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">region_chunks</span><span class="p">:</span>
                 <span class="n">region_ids</span> <span class="o">+=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-                <span class="k">for</span> <span class="n">region</span><span class="p">,</span> <span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">in</span> <span class="n">chunk</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-                    <span class="n">count_quant</span> <span class="o">=</span> <span class="n">CountQuantifier</span><span class="p">(</span><span class="n">mc_types</span><span class="o">=</span><span class="n">total_mc_types</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">in</span> <span class="n">chunk</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+                    <span class="n">count_quant</span> <span class="o">=</span> <span class="n">_CountQuantifier</span><span class="p">(</span><span class="n">mc_types</span><span class="o">=</span><span class="n">total_mc_types</span><span class="p">)</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">allc_lines</span> <span class="o">=</span> <span class="n">allc</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">chrom</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
                         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">allc_lines</span><span class="p">:</span>
@@ -1919,18 +1878,18 @@
                     <span class="n">sample_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">count_quant</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sample_data</span><span class="p">]),</span>
-                <span class="n">coords</span><span class="o">=</span><span class="p">[[</span><span class="n">sample</span><span class="p">],</span> <span class="n">region_ids</span><span class="p">,</span> <span class="n">total_mc_types</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;mc&#39;</span><span class="p">,</span> <span class="s1">&#39;cov&#39;</span><span class="p">]],</span>
-                <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="n">obs_dim</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">,</span> <span class="s1">&#39;mc_type&#39;</span><span class="p">,</span> <span class="s1">&#39;count_type&#39;</span><span class="p">])</span>
+                <span class="n">coords</span><span class="o">=</span><span class="p">[[</span><span class="n">sample</span><span class="p">],</span> <span class="n">region_ids</span><span class="p">,</span> <span class="n">total_mc_types</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;mc&quot;</span><span class="p">,</span> <span class="s2">&quot;cov&quot;</span><span class="p">]],</span>
+                <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="n">obs_dim</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">,</span> <span class="s2">&quot;mc_type&quot;</span><span class="p">,</span> <span class="s2">&quot;count_type&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
             <span class="n">total_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">total_data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span>
-        <span class="p">{</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_da&#39;</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">total_data</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">)})</span>
+    <span class="n">total_data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_da&quot;</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">total_data</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">)})</span>
     <span class="k">return</span> <span class="n">total_data</span></div>
 
 
-<div class="viewcode-block" id="calculate_pv"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.calculate_pv">[docs]</a><span class="k">def</span> <span class="nf">calculate_pv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">reverse_value</span><span class="p">,</span> <span class="n">obs_dim</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
+<div class="viewcode-block" id="_calculate_pv"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset._calculate_pv">[docs]</a><span class="k">def</span> <span class="nf">_calculate_pv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">reverse_value</span><span class="p">,</span> <span class="n">obs_dim</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
     <span class="n">pv</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">obs_dim</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">cell_sf</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">cell</span><span class="p">)</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">())</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">_cell_sf</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">cell</span><span class="p">)</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">())</span>
         <span class="n">pv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="n">pv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pv</span><span class="p">)</span>
 
@@ -1939,63 +1898,58 @@
 
     <span class="c1"># get rid of small values, save space and memory</span>
     <span class="n">pv</span><span class="p">[</span><span class="n">pv</span> <span class="o">&lt;</span> <span class="n">cutoff</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">pv</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">pv</span><span class="p">,</span>
-                      <span class="n">coords</span><span class="o">=</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">obs_dim</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">var_dim</span><span class="p">]],</span>
-                      <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="n">obs_dim</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">])</span>
-    <span class="n">pv</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float16&#39;</span><span class="p">)</span>
+    <span class="n">pv</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">pv</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">obs_dim</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">var_dim</span><span class="p">]],</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="n">obs_dim</span><span class="p">,</span> <span class="n">var_dim</span><span class="p">])</span>
+    <span class="n">pv</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float16&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pv</span></div>
 
 
-<div class="viewcode-block" id="count_single_zarr"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.count_single_zarr">[docs]</a><span class="k">def</span> <span class="nf">count_single_zarr</span><span class="p">(</span><span class="n">allc_table</span><span class="p">,</span>
-                      <span class="n">region_config</span><span class="p">,</span>
-                      <span class="n">obs_dim</span><span class="p">,</span>
-                      <span class="n">region_dim</span><span class="p">,</span>
-                      <span class="n">output_path</span><span class="p">,</span>
-                      <span class="n">obs_dim_dtype</span><span class="p">,</span>
-                      <span class="n">count_dtype</span><span class="o">=</span><span class="s1">&#39;uint32&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;process single region set and its quantifiers&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="_count_single_zarr"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset._count_single_zarr">[docs]</a><span class="k">def</span> <span class="nf">_count_single_zarr</span><span class="p">(</span>
+    <span class="n">allc_table</span><span class="p">,</span> <span class="n">region_config</span><span class="p">,</span> <span class="n">obs_dim</span><span class="p">,</span> <span class="n">region_dim</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">obs_dim_dtype</span><span class="p">,</span> <span class="n">count_dtype</span><span class="o">=</span><span class="s2">&quot;uint32&quot;</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Process single region set and its quantifiers.&quot;&quot;&quot;</span>
     <span class="c1"># count all ALLC and mC types that&#39;s needed for quantifiers if this region_dim</span>
-    <span class="n">count_ds</span> <span class="o">=</span> <span class="n">count_single_region_set</span><span class="p">(</span><span class="n">allc_table</span><span class="o">=</span><span class="n">allc_table</span><span class="p">,</span>
-                                       <span class="n">region_config</span><span class="o">=</span><span class="n">region_config</span><span class="p">,</span>
-                                       <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
-                                       <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">)</span>
+    <span class="n">count_ds</span> <span class="o">=</span> <span class="n">_count_single_region_set</span><span class="p">(</span>
+        <span class="n">allc_table</span><span class="o">=</span><span class="n">allc_table</span><span class="p">,</span> <span class="n">region_config</span><span class="o">=</span><span class="n">region_config</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span> <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span>
+    <span class="p">)</span>
 
     <span class="n">total_ds</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="c1"># deal with count quantifiers</span>
     <span class="n">count_mc_types</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">quant</span> <span class="ow">in</span> <span class="n">region_config</span><span class="p">[</span><span class="s1">&#39;quant&#39;</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_type</span> <span class="o">==</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">quant</span> <span class="ow">in</span> <span class="n">region_config</span><span class="p">[</span><span class="s2">&quot;quant&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_type</span> <span class="o">==</span> <span class="s2">&quot;count&quot;</span><span class="p">:</span>
             <span class="n">count_mc_types</span> <span class="o">+=</span> <span class="n">quant</span><span class="o">.</span><span class="n">mc_types</span>
     <span class="n">count_mc_types</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">count_mc_types</span><span class="p">))</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">count_mc_types</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">count_da</span> <span class="o">=</span> <span class="n">count_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="n">count_mc_types</span><span class="p">)[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_da&#39;</span><span class="p">]</span>
+        <span class="n">count_da</span> <span class="o">=</span> <span class="n">count_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="n">count_mc_types</span><span class="p">)[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_da&quot;</span><span class="p">]</span>
         <span class="n">max_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">count_dtype</span><span class="p">)</span><span class="o">.</span><span class="n">max</span>
         <span class="n">count_da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">count_da</span> <span class="o">&gt;</span> <span class="n">max_int</span><span class="p">,</span> <span class="n">max_int</span><span class="p">,</span> <span class="n">count_da</span><span class="p">)</span>
-        <span class="n">total_ds</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_da&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_da</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">count_dtype</span><span class="p">)</span>
+        <span class="n">total_ds</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_da&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_da</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">count_dtype</span><span class="p">)</span>
 
     <span class="c1"># deal with hypo-score, hyper-score quantifiers</span>
-    <span class="k">for</span> <span class="n">quant</span> <span class="ow">in</span> <span class="n">region_config</span><span class="p">[</span><span class="s1">&#39;quant&#39;</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_type</span> <span class="o">==</span> <span class="s1">&#39;hypo-score&#39;</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">quant</span> <span class="ow">in</span> <span class="n">region_config</span><span class="p">[</span><span class="s2">&quot;quant&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_type</span> <span class="o">==</span> <span class="s2">&quot;hypo-score&quot;</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">mc_type</span> <span class="ow">in</span> <span class="n">quant</span><span class="o">.</span><span class="n">mc_types</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">calculate_pv</span><span class="p">(</span>
-                    <span class="n">data</span><span class="o">=</span><span class="n">count_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">)[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_da&#39;</span><span class="p">],</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">_calculate_pv</span><span class="p">(</span>
+                    <span class="n">data</span><span class="o">=</span><span class="n">count_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">)[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_da&quot;</span><span class="p">],</span>
                     <span class="n">reverse_value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                     <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
                     <span class="n">var_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
-                    <span class="o">**</span><span class="n">quant</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
-                <span class="n">total_ds</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_da_</span><span class="si">{</span><span class="n">mc_type</span><span class="si">}</span><span class="s1">-hypo-score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="k">elif</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_type</span> <span class="o">==</span> <span class="s1">&#39;hyper-score&#39;</span><span class="p">:</span>
+                    <span class="o">**</span><span class="n">quant</span><span class="o">.</span><span class="n">kwargs</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">total_ds</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_da_</span><span class="si">{</span><span class="n">mc_type</span><span class="si">}</span><span class="s2">-hypo-score&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">elif</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_type</span> <span class="o">==</span> <span class="s2">&quot;hyper-score&quot;</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">mc_type</span> <span class="ow">in</span> <span class="n">quant</span><span class="o">.</span><span class="n">mc_types</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">calculate_pv</span><span class="p">(</span>
-                    <span class="n">count_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">)[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_da&#39;</span><span class="p">],</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">_calculate_pv</span><span class="p">(</span>
+                    <span class="n">count_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">mc_type</span><span class="o">=</span><span class="n">mc_type</span><span class="p">)[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_da&quot;</span><span class="p">],</span>
                     <span class="n">reverse_value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                     <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
                     <span class="n">var_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
-                    <span class="o">**</span><span class="n">quant</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
-                <span class="n">total_ds</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_da_</span><span class="si">{</span><span class="n">mc_type</span><span class="si">}</span><span class="s1">-hyper-score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+                    <span class="o">**</span><span class="n">quant</span><span class="o">.</span><span class="n">kwargs</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">total_ds</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_da_</span><span class="si">{</span><span class="n">mc_type</span><span class="si">}</span><span class="s2">-hyper-score&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
     <span class="n">total_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">total_ds</span><span class="p">)</span>
     <span class="n">total_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">obs_dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">obs_dim</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">obs_dim_dtype</span><span class="p">)</span>
-    <span class="n">total_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">total_ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output_path</span></div>
 
 
@@ -2007,10 +1961,11 @@
     <span class="n">quantifiers_doc</span><span class="o">=</span><span class="n">generate_dataset_quantifiers_doc</span><span class="p">,</span>
     <span class="n">obs_dim_doc</span><span class="o">=</span><span class="n">generate_dataset_obs_dim_doc</span><span class="p">,</span>
     <span class="n">cpu_basic_doc</span><span class="o">=</span><span class="n">cpu_basic_doc</span><span class="p">,</span>
-    <span class="n">chunk_size_doc</span><span class="o">=</span><span class="n">generate_dataset_chunk_size_doc</span>
-<div class="viewcode-block" id="generate_dataset"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.generate_dataset">[docs]</a><span class="p">)</span>
-<span class="k">def</span> <span class="nf">generate_dataset</span><span class="p">(</span><span class="n">allc_table</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">regions</span><span class="p">,</span> <span class="n">quantifiers</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span>
-                     <span class="n">obs_dim</span><span class="o">=</span><span class="s1">&#39;cell&#39;</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">chunk_size_doc</span><span class="o">=</span><span class="n">generate_dataset_chunk_size_doc</span><span class="p">,</span>
+<span class="p">)</span>
+<div class="viewcode-block" id="generate_dataset"><a class="viewcode-back" href="../../../api/ALLCools/count_matrix/dataset/index.html#ALLCools.count_matrix.dataset.generate_dataset">[docs]</a><span class="k">def</span> <span class="nf">generate_dataset</span><span class="p">(</span>
+    <span class="n">allc_table</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">regions</span><span class="p">,</span> <span class="n">quantifiers</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">obs_dim</span><span class="o">=</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span> <span class="n">cpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;\</span>
 <span class="sd">    {generate_dataset_doc}</span>
 
@@ -2038,16 +1993,12 @@
 <span class="sd">    output_path</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">allc_table</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">)):</span>
-        <span class="n">allc_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">allc_table</span><span class="p">,</span>
-                                 <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span>
-                                 <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                 <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                                 <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">allc_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">allc_table</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
         <span class="n">allc_table</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">obs_dim</span>
 
     <span class="c1"># determine index length and str dtype</span>
     <span class="n">max_length</span> <span class="o">=</span> <span class="n">allc_table</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    <span class="n">obs_dim_dtype</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&lt;U</span><span class="si">{</span><span class="n">max_length</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">obs_dim_dtype</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&lt;U</span><span class="si">{</span><span class="n">max_length</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="c1"># determine parallel chunk size</span>
     <span class="n">n_sample</span> <span class="o">=</span> <span class="n">allc_table</span><span class="o">.</span><span class="n">size</span>
@@ -2056,35 +2007,35 @@
 
     <span class="c1"># prepare regions and determine quantifiers</span>
     <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">tmp_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s1">_tmp&#39;</span>
-    <span class="n">datasets</span> <span class="o">=</span> <span class="n">determine_datasets</span><span class="p">(</span><span class="n">regions</span><span class="p">,</span> <span class="n">quantifiers</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">tmp_dir</span><span class="p">)</span>
+    <span class="n">tmp_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">_tmp&quot;</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">_determine_datasets</span><span class="p">(</span><span class="n">regions</span><span class="p">,</span> <span class="n">quantifiers</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="n">tmp_dir</span><span class="p">)</span>
 
     <span class="c1"># copy chrom_size_path to output_path</span>
-    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;cp&#39;</span><span class="p">,</span> <span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span>
-                    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s1">/chrom_sizes.txt&#39;</span><span class="p">],</span>
-                   <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;cp&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="n">chrom_size_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">/chrom_sizes.txt&quot;</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="n">chunk_records</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">cpu</span><span class="p">)</span> <span class="k">as</span> <span class="n">exe</span><span class="p">:</span>
         <span class="n">futures</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># parallel on allc chunks and region_sets levels</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk_start</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_sample</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">)):</span>
-            <span class="n">allc_chunk</span> <span class="o">=</span> <span class="n">allc_table</span><span class="p">[</span><span class="n">chunk_start</span><span class="p">:</span><span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">]</span>
+            <span class="n">allc_chunk</span> <span class="o">=</span> <span class="n">allc_table</span><span class="p">[</span><span class="n">chunk_start</span> <span class="p">:</span> <span class="n">chunk_start</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">region_dim</span><span class="p">,</span> <span class="n">region_config</span> <span class="ow">in</span> <span class="n">datasets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">chunk_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tmp_dir</span><span class="si">}</span><span class="s1">/chunk_</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">chunk_start</span><span class="si">}</span><span class="s1">.zarr&#39;</span>
-                <span class="n">f</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">count_single_zarr</span><span class="p">,</span>
-                               <span class="n">allc_table</span><span class="o">=</span><span class="n">allc_chunk</span><span class="p">,</span>
-                               <span class="n">region_config</span><span class="o">=</span><span class="n">region_config</span><span class="p">,</span>
-                               <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
-                               <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
-                               <span class="n">output_path</span><span class="o">=</span><span class="n">chunk_path</span><span class="p">,</span>
-                               <span class="n">obs_dim_dtype</span><span class="o">=</span><span class="n">obs_dim_dtype</span><span class="p">)</span>
+                <span class="n">chunk_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tmp_dir</span><span class="si">}</span><span class="s2">/chunk_</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">chunk_start</span><span class="si">}</span><span class="s2">.zarr&quot;</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                    <span class="n">_count_single_zarr</span><span class="p">,</span>
+                    <span class="n">allc_table</span><span class="o">=</span><span class="n">allc_chunk</span><span class="p">,</span>
+                    <span class="n">region_config</span><span class="o">=</span><span class="n">region_config</span><span class="p">,</span>
+                    <span class="n">obs_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">,</span>
+                    <span class="n">region_dim</span><span class="o">=</span><span class="n">region_dim</span><span class="p">,</span>
+                    <span class="n">output_path</span><span class="o">=</span><span class="n">chunk_path</span><span class="p">,</span>
+                    <span class="n">obs_dim_dtype</span><span class="o">=</span><span class="n">obs_dim_dtype</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="n">futures</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">region_dim</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">):</span>
             <span class="n">region_dim</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">futures</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
             <span class="n">chunk_path</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Chunk </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> of </span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1"> returned&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chunk </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2"> returned&quot;</span><span class="p">)</span>
             <span class="n">chunk_records</span><span class="p">[</span><span class="n">region_dim</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">chunk_path</span>
 
     <span class="k">for</span> <span class="n">region_dim</span><span class="p">,</span> <span class="n">chunks</span> <span class="ow">in</span> <span class="n">chunk_records</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -2095,17 +2046,15 @@
             <span class="c1"># dump chunk to final place</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># first chunk</span>
-                <span class="n">ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-                           <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+                <span class="n">ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># append</span>
-                <span class="n">ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-                           <span class="n">append_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">)</span>
+                <span class="n">ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">append_dim</span><span class="o">=</span><span class="n">obs_dim</span><span class="p">)</span>
             <span class="n">rmtree</span><span class="p">(</span><span class="n">chunk_path</span><span class="p">)</span>
 
         <span class="c1"># save region coords to the ds</span>
-        <span class="n">bed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tmp_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">.regions.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">bed</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_chrom&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_start&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">_end&#39;</span><span class="p">]</span>
+        <span class="n">bed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tmp_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">.regions.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">bed</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_chrom&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_start&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">_end&quot;</span><span class="p">]</span>
         <span class="n">bed</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">region_dim</span>
         <span class="c1"># append region bed to the saved ds</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">()</span>
@@ -2113,47 +2062,56 @@
             <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
         <span class="c1"># change object dtype to string</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;O&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;O&quot;</span><span class="p">:</span>
                 <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-        <span class="n">ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="n">ds</span><span class="o">.</span><span class="n">to_zarr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">region_dim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
 
     <span class="c1"># delete tmp</span>
     <span class="n">rmtree</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">)</span>
 
     <span class="kn">from</span> <span class="nn">..mcds.utilities</span> <span class="kn">import</span> <span class="n">update_dataset_config</span>
-    <span class="n">update_dataset_config</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span>
-                          <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;region_dim&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                                  <span class="s2">&quot;ds_region_dim&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">region_dim</span><span class="p">:</span> <span class="n">region_dim</span>
-                                                    <span class="k">for</span> <span class="n">region_dim</span> <span class="ow">in</span> <span class="n">datasets</span><span class="o">.</span><span class="n">keys</span><span class="p">()},</span>
-                                  <span class="s2">&quot;ds_sample_dim&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">region_dim</span><span class="p">:</span> <span class="n">obs_dim</span>
-                                                    <span class="k">for</span> <span class="n">region_dim</span> <span class="ow">in</span> <span class="n">datasets</span><span class="o">.</span><span class="n">keys</span><span class="p">()}})</span>
+
+    <span class="n">update_dataset_config</span><span class="p">(</span>
+        <span class="n">output_path</span><span class="p">,</span>
+        <span class="n">config</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;region_dim&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;ds_region_dim&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">region_dim</span><span class="p">:</span> <span class="n">region_dim</span> <span class="k">for</span> <span class="n">region_dim</span> <span class="ow">in</span> <span class="n">datasets</span><span class="o">.</span><span class="n">keys</span><span class="p">()},</span>
+            <span class="s2">&quot;ds_sample_dim&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">region_dim</span><span class="p">:</span> <span class="n">obs_dim</span> <span class="k">for</span> <span class="n">region_dim</span> <span class="ow">in</span> <span class="n">datasets</span><span class="o">.</span><span class="n">keys</span><span class="p">()},</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">output_path</span></div>
 </pre></div>
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Hanqing Liu<br/>
+  
+      &copy; Copyright 2019 - 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By Hanqing Liu<br/>
-    
-        &copy; Copyright 2019 - 2022.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

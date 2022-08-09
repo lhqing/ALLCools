@@ -7,19 +7,12 @@
 Module Contents
 ---------------
 
-.. py:function:: simple_cca(adata, group_col, n_components=50, random_state=0)
+.. py:function:: cca(data1, data2, scale1=True, scale2=True, n_components=50, max_cc_cell=20000, chunk_size=50000, random_state=0, svd_algorithm='randomized')
 
 
-.. py:function:: incremental_cca(a, b, max_chunk_size=10000, random_state=0)
+.. py:function:: adata_cca(adata, group_col, separate_scale=True, n_components=50, random_state=42)
 
-   Perform Incremental CCA by chunk dot product and IncrementalPCA
 
-   :param a: dask.Array of dataset a
-   :param b: dask.Array of dataset b
-   :param max_chunk_size: Chunk size for Incremental fit and transform, the larger the better as long as MEM is enough
-   :param random_state:
-
-   :returns:
-   :rtype: Top CCA components
+.. py:function:: lsi_cca(data1, data2, scale_factor=100000, n_components=50, max_cc_cell=20000, chunk_size=50000, svd_algorithm='randomized', min_cov_filter=5)
 
 

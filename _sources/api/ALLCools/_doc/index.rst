@@ -47,6 +47,11 @@ Module Contents
 
    
 
+.. py:data:: convert_bam_strandness_doc
+   :annotation: = Convert CT conversion reads into forward strand, GA conversion reads into reverse strand. During...
+
+   
+
 .. py:data:: compress_level_doc
    :annotation: = Compression level for the output file
 
@@ -249,7 +254,6 @@ Module Contents
 
 .. py:function:: doc_params(**kwds)
 
-   Docstrings should start with "" in the first line for proper formatting.
-
+   Docstrings should start with "\" in the first line for proper formatting.
 
 

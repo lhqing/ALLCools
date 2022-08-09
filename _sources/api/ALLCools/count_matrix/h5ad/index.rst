@@ -15,9 +15,11 @@ Module Contents
 
 .. py:function:: aggregate_region_count_to_paired_anndata(count_tables, output_prefix, chrom_size_path, bin_size, mc_type, count_type, strandness, compression='gzip', file_uids=None, max_obj=3072, cpu=3)
 
+   Aggregate region count to paired anndata.
+
 
 .. py:function:: _transform_single_h5ad(adata_path, output_path, chrom_size_path, bin_size, step_size, window_size, compression)
 
-   Resize non-overlap chrom bin count adata
+   Resize non-overlap chrom bin count adata.
 
 

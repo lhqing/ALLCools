@@ -14,13 +14,17 @@ Module Contents
 
 .. py:function:: _map_to_sparse_chrom_bin(site_bed, out_bed, chrom_size_path, bin_size=500)
 
+   Map site_bed to sparse chrom_bin bed file.
+
    Calculate chromosome bins regional count, output is SPARSE,
    bin_id constructed from chrom_size_path and can be reproduce.
 
 
 .. py:function:: allc_to_region_count(allc_path: str, output_prefix: str, chrom_size_path: str, mc_contexts: List[str], split_strand: bool = False, region_bed_paths: List[str] = None, region_bed_names: List[str] = None, bin_sizes: List[int] = None, cov_cutoff: int = 9999, save_zero_cov: bool = False, remove_tmp: bool = True, cpu: int = 1, binarize: bool = False)
 
-   Calculate mC and cov at regional level. Region can be provided in 2 forms:
+   Calculate mC and cov at regional level.
+
+   Region can be provided in 2 forms:
    1. BED file, provided by region_bed_paths, containing arbitrary regions and use bedtools map to calculate;
    2. Fix-size non-overlap genome bins, provided by bin_sizes.
    Form 2 is much faster to calculate than form 1.

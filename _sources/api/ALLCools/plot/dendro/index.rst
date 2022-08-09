@@ -9,10 +9,12 @@ Module Contents
 
 .. py:function:: straight_branch(ax, a, b, plot_kws)
 
-   Draw link line between a and b
+   Draw link line between a and b.
 
 
 .. py:function:: plot_dendrogram(linkage_df, ax, dendro=None, labels=None, dendro_kws=None, plot_node_id=False, plot_non_singleton=True, plot_kws=None, node_hue=None, node_hue_norm=None, node_hue_cbar=True, node_hue_cbar_frac=0.1, node_palette='viridis', node_size=None, node_size_norm=None, node_sizes=None, line_hue=None, line_hue_norm=None, line_palette='gray_r', linewidth=1.5, edge_color='gray', marker_size=60, marker_color='lightblue')
+
+   Plot a dendrogram with customizations.
 
    :param linkage_df:
    :param dendro:
@@ -37,5 +39,8 @@ Module Contents
    :param edge_color:
    :param marker_size:
    :param marker_color:
+
+   :returns: * *dendro* -- dendrogram object
+             * *node_pos* -- node position
 
 

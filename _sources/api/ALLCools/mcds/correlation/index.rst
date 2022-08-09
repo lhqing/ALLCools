@@ -22,7 +22,7 @@ Module Contents
 
 .. py:function:: _corr(a, b, row, col)
 
-   Correlation between rows in a and b, no nan value
+   Correlation between rows in a and b, no nan value.
 
 
 .. py:function:: _corr_preprocess(da, sample_mch, sample_mcg, cpu=1)

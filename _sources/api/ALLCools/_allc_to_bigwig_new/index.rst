@@ -9,13 +9,13 @@ Module Contents
 
 .. py:class:: ContextCounter(mc_contexts)
 
-   .. py:method:: add(self, context, mc, cov)
+   .. py:method:: add(context, mc, cov)
 
 
 
 .. py:class:: StrandContextCounter(mc_contexts)
 
-   .. py:method:: add(self, context, strand, mc, cov)
+   .. py:method:: add(context, strand, mc, cov)
 
 
 

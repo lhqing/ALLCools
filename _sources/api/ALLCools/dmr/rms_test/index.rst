@@ -18,8 +18,12 @@ Module Contents
 
 .. py:function:: calculate_residual(table)
 
+   Calculate residual of the table.
+
 
 .. py:function:: permute_root_mean_square_test(table, n_permute=3000, min_pvalue=0.034)
+
+   Permute root-mean-square test.
 
 
 .. py:function:: _downsample_sample_count(a, max_count)
@@ -27,6 +31,6 @@ Module Contents
 
 .. py:function:: downsample_table(table, max_row_count)
 
-   Downsample high count rows to max_row_count
+   Downsample high count rows to max_row_count.
 
 

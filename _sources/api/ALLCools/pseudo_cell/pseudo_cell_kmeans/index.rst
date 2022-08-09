@@ -19,6 +19,7 @@ Module Contents
 .. py:function:: generate_pseudo_cells(adata, cluster_col='leiden', obsm='X_pca', cluster_size_cutoff=100, max_pseudo_size=25, aggregate_func='downsample')
 
    Balance the clusters by merge or downsample cells within each cluster.
+
    We first group the data by pre-defined clusters (cluster_col),
    then run k-means clustering iteratively on clusters with size > cluster_size_cutoff,
    the k-means clusters are called cell groups, and the maximum cell group size < max_pseudo_size,

@@ -17,9 +17,9 @@ Module Contents
 
 .. py:function:: _region_count_table_to_csr_npz(region_count_tables, region_id_map, output_prefix, compression=True, dtype=DEFAULT_MCDS_DTYPE)
 
-   helper func of _aggregate_region_count_to_mcds
+   Convert region count table to csr matrix.
 
-   Take a list of region count table paths, read,
+   Helper func of _aggregate_region_count_to_mcds. Take a list of region count table paths, read,
    aggregate them into a 2D sparse matrix and save the mC and COV separately.
    This function don't take care of any path selection, but assume all region_count_table is homogeneous type
    It return the saved file path
@@ -27,16 +27,16 @@ Module Contents
 
 .. py:function:: _csr_matrix_to_dataarray(matrix_table, row_name, row_index, col_name, col_index, other_dim_info)
 
-   helper func of _aggregate_region_count_to_mcds
+   Aggregate sparse array files into a single xarray.DataArray.
 
-   This function aggregate sparse array files into a single xarray.DataArray,
-   combining cell chunks, mc/cov count type together.
+   Combining cell chunks, mc/cov count type together.
    The matrix_table provide all file paths, each row is for a cell chunk, with mc and cov matrix path separately.
+   Helper func of _aggregate_region_count_to_mcds.
 
 
 .. py:function:: _aggregate_region_count_to_mcds(output_dir, dataset_name, chunk_size=100, row_name='cell', cpu=1, dtype=DEFAULT_MCDS_DTYPE)
 
-   This function aggregate all the region count table into a single mcds
+   Aggregate all the region count table into a single mcds.
 
 
 .. py:function:: generate_mcds(allc_table, output_prefix, chrom_size_path, mc_contexts, rna_table=None, split_strand=False, bin_sizes=None, region_bed_paths=None, region_bed_names=None, cov_cutoff=9999, cpu=1, remove_tmp=True, max_per_mcds=3072, cell_chunk_size=100, dtype=DEFAULT_MCDS_DTYPE, binarize=False, engine='zarr')

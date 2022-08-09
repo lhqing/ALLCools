@@ -12,4 +12,6 @@ Module Contents
 
 .. py:function:: methylpy_to_region_ds(dmr_path, output_dir)
 
+   Parse methylpy output to RegionDS dataset.
+
 

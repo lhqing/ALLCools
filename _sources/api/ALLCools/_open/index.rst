@@ -5,6 +5,8 @@
 
 .. autoapi-nested-parse::
 
+   I/O Classes for ALLC and BAM files
+
    - read and write allc file
    - parallel writing
    - read region from allc
@@ -51,22 +53,22 @@ Module Contents
 
 .. py:class:: Closing
 
-   Bases: :py:obj:`object`
+   Closeable class
 
    Inherit from this class and implement a close() method to offer context
    manager functionality.
 
-   .. py:method:: close(self)
+   .. py:method:: close()
       :abstractmethod:
 
 
-   .. py:method:: __enter__(self)
+   .. py:method:: __enter__()
 
 
-   .. py:method:: __exit__(self, *exc_info)
+   .. py:method:: __exit__(*exc_info)
 
 
-   .. py:method:: __del__(self)
+   .. py:method:: __del__()
 
 
 
@@ -74,15 +76,17 @@ Module Contents
 
    Bases: :py:obj:`Closing`
 
+   Piped Gzip Writer.
+
    Write gzip-compressed files by running an external gzip or pigz process and
    piping into it. On Python 2, this is faster than using gzip.open(). On
    Python 3, it allows to run the compression in a separate process and can
    therefore also be faster.
 
-   .. py:method:: write(self, arg)
+   .. py:method:: write(arg)
 
 
-   .. py:method:: close(self)
+   .. py:method:: close()
 
 
 
@@ -90,25 +94,29 @@ Module Contents
 
    Bases: :py:obj:`Closing`
 
+   Closeable class
+
    Inherit from this class and implement a close() method to offer context
    manager functionality.
 
-   .. py:method:: close(self)
+   .. py:method:: close()
 
 
-   .. py:method:: __iter__(self)
+   .. py:method:: __iter__()
 
 
-   .. py:method:: readline(self)
+   .. py:method:: readline()
 
 
-   .. py:method:: _raise_if_error(self)
+   .. py:method:: _raise_if_error()
+
+      Raise an exception if the gzip process has exited with an error.
 
       Raise IOError if process is not running anymore and the
       exit code is nonzero.
 
 
-   .. py:method:: read(self, *args)
+   .. py:method:: read(*args)
 
 
 
@@ -116,25 +124,26 @@ Module Contents
 
    Bases: :py:obj:`Closing`
 
+   Closeable class
+
    Inherit from this class and implement a close() method to offer context
    manager functionality.
 
-   .. py:method:: close(self)
+   .. py:method:: close()
 
 
-   .. py:method:: __iter__(self)
+   .. py:method:: __iter__()
 
 
-   .. py:method:: readline(self)
+   .. py:method:: readline()
 
 
-   .. py:method:: _raise_if_error(self)
+   .. py:method:: _raise_if_error()
 
-      Raise IOError if process is not running anymore and the
-      exit code is nonzero.
+      Raise IOError if process is not running anymore and the exit code is nonzero.
 
 
-   .. py:method:: read(self, *args)
+   .. py:method:: read(*args)
 
 
 
@@ -142,13 +151,15 @@ Module Contents
 
    Bases: :py:obj:`Closing`
 
+   Closeable class
+
    Inherit from this class and implement a close() method to offer context
    manager functionality.
 
-   .. py:method:: write(self, arg)
+   .. py:method:: write(arg)
 
 
-   .. py:method:: close(self)
+   .. py:method:: close()
 
 
 
@@ -159,6 +170,8 @@ Module Contents
 
 
 .. py:function:: open_allc(file_path, mode='r', compresslevel=3, threads=1, region=None)
+
+   Open a .allc file.
 
    A replacement for the "open" function that can also open files that have
    been compressed with gzip, bzip2 or xz. If the file_path is '-', standard

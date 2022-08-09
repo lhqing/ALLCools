@@ -5,8 +5,9 @@
 
 .. autoapi-nested-parse::
 
-   Perform Balanced PCA as well as
-   Reproducible PCA (A class allow user provide fitted model and just transform MCDS to adata with PCs)
+   Perform Balanced PCA as well as Reproducible PCA.
+
+   A class allow user provide fitted model and just transform MCDS to adata with PCs.
 
 
 
@@ -15,7 +16,7 @@ Module Contents
 
 .. py:function:: log_scale(adata, method='standard', with_mean=False, with_std=True, max_value=10, scaler=None)
 
-   Perform log transform and then scale the cell-by-feature matrix
+   Perform log transform and then scale the cell-by-feature matrix.
 
    :param adata: adata with normalized, unscaled cell-by-feature matrix
    :param method: the type of scaler to use:
@@ -26,14 +27,14 @@ Module Contents
    :param max_value: Whether clip large values after scale
    :param scaler: A fitted sklearn scaler, if provided, will only use it to transform the adata.
 
-   :returns:
    :rtype: adata.X is scaled in place, the fitted scaler object will be return if the `scaler` parameter is None.
 
 
 .. py:function:: significant_pc_test(adata: anndata.AnnData, p_cutoff=0.1, update=True, obsm='X_pca', downsample=50000)
 
-   Perform two-sample Kolmogorov-Smirnov test for goodness of fit on two adjacent PCs,
-   select top PCs based on the `p_cutoff`. Top PCs have significantly different distributions, while
+   Perform two-sample Kolmogorov-Smirnov test for goodness of fit on two adjacent PCs.
+
+   Select top PCs based on the `p_cutoff`. Top PCs have significantly different distributions, while
    later PCs only capturing random noise will have larger p-values. An idea from :cite:p:`Zeisel2018`.
 
    :param adata: adata with PC matrix calculated and stored in adata.obsm
@@ -46,7 +47,9 @@ Module Contents
    :rtype: n_components
 
 
-.. py:function:: balanced_pca(adata: anndata.AnnData, groups: str = 'pre_clusters', max_cell_prop=0.1, n_comps=200, scale=False)
+.. py:function:: balanced_pca(adata: anndata.AnnData, groups: str = 'pre_clusters', max_cell_prop=0.1, n_comps=100, scale=False)
+
+   Perform Balanced PCA on the data.
 
    Given a categorical variable (e.g., a pre-clustering label), perform balanced PCA by downsample
    cells in the large categories to make the overall population more balanced, so the PCs are expected
@@ -58,13 +61,12 @@ Module Contents
    :param n_comps: Number of components in PCA
    :param scale: whether to scale the input matrix before PCA
 
-   :returns:
    :rtype: adata with PC information stored in obsm, varm and uns like the :func:`scanpy.tl.pca` do.
 
 
 .. py:function:: get_pc_centers(adata: anndata.AnnData, group: str, outlier_label=None, obsm='X_pca')
 
-   Get the cluster centroids of the PC matrix
+   Get the cluster centroids of the PC matrix.
 
    :param adata: adata with cluster labels in obs and PC in obsm
    :param group: the name of cluster labels in adata.obs
@@ -77,9 +79,11 @@ Module Contents
 
 .. py:class:: ReproduciblePCA(scaler, mc_type, adata=None, pca_obj=None, pc_loading=None, var_names=None, max_value=10)
 
-   .. py:method:: mcds_to_adata(self, mcds)
+   Make reproducible PCA by saving features, scaling, and PCA Loadings.
 
-      Get adata from MCDS with only selected features
+   .. py:method:: mcds_to_adata(mcds)
+
+      Get adata from MCDS with only selected features.
 
       :param mcds:
       :type mcds: Input raw count MCDS object
@@ -88,28 +92,30 @@ Module Contents
       :rtype: adata
 
 
-   .. py:method:: scale(self, adata)
+   .. py:method:: scale(adata)
 
-      Perform {func}`log_scale <ALLCools.clustering.balanced_pca.log_scale>` with fitted scaler
+      Perform {func}`log_scale <ALLCools.clustering.balanced_pca.log_scale>` with fitted scaler.
 
       :param adata: Adata with per-cell normalized mC fraction and selected features
 
-      :returns:
       :rtype: adata.X is transformed in place
 
 
-   .. py:method:: pc_transform(self, adata)
+   .. py:method:: pc_transform(adata)
 
-      calculate the PC from adata.X and PC loading, store PCs in adata.obsm["X_pca"] and
-      loadings in adata.varm["PCs"]
+      Perform PCA transform with fitted PCA model.
+
+      Calculate the PC from adata.X and PC loading,
+      store PCs in adata.obsm["X_pca"] and loadings in adata.varm["PCs"].
 
       :param adata: Adata with log_scale transformed mC fraction and selected features
 
-      :returns:
       :rtype: PC information stored in adata.obsm and varm
 
 
-   .. py:method:: mcds_to_adata_with_pc(self, mcds)
+   .. py:method:: mcds_to_adata_with_pc(mcds)
+
+      Get adata from MCDS with PC.
 
       From raw count MCDS to adata object with PCs using fitted scaler and PC loadings.
       Steps include select features, calculate per-cell normalized mC fractions,
@@ -122,9 +128,9 @@ Module Contents
       :rtype: adata
 
 
-   .. py:method:: dump(self, path)
+   .. py:method:: dump(path)
 
-      Save the ReproduciblePCA to path
+      Save the ReproduciblePCA to path.
 
 
 

@@ -27,15 +27,17 @@ Module Contents
 
    
 
-.. py:function:: parse_header_lines(lines)
+.. py:function:: _parse_header_lines(lines)
 
 
-.. py:function:: parse_motif(lines, alphabet, background)
+.. py:function:: _parse_motif(lines, alphabet, background)
 
 
-.. py:function:: parse_meme_database(meme_path, meta_path)
+.. py:function:: _parse_meme_database(meme_path, meta_path)
 
 
 .. py:function:: get_default_motif_set(database='three_databases')
+
+   Get motif set from pre-defined motif database.
 
 

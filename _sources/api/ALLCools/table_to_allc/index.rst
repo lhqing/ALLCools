@@ -64,7 +64,6 @@ Module Contents
    :param add_chr: {table_to_allc_add_chr}
    :param sort: {table_to_allc_sort}
 
-   :returns:
    :rtype: output path of the converted ALLC file.
 
 
