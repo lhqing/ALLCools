@@ -1,5 +1,5 @@
 [project]
-name = "allcools"
+name = "ALLCools"
 description = "Toolkit for single-cell DNA methylome and multiomic data analysis."
 authors = [
     { name = "Hanqing Liu" },
@@ -63,7 +63,7 @@ test = [
 ]
 
 [tool.coverage.run]
-source = ["allcools"]
+source = ["ALLCools"]
 omit = [
     "**/test_*.py",
 ]

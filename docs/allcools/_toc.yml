@@ -29,7 +29,8 @@ parts:
                       - file: cell_level/step_by_step/100kb/06-Clustering
                 - file: cell_level/step_by_step/5kb/intro_5kb
                   sections:
-                      - file: cell_level/step_by_step/5kb/01-CellBasicFiltering
+                      # use the 01 step from the 100kb section
+                      # - file: cell_level/step_by_step/5kb/01-CellBasicFiltering
                       - file: cell_level/step_by_step/5kb/02-DecompositionAndEmbedding
                       - file: cell_level/step_by_step/5kb/03-Clustering
 
@@ -87,15 +88,6 @@ parts:
           - file: command_line/allcools_mcds
           - file: command_line/allcools_mcad
           - file: command_line/allcools_table_to_allc
-
-    #  - caption: VISUALIZATION
-    #    chapters:
-    #      - file: visualization/intro
-
-    #  - caption: DISCUSSION
-    #    chapters:
-    #      - file: discuss/intro
-    #      - file: discuss/dmr_benchmark
 
     - caption: API
       chapters:

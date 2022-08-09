@@ -231,6 +231,7 @@ class PairwiseDMG:
                 X=self.X.sel({self._obs_dim: total_cells.intersection(sub_series.index)}).values,
                 obs=pd.DataFrame({"groups": sub_series.astype("category")}),
                 var=pd.DataFrame([], index=self.X.get_index(self._var_dim)),
+                dtype="float32",
             )
             cluster_adata.write_h5ad(output_path)
         return
@@ -364,7 +365,7 @@ def _single_ovr_dmg(
 
     # add AUROC and filter again
     auroc = {}
-    for gene in dmg_result.index():
+    for gene in dmg_result.index:
         yscore = adata.obs_vector(gene)
         ylabel = adata.obs["groups"].astype(bool)
         score = roc_auc_score(ylabel, yscore)
@@ -471,7 +472,9 @@ def one_vs_rest_dmg(
     max_other_fold
         The fold of other cell numbers comparing
     cpu :
-            number of cpus
+        number of CPUs to use
+    verbose :
+        whether to print progress
 
     Returns
     -------

@@ -143,3 +143,4 @@ ALLCools/_version.py
 # IDEs
 /.idea/
 /.vscode/
+ALLCools/dataset/DummyDataset

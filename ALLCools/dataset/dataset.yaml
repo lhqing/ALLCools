@@ -1,0 +1,8 @@
+# cell metadata and experiment information
+meta_dir: "meta"
+cell_metadata: "meta/Metadata.csv.gz"
+
+# dataset directory
+mcds_dir: "mcds"
+mcds_paths:
+    - "mcds/*.mcds"

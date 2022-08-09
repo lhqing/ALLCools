@@ -377,8 +377,13 @@ class MCDS(xr.Dataset):
         da_suffix
             name suffix appended to the calculated mC rate data array
         """
+        var_dim = self._verify_dim(var_dim, mode="var")
+
         if da is None:
+            if var_dim is None:
+                raise ValueError("Both da and var_dim are not specified")
             da = f"{var_dim}_da"
+
         if da not in self.data_vars:
             raise KeyError(f"{da} is not in this dataset")
         if var_dim not in self[da].dims:
@@ -547,24 +552,24 @@ class MCDS(xr.Dataset):
         pd.DataFrame
         """
         var_dim = self._verify_dim(var_dim, mode="var")
-        if f"{var_dim}_bin_start" in self.coords:
+        if f"{var_dim}_bin_start" in self:
             start_name = f"{var_dim}_bin_start"
-        elif f"{var_dim}_start" in self.coords:
+        elif f"{var_dim}_start" in self:
             start_name = f"{var_dim}_start"
         else:
-            raise KeyError(f"Neither {var_dim}_bin_start nor {var_dim}_start exists in MCDS.coords")
-        if f"{var_dim}_bin_end" in self.coords:
+            raise KeyError(f"Neither {var_dim}_bin_start nor {var_dim}_start exists in MCDS")
+        if f"{var_dim}_bin_end" in self:
             end_name = f"{var_dim}_bin_end"
-        elif f"{var_dim}_end" in self.coords:
+        elif f"{var_dim}_end" in self:
             end_name = f"{var_dim}_end"
         else:
-            raise KeyError(f"Neither {var_dim}_bin_end nor {var_dim}_end exists in MCDS.coords")
+            raise KeyError(f"Neither {var_dim}_bin_end nor {var_dim}_end exists in MCDS")
 
         bed_df = pd.DataFrame(
             [
-                self.coords[f"{var_dim}_chrom"].to_pandas(),
-                self.coords[start_name].to_pandas(),
-                self.coords[end_name].to_pandas(),
+                self.get(f"{var_dim}_chrom").to_pandas(),
+                self.get(start_name).to_pandas(),
+                self.get(end_name).to_pandas(),
             ],
             index=["chrom", "start", "end"],
             columns=self.get_index(var_dim),
@@ -632,12 +637,12 @@ class MCDS(xr.Dataset):
         """
         var_dim = self._verify_dim(var_dim, mode="var")
         if exclude_chromosome is not None:
-            judge = self.coords[f"{var_dim}_chrom"].isin(exclude_chromosome)
+            judge = self.get(f"{var_dim}_chrom").isin(exclude_chromosome)
             print(f"{int(judge.sum())} {var_dim} features in {exclude_chromosome} removed.")
             with dask.config.set(**{"array.slicing.split_large_chunks": False}):
                 mcds = self.sel({var_dim: ~judge})
         if include_chromosome is not None:
-            judge = self.coords[f"{var_dim}_chrom"].isin(include_chromosome)
+            judge = self.get(f"{var_dim}_chrom").isin(include_chromosome)
             print(f"{int(judge.sum())} {var_dim} features in {include_chromosome} kept.")
             with dask.config.set(**{"array.slicing.split_large_chunks": False}):
                 mcds = self.sel({var_dim: judge})
@@ -1273,6 +1278,19 @@ class MCDS(xr.Dataset):
                     else:
                         raise ValueError(f"{da_name} contain more then one var_dim. " f"Dims of {da_name} is {da.dims}")
 
+        # separate coordinates by var_dim
+        # coords_dict = {k: [] for k in var_dims}
+        # for coord_name, coord in self.coords.items():
+        #     var_dim_count = 0
+        #     for var_dim in var_dims:
+        #         if var_dim in coord.dims:
+        #             var_dim_count += 1
+        #             if var_dim_count == 1:
+        #                 coords_dict[var_dim].append(coord_name)
+        #             else:
+        #                 raise ValueError(f"{coord_name} contain more then one var_dim. "
+        #                                  f"Dims of {coord_name} is {coord.dims}")
+
         obs_index = self.get_index(obs_dim)
         if use_obs is not None:
             # check use_obs first
@@ -1285,7 +1303,7 @@ class MCDS(xr.Dataset):
         # determine chunks
         n_obs = obs_index.size
         if (chunks == "auto") or (chunks is None):
-            chunks = {obs_dim: max(min(1000, max(n_obs // 10, 1)), 10), "mc_type": 1, "count_type": 1}
+            chunks = {obs_dim: min(10000, max(n_obs // 10, 1000)), "mc_type": 1, "count_type": 1}
         full_chunks = {
             dim: size if ((dim not in chunks) or (chunks[dim] is None)) else chunks[dim]
             for dim, size in self.dims.items()
@@ -1301,6 +1319,9 @@ class MCDS(xr.Dataset):
                 print(f"No data for var_dim {var_dim}.")
             else:
                 _mcds = self[da_names]
+                # for coord_names in coords_dict.values():
+                #     _mcds = _mcds.assign_coords(**{k: self.coords[k] for k in coord_names})
+
                 # pop out obs_dim and var_dim from attrs, do not save these to dataset
                 _mcds.attrs.pop("obs_dim")
                 _mcds.attrs.pop("var_dim")

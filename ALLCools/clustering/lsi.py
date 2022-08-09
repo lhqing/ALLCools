@@ -69,9 +69,14 @@ def lsi(
     fit_size
         Ratio or absolute int value, use to downsample when fitting the SVD to speed up run time.
     """
+    # Raise deprecationWarning
+    from warnings import warn
+
+    warn("lsi function is deprecated, use LSI class instead", DeprecationWarning)
+
     # tf-idf
     data = adata.X.astype(np.int8).copy()
-    tf = tf_idf(data, scale_factor)
+    tf, _ = tf_idf(data, scale_factor)
     n_rows, n_cols = tf.shape
     n_components = min(n_rows, n_cols, n_components)
     svd = TruncatedSVD(n_components=n_components, algorithm=algorithm, random_state=random_state)
