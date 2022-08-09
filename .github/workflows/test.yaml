@@ -54,7 +54,7 @@ jobs:
                   PLATFORM: ${{ matrix.os }}
                   DISPLAY: :42
               run: |
-                  pytest -v --cov --color=yes
+                  pytest -m pytest -v --cov --color=yes tests/
             - name: Upload coverage
               env:
                   CODECOV_NAME: ${{ matrix.python }}-${{ matrix.os }}

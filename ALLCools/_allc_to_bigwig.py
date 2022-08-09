@@ -5,8 +5,7 @@ import shlex
 import subprocess
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
-import _doc as doc
-
+from ._doc import *
 from ._extract_allc import extract_allc
 from ._open import open_allc
 from .utilities import parse_chrom_size
@@ -90,14 +89,14 @@ def _bedgraph_to_bigwig(input_file, chrom_size_path, path_to_wigtobigwig, remove
     return output_file
 
 
-@doc.doc_params(
-    allc_path_doc=doc.allc_path_doc,
-    chrom_size_path_doc=doc.chrom_size_path_doc,
-    mc_contexts_doc=doc.mc_contexts_doc,
-    split_strand_doc=doc.split_strand_doc,
-    remove_additional_chrom_doc=doc.remove_additional_chrom_doc,
-    region_doc=doc.region_doc,
-    cov_cutoff_doc=doc.cov_cutoff_doc,
+@doc_params(
+    allc_path_doc=allc_path_doc,
+    chrom_size_path_doc=chrom_size_path_doc,
+    mc_contexts_doc=mc_contexts_doc,
+    split_strand_doc=split_strand_doc,
+    remove_additional_chrom_doc=remove_additional_chrom_doc,
+    region_doc=region_doc,
+    cov_cutoff_doc=cov_cutoff_doc,
 )
 def allc_to_bigwig(
     allc_path,
