@@ -11,7 +11,7 @@ def _calculate_enrichment_score(raw_adata, labels):
     Calculate enrichment score for methylation fractions.
 
     Enrichment score modified from :cite:p:`Zeisel2018` for normalized methylation fractions
-    Assuming the methylation value is posterior frac calculated by MCDS.add_mc_frac)
+    Assuming the methylation value is posterior frac calculated by MCDS.add_mc_frac).
     """
     n_cells = raw_adata.shape[0]
     total_hypo_n = pd.Series(np.ravel((raw_adata.X < 1).sum(axis=0)).copy(), index=raw_adata.var_names)

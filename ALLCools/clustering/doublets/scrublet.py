@@ -12,6 +12,8 @@ from ALLCools.mcds.utilities import calculate_posterior_mc_frac
 
 
 class MethylScrublet:
+    """Methods for calling doublets using the Scrublet algorithm on methylation dataset."""
+
     def __init__(
         self,
         sim_doublet_ratio=2.0,
@@ -58,6 +60,7 @@ class MethylScrublet:
 
     # Core Scrublet functions
     def fit(self, mc, cov, clusters=None, batches=None):
+        """Fit the model to predict doublets."""
         if isinstance(mc, xr.DataArray) and isinstance(cov, xr.DataArray):
             self._xarray_input = True
         elif isinstance(mc, np.ndarray) and isinstance(cov, np.ndarray):
@@ -107,6 +110,7 @@ class MethylScrublet:
         return
 
     def pca(self):
+        """Perform PCA on data."""
         obs = self._frac_obs
         sim = self._frac_sim
         pca = PCA(n_components=min(200, obs.shape[1])).fit(obs)
@@ -125,12 +129,14 @@ class MethylScrublet:
         return
 
     def get_knn_graph(self, data):
+        """Get nearest neighbor graph for data."""
         nn = NNDescent(data, metric="euclidean", n_jobs=self.n_jobs, random_state=self.random_state)
         indices, distances = nn.query(data, k=self.n_neighbors + 1)
         knn = indices[:, 1:]
         return knn
 
     def calculate_doublet_scores(self):
+        """Calculate doublet scores for observed and simulated data."""
         total_pcs = np.vstack((self._pcs_obs, self._pcs_sim))
         n_obs = self._pcs_obs.shape[0]
         n_sim = self._pcs_sim.shape[0]
@@ -170,6 +176,7 @@ class MethylScrublet:
         return
 
     def call_doublets(self, threshold=None):
+        """Predicts doublets based on doublet scores."""
         ld_obs = self.doublet_scores_obs_
         ld_sim = self.doublet_scores_sim_
 
@@ -197,7 +204,7 @@ class MethylScrublet:
         return self.predicted_doublets_
 
     def plot(self):
-
+        """Plot the doublet score ROC curve and the doublet score histogram."""
         fig, (ax_roc, ax_hist) = plt.subplots(figsize=(6, 3), dpi=300, ncols=2)
 
         ax = ax_roc

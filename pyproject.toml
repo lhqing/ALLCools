@@ -50,7 +50,8 @@ analysis = [
     "scikit-learn",
     "statsmodels",
     "rpy2",
-    "tpot"
+    "tpot",
+    "cooler"
 ]
 doc = [
     "jupyter-book",

@@ -1,3 +1,18 @@
+"""
+This script implements the AMULET algorithm for doublet detection on snmC like data.
+
+The AMULET algorithm consider coverage information of each cell to predict doublets.
+It is complementary to the Scrublet like algorithm that uses molecular information.
+This algorithm is only suitable for DNA based sequencing data (and where input genome DNA copy is certain).
+
+Reference:
+Thibodeau, Asa, Alper Eroglu, Christopher S. McGinnis, Nathan Lawlor, Djamel Nehar-Belaid, Romy Kursawe,
+Radu Marches, et al. 2021. “AMULET: A Novel Read Count-Based Method for Effective Multiplet Detection from
+Single Nucleus ATAC-Seq Data.” Genome Biology 22 (1): 252.
+
+"""
+
+
 import json
 import pathlib
 from collections import defaultdict
