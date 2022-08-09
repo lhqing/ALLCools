@@ -146,21 +146,25 @@ class PlotTracks:
         avail_tracks["gtf"] = GtfTrack
         return avail_tracks
 
-    def get_tracks_height(self, start_region=None, end_region=None):
+    def _get_tracks_height(self, start_region=None, end_region=None):
         """
+        Get track height.
+
         The main purpose of the following loop is to get the height of each of the tracks
         because for the Hi-C the height is variable with respect
         to the range being plotted, the function is called
         when each plot is going to be printed.
 
-        Args:
-            start_region: start of the region to plot.
-                          Only used in case the plot is a Hi-C matrix
-            end_region: end of the region to plot.
-                        Only used in case the plot is a Hi-C matrix
+        Parameters
+        ----------
+        start_region :
+            Start of the region to plot. Only used in case the plot is a Hi-C matrix
+        end_region :
+            End of the region to plot. Only used in case the plot is a Hi-C matrix
 
-        Returns:
-
+        Returns
+        -------
+        track_height : list
         """
         track_height = []
         for i, track_dict in enumerate(self.track_list):
@@ -222,7 +226,8 @@ class PlotTracks:
         return track_height
 
     def plot(self, chrom, start, end, file_name=None, title=None, h_align_titles="left", decreasing_x_axis=False):
-        track_height = self.get_tracks_height(start_region=start, end_region=end)
+        """Make the genome track plot."""
+        track_height = self._get_tracks_height(start_region=start, end_region=end)
 
         if self.fig_height:
             fig_height = self.fig_height
@@ -309,15 +314,21 @@ class PlotTracks:
 
     def plot_vlines(self, axis_list, chrom_region, start_region, end_region):
         """
+        Plot vertical lines on the plot.
+
         Plots dotted lines from the top of the first plot to the bottom
         of the last plot at the specified positions.
 
-        :param axis_list: list of plotted axis
-        :param chrom_region chromosome name
-        :param start_region start position
-        :param end_region end position
-
-        :return: None
+        Parameters
+        ----------
+        axis_list :
+            list of plotted axis
+        chrom_region :
+            chromosome name
+        start_region :
+            start position
+        end_region :
+            end position
         """
         vlines_list = []
         if "line_width" in self.vlines_properties:
@@ -361,14 +372,15 @@ class PlotTracks:
 
     def parse_tracks(self, tracks_file, plot_regions=None):
         """
-        Parses a configuration file
+        Parse a configuration file.
 
-        :param tracks_file: file path containing the track configuration
-        :param plot_regions: a list of tuple [(chrom1, start1, end1), (chrom2, start2, end2)]
-                             on which the data should be loaded
-                             here the vlines
-        :return: array of dictionaries and vlines_file.
-                 One dictionary per track
+        Parameters
+        ----------
+        tracks_file :
+            file path containing the track configuration
+        plot_regions :
+            a list of tuple [(chrom1, start1, end1), (chrom2, start2, end2)]
+            on which the data should be loaded here the vlines
         """
         try:
             if isinstance(tracks_file, str) and not pathlib.Path(tracks_file).exists():
@@ -588,25 +600,27 @@ class PlotTracks:
             self.vlines_intval_tree, __, __ = file_to_intervaltree(self.vlines_properties["file"], plot_regions)
 
     def close_files(self):
-        """
-        Close all opened files
-        """
+        """Close all opened files."""
         for track in self.track_obj_list:
             track.__del__()
 
     @staticmethod
     def check_file_exists(track_dict, tracks_path, is_hic=False):
         """
-        Checks if a file or list of files exists. If the file does not exist
-        tries to check if the file may be relative to the track_file path,
+        Check if a file or list of files exists.
+
+        If the file does not exist tries to check if the file may be relative to the track_file path,
         in such case the path is updated.
-        :param track_dict: dictionary of track values. Should contain
-                            a 'file' key containing the path of the file
-                            or files to be checked separated by space
-                            For example: file1 file2 file3
-        :param tracks_path: path of the tracks file
-        :param is_hic:
-        :return: None
+
+        Parameters
+        ----------
+        track_dict :
+            dictionary of track values. Should contain a 'file' key containing the path of the file
+            or files to be checked separated by space. For example: file1 file2 file3
+        tracks_path :
+            path of the tracks file
+        is_hic :
+            boolean indicating if the file is a hic matrix
         """
         for key in track_dict.keys():
             if key.endswith("file"):
@@ -651,21 +665,27 @@ class PlotTracks:
     @staticmethod
     def guess_filetype(track_dict, available_tracks):
         """
-        :param track_dict: dictionary of track values with the 'file' key
-                    containing a string path of the file or files.
-                    Only the ending of the last file is used
-                    in case when there are more files
-        :param available_tracks: list of available tracks
+        Guess the file type of the track.
 
-        :return: string file type detected
+        Parameters
+        ----------
+        track_dict :
+            dictionary of track values with the 'file' key containing a string path of the file or files.
+            Only the ending of the last file is used in case when there are more files
+        available_tracks :
+            list of available tracks
+
+        Returns
+        -------
+        string file type detected
         """
         file_ = track_dict["file"].strip()
         file_type = None
-        for track_type, track_class in available_tracks.items():
+        for _, track_class in available_tracks.items():
             for ending in track_class.SUPPORTED_ENDINGS:
                 if file_.endswith(ending):
                     if file_type == track_class.TRACK_TYPE:
-                        raise InputError("file_type already defined in other" " GenomeTrack")
+                        raise InputError("file_type already defined in other GenomeTrack")
                     else:
                         file_type = track_class.TRACK_TYPE
 
@@ -680,6 +700,7 @@ class PlotTracks:
 
     @staticmethod
     def cm2inch(*tupl):
+        """CM to INCH conversion."""
         inch = 2.54
         if isinstance(tupl[0], tuple):
             return tuple(i / inch for i in tupl[0])
@@ -688,12 +709,15 @@ class PlotTracks:
 
     @staticmethod
     def print_elapsed(start):
+        """Print elapsed time."""
         if start:
             log.info(time.time() - start)
         return time.time()
 
 
 class SpacerTrack(GenomeTrack):
+    """Spacer track."""
+
     SUPPORTED_ENDINGS = []
     TRACK_TYPE = "spacer"
     DEFAULTS_PROPERTIES = {}
@@ -706,13 +730,15 @@ class SpacerTrack(GenomeTrack):
     INTEGER_PROPERTIES = {}
 
     def plot(self, ax, chrom_region, start_region, end_region):
-        pass
+        """Plot the spacer track."""
 
     def plot_y_axis(self, ax, plot_ax):
-        pass
+        """Plot the y axis of the spacer track."""
 
 
 class XAxisTrack(GenomeTrack):
+    """XAxis track."""
+
     SUPPORTED_ENDINGS = []
     TRACK_TYPE = "x_axis"
     NECESSARY_PROPERTIES = []
@@ -728,6 +754,7 @@ class XAxisTrack(GenomeTrack):
         super().__init__(*args, **kwargs)
 
     def plot(self, ax, chrom_region, region_start, region_end):
+        """Plot the x axis track."""
         type(region_start)
         type(region_end)
 
@@ -780,7 +807,7 @@ class XAxisTrack(GenomeTrack):
         )
 
     def plot_y_axis(self, ax, plot_ax):
-        pass
+        """Plot the y axis of the x axis track."""
 
 
 def prepare_config(file_configs, add_spacer=True, spacer_height=0.5):

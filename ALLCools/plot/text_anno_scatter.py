@@ -17,7 +17,7 @@ def _text_anno_scatter(
     linewidth=0.5,
     labelsize=5,
 ):
-    """Add text annotation to a scatter plot"""
+    """Add text annotation to a scatter plot."""
     # prepare kws
     _text_anno_kws = {
         "fontsize": labelsize,

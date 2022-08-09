@@ -50,23 +50,24 @@ def lsi(
     fit_size=None,
 ):
     """
-    Run TF-IDF on the binarized adata.X, followed by TruncatedSVD and then scale the components by svd.singular_values_
+    Run TF-IDF on the binarized adata.X, followed by TruncatedSVD and then scale the components by singular values.
 
     Parameters
     ----------
     adata
-
+        AnnData object
     scale_factor
+        scale factor for TF-IDF
     n_components
+        number of components to keep
     algorithm
+        algorithm to use for TruncatedSVD
     obsm
+        key in adata.obsm to store the components in
     random_state
+        random state for reproducibility
     fit_size
         Ratio or absolute int value, use to downsample when fitting the SVD to speed up run time.
-
-    Returns
-    -------
-
     """
     # tf-idf
     data = adata.X.astype(np.int8).copy()

@@ -62,10 +62,11 @@ See ALLCools documentation here: https://lhqing.github.io/ALLCools/intro.html
 
 class NiceFormatter(logging.Formatter):
     """
-    From Cutadapt https://github.com/marcelm/cutadapt
+    From Cutadapt https://github.com/marcelm/cutadapt.
+
     Do not prefix "INFO:" to info-level log messages (but do it for all other
     levels).
-    Based on http://stackoverflow.com/a/9218261/715090 .
+    Based on http://stackoverflow.com/a/9218261/715090.
     """
 
     def format(self, record):
@@ -102,6 +103,8 @@ def validate_environment():
 
 def setup_logging(stdout=False, quiet=False, debug=False):
     """
+    Set up logging formats.
+
     From Cutadapt https://github.com/marcelm/cutadapt
     Attach handler to the global logger object
     """

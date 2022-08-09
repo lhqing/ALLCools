@@ -39,17 +39,25 @@ class ExamplerAndNeighborhoodSampler:
 
     def _select_dist_thresh(self, pulp_size, n_tests=100, pulp_thicken_ratio=1.2, robust_quantile=0.9):
         """
-        Returns a general distance threshold for neighborhood of give size by random sampling.
+        Select a distance threshold to be used in the sampling procedure.
 
-                Parameters:
-                        pulp_size (int): size of the neighborhood
-                        n_tests (int): Sampling number
-                        pulp_thicken_ratio (float): to get a more robust distance estimate, the neighborhood size
-                            will be relax by this ratio during sampling
-                        robust_quantile (float): to get a more robust distance estimate, this quantile of the all
-                            sampled distance will be used as the final distance
-                Returns:
-                        dist_thresh (str): the distance threshold
+        Parameters
+        ----------
+        pulp_size : int
+            Size of the neighborhood
+        n_tests : int
+            Sampling number
+        pulp_thicken_ratio : float
+            to get a more robust distance estimate, the neighborhood size
+            will be relaxed by this ratio during sampling
+        robust_quantile : float
+            to get a more robust distance estimate, this quantile of the all
+            sampled distance will be used as the final distance
+
+        Returns
+        -------
+        dist_thresh : str
+            a general distance threshold for neighborhood of give size by random sampling.
         """
         dists = self._sample_pulp_dist(n_tests, int(pulp_thicken_ratio * pulp_size))
         dist_thresh = np.quantile(dists, robust_quantile)
@@ -67,30 +75,44 @@ class ExamplerAndNeighborhoodSampler:
         strategy: SamplingStrategyEnum = "dense",
     ):
         """
-        Returns a list of examplers and their neighborhoods.
-            Iteratively generating new examplers and corresponding neighborhoods.
-            In each iteration, at most one new exampler and the neighborhood is added to the final list.
+        Return a list of examplers and their neighborhoods.
+
+        Iteratively generating new examplers and corresponding neighborhoods.
+        In each iteration, at most one new exampler and the neighborhood is added to the final list.
 
                 Parameters:
-                        n_kernels (int): desired number of examplers; as many as posible if None
-                        pulp_size (int): desired size of the neighborhood
-                        max_attempts (int): max number of iterations of find a new exampler
-                        dist_thresh (float): min distance allowed between examplers
-                        ovlp_tol (float): max overlapping ratio between neighbors
-                        min_pulp_size (int): for some examplers, the neighborhood sizes may not
-                            reach the desired size. This is the mininum acceptable neighobrhood size.
-                        k (int): numbers of new exampler candidates to consider in each iteration.
-                            No need to change this argument in general.
-                        strategy (['sparse','dense']): strategy of adding a new exampler.
-                            'dense' will choose the candidate closest to the examplers already-selected.
-                                Recomand to combine 'dense' strategy with 'n_kernels = None'
-                            'sparse' will choose the candidate fartherest to the examplers already-selected.
-                                Recomand to use 'sparse' strategy when a specific 'n_kernels' is desired.
+                        k (int):
+                        strategy (['sparse','dense']):
                 Returns:
                         kernels (list): indexes of selected examplers
                         pulps (list of list): list of indexes of the corresponding neighborhoods
-        """
 
+        Parameters
+        ----------
+        pulp_size : int
+            desired size of the neighborhood
+        n_kernels : int
+            desired number of examplers; as many as posible if None
+        max_attempts : int
+            max number of iterations of find a new exampler
+        dist_thresh : float
+            min distance allowed between examplers
+        ovlp_tol : float
+            max overlapping ratio between examplers
+        min_pulp_size : int
+            min size of the neighborhood.
+            For some examplers, the neighborhood sizes may not reach the desired size.
+            This is the mininum acceptable neighobrhood size.
+        k : int
+            Numbers of new exampler candidates to consider in each iteration.
+            No need to change this argument in general.
+        strategy : str
+            Strategy of adding a new exampler. Two strategies are available:
+            1. 'dense' will choose the candidate closest to the examplers already-selected.
+            Recomand to combine 'dense' strategy with 'n_kernels = None'
+            2. 'sparse' will choose the candidate fartherest to the examplers already-selected.
+            Recomand to use 'sparse' strategy when a specific 'n_kernels' is desired.
+        """
         if strategy == SamplingStrategyEnum.DENSE and n_kernels is not None:
             warnings.warn(
                 "'dense' strategy is better to use with 'n_kernels = None' " "to get the best cover of the data"
@@ -98,7 +120,7 @@ class ExamplerAndNeighborhoodSampler:
 
         import scipy.spatial.distance as ssd
 
-        _dist_thresh = dist_thresh if dist_thresh is not None else _select_dist_thresh(pulp_size)
+        _dist_thresh = dist_thresh if dist_thresh is not None else self._select_dist_thresh(pulp_size)
 
         kernels = []
         pulps = []
@@ -157,6 +179,7 @@ class ExamplerAndNeighborhoodSampler:
         strategy: SamplingStrategyEnum = "dense",
         max_attempts: int = 100,
     ):
+        """Sample examplers and their neighborhoods."""
         if dist_thresh is None:
             dist_thresh = self._select_dist_thresh(n_neighbors)
         if min_n_neighbors is None:
@@ -186,6 +209,7 @@ def sample_pseudo_cells(
     n_pseudos=None,
     strategy: SamplingStrategyEnum = "dense",
 ):
+    """Sample pseudo cells."""
     _cell_meta = cell_meta[[cluster_col]].copy()
     index_name = _cell_meta.index.name
     _cell_meta = _cell_meta.reset_index()

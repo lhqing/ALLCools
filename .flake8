@@ -38,11 +38,23 @@ ignore =
     E203
     # format string does contain unindexed parameters
     P101
+    # defined from star imports
+    F403
     # Name may be undefined, or defined from star imports
     F405
-exclude = .git,__pycache__,build,docs/_build,dist
+    # Unknown interpreted text role
+    RST304
+    # First line should end with a period
+    D400
+    # No whitespaces allowed surrounding docstring text
+    D210
+    # Ignore this for now, will add back later
+    D101
+    D102
+    D103
+    B902
+    B023
+exclude = .git,__pycache__,build,docs/_build,dist,ALLCools/sandbox,
 per-file-ignores =
     tests/*: D
     */__init__.py: F401
-    ALLCools/sandbox/*: D
-    ALLCools/clustering/ClusterMerging.py: B023

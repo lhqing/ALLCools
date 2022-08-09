@@ -114,6 +114,7 @@ def generate_pseudo_cells(
 ):
     """
     Balance the clusters by merge or downsample cells within each cluster.
+
     We first group the data by pre-defined clusters (cluster_col),
     then run k-means clustering iteratively on clusters with size > cluster_size_cutoff,
     the k-means clusters are called cell groups, and the maximum cell group size < max_pseudo_size,
@@ -136,10 +137,6 @@ def generate_pseudo_cells(
         'sum' means sum up all values in a pseudo-cell group
         'mean' means take the average of each feature in a pseudo-cell group
         'median' means take the median of each feature in a pseudo-cell group
-
-    Returns
-    -------
-
     """
     pseudo_group_key = "pseudo_group"
 

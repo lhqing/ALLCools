@@ -17,9 +17,8 @@ def _calculate_cell_record(allc_path, output_path, cov_cutoff=2, resolution=100)
     cov_high_cutoff = int(cov_cutoff * 2)
 
     cell_records = {}
-    i = 0
     with pysam.TabixFile(allc_path) as allc:
-        for i, line in enumerate(allc.fetch()):
+        for _i, line in enumerate(allc.fetch()):
             chrom, pos, *_, cov, _ = line.split("\t")
             cov = int(cov)
             if cov_cutoff < cov <= cov_high_cutoff:
@@ -29,8 +28,7 @@ def _calculate_cell_record(allc_path, output_path, cov_cutoff=2, resolution=100)
                 except KeyError:
                     cell_records[chrom] = defaultdict(int)
                     cell_records[chrom][bin_id] += 1
-
-    cell_total_c = i + 1
+    cell_total_c = _i + 1
     cell_records = {chrom: list(values.keys()) for chrom, values in cell_records.items()}
     # final output to disk
     total_records = {"total_c": cell_total_c, "bins": cell_records}
@@ -45,14 +43,14 @@ def calculate_blacklist_region(region_records, alpha=0.01):
     # calculate region poisson mu
     sum_of_bin = 0
     n_bin = 0
-    for chrom, chrom_values in region_records.items():
+    for chrom_values in region_records.values():
         sum_of_bin += sum(chrom_values.values())
         n_bin += len(chrom_values)
     mu = sum_of_bin / n_bin
 
     # calculate region FDR p cutoff
     total_p = []
-    for chrom, chrom_values in region_records.items():
+    for chrom_values in region_records.values():
         chrom_values = pd.Series(chrom_values)
         p_values = poisson.sf(chrom_values.values, mu)
         total_p.append(p_values)
@@ -108,10 +106,6 @@ def coverage_doublets(
         number of cpu to use
     keep_tmp
         Whether save the tem_dir for debugging
-
-    Returns
-    -------
-
     """
     tmp_dir = pathlib.Path(tmp_dir)
     tmp_dir.mkdir(exist_ok=True)

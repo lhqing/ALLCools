@@ -2,9 +2,7 @@ import seaborn as sns
 
 
 def filter_feature_by_dispersion(adata, top_n=0.5, plot=True, inplace=False):
-    """
-    Filter features based on dispersion.
-    """
+    """Filter features based on dispersion."""
     n_features = int(adata.shape[1] * top_n)
     n_features = max(n_features, 1)
 

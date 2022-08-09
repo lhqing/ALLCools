@@ -161,7 +161,7 @@ def allc_to_bigwig(allc_path, output_prefix, bin_size, mc_contexts, chrom_size_p
 
     with pysam.TabixFile(allc_path) as allc:
         allc_chroms = set(allc.contigs)
-        for chrom, chrom_size in chrom_sizes.items():
+        for chrom in chrom_sizes.keys():
             if chrom not in allc_chroms:
                 continue
             counter = _init_counter(mc_contexts, strandness)

@@ -133,6 +133,8 @@ def significant_pc_test(adata: anndata.AnnData, p_cutoff=0.1, update=True, obsm=
 
 def balanced_pca(adata: anndata.AnnData, groups: str = "pre_clusters", max_cell_prop=0.1, n_comps=100, scale=False):
     """
+    Perform Balanced PCA on the data.
+
     Given a categorical variable (e.g., a pre-clustering label), perform balanced PCA by downsample
     cells in the large categories to make the overall population more balanced, so the PCs are expected
     to represent more variance among small categories.
@@ -157,7 +159,7 @@ def balanced_pca(adata: anndata.AnnData, groups: str = "pre_clusters", max_cell_
     # downsample large clusters
     use_cells = []
     size_to_downsample = max(int(adata.shape[0] * max_cell_prop), 50)
-    for cluster, sub_df in adata.obs.groupby(groups):
+    for _, sub_df in adata.obs.groupby(groups):
         if sub_df.shape[0] > size_to_downsample:
             use_cells += sub_df.sample(size_to_downsample, random_state=0).index.tolist()
         else:
@@ -210,7 +212,7 @@ def balanced_pca(adata: anndata.AnnData, groups: str = "pre_clusters", max_cell_
 
 def get_pc_centers(adata: anndata.AnnData, group: str, outlier_label=None, obsm="X_pca"):
     """
-    Get the cluster centroids of the PC matrix
+    Get the cluster centroids of the PC matrix.
 
     Parameters
     ----------
@@ -236,6 +238,8 @@ def get_pc_centers(adata: anndata.AnnData, group: str, outlier_label=None, obsm=
 
 
 class ReproduciblePCA:
+    """Make reproducible PCA by saving features, scaling, and PCA Loadings."""
+
     def __init__(
         self,
         scaler,
@@ -259,7 +263,7 @@ class ReproduciblePCA:
         adata :
             If anndata is provided, will take the PC loading from adata, otherwise, pca_obj or pc_loading is needed
         pca_obj :
-            fitted sklearn PCA model, will take the pc_loading from the pca_obj.components_
+            fitted sklearn PCA model, will take the pc_loading from the `pca_obj.components_`
         pc_loading :
             or you can directly provide the pc_loading matrix
         var_names :
@@ -343,12 +347,16 @@ class ReproduciblePCA:
 
     def pc_transform(self, adata):
         """
-        Calculate the PC from adata.X and PC loading, store PCs in adata.obsm["X_pca"] and loadings in adata.varm["PCs"].
+        Perform PCA transform with fitted PCA model.
+
+        Calculate the PC from adata.X and PC loading,
+        store PCs in adata.obsm["X_pca"] and loadings in adata.varm["PCs"].
 
         Parameters
         ----------
         adata :
             Adata with log_scale transformed mC fraction and selected features
+
         Returns
         -------
         PC information stored in adata.obsm and varm
@@ -359,6 +367,8 @@ class ReproduciblePCA:
 
     def mcds_to_adata_with_pc(self, mcds):
         """
+        Get adata from MCDS with PC.
+
         From raw count MCDS to adata object with PCs using fitted scaler and PC loadings.
         Steps include select features, calculate per-cell normalized mC fractions,
         log_scale transform the data with fitted scaler, and finally add PC matrix.
@@ -380,7 +390,5 @@ class ReproduciblePCA:
         return adata
 
     def dump(self, path):
-        """
-        Save the ReproduciblePCA to path
-        """
+        """Save the ReproduciblePCA to path."""
         joblib.dump(self, path)

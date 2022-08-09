@@ -21,7 +21,7 @@ from .utilities import (
 )
 
 
-def make_obs_df_var_df(use_data, obs_dim, var_dim):
+def _make_obs_df_var_df(use_data, obs_dim, var_dim):
     obs_df = pd.DataFrame([], index=use_data.get_index(obs_dim).astype(str))
     var_df = pd.DataFrame([], index=use_data.get_index(var_dim).astype(str))
     coord_prefix = re.compile(f"({obs_dim}|{var_dim})_")
@@ -49,20 +49,11 @@ def make_obs_df_var_df(use_data, obs_dim, var_dim):
 
 
 class MCDS(xr.Dataset):
-    """
-    MCDS Class
-    """
+    """The MCDS Class."""
 
     __slots__ = ()
 
     def __init__(self, dataset, coords=None, attrs=None, obs_dim=None, var_dim=None):
-        """
-        Init MCDS
-
-        Parameters
-        ----------
-        dataset
-        """
         if isinstance(dataset, xr.Dataset):
             data_vars = dataset.data_vars
             coords = dataset.coords if coords is None else coords
@@ -81,6 +72,7 @@ class MCDS(xr.Dataset):
 
     @property
     def var_dim(self):
+        """Name of the feature dimension."""
         if self.attrs["var_dim"] == "null":
             return None
         else:
@@ -88,6 +80,7 @@ class MCDS(xr.Dataset):
 
     @var_dim.setter
     def var_dim(self, var_dim):
+        """Set var_dim."""
         if var_dim is not None:
             if var_dim not in self.dims:
                 raise KeyError(f"{var_dim} does not occur in dimension names: {list(self.dims.keys())}")
@@ -98,6 +91,7 @@ class MCDS(xr.Dataset):
 
     @property
     def obs_dim(self):
+        """Name of the observation dimension."""
         if self.attrs["obs_dim"] == "null":
             return None
         else:
@@ -105,6 +99,7 @@ class MCDS(xr.Dataset):
 
     @obs_dim.setter
     def obs_dim(self, obs_dim):
+        """Set obs_dim."""
         if obs_dim is not None:
             if obs_dim not in self.dims:
                 raise KeyError(f"{obs_dim} does not occur in dimension names: {list(self.dims.keys())}")
@@ -115,6 +110,7 @@ class MCDS(xr.Dataset):
 
     @property
     def obs_names(self):
+        """Get obs_names."""
         if self.obs_dim is None:
             return None
         else:
@@ -123,6 +119,7 @@ class MCDS(xr.Dataset):
 
     @property
     def var_names(self):
+        """Get var_names."""
         if self.var_dim is None:
             return None
         else:
@@ -148,9 +145,7 @@ class MCDS(xr.Dataset):
 
     @classmethod
     def get_var_dims(cls, mcds_paths):
-        """
-        Get var_dim from MCDS files
-        """
+        """Get var_dim from MCDS files."""
         _var_dims = set()
         if isinstance(mcds_paths, (str, pathlib.Path)):
             mcds_paths = [mcds_paths]
@@ -179,7 +174,7 @@ class MCDS(xr.Dataset):
         **kwargs,
     ):
         """
-        Take one or multiple MCDS file paths and create single MCDS concatenated on obs_dim
+        Take one or multiple MCDS file paths and create single MCDS concatenated on obs_dim.
 
         Parameters
         ----------
@@ -207,9 +202,9 @@ class MCDS(xr.Dataset):
         compat
             the compat parameter of :py:func:`xarray.open_mfdataset` function,
             default is "override", means skip comparing variables with the same name and pick variable from first MCDS.
-        **kwargs
-            Additional arguments passed on to :py:func:`xarray.open_dataset` or
-            :py:func:`xarray.open_mfdataset` function.
+        kwargs
+            Additional arguments passed on to :py:func:`xarray.open_dataset`
+            or :py:func:`xarray.open_mfdataset` function.
 
         Returns
         -------
@@ -283,7 +278,7 @@ class MCDS(xr.Dataset):
 
         if has_dataset:
             if len(_var_dims) != 1:
-                raise ValueError(f"Some MCDS dataset has multiple var_dim, please specify var_dim parameter.")
+                raise ValueError("Some MCDS dataset has multiple var_dim, please specify var_dim parameter.")
             else:
                 var_dim = _var_dims.pop()
         for path in _final_paths:
@@ -396,7 +391,7 @@ class MCDS(xr.Dataset):
         return
 
     def _calculate_frac(self, var_dim, da, normalize_per_cell, clip_norm_value):
-        """Helper function to calculate mC rate data array for certain feature type (var_dim)."""
+        """Calculate mC frac data array for certain feature type (var_dim)."""
         var_dim = self._verify_dim(dim=var_dim, mode="var")
 
         da_mc = self[da].sel(count_type="mc")
@@ -411,6 +406,25 @@ class MCDS(xr.Dataset):
         return frac
 
     def add_m_value(self, var_dim=None, da=None, alpha=0.01, normalize_per_cell=True, da_suffix="mvalue"):
+        """
+        Add m value data array for certain feature type (var_dim).
+
+        M-Value is a transformation of the posterior mC fraction data array to a log ratio scale.
+        M = np.log2((frac + alpha) / (1 - frac + alpha)).
+
+        Parameters
+        ----------
+        var_dim :
+            Name of the feature type
+        da :
+            DataArray name. if None, will use f'{var_dim}_da'
+        alpha :
+            alpha value for the transformation regularization
+        normalize_per_cell :
+            if True, will normalize the mC rate data array per cell
+        da_suffix :
+            name suffix appended to the calculated mC rate data array
+        """
         if da is None:
             da = f"{var_dim}_da"
         if da not in self.data_vars:
@@ -429,6 +443,7 @@ class MCDS(xr.Dataset):
         return
 
     def add_mc_rate(self, *args, **kwargs):
+        """Add mC fraction data array (Deprecated)."""
         warnings.warn(
             'MCDS.add_mc_rate is renamed to MCDS.add_mc_frac, the default suffix also changed from "rate" to "frac"',
             DeprecationWarning,
@@ -476,6 +491,7 @@ class MCDS(xr.Dataset):
         return
 
     def add_cell_metadata(self, metadata, obs_dim=None):
+        """Add cell metadata table to the MCDS."""
         obs_dim = self._verify_dim(obs_dim, mode="obs")
         metadata.index.name = obs_dim
         mcds_index = self.get_index(obs_dim)
@@ -485,7 +501,7 @@ class MCDS(xr.Dataset):
 
     def filter_feature_by_cov_mean(self, var_dim=None, min_cov=0, max_cov=999999):
         """
-        filter MCDS by feature cov mean. add_feature_cov_mean() must be called before this function.
+        Filter MCDS by feature cov mean. add_feature_cov_mean() must be called before this function.
 
         Parameters
         ----------
@@ -495,6 +511,7 @@ class MCDS(xr.Dataset):
             Minimum cov cutoff
         max_cov
             Maximum cov cutoff
+
         Returns
         -------
         MCDS
@@ -518,12 +535,13 @@ class MCDS(xr.Dataset):
 
     def get_feature_bed(self, var_dim=None):
         """
-        Get a bed format data frame of the var_dim
+        Get a bed format data frame of the var_dim.
 
         Parameters
         ----------
         var_dim
             Name of var_dim
+
         Returns
         -------
         pd.DataFrame
@@ -555,7 +573,7 @@ class MCDS(xr.Dataset):
 
     def remove_black_list_region(self, black_list_path, var_dim=None, f=0.2):
         """
-        Remove regions overlap (bedtools intersect -f {f}) with regions in the black_list_path
+        Remove regions overlap (bedtools intersect -f {f}) with regions in the black_list_path.
 
         Parameters
         ----------
@@ -565,6 +583,7 @@ class MCDS(xr.Dataset):
             Path to the black list bed file
         f
             Fraction of overlap when calling bedtools intersect
+
         Returns
         -------
         MCDS
@@ -596,7 +615,7 @@ class MCDS(xr.Dataset):
 
     def remove_chromosome(self, exclude_chromosome=None, include_chromosome=None, var_dim=None):
         """
-        Remove regions in specific chromosome
+        Remove regions in specific chromosome.
 
         Parameters
         ----------
@@ -606,6 +625,7 @@ class MCDS(xr.Dataset):
             if provided, only these chromosomes will be removed
         include_chromosome
             if provided, only these chromosomes will be kept
+
         Returns
         -------
         MCDS (xr.Dataset)
@@ -635,6 +655,7 @@ class MCDS(xr.Dataset):
     def calculate_hvf_svr(
         self, mc_type=None, var_dim=None, obs_dim=None, n_top_feature=5000, da_name=None, da_suffix="frac", plot=True
     ):
+        """Calculate the highly variable features (hvf) with the Support Vector Regression model."""
         import plotly.graph_objects as go
         from sklearn.svm import SVR
 
@@ -653,7 +674,7 @@ class MCDS(xr.Dataset):
             if mc_type is None:
                 mc_types = self.get_index("mc_type")
                 if mc_types.size > 1:
-                    raise ValueError(f"Data array has multiple mc_types, " f"please specify mc_type parameter.")
+                    raise ValueError("Data array has multiple mc_types, please specify mc_type parameter.")
                 else:
                     mc_type = mc_types[0]
             feature_mc_frac_mean = frac_da.sel(mc_type=mc_type).mean(dim=obs_dim).to_pandas()
@@ -722,23 +743,21 @@ class MCDS(xr.Dataset):
                         z=np.log2(plot_data["dispersion"]),
                         mode="markers",
                         hoverinfo="none",
-                        marker=dict(
-                            size=2,
-                            color=plot_data["feature_select"]
-                            .map({True: "red", False: "gray"})
-                            .tolist(),  # set color to an array/list of desired values
-                            opacity=0.8,
-                        ),
+                        marker={
+                            "size": 2,
+                            "color": plot_data["feature_select"].map({True: "red", False: "gray"}).tolist(),
+                            "opacity": 0.8,
+                        },
                     )
                 ]
             )
             fig.update_layout(
-                scene=dict(
-                    xaxis_title="mC Frac. Mean",
-                    yaxis_title="Coverage Mean",
-                    zaxis_title="log2(Dispersion)",
-                ),
-                margin=dict(r=0, b=0, l=0, t=0),
+                scene={
+                    "xaxis_title": "mC Frac. Mean",
+                    "yaxis_title": "Coverage Mean",
+                    "zaxis_title": "log2(Dispersion)",
+                },
+                margin={"r": 0, "b": 0, "l": 0, "t": 0},
             )
             fig.show()
 
@@ -819,7 +838,7 @@ class MCDS(xr.Dataset):
             if mc_type is None:
                 mc_types = self.get_index("mc_type")
                 if mc_types.size > 1:
-                    raise ValueError(f"Data array has multiple mc_types, " f"please specify mc_type parameter.")
+                    raise ValueError("Data array has multiple mc_types, please specify mc_type parameter.")
                 else:
                     mc_type = mc_types[0]
             matrix = frac_da.sel(mc_type=mc_type).squeeze()
@@ -905,7 +924,6 @@ class MCDS(xr.Dataset):
         -------
         anndata.AnnData
         """
-
         with dask.config.set(**{"array.slicing.split_large_chunks": split_large_chunks}):
             obs_dim = self._verify_dim(obs_dim, mode="obs")
             var_dim = self._verify_dim(var_dim, mode="var")
@@ -938,7 +956,7 @@ class MCDS(xr.Dataset):
         else:
             total_data = np.vstack(total_data)
 
-        obs_df, var_df = make_obs_df_var_df(da, obs_dim, var_dim)
+        obs_df, var_df = _make_obs_df_var_df(da, obs_dim, var_dim)
         if use_vars is not None:
             var_df = var_df.loc[use_vars, :].copy()
 
@@ -992,7 +1010,6 @@ class MCDS(xr.Dataset):
         -------
         anndata.AnnData
         """
-
         QUANT_TYPES = ["hypo-score", "hyper-score"]
         if quant_type.lower().startswith("hypo"):
             quant_type = "hypo-score"
@@ -1018,6 +1035,7 @@ class MCDS(xr.Dataset):
         return adata
 
     def add_feature_selection_column(self, feature_select, col_name="VAR_DIM_feature_select", var_dim=None):
+        """Manually add a feature selection column to the MCDS."""
         if var_dim is None:
             var_dim = self.var_dim
         features = self.get_index(var_dim)
@@ -1047,7 +1065,8 @@ class MCDS(xr.Dataset):
         split_large_chunks=False,
     ):
         """
-        Get anndata from MCDS mC rate matrix
+        Get anndata from MCDS mC rate matrix.
+
         Parameters
         ----------
         mc_type
@@ -1076,7 +1095,7 @@ class MCDS(xr.Dataset):
             if mc_type is None:
                 mc_types = self.get_index("mc_type")
                 if mc_types.size > 1:
-                    raise ValueError(f"Data array has multiple mc_types, " f"please specify mc_type parameter.")
+                    raise ValueError("Data array has multiple mc_types, please specify mc_type parameter.")
                 else:
                     mc_type = mc_types[0]
         else:
@@ -1126,7 +1145,7 @@ class MCDS(xr.Dataset):
                 else:
                     use_data = frac_da.sel({"mc_type": mc_type}).squeeze()
 
-            obs_df, var_df = make_obs_df_var_df(use_data, obs_dim, var_dim)
+            obs_df, var_df = _make_obs_df_var_df(use_data, obs_dim, var_dim)
 
             adata = anndata.AnnData(
                 X=use_data.astype(dtype).transpose(obs_dim, var_dim).values, obs=obs_df, var=var_df, dtype=dtype
@@ -1136,6 +1155,7 @@ class MCDS(xr.Dataset):
     def merge_cluster(
         self, cluster_col, obs_dim=None, add_mc_frac=True, add_overall_mc=True, overall_mc_da="chrom100k_da"
     ):
+        """Merge cell MCDS into cluster MCDS by sum on the obs_dim."""
         obs_dim = self._verify_dim(obs_dim, mode="obs")
 
         if isinstance(cluster_col, str):
@@ -1169,6 +1189,7 @@ class MCDS(xr.Dataset):
         return cluster_mcds
 
     def to_region_ds(self, region_dim=None):
+        """Turn the MCDS into a RegionDS."""
         region_dim = self._verify_dim(region_dim, mode="var")
 
         from .region_ds import RegionDS
@@ -1181,6 +1202,7 @@ class MCDS(xr.Dataset):
     ):
         """
         Write MCDS into an on-disk zarr dataset.
+
         Data arrays for each var_dim will be saved in separate sub-directories of output_path.
         The use_obs can be used to select and order observation accordingly.
 
@@ -1337,6 +1359,7 @@ class MCDS(xr.Dataset):
     ):
         """
         Save a data array to zarr dataset, which is chunked along the var_dim.
+
         This zarr dataset is useful when loading data from one or several specific
         features, such as making a gene plot.
 

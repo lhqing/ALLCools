@@ -1,6 +1,4 @@
-"""
-This file is modified from methylpy https://github.com/yupenghe/methylpy
-"""
+"""This file is modified from methylpy https://github.com/yupenghe/methylpy."""
 
 import logging
 import shlex
@@ -19,10 +17,7 @@ log.addHandler(logging.NullHandler())
 
 
 def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path, remove_additional_chrom=False, bin_size=50):
-    """
-    Simply calculate cov and mc_rate for fixed genome bins. No mC context filter.
-    """
-
+    """Simply calculate cov and mc_rate for fixed genome bins. No mC context filter."""
     chrom_dict = parse_chrom_size(chrom_size_path)
     cur_chrom = "TOTALLY_NOT_A_CHROM"
     cur_chrom_end = 0

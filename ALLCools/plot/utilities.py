@@ -9,7 +9,7 @@ from sklearn.neighbors import LocalOutlierFactor
 
 
 def _density_based_sample(data: pd.DataFrame, coords: list, portion=None, size=None, seed=None):
-    """down sample data based on density, to prevent overplot in dense region and decrease plotting time"""
+    """Down sample data based on density, to prevent overplot in dense region and decrease plotting time."""
     clf = LocalOutlierFactor(
         n_neighbors=20,
         algorithm="auto",
@@ -52,12 +52,13 @@ def _translate_coord_name(coord_name):
 
 
 def _make_tiny_axis_label(ax, x, y, arrow_kws=None, fontsize=5):
-    """this function assume coord is [0, 1]"""
+    # This function assume coord is [0, 1].
+
     # clean ax axises
     ax.set(xticks=[], yticks=[], xlabel=None, ylabel=None)
     sns.despine(ax=ax, left=True, bottom=True)
 
-    _arrow_kws = dict(width=0.003, linewidth=0, color="black")
+    _arrow_kws = {"width": 0.003, "linewidth": 0, "color": "black"}
     if arrow_kws is not None:
         _arrow_kws.update(arrow_kws)
 
@@ -67,20 +68,20 @@ def _make_tiny_axis_label(ax, x, y, arrow_kws=None, fontsize=5):
         0.06,
         0.03,
         _translate_coord_name(x),
-        fontdict=dict(fontsize=fontsize, horizontalalignment="left", verticalalignment="center"),
+        fontdict={"fontsize": fontsize, "horizontalalignment": "left", "verticalalignment": "center"},
         transform=ax.transAxes,
     )
     ax.text(
         0.03,
         0.06,
         _translate_coord_name(y),
-        fontdict=dict(
-            fontsize=fontsize,
-            rotation=90,
-            rotation_mode="anchor",
-            horizontalalignment="left",
-            verticalalignment="center",
-        ),
+        fontdict={
+            "fontsize": fontsize,
+            "rotation": 90,
+            "rotation_mode": "anchor",
+            "horizontalalignment": "left",
+            "verticalalignment": "center",
+        },
         transform=ax.transAxes,
     )
     return
@@ -121,6 +122,7 @@ def _extract_coords(data, coord_base, x, y):
 
 
 def zoom_min_max(vmin, vmax, scale):
+    """Zoom min and max value."""
     width = vmax - vmin
     width_zoomed = width * scale
     delta_value = (width_zoomed - width) / 2
@@ -128,6 +130,7 @@ def zoom_min_max(vmin, vmax, scale):
 
 
 def zoom_ax(ax, zoom_scale, on="both"):
+    """Zoom ax on both x and y-axis."""
     on = on.lower()
 
     xlim = ax.get_xlim()
@@ -143,6 +146,7 @@ def zoom_ax(ax, zoom_scale, on="both"):
 
 
 def smart_number_format(x, pos=None):
+    """Format numbers automatically."""
     if (x > 0.01) and (x < 1):
         return f"{x:.2f}".rstrip("0")
     elif (x >= 1) and (x < 100):
@@ -156,9 +160,10 @@ def smart_number_format(x, pos=None):
 
 
 def add_ax_box(ax, expend=0, **patch_kws):
-    import matplotlib.patches as patches
+    """Add a box around the ax."""
+    from matplotlib import patches
 
-    _patch_kws = dict(linewidth=1, edgecolor="k", facecolor="none")
+    _patch_kws = {"linewidth": 1, "edgecolor": "k", "facecolor": "none"}
     _patch_kws.update(patch_kws)
 
     rect = patches.Rectangle(
@@ -175,7 +180,7 @@ def add_ax_box(ax, expend=0, **patch_kws):
 
 
 def tight_hue_range(hue_data, portion):
-    """Automatic select a SMALLEST data range that covers [portion] of the data"""
+    """Automatic select a SMALLEST data range that covers [portion] of the data."""
     hue_data = hue_data[np.isfinite(hue_data)]
     hue_quantiles = hue_data.quantile(q=np.arange(0, 1, 0.01))
     min_window_right = (

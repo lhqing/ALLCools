@@ -200,7 +200,7 @@ def _predict_sample(
 def _call_enhancer_region(bw_path, dmr_bed, threshold, merge_dist, chrom_size_path):
     high_score_regions = []
     with pyBigWig.open(bw_path) as bw:
-        for chrom, length in bw.chroms().items():
+        for chrom in bw.chroms().keys():
             intervals = bw.intervals(chrom)
             cur_start = None
             cur_end = None
@@ -242,6 +242,8 @@ def _call_enhancer_region(bw_path, dmr_bed, threshold, merge_dist, chrom_size_pa
 
 
 class REPTILE:
+    """REPTILE Pipeline for Enhancer Prediction"""
+
     def __init__(
         self,
         output_path,
@@ -335,6 +337,7 @@ class REPTILE:
         return
 
     def generate_region_ds(self):
+        """Generate RegionDS for training and query."""
         # RegionDS for training
         # step 1. Create training region RegionDS
         train_regions_bed, train_label = _create_train_region_ds(self)
@@ -350,30 +353,35 @@ class REPTILE:
 
     @property
     def train_region_ds(self):
+        """Get train region RegionDS."""
         if self._train_region_ds is None:
             self._train_region_ds = RegionDS.open(self.output_path, region_dim="train-region", engine="zarr")
         return self._train_region_ds
 
     @property
     def train_dmr_ds(self):
+        """Get train DMR RegionDS."""
         if self._train_dmr_ds is None:
             self._train_dmr_ds = RegionDS.open(self.output_path, region_dim="train-dmr", engine="zarr")
         return self._train_dmr_ds
 
     @property
     def query_region_ds(self):
+        """Get query region RegionDS."""
         if self._query_region_ds is None:
             self._query_region_ds = RegionDS.open(self.output_path, region_dim="query-region", engine="zarr")
         return self._query_region_ds
 
     @property
     def query_dmr_ds(self):
+        """Get query DMR RegionDS."""
         if self._query_dmr_ds is None:
             self._query_dmr_ds = RegionDS.open(self.output_path, region_dim="query-dmr")
         return self._query_dmr_ds
 
     @property
     def region_model(self):
+        """Get the region model."""
         if self._region_model is None:
             try:
                 self._region_model = joblib.load(f"{self.model_dir}/train-region_model.lib")
@@ -383,6 +391,7 @@ class REPTILE:
 
     @property
     def dmr_model(self):
+        """Get the DMR model."""
         if self._dmr_model is None:
             try:
                 self._dmr_model = joblib.load(f"{self.model_dir}/train-dmr_model.lib")
@@ -395,6 +404,7 @@ class REPTILE:
             raise KeyError(f"Only accept {self.region_dims}, got {name}")
 
     def annotate_by_bigwigs(self, name, slop, cpu, redo=False):
+        """Annotate genome regions by bigwigs."""
         attribute_name = f"{name.replace('-', '_')}_ds"
         region_ds: RegionDS = self.__getattribute__(attribute_name)
         if region_ds.attrs.get("reptile_annotate") and not redo:
@@ -474,6 +484,7 @@ class REPTILE:
         return region_ds
 
     def prepare_training_input(self, name):
+        """Prepare training input for a type of region."""
         if name not in self.region_dims:
             raise ValueError(f'Only accept ["train-region", "train-dmr"], got {name}')
 
@@ -499,6 +510,7 @@ class REPTILE:
         tpot_max_time_mins=60,
         **tpot_kwargs,
     ):
+        """Perform the auto-ML training and save the model to output_path."""
         print("Training model with these parameters:")
         print(f"cpu={cpu}")
         print(f"train_size={train_size}")
@@ -551,6 +563,7 @@ class REPTILE:
         return model_output_path
 
     def train_region_model(self, slop=None, cpu=1, **kwargs):
+        """Train a model for genomic regions."""
         region_dim = "train-region"
         print("Training model for genomic regions.")
         model_path = self._train(region_dim, slop, cpu=cpu, **kwargs)
@@ -558,6 +571,7 @@ class REPTILE:
         return
 
     def train_dmr_model(self, slop=None, cpu=1, **kwargs):
+        """Train a model for DMRs."""
         region_dim = "train-dmr"
         print("Training model for DMR regions.")
         if slop is None:
@@ -568,7 +582,7 @@ class REPTILE:
         return
 
     def fit(self, cpu=10, **kwargs):
-        """Convenient function to train everything by default parameters"""
+        """Train everything by default parameters."""
         self.train_region_model(cpu=cpu, **kwargs)
         self.train_dmr_model(cpu=cpu, **kwargs)
         return
@@ -636,6 +650,7 @@ class REPTILE:
         return
 
     def predict(self, cpu, mask_cutoff=0.3, bw_bin_size=10, enhancer_cutoff=0.7):
+        """Predict enhancer from score tracks."""
         self._predict(region_dim="query-region", cpu=cpu, mask_cutoff=mask_cutoff)
         self._predict(region_dim="query-dmr", cpu=cpu, mask_cutoff=mask_cutoff)
 
@@ -758,6 +773,7 @@ class REPTILE:
         return bw_path
 
     def dump_bigwigs(self, cpu, mask_cutoff, bw_bin_size):
+        """Dump bigwig files for each sample."""
         print(f"Save prediction results to bigwig files: \n" f"bin size {bw_bin_size}, minimum score {mask_cutoff}.")
         with ProcessPoolExecutor(cpu) as exe:
             futures = {}
@@ -778,6 +794,7 @@ class REPTILE:
         return
 
     def call_enhancers(self, threshold=0.7, merge_dist=None):
+        """Call enhancers from REPTILE score tracks."""
         if merge_dist is None:
             merge_dist = self.step_size
 

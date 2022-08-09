@@ -3,22 +3,7 @@ import plotly.express as px
 
 
 def interactive_scatter(data, hue=None, coord_base="umap", continous_cmap="viridis", size=5, max_points=3000):
-    """
-    Plot an interactive scatter plot with plotly
-
-    Parameters
-    ----------
-    data
-    hue
-    coord_base
-    continous_cmap
-    size
-    max_points
-
-    Returns
-    -------
-
-    """
+    """Plot an interactive scatter plot with plotly."""
     if isinstance(data, anndata.AnnData):
         _data = data.obs.copy()
         _data[f"{coord_base}_0"] = data.obsm[f"X_{coord_base}"][:, 0]

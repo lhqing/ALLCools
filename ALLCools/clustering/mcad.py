@@ -7,18 +7,16 @@ from pybedtools import BedTool
 
 def remove_black_list_region(adata, black_list_path, f=0.2):
     """
-    Remove regions overlap (bedtools intersect -f {f}) with regions in the black_list_path
+    Remove regions overlap (bedtools intersect -f {f}) with regions in the black_list_path.
 
     Parameters
     ----------
     adata
+        AnnData object
     black_list_path
         Path to the black list bed file
     f
         Fraction of overlap when calling bedtools intersect
-    Returns
-    -------
-    None
     """
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -45,9 +43,7 @@ def remove_black_list_region(adata, black_list_path, f=0.2):
 
 
 def remove_chromosomes(adata, exclude_chromosomes=None, include_chromosomes=None, chrom_col="chrom"):
-    """
-    Remove chromosomes from adata.var.
-    """
+    """Remove chromosomes from adata.var."""
     judge = None
     if exclude_chromosomes is not None:
         not_to_exclude = ~adata.var[chrom_col].isin(exclude_chromosomes)
@@ -91,16 +87,13 @@ def filter_regions(adata, hypo_percent=0.5, n_cell=None, zscore_abs_cutoff=None)
     Parameters
     ----------
     adata
+        AnnData object
     hypo_percent
-        min % of cells that are non-zero in this region.
-        If n_cell is provided, this parameter will be ignored.
+        min % of cells that are non-zero in this region. If n_cell is provided, this parameter will be ignored.
     n_cell
         number of cells that are non-zero in this region.
     zscore_abs_cutoff
         absolute feature non-zero cell count zscore cutoff to remove lowest and highest coverage features.
-    Returns
-    -------
-
     """
     _nnz = (adata.X > 0).sum(axis=0)
     try:

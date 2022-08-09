@@ -20,8 +20,7 @@ def _call_dmr_single_chrom(
     corr_cutoff=0.3,
     dms_ratio=0.8,
 ):
-    """Call DMR for single chromosome, see call_dmr for doc"""
-
+    """Call DMR for single chromosome, see call_dmr for doc."""
     ds = RegionDS.open(dms_dir, region_dim="dms")
 
     # open DMS dataset and select single chromosome, significant, large delta DMS
@@ -63,7 +62,7 @@ def _call_dmr_single_chrom(
     raw_dmr_table = pd.DataFrame({"dmr": dmr_ids, "corr": corrs})
     dmr_dict = {}
     cur_dmr_id = 0
-    for dmr_id, sub_df in raw_dmr_table.groupby("dmr"):
+    for _, sub_df in raw_dmr_table.groupby("dmr"):
         dmr_dict[sub_df.index[0]] = cur_dmr_id
         if sub_df.shape[0] > 1:
             for dms_id, corr in sub_df["corr"][1:].items():
@@ -214,6 +213,7 @@ def call_dmr(
 
 
 def collapse_replicates(region_ds, replicate_label, state_da="dmr_state"):
+    """Collapse replicates in a DMR dataset."""
     if not isinstance(replicate_label, str):
         # assume the replicate label is provided as a series or dataarray
         # that can be added into coords

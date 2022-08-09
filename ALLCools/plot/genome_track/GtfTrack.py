@@ -1,5 +1,6 @@
 """
-This GtfTrack class replaced the original pygenometracks class
+This GtfTrack class replaced the original pygenometracks class.
+
 It supports read-in a gffutils database, rather than parse very time
 """
 
@@ -61,22 +62,9 @@ warnings.filterwarnings(
 
 
 class ReadGtf:
-    """
-    Reads a gtf file.
-
-    Example:
-    gtf = ReadGtf("file.gtf")
-    for interval in gtf:
-        print interval.start
-
-    """
+    """Read a gtf file."""
 
     def __init__(self, file_path, prefered_name="transcript_name", merge_transcripts=True):
-        """
-        :param file_path: the path of the gtf file
-        :return:
-        """
-
         self.file_type = "bed12"
 
         # list of bed fields
@@ -117,28 +105,26 @@ class ReadGtf:
                 raise InputError("This is not a gtf file.")
         else:
             if self.merge_transcripts:
-                self.length = len([i for i in self.db.features_of_type("gene")])
+                self.length = len(list(self.db.features_of_type("gene")))
                 self.all_transcripts = self.db.features_of_type("gene", order_by="start")
             else:
-                self.length = len([i for i in self.db.features_of_type("transcript")])
+                self.length = len(list(self.db.features_of_type("transcript")))
                 self.all_transcripts = self.db.features_of_type("transcript", order_by="start")
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        """
-        :return: bedInterval object
-        """
+        """Get next bedInterval object."""
         bed = self.get_bed_interval()
 
         return bed
 
     def get_bed_interval(self):
         """
-        Process a transcript from the database,
-        retrieve all the values and return
-        a namedtuple object
+        Get the bed interval.
+
+        Process a transcript from the database, retrieve all the values and return a namedtuple object.
         """
         tr = next(self.all_transcripts)
         # The name would be the prefered_name if exists
@@ -191,6 +177,8 @@ class ReadGtf:
 
 
 class GtfTrack(BedTrack):
+    """GTF track."""
+
     SUPPORTED_ENDINGS = ["gtf", "gtf.gz", "gtf.db"]
     TRACK_TYPE = "gtf"
     OPTIONS_TXT = (
@@ -329,6 +317,7 @@ file_type = {TRACK_TYPE}
     }
 
     def set_properties_defaults(self):
+        """Set the default values for the properties."""
         super(BedTrack, self).set_properties_defaults()
         self.fp = font_manager.FontProperties(size=self.properties["fontsize"])
         self.colormap = None
@@ -346,6 +335,7 @@ file_type = {TRACK_TYPE}
         self.row_scale = 2.3
 
     def get_bed_handler(self, plot_regions=None):
+        """Get the bed handler for the track."""
         file_to_open = self.properties["file"]
         if not self.properties["global_max_row"]:
             if plot_regions is not None:

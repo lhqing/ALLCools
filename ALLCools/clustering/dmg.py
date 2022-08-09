@@ -156,7 +156,7 @@ class PairwiseDMG:
         selected_pairs: List[tuple] = None,
     ):
         """
-        provide data and perform the pairwise DMG
+        Provide data and perform the pairwise DMG
 
         Parameters
         ----------
@@ -175,10 +175,6 @@ class PairwiseDMG:
         selected_pairs :
             By default, pairwise DMG will calculate all possible pairs between all the groups, which might be very
             time consuming if the group number is large. With this parameter, you may provide a list of cluster pairs
-
-        Returns
-        -------
-
         """
         if (len(x.shape) != 2) or not isinstance(x, xr.DataArray):
             raise ValueError("Expect an cell-by-feature 2D xr.DataArray as input matrix.")
@@ -240,7 +236,7 @@ class PairwiseDMG:
         return
 
     def _pairwise_dmg(self):
-        """pairwise DMG runner, result save to self.dmg_table"""
+        """Run pairwise DMG, save results to self.dmg_table"""
         dmg_dir = pathlib.Path(self._dmg_dir)
         dmg_dir.mkdir(exist_ok=True)
 
@@ -285,19 +281,24 @@ class PairwiseDMG:
 
     def aggregate_pairwise_dmg(self, adata, groupby, obsm="X_pca"):
         """
+        Aggregate pairwise DMG results to get ordered DMGs for each group
+
         Aggregate pairwise DMG results for each cluster, rank DMG for the cluster by the sum of
-        AUROC * cluster_pair_similarity
+        AUROC * cluster_pair_similarity.
         This way, the DMGs having large AUROC between similar clusters get more weights
 
         Parameters
         ----------
         adata :
+            AnnData object
         groupby :
+            name of the groupby variable in adata.obs
         obsm :
+            name of the obsm variable in adata.obsm
 
         Returns
         -------
-
+        cluster_dmgs : dict
         """
         # using the cluster centroids in PC space to calculate dendrogram
         pc_matrix = adata.obsm[obsm]
@@ -330,7 +331,7 @@ def _single_ovr_dmg(
     fc_cutoff,
     auroc_cutoff,
 ):
-    """single one vs rest DMG runner"""
+    """Run single one vs rest DMG comparison."""
     # get adata
     cell_judge = mcds.get_index(obs_dim).isin(cell_label.index)
     adata = mcds.sel({obs_dim: cell_judge}).get_adata(mc_type=mc_type, var_dim=var_dim, select_hvf=False)
@@ -363,9 +364,9 @@ def _single_ovr_dmg(
 
     # add AUROC and filter again
     auroc = {}
-    for gene, row in dmg_result.iterrows():
+    for gene in dmg_result.index():
         yscore = adata.obs_vector(gene)
-        ylabel = adata.obs["groups"] == True
+        ylabel = adata.obs["groups"].astype(bool)
         score = roc_auc_score(ylabel, yscore)
         score = abs(score - 0.5) + 0.5
         auroc[gene] = score
@@ -390,7 +391,7 @@ def _one_vs_rest_dmr_runner(
     auroc_cutoff,
     verbose=True,
 ):
-    """one vs rest DMG runner"""
+    """Run one-vs-rest DMG analysis."""
     if verbose:
         print(f"Calculating cluster {cluster} DMGs.")
 
@@ -439,7 +440,7 @@ def one_vs_rest_dmg(
     verbose=True,
 ):
     """
-    Calculating cluster marker genes using one-vs-rest strategy.
+    Calculate cluster marker genes using one-vs-rest strategy.
 
     Parameters
     ----------
@@ -471,6 +472,7 @@ def one_vs_rest_dmg(
         The fold of other cell numbers comparing
     cpu :
             number of cpus
+
     Returns
     -------
     dmg_table
@@ -485,7 +487,7 @@ def one_vs_rest_dmg(
         mcds_paths = tmp
         tmp_created = True
     else:
-        raise ValueError(f'Need to provide either "mcds_path" or "mcds".')
+        raise ValueError('Need to provide either "mcds_path" or "mcds".')
 
     clusters = cell_meta[group].unique()
     dmg_table = []

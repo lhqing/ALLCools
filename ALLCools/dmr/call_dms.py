@@ -149,7 +149,7 @@ def call_dms(
     region=None,
 ):
     """
-    Call DMS from multiple ALLC files
+    Call DMS from multiple ALLC files.
 
     Parameters
     ----------
@@ -162,10 +162,6 @@ def call_dms(
     n_permute
     min_pvalue
     region
-
-    Returns
-    -------
-
     """
     pathlib.Path(output_dir).mkdir(exist_ok=True)
 

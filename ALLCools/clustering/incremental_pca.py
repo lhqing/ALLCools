@@ -7,7 +7,7 @@ from ..count_matrix.zarr import dataset_to_array
 
 
 def _normalize_per_cell(matrix, cell_sum):
-    """Normalize matrix row sum to to cell_sum"""
+    """Normalize matrix row sum to to cell_sum."""
     print("normalize per cell to CPM")
     if cell_sum is None:
         norm_vec = (matrix.sum(axis=1) + 1) / 1000000
@@ -20,6 +20,8 @@ def _normalize_per_cell(matrix, cell_sum):
 
 
 class IncrementalPCA:
+    """Incremental PCA to fit and transform large datasets."""
+
     def __init__(
         self,
         n_components=100,
@@ -30,7 +32,9 @@ class IncrementalPCA:
         **kwargs,
     ):
         """
-        Perform PCA for huge dataset that exceeds physical memory. Start from the raw count matrix stored in
+        Perform PCA for huge dataset that exceeds physical memory.
+
+        Start from the raw count matrix stored in xarray.Dataset.
 
         Parameters
         ----------
@@ -75,6 +79,7 @@ class IncrementalPCA:
         load_chunk=None,
         random_shuffle=True,
     ):
+        """Fit the dataset to get PC Loadings."""
         self.cell_sum = cell_sum
         self.use_features = use_features
         self.obs_dim = obs_dim
@@ -148,6 +153,7 @@ class IncrementalPCA:
         return
 
     def transform(self, ds, use_cells=None, chunk=100000):
+        """Transform the dataset to PCA space."""
         if not self._fit:
             raise ValueError("fit first before transform")
 
@@ -213,6 +219,7 @@ class IncrementalPCA:
         load_chunk=None,
         random_shuffle=True,
     ):
+        """Fit and transform the dataset."""
         self.fit(
             ds,
             use_cells=use_cells,

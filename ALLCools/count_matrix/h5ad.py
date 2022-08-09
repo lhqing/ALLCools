@@ -87,14 +87,14 @@ def _csr_matrix_to_anndata(
         X=total_matrix,
         obs=pd.DataFrame([], index=obs_names),
         var=var_df[["chrom"]],
-        uns=dict(
-            bin_size=bin_size,
-            chrom_size_path=chrom_size_path,
-            mc_type=mc_type,
-            count_type=count_type,
-            step_size=step_size,
-            strandness=strandness,
-        ),
+        uns={
+            "bin_size": bin_size,
+            "chrom_size_path": chrom_size_path,
+            "mc_type": mc_type,
+            "count_type": count_type,
+            "step_size": step_size,
+            "strandness": strandness,
+        },
     )
     adata.write(output_path, compression=compression, compression_opts=compression_opts)
     return output_path
@@ -113,6 +113,7 @@ def aggregate_region_count_to_paired_anndata(
     max_obj=3072,
     cpu=3,
 ):
+    """Aggregate region count to paired anndata."""
     # TODO write test
     # this should only deal with a simple case, aggregate 2 sample*feature 2-D matrix, one for mc, one for cov,
     # output to full or sparse format
@@ -126,7 +127,7 @@ def aggregate_region_count_to_paired_anndata(
     if file_uids is not None:
         file_uids = parse_file_paths(file_uids)
     else:
-        file_uids = [pathlib.Path(i).name.rstrip(".sparse.bed.gz") for i in count_tables]
+        file_uids = [pathlib.Path(i).name.replace(".sparse.bed.gz", "") for i in count_tables]
     if len(file_uids) != len(count_tables):
         raise ValueError("Length of file_uids do not match length of count_tables.")
 
@@ -257,9 +258,7 @@ def _transform_single_h5ad(
     window_size,
     compression,
 ):
-    """
-    Resize non-overlap chrom bin count adata
-    """
+    """Resize non-overlap chrom bin count adata."""
     if (step_size % bin_size != 0) or (window_size % bin_size != 0):
         raise ValueError("step_size and window_size need to be integral multiple of bin_size")
     n = step_size // bin_size
@@ -287,7 +286,7 @@ def _transform_single_h5ad(
         X=total_data,
         obs=adata.obs,
         var=generate_chrom_bin_bed_dataframe(chrom_size_path, window_size=window_size, step_size=step_size),
-        uns=dict(bin_size=window_size, step_size=step_size, chrom_size_path=chrom_size_path),
+        uns={"bin_size": window_size, "step_size": step_size, "chrom_size_path": chrom_size_path},
     )
 
     adata.write(filename=output_path, compression=compression)

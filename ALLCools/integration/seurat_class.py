@@ -314,12 +314,13 @@ class SeuratIntegration:
         k_score=30,
         alignments=None,
     ):
+        """Find anchors for each dataset pair."""
         if adata_names is None:
             adata_names = list(range(len(adata_list)))
         try:
             assert len(adata_names) == len(adata_list)
         except AssertionError:
-            print(f"length of adata_names does not match length of adata_list")
+            print("length of adata_names does not match length of adata_list.")
 
         self.adata_dict = {k: v for k, v in zip(adata_names, adata_list)}
         self.n_dataset = len(adata_list)
@@ -334,7 +335,7 @@ class SeuratIntegration:
         self.alignments = alignments
         self._get_all_pairs()
 
-        print("Find anchors across datasets")
+        print("Find anchors across datasets.")
         for i in range(self.n_dataset - 1):
             for j in range(i + 1, self.n_dataset):
                 if (alignments is not None) and (f"{i}-{j}" not in self.all_pairs):
@@ -418,6 +419,7 @@ class SeuratIntegration:
     def find_nearest_anchor(
         self, data, data_qry, ref, qry, key_correct="X_pca", npc=30, kweight=100, sd=1, random_state=0
     ):
+        """Find the nearest anchors for each cell in data."""
         print("Initialize")
         cum_ref, cum_qry = [0], [0]
         for xx in ref:
@@ -478,6 +480,7 @@ class SeuratIntegration:
         random_state=0,
         row_normalize=True,
     ):
+        """Transform query data to reference space."""
         data_ref = np.concatenate(data[ref])
         data_qry = np.concatenate(data[qry])
 
@@ -509,6 +512,7 @@ class SeuratIntegration:
         return data
 
     def integrate(self, key_correct, row_normalize=True, n_components=30, k_weight=100, sd=1, alignments=None):
+        """Integrate datasets by transform data matrices from query to reference data using the MNN information."""
         if alignments is not None:
             self.alignments = alignments
 
@@ -560,6 +564,7 @@ class SeuratIntegration:
         chunk_size=50000,
         random_state=0,
     ):
+        """Transfer labels from query to reference space."""
         adata_list = list(self.adata_dict.values())
 
         data_qry = np.concatenate([normalize(adata_list[i].obsm[key_dist], axis=1) for i in qry])
@@ -621,6 +626,7 @@ class SeuratIntegration:
         return result
 
     def save(self, output_path, save_local_knn=False, save_raw_anchor=False, save_mutual_knn=False):
+        """Save the model and results to disk."""
         # save each adata in a separate dir
         output_path = pathlib.Path(output_path)
         output_path.mkdir(exist_ok=True, parents=True)
@@ -647,6 +653,7 @@ class SeuratIntegration:
 
     @classmethod
     def load(cls, input_path):
+        """Load integrator from file."""
         adata_dir = f"{input_path}/adata"
         model_path = f"{input_path}/model.lib"
 
@@ -661,6 +668,7 @@ class SeuratIntegration:
 
     @classmethod
     def save_transfer_results_to_adata(cls, adata, transfer_results, new_label_suffix="_transfer"):
+        """Save transfer results to adata."""
         for key, df in transfer_results.items():
             adata.obs[key + new_label_suffix] = adata.obs[key].copy()
             adata.obs.loc[df.index, key + new_label_suffix] = df.idxmax(axis=1).values

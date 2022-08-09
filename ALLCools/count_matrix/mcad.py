@@ -37,7 +37,7 @@ def _count_single_allc(allc_path, bed_path, mc_pattern, output_dir, cutoff=0.9, 
     # bin raw counts
     with pysam.TabixFile(allc_path, "r") as allc:
         records = []  # list of [mc, cov, region_idx]
-        for idx, (region_id, (chrom, start, end)) in enumerate(region_bed.iterrows()):
+        for idx, (_, (chrom, start, end)) in enumerate(region_bed.iterrows()):
             total_mc = 0
             total_cov = 0
             try:
@@ -84,6 +84,7 @@ def generate_mcad(
     reverse_value=False,
 ):
     """
+    Generate MCAD from ALLC files.
 
     Parameters
     ----------
@@ -103,9 +104,6 @@ def generate_mcad(
         Values smaller than cutoff will be stored as 0, which reduces the file size
     reverse_value
         If true, use cdf instead of sf to make hyper-methylation events having higher values
-    Returns
-    -------
-
     """
     # validate
     if (cutoff < 0) or (cutoff > 1):

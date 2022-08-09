@@ -15,6 +15,7 @@ def prepare_motif_scan_snakemake(
     fnr_fpr_fold=1000,
     cpu=10,
 ):
+    """Prepare snakemake rules for motif scan."""
     output_dir = pathlib.Path(output_dir)
     output_dir.mkdir(exist_ok=True)
 
@@ -100,6 +101,7 @@ rule run_scan:
 
 
 def check_snakemake_success(output_dir):
+    """Check if snakemake jobs are finished."""
     output_dir = pathlib.Path(output_dir)
     all_success = True
     na_paths = []
@@ -118,6 +120,7 @@ def check_snakemake_success(output_dir):
 
 
 def save_motif_chunks(motif_chunk_dir, region_dim, output_path, is_motif_cluster):
+    """Save motif chunks to xarray/zarr."""
     if is_motif_cluster:
         chunk_list = sorted(pathlib.Path(motif_chunk_dir).glob("chunk_*/dmr_motif-cluster"))
     else:

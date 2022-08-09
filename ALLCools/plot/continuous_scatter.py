@@ -232,7 +232,7 @@ def continuous_scatter(
 
     # make color bar
     if colorbar and (hue is not None):
-        _colorbar_label_kws = dict(fontsize=labelsize, label=hue, labelpad=10, rotation=270)
+        _colorbar_label_kws = {"fontsize": labelsize, "label": hue, "labelpad": 10, "rotation": 270}
         if colorbar_label_kws is not None:
             _colorbar_label_kws.update(colorbar_label_kws)
 

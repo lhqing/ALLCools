@@ -94,7 +94,7 @@ def plot_on_plate(
 
 
 def simple_violin(data, x, y, rotate_x=True):
-    """Simple violin plot for dataframe with 2 columns."""
+    """Plot simple violin plot for dataframe with 2 columns."""
     fig, ax = plt.subplots(figsize=(5, 3))
     sns.violinplot(x=x, y=y, data=data, ax=ax)
     if rotate_x:

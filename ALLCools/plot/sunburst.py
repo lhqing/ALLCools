@@ -31,32 +31,7 @@ def sunbrust(
     uniform_section=False,
     order_dict=None,
 ):
-    """
-    Plot a sunburst diagram.
-
-    Parameters
-    ----------
-    pie_data
-        Tidy dataframe
-    ax
-    hue
-    hue_portion
-    cmap
-    colorbar
-    colorbar_kws
-    inner_radius
-    outer_radius
-    anno_col
-    text_anno
-    anno_layer_size
-    col_color_dict
-    startangle
-    anno_ang_min
-    anno_border
-    text_expend
-    uniform_section
-    order_dict
-    """
+    """Plot a sunburst diagram."""
     return_axes = [ax]
     if order_dict is None:
         order_dict = {}

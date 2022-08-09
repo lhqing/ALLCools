@@ -1,4 +1,5 @@
 def install_r_package(name):
+    """Install R package."""
     from rpy2.robjects.packages import importr, isinstalled
     from rpy2.robjects.vectors import StrVector
 
@@ -9,6 +10,7 @@ def install_r_package(name):
 
 
 def install_github_r_package(github_name):
+    """Install R package from github."""
     from rpy2.robjects.packages import importr, isinstalled
 
     install_r_package("devtools")

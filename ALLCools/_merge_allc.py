@@ -1,5 +1,5 @@
 """
-Some of the functions are modified from methylpy https://github.com/yupenghe/methylpy
+Some of the functions are modified from methylpy https://github.com/yupenghe/methylpy.
 
 Original Author: Yupeng He
 """
@@ -48,6 +48,8 @@ class _ALLC:
 
 def _increase_soft_fd_limit():
     """
+    Increase the soft limit of file handle.
+
     Increase soft file descriptor limit to hard limit,
     this is the maximum a process can do
     Use this in merge_allc, because for single cell, a lot of file need to be opened
@@ -204,7 +206,7 @@ def _merge_allc_files_tabix(
     file_reading = np.array([True for _ in range(len(allc_files))])
 
     # init
-    for index, allc_file in enumerate(allc_files):
+    for index in range(len(allc_files)):
         try:
             line = file_handles[index].readline()
             fields = line.split("\t")
@@ -331,7 +333,7 @@ def _merge_allc_files_tabix_with_snp_info(
     file_reading = np.array([True for _ in range(len(allc_files))])
 
     # init
-    for index, allc_file in enumerate(allc_files):
+    for index in range(len(allc_files)):
         line = file_handles[index].readline()
         if line:
             fields = line.split("\t")
@@ -466,9 +468,6 @@ def merge_allc_files(
         {binarize_doc}
     snp
         {snp_doc}
-    Returns
-    -------
-
     """
     # TODO binarize do not work because when merge batch allc, the previous batch merged allc is not single cell
     # can not treat that as binarize, need to reimplement merge ALLC to support binarize in merge allc

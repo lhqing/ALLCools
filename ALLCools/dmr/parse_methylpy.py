@@ -24,6 +24,7 @@ def _make_hypo_hyper_matrix(series, dmr_values):
 
 
 def methylpy_to_region_ds(dmr_path, output_dir):
+    """Parse methylpy output to RegionDS dataset."""
     pathlib.Path(output_dir).mkdir(parents=True)
     with open(f"{output_dir}/.ALLCools", "w") as f:
         config = {"region_dim": "dmr", "ds_region_dim": {"dmr": "dmr"}}

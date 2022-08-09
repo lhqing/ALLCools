@@ -178,10 +178,12 @@ class RegionDS(xr.Dataset):
 
     @property
     def region_dim(self):
+        """Get the region dimension."""
         return self.attrs.get("region_dim")
 
     @region_dim.setter
     def region_dim(self, region_dim):
+        """Set the region dimension."""
         if region_dim is not None:
             if region_dim not in self.dims:
                 raise KeyError(f"{region_dim} does not occur in dimension names: {list(self.dims.keys())}")
@@ -191,10 +193,12 @@ class RegionDS(xr.Dataset):
 
     @property
     def chrom_size_path(self):
+        """Get the chrom size path."""
         return self.attrs.get("chrom_size_path")
 
     @chrom_size_path.setter
     def chrom_size_path(self, chrom_size_path):
+        """Set the chrom size path."""
         if chrom_size_path is not None:
             chrom_size_path = pathlib.Path(chrom_size_path).absolute()
             if not chrom_size_path.exists():
@@ -205,10 +209,12 @@ class RegionDS(xr.Dataset):
 
     @property
     def location(self):
+        """Get the disk location."""
         return self.attrs.get("region_ds_location")
 
     @location.setter
     def location(self, path):
+        """Set the disk location to save results."""
         if path is not None:
             location = pathlib.Path(path).absolute()
             self.attrs["region_ds_location"] = str(location)
@@ -231,9 +237,8 @@ class RegionDS(xr.Dataset):
 
         Returns
         -------
-
+        RegionDS
         """
-
         # sort bed based on chrom_size_path
         if isinstance(bed, (str, pathlib.PosixPath)):
             if sort_bed:
@@ -286,6 +291,7 @@ class RegionDS(xr.Dataset):
         chunks="auto",
         engine="zarr",
     ):
+        """Open a RegionDS from a zarr file."""
         if isinstance(path, (str, pathlib.PosixPath)):
             _path = pathlib.Path(path).absolute()
 
@@ -334,7 +340,7 @@ class RegionDS(xr.Dataset):
                                         engine=engine,
                                     )
                                 )
-                            except BaseException as e:
+                            except Exception as e:
                                 print(f"An error raised when reading {sub_dir_path}.")
                                 raise e
                     region_ds = cls(
@@ -408,6 +414,7 @@ class RegionDS(xr.Dataset):
             Dimension name of regions
         split_large_chunks
             Split large dask array chunks if true
+
         Returns
         -------
         RegionDS
@@ -451,6 +458,7 @@ class RegionDS(xr.Dataset):
         return ds
 
     def iter_index(self, chunk_size=100000, dim=None):
+        """Iterate over the index of the dataset."""
         if dim is None:
             dim = self.region_dim
 
@@ -460,6 +468,7 @@ class RegionDS(xr.Dataset):
             yield use_index
 
     def iter_array(self, chunk_size=100000, dim=None, da=None, load=False):
+        """Iterate over the data array of the dataset along given dim."""
         if dim is None:
             dim = self.region_dim
 
@@ -488,6 +497,7 @@ class RegionDS(xr.Dataset):
         chrom_size_path=None,
         standardize_length=None,
     ):
+        """Get fasta file for each region in the dataset."""
         bed = self.get_bed(
             with_id=True,
             bedtools=True,
@@ -506,6 +516,7 @@ class RegionDS(xr.Dataset):
         chrom_size_path=None,
         standardize_length=None,
     ):
+        """Get bed file for each region in the dataset."""
         if chrom_size_path is None:
             chrom_size_path = self.chrom_size_path  # will be none if not exist
 
@@ -557,7 +568,7 @@ class RegionDS(xr.Dataset):
 
         region_ds_path = self.location
         if region_ds_path is None:
-            raise ValueError(f"Must have an on-disk location to annotate bigwigs.")
+            raise ValueError("Must have an on-disk location to annotate bigwigs.")
 
         if chrom_size_path is None:
             chrom_size_path = self.chrom_size_path
@@ -594,7 +605,7 @@ class RegionDS(xr.Dataset):
                 # time.sleep(1)
 
             chunks_to_write = {}
-            for i, future in enumerate(as_completed(futures)):
+            for future in as_completed(futures):
                 chunk_i = futures[future]
                 output_path = future.result()
                 chunks_to_write[chunk_i] = output_path
@@ -636,6 +647,7 @@ class RegionDS(xr.Dataset):
         cpu=1,
         save=True,
     ):
+        """Annotate the region dataset by bigwigs."""
         if isinstance(bigwig_table, dict):
             track_paths = pd.Series(bigwig_table)
         elif isinstance(bigwig_table, pd.Series):
@@ -645,15 +657,15 @@ class RegionDS(xr.Dataset):
         else:
             track_paths = pd.read_csv(bigwig_table, sep="\t", index_col=0, squeeze=True, header=None)
 
-        kwargs = dict(
-            track_paths=track_paths,
-            dim=dim,
-            slop=slop,
-            chrom_size_path=chrom_size_path,
-            value_type=value_type,
-            chunk_size=chunk_size,
-            dtype=dtype,
-        )
+        kwargs = {
+            "track_paths": track_paths,
+            "dim": dim,
+            "slop": slop,
+            "chrom_size_path": chrom_size_path,
+            "value_type": value_type,
+            "chunk_size": chunk_size,
+            "dtype": dtype,
+        }
         self._chunk_annotation_executor(_annotate_by_bigwigs_worker, cpu=cpu, save=save, **kwargs)
         return
 
@@ -670,6 +682,7 @@ class RegionDS(xr.Dataset):
         fraction=0.2,
         save=True,
     ):
+        """Annotate the region dataset by beds."""
         bed_tmp = pathlib.Path(f"./pybedtools_tmp_{np.random.randint(0, 100000)}").absolute()
         bed_tmp.mkdir(exist_ok=True)
         default_tmp = pybedtools.helpers.get_tempdir()
@@ -684,16 +697,16 @@ class RegionDS(xr.Dataset):
         else:
             track_paths = pd.read_csv(bed_table, sep="\t", index_col=0, squeeze=True, header=None)
 
-        kwargs = dict(
-            track_paths=track_paths,
-            dim=dim,
-            slop=slop,
-            chrom_size_path=chrom_size_path,
-            chunk_size=chunk_size,
-            dtype=dtype,
-            bed_sorted=bed_sorted,
-            fraction=fraction,
-        )
+        kwargs = {
+            "track_paths": track_paths,
+            "dim": dim,
+            "slop": slop,
+            "chrom_size_path": chrom_size_path,
+            "chunk_size": chunk_size,
+            "dtype": dtype,
+            "bed_sorted": bed_sorted,
+            "fraction": fraction,
+        }
         self._chunk_annotation_executor(_annotate_by_beds_worker, cpu=cpu, save=save, **kwargs)
 
         subprocess.run(f"rm -rf {bed_tmp}", shell=True)
@@ -703,6 +716,7 @@ class RegionDS(xr.Dataset):
         return
 
     def get_feature(self, feature_name, dim=None, da_name=None):
+        """Get a feature from the dataset."""
         if dim is None:
             try:
                 data = self.coords[feature_name].to_pandas()
@@ -730,9 +744,10 @@ class RegionDS(xr.Dataset):
         motif_dim="motif",
         snakemake=False,
     ):
+        """Scan motifs in the region dataset."""
         region_ds_path = self.location
         if region_ds_path is None:
-            raise ValueError(f"Must have an on-disk location to annotate bigwigs.")
+            raise ValueError("Must have an on-disk location to annotate bigwigs.")
 
         if chrom_size_path is None:
             chrom_size_path = self.attrs.get("chrom_size_path")
@@ -911,6 +926,7 @@ class RegionDS(xr.Dataset):
         sample_dim="sample",
         use_collapsed=True,
     ):
+        """Get the index of hypo and hyper DMR regions."""
         if region_state_da is None:
             if region_dim is None:
                 region_dim = self.region_dim
@@ -947,6 +963,7 @@ class RegionDS(xr.Dataset):
         sample_dim="sample",
         use_collapsed=True,
     ):
+        """Get the index of pairwise differential DMR regions."""
         a_hypo, a_hyper = self.get_hypo_hyper_index(
             a,
             region_dim=region_dim,
@@ -986,6 +1003,7 @@ class RegionDS(xr.Dataset):
         motif_da=None,
         alternative="two-sided",
     ):
+        """Run motif enrichment analysis on a RegionDS."""
         if region_dim is None:
             region_dim = self.region_dim
         if motif_da is None:
@@ -1025,6 +1043,7 @@ class RegionDS(xr.Dataset):
         alternative="two-sided",
         use_collapsed=True,
     ):
+        """Run motif enrichment for a sample."""
         hypo_region, hyper_region = self.get_hypo_hyper_index(
             sample,
             region_dim=region_dim,
@@ -1054,6 +1073,7 @@ class RegionDS(xr.Dataset):
         motif_da=None,
         alternative="two-sided",
     ):
+        """Perform pairwise differential motif enrichment analysis."""
         a_not_b, _, b_not_a = self.get_pairwise_differential_index(
             a,
             b,
@@ -1073,13 +1093,15 @@ class RegionDS(xr.Dataset):
         return test_results
 
     def object_coords_to_string(self, dtypes=None):
+        """Turn object dtype into a string dtype."""
         obj_to_str(self, dtypes)
         return
 
     def save(self, da_name=None, output_path=None, mode="w", change_region_dim=True):
+        """Save the data array to a RegionDS zarr dataset."""
         if output_path is None:
             if self.location is None:
-                raise ValueError(f"RegionDS.location is None when trying to save.")
+                raise ValueError("RegionDS.location is None when trying to save.")
             pathlib.Path(self.location).mkdir(parents=True, exist_ok=True)
 
             output_path = f"{self.location}/{self.region_dim}"
@@ -1099,4 +1121,5 @@ class RegionDS(xr.Dataset):
         return
 
     def get_coords(self, name):
+        """Get the coordinates of a given variable."""
         return self.coords[name].to_pandas()

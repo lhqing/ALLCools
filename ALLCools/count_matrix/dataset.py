@@ -20,7 +20,7 @@ ALLOW_QUANT_TYPES = ["count", "hypo-score", "hyper-score"]
 
 
 @lru_cache(99999)
-def bin_sf(cov, mc, p):
+def _bin_sf(cov, mc, p):
     if cov > mc:
         return stats.binom(cov, p).sf(mc)
     else:
@@ -28,22 +28,22 @@ def bin_sf(cov, mc, p):
         return 0
 
 
-def cell_sf(cell_count_df):
+def _cell_sf(cell_count_df):
     mc_sum, cov_sum = cell_count_df.sum()
     p = mc_sum / (cov_sum + 0.000001)  # prevent empty allc error
-    pv = cell_count_df.apply(lambda x: bin_sf(x["cov"], x["mc"], p), axis=1).astype("float16")
+    pv = cell_count_df.apply(lambda x: _bin_sf(x["cov"], x["mc"], p), axis=1).astype("float16")
     return pv
 
 
-class Quant:
+class _Quant:
     def __init__(self, mc_types, quant_type, kwargs):
         self.mc_types = mc_types
         self.quant_type = quant_type
         self.kwargs = kwargs
 
 
-class CountQuantifier:
-    """Sum count by mC type for single region in single ALLC"""
+class _CountQuantifier:
+    """Sum count by mC type for single region in single ALLC."""
 
     def __init__(self, mc_types):
         self.mc_types = mc_types
@@ -52,12 +52,14 @@ class CountQuantifier:
         return
 
     def read_line(self, line):
+        """Read a line from an ALLC file."""
         chrom, pos, _, context, mc, cov, *_ = line.split("\t")
         self.mc_data[context] += int(mc)
         self.cov_data[context] += int(cov)
         return
 
     def summary(self):
+        """Return a summary of the data."""
         mc_type_data = []
         for mc_type in self.mc_types:
             mc = sum(self.mc_data[k] for k in parse_mc_pattern(mc_type))
@@ -66,7 +68,8 @@ class CountQuantifier:
         return mc_type_data
 
 
-def determine_datasets(regions, quantifiers, chrom_size_path, tmp_dir):
+def _determine_datasets(regions, quantifiers, chrom_size_path, tmp_dir):
+    """Determine datasets for each region."""
     tmp_dir = pathlib.Path(tmp_dir).absolute()
     tmp_dir.mkdir(exist_ok=True, parents=True)
 
@@ -109,7 +112,11 @@ def determine_datasets(regions, quantifiers, chrom_size_path, tmp_dir):
                 _dfs = []
                 for chrom, chrom_df in region_bed_df.groupby("chrom"):
                     chrom_df = chrom_df.reset_index(drop=True)
-                    chrom_df.index = chrom_df.index.map(lambda i: f"{chrom}_{i}")
+
+                    def _id(i, c=chrom):
+                        return f"{c}_{i}"
+
+                    chrom_df.index = chrom_df.index.map(_id)
                     _dfs.append(chrom_df)
                 region_bed_df = pd.concat(_dfs)
 
@@ -144,12 +151,12 @@ def determine_datasets(regions, quantifiers, chrom_size_path, tmp_dir):
 
         if quant_type not in ALLOW_QUANT_TYPES:
             raise ValueError(f"QUANT_TYPE need to be in {ALLOW_QUANT_TYPES}, got {quant_type} in {quantifier}.")
-        datasets[name]["quant"].append(Quant(mc_types=mc_types, quant_type=quant_type, kwargs=kwargs))
+        datasets[name]["quant"].append(_Quant(mc_types=mc_types, quant_type=quant_type, kwargs=kwargs))
     return datasets
 
 
-def count_single_region_set(allc_table, region_config, obs_dim, region_dim):
-    """Get cell-by-region-by-mc_types count matrix, save to zarr"""
+def _count_single_region_set(allc_table, region_config, obs_dim, region_dim):
+    """Get cell-by-region-by-mc_types count matrix, save to zarr."""
     total_mc_types = []
     for quant in region_config["quant"]:
         total_mc_types += quant.mc_types
@@ -163,8 +170,8 @@ def count_single_region_set(allc_table, region_config, obs_dim, region_dim):
             region_chunks = pd.read_csv(region_config["regions"], index_col=0, chunksize=1000)
             for chunk in region_chunks:
                 region_ids += chunk.index.tolist()
-                for region, (chrom, start, end) in chunk.iterrows():
-                    count_quant = CountQuantifier(mc_types=total_mc_types)
+                for _, (chrom, start, end) in chunk.iterrows():
+                    count_quant = _CountQuantifier(mc_types=total_mc_types)
                     try:
                         allc_lines = allc.fetch(chrom, start, end)
                         for line in allc_lines:
@@ -183,10 +190,10 @@ def count_single_region_set(allc_table, region_config, obs_dim, region_dim):
     return total_data
 
 
-def calculate_pv(data, reverse_value, obs_dim, var_dim, cutoff=0.9):
+def _calculate_pv(data, reverse_value, obs_dim, var_dim, cutoff=0.9):
     pv = []
     for cell in data.get_index(obs_dim):
-        value = cell_sf(data.sel(cell=cell).to_pandas())
+        value = _cell_sf(data.sel(cell=cell).to_pandas())
         pv.append(value)
     pv = np.array(pv)
 
@@ -200,10 +207,12 @@ def calculate_pv(data, reverse_value, obs_dim, var_dim, cutoff=0.9):
     return pv
 
 
-def count_single_zarr(allc_table, region_config, obs_dim, region_dim, output_path, obs_dim_dtype, count_dtype="uint32"):
-    """process single region set and its quantifiers"""
+def _count_single_zarr(
+    allc_table, region_config, obs_dim, region_dim, output_path, obs_dim_dtype, count_dtype="uint32"
+):
+    """Process single region set and its quantifiers."""
     # count all ALLC and mC types that's needed for quantifiers if this region_dim
-    count_ds = count_single_region_set(
+    count_ds = _count_single_region_set(
         allc_table=allc_table, region_config=region_config, obs_dim=obs_dim, region_dim=region_dim
     )
 
@@ -224,7 +233,7 @@ def count_single_zarr(allc_table, region_config, obs_dim, region_dim, output_pat
     for quant in region_config["quant"]:
         if quant.quant_type == "hypo-score":
             for mc_type in quant.mc_types:
-                data = calculate_pv(
+                data = _calculate_pv(
                     data=count_ds.sel(mc_type=mc_type)[f"{region_dim}_da"],
                     reverse_value=False,
                     obs_dim=obs_dim,
@@ -234,7 +243,7 @@ def count_single_zarr(allc_table, region_config, obs_dim, region_dim, output_pat
                 total_ds[f"{region_dim}_da_{mc_type}-hypo-score"] = data
         elif quant.quant_type == "hyper-score":
             for mc_type in quant.mc_types:
-                data = calculate_pv(
+                data = _calculate_pv(
                     count_ds.sel(mc_type=mc_type)[f"{region_dim}_da"],
                     reverse_value=True,
                     obs_dim=obs_dim,
@@ -303,7 +312,7 @@ def generate_dataset(
     # prepare regions and determine quantifiers
     pathlib.Path(output_path).mkdir(exist_ok=True)
     tmp_dir = f"{output_path}_tmp"
-    datasets = determine_datasets(regions, quantifiers, chrom_size_path, tmp_dir)
+    datasets = _determine_datasets(regions, quantifiers, chrom_size_path, tmp_dir)
 
     # copy chrom_size_path to output_path
     subprocess.run(["cp", "-f", chrom_size_path, f"{output_path}/chrom_sizes.txt"], check=True)
@@ -317,7 +326,7 @@ def generate_dataset(
             for region_dim, region_config in datasets.items():
                 chunk_path = f"{tmp_dir}/chunk_{region_dim}_{chunk_start}.zarr"
                 f = exe.submit(
-                    count_single_zarr,
+                    _count_single_zarr,
                     allc_table=allc_chunk,
                     region_config=region_config,
                     obs_dim=obs_dim,

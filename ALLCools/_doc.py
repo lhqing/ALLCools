@@ -186,9 +186,7 @@ table_to_allc_sort = "whether sort the ALLC table after conversion."
 
 
 def doc_params(**kwds):
-    """\
-    Docstrings should start with "\" in the first line for proper formatting.
-    """
+    r"""Docstrings should start with "\" in the first line for proper formatting."""
 
     def dec(obj):
         obj.__doc__ = dedent(obj.__doc__).format(**kwds)

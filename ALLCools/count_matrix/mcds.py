@@ -40,9 +40,9 @@ def _region_count_table_to_csr_npz(
     dtype=DEFAULT_MCDS_DTYPE,
 ):
     """
-    helper func of _aggregate_region_count_to_mcds
+    Convert region count table to csr matrix.
 
-    Take a list of region count table paths, read,
+    Helper func of _aggregate_region_count_to_mcds. Take a list of region count table paths, read,
     aggregate them into a 2D sparse matrix and save the mC and COV separately.
     This function don't take care of any path selection, but assume all region_count_table is homogeneous type
     It return the saved file path
@@ -120,11 +120,11 @@ def _region_count_table_to_csr_npz(
 
 def _csr_matrix_to_dataarray(matrix_table, row_name, row_index, col_name, col_index, other_dim_info):
     """
-    helper func of _aggregate_region_count_to_mcds
+    Aggregate sparse array files into a single xarray.DataArray.
 
-    This function aggregate sparse array files into a single xarray.DataArray,
-    combining cell chunks, mc/cov count type together.
+    Combining cell chunks, mc/cov count type together.
     The matrix_table provide all file paths, each row is for a cell chunk, with mc and cov matrix path separately.
+    Helper func of _aggregate_region_count_to_mcds.
     """
     total_mc_matrix = ss.vstack([ss.load_npz(path) for path in matrix_table["mc"]]).todense()
     total_cov_matrix = ss.vstack([ss.load_npz(path) for path in matrix_table["cov"]]).todense()
@@ -157,9 +157,7 @@ def _aggregate_region_count_to_mcds(
     cpu=1,
     dtype=DEFAULT_MCDS_DTYPE,
 ):
-    """
-    This function aggregate all the region count table into a single mcds
-    """
+    """Aggregate all the region count table into a single mcds."""
     # TODO write test
     output_dir = pathlib.Path(output_dir)
     summary_df = pd.read_hdf(output_dir / "REGION_COUNT_SUMMARY.hdf")
@@ -326,10 +324,6 @@ def generate_mcds(
         {binarize_doc}
     engine
         use zarr or netcdf to store dataset, default is zarr
-
-    Returns
-    -------
-
     """
     if engine not in ["zarr", "netcdf"]:
         raise ValueError(f'engine need to be "zarr" or "netcdf", got {engine}')

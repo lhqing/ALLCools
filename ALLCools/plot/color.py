@@ -1,9 +1,9 @@
 import copy
 
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
 import numpy as np
 import seaborn as sns
+from matplotlib import ticker
 from matplotlib.cm import get_cmap
 from matplotlib.colorbar import ColorbarBase
 from matplotlib.colors import ListedColormap, Normalize
@@ -11,6 +11,8 @@ from matplotlib.colors import ListedColormap, Normalize
 
 def _continuous_color_palette(color, n, skip_border=1):
     """
+    Generate a continuous color palette.
+
     This function concatenate the result of both sns.light_palette
     and sns.dark_palette to get a wider color range
     """
@@ -46,7 +48,7 @@ def level_one_palette(name_list, order=None, palette="auto"):
 
     if order is None:
         try:
-            order = list(sorted(name_set))
+            order = sorted(name_set)
         except TypeError:
             # name set contains multiple dtype (e.g., str and np.NaN)
             # do not sort

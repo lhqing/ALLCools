@@ -46,13 +46,12 @@ def _read_snap_meta(f):
 
 
 def _read_snap_genes(file_path):
-    """Read gene data from snap hdf5 file into anndata.AnnData"""
-
+    """Read gene data from snap hdf5 file into anndata.AnnData."""
     with h5py.File(file_path) as f:
-        data = np.array(f[f"/GM/count"], dtype=np.uint8)
-        idx = np.array(f[f"/GM/idx"]) - 1  # R is 1 based, python is 0 based
-        idy = np.array(f[f"/GM/idy"]) - 1  # R is 1 based, python is 0 based
-        gene_id = np.array(f[f"/GM/name"]).astype(str)
+        data = np.array(f["/GM/count"], dtype=np.uint8)
+        idx = np.array(f["/GM/idx"]) - 1  # R is 1 based, python is 0 based
+        idy = np.array(f["/GM/idy"]) - 1  # R is 1 based, python is 0 based
+        gene_id = np.array(f["/GM/name"]).astype(str)
 
         cell_meta, cell_barcode = _read_snap_meta(f)
         data = ss.coo_matrix((data, (idx, idy)), shape=(cell_barcode.size, gene_id.size), dtype=np.uint8).tocsc()
@@ -114,7 +113,7 @@ def snap_to_xarray(snap_path, bin_sizes=(5000,), gene=True, dtype=np.uint8):
     if gene:
         adata = read_snap(snap_path, bin_kind="gene")
         data = adata_to_df(adata=adata, var_dim="gene", obs_dim="cell", dtype=dtype)
-        total_records[f"gene_da"] = data
+        total_records["gene_da"] = data
     ds = xr.Dataset(total_records)
     return ds
 

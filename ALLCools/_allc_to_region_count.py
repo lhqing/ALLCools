@@ -23,9 +23,7 @@ from .utilities import (
 
 
 def _bedtools_map(region_bed, site_bed, out_bed, chrom_size_path, save_zero_cov=True):
-    """
-    Use bedtools map to map site_bed format into any bed file provided.
-    """
+    """Use bedtools map to map site_bed format into any bed file provided."""
     cmd = f"bedtools map -a {region_bed} -b {site_bed} -c 4,5 -o sum,sum -null 0 -g {chrom_size_path}"
     print(cmd)
     bed_out = subprocess.Popen(
@@ -62,6 +60,8 @@ def _bedtools_map(region_bed, site_bed, out_bed, chrom_size_path, save_zero_cov=
 
 def _map_to_sparse_chrom_bin(site_bed, out_bed, chrom_size_path, bin_size=500):
     """
+    Map site_bed to sparse chrom_bin bed file.
+
     Calculate chromosome bins regional count, output is SPARSE,
     bin_id constructed from chrom_size_path and can be reproduce.
     """
@@ -149,7 +149,9 @@ def allc_to_region_count(
     binarize: bool = False,
 ):
     """\
-    Calculate mC and cov at regional level. Region can be provided in 2 forms:
+    Calculate mC and cov at regional level.
+
+    Region can be provided in 2 forms:
     1. BED file, provided by region_bed_paths, containing arbitrary regions and use bedtools map to calculate;
     2. Fix-size non-overlap genome bins, provided by bin_sizes.
     Form 2 is much faster to calculate than form 1.
@@ -187,8 +189,6 @@ def allc_to_region_count(
         For single cell data, parallel on cell level is better.
     binarize
         {binarize_doc}
-    Returns
-    -------
     """
     cpu = int(cpu)
 
@@ -202,7 +202,7 @@ def allc_to_region_count(
     if region_bed_paths is not None:
         if (region_bed_names is None) or (len(region_bed_names) != len(region_bed_paths)):
             raise ValueError("Different number of bed names and paths provided")
-        for region_name, region_bed_path in zip(region_bed_names, region_bed_paths):
+        for region_bed_path in region_bed_paths:
             if not check_tbi_chroms(region_bed_path, genome_dict):
                 raise ValueError(
                     f"Make sure the bed file {region_bed_path} is:"

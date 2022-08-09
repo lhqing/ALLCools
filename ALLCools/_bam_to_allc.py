@@ -1,5 +1,5 @@
 """
-This file is modified from methylpy https://github.com/yupenghe/methylpy
+This file is modified from methylpy https://github.com/yupenghe/methylpy.
 
 Author: Yupeng He
 
@@ -90,7 +90,8 @@ def _convert_bam_strandness(in_bam_path, out_bam_path):
 
 def _read_faidx(faidx_path):
     """
-    Read fadix of reference fasta file
+    Read fadix of reference fasta file.
+
     samtools fadix ref.fa
     """
     return pd.read_csv(
@@ -103,9 +104,7 @@ def _read_faidx(faidx_path):
 
 
 def _get_chromosome_sequence_upper(fasta_path, fai_df, query_chrom):
-    """
-    read a whole chromosome sequence into memory
-    """
+    """Read a whole chromosome sequence into memory."""
     chrom_pointer = fai_df.loc[query_chrom, "OFFSET"]
     tail = fai_df.loc[query_chrom, "LINEBASES"] - fai_df.loc[query_chrom, "LINEWIDTH"]
     seq = ""
@@ -144,9 +143,7 @@ def _bam_to_allc_worker(
     tabix=True,
     save_count_df=False,
 ):
-    """
-    None parallel bam_to_allc worker function, call by bam_to_allc
-    """
+    """None parallel bam_to_allc worker function, call by bam_to_allc."""
     # mpileup
     if region is None:
         mpileup_cmd = f"samtools mpileup -Q {min_base_quality} " f"-q {min_mapq} -B -f {reference_fasta} {bam_path}"
@@ -246,7 +243,7 @@ def _bam_to_allc_worker(
             pos = int(fields[1]) - 1
             try:
                 context = seq[(pos - num_upstr_bases) : (pos + num_downstr_bases + 1)]
-            except:  # complete context is not available, skip
+            except Exception:  # complete context is not available, skip
                 continue
             unconverted_c = fields[4].count(".")
             converted_c = fields[4].count("T")
@@ -447,27 +444,27 @@ def bam_to_allc(
         raise NotImplementedError
 
         temp_out_paths = []
-        for batch_id, region in enumerate(regions):
+        for batch_id in range(len(regions)):
             temp_out_paths.append(output_path + f".batch_{batch_id}.tmp.tsv.gz")
 
         with ProcessPoolExecutor(max_workers=cpu) as executor:
             future_dict = {}
             for batch_id, (region, out_temp_path) in enumerate(zip(regions, temp_out_paths)):
-                _kwargs = dict(
-                    bam_path=bam_path,
-                    reference_fasta=reference_fasta,
-                    fai_df=fai_df,
-                    output_path=out_temp_path,
-                    region=region,
-                    num_upstr_bases=num_upstr_bases,
-                    num_downstr_bases=num_downstr_bases,
-                    buffer_line_number=buffer_line_number,
-                    min_mapq=min_mapq,
-                    min_base_quality=min_base_quality,
-                    compress_level=compress_level,
-                    tabix=False,
-                    save_count_df=False,
-                )
+                _kwargs = {
+                    "bam_path": bam_path,
+                    "reference_fasta": reference_fasta,
+                    "fai_df": fai_df,
+                    "output_path": out_temp_path,
+                    "region": region,
+                    "num_upstr_bases": num_upstr_bases,
+                    "num_downstr_bases": num_downstr_bases,
+                    "buffer_line_number": buffer_line_number,
+                    "min_mapq": min_mapq,
+                    "min_base_quality": min_base_quality,
+                    "compress_level": compress_level,
+                    "tabix": False,
+                    "save_count_df": False,
+                }
                 future_dict[executor.submit(_bam_to_allc_worker, **_kwargs)] = batch_id
 
             count_dfs = []

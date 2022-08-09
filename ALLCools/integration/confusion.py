@@ -24,19 +24,18 @@ def _get_overlap_score(left_values, right_values):
 
 def calculate_overlap_score(left_part, right_part):
     """
-    Given 2 dataframe for left/source and right/target dataset,
-    calculate the direct confusion matrix based on co-cluster labels.
+    Calculate the overlap score between intra-dataset clusters using co-cluster information.
+
+    Input are 2 dataframes for left/source and right/target dataset,
     Each dataframe only contain 2 columns, first is original cluster, second is co-cluster.
     The returned confusion matrix will be the form of source-cluster by target-cluster.
 
     Parameters
     ----------
     left_part
+        Dataframe for left/source dataset.
     right_part
-
-    Returns
-    -------
-
+        Dataframe for right/target dataset.
     """
     left_part = left_part.astype(str)
     original_left_name = left_part.columns[0]

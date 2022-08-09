@@ -23,7 +23,7 @@ def _hclust_to_scipy_linkage(result, plot=True):
     # add the 4th col: number of singleton
     cluster_dict = {}
     labels = list(range(total_obs))
-    for cur_cluster_id, (left, right, distance) in scipy_linkage.iterrows():
+    for cur_cluster_id, (left, right, _) in scipy_linkage.iterrows():
         left = int(left)
         right = int(right)
         cluster_dict[cur_cluster_id] = {"left": set(), "right": set()}
@@ -88,15 +88,12 @@ class Dendrogram:
 
     def fit(self, data):
         """
+        Fit the dendrogram model.
 
         Parameters
         ----------
         data
             The data is in obs-by-var form, row is obs.
-
-        Returns
-        -------
-
         """
         try:
             import rpy2.robjects as ro

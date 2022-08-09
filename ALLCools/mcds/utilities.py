@@ -87,23 +87,10 @@ def calculate_posterior_mc_frac_lazy(
     clip_norm_value=10,
 ):
     """
+    Calculate posterior mc frac for each cell, dask version.
+
     Running calculate_posterior_mc_rate with dask array and directly save to disk.
-    This is highly memory efficient. Use this for dataset larger then machine memory.
-
-    Parameters
-    ----------
-    mc_da
-    cov_da
-    var_dim
-    output_prefix
-    cell_chunk
-    dask_cell_chunk
-    normalize_per_cell
-    clip_norm_value
-
-    Returns
-    -------
-
+    This is highly memory efficient. Use this for dataset larger than machine memory.
     """
     cell_list = mc_da.get_index("cell")
     cell_chunks = [cell_list[i : i + cell_chunk] for i in range(0, cell_list.size, cell_chunk)]
@@ -185,6 +172,8 @@ def highly_variable_methylation_feature(
     cov_binsize=100,
 ):
     """
+    Calculate highly variable methylation features.
+
     Adapted from Scanpy, the main difference is that,
     this function normalize dispersion based on both mean and cov bins.
     """
@@ -366,7 +355,7 @@ def write_ordered_chunks(
 
     # write chunks
     wrote = False
-    for chunk_i, output_path in sorted(chunks_to_write.items(), key=lambda _i: _i[0]):
+    for _, output_path in sorted(chunks_to_write.items(), key=lambda _i: _i[0]):
         # save chunk into the zarr
         chunk_ds = xr.open_dataset(output_path, engine=engine).load()
         obj_to_str(chunk_ds, coord_dtypes)

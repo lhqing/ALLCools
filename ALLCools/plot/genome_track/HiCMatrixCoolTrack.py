@@ -227,8 +227,9 @@ file_type = {TRACK_TYPE}
 
     def pcolormesh_45deg(self, ax, matrix_c, start_pos_vector):
         """
-        Turns the matrix 45 degrees and adjusts the
-        bins to match the actual start end positions.
+        Plot a 45 degree heatmap.
+
+        Turns the matrix 45 degrees and adjusts the bins to match the actual start end positions.
         """
         # code for rotating the image 45 degrees
         n = matrix_c.shape[0]

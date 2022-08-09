@@ -4,6 +4,7 @@ import pandas as pd
 
 
 def read_gtf(gtf_path):
+    """Read GTF file."""
     gtf = pd.read_csv(
         gtf_path,
         comment="#",
@@ -15,6 +16,7 @@ def read_gtf(gtf_path):
 
 
 def subset_gtf(gtf, regions, output_path=None, select_feature=None):
+    """Subset GTF file by genomic regions."""
     if isinstance(gtf, (str, pathlib.Path)):
         gtf = read_gtf(gtf)
 

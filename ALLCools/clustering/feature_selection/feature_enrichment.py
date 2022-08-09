@@ -8,6 +8,8 @@ from statsmodels.stats.multitest import multipletests
 
 def _calculate_enrichment_score(raw_adata, labels):
     """
+    Calculate enrichment score for methylation fractions.
+
     Enrichment score modified from :cite:p:`Zeisel2018` for normalized methylation fractions
     Assuming the methylation value is posterior frac calculated by MCDS.add_mc_frac)
     """
@@ -52,7 +54,9 @@ def _calculate_enrichment_score(raw_adata, labels):
 
 def _calculate_enrichment_score_cytograph(adata, labels):
     """
-    The original CEF algorithm from :cite:p:`Zeisel2018` for count based data (RNA, ATAC)
+    Calculate enrichment score using the original cytograph method.
+
+    The original CEF algorithm from :cite:p:`Zeisel2018` for count based data (RNA, ATAC).
     """
     n_cells = adata.shape[0]
 
@@ -171,6 +175,7 @@ def cluster_enriched_features(
 ):
     """
     Calculate top Cluster Enriched Features (CEF) from per-cell normalized dataset.
+
     An post-clustering feature selection step adapted from :cite:p:`Zeisel2018,La_Manno2021`
     and their great [cytograph2](https://github.com/linnarsson-lab/cytograph2) package.
     For details about CEF calculation, read the methods of :cite:p:`Zeisel2018`. Note that

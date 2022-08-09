@@ -36,9 +36,7 @@ def _std(a):
 
 @njit
 def _corr(a, b, row, col):
-    """
-    Correlation between rows in a and b, no nan value
-    """
+    """Correlation between rows in a and b, no nan value."""
     _, k = a.shape
 
     mu_a = _mean(a)

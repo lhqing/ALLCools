@@ -84,7 +84,7 @@ def plot_dendrogram(
         if labels is None or linkage_df is None:
             raise ValueError("linkage_df and labels must be provided to calculate dendrogram.")
         print("Computing dendrogram")
-        _dendro_kws = dict(no_plot=True)
+        _dendro_kws = {"no_plot": True}
         if dendro_kws is not None:
             _dendro_kws.update(dendro_kws)
         # all we need is the leaves order from dendrogram,
@@ -100,7 +100,7 @@ def plot_dendrogram(
     for leaf_x, leaf in enumerate(dendro["leaves"]):
         # add singleton positions first
         node_pos[int(leaf)] = (leaf_x, 0)
-    for i, (idx, (left, right, height, _)) in enumerate(linkage_df.iterrows()):
+    for i, (_, (left, right, height, _)) in enumerate(linkage_df.iterrows()):
         node_id = int(i + linkage_df.shape[0] + 1)
         left = int(left)
         right = int(right)
@@ -238,14 +238,14 @@ def plot_dendrogram(
                 ax,
                 (node_x, node_y),
                 node_pos[left_child],
-                plot_kws=dict(c=line_colors[left_child], linewidth=linewidth, clip_on=False),
+                plot_kws={"c": line_colors[left_child], "linewidth": linewidth, "clip_on": False},
             )
             # plot right branch
             straight_branch(
                 ax,
                 (node_x, node_y),
                 node_pos[right_child],
-                plot_kws=dict(c=line_colors[right_child], linewidth=linewidth, clip_on=False),
+                plot_kws={"c": line_colors[right_child], "linewidth": linewidth, "clip_on": False},
             )
 
     ax.set_ylim(0, ymax)

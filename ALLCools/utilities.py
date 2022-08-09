@@ -49,10 +49,12 @@ COMPLIMENT_BASE = {
 
 
 def reverse_complement(seq):
-    return "".join(map(lambda i: COMPLIMENT_BASE[i], seq[::-1]))
+    """Get reverse complement of a DNA sequence."""
+    return "".join([COMPLIMENT_BASE[base] for base in reversed(seq)])
 
 
 def get_allc_chroms(allc_path):
+    """Get all chromosomes in allc file."""
     p = run(
         ["tabix", "-l", allc_path],
         check=True,
@@ -64,9 +66,7 @@ def get_allc_chroms(allc_path):
 
 @functools.lru_cache(maxsize=100)
 def parse_mc_pattern(pattern: str) -> set:
-    """
-    parse mC context pattern
-    """
+    """Parse mC context pattern."""
     # IUPAC DNA abbr. table
     all_pos_list = []
     pattern = pattern.upper()
@@ -82,9 +82,9 @@ def parse_mc_pattern(pattern: str) -> set:
 @functools.lru_cache(maxsize=10)
 def parse_chrom_size(path, remove_chr_list=None):
     """
-    support simple UCSC chrom size file, or .fai format (1st and 2nd columns same as chrom size file)
+    Parse UCSC chrom size file.
 
-    return chrom:length dict
+    Support simple UCSC chrom size file, or .fai format (1st and 2nd columns same as chrom size file)
     """
     if remove_chr_list is None:
         remove_chr_list = []
@@ -101,6 +101,7 @@ def parse_chrom_size(path, remove_chr_list=None):
 
 
 def chrom_dict_to_id_index(chrom_dict, bin_size):
+    """Chrom dict to bin id index."""
     sum_id = 0
     index_dict = {}
     for chrom, chrom_length in chrom_dict.items():
@@ -110,6 +111,7 @@ def chrom_dict_to_id_index(chrom_dict, bin_size):
 
 
 def get_bin_id(chrom, chrom_index_dict, bin_start, bin_size) -> int:
+    """Get bin id from chrom, bin start and bin size."""
     chrom_index_start = chrom_index_dict[chrom]
     n_bin = bin_start // bin_size
     return chrom_index_start + n_bin
@@ -117,7 +119,7 @@ def get_bin_id(chrom, chrom_index_dict, bin_start, bin_size) -> int:
 
 def genome_region_chunks(chrom_size_path: str, bin_length: int = 10000000, combine_small: bool = True) -> List[str]:
     """
-    Split the whole genome into bins, where each bin is {bin_length} bp. Used for tabix region query
+    Split the whole genome into bins, where each bin is {bin_length} bp. Used for tabix region query.
 
     Parameters
     ----------
@@ -169,6 +171,7 @@ def genome_region_chunks(chrom_size_path: str, bin_length: int = 10000000, combi
 
 
 def parse_file_paths(input_file_paths: Union[str, list]) -> list:
+    """Parse input file paths."""
     if isinstance(input_file_paths, list) and (len(input_file_paths) == 1):
         input_file_paths = input_file_paths[0]
 
@@ -198,12 +201,14 @@ def parse_file_paths(input_file_paths: Union[str, list]) -> list:
 
 
 def get_md5(file_path):
+    """Get md5 of a file."""
     file_md5 = run(shlex.split(f"md5sum {file_path}"), stdout=PIPE, encoding="utf8", check=True).stdout
     file_md5 = file_md5.split(" ")[0]
     return file_md5
 
 
 def check_tbi_chroms(file_path, genome_dict, same_order=False):
+    """Check tbi chroms."""
     file_tabix_path = pathlib.Path(str(file_path) + ".tbi")
     if not file_tabix_path.exists():
         print(f"{file_path} do not have .tbi index. Use tabix to index it.")
@@ -236,7 +241,8 @@ def check_tbi_chroms(file_path, genome_dict, same_order=False):
 
 def generate_chrom_bin_bed_dataframe(chrom_size_path: str, window_size: int, step_size: int = None) -> pd.DataFrame:
     """
-    Generate BED format dataframe based on UCSC chrom size file and window_size
+    Generate BED format dataframe based on UCSC chrom size file and window_size.
+
     return dataframe contain 3 columns: chrom, start, end. The index is 0 based continue bin index.
     """
     if step_size is None:
@@ -247,7 +253,7 @@ def generate_chrom_bin_bed_dataframe(chrom_size_path: str, window_size: int, ste
         bin_start = np.array(list(range(0, chrom_length, step_size)))
         bin_end = bin_start + window_size
         bin_end[np.where(bin_end > chrom_length)] = chrom_length
-        chrom_df = pd.DataFrame(dict(bin_start=bin_start, bin_end=bin_end))
+        chrom_df = pd.DataFrame({"bin_start": bin_start, "bin_end": bin_end})
         chrom_df["chrom"] = chrom
         records.append(chrom_df)
     total_df = pd.concat(records)[["chrom", "bin_start", "bin_end"]].reset_index(drop=True)
@@ -258,6 +264,7 @@ def generate_chrom_bin_bed_dataframe(chrom_size_path: str, window_size: int, ste
 def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
     """\
     Generate some summary statistics of 1 ALLC.
+
     1e8 rows finish in about 5 min.
 
     Parameters
@@ -272,9 +279,6 @@ def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
         The default number is usually sufficient to get pretty precise assumption.
     output_path
         Path of the output file. If None, will save the profile next to input ALLC file.
-    Returns
-    -------
-
     """
     # Find best default value
     if "gz" in allc_path:
@@ -352,7 +356,8 @@ def profile_allc(allc_path, drop_n=True, n_rows=1000000, output_path=None):
 
 def is_gz_file(filepath):
     """
-    Check if a file is gzip file, bgzip also return True
+    Check if a file is gzip file, bgzip also return True.
+
     Learnt from here: https://stackoverflow.com/questions/3703276/how-to-tell-if-a-file-is-gzip-compressed
     """
     with open(filepath, "rb") as test_f:
@@ -362,7 +367,9 @@ def is_gz_file(filepath):
 @doc_params(allc_path_doc=allc_path_doc)
 def tabix_allc(allc_path, reindex=False):
     """
-    a simple wrapper of tabix command to index 1 ALLC file
+    Tabix ALLC file.
+
+    A simple wrapper of tabix command to index 1 ALLC file.
 
     Parameters
     ----------
@@ -370,9 +377,6 @@ def tabix_allc(allc_path, reindex=False):
         {allc_path_doc}
     reindex
         If True, will force regenerate the ALLC index.
-    Returns
-    -------
-
     """
     if not is_gz_file(allc_path):
         raise ValueError(
@@ -396,12 +400,14 @@ def tabix_allc(allc_path, reindex=False):
 )
 def standardize_allc(allc_path, chrom_size_path, compress_level=5, remove_additional_chrom=False):
     """\
+    Standardize ALLC file.
+
     Standardize 1 ALLC file by checking:
-        1. No header in the ALLC file;
-        2. Chromosome names in ALLC must be same as those in the chrom_size_path file, including "chr";
-        3. Output file will be bgzipped with .tbi index
-        4. Remove additional chromosome (remove_additional_chrom=True) or
-           raise KeyError if unknown chromosome found (default)
+    1. No header in the ALLC file;
+    2. Chromosome names in ALLC must be same as those in the chrom_size_path file, including "chr";
+    3. Output file will be bgzipped with .tbi index;
+    4. Remove additional chromosome (remove_additional_chrom=True) or
+    raise KeyError if unknown chromosome found (default).
 
     Parameters
     ----------
@@ -413,9 +419,6 @@ def standardize_allc(allc_path, chrom_size_path, compress_level=5, remove_additi
         {compress_level_doc}
     remove_additional_chrom
         {remove_additional_chrom_doc}
-    Returns
-    -------
-
     """
     # first check allc tabix and chrom order
     genome_dict = parse_chrom_size(chrom_size_path)

@@ -7,7 +7,7 @@ from sklearn.metrics import adjusted_rand_score
 
 
 def _purity(label1, label2):
-    """purity score"""
+    """Calculate purity score."""
     # contingency table
     ct = pd.crosstab(label1, label2)
     purity = ct.apply(max, axis=1).sum() / label1.size
@@ -65,9 +65,7 @@ def calculate_adjust_rand_index(adata, label1, label2):
 
 
 def _alignment_score(obsm_list, k=20, random_state=0, downsample_obs=None, n_jobs=-1):
-    """
-    Calculate alignment score of multiple datasets.
-    """
+    """Calculate alignment score of multiple datasets."""
     n_ds = len(obsm_list)
     if n_ds == 0:
         raise ValueError("Empty obsm_list provided.")

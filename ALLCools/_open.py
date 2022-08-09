@@ -1,4 +1,6 @@
 """
+I/O Classes for ALLC and BAM files
+
 - read and write allc file
 - parallel writing
 - read region from allc
@@ -51,6 +53,8 @@ except OSError:
 
 class Closing:
     """
+    Closeable class
+
     Inherit from this class and implement a close() method to offer context
     manager functionality.
     """
@@ -73,6 +77,8 @@ class Closing:
 
 class PipedGzipWriter(Closing):
     """
+    Piped Gzip Writer.
+
     Write gzip-compressed files by running an external gzip or pigz process and
     piping into it. On Python 2, this is faster than using gzip.open(). On
     Python 3, it allows to run the compression in a separate process and can
@@ -81,6 +87,8 @@ class PipedGzipWriter(Closing):
 
     def __init__(self, path, mode="wt", compresslevel=6, threads=1):
         """
+        Pipe a file to an external gzip or pigz process.
+
         mode -- one of 'w', 'wt', 'wb', 'a', 'at', 'ab'
         compresslevel -- gzip compression level
         threads (int) -- number of pigz threads (None means to let pigz decide)
@@ -93,7 +101,7 @@ class PipedGzipWriter(Closing):
         self.closed = False
         self.name = path
 
-        kwargs = dict(stdin=PIPE, stdout=self.outfile, stderr=self.devnull)
+        kwargs = {"stdin": PIPE, "stdout": self.outfile, "stderr": self.devnull}
         # Setting close_fds to True in the Popen arguments is necessary due to
         # <http://bugs.python.org/issue12786>.
         # However, close_fds is not supported on Windows. See
@@ -196,6 +204,8 @@ class PipedGzipReader(Closing):
 
     def _raise_if_error(self):
         """
+        Raise an exception if the gzip process has exited with an error.
+
         Raise IOError if process is not running anymore and the
         exit code is nonzero.
         """
@@ -265,10 +275,7 @@ class PipedBamReader(Closing):
         return self.file.readline()
 
     def _raise_if_error(self):
-        """
-        Raise IOError if process is not running anymore and the
-        exit code is nonzero.
-        """
+        """Raise IOError if process is not running anymore and the exit code is nonzero."""
         return_code = self.process.poll()
         if return_code is not None and return_code != 0:
             message = self._stderr.read().strip()
@@ -286,6 +293,8 @@ class PipedBamReader(Closing):
 class PipedBamWriter(Closing):
     def __init__(self, path, mode="wt", threads=1):
         """
+        Open a pipe to samtools view, which will write to the given path.
+
         mode -- one of 'w', 'wt', 'wb', 'a', 'at', 'ab'
         threads (int) -- number of samtools threads
         """
@@ -297,7 +306,7 @@ class PipedBamWriter(Closing):
         self.closed = False
         self.name = path
 
-        kwargs = dict(stdin=PIPE, stdout=self.outfile, stderr=self.devnull)
+        kwargs = {"stdin": PIPE, "stdout": self.outfile, "stderr": self.devnull}
         # Setting close_fds to True in the Popen arguments is necessary due to
         # <http://bugs.python.org/issue12786>.
         # However, close_fds is not supported on Windows. See
@@ -375,6 +384,8 @@ def open_gz(file_path, mode="r", compresslevel=3, threads=1, region=None):
 
 def open_allc(file_path, mode="r", compresslevel=3, threads=1, region=None):
     """
+    Open a .allc file.
+
     A replacement for the "open" function that can also open files that have
     been compressed with gzip, bzip2 or xz. If the file_path is '-', standard
     output (mode 'w') or input (mode 'r') is returned.
