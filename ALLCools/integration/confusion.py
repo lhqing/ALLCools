@@ -5,7 +5,6 @@ import leidenalg as la
 import networkx as nx
 import numpy as np
 import pandas as pd
-from numba import njit
 
 
 def calculate_direct_confusion(*args, **kwargs):
@@ -13,7 +12,6 @@ def calculate_direct_confusion(*args, **kwargs):
     return calculate_overlap_score(*args, **kwargs)
 
 
-@njit
 def _get_overlap_score(left_values, right_values):
     min_values = []
     for i in range(left_values.size):
