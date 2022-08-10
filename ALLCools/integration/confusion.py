@@ -13,10 +13,7 @@ def calculate_direct_confusion(*args, **kwargs):
 
 
 def _get_overlap_score(left_values, right_values):
-    min_values = []
-    for i in range(left_values.size):
-        min_values.append(min(left_values[i], right_values[i]))
-    score = sum(min_values)
+    score = np.min([left_values, right_values], axis=0).sum()
     return score
 
 
