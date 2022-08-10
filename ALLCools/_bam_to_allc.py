@@ -289,7 +289,7 @@ def _bam_to_allc_worker(
                     "\t".join(
                         [
                             cur_chrom,
-                            str(pos + 1),
+                            str(pos + 1),  # ALLC pos is 1-based
                             "-",
                             context,
                             str(unconverted_c),

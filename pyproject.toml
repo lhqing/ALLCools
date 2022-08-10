@@ -108,3 +108,6 @@ requires = [
     "flit_core >=3.4,<4",
     "importlib_metadata>=0.7; python_version < '3.8'",
 ]
+
+[project.scripts]
+allcools = "ALLCools.__main__:main"
