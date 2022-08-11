@@ -54,6 +54,7 @@ ignore =
     D103
     B902
     B023
+    D401
 exclude = .git,__pycache__,build,docs/_build,dist,ALLCools/sandbox,
 per-file-ignores =
     tests/*: D

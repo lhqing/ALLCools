@@ -1,161 +1,229 @@
-import re
-from itertools import permutations
+import pathlib
 
 import numpy as np
-import zarr
+import pandas as pd
+import xarray as xr
+
+from ALLCools.utilities import parse_mc_pattern
 
 
-class _BaseDSChunkWriter:
-    """Base class for writing chunks to a dataset."""
+def _chunk_pos_to_bed_df(chrom, chunk_pos):
+    records = []
+    for i in range(len(chunk_pos) - 1):
+        start = chunk_pos[i]
+        end = chunk_pos[i + 1]
+        records.append([chrom, start, end])
+    return pd.DataFrame(records, columns=["chrom", "start", "end"])
 
-    def __init__(self):
-        pass
 
+class Codebook(xr.DataArray):
+    """The Codebook data array records methyl-cytosine context in genome."""
 
-class _CreateSingleChromosomeBaseDS:
-    """Create the BaseDS zarr dataset for one chromosome."""
+    __slots__ = ()
 
-    def __init__(
-        self,
-        path,
-        chrom,
-        chrom_size,
-        chrom_sequence,
-        sample_ids,
-        context_size=3,
-        c_pos=0,
-        include_n=False,
-        pos_chunk=10000000,
-        sample_chunk=10,
-        data_dtype="i4",
-    ):
-        self.path = path
-        self.root = zarr.open(path, mode="a")
-        self.pos_chunk = pos_chunk
-        self.sample_chunk = sample_chunk
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        # chrom size info
-        self.chrom = chrom
-        self.chrom_size = chrom_size
+        # in-memory cache for the positions of cytosines matching the pattern
+        self.attrs["__mc_pos_cache"] = {}
+        self.attrs["__mc_pos_bool_cache"] = {}
 
-        # mC type context info
-        self.c_pos = c_pos
-        self.context_size = context_size
-        self.include_n = include_n
-        self.bases, self.contexts = self._create_contexts()
+        # the continuity of codebook is determined by occurrence of pos coords
+        # and should not be changed
+        self.attrs["__continuity"] = False if "pos" in self.coords else True
 
-        # codebook per chromosome
-        self.chrom_sequence = chrom_sequence.upper()
-        self._create_codebook()
+    @property
+    def continuity(self):
+        """Whether the codebook is continuous or not."""
+        return self.attrs["__continuity"]
 
-        # count type
-        self._create_count_type()
+    @property
+    def mc_type(self):
+        """The type of methyl-cytosine context."""
+        return self.get_index("mc_type")
 
-        # sample info
-        self.sample_ids = sample_ids
-        self.n_sample = len(sample_ids)
-        self._create_sample_id()
-
-        # init empty sample dataarray per chromosome
-        self.data_dtype = data_dtype
-        self._create_data()
-
-        # consolidate metadata
-        self._consolidate_metadata()
-
-        # write data in parallel
-        self._write_data()
-        return
-
-    def _get_contexts(self):
-        if self.include_n:
-            bases = "ATCGN"
+    def get_mc_pos_bool(self, mc_pattern):
+        """Get the boolean array of cytosines matching the pattern."""
+        if mc_pattern in self.attrs["__mc_pos_bool_cache"]:
+            return self.attrs["__mc_pos_bool_cache"][mc_pattern]
         else:
-            bases = "ATCG"
+            if mc_pattern is None:
+                # get all cytosines
+                judge = np.ones_like(self.mc_type, dtype=bool)
+            else:
+                # get cytosines matching the pattern
+                judge = self.mc_type.isin(parse_mc_pattern(mc_pattern))
+            _bool = self.sel(mc_type=judge).sum(dim="mc_type").values.astype(bool)
+            self.attrs["__mc_pos_bool_cache"][mc_pattern] = _bool
+            return _bool
 
-        contexts = sorted(
-            {"".join(c) for c in permutations(bases * self.context_size, self.context_size) if c[self.c_pos] == "C"}
-        )
-        return bases, contexts
+    def get_mc_pos(self, mc_pattern):
+        """Get the positions of cytosines matching the pattern."""
+        if mc_pattern in self.attrs["__mc_pos_cache"]:
+            return self.attrs["__mc_pos_cache"][mc_pattern]
+        else:
+            _bool = self.get_mc_pos_bool(mc_pattern)
 
-    def _create_contexts(self):
-        bases, contexts = self._get_contexts()
-        n_type = len(contexts)
-        mc_type = self.root.require_dataset("mc_type", shape=(n_type,), chunks=(n_type,), dtype="<U50")
-        mc_type[:] = np.array(contexts)
-        mc_type.attrs["_ARRAY_DIMENSIONS"] = "mc_type"
-        mc_type.attrs["c_pos"] = self.c_pos
-        mc_type.attrs["include_n"] = self.include_n
-        mc_type.attrs["context_size"] = self.context_size
-        return bases, contexts
+            if self.continuity:
+                _pos = self.coords["pos"].values[_bool]
+            else:
+                _pos = np.where(_bool)[0]
 
-    def _create_codebook(self):
-        chrom_sequence = self.chrom_sequence
+            self.attrs["__mc_pos_cache"][mc_pattern] = _pos
+            return _pos
 
-        contexts = self.contexts
-        print(f"Generating codebook for {self.chrom}...")
 
-        # make sure chrom size consistent
-        chrom_size = self.chrom_size
-        assert len(chrom_sequence) == chrom_size
+class BaseDSChrom(xr.Dataset):
+    """The BaseDS class for data within single chromosome."""
 
-        context_codebook = self.root.require_dataset(
-            "codebook", shape=(chrom_size, len(contexts)), chunks=(self.pos_chunk, len(self.bases)), dtype="bool"
-        )
-        context_codebook.attrs["_ARRAY_DIMENSIONS"] = ["pos", "mc_type"]
+    __slots__ = ()
 
-        for i, context in enumerate(contexts):
-            pattern = re.compile(context)
-            context_pos = [match.start() for match in pattern.finditer(chrom_sequence)]
-            context_codebook[context_pos, i] = True
+    def __init__(self, dataset, coords=None, attrs=None):
+        if isinstance(dataset, xr.Dataset):
+            data_vars = dataset.data_vars
+            coords = dataset.coords if coords is None else coords
+            attrs = dataset.attrs if attrs is None else attrs
+        else:
+            data_vars = dataset
+        super().__init__(data_vars=data_vars, coords=coords, attrs=attrs)
 
-        # create chunk pos array
-        chrom_chunk_pos = list(range(0, chrom_size, self.pos_chunk))
-        if chrom_chunk_pos[-1] != chrom_size:
-            chrom_chunk_pos.append(chrom_size)
-        chunk_pos = self.root.require_dataset(
-            "chunk_pos", shape=(len(chrom_chunk_pos),), chunks=(len(chrom_chunk_pos),), dtype="<i4"
-        )
-        chunk_pos[:] = chrom_chunk_pos
-        chunk_pos.attrs["_ARRAY_DIMENSIONS"] = "chunk_pos"
+        # continuity is set to True by default
+        self.continuity = True
         return
 
-    def _create_count_type(self):
-        count_type = self.root.require_dataset("count_type", shape=(2,), chunks=(2,), dtype="<U10")
-        count_type[:] = ["mc", "cov"]
-        count_type.attrs["_ARRAY_DIMENSIONS"] = ["count_type"]
-        return
+    @property
+    def continuity(self):
+        """
+        The continuity of pos dimension.
 
-    def _create_sample_id(self):
-        sample_id = self.root.require_dataset(
-            "sample_id", shape=(self.n_sample,), chunks=(self.n_sample,), dtype="<U256"
-        )
-        sample_id[:] = self.sample_ids
-        sample_id.attrs["_ARRAY_DIMENSIONS"] = "sample_id"
-        return
+        the BaseDSChrom has tow mode on the position dimension:
+        1. "continuous" mode: the position dimension is continuous
+        and all bases (including non-cytosines) are recorded.
+        In this mode, the position dimension do not have coordinates, the index is genome position.
+        2. "discrete" mode: the position dimension is discrete due to some discontinuous selection.
+        In this mode, the position dimension has coordinates.
+        """
+        return self.attrs["__continuity"]
 
-    def _create_data(self):
-        z = self.root.require_dataset(
-            "data",
-            shape=(self.chrom_size, self.n_sample, len(self.contexts)),
-            chunks=(self.pos_chunk, self.sample_chunk, 1),
-            dtype=self.data_dtype,
-        )
-        z.attrs["_ARRAY_DIMENSIONS"] = ["pos", "sample_id", "count_type"]
-        return
+    @continuity.setter
+    def continuity(self, value):
+        """Set the continuity of pos dimension."""
+        if not value:
+            assert "pos" in self.coords, (
+                "The position dimension is set to discontinuous, " "but the pos coords is missing."
+            )
+            self.attrs["__continuity"] = False
+        else:
+            self.attrs["__continuity"] = True
 
-    def _consolidate_metadata(self):
-        zarr.consolidate_metadata(self.path)
-        return
+    def _clear_attr_cache(self):
+        """Clear the attr cache."""
+        for attr in list(self.attrs.keys()):
+            if str(attr).startswith("__"):
+                del self.attrs[attr]
 
-    def _write_data(self):
-        """Parallel write data to zarr."""
-        # determine chunks
-        # process each chunk in parallel
-        # using BaseDSChunkWriter class
-        return
+    def _continuous_pos_selection(self, start, end):
+        """Select the positions to create a continuous BaseDSChrom."""
+        # once the pos is selected, the ds is continuous
+        # one must set the pos coords and set the continuity to True
+        if start is not None or end is not None:
+            obj = self.sel(pos=slice(start, end, None))
+            return obj
+        else:
+            return self
 
+    def _discontinuous_pos_selection(self, pos_sel):
+        """Select the positions to create a discontinuous BaseDSChrom."""
+        # once the pos is selected, the ds is not continuous anymore
+        # one must set the pos coords and set the continuity to False
+        self._clear_attr_cache()
+        ds = self.sel(pos=pos_sel).assign_coords(pos=pos_sel)
+        ds.continuity = False
+        return ds
 
-class CreateSingleChromosomeBaseDS:
-    def __init__(self):
-        pass
+    @classmethod
+    def open(cls, path, start=None, end=None):
+        """
+        Open a BaseDSChrom object from a zarr path.
+
+        If start and end are not None, only the specified region will be opened.
+
+        Parameters
+        ----------
+        path
+            The zarr path to the chrom dataset.
+        start
+            The start position of the region to be opened.
+        end
+            The end position of the region to be opened.
+
+        Returns
+        -------
+        BaseDSChrom
+        """
+        path = pathlib.Path(path)
+        _obj = cls(xr.open_zarr(path, decode_cf=False))
+        _obj = _obj._continuous_pos_selection(start, end)
+        return _obj
+
+    @property
+    def chrom(self):
+        """The chromosome name."""
+        return self.attrs["chrom"]
+
+    @property
+    def chrom_size(self):
+        """The chromosome size."""
+        return self.attrs["chrom_size"]
+
+    @property
+    def obs_dim(self):
+        """The observation dimension name."""
+        return self.attrs["obs_dim"]
+
+    @property
+    def obs_size(self):
+        """The observation size."""
+        return self.attrs["obs_size"]
+
+    @property
+    def obs_names(self):
+        """The observation names."""
+        return self.get_index(self.obs_dim)
+
+    @property
+    def mc_types(self):
+        """The methyl-cytosine types."""
+        return self.get_index("mc_type")
+
+    @property
+    def chrom_chunk_pos(self):
+        """The chromosome chunk position."""
+        return self.get_index("chunk_pos")
+
+    @property
+    def chrom_chunk_bed_df(self) -> pd.DataFrame:
+        """The chromosome chunk bed dataframe."""
+        chunk_pos = self.chrom_chunk_pos
+        bed = _chunk_pos_to_bed_df(self.chrom, chunk_pos)
+        return bed
+
+    @property
+    def codebook(self) -> Codebook:
+        """Get the codebook data array."""
+        # catch the codebook in the attrs, only effective in memory
+        if "__cb_obj" not in self.attrs:
+            self.attrs["__cb_obj"] = Codebook(self["codebook"])
+        return self.attrs["__cb_obj"]
+
+    @property
+    def cb(self) -> Codebook:
+        """Alias for codebook."""
+        return self.codebook
+
+    def select_mc_type(self, pattern):
+        cb = self.codebook
+        pattern_bool = cb.get_mc_pos(pattern)
+
+        ds = self._discontinuous_pos_selection(pattern_bool)
+        return ds
