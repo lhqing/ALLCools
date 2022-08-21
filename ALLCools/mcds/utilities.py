@@ -458,8 +458,12 @@ def reduce_zarr_coords_chunks(ds_path, max_size=10000000):
 
     # create a coords only dataset, save to temp zarr
     coord_ds = xr.Dataset({}, coords=ds.coords).load()
+    # turn obj to str
+    for k, v in coord_ds.coords.items():
+        if v.dtype == "O":
+            coord_ds.coords[k] = v.astype(str)
     temp_zarr_path = f"{ds_path}_temp.zarr"
-    coord_ds.to_zarr(temp_zarr_path)
+    coord_ds.to_zarr(temp_zarr_path, mode="w")
 
     # move previous coords and zmetadata
     for coord in coord_ds.coords.keys():

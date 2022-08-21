@@ -42,23 +42,49 @@ class Codebook(xr.DataArray):
         """The type of methyl-cytosine context."""
         return self.get_index("mc_type")
 
+    @property
+    def c_pos(self):
+        """The positions of cytosines in mC type."""
+        return self.attrs["c_pos"]
+
+    @property
+    def context_size(self):
+        """The size of context in mC type."""
+        return self.attrs["context_size"]
+
+    def _validate_mc_pattern(self, mc_pattern):
+        mc_pattern = mc_pattern.upper()
+
+        if len(mc_pattern) != self.context_size:
+            raise ValueError(
+                f"The length of mc_pattern {len(mc_pattern)} is not equal to context_size {self.context_size}."
+            )
+        if mc_pattern[self.c_pos] != "C":
+            raise ValueError(f"The c_pos position {self.c_pos} in mc_pattern {mc_pattern} is not a cytosine.")
+
+        return mc_pattern
+
     def get_mc_pos_bool(self, mc_pattern):
         """Get the boolean array of cytosines matching the pattern."""
+        mc_pattern = self._validate_mc_pattern(mc_pattern)
+
         if mc_pattern in self.attrs["__mc_pos_bool_cache"]:
             return self.attrs["__mc_pos_bool_cache"][mc_pattern]
         else:
             if mc_pattern is None:
-                # get all cytosines
+                # get all mc types
                 judge = np.ones_like(self.mc_type, dtype=bool)
             else:
-                # get cytosines matching the pattern
+                # get mc types matching the pattern
                 judge = self.mc_type.isin(parse_mc_pattern(mc_pattern))
             _bool = self.sel(mc_type=judge).sum(dim="mc_type").values.astype(bool)
             self.attrs["__mc_pos_bool_cache"][mc_pattern] = _bool
             return _bool
 
     def get_mc_pos(self, mc_pattern):
-        """Get the positions of cytosines matching the pattern."""
+        """Get the positions of mc types matching the pattern."""
+        mc_pattern = self._validate_mc_pattern(mc_pattern)
+
         if mc_pattern in self.attrs["__mc_pos_cache"]:
             return self.attrs["__mc_pos_cache"][mc_pattern]
         else:
@@ -89,6 +115,7 @@ class BaseDSChrom(xr.Dataset):
 
         # continuity is set to True by default
         self.continuity = True
+        self.offset = 0
         return
 
     @property
@@ -112,11 +139,25 @@ class BaseDSChrom(xr.Dataset):
             assert "pos" in self.coords, (
                 "The position dimension is set to discontinuous, " "but the pos coords is missing."
             )
+            # when continuity is set to False, the offset is set to None
+            self.offset = None
             self.attrs["__continuity"] = False
         else:
             self.attrs["__continuity"] = True
 
-    def _clear_attr_cache(self):
+    @property
+    def offset(self):
+        """The offset of the position dimension, only valid when continuity is True."""
+        return self.attrs["__offset"]
+
+    @offset.setter
+    def offset(self, value):
+        """Set the offset of the position dimension."""
+        if value is not None and not self.continuity:
+            raise ValueError("The offset is only valid when the position dimension is continuous.")
+        self.attrs["__offset"] = value
+
+    def clear_attr_cache(self):
         """Clear the attr cache."""
         for attr in list(self.attrs.keys()):
             if str(attr).startswith("__"):
@@ -124,20 +165,60 @@ class BaseDSChrom(xr.Dataset):
 
     def _continuous_pos_selection(self, start, end):
         """Select the positions to create a continuous BaseDSChrom."""
-        # once the pos is selected, the ds is continuous
-        # one must set the pos coords and set the continuity to True
+        # for continuous mode, the pos should have an offset to convert to genome position
+        if not self.continuity:
+            raise ValueError("The position dimension is not continuous, unable to perform _continuous_pos_selection.")
+        start -= self.offset
+        end -= self.offset
+
         if start is not None or end is not None:
             obj = self.sel(pos=slice(start, end, None))
+            if start is not None:
+                obj.offset = start
             return obj
         else:
             return self
 
-    def _discontinuous_pos_selection(self, pos_sel):
-        """Select the positions to create a discontinuous BaseDSChrom."""
+    def _discontinuous_pos_selection(self, pos_sel=None, idx_sel=None):
+        """
+        Select the positions to create a discontinuous BaseDSChrom.
+
+        Parameters
+        ----------
+        pos_sel :
+            using genome position to select the positions,
+            for continuous mode, the pos should have an offset to convert to idx position
+        idx_sel :
+            using idx position to select the positions
+
+        Returns
+        -------
+        BaseDSChrom
+        """
         # once the pos is selected, the ds is not continuous anymore
         # one must set the pos coords and set the continuity to False
-        self._clear_attr_cache()
-        ds = self.sel(pos=pos_sel).assign_coords(pos=pos_sel)
+        if idx_sel is not None and pos_sel is not None:
+            raise ValueError("Only one of idx_sel and pos_sel can be specified.")
+        elif idx_sel is not None:
+            pass
+        elif pos_sel is not None:
+            if self.continuity:
+                # da is continuous, convert pos to idx
+                idx_sel = pos_sel - self.offset
+            else:
+                # da is not continuous, treat pos_sel as idx_sel
+                idx_sel = pos_sel
+        else:
+            raise ValueError("One of idx_sel or pos_sel must be specified.")
+
+        if self.continuity:
+            # if the ds was continuous, add offset to the pos coords and turn off continuity
+            offset_to_add = self.offset
+        else:
+            offset_to_add = 0
+
+        ds = self.sel(pos=idx_sel).assign_coords(pos=idx_sel + offset_to_add)
+        ds.clear_attr_cache()
         ds.continuity = False
         return ds
 
@@ -214,6 +295,8 @@ class BaseDSChrom(xr.Dataset):
         # catch the codebook in the attrs, only effective in memory
         if "__cb_obj" not in self.attrs:
             self.attrs["__cb_obj"] = Codebook(self["codebook"])
+            self.attrs["__cb_obj"].attrs["c_pos"] = self.attrs["c_pos"]
+            self.attrs["__cb_obj"].attrs["context_size"] = self.attrs["context_size"]
         return self.attrs["__cb_obj"]
 
     @property
@@ -225,5 +308,10 @@ class BaseDSChrom(xr.Dataset):
         cb = self.codebook
         pattern_bool = cb.get_mc_pos(pattern)
 
-        ds = self._discontinuous_pos_selection(pattern_bool)
+        ds = self._discontinuous_pos_selection(idx_sel=pattern_bool)
         return ds
+
+    @property
+    def pos_index(self):
+        """The position index."""
+        return self.get_index("pos")
