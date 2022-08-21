@@ -14,6 +14,14 @@ from scipy.sparse import csc_matrix
 from ALLCools.utilities import reverse_complement
 
 
+def _get_dtype_max(dtype):
+    try:
+        max_value = np.iinfo(dtype).max
+    except ValueError:
+        max_value = np.finfo(dtype).max
+    return max_value
+
+
 class _ALLCFile(TabixFile):
     def __init__(self, filename):
         # validate path and tbi file
@@ -141,6 +149,23 @@ class _ALLCFile(TabixFile):
         pos = _a[:, 0]
         mc = _a[:, 1]
         cov = _a[:, 2]
+
+        # prevent dtype overflow at extremely high coverage sites
+        dtype_max = _get_dtype_max(dtype)
+        cov_max = cov.max()
+        if cov_max > dtype_max:
+            # warning about potential data overflow
+            import warnings
+
+            warnings.warn(
+                f"cov max {cov_max} is larger than dtype max {dtype_max}, "
+                "in order to prevent overflow, mc and cov sites with cov > dtype_max will be scale down."
+            )
+
+            # scale down mc and cov value if cov is larger than dtype_max
+            _flag = cov > dtype_max
+            cov[_flag] = np.round(cov[_flag] / cov_max * dtype_max).astype(cov.dtype)
+            mc[_flag] = np.round(mc[_flag] / cov_max * dtype_max).astype(mc.dtype)
 
         # pos_min use to determine the offset of the array position
         _pos_min = pos.min()
