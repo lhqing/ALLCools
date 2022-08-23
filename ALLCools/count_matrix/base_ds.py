@@ -439,7 +439,7 @@ class _CreateSingleChromosomeBaseDS:
 
         # create the zarr dataset structure
         self._create_contexts()
-        self._create_codebook()
+        self._create_codebook()  # TODO add an option to skip creating codebook
         self._create_count_type()
         self._create_sample_id()
         # init empty sample data array per chromosome
@@ -528,6 +528,9 @@ def create_base_ds(
     n_cpu=1,
 ):
     """Create a BaseDS zarr dataset."""
+    output_dir_path = pathlib.Path(output_dir_path)
+    output_dir_path.mkdir(exist_ok=True, parents=True)
+
     chroms = pd.read_csv(chrom_size_path, header=None, sep="\t", index_col=0, names=["chrom", "size"]).squeeze()
     # save chroms to output_dir_path
     chroms.to_csv(f"{output_dir_path}/chrom_sizes.csv", index=True, header=False)
