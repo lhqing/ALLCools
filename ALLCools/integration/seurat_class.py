@@ -346,7 +346,7 @@ class SeuratIntegration:
 
                 # 2. run cca between datasets
                 print("Run CCA")
-                if dim_red == "pca":
+                if dim_red == "cca":
                     U, V = cca(
                         U, V, scale1=scale1, scale2=scale2, n_components=n_components, svd_algorithm=svd_algorithm
                     )
@@ -356,6 +356,8 @@ class SeuratIntegration:
                     )
                     # U.shape = (self.n_cells[i], n_components)
                     # V.shape = (self.n_cells[j], n_components)
+                else:
+                    raise ValueError(f"dim_red {dim_red} is not supported, must be 'cca' or 'lsi'.")
 
                 # 3. normalize CCV per sample/row
                 U = normalize(U, axis=1)
