@@ -13,7 +13,7 @@ urls.Documentation = "https://lhqing.github.io/ALLCools/intro.html"
 urls.Source = "https://github.com/lhqing/ALLCools"
 urls.Home-page = "https://github.com/lhqing/ALLCools"
 version = "1.0.5"
-requires-python = ">=3.8"
+requires-python = ">=3.7"
 license = { file = "LICENSE" }
 readme = "README.md"
 dependencies = [
