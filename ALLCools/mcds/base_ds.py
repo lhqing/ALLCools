@@ -259,6 +259,7 @@ class BaseDSChrom(xr.Dataset):
             flag = True
             _cb_mc_types = _cb.get_index("mc_type").values
             _obj_mc_types = _zarr_obj.get_index("mc_type").values
+            # noinspection PyUnresolvedReferences
             _diff = (_cb_mc_types != _obj_mc_types).sum()
             if _diff > 0:
                 flag = False

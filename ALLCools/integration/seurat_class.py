@@ -8,6 +8,8 @@ import numpy as np
 import pandas as pd
 import pynndescent
 from scipy.cluster.hierarchy import linkage
+from scipy.sparse import issparse
+from scipy.stats import zscore
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import OneHotEncoder, normalize
 
@@ -67,6 +69,8 @@ def find_neighbor(cc1, cc2, k, random_state=0, n_jobs=-1):
         number of neighbors
     random_state
         random seed
+    n_jobs
+        number of jobs to run in parallel
 
     Returns
     -------
@@ -111,15 +115,37 @@ def min_max(tmp, q_left=1, q_right=90):
 
 
 def filter_anchor(
-    anchor, adata_ref=None, adata_qry=None, high_dim_feature=None, k_filter=200, random_state=0, n_jobs=-1
+    anchor,
+    adata_ref=None,
+    adata_qry=None,
+    scale_ref=False,
+    scale_qry=False,
+    high_dim_feature=None,
+    k_filter=200,
+    random_state=0,
+    n_jobs=-1,
 ):
     """
     Check if an anchor is still an anchor when only using the high_dim_features to construct KNN graph.
 
     If not, remove the anchor.
     """
-    ref_data = normalize(adata_ref.X[:, high_dim_feature], axis=1)
-    qry_data = normalize(adata_qry.X[:, high_dim_feature], axis=1)
+    if issparse(adata_ref.X):
+        ref_data = adata_ref.X[:, high_dim_feature].toarray()
+    else:
+        ref_data = adata_ref.X[:, high_dim_feature].copy()
+    if scale_ref:
+        ref_data = zscore(ref_data, axis=0)
+    ref_data = normalize(ref_data, axis=1)
+
+    if issparse(adata_qry.X):
+        qry_data = adata_qry.X[:, high_dim_feature].toarray()
+    else:
+        qry_data = adata_qry.X[:, high_dim_feature].copy()
+    if scale_qry:
+        qry_data = zscore(qry_data, axis=0)
+    qry_data = normalize(qry_data, axis=1)
+
     index = pynndescent.NNDescent(
         ref_data,
         metric="euclidean",
@@ -129,8 +155,8 @@ def filter_anchor(
         n_jobs=n_jobs,
     )
     G = index.query(qry_data, k=k_filter)[0]
-    input_anchors = anchor.shape[0]
     anchor = np.array([xx for xx in anchor if (xx[0] in G[xx[1]])])
+    input_anchors = anchor.shape[0]
     print(f"Anchor selected with high CC feature graph: {anchor.shape[0]} / {input_anchors}")
     return anchor
 
@@ -263,23 +289,23 @@ class SeuratIntegration:
             self.all_pairs = np.array([])
 
     def _prepare_matrix(self, i, j, key_anchor):
-        adata_list = list(self.adata_dict.values())
+        adata_dict = self.adata_dict
+        adata1 = adata_dict[i]
+        adata2 = adata_dict[j]
 
         if key_anchor == "X":
             # in case the adata var is not in the same order
             # select and order the var to make sure it is matched
-            if (adata_list[i].shape[1] != adata_list[j].shape[1]) or (
-                (adata_list[i].var.index == adata_list[j].var.index).sum() < adata_list[i].shape[1]
-            ):
-                sel_b = adata_list[i].var.index & adata_list[j].var.index
-                U = adata_list[i][:, sel_b].X.copy()
-                V = adata_list[j][:, sel_b].X.copy()
+            if (adata1.shape[1] != adata2.shape[1]) or ((adata1.var.index == adata2.var.index).sum() < adata1.shape[1]):
+                sel_b = adata1.var.index & adata2.var.index
+                U = adata1[:, sel_b].X.copy()
+                V = adata2[:, sel_b].X.copy()
             else:
-                U = adata_list[i].X.copy()
-                V = adata_list[j].X.copy()
+                U = adata1.X.copy()
+                V = adata2.X.copy()
         else:
-            U = adata_list[i].obsm[key_anchor]
-            V = adata_list[j].obsm[key_anchor]
+            U = adata1.obsm[key_anchor]
+            V = adata2.obsm[key_anchor]
 
         return U, V
 
@@ -294,6 +320,178 @@ class SeuratIntegration:
         self.mutual_knn[(i, j)] = (G11, G12, G21, G22)
         self.raw_anchor[(i, j)] = raw_anchors
         return G11, G12, G21, G22, raw_anchors
+
+    def _pairwise_find_anchor(
+        self,
+        i,
+        i_sel,
+        j,
+        j_sel,
+        dim_red,
+        key_anchor,
+        svd_algorithm,
+        scale1,
+        scale2,
+        k_anchor,
+        k_local,
+        k_score,
+        ncc,
+        max_cc_cell,
+        k_filter,
+        n_features,
+        chunk_size,
+        random_state,
+        signorm,
+    ):
+        """Pairwise anchor between two datasets."""
+        adata1 = self.adata_dict[i]
+        adata2 = self.adata_dict[j]
+        if i_sel is not None:
+            adata1 = adata1[i_sel, :]
+        if j_sel is not None:
+            adata2 = adata2[j_sel, :]
+
+        if dim_red in ("cca", "pca", "lsi", "lsi-cca"):
+            # 1. prepare input matrix for CCA
+            U, V = self._prepare_matrix(i, j, key_anchor=key_anchor)
+
+            # 2. run cca between datasets
+            if dim_red in ("cca", "pca"):
+                print("Run CCA")
+                U, V, high_dim_feature = cca(
+                    data1=U,
+                    data2=V,
+                    scale1=scale1,
+                    scale2=scale2,
+                    n_components=ncc,
+                    max_cc_cell=max_cc_cell,
+                    k_filter=k_filter,
+                    n_features=n_features,
+                    chunk_size=chunk_size,
+                    svd_algorithm=svd_algorithm,
+                    random_state=random_state,
+                )
+            elif dim_red in ("lsi", "lsi-cca"):
+                print("Run LSI-CCA")
+                U, V = lsi_cca(
+                    data1=U,
+                    data2=V,
+                    scale_factor=100000,
+                    n_components=ncc,
+                    max_cc_cell=max_cc_cell,
+                    chunk_size=chunk_size,
+                    svd_algorithm=svd_algorithm,
+                    min_cov_filter=5,
+                    random_state=random_state,
+                )
+                high_dim_feature = None
+            else:
+                raise ValueError(f"Dimension reduction method {dim_red} is not supported.")
+
+            # 3. normalize CCV per sample/row
+            U = normalize(U, axis=1)
+            V = normalize(V, axis=1)
+
+            # 4. find MNN of U and V to find anchors
+            print("Find Anchors")
+            _k = max(i for i in [k_anchor, k_local, k_score, 50] if i is not None)
+            G11, G12, G21, G22, raw_anchors = self._calculate_mutual_knn_and_raw_anchors(
+                i=i, j=j, U=U, V=V, k=_k, k_anchor=k_anchor
+            )
+
+            # 5. filter anchors by high dimensional neighbors
+            if k_filter is not None and high_dim_feature is not None:
+                # compute ccv feature loading
+                if self.n_cells[i] >= self.n_cells[j]:
+                    raw_anchors = filter_anchor(
+                        anchor=raw_anchors,
+                        adata_ref=adata1,
+                        adata_qry=adata2,
+                        scale_ref=scale1,
+                        scale_qry=scale2,
+                        high_dim_feature=high_dim_feature,
+                        k_filter=k_filter,
+                        random_state=self.random_state,
+                        n_jobs=self.n_jobs,
+                    )
+                else:
+                    raw_anchors = filter_anchor(
+                        anchor=raw_anchors[:, ::-1],
+                        adata_ref=adata2,
+                        adata_qry=adata1,
+                        scale_ref=scale2,
+                        scale_qry=scale1,
+                        high_dim_feature=high_dim_feature,
+                        k_filter=k_filter,
+                        random_state=self.random_state,
+                        n_jobs=self.n_jobs,
+                    )[:, ::-1]
+        elif dim_red in ("rpca", "rlsi"):
+            from .cca import LSI, SVD, downsample
+
+            adata1, adata2 = adata1.X, adata2.X
+            k = max([k_anchor, k_local, k_score, 50])
+            if dim_red == "rpca":
+                print("Run rPCA")
+                model = SVD(n_components=ncc, random_state=random_state)
+            elif dim_red == "rlsi":
+                print("Run rLSI")
+                model = LSI(n_components=ncc, random_state=random_state)
+            else:
+                raise ValueError(f"Dimension reduction method {dim_red} is not supported.")
+            tf1, tf2, scaler1, scaler2 = downsample(
+                adata1,
+                adata2,
+                todense=True if dim_red == "rpca" else False,
+                scale1=scale1,
+                scale2=scale2,
+                max_cc_cell=max_cc_cell,
+            )
+
+            # project adata2 to adata1
+            model.fit(tf1)
+            U = model.transform(adata1, chunk_size=chunk_size, scaler=scaler1)
+            V = model.transform(adata2, chunk_size=chunk_size, scaler=scaler2)
+            if (dim_red == "pca") and signorm:
+                U = U / model.model.singular_values_
+                V = V / model.model.singular_values_
+            index = pynndescent.NNDescent(
+                U, metric="euclidean", n_neighbors=k + 1, random_state=random_state, n_jobs=-1
+            )
+            G11 = index.neighbor_graph[0][:, 1 : k + 1]
+            G21 = index.query(V, k=k)[0]
+
+            # project adata1 to adata2
+            model.fit(tf2)
+            U = model.transform(adata1, chunk_size=chunk_size, scaler=scaler1)
+            V = model.transform(adata2, chunk_size=chunk_size, scaler=scaler2)
+            if (dim_red == "pca") and signorm:
+                U = U / model.model.singular_values_
+                V = V / model.model.singular_values_
+            index = pynndescent.NNDescent(
+                V, metric="euclidean", n_neighbors=k + 1, random_state=random_state, n_jobs=-1
+            )
+            G22 = index.neighbor_graph[0][:, 1 : k + 1]
+            G12 = index.query(U, k=k)[0]
+
+            raw_anchors = find_mnn(G12, G21, k_anchor)
+        else:
+            raise ValueError(f"Dimension reduction method {dim_red} is not supported.")
+
+        # 6. score anchors with snn and local structure preservation
+        print("Score Anchors")
+        anchor_df = score_anchor(
+            anchor=raw_anchors,
+            G11=G11,
+            G12=G12,
+            G21=G21,
+            G22=G22,
+            k_score=k_score,
+            k_local=k_local,
+            Gp1=self.local_knn[i],
+            Gp2=self.local_knn[j],
+        )
+        return anchor_df
 
     def find_anchor(
         self,
@@ -310,11 +508,19 @@ class SeuratIntegration:
         n_features=200,
         n_components=None,
         max_cc_cells=50000,
+        chunk_size=50000,
         k_anchor=5,
         k_score=30,
         alignments=None,
+        random_state=0,
+        signorm=True,
+        key_match=None,
     ):
         """Find anchors for each dataset pair."""
+        valid_dim_red_name = ["pca", "cca", "lsi", "lsi-cca", "rpca", "rlsi"]
+        if dim_red not in valid_dim_red_name:
+            raise ValueError(f"Dimension reduction method {dim_red} is not supported.")
+
         if adata_names is None:
             adata_names = list(range(len(adata_list)))
         try:
@@ -338,82 +544,89 @@ class SeuratIntegration:
         print("Find anchors across datasets.")
         for i in range(self.n_dataset - 1):
             for j in range(i + 1, self.n_dataset):
-                if (alignments is not None) and (f"{i}-{j}" not in self.all_pairs):
-                    continue
-
-                # 1. prepare input matrix for CCA
-                U, V = self._prepare_matrix(i, j, key_anchor=key_anchor)
-
-                # 2. run cca between datasets
-                print("Run CCA")
-                if dim_red == "cca":
-                    U, V = cca(
-                        U, V, scale1=scale1, scale2=scale2, n_components=n_components, svd_algorithm=svd_algorithm
+                if key_match is None:
+                    anchor_df = self._pairwise_find_anchor(
+                        i=i,
+                        i_sel=None,
+                        j=j,
+                        j_sel=None,
+                        dim_red=dim_red,
+                        key_anchor=key_anchor,
+                        svd_algorithm=svd_algorithm,
+                        scale1=scale1,
+                        scale2=scale2,
+                        k_anchor=k_anchor,
+                        k_local=k_local,
+                        k_score=k_score,
+                        ncc=n_components,
+                        max_cc_cell=max_cc_cells,
+                        k_filter=k_filter,
+                        n_features=n_features,
+                        chunk_size=chunk_size,
+                        random_state=random_state,
+                        signorm=signorm,
                     )
-                elif dim_red == "lsi":
-                    U, V = lsi_cca(
-                        U, V, n_components=n_components, max_cc_cell=max_cc_cells, svd_algorithm=svd_algorithm
-                    )
-                    # U.shape = (self.n_cells[i], n_components)
-                    # V.shape = (self.n_cells[j], n_components)
                 else:
-                    raise ValueError(f"dim_red {dim_red} is not supported, must be 'cca' or 'lsi'.")
+                    tissue = [xx.obs[key_match].unique() for xx in adata_list]
+                    sharet = list(set(tissue[i]).intersection(tissue[j]))
+                    if len(sharet) > 0:
+                        anchor_df_list = []
+                        for t in sharet:
+                            print(t)
+                            adata1 = adata_list[i].copy()
+                            adata2 = adata_list[j].copy()
 
-                # 3. normalize CCV per sample/row
-                U = normalize(U, axis=1)
-                V = normalize(V, axis=1)
-
-                # 4. find MNN of U and V to find anchors
-                print("Find Anchors")
-                _k = max(i for i in [k_anchor, k_local, k_score, 50] if i is not None)
-                G11, G12, G21, G22, raw_anchors = self._calculate_mutual_knn_and_raw_anchors(
-                    i=i, j=j, U=U, V=V, k=_k, k_anchor=k_anchor
-                )
-
-                # 5. filter anchors by high dimensional neighbors
-                if k_filter is not None:
-                    # compute ccv feature loading
-                    mat = np.concatenate([U, V], axis=0).T.dot(
-                        np.concatenate([adata_list[i].X, adata_list[j].X], axis=0)
-                    )
-                    high_dim_feature = top_features_idx(mat, n_features=n_features)
-
-                    if self.n_cells[i] >= self.n_cells[j]:
-                        raw_anchors = filter_anchor(
-                            anchor=raw_anchors,
-                            adata_ref=adata_list[i],
-                            adata_qry=adata_list[j],
-                            high_dim_feature=high_dim_feature,
-                            k_filter=k_filter,
-                            random_state=self.random_state,
-                            n_jobs=self.n_jobs,
-                        )
+                            idx1 = np.where(adata1.obs[key_match] == t)[0]
+                            idx2 = np.where(adata2.obs[key_match] == t)[0]
+                            tmp = self._pairwise_find_anchor(
+                                i=i,
+                                i_sel=idx1,
+                                j=j,
+                                j_sel=idx2,
+                                dim_red=dim_red,
+                                key_anchor=key_anchor,
+                                svd_algorithm=svd_algorithm,
+                                scale1=scale1,
+                                scale2=scale2,
+                                k_anchor=k_anchor,
+                                k_local=k_local,
+                                k_score=k_score,
+                                ncc=n_components,
+                                max_cc_cell=max_cc_cells,
+                                k_filter=k_filter,
+                                n_features=n_features,
+                                chunk_size=chunk_size,
+                                random_state=random_state,
+                                signorm=signorm,
+                            )
+                            tmp["x1"] = idx1[tmp["x1"].values]
+                            tmp["x2"] = idx2[tmp["x2"].values]
+                            anchor_df_list.append(tmp)
+                        anchor_df = pd.concat(anchor_df_list, axis=0)
                     else:
-                        raw_anchors = filter_anchor(
-                            anchor=raw_anchors[:, ::-1],
-                            adata_ref=adata_list[j],
-                            adata_qry=adata_list[i],
-                            high_dim_feature=high_dim_feature,
+                        anchor_df = self._pairwise_find_anchor(
+                            i=i,
+                            i_sel=None,
+                            j=j,
+                            j_sel=None,
+                            dim_red="rpca",
+                            key_anchor=key_anchor,
+                            svd_algorithm=svd_algorithm,
+                            scale1=scale1,
+                            scale2=scale2,
+                            k_anchor=k_anchor,
+                            k_local=k_local,
+                            k_score=k_score,
+                            ncc=n_components,
+                            max_cc_cell=max_cc_cells,
                             k_filter=k_filter,
-                            random_state=self.random_state,
-                            n_jobs=self.n_jobs,
-                        )[:, ::-1]
+                            n_features=n_features,
+                            chunk_size=chunk_size,
+                            random_state=random_state,
+                            signorm=signorm,
+                        )
 
-                # 6. score anchors with snn and local structure preservation
-                print("Score Anchors")
-                anchor_df = score_anchor(
-                    anchor=raw_anchors,
-                    G11=G11,
-                    G12=G12,
-                    G21=G21,
-                    G22=G22,
-                    k_score=k_score,
-                    k_local=k_local,
-                    Gp1=self.local_knn[i],
-                    Gp2=self.local_knn[j],
-                )
-
-                # 7. save anchors
+                # save anchors
                 self.anchor[(i, j)] = anchor_df.copy()
                 print(f"Identified {len(self.anchor[i, j])} anchors between datasets {i} and {j}.")
         return

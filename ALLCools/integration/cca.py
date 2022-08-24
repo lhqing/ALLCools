@@ -7,6 +7,43 @@ from sklearn.utils.extmath import safe_sparse_dot
 from ..clustering.lsi import tf_idf
 
 
+def top_features_idx(data, n_features):
+    """
+    Select top features with the highest importance in CCs.
+
+    Parameters
+    ----------
+    data
+        data.shape = (n_cc, total_features)
+    n_features
+        number of features to select
+
+    Returns
+    -------
+    features_idx : np.array
+    """
+    # data.shape = (n_cc, total_features)
+    n_cc = data.shape[0]
+    n_features_per_dim = n_features * 10 // n_cc
+    sample_range = np.arange(n_cc)[:, None]
+
+    # get idx of n_features_per_dim features with the highest absolute loadings
+    data = np.abs(data)
+    idx = np.argpartition(-data, n_features_per_dim, axis=1)[:, :n_features_per_dim]
+    # idx.shape = (n_cc, n_features_per_dim)
+
+    # make sure the order of first n_features_per_dim is ordered by loadings
+    idx = idx[sample_range, np.argsort(-data[sample_range, idx], axis=1)]
+
+    for i in range(n_features // n_cc + 1, n_features_per_dim):
+        features_idx = np.unique(idx[:, :i].flatten())
+        if len(features_idx) > n_features:
+            return features_idx
+    else:
+        features_idx = np.unique(idx[:, :n_features_per_dim].flatten())
+        return features_idx
+
+
 def cca(
     data1,
     data2,
@@ -17,34 +54,19 @@ def cca(
     chunk_size=50000,
     random_state=0,
     svd_algorithm="randomized",
+    k_filter=None,
+    n_features=200,
 ):
     np.random.seed(random_state)
-
-    # downsample cells
-    if max_cc_cell < data1.shape[0]:
-        sel1 = np.sort(np.random.choice(np.arange(data1.shape[0]), min(max_cc_cell, data1.shape[0]), False))
-        tf_data1 = data1[sel1, :]
-    else:
-        tf_data1 = data1
-    if max_cc_cell < data2.shape[0]:
-        sel2 = np.sort(np.random.choice(np.arange(data2.shape[0]), min(max_cc_cell, data2.shape[0]), False))
-        tf_data2 = data2[sel2, :]
-    else:
-        tf_data2 = data2
-
-    # sparse matrix to dense
-    if issparse(tf_data1):
-        tf_data1 = tf_data1.toarray()
-    if issparse(tf_data2):
-        tf_data2 = tf_data2.toarray()
-
-    # scale input features
-    scaler1 = StandardScaler()
-    if scale1:
-        tf_data1 = scaler1.fit_transform(tf_data1)
-    scaler2 = StandardScaler()
-    if scale2:
-        tf_data2 = scaler2.fit_transform(tf_data2)
+    tf_data1, tf_data2, scaler1, scaler2 = downsample(
+        data1=data1,
+        data2=data2,
+        todense=True,
+        scale1=scale1,
+        scale2=scale2,
+        max_cc_cell=max_cc_cell,
+        random_state=random_state,
+    )
 
     # CCA decomposition
     model = TruncatedSVD(n_components=n_components, algorithm=svd_algorithm, random_state=random_state)
@@ -53,12 +75,20 @@ def cca(
     # select dimensions with non-zero singular values
     sel_dim = model.singular_values_ != 0
     print("non zero dims", sel_dim.sum())
-    nnz_components = model.components_[:, sel_dim]
-    nnz_singular_values = model.singular_values_[sel_dim]
 
-    if max_cc_cell > data2.shape[0]:
-        V = nnz_components.T
+    V = model.components_[sel_dim].T
+    U = U[:, sel_dim] / model.singular_values_[sel_dim]
+
+    # compute ccv feature loading
+    if k_filter:
+        high_dim_feature = top_features_idx(
+            np.concatenate([U, V], axis=0).T.dot(np.concatenate([tf_data1, tf_data2], axis=0)), n_features=n_features
+        )
     else:
+        high_dim_feature = None
+
+    # transform CC
+    if data2.shape[0] > max_cc_cell:
         V = []
         for chunk_start in np.arange(0, data2.shape[0], chunk_size):
             if issparse(data2):
@@ -67,14 +97,11 @@ def cca(
                 tmp = data2[chunk_start : (chunk_start + chunk_size)]
             if scale2:
                 tmp = scaler2.transform(tmp)
-            # calculate V by fitted U and the sampled data1
-            V.append(np.dot(np.dot(U.T[sel_dim], tf_data1), tmp.T).T)
+            V.append(np.dot(np.dot(U.T, tf_data1), tmp.T).T)
         V = np.concatenate(V, axis=0)
-        V = V / np.square(nnz_singular_values)
+        V = V / model.singular_values_[sel_dim]
 
-    if max_cc_cell > data1.shape[0]:
-        U = U[:, sel_dim] / nnz_singular_values
-    else:
+    if data1.shape[0] > max_cc_cell:
         U = []
         for chunk_start in np.arange(0, data1.shape[0], chunk_size):
             if issparse(data1):
@@ -83,10 +110,11 @@ def cca(
                 tmp = data1[chunk_start : (chunk_start + chunk_size)]
             if scale1:
                 tmp = scaler1.transform(tmp)
-            U.append(np.dot(tmp, np.dot(nnz_components, tf_data2).T))
+            U.append(np.dot(tmp, np.dot(model.components_[sel_dim], tf_data2).T))
         U = np.concatenate(U, axis=0)
-        U = U / nnz_singular_values
-    return U, V
+        U = U / model.singular_values_[sel_dim]
+
+    return U, V, high_dim_feature
 
 
 def adata_cca(adata, group_col, separate_scale=True, n_components=50, random_state=42):
@@ -97,7 +125,7 @@ def adata_cca(adata, group_col, separate_scale=True, n_components=50, random_sta
     a = adata[adata.obs[group_col] == group_a, :].X
     b = adata[adata.obs[group_col] == group_b, :].X
 
-    pc, loading = cca(
+    pc, loading, _ = cca(
         data1=a,
         data2=b,
         scale1=separate_scale,
@@ -170,8 +198,9 @@ def lsi_cca(
     chunk_size=50000,
     svd_algorithm="randomized",
     min_cov_filter=5,
+    random_state=0,
 ):
-    np.random.seed(0)
+    np.random.seed(random_state)
 
     # downsample data1 and data2 to run tf_idf and CCA
     if max_cc_cell < data1.shape[0]:
@@ -246,3 +275,104 @@ def lsi_cca(
         )
         U = U / nnz_singular_values
     return U, V
+
+
+class LSI:
+    def __init__(
+        self,
+        scale_factor=100000,
+        n_components=100,
+        algorithm="arpack",
+        random_state=0,
+        idf=None,
+        model=None,
+    ):
+        self.scale_factor = scale_factor
+        if idf is not None:
+            self.idf = idf.copy()
+        if idf is not None:
+            self.model = model
+        else:
+            self.model = TruncatedSVD(n_components=n_components, algorithm=algorithm, random_state=random_state)
+
+    def fit(self, data):
+        tf, idf = tf_idf(data, self.scale_factor)
+        self.idf = idf.copy()
+        n_rows, n_cols = tf.shape
+        self.model.n_components = min(n_rows, n_cols, self.model.n_components)
+        self.model.fit(tf)
+        return self
+
+    def fit_transform(self, data):
+        tf, idf = tf_idf(data, self.scale_factor)
+        self.idf = idf.copy()
+        n_rows, n_cols = tf.shape
+        self.model.n_components = min(n_rows, n_cols, self.model.n_components)
+        tf_reduce = self.model.fit_transform(tf)
+        return tf_reduce / self.model.singular_values_
+
+    def transform(self, data, chunk_size=50000, scaler=None):
+        tf_reduce = []
+        for chunk_start in np.arange(0, data.shape[0], chunk_size):
+            tf, _ = tf_idf(data[chunk_start : (chunk_start + chunk_size)], self.scale_factor, self.idf)
+            tf_reduce.append(self.model.transform(tf))
+        return np.concatenate(tf_reduce, axis=0) / self.model.singular_values_
+
+
+class SVD:
+    def __init__(
+        self,
+        n_components=100,
+        algorithm="arpack",
+        random_state=0,
+    ):
+        self.model = TruncatedSVD(n_components=n_components, algorithm=algorithm, random_state=random_state)
+
+    def fit(self, data):
+        self.model.fit(data)
+        return self
+
+    def fit_transform(self, data):
+        return self.model.fit_transform(data)
+
+    def transform(self, data, chunk_size=50000, scaler=None):
+        tf_reduce = []
+        for chunk_start in np.arange(0, data.shape[0], chunk_size):
+            if issparse(data):
+                tmp = data[chunk_start : (chunk_start + chunk_size)].toarray()
+            else:
+                tmp = data[chunk_start : (chunk_start + chunk_size)]
+            if scaler:
+                tmp = scaler.transform(tmp)
+            tf_reduce.append(self.model.transform(tmp))
+        return np.concatenate(tf_reduce, axis=0)
+
+
+def downsample(data1, data2, scale1, scale2, todense, max_cc_cell=20000, random_state=0):
+    scaler1, scaler2 = [None, None]
+    np.random.seed(random_state)
+    if data1.shape[0] > max_cc_cell:
+        sel1 = np.random.choice(np.arange(data1.shape[0]), min(max_cc_cell, data1.shape[0]), False)
+        tf1 = data1[sel1]
+    else:
+        tf1 = data1.copy()
+    if todense:
+        if issparse(tf1):
+            tf1 = tf1.toarray()
+
+    if data2.shape[0] > max_cc_cell:
+        sel2 = np.random.choice(np.arange(data2.shape[0]), min(max_cc_cell, data2.shape[0]), False)
+        tf2 = data2[sel2]
+    else:
+        tf2 = data2.copy()
+    if todense:
+        if issparse(tf2):
+            tf2 = tf2.toarray()
+
+    if scale1:
+        scaler1 = StandardScaler()
+        tf1 = scaler1.fit_transform(tf1)
+    if scale2:
+        scaler2 = StandardScaler()
+        tf2 = scaler2.fit_transform(tf2)
+    return tf1, tf2, scaler1, scaler2
