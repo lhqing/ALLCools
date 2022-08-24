@@ -815,9 +815,7 @@ def main():
     elif cur_command in ["allc-to-region-count", "region", "2region"]:
         from ._allc_to_region_count import allc_to_region_count as func
     elif cur_command in ["allc-to-bigwig", "bw", "2bw"]:
-        from ._allc_to_bigwig_new import allc_to_bigwig as func
-
-        # from ._allc_to_bigwig import allc_to_bigwig as func  # old version using ucsc tools
+        from ._allc_to_bigwig import allc_to_bigwig as func
     elif cur_command in ["generate-mcds", "mcds"]:
         from .count_matrix.mcds import generate_mcds as func
     elif cur_command in ["convert-mcds-to-zarr"]:

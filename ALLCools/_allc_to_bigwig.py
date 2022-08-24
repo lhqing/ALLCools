@@ -1,198 +1,212 @@
-"""This file is modified from methylpy https://github.com/yupenghe/methylpy."""
+from collections import defaultdict
 
-import logging
-import shlex
-import subprocess
-from concurrent.futures import ProcessPoolExecutor, as_completed
+import pyBigWig
+import pysam
 
 from ._doc import *
-from ._extract_allc import extract_allc
-from ._open import open_allc
-from .utilities import parse_chrom_size
-
-# logger
-log = logging.getLogger(__name__)
-log.addHandler(logging.NullHandler())
+from .utilities import parse_chrom_size, parse_mc_pattern
 
 
-def _allc_to_bedgraph(allc_path, out_prefix, chrom_size_path, remove_additional_chrom=False, bin_size=50):
-    """Simply calculate cov and mc_rate for fixed genome bins. No mC context filter."""
-    chrom_dict = parse_chrom_size(chrom_size_path)
-    cur_chrom = "TOTALLY_NOT_A_CHROM"
-    cur_chrom_end = 0
-    bin_start = 0
-    bin_end = min(cur_chrom_end, bin_size)
-    temp_mc, temp_cov = 0, 0
+class ContextCounter:
+    def __init__(self, mc_contexts):
+        self.mc_counts = defaultdict(float)  # key is context pattern like CHN, CGN
+        self.cov_counts = defaultdict(float)  # key is context pattern like CHN, CGN
+        # key is each single context like CCC, CGC, value is a list of context pattern this context belong to.
+        # A single context may belong to multiple patterns
+        self.context_map = defaultdict(list)
+        for context in mc_contexts:
+            parsed_context_set = parse_mc_pattern(context)
+            for c in parsed_context_set:
+                self.context_map[c].append(context)
 
-    out_prefix = out_prefix.rstrip(".")
-    out_frac = out_prefix + ".frac.bg"
-    out_cov = out_prefix + ".cov.bg"
+    def add(self, context, mc, cov):
+        for c in self.context_map[context]:
+            # print(context, c, mc, cov)
+            self.mc_counts[c] += mc
+            self.cov_counts[c] += cov
 
-    with open_allc(allc_path) as allc, open(out_frac, "w") as frac_handle, open(out_cov, "w") as cov_handle:
-        for line in allc:
-            chrom, pos, _, _, mc, cov, *_ = line.split("\t")
-            pos = int(pos)
-            mc = int(mc)
-            cov = int(cov)
-            if pos >= bin_end or cur_chrom != chrom:
-                # reset_chrom
-                if cur_chrom != chrom:
-                    try:
-                        this_chrom_end = chrom_dict[chrom]
-                    except KeyError as e:
-                        # chrom not in chrom size file
-                        if remove_additional_chrom:
-                            continue
-                        else:
-                            raise e
-                    cur_chrom_end = this_chrom_end
 
-                # write line after confirm the chrom
-                if temp_cov > 0:
-                    mc_level = temp_mc / temp_cov
-                    frac_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
-                    cov_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, temp_cov])) + "\n")
-                cur_chrom = chrom  # only update chrom after wrote the cur line, cause this may belong to last chrom
+class StrandContextCounter:
+    def __init__(self, mc_contexts):
+        self.mc_watson_counts = defaultdict(float)  # key is context pattern like CHN, CGN
+        self.cov_watson_counts = defaultdict(float)  # key is context pattern like CHN, CGN
+        self.mc_crick_counts = defaultdict(float)  # key is context pattern like CHN, CGN
+        self.cov_crick_counts = defaultdict(float)  # key is context pattern like CHN, CGN
+        # key is each single context like CCC, CGC, value is a list of context pattern this context belong to.
+        # A single context may belong to multiple patterns
+        self.context_map = defaultdict(list)
+        for context in mc_contexts:
+            parsed_context_set = parse_mc_pattern(context)
+            for c in parsed_context_set:
+                self.context_map[c].append(context)
 
-                # reset bin
-                _bin_start = (pos - 1) // bin_size * bin_size
-                if _bin_start == bin_start:
-                    # this only happens when pos == cur_chrom_end,
-                    # we don't want the last base, just ignore it, usually happens at chrM last base...
-                    temp_mc, temp_cov = 0, 0
-                else:
-                    temp_mc, temp_cov = mc, cov
-                    bin_start = _bin_start
-                bin_end = min(cur_chrom_end, bin_start + bin_size)
+    def add(self, context, strand, mc, cov):
+        # print(context, strand, mc, cov)
+        for c in self.context_map[context]:
+            if strand == "+":
+                self.mc_watson_counts[c] += mc
+                self.cov_watson_counts[c] += cov
             else:
-                temp_mc += mc
-                temp_cov += cov
-
-        # write last piece if there is anything
-        if temp_cov > 0:
-            mc_level = temp_mc / temp_cov
-            frac_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, mc_level])) + "\n")
-            cov_handle.write("\t".join(map(str, [cur_chrom, bin_start, bin_end, temp_cov])) + "\n")
-
-    print(f"Finish generate bedgraph for {allc_path}")
-    return out_frac, out_cov
+                self.mc_crick_counts[c] += mc
+                self.cov_crick_counts[c] += cov
 
 
-def _bedgraph_to_bigwig(input_file, chrom_size_path, path_to_wigtobigwig, remove_bedgraph=True):
-    output_file = input_file.rstrip(".bg") + ".bw"
-    cmd = f"{path_to_wigtobigwig}wigToBigWig {input_file} {chrom_size_path} {output_file}"
+def write_entry(counter, context_handle, mc_contexts, strandness, chrom, bin_start, bin_size):
+    if strandness == "split":
+        for context in mc_contexts:
+            # Watson strand
+            mc = counter.mc_watson_counts[context]
+            cov = counter.cov_watson_counts[context]
+            if cov != 0:
+                frac = mc / cov
+                frac_handle = context_handle[context, "+", "frac"]
+                frac_handle.addEntries(chrom, starts=[bin_start], values=[frac], span=bin_size)
+                cov_handle = context_handle[context, "+", "cov"]
+                cov_handle.addEntries(chrom, starts=[bin_start], values=[cov], span=bin_size)
 
-    subprocess.run(shlex.split(cmd), check=True)
-    if remove_bedgraph:
-        subprocess.run(shlex.split(f"rm -f {input_file}"), check=True)
-    print(f"Finish generate bigwig for {input_file}")
-    return output_file
+            # Crick strand
+            mc = counter.mc_crick_counts[context]
+            cov = counter.cov_crick_counts[context]
+            if cov != 0:
+                frac = mc / cov
+                frac_handle = context_handle[context, "-", "frac"]
+                frac_handle.addEntries(chrom, starts=[bin_start], values=[frac], span=bin_size)
+                cov_handle = context_handle[context, "-", "cov"]
+                cov_handle.addEntries(chrom, starts=[bin_start], values=[cov], span=bin_size)
+    else:
+        for context in mc_contexts:
+            # Both strand
+            mc = counter.mc_counts[context]
+            cov = counter.cov_counts[context]
+            if cov != 0:
+                frac = mc / cov
+                frac_handle = context_handle[context, "frac"]
+                frac_handle.addEntries(chrom, starts=[bin_start], values=[frac], span=bin_size)
+                cov_handle = context_handle[context, "cov"]
+                cov_handle.addEntries(chrom, starts=[bin_start], values=[cov], span=bin_size)
+    return
 
 
 @doc_params(
     allc_path_doc=allc_path_doc,
-    chrom_size_path_doc=chrom_size_path_doc,
     mc_contexts_doc=mc_contexts_doc,
-    split_strand_doc=split_strand_doc,
-    remove_additional_chrom_doc=remove_additional_chrom_doc,
-    region_doc=region_doc,
-    cov_cutoff_doc=cov_cutoff_doc,
+    chrom_size_path_doc=chrom_size_path_doc,
+    strandness_doc=strandness_doc,
+    bw_bin_sizes_doc=bw_bin_sizes_doc,
 )
-def allc_to_bigwig(
-    allc_path,
-    output_prefix,
-    chrom_size_path,
-    mc_contexts,
-    split_strand=False,
-    bin_size=50,
-    remove_additional_chrom=False,
-    region=None,
-    cov_cutoff=9999,
-    path_to_wigtobigwig="",
-    remove_temp=True,
-    cpu=1,
-):
+def allc_to_bigwig(allc_path, output_prefix, bin_size, mc_contexts, chrom_size_path, strandness):
     """\
-    Generate bigwig file(s) from 1 ALLC file.
+    Generate BigWig files from one ALLC file.
 
     Parameters
     ----------
     allc_path
         {allc_path_doc}
     output_prefix
-        Output prefix of the bigwig file(s)
-    chrom_size_path
-        {chrom_size_path_doc}
+        Path prefix of the output BigWig file.
+    bin_size
+        {bw_bin_sizes_doc}
     mc_contexts
         {mc_contexts_doc}
-    split_strand
-        {split_strand_doc}
-    bin_size
-        Minimum bin size of bigwig file
-    remove_additional_chrom
-        {remove_additional_chrom_doc}
-    region
-        {region_doc}
-    cov_cutoff
-        {cov_cutoff_doc}
-    path_to_wigtobigwig
-        Path to wigtobigwig to allow allcools to find it
-    remove_temp
-        debug parameter, whether to remove the temp file or not
-    cpu
-        Number of cores to use
-
+    strandness
+        {strandness_doc}
+    chrom_size_path
+        {chrom_size_path_doc}
+        If chrom_size_path provided, will use it to extract ALLC with chrom order,
+        but if region provided, will ignore this.
     """
-    if bin_size is None:
-        bin_size = 50
+    if strandness not in {"split", "both"}:
+        raise ValueError(f'strandness need to be "split" or "both", got "{strandness}"')
 
-    # test wigToBigWig
-    p = subprocess.run(f"{path_to_wigtobigwig}wigToBigWig", stderr=subprocess.PIPE, encoding="utf8")
-    if p.returncode != 255:  # somehow, the p.returncode is 255 when set correctly...
-        raise OSError(f"Try {path_to_wigtobigwig}wigToBigWig, got error {p.stderr}")
+    chrom_sizes = parse_chrom_size(chrom_size_path)
+    chrom_sizes_list = [(k, v) for k, v in chrom_sizes.items()]
 
-    strandness = "split" if split_strand else "both"
+    # create bigwig file handles for each case
+    # context_handle: key is mC context pattern like CHN, CAN, CGN, value is the output handle
+    context_handle = {}
+    output_path_collect = {}
+    for bw_type in ["frac", "cov"]:
+        out_suffix = f"{bw_type}.bw"
+        for mc_context in mc_contexts:
+            if strandness == "split":
+                file_path = output_prefix + f".{mc_context}-Watson.{out_suffix}"
+                output_path_collect[(mc_context, "Watson", out_suffix)] = file_path
+                # handle for Watson/+ strand
+                w_handle = pyBigWig.open(file_path, "w")
+                w_handle.addHeader(chrom_sizes_list)
+                context_handle[(mc_context, "+", bw_type)] = w_handle
 
-    # prepare bedgraph
-    extracted_allc_path_dict = extract_allc(
-        allc_path=allc_path,
-        output_prefix=output_prefix,
-        mc_contexts=mc_contexts,
-        chrom_size_path=chrom_size_path,
-        strandness=strandness,
-        output_format="allc",
-        region=region,
-        cov_cutoff=cov_cutoff,
-        tabix=False,
-        cpu=cpu,
-    )
-    extracted_allc_paths = list(extracted_allc_path_dict.values())
+                file_path = output_prefix + f".{mc_context}-Crick.{out_suffix}"
+                output_path_collect[(mc_context, "Crick", out_suffix)] = file_path
+                # handle for Crick/- strand
+                c_handle = pyBigWig.open(file_path, "w")
+                c_handle.addHeader(chrom_sizes_list)
+                context_handle[(mc_context, "-", bw_type)] = c_handle
+            else:
+                # handle for both strand
+                file_path = output_prefix + f".{mc_context}-{strandness}.{out_suffix}"
+                output_path_collect[(mc_context, strandness, out_suffix)] = file_path
+                _handle = pyBigWig.open(file_path, "w")
+                _handle.addHeader(chrom_sizes_list)
+                context_handle[mc_context, bw_type] = _handle
 
-    with ProcessPoolExecutor(cpu) as executor:
-        # generate bigwig file
-        allc_future_dict = {}
-        for path in extracted_allc_paths:
-            future = executor.submit(
-                _allc_to_bedgraph,
-                allc_path=path,
-                out_prefix=str(path).replace(".allc.tsv.gz", ""),  # use extracted ALLC prefix
-                chrom_size_path=chrom_size_path,
-                remove_additional_chrom=remove_additional_chrom,
+    def _init_counter(_contexts, _strandness):
+        if _strandness == "split":
+            # a counter for +/- strand separately
+            _counter = StrandContextCounter(_contexts)
+        else:
+            # a counter for both +/- strands
+            _counter = ContextCounter(_contexts)
+        return _counter
+
+    with pysam.TabixFile(allc_path) as allc:
+        allc_chroms = set(allc.contigs)
+        for chrom in chrom_sizes.keys():
+            if chrom not in allc_chroms:
+                continue
+            counter = _init_counter(mc_contexts, strandness)
+            cur_bin = 0
+            for line in allc.fetch(chrom):
+                _, pos, strand, context, mc, cov, _ = line.split("\t")
+                pos = int(pos)
+                mc = float(mc)
+                cov = float(cov)
+                this_bin = (pos - 1) // bin_size
+                if this_bin != cur_bin:
+                    # dump cur_bin counts
+                    bin_start = int(cur_bin * bin_size)
+                    write_entry(
+                        counter=counter,
+                        context_handle=context_handle,
+                        mc_contexts=mc_contexts,
+                        strandness=strandness,
+                        chrom=chrom,
+                        bin_start=bin_start,
+                        bin_size=bin_size,
+                    )
+                    # initiate next bin
+                    cur_bin = this_bin
+                    counter = _init_counter(mc_contexts, strandness)
+
+                # add counts
+                if strandness == "split":
+                    counter.add(context, strand, mc, cov)
+                else:
+                    counter.add(context, mc, cov)
+
+            # final bin of the chrom
+            bin_start = int(cur_bin * bin_size)
+            write_entry(
+                counter=counter,
+                context_handle=context_handle,
+                mc_contexts=mc_contexts,
+                strandness=strandness,
+                chrom=chrom,
+                bin_start=bin_start,
                 bin_size=bin_size,
             )
-            allc_future_dict[future] = path
+            print(chrom, "finished")
 
-        for future in as_completed(allc_future_dict):
-            output_paths = future.result()
-            for path in output_paths:
-                executor.submit(
-                    _bedgraph_to_bigwig,
-                    input_file=path,
-                    chrom_size_path=chrom_size_path,
-                    path_to_wigtobigwig=path_to_wigtobigwig,
-                    remove_bedgraph=remove_temp,
-                )
-
-    if remove_temp:
-        subprocess.run(["rm", "-f"] + extracted_allc_paths, check=True)
-    return
+    for handle in context_handle.values():
+        handle.close()
+    return output_path_collect
