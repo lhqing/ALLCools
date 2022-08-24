@@ -504,6 +504,7 @@ class SeuratIntegration:
         svd_algorithm="randomized",
         scale1=False,
         scale2=False,
+        scale_list=None,
         k_filter=None,
         n_features=200,
         n_components=None,
@@ -544,6 +545,13 @@ class SeuratIntegration:
         print("Find anchors across datasets.")
         for i in range(self.n_dataset - 1):
             for j in range(i + 1, self.n_dataset):
+                if scale_list is not None:
+                    scale1 = scale_list[i]
+                    scale2 = scale_list[j]
+                    print("Get scale1 and scale2 from scale_list")
+                    print(f"dataset {i} scale: {scale1}")
+                    print(f"dataset {j} scale: {scale2}")
+
                 if key_match is None:
                     anchor_df = self._pairwise_find_anchor(
                         i=i,
