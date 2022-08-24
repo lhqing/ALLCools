@@ -168,10 +168,12 @@ class BaseDSChrom(xr.Dataset):
         # for continuous mode, the pos should have an offset to convert to genome position
         if not self.continuity:
             raise ValueError("The position dimension is not continuous, unable to perform _continuous_pos_selection.")
-        start -= self.offset
-        end -= self.offset
 
         if start is not None or end is not None:
+            if start is not None:
+                start -= self.offset
+            if end is not None:
+                end -= self.offset
             obj = self.sel(pos=slice(start, end, None))
             if start is not None:
                 obj.offset = start
@@ -223,7 +225,7 @@ class BaseDSChrom(xr.Dataset):
         return ds
 
     @classmethod
-    def open(cls, path, start=None, end=None):
+    def open(cls, path, start=None, end=None, codebook_path=None):
         """
         Open a BaseDSChrom object from a zarr path.
 
@@ -237,13 +239,38 @@ class BaseDSChrom(xr.Dataset):
             The start position of the region to be opened.
         end
             The end position of the region to be opened.
+        codebook_path
+            The path to the codebook file if the BaseDS does not have a codebook.
+            Codebook contexts, c_pos, and shape must be compatible with the BaseDS.
 
         Returns
         -------
         BaseDSChrom
         """
         path = pathlib.Path(path)
-        _obj = cls(xr.open_zarr(path, decode_cf=False))
+
+        _zarr_obj = xr.open_zarr(path, decode_cf=False)
+
+        if "codebook" not in _zarr_obj.data_vars:
+            if codebook_path is None:
+                raise ValueError("The BaseDS does not have a codebook, but no codebook_path is specified.")
+            _cb = xr.open_zarr(codebook_path, decode_cf=False)["codebook"]
+            # validate _cb attrs compatibility
+            flag = True
+            _cb_mc_types = _cb.get_index("mc_type").values
+            _obj_mc_types = _zarr_obj.get_index("mc_type").values
+            _diff = (_cb_mc_types != _obj_mc_types).sum()
+            if _diff > 0:
+                flag = False
+                print("The codebook mc_types are not compatible with the BaseDS.")
+            if _cb.shape[0] != _zarr_obj["data"].shape[0]:
+                flag = False
+                print("The codebook shape is not compatible with the BaseDS.")
+            if not flag:
+                raise ValueError("The BaseDS and codebook are not compatible.")
+            _zarr_obj["codebook"] = _cb
+
+        _obj = cls(_zarr_obj)
         _obj = _obj._continuous_pos_selection(start, end)
         return _obj
 

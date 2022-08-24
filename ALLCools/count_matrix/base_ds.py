@@ -249,6 +249,57 @@ class _BaseDSChunkWriter:
         return
 
 
+def _create_contexts(context_size, c_pos, include_n):
+    if include_n:
+        bases = "ATCGN"
+    else:
+        bases = "ATCG"
+
+    contexts = sorted({"".join(c) for c in permutations(bases * context_size, context_size) if c[c_pos] == "C"})
+    return bases, contexts
+
+
+def _create_codebook_single_chrom(zarr_root, chrom, genome_fasta_path, chrom_size, chunk_size, contexts):
+    print(f"Generating codebook for {chrom}...")
+    with pysam.FastaFile(genome_fasta_path, filepath_index=f"{genome_fasta_path}.fai") as fa:
+        sequence = fa.fetch(chrom).upper()
+
+    # make sure chrom size consistent
+    assert len(sequence) == chrom_size, f"chrom {chrom} size {len(sequence)} is not consistent with {chrom_size}"
+
+    context_codebook = zarr_root.require_dataset(
+        "codebook", shape=(chrom_size, len(contexts)), chunks=chunk_size, dtype="bool"
+    )
+    context_codebook.attrs["_ARRAY_DIMENSIONS"] = ["pos", "mc_type"]
+
+    for i, context in enumerate(contexts):
+        print(context, end=", ")
+        # positive strand
+        pos_pattern = re.compile(context)
+        context_pos = [match.start() for match in pos_pattern.finditer(sequence)]
+        # negative strand
+        neg_pattern = re.compile(reverse_complement(context))
+        context_pos += [match.end() for match in neg_pattern.finditer(sequence)]
+
+        context_pos = sorted(set(context_pos))
+        context_codebook[context_pos, i] = True
+
+    context_codebook.attrs["contexts"] = list(contexts)
+    print()
+    return
+
+
+def _create_mc_type_zarr(root, contexts, c_pos, include_n, context_size):
+    n_type = len(contexts)
+    mc_type = root.require_dataset("mc_type", shape=(n_type,), chunks=(n_type,), dtype="<U50")
+    mc_type[:] = np.array(contexts)
+    mc_type.attrs["_ARRAY_DIMENSIONS"] = "mc_type"
+    mc_type.attrs["c_pos"] = c_pos
+    mc_type.attrs["include_n"] = include_n
+    mc_type.attrs["context_size"] = context_size
+    return
+
+
 class _CreateSingleChromosomeBaseDS:
     """Create the BaseDS zarr dataset for one chromosome."""
 
@@ -257,8 +308,9 @@ class _CreateSingleChromosomeBaseDS:
         path,
         chrom,
         chrom_size,
-        fasta_path,
         sample_path_series: pd.Series,
+        fasta_path=None,
+        generate_codebook=True,
         context_size=3,
         c_pos=0,
         include_n=False,
@@ -290,8 +342,10 @@ class _CreateSingleChromosomeBaseDS:
         self.bases, self.contexts = self._get_contexts()
 
         # chrom chunk info
-        with pysam.FastaFile(fasta_path, filepath_index=f"{fasta_path}.fai") as fa:
-            self.chrom_sequence = fa.fetch(chrom).upper()
+        self._generate_codebook = generate_codebook
+        self._genome_fasta_path = fasta_path
+        if self._generate_codebook:
+            assert self._genome_fasta_path is not None, "genome fasta path is required when generating codebook"
         self.chrom_chunk_pos = self._get_chrom_chunk_pos()
 
         # sample info
@@ -311,52 +365,29 @@ class _CreateSingleChromosomeBaseDS:
         return
 
     def _get_contexts(self):
-        if self.include_n:
-            bases = "ATCGN"
-        else:
-            bases = "ATCG"
-
-        contexts = sorted(
-            {"".join(c) for c in permutations(bases * self.context_size, self.context_size) if c[self.c_pos] == "C"}
-        )
+        bases, contexts = _create_contexts(context_size=self.context_size, c_pos=self.c_pos, include_n=self.include_n)
         return bases, contexts
 
     def _create_contexts(self):
         bases, contexts = self._get_contexts()
-        n_type = len(contexts)
-        mc_type = self.root.require_dataset("mc_type", shape=(n_type,), chunks=(n_type,), dtype="<U50")
-        mc_type[:] = np.array(contexts)
-        mc_type.attrs["_ARRAY_DIMENSIONS"] = "mc_type"
-        mc_type.attrs["c_pos"] = self.c_pos
-        mc_type.attrs["include_n"] = self.include_n
-        mc_type.attrs["context_size"] = self.context_size
+        _create_mc_type_zarr(
+            root=self.root,
+            contexts=contexts,
+            c_pos=self.c_pos,
+            include_n=self.include_n,
+            context_size=self.context_size,
+        )
         return bases, contexts
 
     def _create_codebook(self):
-        chrom_sequence = self.chrom_sequence
-
-        contexts = self.contexts
-        print(f"Generating codebook for {self.chrom}...")
-
-        # make sure chrom size consistent
-        chrom_size = self.chrom_size
-        assert len(chrom_sequence) == chrom_size
-
-        context_codebook = self.root.require_dataset(
-            "codebook", shape=(chrom_size, len(contexts)), chunks=(self.pos_chunk, len(self.bases)), dtype="bool"
+        _create_codebook_single_chrom(
+            zarr_root=self.root,
+            chrom=self.chrom,
+            genome_fasta_path=self._genome_fasta_path,
+            chrom_size=self.chrom_size,
+            chunk_size=(self.pos_chunk, len(self.bases)),
+            contexts=self.contexts,
         )
-        context_codebook.attrs["_ARRAY_DIMENSIONS"] = ["pos", "mc_type"]
-
-        for i, context in enumerate(contexts):
-            # positive strand
-            pos_pattern = re.compile(context)
-            context_pos = [match.start() for match in pos_pattern.finditer(chrom_sequence)]
-            # negative strand
-            neg_pattern = re.compile(reverse_complement(context))
-            context_pos += [match.end() for match in neg_pattern.finditer(chrom_sequence)]
-
-            context_pos = sorted(set(context_pos))
-            context_codebook[context_pos, i] = True
         return
 
     def _get_chrom_chunk_pos(self):
@@ -439,7 +470,8 @@ class _CreateSingleChromosomeBaseDS:
 
         # create the zarr dataset structure
         self._create_contexts()
-        self._create_codebook()  # TODO add an option to skip creating codebook
+        if self._generate_codebook:
+            self._create_codebook()
         self._create_count_type()
         self._create_sample_id()
         # init empty sample data array per chromosome
@@ -513,17 +545,18 @@ class _CreateSingleChromosomeBaseDS:
         return
 
 
-def create_base_ds(
+def generate_base_ds(
     output_dir_path,
     genome_fasta_path,
     chrom_size_path,
     allc_table_path,
+    generate_codebook=True,
     context_size=3,
     c_pos=0,
     include_n=False,
     pos_chunk=1000000,
-    sample_chunk=100,
-    data_dtype="f4",
+    sample_chunk=200,
+    data_dtype="uint16",
     mode="a",
     n_cpu=1,
 ):
@@ -543,20 +576,23 @@ def create_base_ds(
         sep="\t" if allc_table_path.name.endswith("tsv") else ",",
     ).squeeze()
 
-    fasta_path = pathlib.Path(genome_fasta_path)
-    fai_path = pathlib.Path(f"{fasta_path}.fai")
-    if not fai_path.exists():
-        print(f"{fai_path} not found. Try generating...")
-        import subprocess
+    if generate_codebook:
+        fasta_path = pathlib.Path(genome_fasta_path)
+        fai_path = pathlib.Path(f"{fasta_path}.fai")
+        if not fai_path.exists():
+            print(f"{fai_path} not found. Try generating...")
+            import subprocess
 
-        try:
-            subprocess.run(["samtools", "faidx", str(fasta_path)], capture_output=True, check=True)
-        except subprocess.CalledProcessError as e:
-            print(
-                f"samtools faidx failed with error: {e.stderr.decode()}. "
-                f"Please try to generate the fai file manually."
-            )
-            raise e
+            try:
+                subprocess.run(["samtools", "faidx", str(fasta_path)], capture_output=True, check=True)
+            except subprocess.CalledProcessError as e:
+                print(
+                    f"samtools faidx failed with error: {e.stderr.decode()}. "
+                    f"Please try to generate the fai file manually."
+                )
+                raise e
+    else:
+        fasta_path = None
 
     output_dir_path = pathlib.Path(output_dir_path)
     output_dir_path.mkdir(exist_ok=True, parents=True)
@@ -570,6 +606,7 @@ def create_base_ds(
             chrom_size=chrom_size,
             fasta_path=fasta_path,
             sample_path_series=sample_path_series,
+            generate_codebook=generate_codebook,
             context_size=context_size,
             c_pos=c_pos,
             include_n=include_n,
@@ -579,4 +616,52 @@ def create_base_ds(
             mode=mode,
             n_cpu=n_cpu,
         )
+    return
+
+
+def generate_mc_codebook(
+    path,
+    genome_fasta_path,
+    chrom_size_path,
+    mode="w",
+    context_size=3,
+    c_pos=0,
+    include_n=False,
+    pos_chunk=1000000,
+    n_cpu=1,
+):
+    """Generate mC context codebook for BaseDS."""
+    bases, contexts = _create_contexts(context_size=context_size, c_pos=c_pos, include_n=include_n)
+    chrom_sizes = pd.read_csv(chrom_size_path, header=None, sep="\t", index_col=0, names=["chrom", "size"]).squeeze()
+
+    if n_cpu > 1:
+        from numcodecs import blosc
+
+        blosc.use_threads = False
+
+    with ProcessPoolExecutor(max_workers=n_cpu) as executor:
+        futures = {}
+        for chrom, chrom_size in chrom_sizes.items():
+            chrom_path = pathlib.Path(f"{path}/{chrom}")
+            chrom_path.mkdir(exist_ok=True, parents=True)
+            chrom_root = zarr.open(str(chrom_path), mode=mode)
+
+            future = executor.submit(
+                _create_codebook_single_chrom,
+                zarr_root=chrom_root,
+                chrom=chrom,
+                genome_fasta_path=genome_fasta_path,
+                chrom_size=chrom_size,
+                chunk_size=(pos_chunk, len(bases)),
+                contexts=contexts,
+            )
+            futures[future] = chrom_root, chrom_path
+
+        for future in as_completed(futures):
+            chrom_root, chrom_path = futures[future]
+            # add mc type index
+            _create_mc_type_zarr(
+                root=chrom_root, contexts=contexts, c_pos=c_pos, include_n=include_n, context_size=context_size
+            )
+            zarr.consolidate_metadata(str(chrom_path))
     return
