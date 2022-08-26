@@ -430,7 +430,7 @@ class SeuratIntegration:
             from .cca import LSI, SVD, downsample
 
             adata1, adata2 = adata1.X, adata2.X
-            k = max([k_anchor, k_local, k_score, 50])
+            k = max(i for i in [k_anchor, k_local, k_score, 50] if i is not None)
             if dim_red == "rpca":
                 print("Run rPCA")
                 model = SVD(n_components=ncc, random_state=random_state)
