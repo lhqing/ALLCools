@@ -430,10 +430,14 @@ class MCDS(xr.Dataset):
         da_suffix :
             name suffix appended to the calculated mC rate data array
         """
+        var_dim = self._verify_dim(var_dim, mode="var")
+
         if da is None:
+            if var_dim is None:
+                raise ValueError("Both da and var_dim are not specified")
             da = f"{var_dim}_da"
         if da not in self.data_vars:
-            raise KeyError(f"{da} is not in this dataset")
+            raise KeyError(f"{da} is not in this dataset, please specify da or var_dim")
         if var_dim not in self[da].dims:
             raise KeyError(f"{var_dim} is not a dimension of {da}")
 
