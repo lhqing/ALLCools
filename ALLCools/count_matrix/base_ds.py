@@ -564,7 +564,7 @@ def generate_base_ds(
     output_dir_path = pathlib.Path(output_dir_path)
     output_dir_path.mkdir(exist_ok=True, parents=True)
 
-    chroms = pd.read_csv(chrom_size_path, header=None, sep="\t", index_col=0, names=["chrom", "size"]).squeeze()
+    chroms = pd.read_csv(chrom_size_path, header=None, sep="\t", index_col=0, names=["chrom", "size"])["size"]
     # save chroms to output_dir_path
     chroms.to_csv(f"{output_dir_path}/chrom_sizes.csv", index=True, header=False)
 
