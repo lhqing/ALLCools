@@ -576,6 +576,10 @@ def generate_base_ds(
         sep="\t" if allc_table_path.name.endswith("tsv") else ",",
     ).squeeze()
 
+    # check if all the allc paths in sample_path_series exist
+    if not all(pathlib.Path(p).exists() for p in sample_path_series.to_list()):
+        raise FileNotFoundError(f"Some of the allc files in {allc_table_path} do not exist.")
+
     if generate_codebook:
         fasta_path = pathlib.Path(genome_fasta_path)
         fai_path = pathlib.Path(f"{fasta_path}.fai")
