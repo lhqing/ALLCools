@@ -155,8 +155,8 @@ def filter_anchor(
         n_jobs=n_jobs,
     )
     G = index.query(qry_data, k=k_filter)[0]
-    anchor = np.array([xx for xx in anchor if (xx[0] in G[xx[1]])])
     input_anchors = anchor.shape[0]
+    anchor = np.array([xx for xx in anchor if (xx[0] in G[xx[1]])])
     print(f"Anchor selected with high CC feature graph: {anchor.shape[0]} / {input_anchors}")
     return anchor
 
