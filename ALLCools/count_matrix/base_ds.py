@@ -96,7 +96,11 @@ class _ALLCFile(TabixFile):
         records :
             a numpy array with shape (n_rows, 3).
         """
-        records = np.array([(pos, mc, cov) for _, pos, _, _, mc, cov, _ in self.fetch(*args, **kwargs)])
+        try:
+            records = np.array([(pos, mc, cov) for _, pos, _, _, mc, cov, _ in self.fetch(*args, **kwargs)])
+        except ValueError as e:
+            print(f"{self.filename} fetch causing ValueError")
+            raise e
         if records.shape[0] == 0:
             # no records in allc
             # this records is still empty, but shape is correct
