@@ -279,11 +279,16 @@ def _create_codebook_single_chrom(zarr_root, chrom, genome_fasta_path, chrom_siz
     for i, context in enumerate(contexts):
         print(context, end=", ")
         # positive strand
-        pos_pattern = re.compile(context)
+        # in order to count overlapping contexts, this regex pattern is necessary
+        # see https://stackoverflow.com/questions/5616822/how-to-use-regex-to-find-all-overlapping-matches
+        pos_context_str = f"(?=({context}))"
+        pos_pattern = re.compile(pos_context_str)
         context_pos = [match.start() for match in pos_pattern.finditer(sequence)]
         # negative strand
-        neg_pattern = re.compile(reverse_complement(context))
-        context_pos += [match.end() for match in neg_pattern.finditer(sequence)]
+        neg_context_str = f"(?=({reverse_complement(context)}))"
+        neg_pattern = re.compile(neg_context_str)
+        neg_dodge = len(context) - 1
+        context_pos += [match.end() + neg_dodge for match in neg_pattern.finditer(sequence)]
 
         context_pos = sorted(set(context_pos))
         context_codebook[context_pos, i] = True
