@@ -392,7 +392,16 @@ class BaseDSChrom(xr.Dataset):
         """The position index."""
         return self.get_index("pos")
 
-    def get_region_ds(self, mc_type, bin_size=None, regions=None, region_name=None, region_chunks=10000):
+    def get_region_ds(
+        self,
+        mc_type,
+        bin_size=None,
+        regions=None,
+        region_name=None,
+        region_chunks=10000,
+        region_start=None,
+        region_end=None,
+    ):
         """
         Get the region dataset.
 
@@ -409,6 +418,10 @@ class BaseDSChrom(xr.Dataset):
             The dimension name of the regions.
         region_chunks
             The chunk size of the region dim in result dataset.
+        region_start
+            The start position of the region to be selected.
+        region_end
+            The end position of the region to be selected.
 
         Returns
         -------
@@ -419,6 +432,9 @@ class BaseDSChrom(xr.Dataset):
 
         if bin_size is not None:
             assert bin_size > 1, "bin_size must be greater than 1."
+            all_idx = self.get_index("pos")
+            region_start = all_idx.min() + self.offset if region_start is None else region_start
+            region_end = all_idx.max() + self.offset if region_end is None else region_end
 
         if regions is not None:
             assert regions.shape[1] == 3, "regions must be a 3-column dataframe: chrom, start, end."
@@ -436,19 +452,15 @@ class BaseDSChrom(xr.Dataset):
             labels = regions.index
             region_name = regions.index.name
         else:
-            all_pos = base_ds.get_index("pos")
-            start = all_pos.min()
-            end = all_pos.max()
-
             bins = []
             for i in range(0, self.chrom_size, bin_size):
-                if i < start or i > end:
+                if i < region_start or i > region_end:
                     continue
                 bins.append(i)
-            if bins[-1] < end:
-                bins.append(end // bin_size * bin_size + bin_size)
-            if bins[0] > start:
-                bins.insert(0, start // bin_size * bin_size)
+            if bins[-1] < region_end:
+                bins.append(region_end)
+            if bins[0] > region_start:
+                bins.insert(0, region_start)
 
             labels = []
             for start in bins[:-1]:
