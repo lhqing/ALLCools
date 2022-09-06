@@ -447,6 +447,8 @@ class BaseDSChrom(xr.Dataset):
                 bins.append(i)
             if bins[-1] < end:
                 bins.append(end)
+            if bins[0] > start:
+                bins.insert(0, start)
 
             labels = []
             for start in bins[:-1]:
@@ -469,5 +471,7 @@ class BaseDSChrom(xr.Dataset):
         )
 
         if region_name is not None:
-            region_ds.rename({"pos_bins": region_name}, inplace=True)
+            region_ds = region_ds.rename({"pos_bins": region_name})
+
+        region_ds = xr.Dataset({"data": region_ds})
         return region_ds
