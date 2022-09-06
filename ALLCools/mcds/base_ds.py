@@ -446,13 +446,13 @@ class BaseDSChrom(xr.Dataset):
                     continue
                 bins.append(i)
             if bins[-1] < end:
-                bins.append(end)
+                bins.append(end // bin_size * bin_size + bin_size)
             if bins[0] > start:
-                bins.insert(0, start)
+                bins.insert(0, start // bin_size * bin_size)
 
             labels = []
             for start in bins[:-1]:
-                labels.append(f"{self.chrom}_{start}_{start + bin_size}")
+                labels.append(start)
 
         region_ds = (
             base_ds["data"]
