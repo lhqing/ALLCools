@@ -16,6 +16,32 @@ def _chunk_pos_to_bed_df(chrom, chunk_pos):
     return pd.DataFrame(records, columns=["chrom", "start", "end"])
 
 
+def _filter_pos_by_region_df(region_df, pos_idx):
+    n_rows = region_df.shape[0]
+    if n_rows == 0:
+        return np.array([])
+
+    region_row = 0
+    _, cur_start, cur_end = region_df.iloc[region_row]
+    pos_list = []
+    for pos in pos_idx:
+        if pos <= cur_start:
+            continue
+        else:
+            if pos > cur_end:
+                region_row += 1
+                if region_row >= n_rows:
+                    break
+                # get next region
+                _, cur_start, cur_end = region_df.iloc[region_row]
+
+            # add pos if inside region
+            if cur_start < pos <= cur_end:
+                pos_list.append(pos)
+    pos_arr = np.array(pos_list)
+    return pos_arr
+
+
 class Codebook(xr.DataArray):
     """The Codebook data array records methyl-cytosine context in genome."""
 
@@ -81,12 +107,12 @@ class Codebook(xr.DataArray):
             self.attrs["__mc_pos_bool_cache"][mc_pattern] = _bool
             return _bool
 
-    def get_mc_pos(self, mc_pattern):
+    def get_mc_pos(self, mc_pattern, offset=None):
         """Get the positions of mc types matching the pattern."""
         mc_pattern = self._validate_mc_pattern(mc_pattern)
 
         if mc_pattern in self.attrs["__mc_pos_cache"]:
-            return self.attrs["__mc_pos_cache"][mc_pattern]
+            _pos = self.attrs["__mc_pos_cache"][mc_pattern]
         else:
             _bool = self.get_mc_pos_bool(mc_pattern)
 
@@ -94,9 +120,12 @@ class Codebook(xr.DataArray):
                 _pos = self.coords["pos"].values[_bool]
             else:
                 _pos = np.where(_bool)[0]
-
             self.attrs["__mc_pos_cache"][mc_pattern] = _pos
-            return _pos
+
+        if offset is not None:
+            _pos = _pos.copy()
+            _pos += offset
+        return _pos
 
 
 class BaseDSChrom(xr.Dataset):
@@ -148,7 +177,10 @@ class BaseDSChrom(xr.Dataset):
     @property
     def offset(self):
         """The offset of the position dimension, only valid when continuity is True."""
-        return self.attrs["__offset"]
+        offset = self.attrs["__offset"]
+        if offset is None:
+            offset = 0
+        return offset
 
     @offset.setter
     def offset(self, value):
@@ -224,6 +256,24 @@ class BaseDSChrom(xr.Dataset):
         ds.continuity = False
         return ds
 
+    @staticmethod
+    def _xarray_open(path):
+        multi = False
+        if isinstance(path, (str, pathlib.Path)):
+            if "*" in str(path):
+                multi = True
+        else:
+            if len(path) > 1:
+                multi = True
+            else:
+                path = path[0]
+
+        if multi:
+            ds = xr.open_mfdataset(path, concat_dim="sample_id", combine="nested", engine="zarr", decode_cf=False)
+        else:
+            ds = xr.open_zarr(path, decode_cf=False)
+        return ds
+
     @classmethod
     def open(cls, path, start=None, end=None, codebook_path=None):
         """
@@ -247,9 +297,7 @@ class BaseDSChrom(xr.Dataset):
         -------
         BaseDSChrom
         """
-        path = pathlib.Path(path)
-
-        _zarr_obj = xr.open_zarr(path, decode_cf=False)
+        _zarr_obj = cls._xarray_open(path)
 
         if "codebook" not in _zarr_obj.data_vars:
             if codebook_path is None:
@@ -334,12 +382,92 @@ class BaseDSChrom(xr.Dataset):
 
     def select_mc_type(self, pattern):
         cb = self.codebook
-        pattern_bool = cb.get_mc_pos(pattern)
+        pattern_pos = cb.get_mc_pos(pattern)
 
-        ds = self._discontinuous_pos_selection(idx_sel=pattern_bool)
+        ds = self._discontinuous_pos_selection(idx_sel=pattern_pos)
         return ds
 
     @property
     def pos_index(self):
         """The position index."""
         return self.get_index("pos")
+
+    def get_region_ds(self, mc_type, bin_size=None, regions=None, region_name=None, region_chunks=10000):
+        """
+        Get the region dataset.
+
+        Parameters
+        ----------
+        mc_type
+            The mc_type to be selected.
+        bin_size
+            The bin size to aggregate BaseDS to fix-sized regions.
+        regions
+            The regions dataframe containing three columns: chrom, start, end.
+            The index will be used as the region names.
+        region_name
+            The dimension name of the regions.
+        region_chunks
+            The chunk size of the region dim in result dataset.
+
+        Returns
+        -------
+        BaseDSChrom
+        """
+        if bin_size is None and regions is None:
+            raise ValueError("One of bin_size or regions must be specified.")
+
+        if bin_size is not None:
+            assert bin_size > 1, "bin_size must be greater than 1."
+
+        if regions is not None:
+            assert regions.shape[1] == 3, "regions must be a 3-column dataframe: chrom, start, end."
+            assert regions.shape[0] > 0, "regions must have at least one row."
+
+        # get positions
+        pos_idx = self.cb.get_mc_pos(mc_type, offset=self.offset)
+        if regions is not None:
+            pos_idx = _filter_pos_by_region_df(region_df=regions, pos_idx=pos_idx)
+        base_ds = self._discontinuous_pos_selection(pos_sel=pos_idx)
+
+        # prepare regions
+        if regions is not None:
+            bins = regions.iloc[:, 1].tolist() + [regions.iloc[-1, 2]]
+            labels = regions.index
+            region_name = regions.index.name
+        else:
+            all_pos = base_ds.get_index("pos")
+            start = all_pos.min()
+            end = all_pos.max()
+
+            bins = []
+            for i in range(0, self.chrom_size, bin_size):
+                if i < start or i > end:
+                    continue
+                bins.append(i)
+            if bins[-1] < end:
+                bins.append(end)
+
+            labels = []
+            for start in bins[:-1]:
+                labels.append(f"{self.chrom}_{start}_{start + bin_size}")
+
+        region_ds = (
+            base_ds["data"]
+            .groupby_bins(
+                group="pos",
+                bins=bins,
+                right=True,
+                labels=labels,
+                precision=3,
+                include_lowest=True,
+                squeeze=True,
+                restore_coord_dims=False,
+            )
+            .sum(dim="pos")
+            .chunk({"pos_bins": region_chunks})
+        )
+
+        if region_name is not None:
+            region_ds.rename({"pos_bins": region_name}, inplace=True)
+        return region_ds

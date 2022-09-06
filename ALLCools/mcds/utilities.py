@@ -497,3 +497,37 @@ def reduce_zarr_coords_chunks(ds_path, max_size=10000000):
     # delete temp zarr
     subprocess.run(["rm", "-rf", temp_zarr_path], check=True)
     return
+
+
+def binnify(chromsizes, binsize):
+    """
+    Divide a genome into evenly sized bins.
+
+    Parameters
+    ----------
+    chromsizes : Series
+        pandas Series indexed by chromosome name with chromosome lengths in bp.
+    binsize : int
+        size of bins in bp
+
+    Returns
+    -------
+    bins : :py:class:`pandas.DataFrame`
+        Dataframe with columns: ``chrom``, ``start``, ``end``.
+    """
+
+    def _each(chrom):
+        clen = chromsizes[chrom]
+        n_bins = int(np.ceil(clen / binsize))
+        binedges = np.arange(0, (n_bins + 1)) * binsize
+        binedges[-1] = clen
+        return pd.DataFrame(
+            {"chrom": [chrom] * n_bins, "start": binedges[:-1], "end": binedges[1:]},
+            columns=["chrom", "start", "end"],
+        )
+
+    bintable = pd.concat(map(_each, chromsizes.keys()), axis=0, ignore_index=True)
+
+    bintable["chrom"] = pd.Categorical(bintable["chrom"], categories=list(chromsizes.index), ordered=True)
+
+    return bintable
