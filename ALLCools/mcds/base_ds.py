@@ -444,6 +444,7 @@ class BaseDSChrom(xr.Dataset):
         pos_idx = self.cb.get_mc_pos(mc_type, offset=self.offset)
         if regions is not None:
             pos_idx = _filter_pos_by_region_df(region_df=regions, pos_idx=pos_idx)
+
         base_ds = self._discontinuous_pos_selection(pos_sel=pos_idx)
 
         # prepare regions
@@ -466,24 +467,30 @@ class BaseDSChrom(xr.Dataset):
             for start in bins[:-1]:
                 labels.append(start)
 
-        region_ds = (
-            base_ds["data"]
-            .groupby_bins(
-                group="pos",
-                bins=bins,
-                right=True,
-                labels=labels,
-                precision=3,
-                include_lowest=True,
-                squeeze=True,
-                restore_coord_dims=False,
+        # no CpG selected
+        if pos_idx.size == 0:
+            # create an empty region_ds
+            region_ds = base_ds["data"].rename({"pos": "pos_bins"})
+            region_ds = region_ds.reindex({"pos_bins": labels}, fill_value=0)
+        else:
+            region_ds = (
+                base_ds["data"]
+                .groupby_bins(
+                    group="pos",
+                    bins=bins,
+                    right=True,
+                    labels=labels,
+                    precision=3,
+                    include_lowest=True,
+                    squeeze=True,
+                    restore_coord_dims=False,
+                )
+                .sum(dim="pos")
+                .chunk({"pos_bins": region_chunks})
             )
-            .sum(dim="pos")
-            .chunk({"pos_bins": region_chunks})
-        )
 
         if region_name is not None:
             region_ds = region_ds.rename({"pos_bins": region_name})
 
-        region_ds = xr.Dataset({"data": region_ds})
+        region_ds = xr.Dataset({"data": region_ds}).fillna(0)
         return region_ds
