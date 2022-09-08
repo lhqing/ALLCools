@@ -586,7 +586,12 @@ def generate_base_ds(
     ).squeeze()
 
     # check if all the allc paths in sample_path_series exist
-    if not all(pathlib.Path(p).exists() for p in sample_path_series.to_list()):
+    flag = False
+    for p in sample_path_series.to_list():
+        if not pathlib.Path(p).exists():
+            flag = True
+            print(f"{p} does not exist.")
+    if flag:
         raise FileNotFoundError(f"Some of the allc files in {allc_table_path} do not exist.")
 
     if generate_codebook:
