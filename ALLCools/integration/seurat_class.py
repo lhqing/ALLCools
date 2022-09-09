@@ -848,19 +848,28 @@ class SeuratIntegration:
             result[key] = label_qry.iloc[:, all_column_variables == key]
         return result
 
-    def save(self, output_path, save_local_knn=False, save_raw_anchor=False, save_mutual_knn=False):
+    def save(self, output_path, save_local_knn=False, save_raw_anchor=False, save_mutual_knn=False, save_adata=False):
         """Save the model and results to disk."""
         # save each adata in a separate dir
         output_path = pathlib.Path(output_path)
         output_path.mkdir(exist_ok=True, parents=True)
 
-        # save adata and clear the self.adata_dict
-        adata_dir = output_path / "adata"
-        adata_dir.mkdir(exist_ok=True)
-        with open(f"{adata_dir}/order.txt", "w") as f:
-            for k, v in self.adata_dict.items():
-                v.write_h5ad(f"{adata_dir}/{k}.h5ad")
-                f.write(f"{k}\n")
+        if save_adata:
+            # save adata and clear the self.adata_dict
+            adata_dir = output_path / "adata"
+            adata_dir.mkdir(exist_ok=True)
+            with open(f"{adata_dir}/order.txt", "w") as f:
+                for k, v in self.adata_dict.items():
+                    for col, val in v.obs.items():
+                        if val.dtype == "O":
+                            v.obs[col] = val.fillna("nan").astype(str)
+                        elif val.dtype == "category":
+                            v.obs[col] = val.fillna("nan").astype(str)
+                        else:
+                            pass
+                    v.write_h5ad(f"{adata_dir}/{k}.h5ad")
+                    f.write(f"{k}\n")
+
         # clear the adata in integrator
         self.adata_dict = {}
 
@@ -885,7 +894,9 @@ class SeuratIntegration:
         orders = pd.read_csv(f"{adata_dir}/order.txt", header=None, index_col=0).index
         adata_dict = OrderedDict()
         for k in orders:
-            adata_dict[k] = anndata.read_h5ad(f"{adata_dir}/{k}.h5ad")
+            adata_path = f"{adata_dir}/{k}.h5ad"
+            if pathlib.Path(adata_path).exists():
+                adata_dict[k] = anndata.read_h5ad(f"{adata_dir}/{k}.h5ad")
         obj.adata_dict = adata_dict
         return obj
 
