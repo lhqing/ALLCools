@@ -14,6 +14,7 @@ from ALLCools.utilities import genome_region_chunks
 from .rms_test import (
     calculate_residual,
     downsample_table,
+    init_rms_functions,
     permute_root_mean_square_test,
 )
 
@@ -188,11 +189,8 @@ def call_dms(
     dms_chunk_dir.mkdir(exist_ok=True, parents=True)
     dms_dir = f"{output_dir}/dms"
 
-    # trigger the numba JIT compilation before multiprocessing
-    table = np.array([[0, 1], [0, 1]])
-    permute_root_mean_square_test(table)
-    calculate_residual(table)
-    downsample_table(table, max_row_count=max_row_count)
+    # init numba function
+    init_rms_functions()
 
     # parallel each chunk
     with ProcessPoolExecutor(cpu) as exe:

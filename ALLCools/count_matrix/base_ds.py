@@ -272,7 +272,7 @@ def _create_codebook_single_chrom(zarr_root, chrom, genome_fasta_path, chrom_siz
     assert len(sequence) == chrom_size, f"chrom {chrom} size {len(sequence)} is not consistent with {chrom_size}"
 
     context_codebook = zarr_root.require_dataset(
-        "codebook", shape=(chrom_size, len(contexts)), chunks=chunk_size, dtype="bool"
+        "codebook", shape=(chrom_size, len(contexts)), chunks=chunk_size, dtype="int8"
     )
     context_codebook.attrs["_ARRAY_DIMENSIONS"] = ["pos", "mc_type"]
 
@@ -283,15 +283,17 @@ def _create_codebook_single_chrom(zarr_root, chrom, genome_fasta_path, chrom_siz
         # see https://stackoverflow.com/questions/5616822/how-to-use-regex-to-find-all-overlapping-matches
         pos_context_str = f"(?=({context}))"
         pos_pattern = re.compile(pos_context_str)
-        context_pos = [match.start() for match in pos_pattern.finditer(sequence)]
+        pos_pos = [match.start() for match in pos_pattern.finditer(sequence)]
         # negative strand
         neg_context_str = f"(?=({reverse_complement(context)}))"
         neg_pattern = re.compile(neg_context_str)
         neg_dodge = len(context) - 1
-        context_pos += [match.end() + neg_dodge for match in neg_pattern.finditer(sequence)]
+        neg_pos = [match.end() + neg_dodge for match in neg_pattern.finditer(sequence)]
 
-        context_pos = sorted(set(context_pos))
-        context_codebook[context_pos, i] = True
+        pos_value = pd.Series({i: 1 for i in pos_pos})
+        neg_value = pd.Series({i: -1 for i in neg_pos})
+        value = pd.concat([pos_value, neg_value]).sort_index()
+        context_codebook[value.index, i] = value.values
 
     context_codebook.attrs["contexts"] = list(contexts)
     print()

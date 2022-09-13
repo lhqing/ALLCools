@@ -108,15 +108,26 @@ def significant_pc_test(adata: anndata.AnnData, p_cutoff=0.1, update=True, obsm=
         use_pcs = pd.DataFrame(pcs).sample(downsample).values
     else:
         use_pcs = pcs
+
+    n_components = pc_ks_test(use_pcs, p_cutoff=p_cutoff, min_pc=4)
+
+    if update:
+        adata.obsm[obsm] = pcs[:, :n_components]
+        print(f"Changing adata.obsm['X_pca'] from shape {pcs.shape} to {adata.obsm[obsm].shape}")
+    return n_components
+
+
+def pc_ks_test(pcs, p_cutoff=0.1, min_pc=4):
     i = 0
-    for i in range(use_pcs.shape[1] - 1):
-        cur_pc = use_pcs[:, i]
-        next_pc = use_pcs[:, i + 1]
+    for i in range(pcs.shape[1] - 1):
+        cur_pc = pcs[:, i]
+        next_pc = pcs[:, i + 1]
         _, p = ks_2samp(cur_pc, next_pc)
         if p > p_cutoff:
             break
-    n_components = min(i + 1, use_pcs.shape[1])
-    min_pc = min(4, use_pcs.shape[1])
+    n_components = min(i + 1, pcs.shape[1])
+    min_pc = min(min_pc, pcs.shape[1])
+
     if n_components < min_pc:
         print(
             f"only {n_components} passed the P cutoff, "
@@ -125,9 +136,6 @@ def significant_pc_test(adata: anndata.AnnData, p_cutoff=0.1, update=True, obsm=
         n_components = min_pc
     else:
         print(f"{n_components} components passed P cutoff of {p_cutoff}.")
-    if update:
-        adata.obsm[obsm] = pcs[:, :n_components]
-        print(f"Changing adata.obsm['X_pca'] from shape {pcs.shape} to {adata.obsm[obsm].shape}")
     return n_components
 
 

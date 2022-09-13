@@ -43,7 +43,18 @@ def calculate_residual(table):
 
 @njit
 def permute_root_mean_square_test(table, n_permute=3000, min_pvalue=0.034):
-    """Permute root-mean-square test."""
+    """
+    Permute root-mean-square test.
+
+    Parameters
+    ----------
+    table :
+        N-by-2 table of methylated and unmethylated counts.
+    n_permute :
+        Number of permutations.
+    min_pvalue :
+        Minimum p-value to perform the test.
+    """
     # calculate real goodness-of-fit s
     n = table.shape[0]
     m = table.sum()
@@ -81,6 +92,19 @@ def _downsample_sample_count(a, max_count):
     return b
 
 
-def downsample_table(table, max_row_count):
+def downsample_table(table, max_row_count=50, max_total_count=3000):
     """Downsample high count rows to max_row_count."""
+    n_sample = table.shape[0]
+    max_row_count = min(max_total_count / n_sample, max_row_count)
+    max_row_count = max(10, max_row_count)
+
     return np.apply_along_axis(_downsample_sample_count, axis=1, arr=table, max_count=max_row_count)
+
+
+def init_rms_functions():
+    """Initialize the numba JIT compilation before multiprocessing RMS functions."""
+    table = np.array([[0, 1], [0, 1]])
+    permute_root_mean_square_test(table)
+    calculate_residual(table)
+    downsample_table(table, max_row_count=10)
+    return
