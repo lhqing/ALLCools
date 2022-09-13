@@ -494,3 +494,75 @@ class BaseDSChrom(xr.Dataset):
 
         region_ds = xr.Dataset({"data": region_ds}).fillna(0)
         return region_ds
+
+    def call_dms(
+        self,
+        groups,
+        output_path=None,
+        mcg_pattern="CGN",
+        n_permute=3000,
+        min_pvalue=0.034,
+        max_row_count=50,
+        max_total_count=3000,
+        filter_sig=True,
+        merge_strand=True,
+        cpu=1,
+        **output_kwargs,
+    ):
+        """
+        Call DMS for a genomic region.
+
+        Parameters
+        ----------
+        groups :
+            Grouping information for the samples.
+            If None, perform DMS test on all samples in the BaseDS.
+            If provided, first group the samples by the group information, then perform DMS test on each group.
+            Samples not occur in the group information will be ignored.
+        output_path :
+            Path to the output DMS dataset.
+            If provided, the result will be saved to disk.
+            If not, the result will be returned.
+        mcg_pattern :
+            Pattern of the methylated cytosine, default is "CGN".
+        n_permute :
+            Number of permutation to perform.
+        min_pvalue :
+            Minimum p-value to consider a site as significant.
+        max_row_count :
+            Maximum number of base counts for each row (sample) in the DMS input count table.
+        max_total_count :
+            Maximum total number of base counts in the DMS input count table.
+        filter_sig :
+            Whether to filter out the non-significant sites in output DMS dataset.
+        merge_strand :
+            Whether to merge the base counts of CpG sites next to each other.
+        cpu :
+            Number of CPU to use.
+        output_kwargs :
+            Keyword arguments for the output DMS dataset, pass to xarray.Dataset.to_zarr.
+
+        Returns
+        -------
+        xarray.Dataset if output_path is None, otherwise None.
+        """
+        from ..dmr.call_dms_baseds import call_dms_worker
+
+        # TODO validate if the BaseDS has the required data for calling DMS
+
+        dms_ds = call_dms_worker(
+            groups=groups,
+            base_ds=self,
+            mcg_pattern=mcg_pattern,
+            n_permute=n_permute,
+            min_pvalue=min_pvalue,
+            max_row_count=max_row_count,
+            max_total_count=max_total_count,
+            cpu=cpu,
+            chrom=self.chrom,
+            filter_sig=filter_sig,
+            merge_strand=merge_strand,
+            output_path=output_path,
+            **output_kwargs,
+        )
+        return dms_ds

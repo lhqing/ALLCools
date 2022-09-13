@@ -1,3 +1,4 @@
+import pathlib
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import pandas as pd
@@ -38,40 +39,48 @@ def _core_dms_function(count_table, max_row_count, max_total_count, n_permute, m
     return p_value, residual
 
 
-def _call_dms_worker(
-    base_ds_path,
-    codebook_path,
-    output_path,
+def call_dms_worker(
+    groups,
+    base_ds,
+    mcg_pattern,
+    n_permute,
+    min_pvalue,
+    max_row_count,
+    max_total_count,
+    cpu,
     chrom,
-    start,
-    end,
-    groups_path=None,
-    mcg_pattern="CGN",
-    cpu=1,
-    n_permute=3000,
-    min_pvalue=0.034,
-    max_row_count=50,
-    max_total_count=3000,
+    filter_sig,
+    merge_strand,
+    output_path,
     **output_kwargs,
 ):
-    base_ds = BaseDSChrom.open(
-        f"{base_ds_path}/{chrom}",
-        codebook_path=f"{codebook_path}/{chrom}",
-        start=start,
-        end=end,
-    )
+    """
+    Worker function for call_dms_from_base_ds.
 
-    if groups_path is not None:
-        sample_group = pd.read_csv(groups_path, header=None, index_col=0, names=["sample_id", "group"]).squeeze()
-        base_ds.coords["group"] = sample_group
+    See call_dms_from_base_ds for parameter description.
+    """
+    if groups is not None:
+        if isinstance(groups, (str, pathlib.Path)):
+            groups = pd.read_csv(groups, header=None, index_col=0, names=["sample_id", "group"]).squeeze()
+
+        # select samples
+        ds_sample_id = base_ds.get_index("sample_id")
+        use_sample = ds_sample_id.isin(groups.index)
+        if use_sample.sum() != use_sample.size:
+            # noinspection PyUnresolvedReferences
+            base_ds = base_ds.sel(sample_id=use_sample.values)
+
+        # add group info
+        base_ds.coords["group"] = groups
 
     # select CpG sites
     cg_base_ds = base_ds.select_mc_type(mcg_pattern)
 
-    # merge pos and neg strand
-    cg_base_ds = _merge_pos_neg_cpg(cg_base_ds)
+    if merge_strand:
+        # merge pos and neg strand
+        cg_base_ds = _merge_pos_neg_cpg(cg_base_ds)
 
-    if groups_path is not None:
+    if groups is not None:
         # group by group and sum base counts
         group_cg_base_ds = cg_base_ds[["data"]].groupby("group").sum(dim="sample_id").load()
     else:
@@ -123,6 +132,101 @@ def _call_dms_worker(
     dms_ds.coords["p-values"] = pd.Series(p_values, index=pos_index)
 
     # filter by p-value
-    dms = dms_ds.sel(pos=dms_ds["p-values"] < 0.1)
-    dms.to_zarr(output_path, **output_kwargs)
-    return
+    if filter_sig:
+        dms_ds = dms_ds.sel(pos=dms_ds["p-values"] <= min_pvalue)
+
+    if output_path is not None:
+        dms_ds.to_zarr(output_path, **output_kwargs)
+        return None
+    else:
+        return dms_ds
+
+
+def call_dms_from_base_ds(
+    base_ds_path,
+    chrom,
+    start,
+    end,
+    codebook_path=None,
+    output_path=None,
+    groups=None,
+    mcg_pattern="CGN",
+    cpu=1,
+    n_permute=3000,
+    min_pvalue=0.034,
+    max_row_count=50,
+    max_total_count=3000,
+    filter_sig=True,
+    merge_strand=True,
+    **output_kwargs,
+):
+    """
+    Call DMS for a single genome region.
+
+    Parameters
+    ----------
+    base_ds_path :
+        Path to the BaseDS, wildcard accepted if data stored in multiple BaseDS.
+    chrom :
+        Chromosome name.
+    start :
+        Start position.
+    end :
+        End position.
+    codebook_path :
+        Path to the mc_type codebook dataset.
+    output_path :
+        Path to the output DMS dataset.
+        If provided, the result will be saved to disk.
+        If not, the result will be returned.
+    groups :
+        Grouping information for the samples.
+        If None, perform DMS test on all samples in the BaseDS.
+        If provided, first group the samples by the group information, then perform DMS test on each group.
+        Samples not occur in the group information will be ignored.
+    mcg_pattern :
+        Pattern of the methylated cytosine, default is "CGN".
+    cpu :
+        Number of CPU to use.
+    n_permute :
+        Number of permutation to perform.
+    min_pvalue :
+        Minimum p-value to consider a site as significant.
+    max_row_count :
+        Maximum number of base counts for each row (sample) in the DMS input count table.
+    max_total_count :
+        Maximum total number of base counts in the DMS input count table.
+    filter_sig :
+        Whether to filter out the non-significant sites in output DMS dataset.
+    merge_strand :
+            Whether to merge the base counts of CpG sites next to each other.
+    output_kwargs :
+        Keyword arguments for the output DMS dataset, pass to xarray.Dataset.to_zarr.
+
+    Returns
+    -------
+    xarray.Dataset if output_path is None, otherwise None.
+    """
+    base_ds = BaseDSChrom.open(
+        f"{base_ds_path}/{chrom}",
+        codebook_path=f"{codebook_path}/{chrom}",
+        start=start,
+        end=end,
+    )
+
+    dms_ds = call_dms_worker(
+        groups=groups,
+        base_ds=base_ds,
+        mcg_pattern=mcg_pattern,
+        n_permute=n_permute,
+        min_pvalue=min_pvalue,
+        max_row_count=max_row_count,
+        max_total_count=max_total_count,
+        cpu=cpu,
+        chrom=chrom,
+        filter_sig=filter_sig,
+        merge_strand=merge_strand,
+        output_path=output_path,
+        **output_kwargs,
+    )
+    return dms_ds
