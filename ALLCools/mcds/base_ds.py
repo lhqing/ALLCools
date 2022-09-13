@@ -501,7 +501,7 @@ class BaseDSChrom(xr.Dataset):
         output_path=None,
         mcg_pattern="CGN",
         n_permute=3000,
-        min_pvalue=0.034,
+        alpha=0.01,
         max_row_count=50,
         max_total_count=3000,
         filter_sig=True,
@@ -528,8 +528,8 @@ class BaseDSChrom(xr.Dataset):
             Pattern of the methylated cytosine, default is "CGN".
         n_permute :
             Number of permutation to perform.
-        min_pvalue :
-            Minimum p-value to consider a site as significant.
+        alpha :
+            Minimum p-value/q-value to consider a site as significant.
         max_row_count :
             Maximum number of base counts for each row (sample) in the DMS input count table.
         max_total_count :
@@ -538,6 +538,7 @@ class BaseDSChrom(xr.Dataset):
             Whether to estimate p-value by approximate the null distribution of S as normal distribution.
             The resolution of the estimated p-value is much higher than the exact p-value,
             which is necessary for multiple testing correction.
+            FDR corrected q-value is also estimated if this option is enabled.
         filter_sig :
             Whether to filter out the non-significant sites in output DMS dataset.
         merge_strand :
@@ -560,7 +561,7 @@ class BaseDSChrom(xr.Dataset):
             base_ds=self,
             mcg_pattern=mcg_pattern,
             n_permute=n_permute,
-            min_pvalue=min_pvalue,
+            alpha=alpha,
             max_row_count=max_row_count,
             max_total_count=max_total_count,
             estimate_p=estimate_p,

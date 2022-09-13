@@ -54,7 +54,7 @@ def call_dms_worker(
     base_ds,
     mcg_pattern,
     n_permute,
-    min_pvalue,
+    alpha,
     estimate_p,
     max_row_count,
     max_total_count,
@@ -116,7 +116,7 @@ def call_dms_worker(
                 max_row_count=max_row_count,
                 max_total_count=max_total_count,
                 n_permute=n_permute,
-                min_pvalue=min_pvalue,
+                min_pvalue=alpha,
                 estimate_p=estimate_p,
             )
             futures[future] = pos
@@ -143,15 +143,25 @@ def call_dms_worker(
     p_values = pd.Series(p_values).astype("float32")
     dms_ds.coords["p-values"] = pd.Series(p_values, index=pos_index)
 
+    if estimate_p:
+        # FDR correction, only valid for estimate_p
+        from statsmodels.stats.multitest import multipletests
+
+        _, q, *_ = multipletests(p_values)
+        dms_ds.coords["q-values"] = pd.Series(q, index=pos_index)
+
     # filter by p-value
     if filter_sig:
+        # save all p-values for multiple testing correction
         all_p = pd.Series(p_values.values).copy()
         all_p.index = range(all_p.size)
         all_p.index.name = "p-values"
-        dms_ds = dms_ds.sel(pos=dms_ds["p-values"] <= min_pvalue)
-
-        # save all p-values for multiple testing correction
         dms_ds.coords["all-p-values"] = all_p
+
+        if "q-values" in dms_ds.coords:
+            dms_ds = dms_ds.sel(pos=dms_ds.coords["q-values"] <= alpha)
+        else:
+            dms_ds = dms_ds.sel(pos=dms_ds["p-values"] <= alpha)
 
     if output_path is not None:
         dms_ds.to_zarr(output_path, **output_kwargs)
@@ -171,12 +181,12 @@ def call_dms_from_base_ds(
     mcg_pattern="CGN",
     cpu=1,
     n_permute=3000,
-    min_pvalue=0.034,
+    alpha=0.01,
     max_row_count=50,
     max_total_count=3000,
     filter_sig=True,
     merge_strand=True,
-    estimate_p=False,
+    estimate_p=True,
     **output_kwargs,
 ):
     """
@@ -209,8 +219,8 @@ def call_dms_from_base_ds(
         Number of CPU to use.
     n_permute :
         Number of permutation to perform.
-    min_pvalue :
-        Minimum p-value to consider a site as significant.
+    alpha :
+        Minimum p-value/q-value to consider a site as significant.
     max_row_count :
         Maximum number of base counts for each row (sample) in the DMS input count table.
     max_total_count :
@@ -223,6 +233,7 @@ def call_dms_from_base_ds(
         Whether to estimate p-value by approximate the null distribution of S as normal distribution.
         The resolution of the estimated p-value is much higher than the exact p-value,
         which is necessary for multiple testing correction.
+        FDR corrected q-value is also estimated if this option is enabled.
     output_kwargs :
         Keyword arguments for the output DMS dataset, pass to xarray.Dataset.to_zarr.
 
@@ -242,7 +253,7 @@ def call_dms_from_base_ds(
         base_ds=base_ds,
         mcg_pattern=mcg_pattern,
         n_permute=n_permute,
-        min_pvalue=min_pvalue,
+        alpha=alpha,
         estimate_p=estimate_p,
         max_row_count=max_row_count,
         max_total_count=max_total_count,
