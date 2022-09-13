@@ -9,6 +9,7 @@ from .rms_test import (
     calculate_residual,
     downsample_table,
     permute_root_mean_square_test,
+    permute_root_mean_square_test_and_estimate_p,
 )
 
 
@@ -29,10 +30,15 @@ def _merge_pos_neg_cpg(cg_ds):
     return cg_ds
 
 
-def _core_dms_function(count_table, max_row_count, max_total_count, n_permute, min_pvalue):
+def _core_dms_function(count_table, max_row_count, max_total_count, n_permute, min_pvalue, estimate_p=False):
     """Calculate dms p-value and residual for a single CpG count table."""
     count_table = downsample_table(count_table, max_row_count=max_row_count, max_total_count=max_total_count)
-    p_value = permute_root_mean_square_test(table=count_table, n_permute=n_permute, min_pvalue=min_pvalue)
+    if estimate_p:
+        p_value = permute_root_mean_square_test_and_estimate_p(
+            table=count_table, n_permute=n_permute, min_pvalue=min_pvalue
+        )
+    else:
+        p_value = permute_root_mean_square_test(table=count_table, n_permute=n_permute, min_pvalue=min_pvalue)
     residual = calculate_residual(count_table)
     # mc_residual = -c_residual, so only save one column
     residual = residual[:, 1]
@@ -45,6 +51,7 @@ def call_dms_worker(
     mcg_pattern,
     n_permute,
     min_pvalue,
+    estimate_p,
     max_row_count,
     max_total_count,
     cpu,
@@ -106,6 +113,7 @@ def call_dms_worker(
                 max_total_count=max_total_count,
                 n_permute=n_permute,
                 min_pvalue=min_pvalue,
+                estimate_p=estimate_p,
             )
             futures[future] = pos
 
@@ -133,7 +141,13 @@ def call_dms_worker(
 
     # filter by p-value
     if filter_sig:
+        all_p = pd.Series(p_values.values).copy()
+        all_p.index = range(all_p.size)
+        all_p.index.name = "p-values"
         dms_ds = dms_ds.sel(pos=dms_ds["p-values"] <= min_pvalue)
+
+        # save all p-values for multiple testing correction
+        dms_ds.coords["all-p-values"] = all_p
 
     if output_path is not None:
         dms_ds.to_zarr(output_path, **output_kwargs)
@@ -158,6 +172,7 @@ def call_dms_from_base_ds(
     max_total_count=3000,
     filter_sig=True,
     merge_strand=True,
+    estimate_p=False,
     **output_kwargs,
 ):
     """
@@ -200,6 +215,10 @@ def call_dms_from_base_ds(
         Whether to filter out the non-significant sites in output DMS dataset.
     merge_strand :
             Whether to merge the base counts of CpG sites next to each other.
+    estimate_p :
+        Whether to estimate p-value by approximate the null distribution of S as normal distribution.
+        The resolution of the estimated p-value is much higher than the exact p-value,
+        which is necessary for multiple testing correction.
     output_kwargs :
         Keyword arguments for the output DMS dataset, pass to xarray.Dataset.to_zarr.
 
@@ -220,6 +239,7 @@ def call_dms_from_base_ds(
         mcg_pattern=mcg_pattern,
         n_permute=n_permute,
         min_pvalue=min_pvalue,
+        estimate_p=estimate_p,
         max_row_count=max_row_count,
         max_total_count=max_total_count,
         cpu=cpu,
