@@ -1,5 +1,6 @@
 import numpy as np
 from numba import njit
+from scipy.stats import norm
 
 
 @njit
@@ -76,6 +77,49 @@ def permute_root_mean_square_test(table, n_permute=3000, min_pvalue=0.034):
             return greater_than_real / (i + 2)
 
     p_value = greater_than_real / n_permute
+    return p_value
+
+
+@njit
+def _get_read_s_and_permute_s(table, n_permute=10000, min_pvalue=0.034):
+    # calculate real goodness-of-fit s
+    n = table.shape[0]
+    m = table.sum()
+    e = _get_e(table, n, m)
+    real_s = _calculate_goodness_of_fit(table, n, m)
+
+    # permutation
+    p = e.flatten() / m
+    greater_than_real = 1
+    max_greater_value = n_permute * min_pvalue
+    ss = np.zeros(n_permute + 1, dtype=np.float64)
+    ss[0] = real_s
+    for i in range(n_permute):
+        p_table = _make_permutation_table(p, n, m)
+        # calculate permuted goodness of fit s'
+        s = _calculate_goodness_of_fit(p_table, n, m)
+        ss[i + 1] = s
+
+        greater_than_real += int(s >= real_s)
+        # break in advance if p-value can be significant
+        if greater_than_real > max_greater_value:
+            # return current p value
+            return ss[: i + 1].copy()
+    return ss
+
+
+def permute_root_mean_square_test_and_estimate_p(table, n_permute=10000, min_pvalue=0.034):
+    """
+    Permute root-mean-square test
+
+    Report estimated p-value by approximate null distribution as normal distribution.
+    """
+    ss = _get_read_s_and_permute_s(table=table, n_permute=n_permute, min_pvalue=min_pvalue)
+    real_s = ss[0]
+    ss = ss[1:]
+    p_value = 1 - norm.fit(ss).cdf(real_s)
+    if p_value < 1e-14:  # np.finfo(np.float64).resolution: 1e-15
+        p_value = 1e-14
     return p_value
 
 
