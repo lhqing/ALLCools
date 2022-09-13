@@ -506,6 +506,7 @@ class BaseDSChrom(xr.Dataset):
         max_total_count=3000,
         filter_sig=True,
         merge_strand=True,
+        estimate_p=True,
         cpu=1,
         **output_kwargs,
     ):
@@ -533,6 +534,10 @@ class BaseDSChrom(xr.Dataset):
             Maximum number of base counts for each row (sample) in the DMS input count table.
         max_total_count :
             Maximum total number of base counts in the DMS input count table.
+        estimate_p :
+            Whether to estimate p-value by approximate the null distribution of S as normal distribution.
+            The resolution of the estimated p-value is much higher than the exact p-value,
+            which is necessary for multiple testing correction.
         filter_sig :
             Whether to filter out the non-significant sites in output DMS dataset.
         merge_strand :
@@ -558,6 +563,7 @@ class BaseDSChrom(xr.Dataset):
             min_pvalue=min_pvalue,
             max_row_count=max_row_count,
             max_total_count=max_total_count,
+            estimate_p=estimate_p,
             cpu=cpu,
             chrom=self.chrom,
             filter_sig=filter_sig,
