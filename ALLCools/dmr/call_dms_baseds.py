@@ -1,6 +1,7 @@
 import pathlib
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
+import numpy as np
 import pandas as pd
 import xarray as xr
 
@@ -33,12 +34,15 @@ def _merge_pos_neg_cpg(cg_ds):
 def _core_dms_function(count_table, max_row_count, max_total_count, n_permute, min_pvalue, estimate_p=False):
     """Calculate dms p-value and residual for a single CpG count table."""
     count_table = downsample_table(count_table, max_row_count=max_row_count, max_total_count=max_total_count)
+    if count_table.sum() == 0:
+        return 1, np.zeros(count_table.shape[0])
     if estimate_p:
         p_value = permute_root_mean_square_test_and_estimate_p(
             table=count_table, n_permute=n_permute, min_pvalue=min_pvalue
         )
     else:
         p_value = permute_root_mean_square_test(table=count_table, n_permute=n_permute, min_pvalue=min_pvalue)
+
     residual = calculate_residual(count_table)
     # mc_residual = -c_residual, so only save one column
     residual = residual[:, 1]

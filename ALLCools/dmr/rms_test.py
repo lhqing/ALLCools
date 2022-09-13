@@ -119,7 +119,10 @@ def permute_root_mean_square_test_and_estimate_p(table, n_permute=10000, min_pva
     ss = ss[1:]
 
     e, std = norm.fit(ss)
-    p_value = 1 - norm(e, std).cdf(real_s)
+    if std == 0:
+        p_value = 1
+    else:
+        p_value = 1 - norm(e, std).cdf(real_s)
 
     if p_value < 1e-14:  # np.finfo(np.float64).resolution: 1e-15
         p_value = 1e-14
