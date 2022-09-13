@@ -141,23 +141,17 @@ def call_dms_worker(
 
     # add p-value
     p_values = pd.Series(p_values).astype("float32")
-    dms_ds.coords["p-values"] = pd.Series(p_values, index=pos_index)
+    dms_ds.coords["p-values"] = p_values
 
     if estimate_p:
         # FDR correction, only valid for estimate_p
         from statsmodels.stats.multitest import multipletests
 
         _, q, *_ = multipletests(p_values)
-        dms_ds.coords["q-values"] = pd.Series(q, index=pos_index)
+        dms_ds.coords["q-values"] = pd.Series(q, index=pos_index).astype("float32")
 
     # filter by p-value
     if filter_sig:
-        # save all p-values for multiple testing correction
-        all_p = pd.Series(p_values.values).copy()
-        all_p.index = range(all_p.size)
-        all_p.index.name = "p-values"
-        dms_ds.coords["all-p-values"] = all_p
-
         if "q-values" in dms_ds.coords:
             dms_ds = dms_ds.sel(pos=dms_ds.coords["q-values"] <= alpha)
         else:
