@@ -78,9 +78,11 @@ def _call_dms_worker(
         # if no group, load all data and call DMR across samples, the sample_id is renamed to group
         group_cg_base_ds = cg_base_ds[["data"]].rename({"sample_id": "group"}).load()
 
+    pos_index = group_cg_base_ds.get_index("pos")
+    data = group_cg_base_ds["data"]
+    groups = group_cg_base_ds.get_index("group")
     with ProcessPoolExecutor(cpu) as exe:
-        pos_index = group_cg_base_ds.get_index("pos")
-        data = group_cg_base_ds["data"]
+        print(f"Perform DMS test for {pos_index.size} CpG sites and {groups.size} samples using {cpu} cores.")
 
         futures = {}
         for pos in pos_index:
@@ -112,12 +114,12 @@ def _call_dms_worker(
             residuals[pos] = residual
 
     # create ds
-    residuals = pd.DataFrame.from_dict(residuals, orient="index", columns=group_cg_base_ds.get_index("group"))
+    residuals = pd.DataFrame.from_dict(residuals, orient="index", columns=groups)
     residuals.index.name = "pos"
-    dms_ds = xr.Dataset({"dms_residual": residuals})
+    dms_ds = xr.Dataset({"dms_residual": residuals.astype("float32")})
 
     # add p-value
-    p_values = pd.Series(p_values)
+    p_values = pd.Series(p_values).astype("float32")
     dms_ds.coords["p-values"] = pd.Series(p_values, index=pos_index)
 
     # filter by p-value
