@@ -103,6 +103,7 @@ class Codebook(xr.DataArray):
             else:
                 # get mc types matching the pattern
                 judge = self.mc_type.isin(parse_mc_pattern(mc_pattern))
+            # value can be -1, 0, 1, only 0 is False, -1 and 1 are True
             _bool = self.sel(mc_type=judge).sum(dim="mc_type").values.astype(bool)
             self.attrs["__mc_pos_bool_cache"][mc_pattern] = _bool
             return _bool

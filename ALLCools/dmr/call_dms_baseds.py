@@ -141,6 +141,10 @@ def call_dms_worker(
 
     # add p-value
     p_values = pd.Series(p_values).astype("float32")
+    p_values.index.name = "pos"
+    p_values = p_values.reindex(pos_index)
+    assert p_values.isna().sum() == 0, "Some positions are missing p-values."
+
     dms_ds.coords["p-values"] = p_values
 
     if estimate_p:
@@ -148,7 +152,8 @@ def call_dms_worker(
         from statsmodels.stats.multitest import multipletests
 
         _, q, *_ = multipletests(p_values)
-        dms_ds.coords["q-values"] = pd.Series(q, index=pos_index).astype("float32")
+        q = pd.Series(q, index=p_values.index, name="q-values").astype("float32")
+        dms_ds.coords["q-values"] = q
 
     # filter by p-value
     if filter_sig:
