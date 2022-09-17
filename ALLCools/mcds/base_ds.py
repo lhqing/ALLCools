@@ -257,6 +257,30 @@ class BaseDSChrom(xr.Dataset):
         ds.continuity = False
         return ds
 
+    def fetch(self, start=None, end=None, pos_sel=None):
+        """
+        Fetch the data within the specified region or positions.
+
+        Parameters
+        ----------
+        start :
+            the start position of the region, the resulting BaseDSChrom will be continuous
+        end :
+            the end position of the region, the resulting BaseDSChrom will be continuous
+        pos_sel :
+            the positions to select, the resulting BaseDSChrom will be discontinuous
+
+        Returns
+        -------
+        BaseDSChrom
+        """
+        if start is not None or end is not None:
+            if pos_sel is not None:
+                raise ValueError("Only one of start/end and pos_sel can be specified.")
+            return self._continuous_pos_selection(start=start, end=end)
+        else:
+            return self._discontinuous_pos_selection(pos_sel=pos_sel)
+
     @staticmethod
     def _xarray_open(path):
         multi = False
@@ -574,3 +598,77 @@ class BaseDSChrom(xr.Dataset):
             **output_kwargs,
         )
         return dms_ds
+
+
+class BaseDS:
+    def __init__(self, paths, codebook_path=None):
+        """
+        A wrapper for one or multiple BaseDS datasets.
+
+        Parameters
+        ----------
+        paths :
+            Path to the BaseDS datasets.
+        codebook_path :
+            Path to the codebook file.
+        """
+        self.paths = self._parse_paths(paths)
+        self.codebook_path = codebook_path
+        self.__base_ds_cache = {}
+
+    @staticmethod
+    def _parse_paths(paths):
+        import glob
+
+        _paths = []
+        if isinstance(paths, str):
+            if "*" in paths:
+                _paths += list(glob.glob(paths))
+            else:
+                _paths.append(paths)
+        elif isinstance(paths, pathlib.Path):
+            _paths.append(str(paths))
+        else:
+            _paths += list(paths)
+        return _paths
+
+    def _get_chrom_paths(self, chrom):
+        return [f"{p}/{chrom}" for p in self.paths]
+
+    def fetch(self, chrom, start=None, end=None, pos_sel=None, mc_type=None):
+        """
+        Fetch a BaseDS for a genomic region or a series of positions.
+
+        Parameters
+        ----------
+        chrom :
+            Chromosome name.
+        start :
+            Select genomic region by start position.
+        end :
+            Select genomic region by end position.
+        pos_sel :
+            Select bases by a list of positions.
+        mc_type :
+            Methylated cytosine type,
+            default is None, a continuous BaseDS region will be returned;
+            if provided, a discontinuous BaseDS region containing only the selected cytosine will be returned.
+
+        Returns
+        -------
+        BaseDSChrom
+        """
+        if chrom not in self.__base_ds_cache:
+            self.__base_ds_cache[chrom] = BaseDSChrom.open(
+                path=self._get_chrom_paths(chrom),
+                codebook_path=f"{self.codebook_path}/{chrom}",
+            )
+        _base_ds = self.__base_ds_cache[chrom]
+
+        if start is not None or end is not None or pos_sel is not None:
+            _base_ds = _base_ds.fetch(start=start, end=end, pos_sel=pos_sel)
+
+        if mc_type is not None:
+            _base_ds = _base_ds.select_mc_type(mc_type)
+
+        return _base_ds
