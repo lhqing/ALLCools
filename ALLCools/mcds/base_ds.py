@@ -9,7 +9,8 @@ from ALLCools.utilities import parse_mc_pattern
 
 
 @njit
-def _regions_to_pos(regions):
+def _regions_to_pos(regions: np.ndarray) -> np.ndarray:
+    """Convert regions to positions."""
     delta = regions[:, 1] - regions[:, 0]
     pos_sel = np.zeros(delta.sum(), dtype=np.uint32)
     cur_pos = 0
@@ -21,38 +22,13 @@ def _regions_to_pos(regions):
 
 
 def _chunk_pos_to_bed_df(chrom, chunk_pos):
+    """Convert chunk positions to bed dataframe."""
     records = []
     for i in range(len(chunk_pos) - 1):
         start = chunk_pos[i]
         end = chunk_pos[i + 1]
         records.append([chrom, start, end])
     return pd.DataFrame(records, columns=["chrom", "start", "end"])
-
-
-def _filter_pos_by_region_df(region_df, pos_idx):
-    n_rows = region_df.shape[0]
-    if n_rows == 0:
-        return np.array([])
-
-    region_row = 0
-    _, cur_start, cur_end = region_df.iloc[region_row]
-    pos_list = []
-    for pos in pos_idx:
-        if pos <= cur_start:
-            continue
-        else:
-            if pos > cur_end:
-                region_row += 1
-                if region_row >= n_rows:
-                    break
-                # get next region
-                _, cur_start, cur_end = region_df.iloc[region_row]
-
-            # add pos if inside region
-            if cur_start < pos <= cur_end:
-                pos_list.append(pos)
-    pos_arr = np.array(pos_list)
-    return pos_arr
 
 
 class Codebook(xr.DataArray):
@@ -62,12 +38,6 @@ class Codebook(xr.DataArray):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-    @property
-    def continuity(self):
-        """Whether the codebook is continuous or not."""
-        continuity = "pos" not in self.coords
-        return continuity
 
     @property
     def mc_type(self):
@@ -116,13 +86,8 @@ class Codebook(xr.DataArray):
 
         _bool = self.get_mc_pos_bool(mc_pattern)
 
-        if self.continuity:
-            _pos = self.coords["pos"].values[_bool]
-        else:
-            _pos = np.where(_bool)[0]
-
+        _pos = self.get_index("pos")[_bool].copy()
         if offset is not None:
-            _pos = _pos.copy()
             _pos += offset
         return _pos
 
@@ -140,11 +105,25 @@ class BaseDSChrom(xr.Dataset):
         else:
             data_vars = dataset
         super().__init__(data_vars=data_vars, coords=coords, attrs=attrs)
-
-        # add pos coordinate
-        if "pos" not in self.coords:
-            self.coords["pos"] = np.arange(0, self.attrs["chrom_size"], dtype="uint32")
         return
+
+    @property
+    def continuous(self):
+        return self.attrs.get("continuous", False)
+
+    @continuous.setter
+    def continuous(self, value):
+        assert isinstance(value, bool), "continuous must be a boolean."
+        self.attrs["continuous"] = value
+
+    @property
+    def offset(self):
+        return self.attrs.get("offset", 0)
+
+    @offset.setter
+    def offset(self, value):
+        assert isinstance(value, int), "offset must be an integer."
+        self.attrs["offset"] = value
 
     def fetch(self, start=None, end=None):
         """
@@ -168,9 +147,21 @@ class BaseDSChrom(xr.Dataset):
                 start = 0
             if end is None:
                 end = self.chrom_size
-            return self.fetch_regions([(start, end)])
+
+            assert start < end, "start must be less than end."
+
+            if self.continuous:
+                obj = self.sel(pos=slice(start - self.offset, end - self.offset))
+                # copy attrs to avoid changing the original attrs of self
+                obj.attrs = obj.attrs.copy()
+                obj.attrs["offset"] = start
+            else:
+                obj = self.fetch_regions([(start, end)])
+                # attrs will be copied in fetch_regions
         else:
             raise ValueError("start and end cannot be both None.")
+
+        return obj
 
     def fetch_regions(self, regions):
         """
@@ -187,13 +178,16 @@ class BaseDSChrom(xr.Dataset):
         BaseDSChrom
         """
         regions = np.array(regions).astype("uint32")
-        try:
-            assert regions.shape[1] == 2
-        except Exception as e:
-            print("Regions can not be converted to (N, 2) array.")
-            raise e
+
+        assert regions.shape[1] == 2, "Regions can not be converted to (N, 2) array."
+
         pos_sel = _regions_to_pos(regions)
-        return self.fetch_positions(pos_sel)
+        obj = self.fetch_positions(pos_sel)
+        # attrs will be copied in fetch_positions
+
+        assert obj.continuous is False
+        assert obj.offset == 0
+        return obj
 
     def fetch_positions(self, positions):
         """
@@ -210,10 +204,20 @@ class BaseDSChrom(xr.Dataset):
         -------
         BaseDSChrom
         """
-        return self.sel(pos=np.sort(positions))
+        # always apply offset to positions, even if self.continuous is False
+        # when self.continuous is False, offset is 0, so it will not change the positions
+        obj = self.sel(pos=np.sort(positions - self.offset))
+        obj.attrs = obj.attrs.copy()
+        obj.attrs["continuous"] = False
+        obj.coords["pos"] = positions
+        try:
+            del obj.attrs["offset"]
+        except KeyError:
+            pass
+        return obj
 
     @staticmethod
-    def _xarray_open(path):
+    def _xarray_open(path, obs_dim):
         multi = False
         if isinstance(path, (str, pathlib.Path)):
             if "*" in str(path):
@@ -225,13 +229,13 @@ class BaseDSChrom(xr.Dataset):
                 path = path[0]
 
         if multi:
-            ds = xr.open_mfdataset(path, concat_dim="sample_id", combine="nested", engine="zarr", decode_cf=False)
+            ds = xr.open_mfdataset(path, concat_dim=obs_dim, combine="nested", engine="zarr", decode_cf=False)
         else:
             ds = xr.open_zarr(path, decode_cf=False)
         return ds
 
     @classmethod
-    def open(cls, path, start=None, end=None, codebook_path=None):
+    def open(cls, path, start=None, end=None, codebook_path=None, obs_dim="sample_id"):
         """
         Open a BaseDSChrom object from a zarr path.
 
@@ -248,12 +252,14 @@ class BaseDSChrom(xr.Dataset):
         codebook_path
             The path to the codebook file if the BaseDS does not have a codebook.
             Codebook contexts, c_pos, and shape must be compatible with the BaseDS.
+        obs_dim
+            The dimension name of the observation dimension.
 
         Returns
         -------
         BaseDSChrom
         """
-        _zarr_obj = cls._xarray_open(path)
+        _zarr_obj = cls._xarray_open(path, obs_dim=obs_dim)
 
         if "codebook" not in _zarr_obj.data_vars:
             if codebook_path is None:
@@ -276,6 +282,8 @@ class BaseDSChrom(xr.Dataset):
             _zarr_obj["codebook"] = _cb
 
         _obj = cls(_zarr_obj)
+        _obj.continuous = True
+
         if start is not None or end is not None:
             _obj = _obj.fetch(start, end)
         return _obj
@@ -337,10 +345,22 @@ class BaseDSChrom(xr.Dataset):
         return self.codebook
 
     def select_mc_type(self, pattern):
-        cb = self.codebook
-        pattern_pos = cb.get_mc_pos(pattern)
+        """
+        Select the mc_type by pattern.
+
+        Parameters
+        ----------
+        pattern :
+            The pattern to select the mc_type.
+
+        Returns
+        -------
+        BaseDSChrom
+        """
+        pattern_pos = self.codebook.get_mc_pos(pattern, offset=self.offset)
 
         ds = self.fetch_positions(positions=pattern_pos)
+        assert ds.continuous is False
         return ds
 
     @property
@@ -368,7 +388,7 @@ class BaseDSChrom(xr.Dataset):
         bin_size
             The bin size to aggregate BaseDS to fix-sized regions.
         regions
-            The regions dataframe containing three columns: chrom, start, end.
+            The regions dataframe containing tow (start, end) or three columns (chrom, start, end).
             The index will be used as the region names.
         region_name
             The dimension name of the regions.
@@ -376,8 +396,10 @@ class BaseDSChrom(xr.Dataset):
             The chunk size of the region dim in result dataset.
         region_start
             The start position of the region to be selected.
+            Relevant only when bin_size is provided and regions is None.
         region_end
             The end position of the region to be selected.
+            Relevant only when bin_size is provided and regions is None.
 
         Returns
         -------
@@ -393,19 +415,23 @@ class BaseDSChrom(xr.Dataset):
             region_end = all_idx.max() + self.offset if region_end is None else region_end
 
         if regions is not None:
-            assert regions.shape[1] == 3, "regions must be a 3-column dataframe: chrom, start, end."
+            if regions.shape[1] == 3:
+                _chrom_sel = regions.iloc[:, 0] == self.chrom
+                regions = regions.iloc[_chrom_sel, 1:].copy()
+            assert regions.shape[1] == 2
             assert regions.shape[0] > 0, "regions must have at least one row."
 
         # get positions
         pos_idx = self.cb.get_mc_pos(mc_type, offset=self.offset)
         if regions is not None:
-            pos_idx = _filter_pos_by_region_df(region_df=regions, pos_idx=pos_idx)
+            region_pos_idx = _regions_to_pos(regions=regions)
+            pos_idx = pos_idx.intersection(region_pos_idx)
 
         base_ds = self.fetch_positions(positions=pos_idx)
 
         # prepare regions
         if regions is not None:
-            bins = regions.iloc[:, 1].tolist() + [regions.iloc[-1, 2]]
+            bins = regions.iloc[:, 0].tolist() + [regions.iloc[-1, 1]]
             labels = regions.index
             region_name = regions.index.name
         else:
@@ -423,7 +449,7 @@ class BaseDSChrom(xr.Dataset):
             for start in bins[:-1]:
                 labels.append(start)
 
-        # no CpG selected
+        # border case, no CpG selected
         if pos_idx.size == 0:
             # create an empty region_ds
             region_ds = base_ds["data"].rename({"pos": "pos_bins"})
@@ -633,6 +659,3 @@ class BaseDS:
         """
         _chrom_ds = self._get_chrom_ds(chrom)
         return _chrom_ds.fetch_positions(positions)
-
-
-# TODO add back continuous selection support
