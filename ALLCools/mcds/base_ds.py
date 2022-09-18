@@ -115,6 +115,9 @@ class BaseDSChrom(xr.Dataset):
     def continuous(self, value):
         assert isinstance(value, bool), "continuous must be a boolean."
         self.attrs["continuous"] = value
+        if not value:
+            # remove offset when continuous is False
+            self.attrs.pop("offset", None)
 
     @property
     def offset(self):
@@ -189,6 +192,20 @@ class BaseDSChrom(xr.Dataset):
         assert obj.offset == 0
         return obj
 
+    def _fetch_positions(self, positions):
+        """Fetch positions only, no prefetch."""
+        positions = np.sort(positions).astype("uint32")
+
+        # always apply offset to positions
+        # if continuous is False, offset will be 0, so no effect
+        obj = self.sel(pos=positions - self.offset)
+
+        # copy attrs to avoid changing the original attrs of self
+        obj.attrs = obj.attrs.copy()
+        obj.continuous = False
+        obj.coords["pos"] = positions
+        return obj
+
     def fetch_positions(self, positions):
         """
         Select the positions to create a discontinuous BaseDSChrom.
@@ -204,17 +221,14 @@ class BaseDSChrom(xr.Dataset):
         -------
         BaseDSChrom
         """
-        # always apply offset to positions, even if self.continuous is False
-        # when self.continuous is False, offset is 0, so it will not change the positions
-        obj = self.sel(pos=np.sort(positions - self.offset))
-        obj.attrs = obj.attrs.copy()
-        obj.attrs["continuous"] = False
-        obj.coords["pos"] = positions
-        try:
-            del obj.attrs["offset"]
-        except KeyError:
-            pass
-        return obj
+        if self.continuous:
+            # if obj is continuous, pre-fetch the min max pos to speed up
+            pos_min = min(positions)
+            pos_max = max(positions) + 1
+            obj = self.fetch(pos_min, pos_max)
+            return obj._fetch_positions(positions)
+        else:
+            return self._fetch_positions(positions)
 
     @staticmethod
     def _xarray_open(path, obs_dim):
