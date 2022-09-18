@@ -3,8 +3,21 @@ import pathlib
 import numpy as np
 import pandas as pd
 import xarray as xr
+from numba import njit
 
 from ALLCools.utilities import parse_mc_pattern
+
+
+@njit
+def _regions_to_pos(regions):
+    delta = regions[:, 1] - regions[:, 0]
+    pos_sel = np.zeros(delta.sum(), dtype=np.uint32)
+    cur_pos = 0
+    for start, end in regions:
+        length = end - start
+        pos_sel[cur_pos : cur_pos + length] = np.arange(start, end, dtype=np.uint32)
+        cur_pos += length
+    return pos_sel
 
 
 def _chunk_pos_to_bed_df(chrom, chunk_pos):
@@ -50,18 +63,11 @@ class Codebook(xr.DataArray):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # in-memory cache for the positions of cytosines matching the pattern
-        self.attrs["__mc_pos_cache"] = {}
-        self.attrs["__mc_pos_bool_cache"] = {}
-
-        # the continuity of codebook is determined by occurrence of pos coords
-        # and should not be changed
-        self.attrs["__continuity"] = False if "pos" in self.coords else True
-
     @property
     def continuity(self):
         """Whether the codebook is continuous or not."""
-        return self.attrs["__continuity"]
+        continuity = "pos" not in self.coords
+        return continuity
 
     @property
     def mc_type(self):
@@ -94,34 +100,26 @@ class Codebook(xr.DataArray):
         """Get the boolean array of cytosines matching the pattern."""
         mc_pattern = self._validate_mc_pattern(mc_pattern)
 
-        if mc_pattern in self.attrs["__mc_pos_bool_cache"]:
-            return self.attrs["__mc_pos_bool_cache"][mc_pattern]
+        if mc_pattern is None:
+            # get all mc types
+            judge = np.ones_like(self.mc_type, dtype=bool)
         else:
-            if mc_pattern is None:
-                # get all mc types
-                judge = np.ones_like(self.mc_type, dtype=bool)
-            else:
-                # get mc types matching the pattern
-                judge = self.mc_type.isin(parse_mc_pattern(mc_pattern))
-            # value can be -1, 0, 1, only 0 is False, -1 and 1 are True
-            _bool = self.sel(mc_type=judge).sum(dim="mc_type").values.astype(bool)
-            self.attrs["__mc_pos_bool_cache"][mc_pattern] = _bool
-            return _bool
+            # get mc types matching the pattern
+            judge = self.mc_type.isin(parse_mc_pattern(mc_pattern))
+        # value can be -1, 0, 1, only 0 is False, -1 and 1 are True
+        _bool = self.sel(mc_type=judge).sum(dim="mc_type").values.astype(bool)
+        return _bool
 
     def get_mc_pos(self, mc_pattern, offset=None):
         """Get the positions of mc types matching the pattern."""
         mc_pattern = self._validate_mc_pattern(mc_pattern)
 
-        if mc_pattern in self.attrs["__mc_pos_cache"]:
-            _pos = self.attrs["__mc_pos_cache"][mc_pattern]
-        else:
-            _bool = self.get_mc_pos_bool(mc_pattern)
+        _bool = self.get_mc_pos_bool(mc_pattern)
 
-            if self.continuity:
-                _pos = self.coords["pos"].values[_bool]
-            else:
-                _pos = np.where(_bool)[0]
-            self.attrs["__mc_pos_cache"][mc_pattern] = _pos
+        if self.continuity:
+            _pos = self.coords["pos"].values[_bool]
+        else:
+            _pos = np.where(_bool)[0]
 
         if offset is not None:
             _pos = _pos.copy()
@@ -143,143 +141,76 @@ class BaseDSChrom(xr.Dataset):
             data_vars = dataset
         super().__init__(data_vars=data_vars, coords=coords, attrs=attrs)
 
-        # continuity is set to True by default
-        self.continuity = True
-        self.offset = 0
+        # add pos coordinate
+        if "pos" not in self.coords:
+            self.coords["pos"] = np.arange(0, self.attrs["chrom_size"], dtype="uint32")
         return
 
-    @property
-    def continuity(self):
+    def fetch(self, start=None, end=None):
         """
-        The continuity of pos dimension.
+        Select by single region.
 
-        the BaseDSChrom has tow mode on the position dimension:
-        1. "continuous" mode: the position dimension is continuous
-        and all bases (including non-cytosines) are recorded.
-        In this mode, the position dimension do not have coordinates, the index is genome position.
-        2. "discrete" mode: the position dimension is discrete due to some discontinuous selection.
-        In this mode, the position dimension has coordinates.
-        """
-        return self.attrs["__continuity"]
-
-    @continuity.setter
-    def continuity(self, value):
-        """Set the continuity of pos dimension."""
-        if not value:
-            assert "pos" in self.coords, (
-                "The position dimension is set to discontinuous, " "but the pos coords is missing."
-            )
-            # when continuity is set to False, the offset is set to None
-            self.offset = None
-            self.attrs["__continuity"] = False
-        else:
-            self.attrs["__continuity"] = True
-
-    @property
-    def offset(self):
-        """The offset of the position dimension, only valid when continuity is True."""
-        offset = self.attrs["__offset"]
-        if offset is None:
-            offset = 0
-        return offset
-
-    @offset.setter
-    def offset(self, value):
-        """Set the offset of the position dimension."""
-        if value is not None and not self.continuity:
-            raise ValueError("The offset is only valid when the position dimension is continuous.")
-        self.attrs["__offset"] = value
-
-    def clear_attr_cache(self):
-        """Clear the attr cache."""
-        for attr in list(self.attrs.keys()):
-            if str(attr).startswith("__"):
-                del self.attrs[attr]
-
-    def _continuous_pos_selection(self, start, end):
-        """Select the positions to create a continuous BaseDSChrom."""
-        # for continuous mode, the pos should have an offset to convert to genome position
-        if not self.continuity:
-            raise ValueError("The position dimension is not continuous, unable to perform _continuous_pos_selection.")
-
-        if start is not None or end is not None:
-            if start is not None:
-                start -= self.offset
-            if end is not None:
-                end -= self.offset
-            obj = self.sel(pos=slice(start, end, None))
-            if start is not None:
-                obj.offset = start
-            return obj
-        else:
-            return self
-
-    def _discontinuous_pos_selection(self, pos_sel=None, idx_sel=None):
-        """
-        Select the positions to create a discontinuous BaseDSChrom.
-
-        Parameters
-        ----------
-        pos_sel :
-            using genome position to select the positions,
-            for continuous mode, the pos should have an offset to convert to idx position
-        idx_sel :
-            using idx position to select the positions
-
-        Returns
-        -------
-        BaseDSChrom
-        """
-        # once the pos is selected, the ds is not continuous anymore
-        # one must set the pos coords and set the continuity to False
-        if idx_sel is not None and pos_sel is not None:
-            raise ValueError("Only one of idx_sel and pos_sel can be specified.")
-        elif idx_sel is not None:
-            pass
-        elif pos_sel is not None:
-            if self.continuity:
-                # da is continuous, convert pos to idx
-                idx_sel = pos_sel - self.offset
-            else:
-                # da is not continuous, treat pos_sel as idx_sel
-                idx_sel = pos_sel
-        else:
-            raise ValueError("One of idx_sel or pos_sel must be specified.")
-
-        if self.continuity:
-            # if the ds was continuous, add offset to the pos coords and turn off continuity
-            offset_to_add = self.offset
-        else:
-            offset_to_add = 0
-
-        ds = self.sel(pos=idx_sel).assign_coords(pos=idx_sel + offset_to_add)
-        ds.clear_attr_cache()
-        ds.continuity = False
-        return ds
-
-    def fetch(self, start=None, end=None, pos_sel=None):
-        """
-        Fetch the data within the specified region or positions.
+        Coordinates are 0-based and half-open, like the BED format.
 
         Parameters
         ----------
         start :
-            the start position of the region, the resulting BaseDSChrom will be continuous
+            The start position of region.
         end :
-            the end position of the region, the resulting BaseDSChrom will be continuous
-        pos_sel :
-            the positions to select, the resulting BaseDSChrom will be discontinuous
+            The end position of region.
 
         Returns
         -------
         BaseDSChrom
         """
         if start is not None or end is not None:
-            if pos_sel is not None:
-                raise ValueError("Only one of start/end and pos_sel can be specified.")
-            return self._continuous_pos_selection(start=start, end=end)
+            if start is None:
+                start = 0
+            if end is None:
+                end = self.chrom_size
+            return self.fetch_regions([(start, end)])
         else:
-            return self._discontinuous_pos_selection(pos_sel=pos_sel)
+            raise ValueError("start and end cannot be both None.")
+
+    def fetch_regions(self, regions):
+        """
+        Select by multiple regions.
+
+        Parameters
+        ----------
+        regions :
+            The regions to select. Iterable of (start, end) tuples.
+            Coordinates are 0-based and half-open, like the BED format.
+
+        Returns
+        -------
+        BaseDSChrom
+        """
+        regions = np.array(regions).astype("uint32")
+        try:
+            assert regions.shape[1] == 2
+        except Exception as e:
+            print("Regions can not be converted to (N, 2) array.")
+            raise e
+        pos_sel = _regions_to_pos(regions)
+        return self.fetch_positions(pos_sel)
+
+    def fetch_positions(self, positions):
+        """
+        Select the positions to create a discontinuous BaseDSChrom.
+
+        Coordinates are 0-based.
+
+        Parameters
+        ----------
+        positions :
+            using genome position to select the positions
+
+        Returns
+        -------
+        BaseDSChrom
+        """
+        return self.sel(pos=np.sort(positions))
 
     @staticmethod
     def _xarray_open(path):
@@ -345,7 +276,8 @@ class BaseDSChrom(xr.Dataset):
             _zarr_obj["codebook"] = _cb
 
         _obj = cls(_zarr_obj)
-        _obj = _obj._continuous_pos_selection(start, end)
+        if start is not None or end is not None:
+            _obj = _obj.fetch(start, end)
         return _obj
 
     @property
@@ -394,11 +326,10 @@ class BaseDSChrom(xr.Dataset):
     def codebook(self) -> Codebook:
         """Get the codebook data array."""
         # catch the codebook in the attrs, only effective in memory
-        if "__cb_obj" not in self.attrs:
-            self.attrs["__cb_obj"] = Codebook(self["codebook"])
-            self.attrs["__cb_obj"].attrs["c_pos"] = self.attrs["c_pos"]
-            self.attrs["__cb_obj"].attrs["context_size"] = self.attrs["context_size"]
-        return self.attrs["__cb_obj"]
+        cb = Codebook(self["codebook"])
+        cb.attrs["c_pos"] = self.attrs["c_pos"]
+        cb.attrs["context_size"] = self.attrs["context_size"]
+        return cb
 
     @property
     def cb(self) -> Codebook:
@@ -409,7 +340,7 @@ class BaseDSChrom(xr.Dataset):
         cb = self.codebook
         pattern_pos = cb.get_mc_pos(pattern)
 
-        ds = self._discontinuous_pos_selection(idx_sel=pattern_pos)
+        ds = self.fetch_positions(positions=pattern_pos)
         return ds
 
     @property
@@ -470,7 +401,7 @@ class BaseDSChrom(xr.Dataset):
         if regions is not None:
             pos_idx = _filter_pos_by_region_df(region_df=regions, pos_idx=pos_idx)
 
-        base_ds = self._discontinuous_pos_selection(pos_sel=pos_idx)
+        base_ds = self.fetch_positions(positions=pos_idx)
 
         # prepare regions
         if regions is not None:
@@ -635,9 +566,18 @@ class BaseDS:
     def _get_chrom_paths(self, chrom):
         return [f"{p}/{chrom}" for p in self.paths]
 
-    def fetch(self, chrom, start=None, end=None, pos_sel=None, mc_type=None):
+    def _get_chrom_ds(self, chrom):
+        if chrom not in self.__base_ds_cache:
+            self.__base_ds_cache[chrom] = BaseDSChrom.open(
+                path=self._get_chrom_paths(chrom),
+                codebook_path=f"{self.codebook_path}/{chrom}",
+            )
+        _chrom_ds: BaseDSChrom = self.__base_ds_cache[chrom]
+        return _chrom_ds
+
+    def fetch(self, chrom, start=None, end=None):
         """
-        Fetch a BaseDS for a genomic region or a series of positions.
+        Fetch a BaseDS for a genomic region.
 
         Parameters
         ----------
@@ -647,28 +587,52 @@ class BaseDS:
             Select genomic region by start position.
         end :
             Select genomic region by end position.
-        pos_sel :
-            Select bases by a list of positions.
-        mc_type :
-            Methylated cytosine type,
-            default is None, a continuous BaseDS region will be returned;
-            if provided, a discontinuous BaseDS region containing only the selected cytosine will be returned.
 
         Returns
         -------
         BaseDSChrom
         """
-        if chrom not in self.__base_ds_cache:
-            self.__base_ds_cache[chrom] = BaseDSChrom.open(
-                path=self._get_chrom_paths(chrom),
-                codebook_path=f"{self.codebook_path}/{chrom}",
-            )
-        _base_ds = self.__base_ds_cache[chrom]
+        _chrom_ds = self._get_chrom_ds(chrom)
+        return _chrom_ds.fetch(start=start, end=end)
 
-        if start is not None or end is not None or pos_sel is not None:
-            _base_ds = _base_ds.fetch(start=start, end=end, pos_sel=pos_sel)
+    def fetch_regions(self, chrom, regions):
+        """
+        Fetch a BaseDS for a list of genomic regions.
 
-        if mc_type is not None:
-            _base_ds = _base_ds.select_mc_type(mc_type)
+        Parameters
+        ----------
+        chrom :
+            Chromosome name.
+        regions :
+            The regions to select. Iterable of (start, end) tuples.
+            Coordinates are 0-based and half-open, like the BED format.
 
-        return _base_ds
+        Returns
+        -------
+        BaseDSChrom
+        """
+        _chrom_ds = self._get_chrom_ds(chrom)
+        return _chrom_ds.fetch_regions(regions)
+
+    def fetch_positions(self, chrom, positions):
+        """
+        Fetch a BaseDS for a list of genomic positions.
+
+        Coordinates are 0-based.
+
+        Parameters
+        ----------
+        chrom :
+            Chromosome name.
+        positions :
+            using genome position to select the positions
+
+        Returns
+        -------
+        BaseDSChrom
+        """
+        _chrom_ds = self._get_chrom_ds(chrom)
+        return _chrom_ds.fetch_positions(positions)
+
+
+# TODO add back continuous selection support

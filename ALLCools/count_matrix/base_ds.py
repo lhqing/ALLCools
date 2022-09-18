@@ -57,9 +57,9 @@ class _ALLCFile(TabixFile):
         Parameters
         ----------
         args :
-            positional arguments for TabixFile.fetch
+            positional arguments for `TabixFile.fetch`
         kwargs :
-            keyword arguments for TabixFile.fetch
+            keyword arguments for `TabixFile.fetch`
 
         Returns
         -------
@@ -84,7 +84,7 @@ class _ALLCFile(TabixFile):
         Parameters
         ----------
         args :
-            positional arguments for TabixFile.fetch
+            positional arguments for `TabixFile.fetch`
         pos_base :
             the position base for the array, default is 0, which means the array pos column is 0-based.
             ALLC file is 1-based.
@@ -124,7 +124,7 @@ class _ALLCFile(TabixFile):
         Parameters
         ----------
         args :
-            positional arguments for TabixFile.fetch
+            positional arguments for `TabixFile.fetch`
         pos_min :
             the minimum position fetched from ALLC or the minimum position in the query region provided by user.
             Use this number as the offset for the array position.
