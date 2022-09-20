@@ -1,4 +1,5 @@
 import pathlib
+import subprocess
 
 import numpy as np
 import pandas as pd
@@ -6,6 +7,16 @@ import xarray as xr
 from numba import njit
 
 from ALLCools.utilities import parse_mc_pattern
+
+
+def _mvalue(mc, cov, alpha=0.1):
+    m = np.log2((mc + alpha) / (cov - mc + alpha))
+    return m
+
+
+def _frac(mc, cov, alpha=0.001):
+    frac = mc / (cov + alpha)
+    return frac
 
 
 @njit
@@ -569,6 +580,114 @@ class BaseDSChrom(xr.Dataset):
             **output_kwargs,
         )
         return dms_ds
+
+    def dump_sample_bigwig(self, bigwig_path, da_name, sample_dim, sample, value="frac"):
+        import pyBigWig
+
+        da = self[da_name]
+
+        pos = da.get_index("pos")
+        mc = da.sel({sample_dim: sample, "count_type": "mc"})
+        cov = da.sel({sample_dim: sample, "count_type": "cov"})
+        if value == "frac":
+            values = _frac(mc=mc, cov=cov).values
+        elif value == "mvalue":
+            values = _mvalue(mc=mc, cov=cov).values
+        else:
+            raise ValueError(f"Unknown value: {value}")
+
+        # save to bigwig
+        bigwig_path = pathlib.Path(bigwig_path).absolute().resolve()
+        # noinspection PyArgumentList
+        with pyBigWig.open(str(bigwig_path), "w") as bw:
+            bw.addHeader([(self.chrom, self.chrom_size)])
+            bw.addEntries(self.chrom, pos.values, values=values, span=1)
+        return bigwig_path
+
+    def dump_multi_sample_bigwig(self, bigwig_dir, sample_dim, da_name, samples=None, value="frac"):
+        sample_idx = self.get_index(sample_dim)
+        bigwig_dir = pathlib.Path(bigwig_dir).resolve().absolute()
+        bigwig_dir.mkdir(parents=True, exist_ok=True)
+
+        bigwig_paths = []
+        if samples is not None:
+            sample_idx = sample_idx.intersection(samples)
+
+        for sample in sample_idx:
+            bigwig_path = bigwig_dir / f"{sample}.bw"
+
+            self.dump_sample_bigwig(
+                bigwig_path=bigwig_path, da_name=da_name, sample_dim=sample_dim, sample=sample, value=value
+            )
+            bigwig_paths.append(bigwig_path)
+        return bigwig_paths
+
+    def dump_base_position_bed(self, bed_path, use_pos=None, bgzip_tabix=True, merge_cpg_strand=False):
+        bed_path = str(bed_path)
+        if bed_path.endswith(".gz"):
+            bed_path = bed_path[:-3]
+        bed_path = pathlib.Path(bed_path).resolve().absolute()
+
+        if merge_cpg_strand:
+            # applicable for CpG only
+            pos_and_strand = self["codebook"].load().sum(dim="mc_type").to_pandas()
+            pos = pos_and_strand[pos_and_strand > 0].index
+            pos_delta = 2
+        else:
+            pos = self.get_index("pos")
+            pos_delta = 1
+
+        if use_pos is not None:
+            if isinstance(use_pos, str):
+                use_pos = self[use_pos].values
+                pos = pos[use_pos]
+            else:
+                pos = pos.intersection(use_pos)
+
+        bed_df = pd.DataFrame({"chrom": self.chrom, "start": pos, "end": pos + pos_delta})
+        # noinspection PyTypeChecker
+        bed_df.to_csv(bed_path, sep="\t", header=None, index=None)
+        if bgzip_tabix:
+            subprocess.run(f"bgzip -f {bed_path} && " f"tabix -p bed -f {bed_path}.gz", shell=True, check=True)
+        return bed_path
+
+    def create_jbrowse(
+        self,
+        sample_dim,
+        da_name="data",
+        samples=None,
+        bigwig_value="frac",
+        add_pos_track=False,
+        use_pos=None,
+        merge_cpg_strand=False,
+        jbrowse_path=None,
+        config=None,
+        fasta_path=None,
+        gene_gtf=None,
+        transcript_gtf=None,
+    ):
+        from ..jbrowse import JBrowse
+
+        jb = JBrowse(path=jbrowse_path, config=config)
+
+        # add genome reference tracks
+        if fasta_path is not None or gene_gtf is not None or transcript_gtf is not None:
+            jb.create(fasta_path=fasta_path, gene_gtf=gene_gtf, transcript_gtf=transcript_gtf)
+
+        # add BaseDS tracks
+        bigwig_paths = self.dump_all_sample_bigwig(
+            bigwig_dir=jb.path, sample_dim=sample_dim, da_name=da_name, samples=samples, value=bigwig_value
+        )
+        for bigwig_path in bigwig_paths:
+            jb.add_track(track_path=bigwig_path, name=None, load="inPlace")
+
+        # add position regions
+        if add_pos_track:
+            self.dump_base_position_bed(
+                bed_path="BaseDS.Positions.bed.gz", use_pos=use_pos, bgzip_tabix=True, merge_cpg_strand=merge_cpg_strand
+            )
+            jb.add_track(track_path="BaseDS.Positions.bed.gz", name="BaseDS Positions", load="inPlace")
+        return jb
 
 
 class BaseDS:
