@@ -628,21 +628,22 @@ class BaseDSChrom(xr.Dataset):
             bed_path = bed_path[:-3]
         bed_path = pathlib.Path(bed_path).resolve().absolute()
 
-        if merge_cpg_strand:
-            # applicable for CpG only
-            pos_and_strand = self["codebook"].load().sum(dim="mc_type").to_pandas()
-            pos = pos_and_strand[pos_and_strand > 0].index
-            pos_delta = 2
-        else:
-            pos = self.get_index("pos")
-            pos_delta = 1
-
+        pos = self.get_index("pos")
         if use_pos is not None:
             if isinstance(use_pos, str):
                 use_pos = self[use_pos].values
                 pos = pos[use_pos]
             else:
                 pos = pos.intersection(use_pos)
+
+        if merge_cpg_strand:
+            # applicable for CpG only
+            pos_and_strand = self["codebook"].load().sum(dim="mc_type").to_pandas()
+            forward_pos = pos_and_strand[pos_and_strand > 0].index
+            pos = pos.intersection(forward_pos)
+            pos_delta = 2
+        else:
+            pos_delta = 1
 
         bed_df = pd.DataFrame({"chrom": self.chrom, "start": pos, "end": pos + pos_delta})
         # noinspection PyTypeChecker
