@@ -675,7 +675,7 @@ class BaseDSChrom(xr.Dataset):
             jb.create(fasta_path=fasta_path, gene_gtf=gene_gtf, transcript_gtf=transcript_gtf)
 
         # add BaseDS tracks
-        bigwig_paths = self.dump_all_sample_bigwig(
+        bigwig_paths = self.dump_multi_sample_bigwig(
             bigwig_dir=jb.path, sample_dim=sample_dim, da_name=da_name, samples=samples, value=bigwig_value
         )
         for bigwig_path in bigwig_paths:
