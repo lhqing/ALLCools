@@ -37,7 +37,10 @@ def _run_cmd(cmd):
 
 
 class JBrowse:
-    def __init__(self, path=None, config="config.json"):
+    def __init__(self, path=None, config=None):
+        if config is None:
+            config = "config.json"
+
         if path is None:
             path = os.getcwd()
             path = pathlib.Path(path) / "jbrowse2"
@@ -105,7 +108,7 @@ class JBrowse:
             print(f"{jb_path} already exists. Skipping.")
             return
 
-        _run_cmd(f"cd {self.path} && " f"jbrowse text-index {self.config}")
+        _run_cmd(f"cd {self.path} && " f"jbrowse text-index")
 
     def create(self, fasta_path, gene_gtf, transcript_gtf=None):
         if self.config.exists():
