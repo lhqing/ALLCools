@@ -70,7 +70,7 @@ class JBrowse:
         if not self.path.exists():
             self.path.mkdir(parents=True, exist_ok=True)
 
-        _run_cmd(f"jbrowse create {self.path}")
+        _run_cmd(f"jbrowse create {self.path} && cd {self.path} && npm install -u serve")
 
     def add_assembly(self, fasta_path, name=None, load="symlink"):
         jb_path = self.path / pathlib.Path(fasta_path).name
@@ -97,7 +97,7 @@ class JBrowse:
         _run_cmd(
             f"cd {self.path} && "
             f"jbrowse add-track {track_path} "
-            f"--name {name} "
+            f'--name "{name}" '
             f"--load {load} "
             f"--target {self.path}"
         )
@@ -108,7 +108,7 @@ class JBrowse:
             print(f"{jb_path} already exists. Skipping.")
             return
 
-        _run_cmd(f"cd {self.path} && " f"jbrowse text-index")
+        _run_cmd(f"cd {self.path} && jbrowse text-index")
 
     def create(self, fasta_path, gene_gtf, transcript_gtf=None):
         if self.config.exists():

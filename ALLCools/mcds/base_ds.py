@@ -680,7 +680,8 @@ class BaseDSChrom(xr.Dataset):
             bigwig_dir=jb.path, sample_dim=sample_dim, da_name=da_name, samples=samples, value=bigwig_value
         )
         for bigwig_path in bigwig_paths:
-            jb.add_track(track_path=bigwig_path, name=None, load="inPlace")
+            # bigwig is already in the jbrowse dir
+            jb.add_track(track_path=pathlib.Path(bigwig_path).name, name=None, load="inPlace")
 
         # add position regions
         if add_pos_track:
