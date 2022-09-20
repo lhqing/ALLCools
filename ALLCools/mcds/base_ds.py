@@ -614,7 +614,7 @@ class BaseDSChrom(xr.Dataset):
             sample_idx = sample_idx.intersection(samples)
 
         for sample in sample_idx:
-            bigwig_path = bigwig_dir / f"{sample}.bw"
+            bigwig_path = bigwig_dir / f"{sample_dim}-{sample}-{value}.bw"
 
             self.dump_sample_bigwig(
                 bigwig_path=bigwig_path, da_name=da_name, sample_dim=sample_dim, sample=sample, value=value
@@ -677,18 +677,21 @@ class BaseDSChrom(xr.Dataset):
 
         # add BaseDS tracks
         bigwig_paths = self.dump_multi_sample_bigwig(
-            bigwig_dir=jb.path, sample_dim=sample_dim, da_name=da_name, samples=samples, value=bigwig_value
+            bigwig_dir="/tmp/", sample_dim=sample_dim, da_name=da_name, samples=samples, value=bigwig_value
         )
         for bigwig_path in bigwig_paths:
             # bigwig is already in the jbrowse dir
-            jb.add_track(track_path=pathlib.Path(bigwig_path).name, name=None, load="inPlace")
+            jb.add_track(track_path=bigwig_path, name=None, load="move")
 
         # add position regions
         if add_pos_track:
             self.dump_base_position_bed(
-                bed_path="BaseDS.Positions.bed.gz", use_pos=use_pos, bgzip_tabix=True, merge_cpg_strand=merge_cpg_strand
+                bed_path="/tmp/BaseDS.Positions.bed.gz",
+                use_pos=use_pos,
+                bgzip_tabix=True,
+                merge_cpg_strand=merge_cpg_strand,
             )
-            jb.add_track(track_path="BaseDS.Positions.bed.gz", name="BaseDS Positions", load="inPlace")
+            jb.add_track(track_path="/tmp/BaseDS.Positions.bed.gz", name="BaseDS Positions", load="move")
         return jb
 
 

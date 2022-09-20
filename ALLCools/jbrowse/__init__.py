@@ -127,5 +127,5 @@ class JBrowse:
     def serve(self, port=3000):
         if not self.created:
             raise Exception("JBrowse not created yet. Please run create() first.")
-        _run_cmd(f"cd {self.path} && npx serve -S --port {port} .")
+        _run_cmd(f"cd {self.path} && npx serve -S -p {port} .")
         return
