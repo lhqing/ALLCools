@@ -31,13 +31,8 @@ import pathlib
 import subprocess
 
 
-def _run_cmd(cmd):
-    print(cmd)
-    subprocess.run(cmd, shell=True, check=True)
-
-
 class JBrowse:
-    def __init__(self, path=None, config=None):
+    def __init__(self, path=None, config=None, verbose=False):
         if config is None:
             config = "config.json"
 
@@ -50,12 +45,24 @@ class JBrowse:
             self.created = True
         else:
             self.created = False
+        self.verbose = verbose
         self._test_cli()
 
-    @staticmethod
-    def _test_cli():
+    def _run_cmd(self, cmd):
+        if self.verbose:
+            print(cmd)
         try:
-            _run_cmd("jbrowse --version")
+            p = subprocess.run(cmd, shell=True, check=True, capture_output=True, encoding="utf-8")
+            if self.verbose:
+                print(p.stdout)
+                print(p.stderr)
+        except subprocess.CalledProcessError as e:
+            print(e.stderr)
+            raise e
+
+    def _test_cli(self):
+        try:
+            self._run_cmd("jbrowse --version")
         except Exception as e:
             print(
                 "JBrowse does not seem to be installed. "
@@ -65,12 +72,10 @@ class JBrowse:
             raise e
 
     def _create(self):
-        self._test_cli()
-
         if not self.path.exists():
             self.path.mkdir(parents=True, exist_ok=True)
 
-        _run_cmd(f"jbrowse create {self.path} && cd {self.path} && npm install -u serve")
+        self._run_cmd(f"jbrowse create {self.path} && cd {self.path} && npm install -u serve")
 
     def add_assembly(self, fasta_path, name=None, load="symlink"):
         jb_path = self.path / pathlib.Path(fasta_path).name
@@ -79,7 +84,7 @@ class JBrowse:
 
         if name is None:
             name = pathlib.Path(fasta_path).stem
-        _run_cmd(
+        self._run_cmd(
             f"cd {self.path} && "
             f"jbrowse add-assembly {fasta_path} "
             f"--name {name} "
@@ -94,7 +99,7 @@ class JBrowse:
 
         if name is None:
             name = pathlib.Path(track_path).stem
-        _run_cmd(
+        self._run_cmd(
             f"cd {self.path} && "
             f"jbrowse add-track {track_path} "
             f'--name "{name}" '
@@ -108,7 +113,7 @@ class JBrowse:
             print(f"{jb_path} already exists. Skipping.")
             return
 
-        _run_cmd(f"cd {self.path} && jbrowse text-index")
+        self._run_cmd(f"cd {self.path} && jbrowse text-index")
 
     def create(self, fasta_path, gene_gtf, transcript_gtf=None):
         if self.config.exists():
@@ -127,5 +132,5 @@ class JBrowse:
     def serve(self, port=3000):
         if not self.created:
             raise Exception("JBrowse not created yet. Please run create() first.")
-        _run_cmd(f"cd {self.path} && npx serve -S -p {port} .")
+        self._run_cmd(f"cd {self.path} && npx serve -S -p {port} .")
         return

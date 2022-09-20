@@ -666,10 +666,11 @@ class BaseDSChrom(xr.Dataset):
         fasta_path=None,
         gene_gtf=None,
         transcript_gtf=None,
+        verbose=False,
     ):
         from ..jbrowse import JBrowse
 
-        jb = JBrowse(path=jbrowse_path, config=config)
+        jb = JBrowse(path=jbrowse_path, config=config, verbose=verbose)
 
         # add genome reference tracks
         if fasta_path is not None or gene_gtf is not None or transcript_gtf is not None:
