@@ -84,7 +84,7 @@ class JBrowse:
             f"jbrowse add-assembly {fasta_path} "
             f"--name {name} "
             f"--load {load} "
-            f"--target {self.config}"
+            f"--target {self.path}"
         )
 
     def add_track(self, track_path, name=None, load="symlink"):
@@ -99,7 +99,7 @@ class JBrowse:
             f"jbrowse add-track {track_path} "
             f"--name {name} "
             f"--load {load} "
-            f"--target {self.config}"
+            f"--target {self.path}"
         )
 
     def text_index(self):
