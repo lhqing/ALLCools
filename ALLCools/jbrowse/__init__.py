@@ -48,12 +48,14 @@ class JBrowse:
         self.verbose = verbose
         self._test_cli()
 
-    def _run_cmd(self, cmd):
-        if self.verbose:
+    def _run_cmd(self, cmd, verbose=None):
+        if verbose is None:
+            verbose = self.verbose
+        if verbose:
             print(cmd)
         try:
             p = subprocess.run(cmd, shell=True, check=True, capture_output=True, encoding="utf-8")
-            if self.verbose:
+            if verbose:
                 print(p.stdout)
                 print(p.stderr)
         except subprocess.CalledProcessError as e:
@@ -92,11 +94,14 @@ class JBrowse:
             f"--target {self.path}"
         )
 
-    def add_track(self, track_path, name=None, load="symlink"):
+    def add_track(self, track_path, name=None, load="symlink", force=False):
         jb_path = self.path / pathlib.Path(track_path).name
         if jb_path.exists():
             load = "inPlace"
-
+        if force:
+            force_str = "--force"
+        else:
+            force_str = ""
         if name is None:
             name = pathlib.Path(track_path).stem
         self._run_cmd(
@@ -104,7 +109,8 @@ class JBrowse:
             f"jbrowse add-track {track_path} "
             f'--name "{name}" '
             f"--load {load} "
-            f"--target {self.path}"
+            f"--target {self.path} "
+            f"{force_str}"
         )
 
     def text_index(self):
@@ -132,5 +138,5 @@ class JBrowse:
     def serve(self, port=3000):
         if not self.created:
             raise Exception("JBrowse not created yet. Please run create() first.")
-        self._run_cmd(f"cd {self.path} && npx serve -S -p {port} .")
+        self._run_cmd(f"cd {self.path} && npx serve -S -p {port} .", verbose=True)
         return
