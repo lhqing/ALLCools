@@ -60,7 +60,9 @@ class DMSAggregate:
     def _get_all_cpg(self):
         all_cpgs = self.base_ds.fetch(self.chrom, self.start, self.end).select_mc_type(self.mcg_pattern)
         all_cpgs.coords["group"] = all_cpgs[self.sample_dim].to_pandas().map(self.cell_groups)
-        all_cpgs["group_data"] = all_cpgs[self.count_da].groupby("group").sum(dim=self.sample_dim).load()
+        all_cpgs["group_data"] = (
+            all_cpgs[self.count_da].groupby("group").sum(dim=self.sample_dim).load(scheduler="sync")
+        )
 
         self._all_cpgs = all_cpgs
         return
@@ -72,7 +74,7 @@ class DMSAggregate:
         sort_pos = dms_ds.get_index("pos").sort_values()
         dms_ds = dms_ds.sel(pos=sort_pos)
 
-        dms_count = self._all_cpgs.fetch_positions(positions=dms_ds.get_index("pos")).load()
+        dms_count = self._all_cpgs.fetch_positions(positions=dms_ds.get_index("pos")).load(scheduler="sync")
         dms_ds["group_data"] = dms_count["group_data"]
 
         # get both forward and reverse strand
@@ -160,7 +162,7 @@ class DMSAggregate:
         dmr_sample_count.coords["dmr_chrom"] = pd.Series(
             [self._all_cpgs.chrom] * n_dmr, index=dmr_sample_count.get_index("dmr")
         )
-        dmr_sample_count["data"] = dmr_sample_count["data"].astype("uint32").load()
+        dmr_sample_count["data"] = dmr_sample_count["data"].astype("uint32").load(scheduler="sync")
         dmr_sample_count.coords["dmr_length"] = dmr_region["end"] - dmr_region["start"]
 
         dmr_sample_count["dmr"] = (
