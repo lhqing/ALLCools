@@ -410,12 +410,14 @@ class MCDS(xr.Dataset):
         )
         return frac
 
-    def add_m_value(self, var_dim=None, da=None, alpha=0.01, normalize_per_cell=True, da_suffix="mvalue"):
+    def add_m_value(self, var_dim=None, da=None, alpha=0.01, da_suffix="mvalue"):
         """
         Add m value data array for certain feature type (var_dim).
 
         M-Value is a transformation of the posterior mC fraction data array to a log ratio scale.
         M = np.log2((frac + alpha) / (1 - frac + alpha)).
+
+        No normalization is applied to M-Value.
 
         Parameters
         ----------
@@ -425,8 +427,6 @@ class MCDS(xr.Dataset):
             DataArray name. if None, will use f'{var_dim}_da'
         alpha :
             alpha value for the transformation regularization
-        normalize_per_cell :
-            if True, will normalize the mC rate data array per cell
         da_suffix :
             name suffix appended to the calculated mC rate data array
         """
@@ -444,9 +444,6 @@ class MCDS(xr.Dataset):
         frac = self._calculate_frac(var_dim=var_dim, da=da, normalize_per_cell=False, clip_norm_value=None)
 
         m_value = np.log2((frac + alpha) / (1 - frac + alpha))
-
-        if normalize_per_cell:
-            m_value = m_value / m_value.mean(dim=var_dim)
 
         self[da + "_" + da_suffix] = m_value
         return
