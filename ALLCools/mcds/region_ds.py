@@ -288,7 +288,7 @@ class RegionDS(xr.Dataset):
         split_large_chunks=True,
         chrom_size_path=None,
         select_dir=None,
-        chunks=None,
+        chunks="auto",
         engine="zarr",
     ):
         """Open a RegionDS from a zarr file."""
@@ -381,6 +381,8 @@ class RegionDS(xr.Dataset):
         if use_regions is not None:
             region_ds = region_ds.sel({region_dim: use_regions})
 
+        # TODO: check the chunk issue of RegionDS.open
+        # the open function do not preserve the chunk information from zarr
         if chunks is not None:
             # change object dtype to string
             if obj_to_str:
