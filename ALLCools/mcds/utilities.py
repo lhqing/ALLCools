@@ -467,10 +467,11 @@ def reduce_zarr_coords_chunks(ds_path, max_size=10000000):
 
     # move previous coords and zmetadata
     for coord in coord_ds.coords.keys():
-        subprocess.run(["mv", f"{ds_path}/{coord}", f"{temp_zarr_path}/{coord}_backup"], check=True)
+        subprocess.run(["cp", "-r", f"{ds_path}/{coord}", f"{temp_zarr_path}/{coord}_backup"], check=True)
+        subprocess.run(["rm", "-rf", f"{ds_path}/{coord}"], check=True)
     # move new coords
     for coord in coord_ds.coords.keys():
-        subprocess.run(["mv", f"{temp_zarr_path}/{coord}", f"{ds_path}/{coord}"], check=True)
+        subprocess.run(["cp", "-r", f"{temp_zarr_path}/{coord}", f"{ds_path}/{coord}"], check=True)
 
     # zmetadata path
     old_zmetadata_path = f"{ds_path}/.zmetadata"

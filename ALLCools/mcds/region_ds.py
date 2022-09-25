@@ -288,7 +288,7 @@ class RegionDS(xr.Dataset):
         split_large_chunks=True,
         chrom_size_path=None,
         select_dir=None,
-        chunks="auto",
+        chunks=None,
         engine="zarr",
     ):
         """Open a RegionDS from a zarr file."""
