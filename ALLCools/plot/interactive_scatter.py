@@ -1,9 +1,13 @@
 import anndata
-import plotly.express as px
 
 
 def interactive_scatter(data, hue=None, coord_base="umap", continous_cmap="viridis", size=5, max_points=3000):
     """Plot an interactive scatter plot with plotly."""
+    try:
+        import plotly.express as px
+    except ImportError:
+        raise ImportError("Please install plotly to use this function.")
+
     if isinstance(data, anndata.AnnData):
         _data = data.obs.copy()
         _data[f"{coord_base}_0"] = data.obsm[f"X_{coord_base}"][:, 0]

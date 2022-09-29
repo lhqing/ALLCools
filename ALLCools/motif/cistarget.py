@@ -13,7 +13,7 @@ from ctxcore.recovery import aucs as calc_aucs
 from ctxcore.recovery import recovery
 
 
-def cistarget_motif_enrichment(rank_df, total_regions, auc_threshold, nes_threshold, rank_threshold):
+def cistarget_motif_enrichment(rank_df, total_regions, auc_threshold=0.005, nes_threshold=3, rank_threshold=0.05):
     """
     Perform the cistarget motif enrichment analysis by considering normalized motif score rank AUC.
 
