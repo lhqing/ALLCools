@@ -59,8 +59,8 @@ def cistarget_motif_enrichment(rank_df, total_regions, auc_threshold=0.005, nes_
     # noinspection PyTypeChecker
     if sum(enriched_features_idx) == 0:
         print("No enriched motifs found")
-        motif_enrichment = pd.DataFrame([], columns=["NES", "AUC", "rank_max", "motif_hits"])
-        motif_hits = {}
+        motif_enrichment = pd.DataFrame([], columns=["NES", "AUC", "rank_at_max", "n_motif_hit"])
+        motif_hits = pd.DataFrame([], columns=rank_df.columns)
         return motif_enrichment, motif_hits
 
     # Make dataframe
