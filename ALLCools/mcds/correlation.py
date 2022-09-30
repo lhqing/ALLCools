@@ -87,7 +87,7 @@ def _corr_preprocess(da, sample_mch, sample_mcg, cpu=1):
 
     if adata.shape[1] > 0:
         # regress out global mCH and mCG
-        # happens on each regions
+        # happens on each region
         sc.pp.regress_out(adata, keys=["sample_mch", "sample_mcg"], n_jobs=cpu)
         sc.pp.scale(adata)
     else:
@@ -104,6 +104,30 @@ def corr(
     shuffle_sample=None,
     calculate_n=None,
 ):
+    """
+    Calculate correlation between two anndata, var by var
+
+    Parameters
+    ----------
+    adata_a
+        anndata a
+    adata_b
+        anndata b
+    max_dist
+        max distance between two regions
+    cpu
+        number of cpu to use
+    method
+        correlation method, pearson or spearman
+    shuffle_sample
+        shuffle sample order, for null correlation
+    calculate_n
+        only calculate n regions, for null correlation
+
+    Returns
+    -------
+    adata contains correlation matrix, shape (n_vars_a, n_vars_b)
+    """
     _adata_a = adata_a.copy()
     _adata_b = adata_b.copy()
 
@@ -120,7 +144,7 @@ def corr(
     # create mask
     mask = coo_matrix(np.abs(_adata_a.var["pos"].values[:, None] - _adata_b.var["pos"].values[None, :]) < max_dist)
 
-    # this is used when calculating null, downsample corr call to save time
+    # this is used when calculating null, down sample corr call to save time
     if (calculate_n is not None) and (calculate_n < mask.data.size):
         rand_loc = np.random.choice(range(mask.data.size), size=int(calculate_n), replace=False)
         rand_loc = sorted(rand_loc)
