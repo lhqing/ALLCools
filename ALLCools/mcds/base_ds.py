@@ -488,7 +488,9 @@ class BaseDSChrom(xr.Dataset):
                 .groupby_bins(
                     group="pos",
                     bins=bins,
-                    right=True,
+                    # important, include the start position but exclude the end position;
+                    # the same as BED format
+                    right=False,
                     labels=labels,
                     precision=3,
                     include_lowest=True,
