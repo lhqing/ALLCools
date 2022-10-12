@@ -156,25 +156,21 @@ class BaseDSChrom(xr.Dataset):
         -------
         BaseDSChrom
         """
-        if start is not None or end is not None:
-            if start is None:
-                start = 0
-            if end is None:
-                end = self.chrom_size
+        if start is None:
+            start = 0
+        if end is None:
+            end = self.chrom_size
 
-            assert start < end, "start must be less than end."
+        assert start < end, "start must be less than end."
 
-            if self.continuous:
-                obj = self.sel(pos=slice(start - self.offset, end - self.offset))
-                # copy attrs to avoid changing the original attrs of self
-                obj.attrs = obj.attrs.copy()
-                obj.attrs["offset"] = start
-            else:
-                obj = self.fetch_regions([(start, end)])
-                # attrs will be copied in fetch_regions
+        if self.continuous:
+            obj = self.sel(pos=slice(start - self.offset, end - self.offset))
+            # copy attrs to avoid changing the original attrs of self
+            obj.attrs = obj.attrs.copy()
+            obj.attrs["offset"] = start
         else:
-            raise ValueError("start and end cannot be both None.")
-
+            obj = self.fetch_regions([(start, end)])
+            # attrs will be copied in fetch_regions
         return obj
 
     def fetch_regions(self, regions):
