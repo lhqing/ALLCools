@@ -132,7 +132,8 @@ class BaseDSChrom(xr.Dataset):
 
     @property
     def offset(self):
-        return self.attrs.get("offset", 0)
+        value = self.attrs.get("offset", 0)
+        return int(value)
 
     @offset.setter
     def offset(self, value):
@@ -438,15 +439,21 @@ class BaseDSChrom(xr.Dataset):
         if regions is not None:
             if regions.shape[1] == 3:
                 _chrom_sel = regions.iloc[:, 0] == self.chrom
-                regions = regions.iloc[_chrom_sel, 1:].copy()
+                regions = (
+                    regions.loc[
+                        _chrom_sel,
+                    ]
+                    .iloc[:, 1:]
+                    .copy()
+                )
             assert regions.shape[1] == 2
             assert regions.shape[0] > 0, "regions must have at least one row."
 
         # get positions
         pos_idx = self.cb.get_mc_pos(mc_type, offset=self.offset)
         if regions is not None:
-            region_pos_idx = _regions_to_pos(regions=regions)
-            pos_idx = pos_idx.intersection(region_pos_idx)
+            region_pos_idx = _regions_to_pos(regions=np.array(regions))
+            pos_idx = pos_idx.intersection(region_pos_idx).astype(int)
 
         base_ds = self.fetch_positions(positions=pos_idx)
 
