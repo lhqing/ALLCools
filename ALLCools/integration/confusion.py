@@ -97,7 +97,9 @@ def calculate_diagonal_score(confusion_matrix, col_group, row_group):
     return ratio
 
 
-def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, seed=0):
+def confusion_matrix_clustering(
+    confusion_matrix, min_value=0.1, max_value=0.9, partition_type=None, resolution=1, seed=0
+):
     """
     Given a confusion matrix, bi-clustering the matrix using Leiden Algorithm.
 
@@ -109,12 +111,26 @@ def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, se
         minimum value to be used as an edge weight.
     max_value :
         maximum value to be used as an edge weight. Larger value will be capped to this value.
+    partition_type :
+        The type of partition to be used. See leidenalg documentation for details.
+        If None, use the :class:`~leidenalg.RBConfigurationVertexPartition` partition type.
+    resolution :
+        The resolution parameter to be used. See leidenalg documentation for details.
     seed :
         random seed for Leiden Algorithm.
 
     Returns
     -------
-    query_group, ref_group, ordered confusion_matrix
+    query_group:
+        A series of query cluster integration group.
+    reference_group:
+        A series of reference cluster integration group.
+    confusion_matrix：
+        A confusion matrix ordered by the integration group.
+    g:
+        The Graph object used for leiden clustering and determine integration groups.
+    modularity_score:
+        The modularity score of the graph partition by integration groups.
     """
     # make sure confusion matrix index and columns are unique
     try:
@@ -142,8 +158,12 @@ def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, se
         # convert to igraph to run leiden
     h = ig.Graph.from_networkx(g)
 
+    if partition_type is None:
+        partition_type = la.RBConfigurationVertexPartition
+
     # leiden clustering
-    partition = la.find_partition(h, la.ModularityVertexPartition, weights="weight", seed=seed)
+    partition = la.find_partition(h, partition_type, weights="weight", seed=seed, resolution_parameter=resolution)
+
     # store output into adata.obs
     groups = np.array(partition.membership)
     idx_to_group = {int(node): g for node, g in zip(g.nodes, groups)}
@@ -159,6 +179,13 @@ def confusion_matrix_clustering(confusion_matrix, min_value=0, max_value=0.9, se
     confusion_matrix.columns = confusion_matrix.columns.map({v: k for k, v in ref_idx_map.items()})
     confusion_matrix = confusion_matrix.loc[query_group.sort_values().index, ref_group.sort_values().index].copy()
 
-    diag_score = calculate_diagonal_score(confusion_matrix, col_group=ref_group, row_group=query_group)
+    # calculate the graph modularity after partition
+    from collections import defaultdict
 
-    return query_group, ref_group, confusion_matrix, diag_score
+    from networkx.algorithms.community import modularity
+
+    group_nodes = defaultdict(set)
+    for group, node in zip(groups, g.nodes):
+        group_nodes[group].add(node)
+    modularity_score = modularity(g, group_nodes.values())
+    return query_group, ref_group, confusion_matrix, g, modularity_score
