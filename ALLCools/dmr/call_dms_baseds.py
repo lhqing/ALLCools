@@ -85,11 +85,13 @@ def call_dms_worker(
         base_ds.coords["group"] = groups
 
     # select CpG sites
-    cg_base_ds = base_ds.select_mc_type(mcg_pattern)
-
-    if merge_strand:
-        # merge pos and neg strand
-        cg_base_ds = _merge_pos_neg_cpg(cg_base_ds)
+    if mcg_pattern is not None:
+        cg_base_ds = base_ds.select_mc_type(mcg_pattern)
+        if merge_strand:
+            # merge pos and neg strand
+            cg_base_ds = _merge_pos_neg_cpg(cg_base_ds)
+    else:
+        cg_base_ds = base_ds
 
     if groups is not None:
         # group by group and sum base counts

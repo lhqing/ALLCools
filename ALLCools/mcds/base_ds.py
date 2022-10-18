@@ -538,6 +538,7 @@ class BaseDSChrom(xr.Dataset):
             If not, the result will be returned.
         mcg_pattern :
             Pattern of the methylated cytosine, default is "CGN".
+            If None, use all positions in the BaseDS.
         n_permute :
             Number of permutation to perform.
         alpha :
