@@ -680,7 +680,7 @@ class SeuratIntegration:
             parallel_batch_queries=True,
             n_jobs=self.n_jobs,
         )
-        kweight = min(kweight, reduce_qry.shape[0])
+        kweight = min(kweight, anchor.shape[0])
         G, D = index.query(reduce_qry, k=kweight)
 
         print("Normalize graph")
