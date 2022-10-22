@@ -502,8 +502,8 @@ class SeuratIntegration:
         key_anchor="X",
         dim_red="pca",
         svd_algorithm="randomized",
-        scale1=False,
-        scale2=False,
+        scale1=True,
+        scale2=True,
         scale_list=None,
         k_filter=None,
         n_features=200,
@@ -671,7 +671,7 @@ class SeuratIntegration:
         else:
             reduce_qry = data_qry
 
-        print("Find nearest anchors")
+        print("Find nearest anchors", end=". ")
         index = pynndescent.NNDescent(
             reduce_qry[anchor[:, 1]],
             metric="euclidean",
@@ -680,7 +680,8 @@ class SeuratIntegration:
             parallel_batch_queries=True,
             n_jobs=self.n_jobs,
         )
-        kweight = min(kweight, anchor.shape[0])
+        kweight = min(kweight, anchor.shape[0] - 1)
+        print("k_weight: ", kweight, end="\n")
         G, D = index.query(reduce_qry, k=kweight)
 
         print("Normalize graph")

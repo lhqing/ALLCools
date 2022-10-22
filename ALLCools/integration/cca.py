@@ -323,7 +323,7 @@ class SVD:
     def __init__(
         self,
         n_components=100,
-        algorithm="arpack",
+        algorithm="randomized",
         random_state=0,
     ):
         self.model = TruncatedSVD(n_components=n_components, algorithm=algorithm, random_state=random_state)
