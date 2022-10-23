@@ -640,7 +640,7 @@ class SeuratIntegration:
         return
 
     def find_nearest_anchor(
-        self, data, data_qry, ref, qry, key_correct="X_pca", npc=30, kweight=100, sd=1, random_state=0
+        self, data, data_qry, ref, qry, key_correct="X_pca", npc=30, k_weight=100, sd=1, random_state=0
     ):
         """Find the nearest anchors for each cell in data."""
         print("Initialize")
@@ -675,14 +675,14 @@ class SeuratIntegration:
         index = pynndescent.NNDescent(
             reduce_qry[anchor[:, 1]],
             metric="euclidean",
-            n_neighbors=kweight,
+            n_neighbors=k_weight,
             random_state=random_state,
             parallel_batch_queries=True,
             n_jobs=self.n_jobs,
         )
-        kweight = min(kweight, anchor.shape[0] - 1)
-        print("k_weight: ", kweight, end="\n")
-        G, D = index.query(reduce_qry, k=kweight)
+        k_weight = min(k_weight, anchor.shape[0] - 2)
+        print("k_weight: ", k_weight, end="\n")
+        G, D = index.query(reduce_qry, k=k_weight)
 
         print("Normalize graph")
         cell_filter = D[:, -1] == 0
@@ -716,7 +716,7 @@ class SeuratIntegration:
             ref=ref,
             qry=qry,
             npc=npc,
-            kweight=k_weight,
+            k_weight=k_weight,
             sd=sd,
             random_state=random_state,
         )
@@ -783,7 +783,7 @@ class SeuratIntegration:
         categorical_key=None,
         continuous_key=None,
         key_dist="X_pca",
-        kweight=100,
+        k_weight=100,
         npc=30,
         sd=1,
         chunk_size=50000,
@@ -801,7 +801,7 @@ class SeuratIntegration:
             ref=ref,
             qry=qry,
             npc=npc,
-            kweight=kweight,
+            k_weight=k_weight,
             key_correct=key_dist,
             sd=sd,
             random_state=random_state,
