@@ -18,43 +18,6 @@ from .cca import cca, lsi_cca
 CPU_COUNT = multiprocessing.cpu_count()
 
 
-def top_features_idx(data, n_features):
-    """
-    Select top features with the highest importance in CCs.
-
-    Parameters
-    ----------
-    data
-        data.shape = (n_cc, total_features)
-    n_features
-        number of features to select
-
-    Returns
-    -------
-    features_idx : np.array
-    """
-    # data.shape = (n_cc, total_features)
-    n_cc = data.shape[0]
-    n_features_per_dim = n_features * 10 // n_cc
-    sample_range = np.arange(n_cc)[:, None]
-
-    # get idx of n_features_per_dim features with the highest absolute loadings
-    data = np.abs(data)
-    idx = np.argpartition(-data, n_features_per_dim, axis=1)[:, :n_features_per_dim]
-    # idx.shape = (n_cc, n_features_per_dim)
-
-    # make sure the order of first n_features_per_dim is ordered by loadings
-    idx = idx[sample_range, np.argsort(-data[sample_range, idx], axis=1)]
-
-    for i in range(n_features // n_cc + 1, n_features_per_dim):
-        features_idx = np.unique(idx[:, :i].flatten())
-        if len(features_idx) > n_features:
-            return features_idx
-    else:
-        features_idx = np.unique(idx[:, :n_features_per_dim].flatten())
-        return features_idx
-
-
 def find_neighbor(cc1, cc2, k, random_state=0, n_jobs=-1):
     """
     Find all four way of neighbors for two datasets.
@@ -680,7 +643,8 @@ class SeuratIntegration:
             parallel_batch_queries=True,
             n_jobs=self.n_jobs,
         )
-        k_weight = min(k_weight, anchor.shape[0] - 2)
+        k_weight = min(k_weight, anchor.shape[0] - 5)
+        k_weight = max(5, k_weight)
         print("k_weight: ", k_weight, end="\n")
         G, D = index.query(reduce_qry, k=k_weight)
 

@@ -25,6 +25,8 @@ def top_features_idx(data, n_features):
     # data.shape = (n_cc, total_features)
     n_cc = data.shape[0]
     n_features_per_dim = n_features * 10 // n_cc
+    n_features_per_dim = min(n_features_per_dim, data.shape[1] - 1)
+
     sample_range = np.arange(n_cc)[:, None]
 
     # get idx of n_features_per_dim features with the highest absolute loadings
