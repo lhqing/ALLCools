@@ -79,7 +79,7 @@ def call_dms_worker(
         use_sample = ds_sample_id.isin(groups.index)
         if use_sample.sum() != use_sample.size:
             # noinspection PyUnresolvedReferences
-            base_ds = base_ds.sel(sample_id=use_sample.values)
+            base_ds = base_ds.sel(sample_id=use_sample)
 
         # add group info
         base_ds.coords["group"] = groups
