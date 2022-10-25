@@ -202,11 +202,14 @@ class BaseDSChrom(xr.Dataset):
 
     def _fetch_positions(self, positions):
         """Fetch positions only, no prefetch."""
-        positions = np.sort(positions).astype("uint32")
+        if positions.size == 0:
+            obj = self.isel(pos=[])
+        else:
+            positions = np.sort(positions).astype("uint32")
 
-        # always apply offset to positions
-        # if continuous is False, offset will be 0, so no effect
-        obj = self.sel(pos=positions - self.offset)
+            # always apply offset to positions
+            # if continuous is False, offset will be 0, so no effect
+            obj = self.sel(pos=positions - self.offset)
 
         # copy attrs to avoid changing the original attrs of self
         obj.attrs = obj.attrs.copy()
@@ -229,7 +232,7 @@ class BaseDSChrom(xr.Dataset):
         -------
         BaseDSChrom
         """
-        if self.continuous:
+        if self.continuous and len(positions) != 0:
             # if obj is continuous, pre-fetch the min max pos to speed up
             pos_min = min(positions)
             pos_max = max(positions) + 1

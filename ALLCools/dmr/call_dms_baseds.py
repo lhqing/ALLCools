@@ -149,20 +149,23 @@ def call_dms_worker(
 
     dms_ds.coords["p-values"] = p_values
 
-    if estimate_p:
-        # FDR correction, only valid for estimate_p
-        from statsmodels.stats.multitest import multipletests
+    n_dms = dms_ds.get_index("pos").size
 
-        _, q, *_ = multipletests(p_values)
-        q = pd.Series(q, index=p_values.index, name="q-values").astype("float32")
-        dms_ds.coords["q-values"] = q
+    if n_dms > 0:
+        if estimate_p:
+            # FDR correction, only valid for estimate_p
+            from statsmodels.stats.multitest import multipletests
 
-    # filter by p-value
-    if filter_sig:
-        if "q-values" in dms_ds.coords:
-            dms_ds = dms_ds.sel(pos=dms_ds.coords["q-values"] <= alpha)
-        else:
-            dms_ds = dms_ds.sel(pos=dms_ds["p-values"] <= alpha)
+            _, q, *_ = multipletests(p_values)
+            q = pd.Series(q, index=p_values.index, name="q-values").astype("float32")
+            dms_ds.coords["q-values"] = q
+
+        # filter by p-value
+        if filter_sig:
+            if "q-values" in dms_ds.coords:
+                dms_ds = dms_ds.sel(pos=dms_ds.coords["q-values"] <= alpha)
+            else:
+                dms_ds = dms_ds.sel(pos=dms_ds["p-values"] <= alpha)
 
     if output_path is not None:
         dms_ds.to_zarr(output_path, **output_kwargs)
