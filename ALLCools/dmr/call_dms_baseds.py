@@ -27,7 +27,14 @@ def _merge_pos_neg_cpg(cg_ds):
     # modify the pos by -1 so the neg_ds and pos_ds has the same pos,
     # and can be sum together
     neg_ds["pos"] = neg_ds["pos"].to_pandas() - 1
-    cg_ds = pos_ds + neg_ds
+
+    # sum the pos and neg
+    # union the pos and neg index, otherwise if there is only one strand occur in the base_ds,
+    # the other strand will be dropped by sum (xarray take the union of index)
+    pos_index = pos_ds.get_index("pos")
+    neg_index = neg_ds.get_index("pos")
+    all_positions = pos_index.union(neg_index)
+    cg_ds = pos_ds.reindex(pos=all_positions, fill_value=0) + neg_ds.reindex(pos=all_positions, fill_value=0)
     return cg_ds
 
 
