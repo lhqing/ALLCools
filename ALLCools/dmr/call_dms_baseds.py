@@ -30,7 +30,7 @@ def _merge_pos_neg_cpg(cg_ds):
 
     # sum the pos and neg
     # union the pos and neg index, otherwise if there is only one strand occur in the base_ds,
-    # the other strand will be dropped by sum (xarray take the union of index)
+    # the other strand will be dropped by sum (xarray take the intersection of index)
     pos_index = pos_ds.get_index("pos")
     neg_index = neg_ds.get_index("pos")
     all_positions = pos_index.union(neg_index)
