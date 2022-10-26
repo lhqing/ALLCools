@@ -163,7 +163,7 @@ def call_dms_worker(
             # FDR correction, only valid for estimate_p
             from statsmodels.stats.multitest import multipletests
 
-            _, q, *_ = multipletests(p_values)
+            _, q, *_ = multipletests(p_values, method="fdr_bh")
             q = pd.Series(q, index=p_values.index, name="q-values").astype("float32")
             dms_ds.coords["q-values"] = q
 
