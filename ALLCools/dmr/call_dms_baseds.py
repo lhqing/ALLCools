@@ -173,6 +173,9 @@ def call_dms_worker(
                 dms_ds = dms_ds.sel(pos=dms_ds.coords["q-values"] <= alpha)
             else:
                 dms_ds = dms_ds.sel(pos=dms_ds["p-values"] <= alpha)
+    else:
+        if estimate_p:
+            dms_ds.coords["q-values"] = []
 
     if output_path is not None:
         dms_ds.to_zarr(output_path, **output_kwargs)
