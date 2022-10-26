@@ -309,6 +309,9 @@ class SeuratIntegration:
         """Pairwise anchor between two datasets."""
         adata1 = self.adata_dict[i]
         adata2 = self.adata_dict[j]
+
+        min_sample = min(adata1.shape[0], adata2.shape[0])
+
         if i_sel is not None:
             adata1 = adata1[i_sel, :]
         if j_sel is not None:
@@ -357,8 +360,7 @@ class SeuratIntegration:
 
             # 4. find MNN of U and V to find anchors
             print("Find Anchors")
-            _k = max(i for i in [k_anchor, k_local, k_score, 50] if i is not None)
-            _k = min(_k, min(U.shape[0], V.shape[0]) - 1)
+            _k = max(i for i in [k_anchor, k_local, k_score, min_sample - 2] if i is not None)
             G11, G12, G21, G22, raw_anchors = self._calculate_mutual_knn_and_raw_anchors(
                 i=i, j=j, U=U, V=V, k=_k, k_anchor=k_anchor
             )
