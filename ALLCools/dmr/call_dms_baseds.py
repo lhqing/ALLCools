@@ -56,6 +56,23 @@ def _core_dms_function(count_table, max_row_count, max_total_count, n_permute, m
     return p_value, residual
 
 
+def add_groups_to_base_ds(base_ds, groups):
+    """Add groups to base_ds.coords"""
+    if isinstance(groups, (str, pathlib.Path)):
+        groups = pd.read_csv(groups, header=None, index_col=0, names=["sample_id", "group"]).squeeze()
+
+    # select samples
+    ds_sample_id = base_ds.get_index("sample_id")
+    use_sample = ds_sample_id.isin(groups.index)
+    if use_sample.sum() != use_sample.size:
+        # noinspection PyUnresolvedReferences
+        base_ds = base_ds.sel(sample_id=use_sample)
+
+    # add group info
+    base_ds.coords["group"] = groups
+    return base_ds
+
+
 def call_dms_worker(
     groups,
     base_ds,
@@ -78,18 +95,7 @@ def call_dms_worker(
     See call_dms_from_base_ds for parameter description.
     """
     if groups is not None:
-        if isinstance(groups, (str, pathlib.Path)):
-            groups = pd.read_csv(groups, header=None, index_col=0, names=["sample_id", "group"]).squeeze()
-
-        # select samples
-        ds_sample_id = base_ds.get_index("sample_id")
-        use_sample = ds_sample_id.isin(groups.index)
-        if use_sample.sum() != use_sample.size:
-            # noinspection PyUnresolvedReferences
-            base_ds = base_ds.sel(sample_id=use_sample)
-
-        # add group info
-        base_ds.coords["group"] = groups
+        base_ds = add_groups_to_base_ds(base_ds, groups)
 
     # select CpG sites
     if mcg_pattern is not None:

@@ -36,6 +36,7 @@ class DMSAggregate:
         frac_delta_quantile=0.05,
         max_dist=250,
         corr_cutoff=0.3,
+        drop_additional_samples=False,
     ):
         self.base_ds = base_ds
         self.cell_groups = cell_groups
@@ -53,12 +54,18 @@ class DMSAggregate:
         self.frac_delta_quantile = frac_delta_quantile
         self.max_dist = max_dist
         self.corr_cutoff = corr_cutoff
-
+        self.drop_additional_samples = drop_additional_samples
         self._all_cpgs = None
         return
 
     def _get_all_cpg(self):
+        if self.drop_additional_samples:
+            use_samples = pd.Series(self.cell_groups).index
+            sample_index = self.base_ds.get_index(self.sample_dim)
+            self.base_ds = self.base_ds.sel({self.sample_dim: sample_index.isin(use_samples)})
+
         all_cpgs = self.base_ds.fetch(self.chrom, self.start, self.end).select_mc_type(self.mcg_pattern)
+
         all_cpgs.coords["group"] = all_cpgs[self.sample_dim].to_pandas().map(self.cell_groups)
         all_cpgs["group_data"] = (
             all_cpgs[self.count_da].groupby("group").sum(dim=self.sample_dim).load(scheduler="sync")
