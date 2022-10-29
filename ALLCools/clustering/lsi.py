@@ -11,7 +11,7 @@ def tf_idf(data, scale_factor=100000, idf=None):
     sparse_input = issparse(data)
 
     if idf is None:
-        # add small value in case downsample creates empty feature
+        # add small value in case down sample creates empty feature
         _col_sum = data.sum(axis=0)
         if sparse_input:
             col_sum = _col_sum.A1.astype(np.float32) + 0.00001

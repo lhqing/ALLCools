@@ -204,7 +204,7 @@ def lsi_cca(
 ):
     np.random.seed(random_state)
 
-    # downsample data1 and data2 to run tf_idf and CCA
+    # down sample data1 and data2 to run tf_idf and CCA
     if max_cc_cell < data1.shape[0]:
         sel1 = np.sort(np.random.choice(np.arange(data1.shape[0]), max_cc_cell, False))
         tf_data1 = data1[sel1, :]
@@ -231,7 +231,7 @@ def lsi_cca(
     U = model.fit_transform(tf)
 
     # select non-zero singular values
-    # transform the whole dataset
+    # transform the whole dataset 2 to get V
     sel_dim = model.singular_values_ != 0
     nnz_singular_values = model.singular_values_[sel_dim]
     nnz_components = model.components_[sel_dim]
@@ -239,6 +239,8 @@ def lsi_cca(
         V = nnz_components.T
     else:
         # use the safe_sparse_dot to avoid memory error
+        # safe_sparse_dot take both sparse and dense matrix,
+        # for dense matrix, it just uses normal numpy dot product
         V = np.concatenate(
             [
                 safe_sparse_dot(
@@ -256,6 +258,8 @@ def lsi_cca(
             axis=0,
         )
         V = V / np.square(nnz_singular_values)
+
+    # transform the whole dataset 1 to get U
     if max_cc_cell > data1.shape[0]:
         U = U[:, sel_dim] / nnz_singular_values
     else:
