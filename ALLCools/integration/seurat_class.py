@@ -359,9 +359,9 @@ class SeuratIntegration:
             V = normalize(V, axis=1)
 
             # 4. find MNN of U and V to find anchors
-            print("Find Anchors")
-            _k = max(i for i in [k_anchor, k_local, k_score] if i is not None)
+            _k = max(_temp for _temp in [k_anchor, k_local, k_score] if _temp is not None)
             _k = min(min_sample - 2, _k)
+            print(f"Find Anchors using k={_k}")
             G11, G12, G21, G22, raw_anchors = self._calculate_mutual_knn_and_raw_anchors(
                 i=i, j=j, U=U, V=V, k=_k, k_anchor=k_anchor
             )
