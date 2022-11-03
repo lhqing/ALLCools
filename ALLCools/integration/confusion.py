@@ -7,6 +7,20 @@ import numpy as np
 import pandas as pd
 
 
+def sdi(data):
+    """
+    Calculate the Shannon Diversity Index (SDI) for a categorical data series.
+
+    Higher SDI indicates higher diversity.
+    """
+    if len(data) == 0:
+        return 0
+    counts = pd.Series(data).value_counts()
+    ratio = counts / counts.sum()
+    score = -(np.log(ratio) * ratio).sum()
+    return score
+
+
 def calculate_direct_confusion(*args, **kwargs):
     warn("This function is deprecated. Call calculate_overlap_score instead", DeprecationWarning)
     return calculate_overlap_score(*args, **kwargs)
