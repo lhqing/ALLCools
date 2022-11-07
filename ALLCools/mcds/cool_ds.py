@@ -11,7 +11,7 @@ from scipy import ndimage
 class CoolDS:
     def __init__(self, cool_ds_paths, chrom_sizes_path, sample_weights: pd.Series, sample_dim="sample_id"):
         """
-        Multiple chromatin conformation matrix profiles
+        Multiple chromatin conformation matrix profiles.
 
         Parameters
         ----------
