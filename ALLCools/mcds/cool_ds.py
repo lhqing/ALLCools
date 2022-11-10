@@ -246,3 +246,110 @@ class CoolDSChrom(xr.Dataset):
                 top = middle
             data = data[bottom:top].copy()
         return data
+
+    def get_cooler(
+        self, samples, value_type, output_prefix, dtype="float32", scale_factor=1, zoomify=True, zoomify_cpu=1
+    ):
+        """
+        Get cooler from cool ds
+
+        Parameters
+        ----------
+        samples :
+            Samples to fetch, if multiple samples are provided, the matrix is summed with sample weights
+        value_type :
+            Value type to fetch
+        output_prefix :
+            Output prefix, suffix will be ".cool" if zoomify is False, or ".mcool" if zoomify is True
+        dtype :
+            Data type of the returned matrix
+        scale_factor :
+            Scale factor to apply to matrix
+        zoomify :
+            Zoomify the matrix
+        zoomify_cpu :
+            Number of CPUs to use for zoomify
+
+        """
+        import subprocess
+
+        from cooler import binnify, create_cooler
+        from scipy.sparse import coo_matrix
+
+        def _get_chrom_offsets(bins):
+            _co = {chrom: bins[bins["chrom"] == chrom].index[0] for chrom in bins["chrom"].cat.categories}
+            return _co
+
+        def _chrom_iterator(
+            _samples,
+            _value_type,
+            _chrom_offset,
+            da_name="real",
+            add_trans=False,
+        ):
+            """Iterate through the raw matrices and chromosomes of cells."""
+            chrom_sizes = self.chrom_sizes
+
+            def _iter_1d(_chrom1, _chrom2):
+                print(_chrom1, _chrom2)
+                chrom_ds = self.fetch(chrom=_chrom1, chrom2=_chrom2)
+
+                # get chrom 2D np.array
+                matrix = chrom_ds.matrix(
+                    samples=_samples,
+                    value_type=_value_type,
+                    scale_factor=scale_factor,
+                    fill_lower_triangle=False,
+                    log1p=False,
+                    da_name=da_name,
+                    rotate=False,
+                    rotate_cval=np.NaN,
+                    rotate_height_bp=5000000,
+                    dtype=dtype,
+                )
+
+                # to coo then to pixel
+                matrix = coo_matrix(matrix)
+                _pixel_df = pd.DataFrame({"bin1_id": matrix.row, "bin2_id": matrix.col, "count": matrix.data})
+
+                # add chrom offset
+                if _chrom2 is None:
+                    # both row and col are chrom1
+                    _pixel_df.iloc[:, :2] += _chrom_offset[_chrom1]
+                else:
+                    # row is chrom1, add chrom1 offset
+                    _pixel_df.iloc[:, 0] += _chrom_offset[_chrom1]
+                    # col is chrom2, add chrom2 offset
+                    _pixel_df.iloc[:, 1] += _chrom_offset[_chrom2]
+                return _pixel_df
+
+            if add_trans:
+                raise NotImplementedError
+            else:
+                for chrom in chrom_sizes.keys():
+                    pixel_df = _iter_1d(chrom, None)
+                    yield pixel_df
+
+        bins_df = binnify(self.chrom_sizes, binsize=self.bin_size)
+        chrom_offset = _get_chrom_offsets(bins_df)
+
+        create_cooler(
+            cool_uri=f"{output_prefix}.cool",
+            bins=bins_df,
+            pixels=_chrom_iterator(
+                _samples=samples,
+                _value_type=value_type,
+                _chrom_offset=chrom_offset,
+                da_name="real",
+                add_trans=False,
+            ),
+            dtypes={"count": dtype},
+            ordered=True,
+        )
+
+        if zoomify:
+            subprocess.run(["cooler", "zoomify", f"{output_prefix}.cool", "-p", str(zoomify_cpu)], check=True)
+            # delete the original cooler file
+            subprocess.run(["rm", f"{output_prefix}.cool"], check=True)
+
+        return
