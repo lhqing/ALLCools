@@ -141,112 +141,6 @@ class CoolDS:
             use_ds, sample_dim=self.sample_dim, sample_weights=self.sample_weights, bin_size=self.bin_size
         )
 
-
-class CoolDSChrom(xr.Dataset):
-    __slots__ = ()
-
-    def __init__(self, dataset, sample_dim, sample_weights, bin_size):
-        super().__init__(data_vars=dataset.data_vars, coords=dataset.coords, attrs=dataset.attrs)
-        self.attrs["sample_dim"] = sample_dim
-
-        if bin_size is not None:
-            self.attrs["bin_size"] = bin_size
-
-        sample_weights.index.name = sample_dim
-        self.coords["sample_weights"] = sample_weights
-        return
-
-    @property
-    def bin_size(self):
-        return self.attrs["bin_size"]
-
-    @property
-    def sample_dim(self):
-        return self.attrs["sample_dim"]
-
-    @property
-    def sample_weights(self):
-        if "sample_weights" in self.coords:
-            return self.coords["sample_weights"]
-        else:
-            raise KeyError("sample_weights not found in coords")
-
-    def matrix(
-        self,
-        samples,
-        value_type,
-        scale_factor=10e6,
-        fill_lower_triangle=False,
-        log1p=True,
-        da_name="real",
-        rotate=False,
-        rotate_cval=np.NaN,
-        rotate_height_bp=5000000,
-        dtype="float32",
-    ):
-        """
-        Fetch matrix from cool ds
-
-        Parameters
-        ----------
-        samples
-            Samples to fetch, if multiple samples are provided, the matrix is summed with sample weights
-        value_type
-            Value type to fetch
-        scale_factor
-            Scale factor to apply to matrix
-        fill_lower_triangle
-            Fill matrix lower triangle with upper triangle
-        log1p
-            Apply log1p to matrix
-        da_name
-            DataArray name
-        rotate
-            Rotate matrix by 45 degrees to make triangle plot
-        rotate_cval
-            Rotate matrix fill value
-        rotate_height_bp
-            Rotate matrix height in base pairs
-        dtype
-            Data type of the returned matrix
-
-        Returns
-        -------
-        np.ndarray
-        """
-        sample_da = self.sel({self.sample_dim: samples, f"{da_name}_value_type": value_type})[da_name]
-        if not isinstance(samples, str):
-            # sum sample_dim if multiple samples selected
-            sample_da = (sample_da * self.sample_weights).sum(dim=self.sample_dim) / (
-                self.sample_weights.sum() / scale_factor
-            )
-
-        data = sample_da.values.astype(dtype)
-
-        if fill_lower_triangle:
-            # complete the lower triangle
-            data = data + data.T - np.diag(data.diagonal())
-
-        if log1p:
-            data = np.log1p(data)
-
-        if rotate:
-            # to make triangle plot, rotate the matrix by 45 degrees
-            data = ndimage.rotate(data, 45, order=0, reshape=True, prefilter=False, cval=rotate_cval)
-
-            middle = data.shape[0] // 2
-            height = (rotate_height_bp // self.bin_size) / np.sqrt(2) + 4
-            height = int(height)
-            height = min(height, data.shape[0] // 2)
-
-            bottom = middle - height
-            if fill_lower_triangle:
-                top = middle + height
-            else:
-                top = middle
-            data = data[bottom:top].copy()
-        return data
-
     def get_cooler(
         self, samples, value_type, output_prefix, dtype="float32", scale_factor=1, zoomify=True, zoomify_cpu=1
     ):
@@ -353,3 +247,109 @@ class CoolDSChrom(xr.Dataset):
             subprocess.run(["rm", f"{output_prefix}.cool"], check=True)
 
         return
+
+
+class CoolDSChrom(xr.Dataset):
+    __slots__ = ()
+
+    def __init__(self, dataset, sample_dim, sample_weights, bin_size):
+        super().__init__(data_vars=dataset.data_vars, coords=dataset.coords, attrs=dataset.attrs)
+        self.attrs["sample_dim"] = sample_dim
+
+        if bin_size is not None:
+            self.attrs["bin_size"] = bin_size
+
+        sample_weights.index.name = sample_dim
+        self.coords["sample_weights"] = sample_weights
+        return
+
+    @property
+    def bin_size(self):
+        return self.attrs["bin_size"]
+
+    @property
+    def sample_dim(self):
+        return self.attrs["sample_dim"]
+
+    @property
+    def sample_weights(self):
+        if "sample_weights" in self.coords:
+            return self.coords["sample_weights"]
+        else:
+            raise KeyError("sample_weights not found in coords")
+
+    def matrix(
+        self,
+        samples,
+        value_type,
+        scale_factor=10e6,
+        fill_lower_triangle=False,
+        log1p=True,
+        da_name="real",
+        rotate=False,
+        rotate_cval=np.NaN,
+        rotate_height_bp=5000000,
+        dtype="float32",
+    ):
+        """
+        Fetch matrix from cool ds
+
+        Parameters
+        ----------
+        samples
+            Samples to fetch, if multiple samples are provided, the matrix is summed with sample weights
+        value_type
+            Value type to fetch
+        scale_factor
+            Scale factor to apply to matrix
+        fill_lower_triangle
+            Fill matrix lower triangle with upper triangle
+        log1p
+            Apply log1p to matrix
+        da_name
+            DataArray name
+        rotate
+            Rotate matrix by 45 degrees to make triangle plot
+        rotate_cval
+            Rotate matrix fill value
+        rotate_height_bp
+            Rotate matrix height in base pairs
+        dtype
+            Data type of the returned matrix
+
+        Returns
+        -------
+        np.ndarray
+        """
+        sample_da = self.sel({self.sample_dim: samples, f"{da_name}_value_type": value_type})[da_name]
+        if not isinstance(samples, str):
+            # sum sample_dim if multiple samples selected
+            sample_da = (sample_da * self.sample_weights).sum(dim=self.sample_dim) / (
+                self.sample_weights.sum() / scale_factor
+            )
+
+        data = sample_da.values.astype(dtype)
+
+        if fill_lower_triangle:
+            # complete the lower triangle
+            data = data + data.T - np.diag(data.diagonal())
+
+        if log1p:
+            data = np.log1p(data)
+
+        if rotate:
+            # to make triangle plot, rotate the matrix by 45 degrees
+            data = ndimage.rotate(data, 45, order=0, reshape=True, prefilter=False, cval=rotate_cval)
+
+            middle = data.shape[0] // 2
+            height = (rotate_height_bp // self.bin_size) / np.sqrt(2) + 4
+            height = int(height)
+            height = min(height, data.shape[0] // 2)
+
+            bottom = middle - height
+            if fill_lower_triangle:
+                top = middle + height
+            else:
+                top = middle
+            data = data[bottom:top].copy()
+        return data
