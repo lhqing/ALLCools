@@ -4,8 +4,13 @@ import pathlib
 import numpy as np
 import pandas as pd
 import xarray as xr
-from cooler import read_chromsizes
+from cooler import binnify, read_chromsizes
 from scipy import ndimage
+
+
+def _get_chrom_offsets(bins):
+    _co = {chrom: bins[bins["chrom"] == chrom].index[0] for chrom in bins["chrom"].cat.categories}
+    return _co
 
 
 class CoolDS:
@@ -25,9 +30,15 @@ class CoolDS:
             Name of sample dimension
         """
         self.cool_ds_paths = self._prepare_cool_ds_paths(cool_ds_paths)
+
+        # chrom sizes and bins
         self.chrom_sizes_path = chrom_sizes_path
         self.chrom_sizes = read_chromsizes(self.chrom_sizes_path)
         self.bin_size = self._get_bin_size_from_cool_ds()
+        self.bins_df = binnify(self.chrom_sizes, binsize=self.bin_size)
+        self.chrom_offsets = _get_chrom_offsets(self.bins_df)
+
+        # sample weights
         self.sample_weights = sample_weights
         self.sample_dim = sample_dim
         self.sample_weights.index.name = self.sample_dim
@@ -167,12 +178,8 @@ class CoolDS:
         """
         import subprocess
 
-        from cooler import binnify, create_cooler
+        from cooler import create_cooler
         from scipy.sparse import coo_matrix
-
-        def _get_chrom_offsets(bins):
-            _co = {chrom: bins[bins["chrom"] == chrom].index[0] for chrom in bins["chrom"].cat.categories}
-            return _co
 
         def _chrom_iterator(
             _samples,
