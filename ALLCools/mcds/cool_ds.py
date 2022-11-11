@@ -185,7 +185,7 @@ class CoolDS:
             chrom_sizes = self.chrom_sizes
 
             def _iter_1d(_chrom1, _chrom2):
-                print(_chrom1, _chrom2)
+                print(f"Saving {_chrom1} x {_chrom2 if _chrom2 is not None else _chrom1}...")
                 chrom_ds = self.fetch(chrom=_chrom1, chrom2=_chrom2)
 
                 # get chrom 2D np.array
@@ -324,9 +324,8 @@ class CoolDSChrom(xr.Dataset):
         sample_da = self.sel({self.sample_dim: samples, f"{da_name}_value_type": value_type})[da_name]
         if not isinstance(samples, str):
             # sum sample_dim if multiple samples selected
-            sample_da = (sample_da * self.sample_weights).sum(dim=self.sample_dim) / (
-                self.sample_weights.sum() / scale_factor
-            )
+            use_weights = self.sample_weights.sel({self.sample_dim: samples})
+            sample_da = (sample_da * use_weights).sum(dim=self.sample_dim) / use_weights.sum() * scale_factor
 
         data = sample_da.values.astype(dtype)
 
