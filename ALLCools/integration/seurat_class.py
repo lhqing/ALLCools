@@ -636,7 +636,7 @@ class SeuratIntegration:
             model = PCA(n_components=npc, svd_solver="arpack", random_state=random_state)
             reduce_qry = model.fit_transform(data_qry)
         else:
-            reduce_qry = data_qry
+            reduce_qry = data_qry[:, :npc]
 
         print("Find nearest anchors", end=". ")
         index = pynndescent.NNDescent(
