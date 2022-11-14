@@ -5,7 +5,7 @@ import pandas as pd
 from pybedtools import BedTool
 
 
-def remove_black_list_region(adata, black_list_path, f=0.2):
+def remove_black_list_region(adata, black_list_path, region_axis=1, f=0.2):
     """
     Remove regions overlap (bedtools intersect -f {f}) with regions in the black_list_path.
 
@@ -15,12 +15,19 @@ def remove_black_list_region(adata, black_list_path, f=0.2):
         AnnData object
     black_list_path
         Path to the black list bed file
+    region_axis
+        Axis of regions. 0 for adata.obs, 1 for adata.var
     f
         Fraction of overlap when calling bedtools intersect
     """
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        feature_bed_df = adata.var[["chrom", "start", "end"]]
+        if region_axis == 1:
+            feature_bed_df = adata.var[["chrom", "start", "end"]]
+        elif region_axis == 0:
+            feature_bed_df = adata.obs[["chrom", "start", "end"]]
+        else:
+            raise ValueError("region_axis should be 0 or 1.")
         feature_bed = BedTool.from_dataframe(feature_bed_df)
         black_list_bed = BedTool(black_list_path)
         black_feature = feature_bed.intersect(black_list_bed, f=f, wa=True)
