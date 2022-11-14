@@ -39,10 +39,13 @@ def remove_black_list_region(adata, black_list_path, region_axis=1, f=0.2):
                 .loc[black_feature_index][feature_bed_df.index.name]
             )
             print(
-                f"{black_feature_id.size} features removed due to overlapping"
+                f"{black_feature_id.size} regions removed due to overlapping"
                 f" (bedtools intersect -f {f}) with black list regions."
             )
-            adata._inplace_subset_var(~adata.var_names.isin(black_feature_id))
+            if region_axis == 1:
+                adata._inplace_subset_var(~adata.var_names.isin(black_feature_id))
+            else:
+                adata._inplace_subset_obs(~adata.obs_names.isin(black_feature_id))
         except pd.errors.EmptyDataError:
             # no overlap with black list
             pass
