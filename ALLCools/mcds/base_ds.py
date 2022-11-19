@@ -3,6 +3,7 @@ import subprocess
 
 import numpy as np
 import pandas as pd
+import pyBigWig
 import xarray as xr
 from numba import njit
 
@@ -590,12 +591,8 @@ class BaseDSChrom(xr.Dataset):
         )
         return dms_ds
 
-    def dump_sample_bigwig(self, bigwig_path, da_name, sample_dim, sample, value="frac"):
-        import pyBigWig
-
+    def get_sample_mc_values(self, da_name, sample_dim, sample, value):
         da = self[da_name]
-
-        pos = da.get_index("pos")
         mc = da.sel({sample_dim: sample, "count_type": "mc"})
         cov = da.sel({sample_dim: sample, "count_type": "cov"})
         if value == "frac":
@@ -604,6 +601,11 @@ class BaseDSChrom(xr.Dataset):
             values = _mvalue(mc=mc, cov=cov).values
         else:
             raise ValueError(f"Unknown value: {value}")
+        return values
+
+    def dump_sample_bigwig(self, bigwig_path, da_name, sample_dim, sample, value="frac"):
+        pos = self.get_index("pos")
+        values = self.get_sample_mc_values(da_name=da_name, sample_dim=sample_dim, sample=sample, value=value)
 
         # save to bigwig
         bigwig_path = pathlib.Path(bigwig_path).absolute().resolve()
@@ -706,7 +708,7 @@ class BaseDSChrom(xr.Dataset):
 
 
 class BaseDS:
-    def __init__(self, paths, codebook_path=None):
+    def __init__(self, paths, chrom_sizes_path, codebook_path=None):
         """
         A wrapper for one or multiple BaseDS datasets.
 
@@ -714,11 +716,15 @@ class BaseDS:
         ----------
         paths :
             Path to the BaseDS datasets.
+        chrom_sizes_path :
+            Path to the chromosome sizes file.
         codebook_path :
             Path to the codebook file.
         """
         self.paths = self._parse_paths(paths)
         self.codebook_path = codebook_path
+        self.chrom_sizes_path = chrom_sizes_path
+        self.chrom_sizes = pd.read_csv(chrom_sizes_path, sep="\t", header=None, index_col=0).squeeze()
         self.__base_ds_cache = {}
 
     @staticmethod
