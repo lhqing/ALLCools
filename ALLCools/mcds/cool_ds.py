@@ -1,6 +1,7 @@
 import json
 import pathlib
 
+import dask
 import numpy as np
 import pandas as pd
 import xarray as xr
@@ -196,18 +197,19 @@ class CoolDS:
                 chrom_ds = self.fetch(chrom=_chrom1, chrom2=_chrom2)
 
                 # get chrom 2D np.array
-                matrix = chrom_ds.matrix(
-                    samples=_samples,
-                    value_type=_value_type,
-                    scale_factor=scale_factor,
-                    fill_lower_triangle=False,
-                    log1p=False,
-                    da_name=da_name,
-                    rotate=False,
-                    rotate_cval=np.NaN,
-                    rotate_height_bp=5000000,
-                    dtype=dtype,
-                )
+                with dask.config.set(**{"array.slicing.split_large_chunks": False}):
+                    matrix = chrom_ds.matrix(
+                        samples=_samples,
+                        value_type=_value_type,
+                        scale_factor=scale_factor,
+                        fill_lower_triangle=False,
+                        log1p=False,
+                        da_name=da_name,
+                        rotate=False,
+                        rotate_cval=np.NaN,
+                        rotate_height_bp=5000000,
+                        dtype=dtype,
+                    )
 
                 # to coo then to pixel
                 matrix = coo_matrix(matrix)
