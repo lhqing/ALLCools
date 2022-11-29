@@ -454,12 +454,16 @@ class BaseDSChrom(xr.Dataset):
             assert regions.shape[0] > 0, "regions must have at least one row."
 
         # get positions
-        pos_idx = self.cb.get_mc_pos(mc_type, offset=self.offset)
-        if regions is not None:
-            region_pos_idx = _regions_to_pos(regions=np.array(regions))
-            pos_idx = pos_idx.intersection(region_pos_idx).astype(int)
-
-        base_ds = self.fetch_positions(positions=pos_idx)
+        if mc_type is not None:
+            pos_idx = self.cb.get_mc_pos(mc_type, offset=self.offset)
+            if regions is not None:
+                region_pos_idx = _regions_to_pos(regions=np.array(regions))
+                pos_idx = pos_idx.intersection(region_pos_idx).astype(int)
+            base_ds = self.fetch_positions(positions=pos_idx)
+        else:
+            # use all positions in the BaseDS (mc_type selection may have been done)
+            base_ds = self
+            pos_idx = pd.Index([], name="pos")
 
         # prepare regions
         if regions is not None:
@@ -481,8 +485,8 @@ class BaseDSChrom(xr.Dataset):
             for start in bins[:-1]:
                 labels.append(start)
 
-        # border case, no CpG selected
-        if pos_idx.size == 0:
+        if mc_type is not None and len(pos_idx) == 0:
+            # border case, no CpX selected by mc_type
             # create an empty region_ds
             region_ds = base_ds["data"].rename({"pos": "pos_bins"})
             region_ds = region_ds.reindex({"pos_bins": labels}, fill_value=0)
