@@ -463,7 +463,13 @@ class BaseDSChrom(xr.Dataset):
         else:
             # use all positions in the BaseDS (mc_type selection may have been done)
             base_ds = self
-            pos_idx = pd.Index([], name="pos")
+            pos_idx = base_ds.get_index("pos")
+            if regions is not None:
+                region_pos_idx = _regions_to_pos(regions=np.array(regions))
+                pos_idx = pos_idx.intersection(region_pos_idx).astype(int)
+                base_ds = self.fetch_positions(positions=pos_idx)
+                # update pos_idx
+                pos_idx = base_ds.get_index("pos")
 
         # prepare regions
         if regions is not None:
@@ -506,9 +512,9 @@ class BaseDSChrom(xr.Dataset):
                     restore_coord_dims=False,
                 )
                 .sum(dim="pos")
-                .chunk({"pos_bins": region_chunks})
             )
-
+        if region_chunks is not None:
+            region_ds = region_ds.chunk({"pos_bins": region_chunks})
         if region_name is not None:
             region_ds = region_ds.rename({"pos_bins": region_name})
 
