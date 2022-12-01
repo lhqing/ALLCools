@@ -16,7 +16,14 @@ def _get_chrom_offsets(bins):
 
 
 class CoolDS:
-    def __init__(self, cool_ds_paths, chrom_sizes_path, sample_weights: Union[pd.Series, None], sample_dim="sample_id"):
+    def __init__(
+        self,
+        cool_ds_paths,
+        chrom_sizes_path,
+        sample_weights: Union[pd.Series, None] = None,
+        sample_dim="sample_id",
+        bin_size=None,
+    ):
         """
         Multiple chromatin conformation matrix profiles.
 
@@ -30,13 +37,16 @@ class CoolDS:
             A series of sample weights used for sum sample
         sample_dim
             Name of sample dimension
+        bin_size
+            Bin size, if None, will be inferred from cool ds
         """
         self.cool_ds_paths = self._prepare_cool_ds_paths(cool_ds_paths)
 
         # chrom sizes and bins
         self.chrom_sizes_path = chrom_sizes_path
         self.chrom_sizes = read_chromsizes(self.chrom_sizes_path)
-        self.bin_size = self._get_bin_size_from_cool_ds()
+        if bin_size is None:
+            self.bin_size = self._get_bin_size_from_cool_ds()
         self.bins_df = binnify(self.chrom_sizes, binsize=self.bin_size)
         self.chrom_offsets = _get_chrom_offsets(self.bins_df)
 
@@ -53,9 +63,14 @@ class CoolDS:
     def _get_bin_size_from_cool_ds(self):
         _path = self.cool_ds_paths[0]
         _chrom = self.chrom_sizes.index[0]
-        with open(f"{_path}/{_chrom}/.zattrs") as f:
-            attrs = json.load(f)
-        return attrs["cooler_bin_size"]
+        try:
+            with open(f"{_path}/{_chrom}/.zattrs") as f:
+                attrs = json.load(f)
+            bin_size = attrs["cooler_bin_size"]
+            return bin_size
+        except BaseException as e:
+            print("Cannot infer bin size from cool ds")
+            raise e
 
     @staticmethod
     def _prepare_cool_ds_paths(cool_ds_paths):
