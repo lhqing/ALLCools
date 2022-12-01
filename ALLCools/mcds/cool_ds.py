@@ -47,6 +47,8 @@ class CoolDS:
         self.chrom_sizes = read_chromsizes(self.chrom_sizes_path)
         if bin_size is None:
             self.bin_size = self._get_bin_size_from_cool_ds()
+        else:
+            self.bin_size = bin_size
         self.bins_df = binnify(self.chrom_sizes, binsize=self.bin_size)
         self.chrom_offsets = _get_chrom_offsets(self.bins_df)
 
@@ -348,8 +350,17 @@ class CoolDSChrom(xr.Dataset):
         -------
         np.ndarray
         """
-        sample_da = self.sel({self.sample_dim: samples, f"{da_name}_value_type": value_type})[da_name]
-        if not isinstance(samples, str):
+        sel_dict = {}
+        if samples is not None:
+            sel_dict[self.sample_dim] = samples
+        if value_type is not None:
+            sel_dict[f"{da_name}_value_type"] = value_type
+        if len(sel_dict) > 0:
+            sample_da = self.sel(sel_dict)[da_name]
+        else:
+            sample_da = self[da_name]
+
+        if samples is not None and not isinstance(samples, str):
             # sum sample_dim if multiple samples selected
             use_weights = self.sample_weights.sel({self.sample_dim: samples})
             sample_da = (sample_da * use_weights).sum(dim=self.sample_dim) / use_weights.sum() * scale_factor
