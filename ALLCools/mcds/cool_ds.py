@@ -117,6 +117,7 @@ class CoolDS:
                 concat_dim="sample_id",
                 combine="nested",
                 engine="zarr",
+                decode_cf=False,
             )
             self._chrom_ds_cache[(chrom, chrom2)] = chrom_ds
             return chrom_ds
