@@ -1,5 +1,6 @@
 import json
 import pathlib
+from typing import Union
 
 import dask
 import numpy as np
@@ -15,7 +16,7 @@ def _get_chrom_offsets(bins):
 
 
 class CoolDS:
-    def __init__(self, cool_ds_paths, chrom_sizes_path, sample_weights: pd.Series, sample_dim="sample_id"):
+    def __init__(self, cool_ds_paths, chrom_sizes_path, sample_weights: Union[pd.Series, None], sample_dim="sample_id"):
         """
         Multiple chromatin conformation matrix profiles.
 
@@ -25,7 +26,7 @@ class CoolDS:
             List of paths to cool ds or path wildcard
         chrom_sizes_path
             Path to chrom sizes file
-        sample_weights: pd.Series
+        sample_weights: pd.Series, None
             A series of sample weights used for sum sample
         sample_dim
             Name of sample dimension
@@ -40,9 +41,10 @@ class CoolDS:
         self.chrom_offsets = _get_chrom_offsets(self.bins_df)
 
         # sample weights
-        self.sample_weights = sample_weights
         self.sample_dim = sample_dim
-        self.sample_weights.index.name = self.sample_dim
+        self.sample_weights = sample_weights
+        if sample_weights is not None:
+            self.sample_weights.index.name = self.sample_dim
 
         self._chrom_ds_cache = {}
 
@@ -268,8 +270,9 @@ class CoolDSChrom(xr.Dataset):
         if bin_size is not None:
             self.attrs["bin_size"] = bin_size
 
-        sample_weights.index.name = sample_dim
-        self.coords["sample_weights"] = sample_weights
+        if sample_weights is not None:
+            sample_weights.index.name = sample_dim
+            self.coords["sample_weights"] = sample_weights
         return
 
     @property
@@ -317,7 +320,7 @@ class CoolDSChrom(xr.Dataset):
             Apply log1p to matrix
         da_name
             DataArray name
-        rotate
+        rotate: bool
             Rotate matrix by 45 degrees to make triangle plot
         rotate_cval
             Rotate matrix fill value
