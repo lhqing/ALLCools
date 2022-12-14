@@ -13,7 +13,9 @@ from ctxcore.recovery import aucs as calc_aucs
 from ctxcore.recovery import recovery
 
 
-def cistarget_motif_enrichment(rank_df, total_regions, auc_threshold=0.005, nes_threshold=3, rank_threshold=0.05):
+def cistarget_motif_enrichment(
+    rank_df, total_regions, auc_threshold=0.005, nes_threshold=3, rank_threshold=0.05, full_motif_stats=False
+):
     """
     Perform the cistarget motif enrichment analysis by considering normalized motif score rank AUC.
 
@@ -29,6 +31,8 @@ def cistarget_motif_enrichment(rank_df, total_regions, auc_threshold=0.005, nes_
         The normalized enrichment score threshold to determine if a motif is enriched.
     rank_threshold :
         The rank threshold to determine if a motif hit in a region.
+    full_motif_stats :
+        Whether to return the full motif statistics.
 
     Returns
     -------
@@ -73,6 +77,17 @@ def cistarget_motif_enrichment(rank_df, total_regions, auc_threshold=0.005, nes_
             "AUC": aucs[enriched_features_idx],
         },
     )
+    # full motif stats
+    if full_motif_stats:
+        full_stats = pd.DataFrame(
+            index=pd.Index(motifs, name="MotifID"),
+            data={
+                "NES": ness,
+                "AUC": aucs,
+            },
+        )
+    else:
+        full_stats = None
 
     # Recovery analysis (Leading edge analysis)
     rccs, _ = recovery(
@@ -101,4 +116,4 @@ def cistarget_motif_enrichment(rank_df, total_regions, auc_threshold=0.005, nes_
     motif_hit = rank_df.loc[motif_enrichment.index] < motif_enrichment["rank_at_max"].values[:, None]
     # noinspection PyUnresolvedReferences
     motif_enrichment["n_motif_hit"] = motif_hit.sum(axis=1)
-    return motif_enrichment, motif_hit
+    return motif_enrichment, motif_hit, full_stats
