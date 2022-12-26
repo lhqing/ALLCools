@@ -183,6 +183,7 @@ class CoolDS:
         scale_factor=1,
         zoomify=True,
         zoomify_cpu=1,
+        cooler_kwargs=None,
     ):
         """
         Get cooler from cool ds
@@ -205,7 +206,8 @@ class CoolDS:
             Zoomify the matrix
         zoomify_cpu :
             Number of CPUs to use for zoomify
-
+        cooler_kwargs :
+            Additional arguments to pass to create_cooler
         """
         import subprocess
 
@@ -280,6 +282,7 @@ class CoolDS:
             ),
             dtypes={"count": dtype},
             ordered=True,
+            **(cooler_kwargs or {}),
         )
 
         if zoomify:
