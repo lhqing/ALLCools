@@ -174,7 +174,15 @@ class CoolDS:
         )
 
     def get_cooler(
-        self, samples, value_type, output_prefix, dtype="float32", scale_factor=1, zoomify=True, zoomify_cpu=1
+        self,
+        samples,
+        value_type,
+        output_prefix,
+        da_name="real",
+        dtype="float32",
+        scale_factor=1,
+        zoomify=True,
+        zoomify_cpu=1,
     ):
         """
         Get cooler from cool ds
@@ -187,6 +195,8 @@ class CoolDS:
             Value type to fetch
         output_prefix :
             Output prefix, suffix will be ".cool" if zoomify is False, or ".mcool" if zoomify is True
+        da_name :
+            Data array name in xarray dataset
         dtype :
             Data type of the returned matrix
         scale_factor :
@@ -206,7 +216,7 @@ class CoolDS:
             _samples,
             _value_type,
             _chrom_offset,
-            da_name="real",
+            _da_name,
             add_trans=False,
         ):
             """Iterate through the raw matrices and chromosomes of cells."""
@@ -224,7 +234,7 @@ class CoolDS:
                         scale_factor=scale_factor,
                         fill_lower_triangle=False,
                         log1p=False,
-                        da_name=da_name,
+                        da_name=_da_name,
                         rotate=False,
                         rotate_cval=np.NaN,
                         rotate_height_bp=5000000,
@@ -263,7 +273,7 @@ class CoolDS:
                 _samples=samples,
                 _value_type=value_type,
                 _chrom_offset=chrom_offset,
-                da_name="real",
+                _da_name=da_name,
                 add_trans=False,
             ),
             dtypes={"count": dtype},
