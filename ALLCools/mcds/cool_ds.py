@@ -174,7 +174,15 @@ class CoolDS:
         )
 
     def get_cooler(
-        self, samples, value_type, output_prefix, dtype="float32", scale_factor=1, zoomify=True, zoomify_cpu=1
+        self,
+        samples,
+        value_type,
+        output_prefix,
+        dtype="float32",
+        scale_factor=1,
+        zoomify=True,
+        zoomify_cpu=1,
+        data_sel=None,
     ):
         """
         Get cooler from cool ds
@@ -195,7 +203,9 @@ class CoolDS:
             Zoomify the matrix
         zoomify_cpu :
             Number of CPUs to use for zoomify
-
+        data_sel :
+            Dictionary of data selection to make a 2-D dataarray, if data_sel is provided, the samples and value_type
+            parameters are ignored.
         """
         import subprocess
 
@@ -229,6 +239,7 @@ class CoolDS:
                         rotate_cval=np.NaN,
                         rotate_height_bp=5000000,
                         dtype=dtype,
+                        data_sel=data_sel,
                     )
 
                 # to coo then to pixel
@@ -320,6 +331,7 @@ class CoolDSChrom(xr.Dataset):
         rotate_cval=np.NaN,
         rotate_height_bp=5000000,
         dtype="float32",
+        data_sel=None,
     ):
         """
         Fetch matrix from cool ds
@@ -346,20 +358,26 @@ class CoolDSChrom(xr.Dataset):
             Rotate matrix height in base pairs
         dtype
             Data type of the returned matrix
+        data_sel
+            Dictionary of data selection to make a 2-D dataarray, if data_sel is provided, the samples and value_type
+            parameters are ignored.
 
         Returns
         -------
         np.ndarray
         """
-        sel_dict = {}
-        if samples is not None:
-            sel_dict[self.sample_dim] = samples
-        if value_type is not None:
-            sel_dict[f"{da_name}_value_type"] = value_type
-        if len(sel_dict) > 0:
-            sample_da = self.sel(sel_dict)[da_name]
+        if data_sel is None:
+            sel_dict = {}
+            if samples is not None:
+                sel_dict[self.sample_dim] = samples
+            if value_type is not None:
+                sel_dict[f"{da_name}_value_type"] = value_type
+            if len(sel_dict) > 0:
+                sample_da = self.sel(sel_dict)[da_name]
+            else:
+                sample_da = self[da_name]
         else:
-            sample_da = self[da_name]
+            sample_da = self.sel(data_sel)[da_name]
 
         if samples is not None and not isinstance(samples, str):
             # sum sample_dim if multiple samples selected
