@@ -240,6 +240,8 @@ class CoolDS:
                         rotate_height_bp=5000000,
                         dtype=dtype,
                     )
+                    if len(matrix.shape) > 2:
+                        matrix = matrix.squeeze()
 
                 # to coo then to pixel
                 matrix = coo_matrix(matrix)
