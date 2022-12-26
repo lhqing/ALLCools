@@ -355,7 +355,10 @@ class CoolDSChrom(xr.Dataset):
         if samples is not None:
             sel_dict[self.sample_dim] = samples
         if value_type is not None:
-            sel_dict[f"{da_name}_value_type"] = value_type
+            _da_name = f"{da_name}_value_type"
+            if _da_name not in self.data_vars:
+                _da_name = "value_type"
+            sel_dict[_da_name] = value_type
         if len(sel_dict) > 0:
             sample_da = self.sel(sel_dict)[da_name]
         else:
