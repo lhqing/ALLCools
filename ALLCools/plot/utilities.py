@@ -267,5 +267,5 @@ def sync_xylim_width(ax):
     else:
         xmin -= flank
         xmax += flank
-        ax.set_ylim(xmin, xmax)
+        ax.set_xlim(xmin, xmax)
     return
