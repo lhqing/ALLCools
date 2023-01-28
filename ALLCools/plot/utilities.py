@@ -251,3 +251,21 @@ def _auto_size(ax, n_dots):
     else:
         s = 0.02
     return s
+
+
+def sync_xylim_width(ax):
+    """Sync x and y axis limit to make them have the same width."""
+    xmin, xmax = ax.get_xlim()
+    ymin, ymax = ax.get_ylim()
+    xdelta = xmax - xmin
+    ydelta = ymax - ymin
+    flank = abs(xdelta - ydelta) / 2
+    if xdelta > ydelta:
+        ymin -= flank
+        ymax += flank
+        ax.set_ylim(ymin, ymax)
+    else:
+        xmin -= flank
+        xmax += flank
+        ax.set_ylim(xmin, xmax)
+    return
