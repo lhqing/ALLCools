@@ -495,7 +495,14 @@ class ConsensusClustering:
                 random_state=self.random_state + cur_iter,
                 # every time train-test split got a different random state
             )
-            (clf, score, cluster_map, cmat, r1_cmat, r2_cmat,) = single_supervise_evaluation(
+            (
+                clf,
+                score,
+                cluster_map,
+                cmat,
+                r1_cmat,
+                r2_cmat,
+            ) = single_supervise_evaluation(
                 clf,
                 x_train,
                 y_train,

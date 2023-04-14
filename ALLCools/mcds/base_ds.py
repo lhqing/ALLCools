@@ -443,13 +443,7 @@ class BaseDSChrom(xr.Dataset):
         if regions is not None:
             if regions.shape[1] == 3:
                 _chrom_sel = regions.iloc[:, 0] == self.chrom
-                regions = (
-                    regions.loc[
-                        _chrom_sel,
-                    ]
-                    .iloc[:, 1:]
-                    .copy()
-                )
+                regions = regions.loc[_chrom_sel,].iloc[:, 1:].copy()
             assert regions.shape[1] == 2
             assert regions.shape[0] > 0, "regions must have at least one row."
 

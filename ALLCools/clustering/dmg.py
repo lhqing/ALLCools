@@ -254,7 +254,7 @@ class PairwiseDMG:
         with ProcessPoolExecutor(min(n_pairs, self.n_jobs)) as exe:
             step = max(1, n_pairs // 10)
             futures = {}
-            for (cluster_l, cluster_r) in pairs:
+            for cluster_l, cluster_r in pairs:
                 f = exe.submit(
                     _single_pairwise_dmg,
                     cluster_l=cluster_l,
@@ -351,12 +351,8 @@ def _single_ovr_dmg(
     )
     dmg_result = dmg_result[dmg_result.index.get_level_values(1).astype(bool)].reset_index(drop=True)
     # add fold change
-    in_cells_mean = adata.X[
-        adata.obs["groups"].astype(bool),
-    ].mean(axis=0)
-    out_cells_mean = adata.X[
-        ~adata.obs["groups"].astype(bool),
-    ].mean(axis=0)
+    in_cells_mean = adata.X[adata.obs["groups"].astype(bool),].mean(axis=0)
+    out_cells_mean = adata.X[~adata.obs["groups"].astype(bool),].mean(axis=0)
     fc = pd.Series(in_cells_mean / out_cells_mean, index=adata.var_names)
     dmg_result["fc"] = dmg_result["names"].map(fc)
     # filter

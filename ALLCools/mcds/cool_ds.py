@@ -78,7 +78,6 @@ class CoolDS:
     def _prepare_cool_ds_paths(cool_ds_paths):
         if isinstance(cool_ds_paths, (str, pathlib.Path)):
             if "*" in str(cool_ds_paths):
-
                 import glob
 
                 cool_ds_paths = sorted(glob.glob(cool_ds_paths))

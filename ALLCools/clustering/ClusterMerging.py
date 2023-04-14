@@ -18,7 +18,6 @@ class ClusterMerge:
         method="average",
         label_concat_str="::",
     ):
-
         self.data_for_tree = None
         self.cell_to_type = None
         self.gene_mcds = None

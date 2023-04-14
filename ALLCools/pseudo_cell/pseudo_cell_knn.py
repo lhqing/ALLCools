@@ -157,7 +157,6 @@ class ExamplerAndNeighborhoodSampler:
                     or ((min_pulp_size is None) and (dists < dist_thresh).all())
                     or ((min_pulp_size is not None) and (dists < dist_thresh).sum() >= min_pulp_size)
                 ):
-
                     if len(set(pulp) - set(unused)) / len(pulp) <= ovlp_tol:
                         kernels.append(kernel)
                         pulps.append(pulp)
