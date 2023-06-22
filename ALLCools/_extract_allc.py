@@ -35,7 +35,7 @@ def _merge_cg_strand(in_path, out_path):
                 continue
             else:
                 # pos should be continuous, strand should be reverse
-                if int(prev_line[1]) + 1 == int(cur_line[1]) and prev_line[2] != cur_line[2]:
+                if int(prev_line[1]) + 1 == int(cur_line[1]) and prev_line[2] == "+":
                     new_line = prev_line[:4] + [
                         str(int(prev_line[4]) + int(cur_line[4])),
                         str(int(prev_line[5]) + int(cur_line[5])),
