@@ -90,7 +90,8 @@ def binarize_matrix(adata, cutoff=0.95):
     return
 
 
-def filter_regions(adata, hypo_percent=0.5, n_cell=None, zscore_abs_cutoff=None):
+def filter_regions(adata, hypo_percent=0.5, n_cell=None, 
+                   zscore_abs_cutoff=None,chunk_size=5000):
     """
     Filter regions based on % of cells having non-zero scores.
 
@@ -104,16 +105,78 @@ def filter_regions(adata, hypo_percent=0.5, n_cell=None, zscore_abs_cutoff=None)
         number of cells that are non-zero in this region.
     zscore_abs_cutoff
         absolute feature non-zero cell count zscore cutoff to remove lowest and highest coverage features.
+    chunk_size: int
+        chunk the regions (columns) using chunk_size.
     """
-    _nnz = (adata.X > 0).sum(axis=0)
-    try:
-        feature_nnz_cell = _nnz.A1
-    except AttributeError:
-        feature_nnz_cell = _nnz.ravel()
+
+    _nnz=[]
+    ncols=adata.X.shape[1]
+    for i in range(ncols // chunk_size + 1):
+        _nnz.append((adata.X[:,i*chunk_size:(i+1)*chunk_size] > 0).sum(axis=0)) #number of cells with non-hyper-methylation
 
     if n_cell is None:
         n_cell = int(adata.shape[0] * hypo_percent / 100)
+
+    feature_nnz_cell=[]
+    for chunk in _nnz:
+        try:
+            a = chunk.A1
+        except AttributeError:
+            a = chunk.ravel()
+        feature_nnz_cell.append(a)
+
+    feature_nnz_cell=np.concatenate(feature_nnz_cell) #in default, axis=0 for np.concatenate 
+
     n_cell_judge = feature_nnz_cell > n_cell
+    adata._inplace_subset_var(n_cell_judge)
+    feature_nnz_cell = feature_nnz_cell[n_cell_judge].copy()
+
+    if zscore_abs_cutoff is not None:
+        from scipy.stats import zscore
+
+        zscore_judge = np.abs(zscore(np.log2(feature_nnz_cell))) < zscore_abs_cutoff
+        adata._inplace_subset_var(zscore_judge)
+
+    print(f"{adata.shape[1]} regions remained.")
+    return
+
+def filter_regions_hyper(adata, non_hyper_percent=0.5, n_cell=None, 
+                         zscore_abs_cutoff=None,chunk_size=5000):
+    """
+    Filter regions based on % of cells having non-zero scores.
+
+    Parameters
+    ----------
+    adata
+        AnnData object
+    non_hyper_percent
+        min % of cells that are zero in this region. If n_cell is provided, this parameter will be ignored.
+    n_cell
+        number of cells that are non-zero in this region.
+    zscore_abs_cutoff
+        absolute feature non-zero cell count zscore cutoff to remove lowest and highest coverage features.
+    chunk_size: int
+        chunk the columns (regions).
+    """
+    _nnz=[]
+    ncols=adata.X.shape[1]
+    for i in range(ncols // chunk_size + 1):
+        _nnz.append((adata.X[:,i*chunk_size:(i+1)*chunk_size]==0).sum(axis=0)) #number of cells with non-hyper-methylation
+
+    if n_cell is None:
+        n_cell = int(adata.shape[0] * non_hyper_percent / 100)
+
+    feature_nnz_cell=[]
+    for chunk in _nnz:
+        try:
+            a = chunk.A1
+        except AttributeError:
+            a = chunk.ravel()
+        feature_nnz_cell.append(a)
+
+    feature_nnz_cell=np.concatenate(feature_nnz_cell) #in default, axis=0 for np.concatenate 
+    n_cell_judge = feature_nnz_cell > n_cell
+
     adata._inplace_subset_var(n_cell_judge)
     feature_nnz_cell = feature_nnz_cell[n_cell_judge].copy()
 
