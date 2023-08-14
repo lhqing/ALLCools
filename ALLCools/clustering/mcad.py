@@ -90,8 +90,7 @@ def binarize_matrix(adata, cutoff=0.95):
     return
 
 
-def filter_regions(adata, hypo_percent=0.5, n_cell=None, 
-                   zscore_abs_cutoff=None,chunk_size=5000):
+def filter_regions(adata, hypo_percent=0.5, n_cell=None, zscore_abs_cutoff=None, chunk_size=5000):
     """
     Filter regions based on % of cells having non-zero scores.
 
@@ -109,15 +108,17 @@ def filter_regions(adata, hypo_percent=0.5, n_cell=None,
         chunk the regions (columns) using chunk_size.
     """
 
-    _nnz=[]
-    ncols=adata.X.shape[1]
+    _nnz = []
+    ncols = adata.X.shape[1]
     for i in range(ncols // chunk_size + 1):
-        _nnz.append((adata.X[:,i*chunk_size:(i+1)*chunk_size] > 0).sum(axis=0)) #number of cells with non-hyper-methylation
+        _nnz.append(
+            (adata.X[:, i * chunk_size : (i + 1) * chunk_size] > 0).sum(axis=0)
+        )  # number of cells with non-hyper-methylation
 
     if n_cell is None:
         n_cell = int(adata.shape[0] * hypo_percent / 100)
 
-    feature_nnz_cell=[]
+    feature_nnz_cell = []
     for chunk in _nnz:
         try:
             a = chunk.A1
@@ -125,7 +126,7 @@ def filter_regions(adata, hypo_percent=0.5, n_cell=None,
             a = chunk.ravel()
         feature_nnz_cell.append(a)
 
-    feature_nnz_cell=np.concatenate(feature_nnz_cell) #in default, axis=0 for np.concatenate 
+    feature_nnz_cell = np.concatenate(feature_nnz_cell)  # in default, axis=0 for np.concatenate
 
     n_cell_judge = feature_nnz_cell > n_cell
     adata._inplace_subset_var(n_cell_judge)
@@ -140,8 +141,8 @@ def filter_regions(adata, hypo_percent=0.5, n_cell=None,
     print(f"{adata.shape[1]} regions remained.")
     return
 
-def filter_regions_hyper(adata, non_hyper_percent=0.5, n_cell=None, 
-                         zscore_abs_cutoff=None,chunk_size=5000):
+
+def filter_regions_hyper(adata, non_hyper_percent=0.5, n_cell=None, zscore_abs_cutoff=None, chunk_size=5000):
     """
     Filter regions based on % of cells having non-zero scores.
 
@@ -158,15 +159,17 @@ def filter_regions_hyper(adata, non_hyper_percent=0.5, n_cell=None,
     chunk_size: int
         chunk the columns (regions).
     """
-    _nnz=[]
-    ncols=adata.X.shape[1]
+    _nnz = []
+    ncols = adata.X.shape[1]
     for i in range(ncols // chunk_size + 1):
-        _nnz.append((adata.X[:,i*chunk_size:(i+1)*chunk_size]==0).sum(axis=0)) #number of cells with non-hyper-methylation
+        _nnz.append(
+            (adata.X[:, i * chunk_size : (i + 1) * chunk_size] == 0).sum(axis=0)
+        )  # number of cells with non-hyper-methylation
 
     if n_cell is None:
         n_cell = int(adata.shape[0] * non_hyper_percent / 100)
 
-    feature_nnz_cell=[]
+    feature_nnz_cell = []
     for chunk in _nnz:
         try:
             a = chunk.A1
@@ -174,7 +177,7 @@ def filter_regions_hyper(adata, non_hyper_percent=0.5, n_cell=None,
             a = chunk.ravel()
         feature_nnz_cell.append(a)
 
-    feature_nnz_cell=np.concatenate(feature_nnz_cell) #in default, axis=0 for np.concatenate 
+    feature_nnz_cell = np.concatenate(feature_nnz_cell)  # in default, axis=0 for np.concatenate
     n_cell_judge = feature_nnz_cell > n_cell
 
     adata._inplace_subset_var(n_cell_judge)
