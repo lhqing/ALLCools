@@ -161,10 +161,10 @@ def filter_regions_hyper(adata, non_hyper_percent=0.5, n_cell=None, zscore_abs_c
     """
     _nnz = []
     ncols = adata.X.shape[1]
-    n_batch=ncols // chunk_size + 1
+    n_batch = ncols // chunk_size + 1
     print("Chunking regions..")
     for i in range(n_batch):
-        print(round((i+1) / n_batch * 100, 2), '%\t\t\t', end='\r')
+        print(round((i + 1) / n_batch * 100, 2), "%\t\t\t", end="\r")
         _nnz.append(
             (adata.X[:, i * chunk_size : (i + 1) * chunk_size] == 0).sum(axis=0)
         )  # number of cells with non-hyper-methylation
@@ -195,9 +195,10 @@ def filter_regions_hyper(adata, non_hyper_percent=0.5, n_cell=None, zscore_abs_c
     print(f"{adata.shape[1]} regions remained.")
     return
 
-def filter_region_chi2(adata,group=None,chunk_size=2000,
-                         p_cutoff=0.05,added_key='feature_chi2',
-                         pair_wise=True,topn=1500):
+
+def filter_region_chi2(
+    adata, group=None, chunk_size=2000, p_cutoff=0.05, added_key="feature_chi2", pair_wise=True, topn=1500
+):
     """
     Filter regions based on Chi2 square test
 
@@ -213,101 +214,99 @@ def filter_region_chi2(adata,group=None,chunk_size=2000,
     added_key: str
         key added to adata.varm
     pair_wise:
-        In addition to one verse rest, whether to perform one verse one 
+        In addition to one verse rest, whether to perform one verse one
         comparison too.
     topn: int
         top n features to selected for each comparison. After top n features
-        are selected for each comparison, the union features names will be the 
+        are selected for each comparison, the union features names will be the
         final features, so the final number could be different than
         n_comparison * topn.
     """
-    
+
     def get_pvalue(x):
         try:
-            p = chi2_contingency(
-            [
-                [x['GroupA'],x['GroupB']],
-                [x['NonGroupA'],x['NonGroupB']]
-            ])[1]
+            p = chi2_contingency([[x["GroupA"], x["GroupB"]], [x["NonGroupA"], x["NonGroupB"]]])[1]
         except:
-            p=np.nan
+            p = np.nan
         return p
-    
-    from scipy.stats import chi2_contingency
+
     import itertools
+
+    from scipy.stats import chi2_contingency
+
     assert not group is None
     ncols = adata.X.shape[1]
-    nrows=adata.X.shape[0]
-    n_batch=ncols // chunk_size + 1
+    nrows = adata.X.shape[0]
+    n_batch = ncols // chunk_size + 1
     print("Chunking regions..")
-    n_count_dict=adata.obs[group].value_counts().to_dict()
-    adata.uns[added_key]=None
-    for i in range(n_batch): #chunk columns (regions)
-        print(round((i+1) / n_batch * 100, 2), '%\t\t\t', end='\r')
-        cols=adata.var_names[i * chunk_size : (i + 1) * chunk_size]
-        df=pd.DataFrame(adata.X[:, i * chunk_size : (i + 1) * chunk_size].toarray(),
-                        columns=cols,index=adata.obs_names
+    n_count_dict = adata.obs[group].value_counts().to_dict()
+    adata.uns[added_key] = None
+    for i in range(n_batch):  # chunk columns (regions)
+        print(round((i + 1) / n_batch * 100, 2), "%\t\t\t", end="\r")
+        cols = adata.var_names[i * chunk_size : (i + 1) * chunk_size]
+        df = pd.DataFrame(
+            adata.X[:, i * chunk_size : (i + 1) * chunk_size].toarray(), columns=cols, index=adata.obs_names
         )
-        df[group]=adata.obs[group]
-        
+        df[group] = adata.obs[group]
+
         for g in df[group].unique():
             # one verse rest
-            df['Comparison']=df[group].apply(lambda x:"GroupA" if x==g else 'GroupB')
-            n_group_a=n_count_dict[g]
-            n_group_b=nrows - n_group_a
-            comparison=g+" | "+"Rest"
-            df_stat=df.groupby('Comparison')[cols].agg(np.sum).T
-            df_stat['NonGroupA']=n_group_a-df_stat['GroupA']
-            df_stat['NonGroupB']=n_group_b-df_stat['GroupB']
-            df_stat['chi2_p']=df_stat.apply(lambda x:get_pvalue(x),axis=1)
-            df_stat=df_stat.loc[~ df_stat.chi2_p.isna()]
+            df["Comparison"] = df[group].apply(lambda x: "GroupA" if x == g else "GroupB")
+            n_group_a = n_count_dict[g]
+            n_group_b = nrows - n_group_a
+            comparison = g + " | " + "Rest"
+            df_stat = df.groupby("Comparison")[cols].agg(np.sum).T
+            df_stat["NonGroupA"] = n_group_a - df_stat["GroupA"]
+            df_stat["NonGroupB"] = n_group_b - df_stat["GroupB"]
+            df_stat["chi2_p"] = df_stat.apply(lambda x: get_pvalue(x), axis=1)
+            df_stat = df_stat.loc[~df_stat.chi2_p.isna()]
             # print(df_stat.shape,end="\r")
-            if df_stat.shape[0]==0:
+            if df_stat.shape[0] == 0:
                 continue
-            df_stat['Comparison']=comparison
-            df_stat['chi2_adjp']=df_stat['chi2_p'] * df_stat.shape[0]
-            df_stat=df_stat.loc[df_stat['chi2_adjp'] <= p_cutoff]
-            if df_stat.shape[0]==0:
+            df_stat["Comparison"] = comparison
+            df_stat["chi2_adjp"] = df_stat["chi2_p"] * df_stat.shape[0]
+            df_stat = df_stat.loc[df_stat["chi2_adjp"] <= p_cutoff]
+            if df_stat.shape[0] == 0:
                 continue
             if adata.uns[added_key] is None:
-                adata.uns[added_key]=df_stat.copy()
+                adata.uns[added_key] = df_stat.copy()
             else:
-                adata.uns[added_key]=pd.concat([adata.uns[added_key],df_stat])
+                adata.uns[added_key] = pd.concat([adata.uns[added_key], df_stat])
         if pair_wise:
             # one verse one
-            for a,b in itertools.combinations(df[group].map(str).unique(),2):
-                df['Comparison']=df[group].apply(lambda x:"GroupA" if x==a else 'GroupB' if x==b else "Rest")
-                n_group_a=n_count_dict[a]
-                n_group_b=n_count_dict[b]
-                comparison=a+" | "+b
-                df_stat=df.loc[df.Comparison.isin(['GroupA','GroupB'])].groupby('Comparison')[cols].agg(np.sum).T
-                df_stat['NonGroupA']=n_group_a-df_stat['GroupA']
-                df_stat['NonGroupB']=n_group_b-df_stat['GroupB']
-                df_stat['chi2_p']=df_stat.apply(lambda x:get_pvalue(x),axis=1)
-                df_stat=df_stat.loc[~ df_stat.chi2_p.isna()]
+            for a, b in itertools.combinations(df[group].map(str).unique(), 2):
+                df["Comparison"] = df[group].apply(lambda x: "GroupA" if x == a else "GroupB" if x == b else "Rest")
+                n_group_a = n_count_dict[a]
+                n_group_b = n_count_dict[b]
+                comparison = a + " | " + b
+                df_stat = df.loc[df.Comparison.isin(["GroupA", "GroupB"])].groupby("Comparison")[cols].agg(np.sum).T
+                df_stat["NonGroupA"] = n_group_a - df_stat["GroupA"]
+                df_stat["NonGroupB"] = n_group_b - df_stat["GroupB"]
+                df_stat["chi2_p"] = df_stat.apply(lambda x: get_pvalue(x), axis=1)
+                df_stat = df_stat.loc[~df_stat.chi2_p.isna()]
                 # print(df_stat.shape,end="\r")
-                if df_stat.shape[0]==0:
+                if df_stat.shape[0] == 0:
                     continue
-                df_stat['Comparison']=comparison
-                df_stat['chi2_adjp']=df_stat['chi2_p'] * df_stat.shape[0]
-                df_stat=df_stat.loc[df_stat['chi2_adjp'] <= p_cutoff]
-                if df_stat.shape[0]==0:
+                df_stat["Comparison"] = comparison
+                df_stat["chi2_adjp"] = df_stat["chi2_p"] * df_stat.shape[0]
+                df_stat = df_stat.loc[df_stat["chi2_adjp"] <= p_cutoff]
+                if df_stat.shape[0] == 0:
                     continue
                 if adata.uns[added_key] is None:
-                    adata.uns[added_key]=df_stat.copy()
+                    adata.uns[added_key] = df_stat.copy()
                 else:
-                    adata.uns[added_key]=pd.concat([adata.uns[added_key],df_stat])
+                    adata.uns[added_key] = pd.concat([adata.uns[added_key], df_stat])
     if adata.uns[added_key] is None:
         print("No features were identified")
     else:
-        adata.uns[added_key].sort_values('chi2_adjp',inplace=True)
-        features=[]
+        adata.uns[added_key].sort_values("chi2_adjp", inplace=True)
+        features = []
         for comparison in adata.uns[added_key].Comparison.unique():
-            df1=adata.uns[added_key].loc[adata.uns[added_key].Comparison==comparison]
+            df1 = adata.uns[added_key].loc[adata.uns[added_key].Comparison == comparison]
             if df1.query("chi2_adjp == 0").shape[0] > topn:
                 features.extend(df1.query("chi2_adjp == 0").index.tolist())
             else:
-                features.extend(df1.sort_values('chi2_adjp').head(topn).index.tolist())
+                features.extend(df1.sort_values("chi2_adjp").head(topn).index.tolist())
         # features=.groupby('Comparison').apply(lambda x:x.head(topn).index.tolist()).sum()
         # adata=adata[:,list(set(features))]
         adata._inplace_subset_var(adata.var_names.isin(list(set(features))))
