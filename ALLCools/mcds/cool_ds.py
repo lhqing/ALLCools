@@ -269,20 +269,21 @@ class CoolDS:
         bins_df = binnify(self.chrom_sizes, binsize=self.bin_size)
         chrom_offset = _get_chrom_offsets(bins_df)
 
-        create_cooler(
-            cool_uri=f"{output_prefix}.cool",
-            bins=bins_df,
-            pixels=_chrom_iterator(
-                _samples=samples,
-                _value_type=value_type,
-                _chrom_offset=chrom_offset,
-                _da_name=da_name,
-                add_trans=False,
-            ),
-            dtypes={"count": dtype},
-            ordered=True,
-            **(cooler_kwargs or {}),
-        )
+        with dask.config.set(scheduler="sync"):
+            create_cooler(
+                cool_uri=f"{output_prefix}.cool",
+                bins=bins_df,
+                pixels=_chrom_iterator(
+                    _samples=samples,
+                    _value_type=value_type,
+                    _chrom_offset=chrom_offset,
+                    _da_name=da_name,
+                    add_trans=False,
+                ),
+                dtypes={"count": dtype},
+                ordered=True,
+                **(cooler_kwargs or {}),
+            )
 
         if zoomify:
             subprocess.run(["cooler", "zoomify", f"{output_prefix}.cool", "-p", str(zoomify_cpu)], check=True)
