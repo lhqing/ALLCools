@@ -366,47 +366,48 @@ class CoolDSChrom(xr.Dataset):
         -------
         np.ndarray
         """
-        sel_dict = {}
-        if samples is not None:
-            sel_dict[self.sample_dim] = samples
-        if value_type is not None:
-            if da_name not in self.data_vars:
-                value_type_dim_name = "value_type"
+        with dask.config.set(scheduler="sync"):
+            sel_dict = {}
+            if samples is not None:
+                sel_dict[self.sample_dim] = samples
+            if value_type is not None:
+                if da_name not in self.data_vars:
+                    value_type_dim_name = "value_type"
+                else:
+                    value_type_dim_name = f"{da_name}_value_type"
+                sel_dict[value_type_dim_name] = value_type
+            if len(sel_dict) > 0:
+                sample_da = self.sel(sel_dict)[da_name]
             else:
-                value_type_dim_name = f"{da_name}_value_type"
-            sel_dict[value_type_dim_name] = value_type
-        if len(sel_dict) > 0:
-            sample_da = self.sel(sel_dict)[da_name]
-        else:
-            sample_da = self[da_name]
+                sample_da = self[da_name]
 
-        if samples is not None and not isinstance(samples, str):
-            # sum sample_dim if multiple samples selected
-            use_weights = self.sample_weights.sel({self.sample_dim: samples})
-            sample_da = (sample_da * use_weights).sum(dim=self.sample_dim) / use_weights.sum() * scale_factor
+            if samples is not None and not isinstance(samples, str):
+                # sum sample_dim if multiple samples selected
+                use_weights = self.sample_weights.sel({self.sample_dim: samples})
+                sample_da = (sample_da * use_weights).sum(dim=self.sample_dim) / use_weights.sum() * scale_factor
 
-        data = sample_da.values.astype(dtype)
+            data = sample_da.values.astype(dtype)
 
-        if fill_lower_triangle:
-            # complete the lower triangle
-            data = data + data.T - np.diag(data.diagonal())
-
-        if log1p:
-            data = np.log1p(data)
-
-        if rotate:
-            # to make triangle plot, rotate the matrix by 45 degrees
-            data = ndimage.rotate(data, 45, order=0, reshape=True, prefilter=False, cval=rotate_cval)
-
-            middle = data.shape[0] // 2
-            height = (rotate_height_bp // self.bin_size) / np.sqrt(2) + 4
-            height = int(height)
-            height = min(height, data.shape[0] // 2)
-
-            bottom = middle - height
             if fill_lower_triangle:
-                top = middle + height
-            else:
-                top = middle
-            data = data[bottom:top].copy()
+                # complete the lower triangle
+                data = data + data.T - np.diag(data.diagonal())
+
+            if log1p:
+                data = np.log1p(data)
+
+            if rotate:
+                # to make triangle plot, rotate the matrix by 45 degrees
+                data = ndimage.rotate(data, 45, order=0, reshape=True, prefilter=False, cval=rotate_cval)
+
+                middle = data.shape[0] // 2
+                height = (rotate_height_bp // self.bin_size) / np.sqrt(2) + 4
+                height = int(height)
+                height = min(height, data.shape[0] // 2)
+
+                bottom = middle - height
+                if fill_lower_triangle:
+                    top = middle + height
+                else:
+                    top = middle
+                data = data[bottom:top].copy()
         return data
