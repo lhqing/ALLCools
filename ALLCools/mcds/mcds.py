@@ -662,7 +662,6 @@ class MCDS(xr.Dataset):
         self, mc_type=None, var_dim=None, obs_dim=None, n_top_feature=5000, da_name=None, da_suffix="frac", plot=True
     ):
         """Calculate the highly variable features (hvf) with the Support Vector Regression model."""
-        import plotly.graph_objects as go
         from sklearn.svm import SVR
 
         obs_dim = self._verify_dim(obs_dim, mode="obs")
@@ -735,6 +734,13 @@ class MCDS(xr.Dataset):
             f"Highly Variable Feature:  {selected_feature_index.size} "
             f"({(selected_feature_index.size / judge.size * 100):.1f}%)"
         )
+
+        if plot:
+            try:
+                import plotly.graph_objects as go
+            except ImportError:
+                print("Please install plotly to enable plotting.")
+            plot = False
 
         if plot:
             if hvf_df.shape[0] > 5000:

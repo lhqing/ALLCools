@@ -44,7 +44,6 @@ analysis = [
     "leidenalg",
     "networkx",
     "opentsne",
-    "plotly",
     "pynndescent",
     "scanpy",
     "scikit-learn",
