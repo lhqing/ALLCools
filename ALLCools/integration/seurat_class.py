@@ -732,7 +732,7 @@ class SeuratIntegration:
         for xx in self.alignments:
             print(xx)
             corrected = self.transform(
-                data=np.array(corrected),
+                data=np.array(corrected, dtype="object"),
                 ref=xx[0],
                 qry=xx[1],
                 npc=n_components,
