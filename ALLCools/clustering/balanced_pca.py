@@ -120,7 +120,7 @@ def significant_pc_test(adata: anndata.AnnData, p_cutoff=0.1, update=True, obsm=
 def pc_ks_test(pcs, p_cutoff=0.1, min_pc=4):
     i = 0
     for i in range(pcs.shape[1]):
-        if i == (pcs.shape[1]-1):
+        if i == (pcs.shape[1] - 1):
             break
         cur_pc = pcs[:, i]
         next_pc = pcs[:, i + 1]
