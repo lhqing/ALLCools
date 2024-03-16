@@ -332,12 +332,14 @@ def generate_mcds(
 
     if isinstance(allc_table, str):
         allc_series = pd.read_csv(allc_table, header=None, index_col=0, sep="\t")
-        if allc_series.shape[1]==1:
-            allc_series[2]=''
-        elif allc_series.shape[1]==2:
+        if allc_series.shape[1] == 1:
+            allc_series[2] = ""
+        elif allc_series.shape[1] == 2:
             pass
         else:
-            raise ValueError("allc_table malformed, should have 2 or 3 columns, 1. file_uid, 2. file_path, 3. cmeta_path if ballc format")
+            raise ValueError(
+                "allc_table malformed, should have 2 or 3 columns, 1. file_uid, 2. file_path, 3. cmeta_path if ballc format"
+            )
     else:
         allc_series = allc_table[~allc_table[1].isna()]
     if allc_series.index.duplicated().sum() != 0:

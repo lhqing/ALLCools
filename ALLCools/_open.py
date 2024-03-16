@@ -154,7 +154,7 @@ class PipedGzipWriter(Closing):
         self.outfile.close()
         self.devnull.close()
         if return_code != 0:
-            raise IOError(f"Output {self.program} process terminated with exit code {return_code}")
+            raise OSError(f"Output {self.program} process terminated with exit code {return_code}")
 
 
 class PipedGzipReader(Closing):
@@ -223,10 +223,9 @@ class PipedGzipReader(Closing):
         return data
 
 
-
 class PipedBAllCReader(Closing):
     def __init__(self, path, cmeta_path=None, region=None, mode="r"):
-        if mode not in ('r'):
+        if mode not in ("r"):
             raise ValueError(f"Mode can only be 'r' for ballc file")
         if cmeta_path is None:
             raise NotImplementedError
@@ -235,17 +234,22 @@ class PipedBAllCReader(Closing):
             raise FileNotFoundError(f"{cmeta_path} does not exist.")
         cmeta_path = str(cmeta_path)
 
-
         if region is None:
-            self.process = Popen(["ballcools", "query", path, "\"*\"", "-c", cmeta_path],
-                                 #stdout=PIPE, stderr=PIPE, encoding="utf8")
-                                 stdout=PIPE, stderr=PIPE, encoding=None)
+            self.process = Popen(
+                ["ballcools", "query", path, '"*"', "-c", cmeta_path],
+                # stdout=PIPE, stderr=PIPE, encoding="utf8")
+                stdout=PIPE,
+                stderr=PIPE,
+                encoding=None,
+            )
         else:
-            self.process = Popen(["ballcools", "query", path]+ region.split(" ")+["-c",cmeta_path],
-                                 stdout=PIPE,
-                                 stderr=PIPE,
-                                 #encoding="utf8",)
-                                 encoding=None,)
+            self.process = Popen(
+                ["ballcools", "query", path] + region.split(" ") + ["-c", cmeta_path],
+                stdout=PIPE,
+                stderr=PIPE,
+                # encoding="utf8",)
+                encoding=None,
+            )
 
         self.name = path
         self._file = self.process.stdout
@@ -266,12 +270,12 @@ class PipedBAllCReader(Closing):
 
     def __iter__(self):
         for line in self._file:
-            yield line.decode('utf-8')
+            yield line.decode("utf-8")
         self.process.wait()
         self._raise_if_error()
 
     def readline(self):
-        return self._file.readline().decode('utf-8')
+        return self._file.readline().decode("utf-8")
 
     def _raise_if_error(self):
         """
@@ -450,8 +454,10 @@ def open_gz(file_path, mode="r", compresslevel=3, threads=1, region=None):
         except OSError:
             return gzip.open(file_path, mode, compresslevel=compresslevel)
 
+
 def open_ballc(file_path, mode="r", compresslevel=None, threads=None, region=None, cmeta_path=None):
     return PipedBAllCReader(file_path, cmeta_path=cmeta_path, region=region, mode="r")
+
 
 def open_allc(file_path, mode="r", compresslevel=3, threads=1, region=None, cmeta_path=None):
     """
@@ -508,7 +514,7 @@ def open_allc(file_path, mode="r", compresslevel=3, threads=1, region=None, cmet
 
     if file_path.endswith(".gz"):
         return open_gz(file_path, mode, compresslevel, threads, region=region)
-    elif file_path.endswith(".ballc"): 
+    elif file_path.endswith(".ballc"):
         return open_ballc(file_path, region=region, cmeta_path=cmeta_path)
     else:
         return open(file_path, mode)
