@@ -331,11 +331,15 @@ def generate_mcds(
     dtype = parse_dtype(dtype)
 
     if isinstance(allc_table, str):
-        allc_series = pd.read_csv(allc_table, header=None, index_col=0, squeeze=True, sep="\t")
-        if not isinstance(allc_series, pd.Series):
-            raise ValueError("allc_table malformed, should only have 2 columns, 1. file_uid, 2. file_path")
+        allc_series = pd.read_csv(allc_table, header=None, index_col=0, sep="\t")
+        if allc_series.shape[1]==1:
+            allc_series[2]=''
+        elif allc_series.shape[1]==2:
+            pass
+        else:
+            raise ValueError("allc_table malformed, should have 2 or 3 columns, 1. file_uid, 2. file_path, 3. cmeta_path if ballc format")
     else:
-        allc_series = allc_table.dropna()
+        allc_series = allc_table[~allc_table[1].isna()]
     if allc_series.index.duplicated().sum() != 0:
         raise ValueError("allc_table file uid have duplicates (1st column)")
 
@@ -363,7 +367,7 @@ def generate_mcds(
         else:
             if n_matched < rna_series.size:
                 print(f"{rna_series.size - n_matched} file_uid in RNA table do not exist in ALLC table")
-            if n_matched < allc_series.size:
+            if n_matched < allc_series.shape[0]:
                 print(f"{allc_series.size - n_matched} file_uid in ALLC table do not exist in RNA table")
 
         # reindex allc and rna series, this may create NaN, will be dropped
@@ -372,19 +376,19 @@ def generate_mcds(
         rna_series = rna_series.reindex(union_index)
 
     # if allc files exceed max_per_mcds, save them into chunks
-    if allc_series.size > max_per_mcds:
-        mcds_n_chunk = ceil(allc_series.size / max_per_mcds)
-        chunk_size = ceil(allc_series.size / mcds_n_chunk)
+    if allc_series.shape[0] > max_per_mcds:
+        mcds_n_chunk = ceil(allc_series.shape[0] / max_per_mcds)
+        chunk_size = ceil(allc_series.shape[0] / mcds_n_chunk)
         allc_series_chunks = [
-            allc_series[chunk_start : chunk_start + chunk_size]
-            for chunk_start in range(0, allc_series.size, chunk_size)
+            allc_series.iloc[chunk_start : chunk_start + chunk_size]
+            for chunk_start in range(0, allc_series.shape[0], chunk_size)
         ]
         if rna_table is not None:
             rna_series_chunks = [
                 rna_series[chunk_start : chunk_start + chunk_size]
                 for chunk_start in range(0, rna_series.size, chunk_size)
             ]
-        print(f"Number of file_uids {allc_series.size} > max_per_mcds {max_per_mcds}, ")
+        print(f"Number of file_uids {allc_series.shape[0]} > max_per_mcds {max_per_mcds}, ")
         print(f"will generate MCDS in {len(allc_series_chunks)} chunks.")
 
         # mcds chunks execute sequentially
