@@ -219,6 +219,7 @@ def _extract_allc_parallel(
 )
 def extract_allc(
     allc_path: str,
+    cmeta_path: str,
     output_prefix: str,
     mc_contexts: Union[str, list],
     chrom_size_path: str,
@@ -346,7 +347,7 @@ def extract_allc(
 
     # split file first
     # strandness function
-    with open_allc(allc_path, region=region) as allc:
+    with open_allc(allc_path, region=region, cmeta_path=cmeta_path) as allc:
         if strandness == "Split":
             for line in allc:
                 cur_line = line.split("\t")

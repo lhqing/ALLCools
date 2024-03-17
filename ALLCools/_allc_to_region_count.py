@@ -135,6 +135,7 @@ def _map_to_sparse_chrom_bin(site_bed, out_bed, chrom_size_path, bin_size=500):
 )
 def allc_to_region_count(
     allc_path: str,
+    cmeta_path: str,
     output_prefix: str,
     chrom_size_path: str,
     mc_contexts: List[str],
@@ -215,6 +216,7 @@ def allc_to_region_count(
     strandness = "split" if split_strand else "both"
     output_paths_dict = extract_allc(
         allc_path=allc_path,
+        cmeta_path=cmeta_path,
         output_prefix=output_prefix,
         mc_contexts=mc_contexts,
         strandness=strandness,
@@ -332,10 +334,11 @@ def batch_allc_to_region_count(
 
     with ProcessPoolExecutor(cpu) as executor:
         futures = {}
-        for cell_id, allc_path in allc_series.iteritems():
+        for cell_id, (allc_path, cmeta_path) in allc_series.iterrows():
             future = executor.submit(
                 allc_to_region_count,
                 allc_path=allc_path,
+                cmeta_path=cmeta_path,
                 output_prefix=str(output_dir / cell_id),
                 chrom_size_path=chrom_size_path,
                 mc_contexts=mc_contexts,

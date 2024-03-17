@@ -206,7 +206,80 @@ class PipedGzipReader(Closing):
         """
         Raise an exception if the gzip process has exited with an error.
 
-        Raise IOError if process is not running anymore and the
+        Raise OSError if process is not running anymore and the
+        exit code is nonzero.
+        """
+        return_code = self.process.poll()
+        if return_code is not None and return_code != 0:
+            message = self._stderr.read().strip()
+            raise OSError(message)
+
+    def read(self, *args):
+        data = self._file.read(*args)
+        if len(args) == 0 or args[0] <= 0:
+            # wait for process to terminate until we check the exit code
+            self.process.wait()
+        self._raise_if_error()
+        return data
+
+
+class PipedBAllCReader(Closing):
+    def __init__(self, path, cmeta_path=None, region=None, mode="r"):
+        if mode not in ("r"):
+            raise ValueError(f"Mode can only be 'r' for ballc file")
+        if cmeta_path is None:
+            raise NotImplementedError
+        cmeta_path = pathlib.Path(cmeta_path).resolve()
+        if not cmeta_path.exists():
+            raise FileNotFoundError(f"{cmeta_path} does not exist.")
+        cmeta_path = str(cmeta_path)
+
+        if region is None:
+            self.process = Popen(
+                ["ballcools", "query", path, '"*"', "-c", cmeta_path],
+                # stdout=PIPE, stderr=PIPE, encoding="utf8")
+                stdout=PIPE,
+                stderr=PIPE,
+                encoding=None,
+            )
+        else:
+            self.process = Popen(
+                ["ballcools", "query", path] + region.split(" ") + ["-c", cmeta_path],
+                stdout=PIPE,
+                stderr=PIPE,
+                # encoding="utf8",)
+                encoding=None,
+            )
+
+        self.name = path
+        self._file = self.process.stdout
+        self._stderr = self.process.stderr
+        self.closed = False
+        # Give ballcools a little bit of time to report any errors
+        # (such as a non-existing file)
+        time.sleep(0.01)
+        self._raise_if_error()
+
+    def close(self):
+        self.closed = True
+        return_code = self.process.poll()
+        if return_code is None:
+            # still running
+            self.process.terminate()
+        self._raise_if_error()
+
+    def __iter__(self):
+        for line in self._file:
+            yield line.decode("utf-8")
+        self.process.wait()
+        self._raise_if_error()
+
+    def readline(self):
+        return self._file.readline().decode("utf-8")
+
+    def _raise_if_error(self):
+        """
+        Raise OSError if process is not running anymore and the
         exit code is nonzero.
         """
         return_code = self.process.poll()
@@ -275,7 +348,7 @@ class PipedBamReader(Closing):
         return self.file.readline()
 
     def _raise_if_error(self):
-        """Raise IOError if process is not running anymore and the exit code is nonzero."""
+        """Raise OSError if process is not running anymore and the exit code is nonzero."""
         return_code = self.process.poll()
         if return_code is not None and return_code != 0:
             message = self._stderr.read().strip()
@@ -382,7 +455,11 @@ def open_gz(file_path, mode="r", compresslevel=3, threads=1, region=None):
             return gzip.open(file_path, mode, compresslevel=compresslevel)
 
 
-def open_allc(file_path, mode="r", compresslevel=3, threads=1, region=None):
+def open_ballc(file_path, mode="r", compresslevel=None, threads=None, region=None, cmeta_path=None):
+    return PipedBAllCReader(file_path, cmeta_path=cmeta_path, region=region, mode="r")
+
+
+def open_allc(file_path, mode="r", compresslevel=3, threads=1, region=None, cmeta_path=None):
     """
     Open a .allc file.
 
@@ -422,7 +499,7 @@ def open_allc(file_path, mode="r", compresslevel=3, threads=1, region=None):
         raise ValueError(f"mode '{mode}' not supported")
     if compresslevel not in range(1, 10):
         raise ValueError("compresslevel must be between 1 and 9")
-    if region is not None:
+    if (region is not None) and (not file_path.endswith(".ballc")):
         # unzipped file
         if not file_path.endswith("gz"):
             raise ValueError(f"File must be compressed by bgzip to use region query. File path {file_path}")
@@ -435,8 +512,10 @@ def open_allc(file_path, mode="r", compresslevel=3, threads=1, region=None):
         if not os.path.exists(file_path + ".tbi"):
             raise FileNotFoundError("region query provided, but .tbi index not found")
 
-    if file_path.endswith("gz"):
+    if file_path.endswith(".gz"):
         return open_gz(file_path, mode, compresslevel, threads, region=region)
+    elif file_path.endswith(".ballc"):
+        return open_ballc(file_path, region=region, cmeta_path=cmeta_path)
     else:
         return open(file_path, mode)
 
