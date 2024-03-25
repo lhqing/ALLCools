@@ -12,7 +12,6 @@ Single Nucleus ATAC-Seq Data.” Genome Biology 22 (1): 252.
 
 """
 
-
 import json
 import pathlib
 from collections import defaultdict
