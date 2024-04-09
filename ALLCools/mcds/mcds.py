@@ -293,7 +293,7 @@ class MCDS(xr.Dataset):
             ds = xr.open_dataset(
                 _final_paths[0],
                 engine=engine,
-                **kwargs
+                **kwargs,
                 # chunks=chunks  # do not apply chunks parameter here, apply in the end
             )
         else:
