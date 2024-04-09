@@ -3,6 +3,7 @@ Perform Balanced PCA as well as Reproducible PCA.
 
 A class allow user provide fitted model and just transform MCDS to adata with PCs.
 """
+
 import anndata
 import joblib
 import numpy as np
