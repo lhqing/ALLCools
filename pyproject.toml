@@ -1,13 +1,11 @@
 [project]
 name = "ALLCools"
 description = "Toolkit for single-cell DNA methylome and multiomic data analysis."
-authors = [
-    { name = "Hanqing Liu" },
-]
+authors = [{ name = "Hanqing Liu" }]
 maintainers = [
     { name = "Hanqing Liu", email = "hanliu@salk.edu" },
     { name = "Jingtian Zhou", email = "jzhou@salk.edu" },
-    { name = "Wei Tian", email = "wtian@salk.edu" }
+    { name = "Wei Tian", email = "wtian@salk.edu" },
 ]
 urls.Documentation = "https://lhqing.github.io/ALLCools/intro.html"
 urls.Source = "https://github.com/lhqing/ALLCools"
@@ -34,7 +32,7 @@ dependencies = [
 dev = [
     # dev version generation
     "bump2version",
-    "pre-commit"
+    "pre-commit",
 ]
 analysis = [
     "biopython",
@@ -50,22 +48,14 @@ analysis = [
     "statsmodels",
     "rpy2",
     "tpot",
-    "cooler"
+    "cooler",
 ]
-doc = [
-    "jupyter-book",
-    "ghp-import"
-]
-test = [
-    "pytest",
-    "pytest-cov",
-]
+doc = ["jupyter-book", "ghp-import"]
+test = ["pytest", "pytest-cov"]
 
 [tool.coverage.run]
 source = ["ALLCools"]
-omit = [
-    "**/test_*.py",
-]
+omit = ["**/test_*.py"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
