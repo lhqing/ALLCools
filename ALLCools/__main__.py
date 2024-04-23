@@ -812,6 +812,7 @@ def main():
         from ._merge_allc import merge_allc_files as func
     elif cur_command in ["extract-allc", "extract"]:
         from ._extract_allc import extract_allc as func
+        args_vars["cmeta_path"] = None
     elif cur_command in ["allc-to-region-count", "region", "2region"]:
         from ._allc_to_region_count import allc_to_region_count as func
     elif cur_command in ["allc-to-bigwig", "bw", "2bw"]:
