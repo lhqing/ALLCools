@@ -84,7 +84,13 @@ def _check_out_format_parameter(out_format, binarize=False) -> Tuple[str, Callab
             # only chrom, pos, pos, mc, cov
             # mc and cov is binarized
             allc_line_list[4], allc_line_list[5] = binary_count(int(allc_line_list[4]), int(allc_line_list[5]))
-            allc_line_list = [allc_line_list[i] for i in [0, 1, 1, 4, 5]]
+            allc_line_list = [
+                allc_line_list[0],  # chr
+                int(allc_line_list[1]) - 1,  # convert position to 0-based for start
+                int(allc_line_list[1]),  # keep position 1-based for end
+                allc_line_list[4],  # mC
+                allc_line_list[5],  # cov
+            ]
             return "\t".join(map(str, allc_line_list)) + "\n"
 
     else:
@@ -95,8 +101,14 @@ def _check_out_format_parameter(out_format, binarize=False) -> Tuple[str, Callab
 
         def _extract_bed5_format(allc_line_list):
             # only chrom, pos, pos, mc, cov
-            allc_line_list = [allc_line_list[i] for i in [0, 1, 1, 4, 5]]
-            return "\t".join(allc_line_list) + "\n"
+            allc_line_list = [
+                allc_line_list[0],  # chr
+                int(allc_line_list[1]) - 1,  # convert position to 0-based for start
+                int(allc_line_list[1]),  # keep position 1-based for end
+                allc_line_list[4],  # mC
+                allc_line_list[5],  # cov
+            ]
+            return "\t".join(map(str, allc_line_list)) + "\n"
 
     out_format = str(out_format).lower()
     if out_format == "allc":
