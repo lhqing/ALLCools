@@ -94,7 +94,7 @@ def _determine_datasets(regions, quantifiers, chrom_size_path, tmp_dir):
                     "do not have index in its fourth column, adding it automatically. "
                     "If this is not desired, add a fourth column containing UNIQUE IDs to the BED file.",
                 )
-                region_bed_df[name] = (f"{name}_{i}" for i in range(region_bed_df.shape[0]))
+                region_bed_df[name] = [f"{name}_{i}" for i in range(region_bed_df.shape[0])]
             # check if name is unique()
             if region_bed_df.iloc[:, 3].duplicated().sum() > 0:
                 raise ValueError(f"Region IDs in {region_path} (fourth column) are not unique.")

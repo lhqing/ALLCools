@@ -21,10 +21,10 @@ ALLCools documentation organization.
 
 ## Authors
 
--   Hanqing Liu, developer, initial conception
--   Jingtian Zhou, developer, 5kb clustering algorithms
--   Wei Tian
--   Jiaying Xu
+- Hanqing Liu, developer, initial conception
+- Jingtian Zhou, developer, 5kb clustering algorithms
+- Wei Tian
+- Jiaying Xu
 
 ## Support
 
@@ -37,10 +37,10 @@ figclass: margin
 Click on this to create a page specific issue.
 ```
 
--   The source code is on [github](https://github.com/lhqing/ALLCools);
--   For releases and changelog, please check out the [github releases page](https://github.com/lhqing/ALLCools/releases);
--   For bugs and feature requests, please use the [issue tracker](https://github.com/lhqing/ALLCools/issues).
--   For page-specific issues, please use the "open issue" button on the top-right toggle.
+- The source code is on [github](https://github.com/lhqing/ALLCools);
+- For releases and changelog, please check out the [github releases page](https://github.com/lhqing/ALLCools/releases);
+- For bugs and feature requests, please use the [issue tracker](https://github.com/lhqing/ALLCools/issues).
+- For page-specific issues, please use the "open issue" button on the top-right toggle.
 
 ## Citing ALLCools
 
