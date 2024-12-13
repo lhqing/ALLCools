@@ -123,8 +123,8 @@ conda deactivate
 
 Here are some optional packages which might be hard to install on some old systems.
 
--   `rpy2` (R and the R package pvclust) is used for the cluster dendrogram.
--   `tpot` is used in REPTILE model.
+- `rpy2` (R and the R package pvclust) is used for the cluster dendrogram.
+- `tpot` is used in REPTILE model.
 
 ```shell
 mamba install -n allcools rpy2
