@@ -1,20 +1,22 @@
 import pathlib
 import subprocess
+import tempfile
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from functools import lru_cache
-from shutil import rmtree
-import tempfile
-
 
 import numpy as np
 import pandas as pd
 import pybedtools
 import pysam
 import xarray as xr
+import zarr
+import zarr.convenience
+import zarr.creation
+import zarr.hierarchy
+import zarr.storage
 from numcodecs import blosc
 from scipy import stats
-import zarr, zarr.creation, zarr.convenience, zarr.hierarchy, zarr.storage
 
 from ALLCools.utilities import parse_chrom_size, parse_mc_pattern
 
@@ -185,7 +187,7 @@ def _count_single_region_set(allc_table, region_config, obs_dim, region_dim):
             data = xr.DataArray(
                 np.array([sample_data]),
                 coords=[[sample], region_ids, total_mc_types, ["mc", "cov"]],
-                dims=[obs_dim, region_dim, "mc_type", "count_type"]
+                dims=[obs_dim, region_dim, "mc_type", "count_type"],
             )
             total_data.append(data)
     total_data = xr.Dataset({f"{region_dim}_da": xr.concat(total_data, dim=obs_dim)})
@@ -209,9 +211,7 @@ def _calculate_pv(data, reverse_value, obs_dim, var_dim, cutoff=0.9):
     return pv
 
 
-def _count_single_zarr(
-    allc_table, region_config, obs_dim, region_dim, chunk_start, regiongroup, count_dtype="uint32"
-):
+def _count_single_zarr(allc_table, region_config, obs_dim, region_dim, chunk_start, regiongroup, count_dtype="uint32"):
     """Process single region set and its quantifiers."""
     # count all ALLC and mC types that's needed for quantifiers if this region_dim
     count_ds = _count_single_region_set(
@@ -228,8 +228,9 @@ def _count_single_zarr(
         count_da = count_ds.sel(mc_type=count_mc_types)[f"{region_dim}_da"]
         max_int = np.iinfo(count_dtype).max
         count_da = xr.where(count_da > max_int, max_int, count_da)
-        regiongroup[f"{region_dim}_da"][
-            chunk_start : chunk_start + allc_table.index.size, :, :, :] = count_da.astype(count_dtype).data
+        regiongroup[f"{region_dim}_da"][chunk_start : chunk_start + allc_table.index.size, :, :, :] = count_da.astype(
+            count_dtype
+        ).data
     # deal with hypo-score, hyper-score quantifiers
     for quant in region_config["quant"]:
         if quant.quant_type == "hypo-score":
@@ -253,7 +254,9 @@ def _count_single_zarr(
                     var_dim=region_dim,
                     **quant.kwargs,
                 )
-                regiongroup[f"{region_dim}_da_{mc_type}-hyper-score"][chunk_start : chunk_start + allc_table.index.size, :] = data.data
+                regiongroup[f"{region_dim}_da_{mc_type}-hyper-score"][
+                    chunk_start : chunk_start + allc_table.index.size, :
+                ] = data.data
 
     return True
 
@@ -312,7 +315,7 @@ def generate_dataset(
     # prepare regions and determine quantifiers
     pathlib.Path(output_path).mkdir(exist_ok=True)
     z = zarr.storage.DirectoryStore(path=output_path)
-    root = zarr.hierarchy.group(store = z, overwrite = True)
+    root = zarr.hierarchy.group(store=z, overwrite=True)
     datasets, tmpdir = _determine_datasets(regions, quantifiers, chrom_size_path)
     # copy chrom_size_path to output_path
     subprocess.run(["cp", "-f", chrom_size_path, f"{output_path}/chrom_sizes.txt"], check=True)
@@ -324,12 +327,9 @@ def generate_dataset(
         bed.index.name = region_dim
         region_size = bed.index.size
         dsobs = regiongroup.array(
-            name=obs_dim,
-            data=allc_table.index.values,
-            chunks=(chunk_size),
-            dtype=f"<U{max_length}"
+            name=obs_dim, data=allc_table.index.values, chunks=(chunk_size), dtype=f"<U{max_length}"
         )
-        dsobs.attrs['_ARRAY_DIMENSIONS'] = [obs_dim]
+        dsobs.attrs["_ARRAY_DIMENSIONS"] = [obs_dim]
         # append region bed to the saved ds
         ds = xr.Dataset()
         for col, data in bed.items():
@@ -350,41 +350,33 @@ def generate_dataset(
                 name=f"{region_dim}_da",
                 shape=(n_sample, region_size, len(count_mc_types), 2),
                 chunks=(chunk_size, region_size, len(count_mc_types), 2),
-                dtype="uint32"
+                dtype="uint32",
             )
-            DA.attrs['_ARRAY_DIMENSIONS']=[obs_dim, region_dim, "mc_type", "count_type"]
-            count = regiongroup.array(
-                name="count_type",
-                data=(["mc", "cov"]),
-                dtype="<U3"
-            )
-            count.attrs['_ARRAY_DIMENSIONS']=["count_type"]
-            mc = regiongroup.array(
-                name="mc_type",
-                data=count_mc_types,
-                dtype="<U3"
-            )
-            mc.attrs['_ARRAY_DIMENSIONS']=["mc_type"]
+            DA.attrs["_ARRAY_DIMENSIONS"] = [obs_dim, region_dim, "mc_type", "count_type"]
+            count = regiongroup.array(name="count_type", data=(["mc", "cov"]), dtype="<U3")
+            count.attrs["_ARRAY_DIMENSIONS"] = ["count_type"]
+            mc = regiongroup.array(name="mc_type", data=count_mc_types, dtype="<U3")
+            mc.attrs["_ARRAY_DIMENSIONS"] = ["mc_type"]
         # deal with hypo-score, hyper-score quantifiers
         for quant in region_config["quant"]:
             if quant.quant_type == "hypo-score":
                 for mc_type in quant.mc_types:
-                    hypo = regiongroup.empty (
-                        name = f"{region_dim}_da_{mc_type}-hypo-score",
+                    hypo = regiongroup.empty(
+                        name=f"{region_dim}_da_{mc_type}-hypo-score",
                         shape=(allc_table.size, region_size),
-                        chunks = (chunk_size, region_size),
-                        dtype = "float16"
+                        chunks=(chunk_size, region_size),
+                        dtype="float16",
                     )
-                    hypo.attrs['_ARRAY_DIMENSIONS']=[obs_dim, region_dim]
+                    hypo.attrs["_ARRAY_DIMENSIONS"] = [obs_dim, region_dim]
             elif quant.quant_type == "hyper-score":
                 for mc_type in quant.mc_types:
-                    hyper = regiongroup.empty (
-                        name = f"{region_dim}_da_{mc_type}-hyper-score",
+                    hyper = regiongroup.empty(
+                        name=f"{region_dim}_da_{mc_type}-hyper-score",
                         shape=(allc_table.size, region_size),
-                        chunks = (chunk_size, region_size),
-                        dtype = "float16"
+                        chunks=(chunk_size, region_size),
+                        dtype="float16",
                     )
-                    hyper.attrs['_ARRAY_DIMENSIONS']=[obs_dim, region_dim]
+                    hyper.attrs["_ARRAY_DIMENSIONS"] = [obs_dim, region_dim]
     blosc.use_threads = False
     with ProcessPoolExecutor(cpu) as exe:
         futures = {}
