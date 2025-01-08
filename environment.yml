@@ -30,7 +30,7 @@ dependencies:
     - statsmodels
     - xarray
     - yaml
-    - zarr
+    - zarr < 3
     - pip:
           - papermill
           - imblearn
