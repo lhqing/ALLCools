@@ -20,11 +20,11 @@ In general, the **cellular analysis** is focused on individual cells' overall di
 
 ### Sections
 
--   [Basic walk-through of the clustering analysis](../cell_level/basic/intro_basic_clustering.md).
--   [Step-by-step description of the clustering analysis](../cell_level/step_by_step/intro_step_by_step_clustering.md).
--   [Identification of Differentially Methylated Genes clusters](../cell_level/dmg/intro_dmg.md).
--   [Cell-level data integration](../cell_level/integration/intro_integration.md).
--   [Potential cell doublets identification](../cell_level/doublets/intro_doublets.md).
+- [Basic walk-through of the clustering analysis](../cell_level/basic/intro_basic_clustering.md).
+- [Step-by-step description of the clustering analysis](../cell_level/step_by_step/intro_step_by_step_clustering.md).
+- [Identification of Differentially Methylated Genes clusters](../cell_level/dmg/intro_dmg.md).
+- [Cell-level data integration](../cell_level/integration/intro_integration.md).
+- [Potential cell doublets identification](../cell_level/doublets/intro_doublets.md).
 
 ### Input
 
@@ -49,12 +49,12 @@ Specifically, this strategy starts from a cell-by-5kb-bin hypo-methylation score
 
 ### Sections
 
--   [Prepare pseudo-bulk ALLC files](../cluster_level/intro.md)
--   [Call Differentially Methylated Region (DMR)](../cluster_level/RegionDS/01a.call_dmr)
--   [DMR annotation](../cluster_level/RegionDS/02.annotation.ipynb)
--   [DMR motif analysis (finding upstream regulators of DMRs)](../cluster_level/RegionDS/intro_motif.md)
--   [DMR - Gene correlation analysis (finding downstream targets of DMRs)](../cluster_level/Correlation/intro_corr)
--   [Enhancer prediction with REPTILE algorithm](../cluster_level/REPTILE/intro_reptile.md)
+- [Prepare pseudo-bulk ALLC files](../cluster_level/intro.md)
+- [Call Differentially Methylated Region (DMR)](../cluster_level/RegionDS/01a.call_dmr)
+- [DMR annotation](../cluster_level/RegionDS/02.annotation.ipynb)
+- [DMR motif analysis (finding upstream regulators of DMRs)](../cluster_level/RegionDS/intro_motif.md)
+- [DMR - Gene correlation analysis (finding downstream targets of DMRs)](../cluster_level/Correlation/intro_corr)
+- [Enhancer prediction with REPTILE algorithm](../cluster_level/REPTILE/intro_reptile.md)
 
 ### Basic process of genomic analysis
 
