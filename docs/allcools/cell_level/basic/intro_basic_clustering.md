@@ -14,9 +14,9 @@ The dataset we used for 100Kb clustering documentation comes from the hippocampu
 
 #### Download Input Files
 
--   Cell metadata: ADD DOWNLOAD URL
--   single-cell ALLC files: ADD DOWNLOAD URL
--   MCDS files: ADD DOWNLOAD URL
+- Cell metadata: ADD DOWNLOAD URL
+- single-cell ALLC files: ADD DOWNLOAD URL
+- MCDS files: ADD DOWNLOAD URL
 
 ### For 5Kb bins clustering
 
@@ -24,9 +24,9 @@ The dataset we used for 5Kb clustering documentation comes from human PBMC (ADD 
 
 #### Download Input Files
 
--   Cell metadata: ADD DOWNLOAD URL
--   single-cell ALLC files: ADD DOWNLOAD URL
--   MCDS files: ADD DOWNLOAD URL
+- Cell metadata: ADD DOWNLOAD URL
+- single-cell ALLC files: ADD DOWNLOAD URL
+- MCDS files: ADD DOWNLOAD URL
 
 ## Prepare your own datasets
 
