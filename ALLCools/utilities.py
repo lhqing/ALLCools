@@ -76,6 +76,8 @@ def parse_mc_pattern(pattern: str) -> set:
         except KeyError:
             raise KeyError(f"Base {base} is not in IUPAC table.")
     context_set = {"".join(i) for i in itertools.product(*all_pos_list)}
+    if pattern = 'CH':
+        context_set.add('CH')
     return context_set
 
 
