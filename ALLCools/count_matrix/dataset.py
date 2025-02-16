@@ -211,7 +211,9 @@ def _calculate_pv(data, reverse_value, obs_dim, var_dim, cutoff=0.9):
     return pv
 
 
-def _count_single_zarr(allc_table, region_config, obs_dim, obs_dim_dtype, region_dim, chunk_start, regiongroup, count_dtype="uint32"):
+def _count_single_zarr(
+    allc_table, region_config, obs_dim, obs_dim_dtype, region_dim, chunk_start, regiongroup, count_dtype="uint32"
+):
     """Process single region set and its quantifiers."""
     # count all ALLC and mC types that's needed for quantifiers if this region_dim
     count_ds = _count_single_region_set(
@@ -257,7 +259,9 @@ def _count_single_zarr(allc_table, region_config, obs_dim, obs_dim_dtype, region
                 regiongroup[f"{region_dim}_da_{mc_type}-hyper-score"][
                     chunk_start : chunk_start + allc_table.index.size, :
                 ] = data.data
-    regiongroup[obs_dim] = count_ds.coords[obs_dim].astype(obs_dim_dtype)
+    regiongroup[obs_dim][chunk_start : chunk_start + allc_table.index.size] = (
+        count_ds.coords[obs_dim].astype(obs_dim_dtype).data
+    )
     return True
 
 
@@ -327,10 +331,6 @@ def generate_dataset(
         bed.columns = [f"{region_dim}_chrom", f"{region_dim}_start", f"{region_dim}_end"]
         bed.index.name = region_dim
         region_size = bed.index.size
-        dsobs = regiongroup.array(
-            name=obs_dim, data=allc_table.index.values, chunks=(chunk_size), dtype=f"<U{max_length}"
-        )
-        dsobs.attrs["_ARRAY_DIMENSIONS"] = [obs_dim]
         # append region bed to the saved ds
         ds = xr.Dataset()
         for col, data in bed.items():
@@ -340,7 +340,11 @@ def generate_dataset(
         for k in ds.coords.keys():
             if ds.coords[k].dtype == "O":
                 ds.coords[k] = ds.coords[k].astype(str)
-        ds.to_zarr(f"{output_path}/{region_dim}", mode="w")
+        ds.to_zarr(f"{output_path}/{region_dim}", mode="w", consolidated=False)
+        dsobs = regiongroup.empty(
+            name=obs_dim, shape=allc_table.index.size, chunks=(chunk_size), dtype=f"<U{max_length}"
+        )
+        dsobs.attrs["_ARRAY_DIMENSIONS"] = [obs_dim]
         count_mc_types = []
         for quant in region_config["quant"]:
             if quant.quant_type == "count":
@@ -390,7 +394,7 @@ def generate_dataset(
                     allc_table=allc_chunk,
                     region_config=region_config,
                     obs_dim=obs_dim,
-                    obs_dim_dtype = obs_dim_dtype,
+                    obs_dim_dtype=obs_dim_dtype,
                     region_dim=region_dim,
                     chunk_start=chunk_start,
                     regiongroup=regiongroup,
