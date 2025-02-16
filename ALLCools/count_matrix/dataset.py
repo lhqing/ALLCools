@@ -211,7 +211,7 @@ def _calculate_pv(data, reverse_value, obs_dim, var_dim, cutoff=0.9):
     return pv
 
 
-def _count_single_zarr(allc_table, region_config, obs_dim, region_dim, chunk_start, regiongroup, count_dtype="uint32"):
+def _count_single_zarr(allc_table, region_config, obs_dim, obs_dim_dtype, region_dim, chunk_start, regiongroup, count_dtype="uint32"):
     """Process single region set and its quantifiers."""
     # count all ALLC and mC types that's needed for quantifiers if this region_dim
     count_ds = _count_single_region_set(
@@ -257,7 +257,7 @@ def _count_single_zarr(allc_table, region_config, obs_dim, region_dim, chunk_sta
                 regiongroup[f"{region_dim}_da_{mc_type}-hyper-score"][
                     chunk_start : chunk_start + allc_table.index.size, :
                 ] = data.data
-
+    regiongroup[obs_dim] = count_ds.coords[obs_dim].astype(obs_dim_dtype)
     return True
 
 
@@ -306,6 +306,7 @@ def generate_dataset(
 
     # determine index length and str dtype
     max_length = allc_table.index.map(lambda idx: len(idx)).max()
+    obs_dim_dtype = f"<U{max_length}"
 
     # determine parallel chunk size
     n_sample = allc_table.size
@@ -389,6 +390,7 @@ def generate_dataset(
                     allc_table=allc_chunk,
                     region_config=region_config,
                     obs_dim=obs_dim,
+                    obs_dim_dtype = obs_dim_dtype,
                     region_dim=region_dim,
                     chunk_start=chunk_start,
                     regiongroup=regiongroup,
