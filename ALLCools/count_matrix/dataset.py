@@ -324,8 +324,10 @@ def generate_dataset(
     datasets, tmpdir = _determine_datasets(regions, quantifiers, chrom_size_path)
     # copy chrom_size_path to output_path
     subprocess.run(["cp", "-f", chrom_size_path, f"{output_path}/chrom_sizes.txt"], check=True)
+    rgs = {}
     for region_dim, region_config in datasets.items():
         regiongroup = root.create_group(region_dim)
+        rgs[region_dim] = regiongroup
         # save region coords to the ds
         bed = pd.read_csv(f"{tmpdir}/{region_dim}.regions.csv", index_col=0)
         bed.columns = [f"{region_dim}_chrom", f"{region_dim}_start", f"{region_dim}_end"]
@@ -397,10 +399,9 @@ def generate_dataset(
                     obs_dim_dtype=obs_dim_dtype,
                     region_dim=region_dim,
                     chunk_start=chunk_start,
-                    regiongroup=regiongroup,
+                    regiongroup=rgs[region_dim],
                 )
                 futures[f] = (region_dim, i)
-
         for f in as_completed(futures):
             region_dim, i = futures[f]
             print(f"Chunk {i} of {region_dim} returned")
@@ -415,5 +416,6 @@ def generate_dataset(
             "ds_sample_dim": {region_dim: obs_dim for region_dim in datasets.keys()},
         },
     )
-    zarr.convenience.consolidate_metadata(z)
+    for region_dim in datasets.keys():
+        zarr.convenience.consolidate_metadata(f"{output_path}/{region_dim}")
     return output_path
