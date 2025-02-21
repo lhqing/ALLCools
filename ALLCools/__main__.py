@@ -322,7 +322,7 @@ def merge_allc_register_subparser(subparser):
         "--output_path",
         type=str,
         required=True,
-        help="Path to the output merged ALLC file.",
+        help="Path to the output merged ALLC file (specify tsv.gz extension)",
     )
 
     parser_req.add_argument("--chrom_size_path", type=str, required=True, help=chrom_size_path_doc)

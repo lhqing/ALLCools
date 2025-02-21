@@ -40,7 +40,7 @@ class _ALLC:
             self.f_region = TabixIterator()
 
     def readline(self):
-        return next(self.f_region)
+        return self.f_region.__next__()
 
     def close(self):
         self.f.close()
