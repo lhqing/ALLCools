@@ -26,6 +26,7 @@ dependencies = [
     'seaborn',
     "xarray",
     "pyyaml",
+    "zarr < 3"
 ]
 
 [project.optional-dependencies]
