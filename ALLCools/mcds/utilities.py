@@ -260,7 +260,7 @@ def highly_variable_methylation_feature(
 
     # Select n_top_feature
     if n_top_feature is not None:
-        feature_subset = df.index.isin(df.sort_values("dispersion_norm", ascending=False).index[:5000])
+        feature_subset = df.index.isin(df.sort_values("dispersion_norm", ascending=False).index[:n_top_feature])
     else:
         max_disp = np.inf if max_disp is None else max_disp
         dispersion_norm[np.isnan(dispersion_norm)] = 0  # similar to Seurat
