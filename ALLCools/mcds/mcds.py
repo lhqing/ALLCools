@@ -1026,7 +1026,7 @@ class MCDS(xr.Dataset):
         if quant_type.lower().startswith("hypo"):
             quant_type = "hypo-score"
         elif quant_type.lower().startswith("hyper"):
-            quant_type = "hyper_score"
+            quant_type = "hyper-score"
         else:
             pass
         if quant_type not in QUANT_TYPES:
