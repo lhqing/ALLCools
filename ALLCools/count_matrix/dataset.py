@@ -164,7 +164,15 @@ def _count_single_region_set(allc_table, region_config, obs_dim, region_dim):
 
     total_data = []
     for sample, allc_path in allc_table.items():
-        with pysam.TabixFile(allc_path) as allc:
+        try:
+            allc = pysam.TabixFile(allc_path)
+        except OSError:
+            local_tabix = "./" + pathlib.Path(allc_path).name + ".tbi"
+            local_compressed = pysam.tabix_index(
+                filename=allc_path, index=local_tabix, seq_col=0, start_col=1, end_col=1
+            )
+            allc = pysam.TabixFile(filename=local_compressed, index=local_tabix)
+        with allc:
             region_ids = []
             sample_data = []
             region_chunks = pd.read_csv(region_config["regions"], index_col=0, chunksize=1000)
