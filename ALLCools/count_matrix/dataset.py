@@ -98,7 +98,7 @@ def _determine_datasets(regions, quantifiers, chrom_size_path):
                     "do not have index in its fourth column, adding it automatically. "
                     "If this is not desired, add a fourth column containing UNIQUE IDs to the BED file.",
                 )
-                region_bed_df[name] = [f"{name}_{i}" for i in range(region_bed_df.shape[0])]
+                region_bed_df[name] = (f"{name}_{i}" for i in range(region_bed_df.shape[0]))
             # check if name is unique()
             if region_bed_df.iloc[:, 3].duplicated().sum() > 0:
                 raise ValueError(f"Region IDs in {region_path} (fourth column) are not unique.")
@@ -219,7 +219,6 @@ def _count_single_zarr(
     count_ds = _count_single_region_set(
         allc_table=allc_table, region_config=region_config, obs_dim=obs_dim, region_dim=region_dim
     )
-
     # deal with count quantifiers
     count_mc_types = []
     for quant in region_config["quant"]:
@@ -326,8 +325,7 @@ def generate_dataset(
     subprocess.run(["cp", "-f", chrom_size_path, f"{output_path}/chrom_sizes.txt"], check=True)
     rgs = {}
     for region_dim, region_config in datasets.items():
-        regiongroup = root.create_group(region_dim)
-        rgs[region_dim] = regiongroup
+        rgs[region_dim] = root.create_group(region_dim)
         # save region coords to the ds
         bed = pd.read_csv(f"{tmpdir}/{region_dim}.regions.csv", index_col=0)
         bed.columns = [f"{region_dim}_chrom", f"{region_dim}_start", f"{region_dim}_end"]
@@ -343,7 +341,7 @@ def generate_dataset(
             if ds.coords[k].dtype == "O":
                 ds.coords[k] = ds.coords[k].astype(str)
         ds.to_zarr(f"{output_path}/{region_dim}", mode="w", consolidated=False)
-        dsobs = regiongroup.empty(
+        dsobs = rgs[region_dim].empty(
             name=obs_dim, shape=allc_table.index.size, chunks=(chunk_size), dtype=f"<U{max_length}"
         )
         dsobs.attrs["_ARRAY_DIMENSIONS"] = [obs_dim]
@@ -353,22 +351,22 @@ def generate_dataset(
                 count_mc_types += quant.mc_types
         count_mc_types = list(set(count_mc_types))
         if len(count_mc_types) > 0:
-            DA = regiongroup.empty(
+            DA = rgs[region_dim].empty(
                 name=f"{region_dim}_da",
                 shape=(n_sample, region_size, len(count_mc_types), 2),
                 chunks=(chunk_size, region_size, len(count_mc_types), 2),
                 dtype="uint32",
             )
             DA.attrs["_ARRAY_DIMENSIONS"] = [obs_dim, region_dim, "mc_type", "count_type"]
-            count = regiongroup.array(name="count_type", data=(["mc", "cov"]), dtype="<U3")
+            count = rgs[region_dim].array(name="count_type", data=(["mc", "cov"]), dtype="<U3")
             count.attrs["_ARRAY_DIMENSIONS"] = ["count_type"]
-            mc = regiongroup.array(name="mc_type", data=count_mc_types, dtype="<U3")
+            mc = rgs[region_dim].array(name="mc_type", data=count_mc_types, dtype="<U3")
             mc.attrs["_ARRAY_DIMENSIONS"] = ["mc_type"]
         # deal with hypo-score, hyper-score quantifiers
         for quant in region_config["quant"]:
             if quant.quant_type == "hypo-score":
                 for mc_type in quant.mc_types:
-                    hypo = regiongroup.empty(
+                    hypo = rgs[region_dim].empty(
                         name=f"{region_dim}_da_{mc_type}-hypo-score",
                         shape=(allc_table.size, region_size),
                         chunks=(chunk_size, region_size),
@@ -377,7 +375,7 @@ def generate_dataset(
                     hypo.attrs["_ARRAY_DIMENSIONS"] = [obs_dim, region_dim]
             elif quant.quant_type == "hyper-score":
                 for mc_type in quant.mc_types:
-                    hyper = regiongroup.empty(
+                    hyper = rgs[region_dim].empty(
                         name=f"{region_dim}_da_{mc_type}-hyper-score",
                         shape=(allc_table.size, region_size),
                         chunks=(chunk_size, region_size),
