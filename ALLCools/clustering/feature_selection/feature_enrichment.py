@@ -241,7 +241,7 @@ def cluster_enriched_features(
             null_values = null_enrichment.iloc[row, :].sort_values()
             values = enrichment.iloc[row, :]
             pvals = 1 - np.searchsorted(null_values, values) / values.shape[0]
-            (_, q, _, _) = multipletests(pvals, alpha, method="fdr_bh")
+            _, q, _, _ = multipletests(pvals, alpha, method="fdr_bh")
             qvals[row, :] = q
         qvals = pd.DataFrame(qvals, index=enrichment.index, columns=enrichment.columns)
 
